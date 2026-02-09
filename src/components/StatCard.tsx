@@ -12,14 +12,14 @@ interface StatCardProps {
 export function StatCard({ title, value, subtitle, icon, className, children }: StatCardProps) {
   return (
     <div className={cn(
-      "bg-card rounded-2xl p-5 shadow-card border border-border hover:shadow-card-hover transition-shadow duration-300",
+      "bg-card rounded-2xl p-5 shadow-card border border-border hover:shadow-card-hover hover:border-primary/15 transition-all duration-300",
       className
     )}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</p>
-          <p className="text-2xl font-bold font-display text-foreground mt-1">{value}</p>
-          {subtitle && <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>}
+          <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">{title}</p>
+          <p className="text-2xl font-bold font-display text-foreground mt-1.5">{value}</p>
+          {subtitle && <p className="text-[11px] text-muted-foreground mt-1">{subtitle}</p>}
         </div>
         {icon && (
           <div className="h-10 w-10 rounded-xl bg-secondary flex items-center justify-center text-primary">
