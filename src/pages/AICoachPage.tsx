@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Mic, Bot, User, Lightbulb, Bug, HelpCircle, FileText } from "lucide-react";
+import { Send, Mic, Bot, User, Lightbulb, Bug, HelpCircle, FileText, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -17,10 +17,10 @@ const initialMessages: Message[] = [
 ];
 
 const quickActions = [
-  { label: "Explain", icon: Lightbulb },
-  { label: "Debug", icon: Bug },
-  { label: "Hint", icon: HelpCircle },
-  { label: "Summarize", icon: FileText },
+  { label: "Explain", icon: Lightbulb, color: "text-primary" },
+  { label: "Debug", icon: Bug, color: "text-destructive" },
+  { label: "Hint", icon: HelpCircle, color: "text-info" },
+  { label: "Summarize", icon: FileText, color: "text-success" },
 ];
 
 const AICoachPage = () => {
@@ -31,7 +31,6 @@ const AICoachPage = () => {
     if (!input.trim()) return;
     setMessages([...messages, { role: "user", content: input }]);
     setInput("");
-    // Simulate AI response
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -42,9 +41,17 @@ const AICoachPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-6rem)] animate-fade-in">
-      <div className="mb-4">
-        <h1 className="font-display text-2xl font-bold text-foreground">AI Coach</h1>
-        <p className="text-sm text-muted-foreground mt-1">Your personal DSA mentor</p>
+      {/* Header */}
+      <div className="mb-5">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl gradient-golden flex items-center justify-center shadow-sm">
+            <Sparkles className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="font-display text-xl font-bold text-foreground">AI Coach</h1>
+            <p className="text-xs text-muted-foreground">Your personal DSA mentor — always online</p>
+          </div>
+        </div>
       </div>
 
       {/* Quick Actions */}
@@ -53,31 +60,31 @@ const AICoachPage = () => {
           <button
             key={action.label}
             onClick={() => setInput(`${action.label} this concept`)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-card border border-border text-xs font-medium text-foreground hover:bg-secondary transition-colors shadow-card"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-card border border-border text-xs font-medium text-foreground hover:bg-secondary hover:border-primary/20 transition-all shadow-card"
           >
-            <action.icon className="h-3.5 w-3.5 text-primary" />
+            <action.icon className={cn("h-3.5 w-3.5", action.color)} />
             {action.label}
           </button>
         ))}
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+      <div className="flex-1 overflow-y-auto space-y-4 pr-1 pb-2">
         {messages.map((msg, i) => (
           <div key={i} className={cn("flex gap-3", msg.role === "user" ? "justify-end" : "justify-start")}>
             {msg.role === "assistant" && (
-              <div className="h-8 w-8 rounded-full gradient-golden flex-shrink-0 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-sm">
                 <Bot className="h-4 w-4 text-primary-foreground" />
               </div>
             )}
             <div className={cn(
               "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
               msg.role === "user"
-                ? "bg-primary text-primary-foreground rounded-br-md"
-                : "bg-card border border-border text-foreground rounded-bl-md shadow-card"
+                ? "bg-primary text-primary-foreground rounded-br-lg"
+                : "bg-card border border-border text-foreground rounded-bl-lg shadow-card"
             )}>
               {msg.isCode ? (
-                <pre className="bg-foreground/5 rounded-xl p-3 text-xs font-mono overflow-x-auto whitespace-pre">
+                <pre className="bg-foreground/[0.04] rounded-xl p-3 text-[11px] font-mono overflow-x-auto whitespace-pre border border-border/50">
                   {msg.content.replace(/```typescript\n?/, "").replace(/```/, "")}
                 </pre>
               ) : (
@@ -93,7 +100,7 @@ const AICoachPage = () => {
               )}
             </div>
             {msg.role === "user" && (
-              <div className="h-8 w-8 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl bg-secondary flex-shrink-0 flex items-center justify-center">
                 <User className="h-4 w-4 text-secondary-foreground" />
               </div>
             )}
@@ -103,7 +110,7 @@ const AICoachPage = () => {
 
       {/* Input */}
       <div className="mt-4 flex gap-2">
-        <button className="h-11 w-11 rounded-xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-secondary transition-colors flex-shrink-0">
+        <button className="h-11 w-11 rounded-xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-primary transition-all flex-shrink-0">
           <Mic className="h-5 w-5" />
         </button>
         <div className="flex-1 relative">
@@ -113,7 +120,7 @@ const AICoachPage = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Ask anything about DSA..."
-            className="w-full px-4 py-3 pr-12 rounded-xl bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className="w-full px-4 py-3 pr-12 rounded-xl bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 shadow-card"
           />
           <button
             onClick={handleSend}

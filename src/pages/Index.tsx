@@ -4,29 +4,29 @@ import { HeatmapChart } from "@/components/HeatmapChart";
 import { ProgressRing } from "@/components/ProgressRing";
 import {
   Flame, Zap, Trophy, BookOpen, Eye, Bot, Map,
-  Calendar, ChevronRight, Star, TrendingUp
+  Calendar, ChevronRight, Star, TrendingUp, ArrowUpRight, Target
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer,
   PieChart, Pie, Cell, RadarChart, Radar, PolarGrid,
-  PolarAngleAxis, PolarRadiusAxis, LineChart, Line, Tooltip
+  PolarAngleAxis, PolarRadiusAxis, LineChart, Line, Tooltip, Area, AreaChart
 } from "recharts";
 import { Link } from "react-router-dom";
 
 const weeklyData = [
-  { day: "Mon", solved: 8 },
-  { day: "Tue", solved: 12 },
-  { day: "Wed", solved: 5 },
-  { day: "Thu", solved: 15 },
-  { day: "Fri", solved: 10 },
-  { day: "Sat", solved: 18 },
-  { day: "Sun", solved: 7 },
+  { day: "S", solved: 3 },
+  { day: "M", solved: 8 },
+  { day: "T", solved: 12 },
+  { day: "W", solved: 5, highlight: true },
+  { day: "T", solved: 15 },
+  { day: "F", solved: 10 },
+  { day: "S", solved: 18 },
 ];
 
 const pieData = [
-  { name: "Easy", value: 45 },
-  { name: "Medium", value: 35 },
-  { name: "Hard", value: 20 },
+  { name: "Easy", value: 85, color: "hsl(152,60%,45%)" },
+  { name: "Medium", value: 72, color: "hsl(38,92%,50%)" },
+  { name: "Hard", value: 30, color: "hsl(0,72%,51%)" },
 ];
 const PIE_COLORS = ["hsl(152,60%,45%)", "hsl(38,92%,50%)", "hsl(0,72%,51%)"];
 
@@ -49,16 +49,16 @@ const progressData = [
 ];
 
 const quickActions = [
-  { label: "Start Today's Tasks", icon: Zap, to: "/topics", color: "bg-primary text-primary-foreground" },
-  { label: "Open Visualizer", icon: Eye, to: "/visualizer", color: "bg-info text-info-foreground" },
-  { label: "Ask AI", icon: Bot, to: "/ai-coach", color: "bg-success text-primary-foreground" },
-  { label: "Roadmap", icon: Map, to: "/topics", color: "bg-accent text-accent-foreground" },
+  { label: "Start Tasks", icon: Zap, to: "/topics", desc: "Continue learning" },
+  { label: "Visualizer", icon: Eye, to: "/visualizer", desc: "Watch algorithms" },
+  { label: "Ask AI", icon: Bot, to: "/ai-coach", desc: "Get instant help" },
+  { label: "Roadmap", icon: Map, to: "/topics", desc: "Your learning path" },
 ];
 
 const upcomingTasks = [
-  { title: "Binary Search on Rotated Array", difficulty: "Medium", topic: "Arrays" },
-  { title: "LCA of Binary Tree", difficulty: "Hard", topic: "Trees" },
-  { title: "Coin Change Problem", difficulty: "Medium", topic: "DP" },
+  { title: "Binary Search on Rotated Array", difficulty: "Medium", topic: "Arrays", time: "~25 min" },
+  { title: "LCA of Binary Tree", difficulty: "Hard", topic: "Trees", time: "~40 min" },
+  { title: "Coin Change Problem", difficulty: "Medium", topic: "DP", time: "~30 min" },
 ];
 
 const leaderboard = [
@@ -68,32 +68,126 @@ const leaderboard = [
   { name: "Rahul K.", xp: 1980, rank: 4 },
 ];
 
-const calendarDays = ["Mon 3", "Tue 4", "Wed 5", "Thu 6", "Fri 7", "Sat 8", "Sun 9"];
+const calendarDays = [
+  { day: "Mon", date: "3", active: false },
+  { day: "Tue", date: "4", active: false },
+  { day: "Wed", date: "5", active: false },
+  { day: "Thu", date: "6", active: true },
+  { day: "Fri", date: "7", active: false },
+  { day: "Sat", date: "8", active: false },
+  { day: "Sun", date: "9", active: false },
+];
 
 const Dashboard = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
       {/* Welcome Header */}
-      <div className="bg-card rounded-2xl p-6 shadow-card border border-border">
-        <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-full gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-xl">
-            A
-          </div>
-          <div className="flex-1">
-            <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">
-              Welcome back, Arjun! 👋
-            </h1>
-            <div className="flex flex-wrap items-center gap-3 mt-1">
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Star className="h-4 w-4 text-primary" /> 2,150 XP
-              </span>
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Flame className="h-4 w-4 text-destructive" /> 14 Day Streak
-              </span>
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Trophy className="h-4 w-4 text-primary" /> Rank #3
-              </span>
+      <div className="relative overflow-hidden rounded-3xl gradient-golden p-6 md:p-8">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-primary-foreground/10" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center text-primary-foreground font-display font-bold text-2xl md:text-3xl ring-4 ring-primary-foreground/20">
+              A
             </div>
+            <div>
+              <h1 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
+                Welcome in, Arjun
+              </h1>
+              <div className="flex items-center gap-4 mt-1.5">
+                <span className="flex items-center gap-1.5 text-sm text-primary-foreground/80">
+                  <Flame className="h-4 w-4" /> 14 Day Streak
+                </span>
+                <span className="flex items-center gap-1.5 text-sm text-primary-foreground/80">
+                  <Trophy className="h-4 w-4" /> Rank #3
+                </span>
+              </div>
+            </div>
+          </div>
+          {/* Big Stats like reference */}
+          <div className="flex items-center gap-6 md:gap-10">
+            <div className="text-center">
+              <p className="font-display text-4xl md:text-5xl font-bold text-primary-foreground">187</p>
+              <p className="text-xs text-primary-foreground/70 mt-1">Solved</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display text-4xl md:text-5xl font-bold text-primary-foreground">2,150</p>
+              <p className="text-xs text-primary-foreground/70 mt-1">XP</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display text-4xl md:text-5xl font-bold text-primary-foreground">8</p>
+              <p className="text-xs text-primary-foreground/70 mt-1">Level</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Progress + Time Tracker + Onboarding Row (like reference) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Weekly Progress Card */}
+        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
+          <div className="flex items-center justify-between mb-1">
+            <p className="text-sm font-semibold text-foreground">Progress</p>
+            <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <div className="flex items-baseline gap-2 mb-4">
+            <span className="font-display text-3xl font-bold text-foreground">6.1h</span>
+            <span className="text-xs text-muted-foreground">Study time this week</span>
+          </div>
+          <ResponsiveContainer width="100%" height={120}>
+            <BarChart data={weeklyData} barCategoryGap="20%">
+              <XAxis dataKey="day" tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
+              <Bar dataKey="solved" radius={[4, 4, 0, 0]}>
+                {weeklyData.map((entry, index) => (
+                  <Cell key={index} fill={index === 3 ? "hsl(38,92%,50%)" : "hsl(38,92%,50%,0.25)"} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Pomodoro / Time Tracker */}
+        <PomodoroTimer />
+
+        {/* Difficulty Breakdown */}
+        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-semibold text-foreground">Difficulty Split</p>
+            <span className="text-xs text-muted-foreground">187 Total</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex-shrink-0">
+              <ResponsiveContainer width={100} height={100}>
+                <PieChart>
+                  <Pie data={pieData} cx="50%" cy="50%" innerRadius={28} outerRadius={45} dataKey="value" stroke="none" strokeWidth={0}>
+                    {pieData.map((_, i) => (
+                      <Cell key={i} fill={PIE_COLORS[i]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-2.5 flex-1">
+              {pieData.map((item) => (
+                <div key={item.name} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
+                    <span className="text-xs text-muted-foreground">{item.name}</span>
+                  </div>
+                  <span className="text-sm font-bold font-display text-foreground">{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Progress bars */}
+          <div className="mt-4 space-y-2">
+            {pieData.map((item) => (
+              <div key={item.name} className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground w-12">{item.name}</span>
+                <div className="flex-1 h-1.5 bg-secondary rounded-full overflow-hidden">
+                  <div className="h-full rounded-full transition-all duration-700" style={{ width: `${(item.value / 187) * 100}%`, backgroundColor: item.color }} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -104,68 +198,21 @@ const Dashboard = () => {
           <Link
             key={action.label}
             to={action.to}
-            className={`${action.color} rounded-2xl p-4 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col items-center gap-2 text-center`}
+            className="group bg-card rounded-2xl p-4 shadow-card border border-border hover:shadow-card-hover hover:border-primary/20 transition-all duration-300 flex items-start gap-3"
           >
-            <action.icon className="h-6 w-6" />
-            <span className="text-xs font-medium">{action.label}</span>
+            <div className="h-10 w-10 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors flex-shrink-0">
+              <action.icon className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground">{action.label}</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{action.desc}</p>
+            </div>
           </Link>
         ))}
       </div>
 
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard title="Problems Solved" value={187} subtitle="+12 this week" icon={<BookOpen className="h-5 w-5" />} />
-        <StatCard title="Current Streak" value="14 Days" subtitle="Personal best!" icon={<Flame className="h-5 w-5" />} />
-        <StatCard title="XP Earned" value="2,150" subtitle="Level 8" icon={<Star className="h-5 w-5" />} />
-        <StatCard title="Rank" value="#3" subtitle="Top 5%" icon={<Trophy className="h-5 w-5" />} />
-      </div>
-
-      {/* Charts Row */}
+      {/* Heatmap + Radar + XP Growth */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Weekly Bar Chart */}
-        <div className="bg-card rounded-2xl p-5 shadow-card border border-border col-span-1 md:col-span-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Weekly Progress</p>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={weeklyData}>
-              <XAxis dataKey="day" tick={{ fontSize: 11, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
-              <Tooltip
-                contentStyle={{
-                  background: "hsl(0,0%,100%)",
-                  border: "1px solid hsl(36,20%,88%)",
-                  borderRadius: "12px",
-                  fontSize: 12,
-                }}
-              />
-              <Bar dataKey="solved" fill="hsl(38,92%,50%)" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Difficulty Pie */}
-        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">By Difficulty</p>
-          <ResponsiveContainer width="100%" height={180}>
-            <PieChart>
-              <Pie data={pieData} cx="50%" cy="50%" innerRadius={40} outerRadius={70} dataKey="value" stroke="none">
-                {pieData.map((_, i) => (
-                  <Cell key={i} fill={PIE_COLORS[i]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="flex justify-center gap-4 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-success" />Easy</span>
-            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-primary" />Medium</span>
-            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-destructive" />Hard</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Pomodoro + Heatmap + Radar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <PomodoroTimer />
         <HeatmapChart />
         <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Skill Radar</p>
@@ -174,42 +221,51 @@ const Dashboard = () => {
               <PolarGrid stroke="hsl(36,20%,88%)" />
               <PolarAngleAxis dataKey="skill" tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} />
               <PolarRadiusAxis tick={false} axisLine={false} />
-              <Radar dataKey="A" stroke="hsl(38,92%,50%)" fill="hsl(38,92%,50%)" fillOpacity={0.3} />
+              <Radar dataKey="A" stroke="hsl(38,92%,50%)" fill="hsl(38,92%,50%)" fillOpacity={0.2} strokeWidth={2} />
             </RadarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">XP Growth</p>
+          <ResponsiveContainer width="100%" height={200}>
+            <AreaChart data={progressData}>
+              <defs>
+                <linearGradient id="xpGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="hsl(38,92%,50%)" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="hsl(38,92%,50%)" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="week" tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: "hsl(0,0%,100%)", border: "1px solid hsl(36,20%,88%)", borderRadius: "12px", fontSize: 12 }} />
+              <Area type="monotone" dataKey="xp" stroke="hsl(38,92%,50%)" strokeWidth={2} fill="url(#xpGradient)" dot={{ fill: "hsl(38,92%,50%)", r: 3, strokeWidth: 0 }} />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* XP Progress + Calendar + AI Roadmap */}
+      {/* Calendar + AI Roadmap + Leaderboard */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* XP Line Chart */}
-        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">XP Growth</p>
-          <ResponsiveContainer width="100%" height={160}>
-            <LineChart data={progressData}>
-              <XAxis dataKey="week" tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: "hsl(30,8%,50%)" }} axisLine={false} tickLine={false} />
-              <Tooltip />
-              <Line type="monotone" dataKey="xp" stroke="hsl(38,92%,50%)" strokeWidth={2} dot={{ fill: "hsl(38,92%,50%)", r: 3 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Calendar Strip */}
         <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
-            <Calendar className="h-3 w-3 inline mr-1" />This Week
-          </p>
-          <div className="grid grid-cols-7 gap-1">
-            {calendarDays.map((day, i) => (
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-semibold text-foreground">
+              <Calendar className="h-4 w-4 inline mr-1.5 text-primary" />February 2026
+            </p>
+            <span className="text-xs text-muted-foreground">This Week</span>
+          </div>
+          <div className="grid grid-cols-7 gap-1.5">
+            {calendarDays.map((d) => (
               <div
-                key={day}
-                className={`text-center p-2 rounded-xl text-xs font-medium ${
-                  i === 3 ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
+                key={d.day + d.date}
+                className={`text-center p-2.5 rounded-xl transition-all cursor-pointer ${
+                  d.active
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "bg-secondary text-secondary-foreground hover:bg-muted"
                 }`}
               >
-                {day.split(" ")[0]}<br/>
-                <span className="text-sm font-bold">{day.split(" ")[1]}</span>
+                <p className="text-[10px] font-medium opacity-70">{d.day}</p>
+                <p className="text-base font-bold font-display mt-0.5">{d.date}</p>
               </div>
             ))}
           </div>
@@ -217,20 +273,26 @@ const Dashboard = () => {
 
         {/* AI Roadmap */}
         <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
-            <TrendingUp className="h-3 w-3 inline mr-1" />AI Roadmap
-          </p>
-          <div className="space-y-3">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-semibold text-foreground">
+              <Target className="h-4 w-4 inline mr-1.5 text-primary" />AI Roadmap
+            </p>
+            <span className="text-xs font-medium text-primary">3 tasks</span>
+          </div>
+          <div className="space-y-2.5">
             {upcomingTasks.map((task, i) => (
-              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-secondary">
-                <div className="h-8 w-8 rounded-lg gradient-golden flex items-center justify-center text-primary-foreground text-xs font-bold">
+              <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-secondary/60 hover:bg-secondary transition-colors">
+                <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0 shadow-sm">
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{task.title}</p>
-                  <p className="text-[10px] text-muted-foreground">{task.topic}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-[10px] text-muted-foreground">{task.topic}</span>
+                    <span className="text-[10px] text-muted-foreground">• {task.time}</span>
+                  </div>
                 </div>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                <span className={`text-[10px] px-2 py-1 rounded-lg font-medium ${
                   task.difficulty === "Hard" ? "bg-destructive/10 text-destructive" : "bg-primary/10 text-primary"
                 }`}>
                   {task.difficulty}
@@ -239,54 +301,54 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Leaderboard + Referral */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Leaderboard */}
         <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Leaderboard</p>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-semibold text-foreground">Leaderboard</p>
+            <Link to="/referrals" className="text-xs text-primary font-medium hover:underline">View all</Link>
+          </div>
           <div className="space-y-2">
             {leaderboard.map((user) => (
-              <div key={user.rank} className={`flex items-center gap-3 p-3 rounded-xl ${
-                user.name === "You" ? "bg-primary/10 border border-primary/20" : "bg-secondary"
+              <div key={user.rank} className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
+                user.name === "You" ? "bg-primary/8 border border-primary/15" : "bg-secondary/60 hover:bg-secondary"
               }`}>
-                <span className={`font-display font-bold text-lg w-8 text-center ${
-                  user.rank === 1 ? "text-primary" : "text-muted-foreground"
+                <span className={`font-display font-bold text-base w-7 text-center ${
+                  user.rank === 1 ? "text-primary" : user.rank === 2 ? "text-muted-foreground" : user.rank === 3 ? "text-accent" : "text-muted-foreground"
                 }`}>
-                  #{user.rank}
+                  {user.rank === 1 ? "🥇" : user.rank === 2 ? "🥈" : user.rank === 3 ? "🥉" : `#${user.rank}`}
                 </span>
-                <span className="flex-1 text-sm font-medium text-foreground">{user.name}</span>
-                <span className="text-sm text-muted-foreground">{user.xp} XP</span>
+                <span className={`flex-1 text-sm font-medium ${user.name === "You" ? "text-primary" : "text-foreground"}`}>{user.name}</span>
+                <span className="text-xs font-semibold text-muted-foreground">{user.xp.toLocaleString()} XP</span>
               </div>
             ))}
           </div>
         </div>
+      </div>
 
-        <div className="bg-card rounded-2xl p-5 shadow-card border border-border">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Referral Summary</p>
-          <div className="relative overflow-hidden rounded-xl gradient-golden p-5 text-primary-foreground">
-            <p className="font-display font-bold text-lg">Invite & Earn</p>
-            <p className="text-sm opacity-90 mt-1">Share your referral link and earn rewards!</p>
+      {/* Referral Summary */}
+      <div className="relative overflow-hidden bg-card rounded-2xl shadow-card border border-border p-6">
+        <div className="absolute top-0 right-0 w-1/3 h-full gradient-golden opacity-10 rounded-l-full" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <p className="font-display font-bold text-lg text-foreground">Invite Friends & Earn Rewards</p>
+            <p className="text-sm text-muted-foreground mt-1">Share your referral link and earn ₹100 per active referral!</p>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="text-center">
+              <p className="font-display text-2xl font-bold text-foreground">5</p>
+              <p className="text-[10px] text-muted-foreground">Referred</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display text-2xl font-bold text-primary">₹350</p>
+              <p className="text-[10px] text-muted-foreground">Earned</p>
+            </div>
             <Link
               to="/referrals"
-              className="inline-flex items-center gap-1 mt-3 text-sm font-medium bg-card/20 px-4 py-2 rounded-full hover:bg-card/30 transition-colors"
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shadow-sm"
             >
               View Details <ChevronRight className="h-4 w-4" />
             </Link>
-          </div>
-          <div className="grid grid-cols-3 gap-3 mt-4">
-            <div className="text-center p-3 bg-secondary rounded-xl">
-              <p className="font-display font-bold text-lg text-foreground">5</p>
-              <p className="text-[10px] text-muted-foreground">Referred</p>
-            </div>
-            <div className="text-center p-3 bg-secondary rounded-xl">
-              <p className="font-display font-bold text-lg text-foreground">₹350</p>
-              <p className="text-[10px] text-muted-foreground">Earned</p>
-            </div>
-            <div className="text-center p-3 bg-secondary rounded-xl">
-              <p className="font-display font-bold text-lg text-foreground">Silver</p>
-              <p className="text-[10px] text-muted-foreground">Tier</p>
-            </div>
           </div>
         </div>
       </div>
