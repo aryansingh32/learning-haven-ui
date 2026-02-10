@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Send, Mic, Bot, User, Lightbulb, Bug, HelpCircle, FileText, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Message {
   role: "user" | "assistant";
@@ -26,25 +27,33 @@ const quickActions = [
 const AICoachPage = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
 
   const handleSend = () => {
     if (!input.trim()) return;
-    setMessages([...messages, { role: "user", content: input }]);
+    setMessages((prev) => [...prev, { role: "user", content: input }]);
     setInput("");
+    setIsTyping(true);
     setTimeout(() => {
+      setIsTyping(false);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "That's a great question! Let me think about the best approach for this problem..." },
       ]);
-    }, 800);
+    }, 1500);
   };
 
   return (
-    <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-6rem)] animate-fade-in">
+    <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-6rem)]">
       {/* Header */}
       <div className="mb-5">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl gradient-golden flex items-center justify-center shadow-sm">
+          <div className="h-10 w-10 rounded-xl gradient-golden flex items-center justify-center shadow-md">
             <Sparkles className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
@@ -57,60 +66,96 @@ const AICoachPage = () => {
       {/* Quick Actions */}
       <div className="flex gap-2 mb-4 flex-wrap">
         {quickActions.map((action) => (
-          <button
+          <motion.button
             key={action.label}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => setInput(`${action.label} this concept`)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-card border border-border text-xs font-medium text-foreground hover:bg-secondary hover:border-primary/20 transition-all shadow-card"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl card-glass text-xs font-medium text-foreground hover:bg-secondary/60 transition-all"
           >
             <action.icon className={cn("h-3.5 w-3.5", action.color)} />
             {action.label}
-          </button>
+          </motion.button>
         ))}
       </div>
 
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto space-y-4 pr-1 pb-2">
-        {messages.map((msg, i) => (
-          <div key={i} className={cn("flex gap-3", msg.role === "user" ? "justify-end" : "justify-start")}>
-            {msg.role === "assistant" && (
-              <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-sm">
-                <Bot className="h-4 w-4 text-primary-foreground" />
-              </div>
-            )}
-            <div className={cn(
-              "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
-              msg.role === "user"
-                ? "bg-primary text-primary-foreground rounded-br-lg"
-                : "bg-card border border-border text-foreground rounded-bl-lg shadow-card"
-            )}>
-              {msg.isCode ? (
-                <pre className="bg-foreground/[0.04] rounded-xl p-3 text-[11px] font-mono overflow-x-auto whitespace-pre border border-border/50">
-                  {msg.content.replace(/```typescript\n?/, "").replace(/```/, "")}
-                </pre>
-              ) : (
-                <div className="whitespace-pre-wrap">
-                  {msg.content.split(/(\*\*[^*]+\*\*)/g).map((part, pi) =>
-                    part.startsWith("**") && part.endsWith("**") ? (
-                      <strong key={pi} className="font-semibold">{part.slice(2, -2)}</strong>
-                    ) : (
-                      <span key={pi}>{part}</span>
-                    )
-                  )}
+        <AnimatePresence>
+          {messages.map((msg, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.25 }}
+              className={cn("flex gap-3", msg.role === "user" ? "justify-end" : "justify-start")}
+            >
+              {msg.role === "assistant" && (
+                <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-sm">
+                  <Bot className="h-4 w-4 text-primary-foreground" />
                 </div>
               )}
-            </div>
-            {msg.role === "user" && (
-              <div className="h-8 w-8 rounded-xl bg-secondary flex-shrink-0 flex items-center justify-center">
-                <User className="h-4 w-4 text-secondary-foreground" />
+              <div className={cn(
+                "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
+                msg.role === "user"
+                  ? "bg-primary text-primary-foreground rounded-br-lg shadow-md"
+                  : "card-glass text-foreground rounded-bl-lg"
+              )}>
+                {msg.isCode ? (
+                  <pre className="bg-secondary/40 rounded-xl p-3 text-[11px] font-mono overflow-x-auto whitespace-pre border border-border/30">
+                    {msg.content.replace(/```typescript\n?/, "").replace(/```/, "")}
+                  </pre>
+                ) : (
+                  <div className="whitespace-pre-wrap">
+                    {msg.content.split(/(\*\*[^*]+\*\*)/g).map((part, pi) =>
+                      part.startsWith("**") && part.endsWith("**") ? (
+                        <strong key={pi} className="font-semibold">{part.slice(2, -2)}</strong>
+                      ) : (
+                        <span key={pi}>{part}</span>
+                      )
+                    )}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+              {msg.role === "user" && (
+                <div className="h-8 w-8 rounded-xl bg-secondary flex-shrink-0 flex items-center justify-center">
+                  <User className="h-4 w-4 text-secondary-foreground" />
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+
+        {/* Typing indicator */}
+        {isTyping && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex gap-3 items-start"
+          >
+            <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-sm">
+              <Bot className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <div className="card-glass rounded-2xl rounded-bl-lg px-4 py-3">
+              <div className="flex gap-1.5">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="w-2 h-2 rounded-full bg-muted-foreground/50"
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+        <div ref={chatEndRef} />
       </div>
 
       {/* Input */}
       <div className="mt-4 flex gap-2">
-        <button className="h-11 w-11 rounded-xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-primary transition-all flex-shrink-0">
+        <button className="h-11 w-11 rounded-xl card-glass flex items-center justify-center text-muted-foreground hover:text-primary transition-all flex-shrink-0 active:scale-95">
           <Mic className="h-5 w-5" />
         </button>
         <div className="flex-1 relative">
@@ -120,11 +165,11 @@ const AICoachPage = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Ask anything about DSA..."
-            className="w-full px-4 py-3 pr-12 rounded-xl bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 shadow-card"
+            className="w-full px-4 py-3 pr-12 rounded-xl card-glass text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
           />
           <button
             onClick={handleSend}
-            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
+            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-all active:scale-95 shadow-sm"
           >
             <Send className="h-4 w-4" />
           </button>

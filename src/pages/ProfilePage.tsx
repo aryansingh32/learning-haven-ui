@@ -1,5 +1,8 @@
-import { Star, Flame, Trophy, Settings, Globe, ChevronRight, Shield, Bell, HelpCircle, Mail } from "lucide-react";
+import { Star, Flame, Trophy, Settings, Globe, ChevronRight, Shield, Bell, HelpCircle, Mail, Moon, Sun } from "lucide-react";
 import { ProgressRing } from "@/components/ProgressRing";
+import { useTheme } from "@/hooks/useTheme";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const stats = [
   { label: "Problems Solved", value: "187" },
@@ -20,10 +23,16 @@ const settingsItems = [
 ];
 
 const ProfilePage = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <div className="max-w-3xl mx-auto space-y-5 animate-fade-in">
+    <div className="max-w-3xl mx-auto space-y-5">
       {/* Profile Header */}
-      <div className="bg-card rounded-2xl shadow-card border border-border relative overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="card-glass rounded-2xl relative overflow-hidden"
+      >
         <div className="h-28 gradient-golden opacity-30" />
         <div className="px-6 pb-6 -mt-12 relative z-10">
           <div className="h-24 w-24 rounded-2xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-4xl ring-4 ring-card shadow-lg">
@@ -43,66 +52,107 @@ const ProfilePage = () => {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* XP Progress */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5 flex items-center gap-5">
+      <div className="card-glass rounded-2xl p-5 flex items-center gap-5">
         <ProgressRing value={75} size={80} strokeWidth={8} label="75%" sublabel="to Lvl 9" />
         <div className="flex-1">
           <p className="text-sm font-semibold text-foreground">Level 8 → Level 9</p>
           <p className="text-xs text-muted-foreground mt-0.5">2,150 / 3,000 XP</p>
           <div className="w-full h-2.5 bg-secondary rounded-full mt-2.5 overflow-hidden">
-            <div className="h-full bg-primary rounded-full transition-all duration-700" style={{ width: "72%" }} />
+            <motion.div
+              className="h-full gradient-golden rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: "72%" }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
           </div>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-3">Statistics</p>
         <div className="grid grid-cols-3 gap-2.5">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center p-3.5 rounded-xl bg-secondary/60">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.04 }}
+              className="text-center p-3.5 rounded-xl bg-secondary/40 hover:bg-secondary/60 transition-all"
+            >
               <p className="font-display text-xl font-bold text-foreground">{stat.value}</p>
               <p className="text-[10px] text-muted-foreground mt-0.5">{stat.label}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Theme Toggle */}
+      <div className="card-glass rounded-2xl p-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {theme === "light" ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5 text-primary" />}
+            <div>
+              <p className="text-sm font-semibold text-foreground">Appearance</p>
+              <p className="text-xs text-muted-foreground">{theme === "light" ? "Light" : "Dark"} mode is active</p>
+            </div>
+          </div>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleTheme}
+            className={cn(
+              "relative w-14 h-7 rounded-full transition-colors",
+              theme === "dark" ? "bg-primary" : "bg-secondary"
+            )}
+          >
+            <motion.div
+              className="absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-md"
+              animate={{ left: theme === "dark" ? "calc(100% - 1.625rem)" : "0.125rem" }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            />
+          </motion.button>
+        </div>
+      </div>
+
       {/* Language Selector */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-3">
           <Globe className="h-4 w-4 text-primary" />
           <p className="text-sm font-semibold text-foreground">Preferred Language</p>
         </div>
         <div className="flex flex-wrap gap-2">
           {languages.map((lang, i) => (
-            <button
+            <motion.button
               key={lang}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                i === 0 ? "bg-primary text-primary-foreground shadow-sm" : "bg-secondary/60 text-secondary-foreground hover:bg-secondary"
-              }`}
+              whileTap={{ scale: 0.95 }}
+              className={cn(
+                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all",
+                i === 0 ? "bg-primary text-primary-foreground shadow-md" : "bg-secondary/40 text-secondary-foreground hover:bg-secondary"
+              )}
             >
               {lang}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
 
       {/* Settings */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-3">
           <Settings className="h-4 w-4 text-primary" />
           <p className="text-sm font-semibold text-foreground">Settings</p>
         </div>
         <div className="space-y-1">
           {settingsItems.map((item) => (
-            <button
+            <motion.button
               key={item.label}
-              className="w-full flex items-center gap-3 p-3.5 rounded-xl hover:bg-secondary/60 transition-colors text-left group"
+              whileHover={{ x: 4 }}
+              className="w-full flex items-center gap-3 p-3.5 rounded-xl hover:bg-secondary/40 transition-all text-left group"
             >
-              <div className="h-9 w-9 rounded-lg bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors flex-shrink-0">
+              <div className="h-9 w-9 rounded-lg bg-secondary/60 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all flex-shrink-0">
                 <item.icon className="h-4 w-4" />
               </div>
               <div className="flex-1">
@@ -110,7 +160,7 @@ const ProfilePage = () => {
                 <p className="text-xs text-muted-foreground">{item.description}</p>
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>

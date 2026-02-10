@@ -1,6 +1,7 @@
 import { Copy, Check, Gift, Trophy, ArrowUpRight, Users, Wallet, Crown } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const tiers = [
   { name: "Bronze", min: 0, max: 5, emoji: "🥉", active: false },
@@ -33,14 +34,18 @@ const ReferralsPage = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-5 animate-fade-in">
+    <div className="max-w-5xl mx-auto space-y-5">
       <div>
         <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Referrals & Wallet</h1>
         <p className="text-sm text-muted-foreground mt-1">Invite friends and earn rewards</p>
       </div>
 
       {/* Hero Referral Card */}
-      <div className="relative overflow-hidden rounded-2xl gradient-golden p-6 md:p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden rounded-2xl gradient-golden p-6 md:p-8"
+      >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent to-primary-foreground/10" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
@@ -52,7 +57,8 @@ const ReferralsPage = () => {
             <div className="flex-1 bg-primary-foreground/15 backdrop-blur-sm rounded-xl px-4 py-3 text-sm text-primary-foreground font-mono truncate border border-primary-foreground/20">
               {referralLink}
             </div>
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={handleCopy}
               className={cn(
                 "px-5 py-3 rounded-xl font-medium text-sm transition-all flex items-center gap-2 shadow-sm",
@@ -60,10 +66,10 @@ const ReferralsPage = () => {
               )}
             >
               {copied ? <><Check className="h-4 w-4" /> Copied</> : <><Copy className="h-4 w-4" /> Copy</>}
-            </button>
+            </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -72,45 +78,55 @@ const ReferralsPage = () => {
           { icon: Wallet, label: "Total Earned", value: "₹350", color: "text-primary" },
           { icon: ArrowUpRight, label: "Available", value: "₹200", color: "text-success" },
           { icon: Trophy, label: "Rank", value: "#15", color: "text-primary" },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-card rounded-2xl p-5 shadow-card border border-border">
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.05 }}
+            className="card-glass rounded-2xl p-5 card-hover"
+          >
             <stat.icon className={cn("h-5 w-5 mb-2", stat.color)} />
             <p className="font-display text-2xl font-bold text-foreground">{stat.value}</p>
             <p className="text-[11px] text-muted-foreground mt-0.5">{stat.label}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Tiers */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <Crown className="h-4 w-4 text-primary" />
           <p className="text-sm font-semibold text-foreground">Tier Status</p>
         </div>
         <div className="grid grid-cols-3 gap-3">
           {tiers.map((tier) => (
-            <div key={tier.name} className={cn(
-              "rounded-xl border-2 p-4 text-center transition-all",
-              tier.active
-                ? "border-primary bg-primary/5 shadow-sm"
-                : "border-border bg-secondary/50"
-            )}>
+            <motion.div
+              key={tier.name}
+              whileHover={{ scale: 1.02 }}
+              className={cn(
+                "rounded-xl border-2 p-4 text-center transition-all",
+                tier.active
+                  ? "border-primary bg-primary/5 shadow-md"
+                  : "border-border bg-secondary/30"
+              )}
+            >
               <p className="text-2xl mb-1">{tier.emoji}</p>
               <p className="font-display font-bold text-foreground">{tier.name}</p>
               <p className="text-[10px] text-muted-foreground mt-0.5">{tier.min}–{tier.max === 999 ? "∞" : tier.max} referrals</p>
               {tier.active && <span className="inline-block mt-2 text-[10px] bg-primary text-primary-foreground px-2.5 py-0.5 rounded-full font-semibold">Current</span>}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Referred Users */}
-        <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+        <div className="card-glass rounded-2xl p-5">
           <p className="text-sm font-semibold text-foreground mb-3">Referred Users</p>
           <div className="space-y-1.5">
             {referredUsers.map((u) => (
-              <div key={u.name} className="flex items-center justify-between p-3 rounded-xl bg-secondary/60 hover:bg-secondary transition-colors">
+              <motion.div key={u.name} whileHover={{ x: 4 }} className="flex items-center justify-between p-3 rounded-xl bg-secondary/40 hover:bg-secondary/60 transition-all">
                 <div className="flex items-center gap-3">
                   <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
                     {u.name.charAt(0)}
@@ -129,32 +145,35 @@ const ReferralsPage = () => {
                   </span>
                   <p className="text-xs font-semibold text-foreground mt-1">{u.earned}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Withdrawal + Leaderboard */}
         <div className="space-y-4">
-          <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+          <div className="card-glass rounded-2xl p-5">
             <p className="text-sm font-semibold text-foreground mb-3">UPI Withdrawal</p>
             <input
               type="text"
               placeholder="Enter UPI ID (e.g. name@upi)"
-              className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 mb-3"
+              className="w-full px-4 py-3 rounded-xl bg-secondary/40 border border-border/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 mb-3 transition-all"
             />
-            <button className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity shadow-sm">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-all shadow-md"
+            >
               Withdraw ₹200
-            </button>
+            </motion.button>
           </div>
 
-          <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+          <div className="card-glass rounded-2xl p-5">
             <p className="text-sm font-semibold text-foreground mb-3">Top Referrers</p>
             <div className="space-y-1.5">
               {leaderboard.map((u) => (
                 <div key={u.rank} className={cn(
-                  "flex items-center gap-3 p-3 rounded-xl transition-colors",
-                  u.name === "You" ? "bg-primary/8 border border-primary/15" : "bg-secondary/60 hover:bg-secondary"
+                  "flex items-center gap-3 p-3 rounded-xl transition-all",
+                  u.name === "You" ? "bg-primary/10 border border-primary/20" : "bg-secondary/40 hover:bg-secondary/60"
                 )}>
                   <span className="font-display font-bold text-base w-7 text-center">
                     {u.rank === 1 ? "🥇" : u.rank === 2 ? "🥈" : `#${u.rank}`}
