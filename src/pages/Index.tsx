@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import type { Easing } from "framer-motion";
 import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const weeklyData = [
   { day: "S", solved: 3 },
