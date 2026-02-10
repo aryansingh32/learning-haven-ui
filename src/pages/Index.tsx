@@ -1,10 +1,8 @@
-import { StatCard } from "@/components/StatCard";
 import { PomodoroTimer } from "@/components/PomodoroTimer";
 import { HeatmapChart } from "@/components/HeatmapChart";
-import { ProgressRing } from "@/components/ProgressRing";
 import {
-  Flame, Zap, Trophy, BookOpen, Eye, Bot, Map,
-  Calendar, ChevronRight, Star, TrendingUp, ArrowUpRight, Target, Sparkles
+  Flame, Zap, Trophy, Eye, Bot, Map,
+  Calendar, ChevronRight, ArrowUpRight, Target, Sparkles
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer,
@@ -12,6 +10,7 @@ import {
   PolarAngleAxis, PolarRadiusAxis, Tooltip, Area, AreaChart
 } from "recharts";
 import { Link } from "react-router-dom";
+import type { Easing } from "framer-motion";
 import { motion } from "framer-motion";
 
 const weeklyData = [
