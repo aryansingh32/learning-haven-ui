@@ -21,7 +21,7 @@ const intensityClasses = [
 
 export function HeatmapChart({ className }: { className?: string }) {
   return (
-    <div className={cn("bg-card rounded-2xl p-5 shadow-card border border-border", className)}>
+    <div className={cn("card-glass rounded-2xl p-5 card-hover", className)}>
       <div className="flex items-center justify-between mb-3">
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Activity Heatmap</p>
         <span className="text-[10px] text-muted-foreground">Last {weeks} weeks</span>
@@ -37,7 +37,10 @@ export function HeatmapChart({ className }: { className?: string }) {
             {week.map((val, di) => (
               <div
                 key={di}
-                className={cn("h-[14px] w-[14px] rounded-[3px] transition-colors", intensityClasses[val])}
+                className={cn(
+                  "h-[14px] w-[14px] rounded-[3px] transition-all duration-200 hover:scale-125 cursor-pointer",
+                  intensityClasses[val]
+                )}
                 title={`${val} problems`}
               />
             ))}
