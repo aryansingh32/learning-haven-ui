@@ -78,11 +78,13 @@ const calendarDays = [
   { day: "Sun", date: "9", active: false, streak: false },
 ];
 
+const easeOut: Easing = [0.33, 1, 0.68, 1];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   show: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.05, duration: 0.4, ease: "easeOut" }
+    transition: { delay: i * 0.05, duration: 0.4, ease: easeOut }
   }),
 };
 
