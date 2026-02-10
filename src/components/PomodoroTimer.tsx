@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export function PomodoroTimer({ className }: { className?: string }) {
   const [time, setTime] = useState(25 * 60);
@@ -22,32 +23,35 @@ export function PomodoroTimer({ className }: { className?: string }) {
   const offset = circumference - progress * circumference;
 
   return (
-    <div className={cn("bg-card rounded-2xl p-5 shadow-card border border-border flex flex-col items-center", className)}>
+    <div className={cn("card-glass rounded-2xl p-5 flex flex-col items-center card-hover", className)}>
       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Pomodoro Timer</p>
       <div className="relative w-32 h-32">
         <svg width={128} height={128} className="-rotate-90">
           <circle cx={64} cy={64} r={radius} fill="none" stroke="hsl(var(--secondary))" strokeWidth={8} />
-          <circle
+          <motion.circle
             cx={64} cy={64} r={radius} fill="none"
             stroke="hsl(var(--primary))" strokeWidth={8}
             strokeDasharray={circumference} strokeDashoffset={offset}
-            strokeLinecap="round" className="transition-all duration-500"
+            strokeLinecap="round"
+            initial={false}
+            animate={{ strokeDashoffset: offset }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-display text-2xl font-bold text-foreground">{mins}:{secs}</span>
+          <span className="font-display text-2xl font-bold text-foreground tabular-nums">{mins}:{secs}</span>
         </div>
       </div>
       <div className="flex gap-3 mt-4">
         <button
           onClick={() => setRunning(!running)}
-          className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
+          className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-all shadow-md hover:shadow-lg active:scale-95"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
         </button>
         <button
           onClick={() => { setRunning(false); setTime(25 * 60); }}
-          className="h-10 w-10 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-muted transition-colors"
+          className="h-10 w-10 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:bg-muted transition-all active:scale-95"
         >
           <RotateCcw className="h-4 w-4" />
         </button>

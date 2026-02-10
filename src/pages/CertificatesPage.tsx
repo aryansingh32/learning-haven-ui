@@ -1,4 +1,5 @@
 import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 const certificates = [
   { title: "Arrays & Hashing Mastery", date: "February 2, 2025", id: "CERT-ARR-2025-001", status: "Issued" },
@@ -8,21 +9,24 @@ const certificates = [
 
 const CertificatesPage = () => {
   return (
-    <div className="max-w-5xl mx-auto space-y-5 animate-fade-in">
+    <div className="max-w-5xl mx-auto space-y-5">
       <div>
         <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Certificates</h1>
         <p className="text-sm text-muted-foreground mt-1">Your achievements & credentials</p>
       </div>
 
       {/* Certificate Preview */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-8 md:p-12 text-center relative overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="card-glass rounded-2xl p-8 md:p-12 text-center relative overflow-hidden"
+      >
         <div className="absolute inset-0 opacity-[0.04]">
           <div className="absolute inset-0 gradient-golden" />
         </div>
-        {/* Decorative border */}
         <div className="absolute inset-3 border-2 border-dashed border-primary/10 rounded-xl pointer-events-none" />
         <div className="relative z-10">
-          <div className="h-14 w-14 rounded-2xl gradient-golden flex items-center justify-center mx-auto mb-5 shadow-md">
+          <div className="h-14 w-14 rounded-2xl gradient-golden flex items-center justify-center mx-auto mb-5 shadow-lg">
             <Award className="h-7 w-7 text-primary-foreground" />
           </div>
           <p className="text-[10px] text-muted-foreground uppercase tracking-[0.3em] mb-3 font-semibold">Certificate of Achievement</p>
@@ -30,38 +34,52 @@ const CertificatesPage = () => {
           <p className="text-sm text-muted-foreground mb-1">Awarded to <strong className="text-foreground">Arjun Sharma</strong></p>
           <p className="text-xs text-muted-foreground mb-8">For completing all 20 problems in the Arrays & Hashing module</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-all shadow-md"
+            >
               <Download className="h-4 w-4" /> Download PDF
-            </button>
-            <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium hover:bg-muted transition-colors">
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium hover:bg-muted transition-all"
+            >
               <Share2 className="h-4 w-4" /> Share
-            </button>
+            </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Share Options */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-3">Share to Social</p>
         <div className="flex flex-wrap gap-2">
           {["LinkedIn", "Twitter / X", "WhatsApp", "Copy Link"].map((platform) => (
-            <button
+            <motion.button
               key={platform}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-secondary/60 text-foreground text-sm font-medium hover:bg-secondary transition-colors"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-secondary/40 text-foreground text-sm font-medium hover:bg-secondary transition-all"
             >
               <ExternalLink className="h-3.5 w-3.5 text-primary" />
               {platform}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
 
       {/* Certificates List */}
-      <div className="bg-card rounded-2xl shadow-card border border-border p-5">
+      <div className="card-glass rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-4">All Certificates</p>
         <div className="space-y-2">
-          {certificates.map((cert) => (
-            <div key={cert.id} className="flex items-center gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors">
+          {certificates.map((cert, i) => (
+            <motion.div
+              key={cert.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="flex items-center gap-4 p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-all card-hover"
+            >
               <div className="h-11 w-11 rounded-xl gradient-golden flex items-center justify-center flex-shrink-0 shadow-sm">
                 <BadgeCheck className="h-5 w-5 text-primary-foreground" />
               </div>
@@ -74,14 +92,14 @@ const CertificatesPage = () => {
                 </div>
               </div>
               <div className="flex gap-1.5 flex-shrink-0">
-                <button className="p-2.5 rounded-xl bg-card border border-border text-foreground hover:bg-secondary transition-colors">
+                <button className="p-2.5 rounded-xl card-glass text-foreground hover:bg-secondary transition-all active:scale-95">
                   <Download className="h-4 w-4" />
                 </button>
-                <button className="p-2.5 rounded-xl bg-card border border-border text-foreground hover:bg-secondary transition-colors">
+                <button className="p-2.5 rounded-xl card-glass text-foreground hover:bg-secondary transition-all active:scale-95">
                   <Share2 className="h-4 w-4" />
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

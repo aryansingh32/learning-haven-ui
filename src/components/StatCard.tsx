@@ -12,7 +12,7 @@ interface StatCardProps {
 export function StatCard({ title, value, subtitle, icon, className, children }: StatCardProps) {
   return (
     <div className={cn(
-      "bg-card rounded-2xl p-5 shadow-card border border-border hover:shadow-card-hover hover:border-primary/15 transition-all duration-300",
+      "card-glass rounded-2xl p-5 card-hover",
       className
     )}>
       <div className="flex items-start justify-between">
