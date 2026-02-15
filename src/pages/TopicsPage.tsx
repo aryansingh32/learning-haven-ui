@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, ChevronDown, ChevronRight, Check, ExternalLink, Star, PlusCircle, Shuffle } from "lucide-react";
+import { Search, ChevronRight, Check, ExternalLink, Star, PlusCircle, Shuffle, Filter, TrendingDown, Clock, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProgressRing } from "@/components/ProgressRing";
 import { motion, AnimatePresence } from "framer-motion";
@@ -80,9 +80,9 @@ const topics = [
 ];
 
 const difficultyColor: Record<string, string> = {
-  Easy: "bg-success/15 text-success",
-  Medium: "bg-primary/15 text-primary",
-  Hard: "bg-destructive/15 text-destructive",
+  Easy: "bg-success/15 text-success border border-success/20",
+  Medium: "bg-primary/15 text-primary border border-primary/20",
+  Hard: "bg-destructive/15 text-destructive border border-destructive/20",
 };
 
 const totalProblems = topics.reduce((s, t) => s + t.total, 0);
@@ -106,48 +106,58 @@ const TopicsPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         <div className="lg:col-span-3 space-y-4">
-          {/* Filters */}
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            <div className="flex gap-2">
-              {(["all", "easy", "medium", "hard"] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={cn(
-                    "px-4 py-2 rounded-xl text-xs font-medium capitalize transition-all duration-200",
-                    filter === f
-                      ? "bg-primary text-primary-foreground shadow-md"
-                      : "card-glass text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {f === "all" ? "All" : f}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 flex-1">
-              <div className="relative flex-1 max-w-xs">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search topics..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 rounded-xl card-glass text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                />
+          {/* Sticky Filter Bar */}
+          <div className="sticky top-0 z-20 card-glass rounded-2xl p-3 -mx-1 px-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+              <div className="flex items-center gap-1.5">
+                <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+                {(["all", "easy", "medium", "hard"] as const).map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={cn(
+                      "px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all duration-200",
+                      filter === f
+                        ? f === "easy" ? "bg-success/15 text-success border border-success/20"
+                        : f === "medium" ? "bg-primary/15 text-primary border border-primary/20"
+                        : f === "hard" ? "bg-destructive/15 text-destructive border border-destructive/20"
+                        : "gradient-golden text-primary-foreground shadow-sm"
+                        : "bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    )}
+                  >
+                    {f === "all" ? "All" : f}
+                  </button>
+                ))}
               </div>
-              <button className="flex items-center gap-1.5 px-3 py-2 rounded-xl card-glass text-xs text-foreground hover:bg-secondary transition-all">
-                <Shuffle className="h-3.5 w-3.5" /> Random
-              </button>
+              <div className="flex items-center gap-2 flex-1">
+                <div className="relative flex-1 max-w-xs">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search topics..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-secondary/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all border border-border/50"
+                  />
+                </div>
+                <motion.button whileTap={{ scale: 0.95 }} className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/60 text-xs font-medium text-foreground hover:bg-secondary transition-all border border-border/50">
+                  <Shuffle className="h-3.5 w-3.5" /> Random
+                </motion.button>
+              </div>
             </div>
           </div>
 
           {/* Overall Progress */}
-          <div className="card-glass rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="card-layer-2 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
+          >
             <div className="flex items-center gap-3 flex-shrink-0">
               <ProgressRing value={totalSolved} max={totalProblems} size={52} strokeWidth={6} label={`${Math.round((totalSolved / totalProblems) * 100)}%`} />
               <div>
                 <p className="text-sm font-semibold text-foreground">Overall Progress</p>
-                <p className="text-xs text-muted-foreground">{totalSolved}/{totalProblems}</p>
+                <p className="text-xs text-muted-foreground">{totalSolved}/{totalProblems} problems</p>
               </div>
             </div>
             <div className="flex items-center gap-6 ml-auto">
@@ -157,14 +167,14 @@ const TopicsPage = () => {
                 { label: "Hard", color: "bg-destructive", done: 30, total: 137 },
               ].map((d) => (
                 <span key={d.label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <span className={cn("w-2 h-2 rounded-full", d.color)} /> {d.label} {d.done}/{d.total}
+                  <span className={cn("w-2.5 h-2.5 rounded-full", d.color)} /> {d.label} <strong className="text-foreground">{d.done}</strong>/{d.total}
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Topics List */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {filteredTopics.map((topic, ti) => (
               <motion.div
                 key={topic.name}
@@ -175,22 +185,31 @@ const TopicsPage = () => {
               >
                 <button
                   onClick={() => setExpanded(expanded === topic.name ? null : topic.name)}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-secondary/30 transition-colors"
+                  className="w-full flex items-center gap-4 p-4 hover:bg-secondary/20 transition-colors"
                 >
                   <motion.div animate={{ rotate: expanded === topic.name ? 90 : 0 }} transition={{ duration: 0.2 }}>
                     <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   </motion.div>
-                  <p className="flex-1 text-left text-sm font-medium text-foreground">{topic.name}</p>
+                  <div className="flex-1 flex items-center gap-3 text-left">
+                    <span className="text-sm font-semibold text-foreground">{topic.name}</span>
+                    <span className={cn(
+                      "text-[10px] px-2 py-0.5 rounded-full font-semibold",
+                      topic.progress >= 70 ? "bg-success/15 text-success" : topic.progress >= 40 ? "bg-primary/15 text-primary" : "bg-secondary text-muted-foreground"
+                    )}>
+                      {topic.progress}%
+                    </span>
+                  </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
-                    <div className="w-28 h-2 bg-secondary rounded-full overflow-hidden hidden sm:block">
+                    <div className="w-32 h-2.5 bg-secondary rounded-full overflow-hidden hidden sm:block">
                       <motion.div
-                        className="h-full bg-primary rounded-full"
+                        className="h-full rounded-full"
+                        style={{ background: topic.progress >= 70 ? "hsl(152,60%,45%)" : topic.progress >= 40 ? "hsl(38,92%,50%)" : "hsl(var(--muted-foreground))" }}
                         initial={{ width: 0 }}
                         animate={{ width: `${topic.progress}%` }}
                         transition={{ duration: 0.8, delay: ti * 0.05 }}
                       />
                     </div>
-                    <span className="text-xs text-muted-foreground w-12 text-right">{topic.solved}/{topic.total}</span>
+                    <span className="text-xs text-muted-foreground w-14 text-right font-medium tabular-nums">{topic.solved}/{topic.total}</span>
                   </div>
                 </button>
 
@@ -200,11 +219,11 @@ const TopicsPage = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-border/50">
-                        <div className="hidden sm:grid grid-cols-12 gap-2 px-5 py-2.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider bg-secondary/30">
+                      <div className="border-t border-border/40">
+                        <div className="hidden sm:grid grid-cols-12 gap-2 px-5 py-2.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider bg-secondary/20">
                           <div className="col-span-1">Status</div>
                           <div className="col-span-4">Problem</div>
                           <div className="col-span-2">Resource</div>
@@ -219,25 +238,28 @@ const TopicsPage = () => {
                             initial={{ opacity: 0, x: -8 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: pi * 0.04 }}
-                            className="grid grid-cols-12 gap-2 px-5 py-3.5 items-center border-t border-border/30 hover:bg-secondary/20 transition-all duration-200"
+                            className="grid grid-cols-12 gap-2 px-5 py-3.5 items-center border-t border-border/20 hover:bg-secondary/15 transition-all duration-200 group"
                           >
                             <div className="col-span-1">
-                              <div className={cn(
-                                "h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer",
-                                problem.solved ? "bg-success border-success" : "border-border hover:border-primary/50"
-                              )}>
+                              <motion.div
+                                whileTap={{ scale: 0.8 }}
+                                className={cn(
+                                  "h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer",
+                                  problem.solved ? "bg-success border-success shadow-sm" : "border-border hover:border-primary/50"
+                                )}
+                              >
                                 {problem.solved && <Check className="h-3 w-3 text-primary-foreground" />}
-                              </div>
+                              </motion.div>
                             </div>
                             <div className="col-span-4">
-                              <p className={cn("text-sm", problem.solved ? "text-muted-foreground line-through" : "text-foreground font-medium")}>
+                              <p className={cn("text-sm", problem.solved ? "text-muted-foreground line-through" : "text-foreground font-medium group-hover:text-primary transition-colors")}>
                                 {problem.name}
                               </p>
                             </div>
                             <div className="col-span-2 flex items-center gap-1.5">
-                              <button className="px-2.5 py-1 rounded-md bg-primary text-primary-foreground text-[10px] font-semibold hover:opacity-90 transition-all active:scale-95">
+                              <motion.button whileTap={{ scale: 0.9 }} className="px-2.5 py-1 rounded-lg gradient-golden text-primary-foreground text-[10px] font-semibold transition-all shadow-sm hover:shadow-md">
                                 Solve
-                              </button>
+                              </motion.button>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <button className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors">
@@ -247,12 +269,12 @@ const TopicsPage = () => {
                                 <TooltipContent>Open Resource</TooltipContent>
                               </Tooltip>
                             </div>
-                            <div className="col-span-1 text-center text-muted-foreground text-xs">---</div>
+                            <div className="col-span-1 text-center text-muted-foreground/50 text-xs">---</div>
                             <div className="col-span-1 flex justify-center">
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <button className="p-1 rounded-md hover:bg-secondary transition-colors">
-                                    <PlusCircle className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+                                  <button className="p-1.5 rounded-lg hover:bg-secondary transition-colors group/btn">
+                                    <PlusCircle className="h-4 w-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
                                   </button>
                                 </TooltipTrigger>
                                 <TooltipContent>Add Note</TooltipContent>
@@ -261,8 +283,8 @@ const TopicsPage = () => {
                             <div className="col-span-1 flex justify-center">
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <button className="p-1 rounded-md hover:bg-secondary transition-colors">
-                                    <Star className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+                                  <button className="p-1.5 rounded-lg hover:bg-secondary transition-colors group/btn">
+                                    <Star className="h-4 w-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
                                   </button>
                                 </TooltipTrigger>
                                 <TooltipContent>Mark for Revision</TooltipContent>
@@ -284,10 +306,10 @@ const TopicsPage = () => {
           </div>
         </div>
 
-        {/* Right Sidebar */}
+        {/* Right Sidebar — Analytics */}
         <div className="space-y-4">
-          <div className="card-glass rounded-2xl p-5 sticky top-6">
-            <p className="text-sm font-semibold text-foreground mb-4">Progress</p>
+          <div className="card-layer-2 rounded-2xl p-5 sticky top-6">
+            <p className="text-sm font-semibold text-foreground mb-4">📊 Progress</p>
             <div className="flex flex-col items-center mb-4">
               <ProgressRing value={totalSolved} max={totalProblems} size={100} strokeWidth={8} label={`${totalSolved}`} sublabel={`/ ${totalProblems}`} />
             </div>
@@ -297,27 +319,20 @@ const TopicsPage = () => {
                 { label: "Medium", color: "bg-primary", done: 72, total: 150 },
                 { label: "Hard", color: "bg-destructive", done: 30, total: 137 },
               ].map((d) => (
-                <div key={d.label} className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className={cn("w-2 h-2 rounded-full", d.color)} /> {d.label}
-                  </span>
-                  <span className="text-xs font-semibold text-foreground">{d.done}/{d.total}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="card-glass rounded-2xl p-5">
-            <p className="text-sm font-semibold text-foreground mb-3">Topic Mastery</p>
-            <div className="space-y-2">
-              {topics.slice(0, 4).map((t) => (
-                <div key={t.name} className="space-y-1">
-                  <div className="flex justify-between">
-                    <span className="text-[10px] text-muted-foreground truncate max-w-[120px]">{t.name.split("[")[0]}</span>
-                    <span className="text-[10px] font-semibold text-foreground">{t.progress}%</span>
+                <div key={d.label}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className={cn("w-2.5 h-2.5 rounded-full", d.color)} /> {d.label}
+                    </span>
+                    <span className="text-xs font-bold text-foreground tabular-nums">{d.done}/{d.total}</span>
                   </div>
                   <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-                    <div className="h-full bg-primary rounded-full" style={{ width: `${t.progress}%` }} />
+                    <motion.div
+                      className={cn("h-full rounded-full", d.color)}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(d.done / d.total) * 100}%` }}
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                    />
                   </div>
                 </div>
               ))}
@@ -325,8 +340,52 @@ const TopicsPage = () => {
           </div>
 
           <div className="card-glass rounded-2xl p-5">
-            <p className="text-sm font-semibold text-foreground mb-3">Sessions</p>
-            <div className="h-20 rounded-xl bg-secondary/60 flex items-center justify-center text-xs text-muted-foreground">Coming Soon</div>
+            <p className="text-sm font-semibold text-foreground mb-3">📈 Topic Mastery</p>
+            <div className="space-y-2.5">
+              {topics.slice(0, 5).map((t) => (
+                <div key={t.name} className="space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-[10px] text-muted-foreground truncate max-w-[130px]">{t.name.split("[")[0]}</span>
+                    <span className="text-[10px] font-bold text-foreground tabular-nums">{t.progress}%</span>
+                  </div>
+                  <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-primary rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${t.progress}%` }}
+                      transition={{ duration: 0.8 }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="card-glass rounded-2xl p-5">
+            <p className="text-sm font-semibold text-foreground mb-3">⚡ Quick Stats</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
+                <Clock className="h-4 w-4 text-primary" />
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground">Avg Solve Time</p>
+                  <p className="text-sm font-bold text-foreground">18 min</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
+                <TrendingDown className="h-4 w-4 text-destructive" />
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground">Weakest Area</p>
+                  <p className="text-sm font-bold text-foreground">Dynamic Programming</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
+                <Zap className="h-4 w-4 text-primary" />
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground">Strongest Area</p>
+                  <p className="text-sm font-bold text-foreground">Arrays & Strings</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
