@@ -4,6 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/AppLayout";
+import { AuthProvider } from "@/context/AuthContext";
+import { AuthLayout } from "@/components/layouts/AuthLayout";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import SignIn from "@/pages/auth/SignIn";
+import SignUp from "@/pages/auth/SignUp";
+import CodeExecutorTest from "@/modules/CodeExecutor/test-page";
 import Index from "./pages/Index";
 import TopicsPage from "./pages/TopicsPage";
 import VisualizerPage from "./pages/VisualizerPage";
@@ -21,18 +27,33 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppLayout>
+        <AuthProvider>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/topics" element={<TopicsPage />} />
-            <Route path="/visualizer" element={<VisualizerPage />} />
-            <Route path="/ai-coach" element={<AICoachPage />} />
-            <Route path="/referrals" element={<ReferralsPage />} />
-            <Route path="/certificates" element={<CertificatesPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/test-editor" element={<CodeExecutorTest />} />
+
+            <Route element={<AuthLayout />}>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Route>
+
+            <Route path="/*" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/topics" element={<TopicsPage />} />
+                    <Route path="/visualizer" element={<VisualizerPage />} />
+                    <Route path="/ai-coach" element={<AICoachPage />} />
+                    <Route path="/referrals" element={<ReferralsPage />} />
+                    <Route path="/certificates" element={<CertificatesPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </AppLayout>
+              </ProtectedRoute>
+            } />
           </Routes>
-        </AppLayout>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

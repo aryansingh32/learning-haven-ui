@@ -1,13 +1,14 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
-import { 
+import {
   LayoutDashboard, BookOpen, Eye, Bot, Gift, Award, User,
-  Menu, X, Moon, Sun
+  Menu, X, Moon, Sun, LogOut
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "@/hooks/useTheme";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "Dashboard" },
@@ -24,6 +25,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-depth transition-colors duration-400">
@@ -85,16 +87,23 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               {theme === "light" ? "Dark Mode" : "Light Mode"}
             </button>
           </div>
-          <div className="p-4 border-t border-border/40">
+          <div className="p-4 border-t border-border/40 space-y-2">
             <RouterNavLink to="/profile" className="flex items-center gap-3 p-2 rounded-xl hover:bg-secondary/80 transition-colors group">
               <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-sm group-hover:shadow-md transition-shadow">
-                A
+                {user?.full_name?.[0] || user?.email?.[0] || "U"}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">Arjun Sharma</p>
-                <p className="text-[10px] text-muted-foreground">Level 8 • 2,150 XP</p>
+                <p className="text-sm font-medium text-foreground truncate">{user?.full_name || "User"}</p>
+                <p className="text-[10px] text-muted-foreground">Level {(user as any)?.level || 1} • {(user as any)?.xp || 0} XP</p>
               </div>
             </RouterNavLink>
+            <button
+              onClick={logout}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-destructive transition-colors"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Sign Out
+            </button>
           </div>
         </aside>
       )}

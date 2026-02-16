@@ -1,17 +1,11 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useApiQuery } from "@/hooks/useApi";
+import { Skeleton } from "./ui/skeleton";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const weeks = 16;
-
-const generateData = () => {
-  return Array.from({ length: weeks }, () =>
-    Array.from({ length: 7 }, () => Math.floor(Math.random() * 5))
-  );
-};
-
-const data = generateData();
 
 const intensityClasses = [
   "bg-secondary",
@@ -22,7 +16,34 @@ const intensityClasses = [
 ];
 
 export function HeatmapChart({ className }: { className?: string }) {
-  const [hoveredCell, setHoveredCell] = useState<{week: number; day: number} | null>(null);
+  const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number } | null>(null);
+
+  const { data, isLoading } = useApiQuery<number[][]>(
+    ['heatmap-activity'],
+    '/users/analytics/activity'
+  );
+
+  if (isLoading) {
+    return (
+      <div className={cn("card-glass rounded-2xl p-5 card-hover", className)}>
+        <div className="flex items-center justify-between mb-4">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-4 w-20" />
+        </div>
+        <div className="flex gap-[3px] mt-2">
+          {Array.from({ length: weeks }).map((_, i) => (
+            <div key={i} className="flex flex-col gap-[3px]">
+              {Array.from({ length: 7 }).map((_, j) => (
+                <Skeleton key={j} className="h-[14px] w-[14px] rounded-[3px]" />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const heatmapData = data || Array.from({ length: weeks }, () => Array.from({ length: 7 }, () => 0));
 
   return (
     <div className={cn("card-glass rounded-2xl p-5 card-hover", className)}>
@@ -36,19 +57,19 @@ export function HeatmapChart({ className }: { className?: string }) {
             <div key={d} className="h-[14px] flex items-center leading-none">{d}</div>
           ))}
         </div>
-        {data.map((week, wi) => (
+        {heatmapData.map((week, wi) => (
           <div key={wi} className="flex flex-col gap-[3px]">
             {week.map((val, di) => (
               <div
                 key={di}
                 className="relative"
-                onMouseEnter={() => setHoveredCell({week: wi, day: di})}
+                onMouseEnter={() => setHoveredCell({ week: wi, day: di })}
                 onMouseLeave={() => setHoveredCell(null)}
               >
                 <motion.div
                   className={cn(
                     "h-[14px] w-[14px] rounded-[3px] cursor-pointer transition-colors duration-200",
-                    intensityClasses[val]
+                    intensityClasses[Math.min(val, 4)]
                   )}
                   whileHover={{ scale: 1.4 }}
                   transition={{ duration: 0.15 }}

@@ -1,107 +1,65 @@
-import { useState } from "react";
-import { Search, ChevronRight, Check, ExternalLink, Star, PlusCircle, Shuffle, Filter, TrendingDown, Clock, Zap } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, ChevronRight, Check, ExternalLink, Star, PlusCircle, Shuffle, Filter, TrendingDown, Clock, Zap, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProgressRing } from "@/components/ProgressRing";
 import { motion, AnimatePresence } from "framer-motion";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-
-const topics = [
-  {
-    name: "Learn the Basics",
-    progress: 75, total: 31, solved: 23,
-    problems: [
-      { name: "Input Output", difficulty: "Easy", solved: true, hasNotes: true },
-      { name: "Cpp Basics", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "If ElseIf", difficulty: "Easy", solved: true, hasNotes: true },
-      { name: "Switch Case", difficulty: "Easy", solved: false, hasNotes: false },
-      { name: "What are arrays, strings?", difficulty: "Easy", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Learn Important Sorting Techniques",
-    progress: 60, total: 7, solved: 4,
-    problems: [
-      { name: "Selection Sort", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Bubble Sort", difficulty: "Easy", solved: true, hasNotes: true },
-      { name: "Merge Sort", difficulty: "Medium", solved: false, hasNotes: false },
-      { name: "Quick Sort", difficulty: "Medium", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Solve Problems on Arrays [Easy → Medium → Hard]",
-    progress: 40, total: 40, solved: 16,
-    problems: [
-      { name: "Two Sum", difficulty: "Easy", solved: true, hasNotes: true },
-      { name: "Best Time to Buy & Sell Stock", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Kadane's Algorithm", difficulty: "Medium", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Binary Search [1D, 2D Arrays, Search Space]",
-    progress: 50, total: 32, solved: 16,
-    problems: [
-      { name: "Binary Search", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Search in Rotated Sorted Array", difficulty: "Medium", solved: true, hasNotes: true },
-      { name: "Median of Two Sorted Arrays", difficulty: "Hard", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Strings [Basic and Medium]",
-    progress: 25, total: 15, solved: 4,
-    problems: [
-      { name: "Reverse Words", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Longest Palindromic Substring", difficulty: "Medium", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Learn LinkedList [Single LL, Double LL, Medium, Hard Problems]",
-    progress: 20, total: 31, solved: 6,
-    problems: [
-      { name: "Reverse Linked List", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Merge Two Sorted Lists", difficulty: "Easy", solved: true, hasNotes: false },
-    ],
-  },
-  {
-    name: "Recursion [PatternWise]",
-    progress: 15, total: 25, solved: 4,
-    problems: [
-      { name: "Climbing Stairs", difficulty: "Easy", solved: true, hasNotes: true },
-      { name: "Subsets", difficulty: "Medium", solved: false, hasNotes: false },
-    ],
-  },
-  {
-    name: "Dynamic Programming [Patterns]",
-    progress: 10, total: 56, solved: 6,
-    problems: [
-      { name: "Fibonacci Number", difficulty: "Easy", solved: true, hasNotes: false },
-      { name: "Coin Change", difficulty: "Medium", solved: false, hasNotes: false },
-    ],
-  },
-];
+import { useApiQuery } from "@/hooks/useApi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const difficultyColor: Record<string, string> = {
-  Easy: "bg-success/15 text-success border border-success/20",
-  Medium: "bg-primary/15 text-primary border border-primary/20",
-  Hard: "bg-destructive/15 text-destructive border border-destructive/20",
+  easy: "bg-success/15 text-success border border-success/20",
+  medium: "bg-primary/15 text-primary border border-primary/20",
+  hard: "bg-destructive/15 text-destructive border border-destructive/20",
 };
 
-const totalProblems = topics.reduce((s, t) => s + t.total, 0);
-const totalSolved = topics.reduce((s, t) => s + t.solved, 0);
+import { NotesModal } from "@/components/NotesModal";
+import { useApiMutation } from "@/hooks/useApi";
+import { toast } from "sonner";
+import { CheckCircle, HelpCircle, RotateCcw } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const TopicsPage = () => {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<"all" | "revision" | "easy" | "medium" | "hard">("all");
+  const [filter, setFilter] = useState<"all" | "easy" | "medium" | "hard">("all");
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [notesOpen, setNotesOpen] = useState(false);
+  const [selectedProblem, setSelectedProblem] = useState<{ id: string; title: string } | null>(null);
 
-  const filteredTopics = topics.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase())
+  const openNotes = (problemId: string, problemTitle: string) => {
+    setSelectedProblem({ id: problemId, title: problemTitle });
+    setNotesOpen(true);
+  };
+
+  // 1. Fetch Topic Progress
+  const { data: topicProgress, isLoading: progressLoading } = useApiQuery<any[]>(
+    ['topic-progress'],
+    '/users/me/progress'
   );
+
+  // 2. Fetch Overall Stats for Sidebar
+  const { data: stats, isLoading: statsLoading } = useApiQuery<any>(
+    ['user-stats'],
+    '/users/me/stats'
+  );
+
+  const filteredTopics = topicProgress?.filter((t) =>
+    t.topic.toLowerCase().includes(search.toLowerCase())
+  ) || [];
+
+  const totalProblems = stats?.total_problems || topicProgress?.reduce((s, t) => s + t.total, 0) || 0;
+  const totalSolved = stats?.total_solved || 0;
 
   return (
     <div className="max-w-6xl mx-auto space-y-5">
       <div>
-        <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Striver's A2Z Sheet</h1>
-        <p className="text-sm text-muted-foreground mt-1">Learn DSA from A to Z in a well-organised and structured manner.</p>
+        <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Learning Tracks</h1>
+        <p className="text-sm text-muted-foreground mt-1">Master Data Structures and Algorithms with structured topic-wise problems.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
@@ -109,8 +67,8 @@ const TopicsPage = () => {
           {/* Sticky Filter Bar */}
           <div className="sticky top-0 z-20 card-glass rounded-2xl p-3 -mx-1 px-4">
             <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-              <div className="flex items-center gap-1.5">
-                <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+              <div className="flex items-center gap-1.5 font-sans">
+                <Filter className="h-3.5 w-3.5 text-muted-foreground mr-1" />
                 {(["all", "easy", "medium", "hard"] as const).map((f) => (
                   <button
                     key={f}
@@ -118,14 +76,11 @@ const TopicsPage = () => {
                     className={cn(
                       "px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all duration-200",
                       filter === f
-                        ? f === "easy" ? "bg-success/15 text-success border border-success/20"
-                        : f === "medium" ? "bg-primary/15 text-primary border border-primary/20"
-                        : f === "hard" ? "bg-destructive/15 text-destructive border border-destructive/20"
-                        : "gradient-golden text-primary-foreground shadow-sm"
+                        ? "gradient-golden text-primary-foreground shadow-sm"
                         : "bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary"
                     )}
                   >
-                    {f === "all" ? "All" : f}
+                    {f}
                   </button>
                 ))}
               </div>
@@ -140,170 +95,60 @@ const TopicsPage = () => {
                     className="w-full pl-10 pr-4 py-2 rounded-xl bg-secondary/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all border border-border/50"
                   />
                 </div>
-                <motion.button whileTap={{ scale: 0.95 }} className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/60 text-xs font-medium text-foreground hover:bg-secondary transition-all border border-border/50">
-                  <Shuffle className="h-3.5 w-3.5" /> Random
-                </motion.button>
               </div>
             </div>
           </div>
 
-          {/* Overall Progress */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="card-layer-2 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
-          >
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <ProgressRing value={totalSolved} max={totalProblems} size={52} strokeWidth={6} label={`${Math.round((totalSolved / totalProblems) * 100)}%`} />
-              <div>
-                <p className="text-sm font-semibold text-foreground">Overall Progress</p>
-                <p className="text-xs text-muted-foreground">{totalSolved}/{totalProblems} problems</p>
-              </div>
+          {progressLoading ? (
+            <div className="space-y-3">
+              <Skeleton className="h-20 w-full rounded-2xl" />
+              <Skeleton className="h-16 w-full rounded-2xl" />
+              <Skeleton className="h-16 w-full rounded-2xl" />
+              <Skeleton className="h-16 w-full rounded-2xl" />
             </div>
-            <div className="flex items-center gap-6 ml-auto">
-              {[
-                { label: "Easy", color: "bg-success", done: 85, total: 132 },
-                { label: "Medium", color: "bg-primary", done: 72, total: 150 },
-                { label: "Hard", color: "bg-destructive", done: 30, total: 137 },
-              ].map((d) => (
-                <span key={d.label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <span className={cn("w-2.5 h-2.5 rounded-full", d.color)} /> {d.label} <strong className="text-foreground">{d.done}</strong>/{d.total}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Topics List */}
-          <div className="space-y-2.5">
-            {filteredTopics.map((topic, ti) => (
+          ) : (
+            <div className="space-y-4">
+              {/* Overall Progress */}
               <motion.div
-                key={topic.name}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: ti * 0.03 }}
-                className="card-glass rounded-2xl overflow-hidden card-hover"
+                className="card-layer-2 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
               >
-                <button
-                  onClick={() => setExpanded(expanded === topic.name ? null : topic.name)}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-secondary/20 transition-colors"
-                >
-                  <motion.div animate={{ rotate: expanded === topic.name ? 90 : 0 }} transition={{ duration: 0.2 }}>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                  </motion.div>
-                  <div className="flex-1 flex items-center gap-3 text-left">
-                    <span className="text-sm font-semibold text-foreground">{topic.name}</span>
-                    <span className={cn(
-                      "text-[10px] px-2 py-0.5 rounded-full font-semibold",
-                      topic.progress >= 70 ? "bg-success/15 text-success" : topic.progress >= 40 ? "bg-primary/15 text-primary" : "bg-secondary text-muted-foreground"
-                    )}>
-                      {topic.progress}%
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <ProgressRing value={totalSolved} max={totalProblems} size={52} strokeWidth={6} label={`${totalProblems > 0 ? Math.round((totalSolved / totalProblems) * 100) : 0}%`} />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Overall Progress</p>
+                    <p className="text-xs text-muted-foreground">{totalSolved}/{totalProblems} problems</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-6 ml-auto">
+                  {[
+                    { label: "Easy", color: "bg-success", done: stats?.easy_solved || 0, total: stats?.easy_total || 0 },
+                    { label: "Medium", color: "bg-primary", done: stats?.medium_solved || 0, total: stats?.medium_total || 0 },
+                    { label: "Hard", color: "bg-destructive", done: stats?.hard_solved || 0, total: stats?.hard_total || 0 },
+                  ].map((d) => (
+                    <span key={d.label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <span className={cn("w-2.5 h-2.5 rounded-full", d.color)} /> {d.label} <strong className="text-foreground">{d.done}</strong>/{d.total}
                     </span>
-                  </div>
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    <div className="w-32 h-2.5 bg-secondary rounded-full overflow-hidden hidden sm:block">
-                      <motion.div
-                        className="h-full rounded-full"
-                        style={{ background: topic.progress >= 70 ? "hsl(152,60%,45%)" : topic.progress >= 40 ? "hsl(38,92%,50%)" : "hsl(var(--muted-foreground))" }}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${topic.progress}%` }}
-                        transition={{ duration: 0.8, delay: ti * 0.05 }}
-                      />
-                    </div>
-                    <span className="text-xs text-muted-foreground w-14 text-right font-medium tabular-nums">{topic.solved}/{topic.total}</span>
-                  </div>
-                </button>
-
-                <AnimatePresence>
-                  {expanded === topic.name && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="border-t border-border/40">
-                        <div className="hidden sm:grid grid-cols-12 gap-2 px-5 py-2.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider bg-secondary/20">
-                          <div className="col-span-1">Status</div>
-                          <div className="col-span-4">Problem</div>
-                          <div className="col-span-2">Resource</div>
-                          <div className="col-span-1 text-center">Practice</div>
-                          <div className="col-span-1 text-center">Note</div>
-                          <div className="col-span-1 text-center">Revision</div>
-                          <div className="col-span-2 text-right">Difficulty</div>
-                        </div>
-                        {topic.problems.map((problem, pi) => (
-                          <motion.div
-                            key={problem.name}
-                            initial={{ opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: pi * 0.04 }}
-                            className="grid grid-cols-12 gap-2 px-5 py-3.5 items-center border-t border-border/20 hover:bg-secondary/15 transition-all duration-200 group"
-                          >
-                            <div className="col-span-1">
-                              <motion.div
-                                whileTap={{ scale: 0.8 }}
-                                className={cn(
-                                  "h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer",
-                                  problem.solved ? "bg-success border-success shadow-sm" : "border-border hover:border-primary/50"
-                                )}
-                              >
-                                {problem.solved && <Check className="h-3 w-3 text-primary-foreground" />}
-                              </motion.div>
-                            </div>
-                            <div className="col-span-4">
-                              <p className={cn("text-sm", problem.solved ? "text-muted-foreground line-through" : "text-foreground font-medium group-hover:text-primary transition-colors")}>
-                                {problem.name}
-                              </p>
-                            </div>
-                            <div className="col-span-2 flex items-center gap-1.5">
-                              <motion.button whileTap={{ scale: 0.9 }} className="px-2.5 py-1 rounded-lg gradient-golden text-primary-foreground text-[10px] font-semibold transition-all shadow-sm hover:shadow-md">
-                                Solve
-                              </motion.button>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors">
-                                    <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
-                                  </button>
-                                </TooltipTrigger>
-                                <TooltipContent>Open Resource</TooltipContent>
-                              </Tooltip>
-                            </div>
-                            <div className="col-span-1 text-center text-muted-foreground/50 text-xs">---</div>
-                            <div className="col-span-1 flex justify-center">
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button className="p-1.5 rounded-lg hover:bg-secondary transition-colors group/btn">
-                                    <PlusCircle className="h-4 w-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
-                                  </button>
-                                </TooltipTrigger>
-                                <TooltipContent>Add Note</TooltipContent>
-                              </Tooltip>
-                            </div>
-                            <div className="col-span-1 flex justify-center">
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button className="p-1.5 rounded-lg hover:bg-secondary transition-colors group/btn">
-                                    <Star className="h-4 w-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
-                                  </button>
-                                </TooltipTrigger>
-                                <TooltipContent>Mark for Revision</TooltipContent>
-                              </Tooltip>
-                            </div>
-                            <div className="col-span-2 text-right">
-                              <span className={cn("text-[10px] px-2.5 py-1 rounded-lg font-semibold", difficultyColor[problem.difficulty])}>
-                                {problem.difficulty}
-                              </span>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  ))}
+                </div>
               </motion.div>
-            ))}
-          </div>
+
+              {/* Topics List */}
+              <div className="space-y-2.5">
+                {filteredTopics.map((topic, ti) => (
+                  <TopicRow
+                    key={topic.topic}
+                    topic={topic}
+                    ti={ti}
+                    expanded={expanded === topic.topic}
+                    onToggle={() => setExpanded(expanded === topic.topic ? null : topic.topic)}
+                    onOpenNotes={openNotes}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right Sidebar — Analytics */}
@@ -315,9 +160,9 @@ const TopicsPage = () => {
             </div>
             <div className="space-y-3 mt-4">
               {[
-                { label: "Easy", color: "bg-success", done: 85, total: 132 },
-                { label: "Medium", color: "bg-primary", done: 72, total: 150 },
-                { label: "Hard", color: "bg-destructive", done: 30, total: 137 },
+                { label: "Easy", color: "bg-success", done: stats?.easy_solved || 0, total: stats?.easy_total || 0 },
+                { label: "Medium", color: "bg-primary", done: stats?.medium_solved || 0, total: stats?.medium_total || 0 },
+                { label: "Hard", color: "bg-destructive", done: stats?.hard_solved || 0, total: stats?.hard_total || 0 },
               ].map((d) => (
                 <div key={d.label}>
                   <div className="flex items-center justify-between mb-1">
@@ -330,7 +175,7 @@ const TopicsPage = () => {
                     <motion.div
                       className={cn("h-full rounded-full", d.color)}
                       initial={{ width: 0 }}
-                      animate={{ width: `${(d.done / d.total) * 100}%` }}
+                      animate={{ width: `${d.total > 0 ? (d.done / d.total) * 100 : 0}%` }}
                       transition={{ duration: 0.8, delay: 0.3 }}
                     />
                   </div>
@@ -342,10 +187,10 @@ const TopicsPage = () => {
           <div className="card-glass rounded-2xl p-5">
             <p className="text-sm font-semibold text-foreground mb-3">📈 Topic Mastery</p>
             <div className="space-y-2.5">
-              {topics.slice(0, 5).map((t) => (
-                <div key={t.name} className="space-y-1">
+              {topicProgress?.slice(0, 5).map((t) => (
+                <div key={t.topic} className="space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-[10px] text-muted-foreground truncate max-w-[130px]">{t.name.split("[")[0]}</span>
+                    <span className="text-[10px] text-muted-foreground truncate max-w-[130px]">{t.topic}</span>
                     <span className="text-[10px] font-bold text-foreground tabular-nums">{t.progress}%</span>
                   </div>
                   <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
@@ -360,37 +205,211 @@ const TopicsPage = () => {
               ))}
             </div>
           </div>
-
-          <div className="card-glass rounded-2xl p-5">
-            <p className="text-sm font-semibold text-foreground mb-3">⚡ Quick Stats</p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
-                <Clock className="h-4 w-4 text-primary" />
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground">Avg Solve Time</p>
-                  <p className="text-sm font-bold text-foreground">18 min</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
-                <TrendingDown className="h-4 w-4 text-destructive" />
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground">Weakest Area</p>
-                  <p className="text-sm font-bold text-foreground">Dynamic Programming</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-secondary/30">
-                <Zap className="h-4 w-4 text-primary" />
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground">Strongest Area</p>
-                  <p className="text-sm font-bold text-foreground">Arrays & Strings</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
+      {selectedProblem && (
+        <NotesModal
+          open={notesOpen}
+          onOpenChange={setNotesOpen}
+          problemId={selectedProblem.id}
+          problemTitle={selectedProblem.title}
+        />
+      )}
     </div>
   );
 };
+
+function TopicRow({ topic, ti, expanded, onToggle, onOpenNotes }: any) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: ti * 0.03 }}
+      className="card-glass rounded-2xl overflow-hidden card-hover"
+    >
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center gap-4 p-4 hover:bg-secondary/20 transition-colors"
+      >
+        <motion.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.2 }}>
+          <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+        </motion.div>
+        <div className="flex-1 flex items-center gap-3 text-left">
+          <span className="text-sm font-semibold text-foreground">{topic.topic}</span>
+          <span className={cn(
+            "text-[10px] px-2 py-0.5 rounded-full font-semibold",
+            topic.progress >= 70 ? "bg-success/15 text-success" : topic.progress >= 40 ? "bg-primary/15 text-primary" : "bg-secondary text-muted-foreground"
+          )}>
+            {topic.progress}%
+          </span>
+        </div>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="w-32 h-2.5 bg-secondary rounded-full overflow-hidden hidden sm:block">
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: topic.progress >= 70 ? "hsl(152,60%,45%)" : topic.progress >= 40 ? "hsl(38,92%,50%)" : "hsl(var(--muted-foreground))" }}
+              initial={{ width: 0 }}
+              animate={{ width: `${topic.progress}%` }}
+              transition={{ duration: 0.8, delay: ti * 0.05 }}
+            />
+          </div>
+          <span className="text-xs text-muted-foreground w-14 text-right font-medium tabular-nums">{topic.solved}/{topic.total}</span>
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {expanded && <TopicProblems topicName={topic.topic} onOpenNotes={onOpenNotes} />}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNotes: (id: string, title: string) => void }) {
+  const { data, isLoading, refetch } = useApiQuery<any>(
+    ['problems', topicName],
+    `/problems?topic=${encodeURIComponent(topicName)}&limit=100`
+  );
+
+  const { mutate: updateStatus } = useApiMutation(
+    '/status',
+    'POST',
+    {
+      onSuccess: () => {
+        refetch();
+        toast.success("Status updated");
+      },
+      onError: () => toast.error("Failed to update status")
+    }
+  );
+
+  const handleStatusChange = (problemId: string, status: 'solved' | 'tried' | 'revision') => {
+    updateStatus({ problem_id: problemId, status });
+  };
+
+  const problems = data?.problems || [];
+
+  if (isLoading) {
+    return (
+      <div className="p-5 space-y-3">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: "auto", opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="overflow-hidden"
+    >
+      <div className="border-t border-border/40">
+        <div className="hidden sm:grid grid-cols-12 gap-2 px-5 py-2.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider bg-secondary/20">
+          <div className="col-span-1">Status</div>
+          <div className="col-span-5">Problem</div>
+          <div className="col-span-2">Resource</div>
+          <div className="col-span-2 text-center">Practice</div>
+          <div className="col-span-2 text-right">Difficulty</div>
+        </div>
+        {problems.length > 0 ? (
+          problems.map((problem: any, pi: number) => (
+            <div
+              key={problem.id}
+              className="grid grid-cols-12 gap-2 px-5 py-3.5 items-center border-t border-border/20 hover:bg-secondary/15 transition-all duration-200 group"
+            >
+              <div className="col-span-1">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className={cn(
+                      "h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-primary/20",
+                      problem.status === 'solved' ? "bg-success border-success shadow-sm" :
+                        problem.status === 'tried' ? "bg-orange-500 border-orange-500" :
+                          problem.status === 'revision' ? "bg-purple-500 border-purple-500" :
+                            "border-border hover:border-primary/50"
+                    )}>
+                      {problem.status === 'solved' && <Check className="h-3 w-3 text-white" />}
+                      {problem.status === 'tried' && <HelpCircle className="h-3 w-3 text-white" />}
+                      {problem.status === 'revision' && <RotateCcw className="h-3 w-3 text-white" />}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'solved')}>
+                      <CheckCircle className="mr-2 h-4 w-4 text-success" /> Solved
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'tried')}>
+                      <HelpCircle className="mr-2 h-4 w-4 text-orange-500" /> Tried
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'revision')}>
+                      <RotateCcw className="mr-2 h-4 w-4 text-purple-500" /> Revision
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+              </div>
+              <div className="col-span-5">
+                <p className={cn("text-sm", problem.status === 'solved' ? "text-muted-foreground line-through" : "text-foreground font-medium group-hover:text-primary transition-colors")}>
+                  {problem.title}
+                </p>
+              </div>
+              <div className="col-span-2 flex items-center gap-1.5">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors">
+                      <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Open Resource</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => onOpenNotes(problem.id, problem.title)}
+                      className={cn(
+                        "p-1 rounded-md transition-colors",
+                        problem.has_notes ? "bg-primary/20 text-primary" : "bg-secondary hover:bg-muted text-muted-foreground"
+                      )}
+                    >
+                      <PlusCircle className="h-3.5 w-3.5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{problem.has_notes ? "Edit Notes" : "Add Notes"}</TooltipContent>
+                </Tooltip>
+              </div>
+              <div className="col-span-2 flex justify-center">
+                {/* Replaced 'Solve' button with status behavior, but keeping a CTA if needed or removing it as Status covers it. 
+                     The user requested "Solve button" so I keep it but maybe it links to the problem? 
+                     Actually, the ExternalLink is the resource. The 'Solve' button was just a CTA.
+                     I'll keep it as a link to the external resource as well.
+                 */}
+                <a
+                  href={problem.link || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2.5 py-1 rounded-lg gradient-golden text-primary-foreground text-[10px] font-semibold transition-all shadow-sm hover:shadow-md block text-center"
+                >
+                  Solve
+                </a>
+              </div>
+              <div className="col-span-2 text-right">
+                <span className={cn("text-[10px] px-2.5 py-1 rounded-lg font-semibold", difficultyColor[problem.difficulty?.toLowerCase()] || "bg-secondary")}>
+                  {problem.difficulty}
+                </span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="p-10 text-center">
+            <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-20" />
+            <p className="text-xs text-muted-foreground">No problems found for this topic</p>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
 
 export default TopicsPage;

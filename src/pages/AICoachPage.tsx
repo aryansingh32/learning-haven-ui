@@ -1,21 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { Send, Mic, Bot, User, Lightbulb, Bug, HelpCircle, FileText, Sparkles, Copy, Check } from "lucide-react";
+import { Send, Mic, Bot, User, Lightbulb, Bug, HelpCircle, FileText, Sparkles, Copy, Check, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useApiQuery, useApiMutation } from "@/hooks/useApi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
   isCode?: boolean;
 }
-
-const initialMessages: Message[] = [
-  { role: "assistant", content: "Hi! I'm your AI DSA Coach. Ask me anything about data structures, algorithms, or coding problems. I can explain concepts, debug code, give hints, or summarize solutions. 🚀" },
-  { role: "user", content: "Can you explain the two pointer technique?" },
-  { role: "assistant", content: "The **Two Pointer** technique uses two references (pointers) that move through a data structure — typically an array — to solve problems efficiently.\n\n**Key patterns:**\n• Opposite ends (start & end move inward)\n• Same direction (slow & fast pointer)\n\n**Common use cases:**\n• Finding pairs that sum to a target\n• Removing duplicates in sorted arrays\n• Palindrome checking\n\nTime complexity typically improves from O(n²) to O(n)." },
-  { role: "user", content: "Show me a code example for two sum with sorted array" },
-  { role: "assistant", content: "```typescript\nfunction twoSum(nums: number[], target: number): number[] {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    const sum = nums[left] + nums[right];\n    if (sum === target) return [left, right];\n    if (sum < target) left++;\n    else right--;\n  }\n  return [];\n}\n```", isCode: true },
-];
 
 const quickActions = [
   { label: "Explain", icon: Lightbulb, color: "text-primary" },
@@ -25,32 +19,82 @@ const quickActions = [
 ];
 
 const AICoachPage = () => {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // 1. Fetch Chat History
+  const { data: history, isLoading: historyLoading, refetch: refetchHistory } = useApiQuery<any[]>(
+    ['ai-history'],
+    '/ai/history'
+  );
+
+  // 2. Fetch Usage Info
+  const { data: usage } = useApiQuery<any>(
+    ['ai-usage'],
+    '/ai/usage'
+  );
+
+  // 3. Clear History Mutation
+  const clearMutation = useApiMutation<any, void>(
+    '/ai/history',
+    'delete'
+  );
+
+  // 4. Send Message Mutation
+  const chatMutation = useApiMutation<any, { message: string }>(
+    '/ai/chat',
+    'post'
+  );
+
+  useEffect(() => {
+    if (history) {
+      setMessages(history.map(m => ({
+        role: m.role,
+        content: m.content,
+        isCode: m.content.includes('```')
+      })));
+    }
+  }, [history]);
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages, chatMutation.isPending]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
-    setInput("");
-    setIsTyping(true);
-    setTimeout(() => {
-      setIsTyping(false);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "That's a great question! Let me think about the best approach for this problem..." },
-      ]);
-    }, 1500);
+  const handleSend = async (messageText?: string) => {
+    const text = messageText || input;
+    if (!text.trim() || chatMutation.isPending) return;
+
+    // Optimistic UI update
+    const newUserMsg: Message = { role: "user", content: text };
+    setMessages(prev => [...prev, newUserMsg]);
+    if (!messageText) setInput("");
+
+    try {
+      const response = await chatMutation.mutateAsync({ message: text });
+      const assistantMsg: Message = {
+        role: "assistant",
+        content: response.content,
+        isCode: response.content.includes('```')
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+    } catch (error) {
+      console.error("AI Error:", error);
+    }
+  };
+
+  const handleClearChat = async () => {
+    if (window.confirm("Are you sure you want to clear your chat history?")) {
+      await clearMutation.mutateAsync();
+      setMessages([]);
+      refetchHistory();
+    }
   };
 
   const handleCopyCode = (code: string, index: number) => {
-    navigator.clipboard.writeText(code);
+    const cleanCode = code.replace(/```[a-z]*\n?/g, "").replace(/```/g, "");
+    navigator.clipboard.writeText(cleanCode.trim());
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
   };
@@ -58,16 +102,25 @@ const AICoachPage = () => {
   return (
     <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-6rem)]">
       {/* Header */}
-      <div className="mb-5">
+      <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="h-11 w-11 rounded-xl gradient-golden flex items-center justify-center shadow-lg animate-glow-pulse">
             <Sparkles className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
             <h1 className="font-display text-xl font-bold text-foreground">AI Coach</h1>
-            <p className="text-xs text-muted-foreground">Your personal DSA mentor — always online</p>
+            <p className="text-xs text-muted-foreground">
+              {usage ? `${usage.remaining || 0} queries remaining today` : "Your personal DSA mentor"}
+            </p>
           </div>
         </div>
+        <button
+          onClick={handleClearChat}
+          className="p-2 rounded-xl hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors border border-border/40"
+          title="Clear History"
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
       </div>
 
       {/* Quick Actions */}
@@ -80,7 +133,7 @@ const AICoachPage = () => {
             transition={{ delay: i * 0.05 }}
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            onClick={() => setInput(`${action.label} this concept`)}
+            onClick={() => handleSend(`${action.label} this: `)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl card-glass text-xs font-semibold text-foreground hover:bg-secondary/60 transition-all border border-border/50"
           >
             <action.icon className={cn("h-3.5 w-3.5", action.color)} />
@@ -91,62 +144,69 @@ const AICoachPage = () => {
 
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto space-y-4 pr-1 pb-2">
-        <AnimatePresence>
-          {messages.map((msg, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className={cn("flex gap-3", msg.role === "user" ? "justify-end" : "justify-start")}
-            >
-              {msg.role === "assistant" && (
-                <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-md">
-                  <Bot className="h-4 w-4 text-primary-foreground" />
-                </div>
-              )}
-              <div className={cn(
-                "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed relative group",
-                msg.role === "user"
-                  ? "gradient-golden text-primary-foreground rounded-br-lg shadow-lg"
-                  : "card-glass text-foreground rounded-bl-lg"
-              )}>
-                {msg.isCode ? (
-                  <div className="relative">
-                    <pre className="bg-secondary/50 rounded-xl p-3 text-[11px] font-mono overflow-x-auto whitespace-pre border border-border/30">
-                      {msg.content.replace(/```typescript\n?/, "").replace(/```/, "")}
-                    </pre>
-                    <motion.button
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => handleCopyCode(msg.content.replace(/```typescript\n?/, "").replace(/```/, ""), i)}
-                      className="absolute top-2 right-2 p-1.5 rounded-lg bg-secondary/80 text-muted-foreground hover:text-foreground transition-all opacity-0 group-hover:opacity-100"
-                    >
-                      {copiedIndex === i ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
-                    </motion.button>
-                  </div>
-                ) : (
-                  <div className="whitespace-pre-wrap">
-                    {msg.content.split(/(\*\*[^*]+\*\*)/g).map((part, pi) =>
-                      part.startsWith("**") && part.endsWith("**") ? (
-                        <strong key={pi} className="font-semibold">{part.slice(2, -2)}</strong>
-                      ) : (
-                        <span key={pi}>{part}</span>
-                      )
-                    )}
+        {historyLoading && messages.length === 0 ? (
+          <div className="space-y-4">
+            <Skeleton className="h-12 w-2/3 rounded-2xl rounded-bl-none" />
+            <Skeleton className="h-12 w-1/2 ml-auto rounded-2xl rounded-br-none" />
+            <Skeleton className="h-24 w-3/4 rounded-2xl rounded-bl-none" />
+          </div>
+        ) : (
+          <AnimatePresence>
+            {messages.length === 0 && (
+              <div className="text-center py-10 opacity-40">
+                <Bot className="h-12 w-12 mx-auto mb-3" />
+                <p className="text-sm">No messages yet. Start a conversation!</p>
+              </div>
+            )}
+            {messages.map((msg, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                className={cn("flex gap-3", msg.role === "user" ? "justify-end" : "justify-start")}
+              >
+                {msg.role === "assistant" && (
+                  <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-md">
+                    <Bot className="h-4 w-4 text-primary-foreground" />
                   </div>
                 )}
-              </div>
-              {msg.role === "user" && (
-                <div className="h-8 w-8 rounded-xl bg-secondary flex-shrink-0 flex items-center justify-center">
-                  <User className="h-4 w-4 text-secondary-foreground" />
+                <div className={cn(
+                  "max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed relative group shadow-sm",
+                  msg.role === "user"
+                    ? "gradient-golden text-primary-foreground rounded-br-lg"
+                    : "card-glass text-foreground rounded-bl-lg border border-border/50"
+                )}>
+                  {msg.isCode ? (
+                    <div className="relative mt-1">
+                      <pre className="bg-background/50 rounded-xl p-3 text-[11px] font-mono overflow-x-auto whitespace-pre border border-border/20">
+                        {msg.content.replace(/```[a-z]*\n?/g, "").replace(/```/g, "")}
+                      </pre>
+                      <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleCopyCode(msg.content, i)}
+                        className="absolute top-2 right-2 p-1.5 rounded-lg bg-secondary/80 text-muted-foreground hover:text-foreground transition-all opacity-0 group-hover:opacity-100"
+                      >
+                        {copiedIndex === i ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+                      </motion.button>
+                    </div>
+                  ) : (
+                    <div className="whitespace-pre-wrap">
+                      {msg.content}
+                    </div>
+                  )}
                 </div>
-              )}
-            </motion.div>
-          ))}
-        </AnimatePresence>
+                {msg.role === "user" && (
+                  <div className="h-8 w-8 rounded-xl bg-secondary flex-shrink-0 flex items-center justify-center border border-border/40 shadow-sm">
+                    <User className="h-4 w-4 text-secondary-foreground" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        )}
 
         {/* Typing indicator */}
-        {isTyping && (
+        {chatMutation.isPending && (
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,7 +215,7 @@ const AICoachPage = () => {
             <div className="h-8 w-8 rounded-xl gradient-golden flex-shrink-0 flex items-center justify-center shadow-md">
               <Bot className="h-4 w-4 text-primary-foreground" />
             </div>
-            <div className="card-glass rounded-2xl rounded-bl-lg px-4 py-3">
+            <div className="card-glass rounded-2xl rounded-bl-lg px-4 py-3 border border-border/50">
               <div className="flex gap-1.5">
                 {[0, 1, 2].map((i) => (
                   <motion.div
@@ -186,13 +246,15 @@ const AICoachPage = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Ask anything about DSA..."
-            className="w-full px-4 py-3 pr-12 rounded-xl card-glass text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all border border-border/50"
+            disabled={chatMutation.isPending}
+            placeholder={chatMutation.isPending ? "Tutor is thinking..." : "Ask anything about DSA..."}
+            className="w-full px-4 py-3 pr-12 rounded-xl card-glass text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all border border-border/50 disabled:opacity-50"
           />
           <motion.button
             whileTap={{ scale: 0.85 }}
-            onClick={handleSend}
-            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg gradient-golden text-primary-foreground flex items-center justify-center transition-all shadow-md hover:shadow-lg"
+            onClick={() => handleSend()}
+            disabled={chatMutation.isPending}
+            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg gradient-golden text-primary-foreground flex items-center justify-center transition-all shadow-md hover:shadow-lg disabled:grayscale disabled:opacity-50"
           >
             <Send className="h-4 w-4" />
           </motion.button>

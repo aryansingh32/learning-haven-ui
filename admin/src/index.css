@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   GOOGLE FONTS
+   ═══════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════════════
+   TAILWIND v4 THEME CONFIGURATION
+   ═══════════════════════════════════════════════════ */
+@theme {
+  --color-background: hsl(224 71% 4%);
+  --color-foreground: hsl(213 31% 91%);
+
+  --color-card: hsl(225 45% 8%);
+  --color-card-foreground: hsl(213 31% 91%);
+
+  --color-popover: hsl(225 45% 8%);
+  --color-popover-foreground: hsl(213 31% 91%);
+
+  --color-primary: hsl(234 89% 63%);
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(222 47% 11%);
+  --color-secondary-foreground: hsl(213 31% 91%);
+
+  --color-muted: hsl(223 47% 11%);
+  --color-muted-foreground: hsl(218 11% 55%);
+
+  --color-accent: hsl(216 34% 17%);
+  --color-accent-foreground: hsl(213 31% 91%);
+
+  --color-destructive: hsl(0 63% 31%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+
+  --color-border: hsl(216 34% 17%);
+  --color-input: hsl(216 34% 17%);
+  --color-ring: hsl(234 89% 63%);
+
+  --radius: 0.75rem;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════ */
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════
+   CUSTOM SCROLLBAR
+   ═══════════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-muted-foreground) 30%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-muted-foreground) 50%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out forwards;
+}
+
+.animate-count-up {
+  animation: count-up 0.5s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════
+   CUSTOM COMPONENT STYLES
+   ═══════════════════════════════════════════════════ */
+.glass {
+  background: color-mix(in srgb, var(--color-card) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--color-card) 85%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(234 89% 63%), hsl(258 90% 66%));
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, hsl(142 76% 36%), hsl(160 84% 39%));
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, hsl(38 92% 50%), hsl(25 95% 53%));
+}
+
+.gradient-destructive {
+  background: linear-gradient(135deg, hsl(0 84% 60%), hsl(340 82% 52%));
+}
+
+/* Premium stat card hover */
+.stat-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg,
+      var(--color-muted) 25%,
+      color-mix(in srgb, var(--color-muted-foreground) 8%, transparent) 50%,
+      var(--color-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius);
+}
+
+/* Page transition */
+.page-enter {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Sidebar nav item */
+.nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 4px 4px 0;
+  background: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+
+.nav-item.active::before {
+  transform: translateY(-50%) scaleY(1);
+}

@@ -5,30 +5,10 @@ import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
-
-const stats = [
-  { label: "Problems Solved", value: "187" },
-  { label: "Easy", value: "85" },
-  { label: "Medium", value: "72" },
-  { label: "Hard", value: "30" },
-  { label: "Contests", value: "12" },
-  { label: "Certificates", value: "3" },
-];
+import { useApiQuery } from "@/hooks/useApi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const languages = ["JavaScript", "Python", "C++", "Java", "Go"];
-
-const badges = [
-  { name: "First Blood", emoji: "⚔️", desc: "Solved first problem", unlocked: true },
-  { name: "Streak Master", emoji: "🔥", desc: "14-day streak", unlocked: true },
-  { name: "Speed Demon", emoji: "⚡", desc: "Solve in <5 min", unlocked: true },
-  { name: "Hard Crusher", emoji: "💎", desc: "10 Hard problems", unlocked: false },
-  { name: "Contest King", emoji: "👑", desc: "Win a contest", unlocked: false },
-  { name: "Centurion", emoji: "💯", desc: "100 problems", unlocked: true },
-];
-
-const sparklineData = [
-  { v: 3 }, { v: 5 }, { v: 8 }, { v: 4 }, { v: 12 }, { v: 15 }, { v: 10 },
-];
 
 const settingsItems = [
   { label: "Notifications", description: "Manage push notifications", icon: Bell },
@@ -39,7 +19,55 @@ const settingsItems = [
 
 const ProfilePage = () => {
   const { theme, toggleTheme } = useTheme();
-  const xpCount = useAnimatedCounter(2150, 1200, 200);
+
+  // 1. Fetch User Profile
+  const { data: profile, isLoading: profileLoading } = useApiQuery<any>(
+    ['user-profile'],
+    '/users/me'
+  );
+
+  // 2. Fetch User Stats
+  const { data: stats, isLoading: statsLoading } = useApiQuery<any>(
+    ['user-stats'],
+    '/users/me/stats'
+  );
+
+  const xpCount = useAnimatedCounter(0, profile?.xp || 0, 800);
+  const solvedCount = useAnimatedCounter(0, stats?.total_solved || 0, 800);
+
+  const isLoading = profileLoading || statsLoading;
+
+  if (isLoading) {
+    return (
+      <div className="max-w-3xl mx-auto space-y-5">
+        <Skeleton className="h-48 w-full rounded-2xl" />
+        <Skeleton className="h-24 w-full rounded-2xl" />
+        <Skeleton className="h-40 w-full rounded-2xl" />
+        <div className="grid grid-cols-2 gap-4">
+          <Skeleton className="h-24 rounded-2xl" />
+          <Skeleton className="h-24 rounded-2xl" />
+        </div>
+      </div>
+    );
+  }
+
+  const statItems = [
+    { label: "Problems Solved", value: stats?.total_solved || 0 },
+    { label: "Easy", value: stats?.easy_solved || 0 },
+    { label: "Medium", value: stats?.medium_solved || 0 },
+    { label: "Hard", value: stats?.hard_solved || 0 },
+    { label: "Streak", value: stats?.streak || 0 },
+    { label: "Wallet", value: `₹${profile?.wallet_balance || 0}` },
+  ];
+
+  const badges = [
+    { name: "First Blood", emoji: "⚔️", desc: "Solved first problem", unlocked: stats?.total_solved > 0 },
+    { name: "Streak Master", emoji: "🔥", desc: "7-day streak", unlocked: stats?.streak >= 7 },
+    { name: "Speed Demon", emoji: "⚡", desc: "Consistency king", unlocked: stats?.consistency >= 90 },
+    { name: "Hard Crusher", emoji: "💎", desc: "10 Hard problems", unlocked: stats?.hard_solved >= 10 },
+    { name: "Contest King", emoji: "👑", desc: "Level up to 10", unlocked: profile?.level >= 10 },
+    { name: "Centurion", emoji: "💯", desc: "100 problems", unlocked: stats?.total_solved >= 100 },
+  ];
 
   return (
     <div className="max-w-3xl mx-auto space-y-5">
@@ -52,24 +80,28 @@ const ProfilePage = () => {
         <div className="h-28 gradient-golden opacity-30" />
         <div className="px-6 pb-6 -mt-12 relative z-10">
           <div className="relative group cursor-pointer inline-block">
-            <div className="h-24 w-24 rounded-2xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-4xl ring-4 ring-card shadow-lg group-hover:shadow-xl transition-shadow">
-              A
+            <div className="h-24 w-24 rounded-2xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-4xl ring-4 ring-card shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt={profile.full_name} className="w-full h-full object-cover" />
+              ) : (
+                profile?.full_name?.charAt(0) || "U"
+              )}
             </div>
             <div className="absolute inset-0 rounded-2xl bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
               <span className="text-primary-foreground text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Edit</span>
             </div>
           </div>
-          <h1 className="font-display text-xl font-bold text-foreground mt-3">Arjun Sharma</h1>
-          <p className="text-sm text-muted-foreground">arjun@email.com</p>
+          <h1 className="font-display text-xl font-bold text-foreground mt-3">{profile?.full_name || "User"}</h1>
+          <p className="text-sm text-muted-foreground">{profile?.email}</p>
           <div className="flex items-center gap-5 mt-3 flex-wrap">
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <Star className="h-4 w-4 text-primary" /> {xpCount.toLocaleString()} XP
             </span>
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Flame className="h-4 w-4 text-destructive" /> 14 Day Streak
+              <Flame className="h-4 w-4 text-destructive" /> {stats?.streak || 0} Day Streak
             </span>
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Trophy className="h-4 w-4 text-primary" /> Level 8
+              <Trophy className="h-4 w-4 text-primary" /> Level {profile?.level || 1}
             </span>
           </div>
         </div>
@@ -77,38 +109,19 @@ const ProfilePage = () => {
 
       {/* XP Progress */}
       <div className="card-layer-2 rounded-2xl p-5 flex items-center gap-5">
-        <ProgressRing value={75} size={80} strokeWidth={8} label="75%" sublabel="to Lvl 9" />
+        <ProgressRing value={profile?.level_progress || 0} size={80} strokeWidth={8} label={`${profile?.level_progress || 0}%`} sublabel={`to Lvl ${(profile?.level || 1) + 1}`} />
         <div className="flex-1">
-          <p className="text-sm font-semibold text-foreground">Level 8 → Level 9</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{xpCount.toLocaleString()} / 3,000 XP</p>
+          <p className="text-sm font-semibold text-foreground">Level {profile?.level || 1} → Level {(profile?.level || 1) + 1}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{profile?.xp?.toLocaleString() || 0} / {(profile?.xp + profile?.xp_to_next_level)?.toLocaleString() || 0} XP</p>
           <div className="w-full h-3 bg-secondary rounded-full mt-2.5 overflow-hidden">
             <motion.div
               className="h-full gradient-golden rounded-full"
               initial={{ width: 0 }}
-              animate={{ width: "72%" }}
+              animate={{ width: `${profile?.level_progress || 0}%` }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
           </div>
         </div>
-      </div>
-
-      {/* Weekly Performance Sparkline */}
-      <div className="card-glass rounded-2xl p-5">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm font-semibold text-foreground">📈 Weekly Performance</p>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-success/15 text-success font-semibold">+25% vs last week</span>
-        </div>
-        <ResponsiveContainer width="100%" height={60}>
-          <AreaChart data={sparklineData}>
-            <defs>
-              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="hsl(38,92%,50%)" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="hsl(38,92%,50%)" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <Area type="monotone" dataKey="v" stroke="hsl(38,92%,50%)" strokeWidth={2} fill="url(#sparkGrad)" dot={false} animationDuration={1200} />
-          </AreaChart>
-        </ResponsiveContainer>
       </div>
 
       {/* Achievement Badges */}
@@ -123,7 +136,7 @@ const ProfilePage = () => {
               transition={{ delay: i * 0.06 }}
               whileHover={badge.unlocked ? { scale: 1.1, y: -4 } : {}}
               className={cn(
-                "text-center p-3 rounded-xl transition-all cursor-pointer",
+                "text-center p-3 rounded-xl transition-all cursor-pointer min-h-[100px] flex flex-col justify-center",
                 badge.unlocked ? "card-layer-2 shadow-sm hover:shadow-glow" : "bg-secondary/30 opacity-40 grayscale"
               )}
             >
@@ -139,7 +152,7 @@ const ProfilePage = () => {
       <div className="card-glass rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-3">📊 Statistics</p>
         <div className="grid grid-cols-3 gap-2.5">
-          {stats.map((stat, i) => (
+          {statItems.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.95 }}
