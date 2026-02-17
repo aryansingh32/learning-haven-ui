@@ -1,127 +1,92 @@
+/* global importScripts */
+// Shim for CommonJS bundle
+const fakeModule: { exports: Record<string, unknown> } = { exports: {} };
+(self as unknown as { module: typeof fakeModule }).module = fakeModule;
+(self as unknown as { exports: typeof fakeModule.exports }).exports = fakeModule.exports;
 
-// Shim module.exports because the vendored JSCPP is a CommonJS bundle
-const fakeModule: any = { exports: {} };
-self.module = fakeModule;
-self.exports = fakeModule.exports;
-
-// Use local vendored version to avoid CDN issues (NS_ERROR_CORRUPTED_CONTENT)
 importScripts("/jscpp.js");
 
+type JSCPPRun = (code: string, input: string, config?: { stdio?: { write?: (s: string) => void; writeError?: (s: string) => void } }) => number;
+
 self.onmessage = async (e: MessageEvent) => {
-    const { code, testCases } = e.data;
-    const results = [];
-    let logs = "";
+    const { code, testCases } = e.data as { code: string; testCases: { input: string; output: string }[] };
+    const results: { passed: boolean; input: string; expectedOutput: string; actualOutput: string; executionTime: number }[] = [];
+    let allLogs = "";
 
     try {
-        const config = {
-            stdio: {
-                write: (s: string) => { logs += s; },
-                writeError: (s: string) => { logs += s; }
+        let JSCPP = (self as unknown as { module: { exports: unknown } }).module.exports as { run?: JSCPPRun } | JSCPPRun;
+        if (JSCPP && typeof (JSCPP as { default?: unknown }).default === "function") {
+            JSCPP = (JSCPP as { default: JSCPPRun }).default;
+        }
+        if (!JSCPP || typeof (JSCPP as JSCPPRun) !== "function" && typeof (JSCPP as { run?: JSCPPRun }).run !== "function") {
+            if ((self as unknown as { JSCPP?: unknown }).JSCPP) {
+                JSCPP = (self as unknown as { JSCPP: typeof JSCPP }).JSCPP;
             }
-        };
-
-        // Capture JSCPP
-        // @ts-ignore
-        let JSCPP = self.JSCPP || self.module.exports;
-
-        // If it was exported as default
-        if (JSCPP && JSCPP.default) {
-            JSCPP = JSCPP.default;
+        }
+        const run = (typeof JSCPP === "function" ? JSCPP : (JSCPP as { run: JSCPPRun }).run) as JSCPPRun;
+        if (typeof run !== "function") {
+            throw new Error("JSCPP.run not found. Got: " + typeof JSCPP + " " + (JSCPP && Object.keys(JSCPP).join(",")));
         }
 
-        // Special case: Browserify/Webpack sometimes returns an empty object but sets global
-        // The log showed "require" might not be there, but "global" was.
-        // Actually, the log showed keys: "postMessage, close, ..., _inherits, ...".
-        // It seems the bundle executed in global scope but didn't assign to a clear global variable "JSCPP".
+        const hasMain = /int\s+main\s*\s*\(/.test(code);
+        const executableCode = hasMain
+            ? code
+            : code + "\n#include <iostream>\nint main() { std::cout << \"Add int main() to run your program.\"; return 0; }\n";
 
-        // However, looking at jscpp.js snippet: `module.exports=function(){...}` inside a closure.
-        // It seems it tries to assign to module.exports.
-        // So `self.module.exports` should have it IF `module` was defined BEFORE importScripts.
-
-        // Let's re-try capture. If self.module.exports is set, use it.
-        JSCPP = self.module.exports;
-
-        if (!JSCPP || Object.keys(JSCPP).length === 0) {
-            // Fallback: Check if it leaked a global constructor?
-            // @ts-ignore
-            if (self.JSCPP) JSCPP = self.JSCPP;
-        }
-
-        if (!JSCPP) {
-            console.log("Global keys:", Object.keys(self));
-            throw new Error(`Failed to load JSCPP. Keys on self: ${Object.keys(self).join(', ')}`);
-        }
-
-        let executableCode = code;
-
-        // Naive main injection if missing
-        if (!code.includes("int main")) {
-            executableCode = code + `
-            #include <iostream>
-            int main() {
-                std::cout << "Running sample..." << std::endl;
-                // Solution s;
-                // s.twoSum(...); 
-                return 0;
-            }
-            `;
-        }
-
-        // JSCPP might be a function constructor or an object with run method?
-        // Usage: var engine = new JSCPP.run(code, input, config); OR var engine = JSCPP.run(...)
-        // Let's assume JSCPP is the main object exports.
-
-        console.log("JSCPP Type:", typeof JSCPP);
-        console.log("JSCPP Keys:", Object.keys(JSCPP));
-
-        let engine;
-        try {
-            // @ts-ignore
-            if (typeof JSCPP.run === 'function') {
-                console.log("Using JSCPP.run as constructor");
-                // @ts-ignore
-                engine = new JSCPP.run(executableCode, "", config);
-            } else if (typeof JSCPP === 'function') {
-                console.log("Using JSCPP as constructor");
-                // @ts-ignore
-                engine = new JSCPP(executableCode, "", config);
-            } else {
-                throw new Error(`JSCPP is ${typeof JSCPP} and has no 'run' method. Keys: ${Object.keys(JSCPP).join(', ')}`);
-            }
-        } catch (e: any) {
-            console.log("Primary execution attempt failed, trying fallback:", e.message);
-            // Fallback: try calling without 'new' if it's just a function
-            // @ts-ignore
-            if (typeof JSCPP.run === 'function') {
-                // @ts-ignore
-                engine = JSCPP.run(executableCode, "", config);
-            } else if (typeof JSCPP === 'function') {
-                // @ts-ignore
-                engine = JSCPP(executableCode, "", config);
-            } else {
-                throw new Error("Could not find a way to execute JSCPP: " + e.message);
+        for (const tc of testCases) {
+            let logs = "";
+            const config = {
+                stdio: {
+                    write: (s: string) => {
+                        logs += s;
+                        allLogs += s;
+                    },
+                    writeError: (s: string) => {
+                        logs += s;
+                        allLogs += s;
+                    },
+                },
+            };
+            const start = performance.now();
+            try {
+                run(executableCode, (tc.input || "").trim(), config);
+                const elapsed = performance.now() - start;
+                const actual = logs.trim();
+                const expected = (tc.output || "").trim();
+                const passed = actual === expected || normalizeCompare(actual, expected);
+                results.push({
+                    passed,
+                    input: tc.input,
+                    expectedOutput: expected,
+                    actualOutput: actual || "(no output)",
+                    executionTime: elapsed,
+                });
+            } catch (err: unknown) {
+                const msg = err instanceof Error ? err.message : String(err);
+                results.push({
+                    passed: false,
+                    input: tc.input,
+                    expectedOutput: tc.output,
+                    actualOutput: msg,
+                    executionTime: 0,
+                });
             }
         }
 
-        results.push({
-            passed: true,
-            input: "Sample",
-            expectedOutput: "Check console",
-            actualOutput: logs.trim(),
-            executionTime: 0
-        });
-
-        self.postMessage({
-            type: 'success',
-            results: results,
-            logs: logs
-        });
-
-    } catch (err: any) {
-        self.postMessage({
-            type: 'error',
-            error: err.message || err,
-            logs: logs
-        });
+        self.postMessage({ type: "success", results, logs: allLogs });
+    } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        self.postMessage({ type: "error", error: message, logs: allLogs });
     }
 };
+
+function normalizeCompare(actual: string, expected: string): boolean {
+    if (actual === expected) return true;
+    try {
+        const a = JSON.parse(actual);
+        const b = JSON.parse(expected);
+        return JSON.stringify(a) === JSON.stringify(b);
+    } catch {
+        return actual.trim() === expected.trim();
+    }
+}

@@ -1,8 +1,19 @@
 
+function normalizeAndCompare(actual: string, expected: string): boolean {
+    if (actual === expected) return true;
+    try {
+        const a = JSON.parse(actual);
+        const b = JSON.parse(expected);
+        return JSON.stringify(a) === JSON.stringify(b);
+    } catch {
+        return actual.trim() === expected.trim();
+    }
+}
+
 self.onmessage = async (e: MessageEvent) => {
     const { code, testCases } = e.data;
 
-    const results = [];
+    const results: { passed: boolean; input: string; expectedOutput: string; actualOutput: string; executionTime: number }[] = [];
     const logs: string[] = [];
 
     // Capture console.log
@@ -93,11 +104,15 @@ self.onmessage = async (e: MessageEvent) => {
             const result = fn(...args);
             const endTime = performance.now();
 
+            const actualStr = result !== undefined ? JSON.stringify(result) : String(result);
+            const expectedStr = (testCase.output || '').trim();
+            const passed = normalizeAndCompare(actualStr, expectedStr);
+
             results.push({
-                passed: JSON.stringify(result) === testCase.output, // Naive comparison
+                passed,
                 input: testCase.input,
-                expectedOutput: testCase.output,
-                actualOutput: JSON.stringify(result),
+                expectedOutput: expectedStr,
+                actualOutput: actualStr,
                 executionTime: endTime - startTime
             });
         }

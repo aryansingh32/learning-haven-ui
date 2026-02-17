@@ -9,9 +9,9 @@ loader.config({
         vs: 'https://unpkg.com/monaco-editor@0.44.0/min/vs'
     }
 });
-import { Moon, Sun, Play, Send, RotateCcw, Settings, ChevronDown } from "lucide-react";
+import { Moon, Sun, Play, Send, RotateCcw, Settings } from "lucide-react";
 import { SupportedLanguage } from '../types';
-import { LANGUAGE_OPTIONS } from '../constants';
+import { LANGUAGE_OPTIONS, DEFAULT_CODE_TEMPLATES } from '../constants';
 import { cn } from "@/lib/utils";
 
 interface EditorPanelProps {
@@ -24,7 +24,16 @@ interface EditorPanelProps {
     onRun: () => void;
     onSubmit: () => void;
     isExecuting: boolean;
+    onReset?: () => void;
 }
+
+const MONACO_LANG: Record<SupportedLanguage, string> = {
+    javascript: 'javascript',
+    python: 'python',
+    cpp: 'cpp',
+    c: 'c',
+    java: 'java',
+};
 
 export const EditorPanel: React.FC<EditorPanelProps> = ({
     language,
@@ -35,7 +44,8 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     toggleTheme,
     onRun,
     onSubmit,
-    isExecuting
+    isExecuting,
+    onReset,
 }) => {
     const handleEditorDidMount: OnMount = (editor, monaco) => {
         // Custom monaco theme setup could go here
@@ -67,7 +77,12 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
 
                     <div className="h-4 w-px bg-zinc-800 mx-1" />
 
-                    <Button variant="ghost" size="sm" className="h-7 px-2 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50"
+                        onClick={() => (onReset ? onReset() : setCode(DEFAULT_CODE_TEMPLATES[language]))}
+                    >
                         <RotateCcw className="h-3 w-3 mr-1.5" />
                         <span className="text-[10px] font-bold uppercase tracking-wider">Reset</span>
                     </Button>
@@ -122,7 +137,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             <div className="flex-1 relative overflow-hidden">
                 <Editor
                     height="100%"
-                    language={language === 'cpp' ? 'cpp' : language === 'java' ? 'java' : language === 'python' ? 'python' : 'javascript'}
+                    language={MONACO_LANG[language]}
                     value={code}
                     theme={theme === 'dark' ? 'vs-dark' : 'light'}
                     loading={<div className="h-full w-full bg-zinc-950 animate-pulse" />}

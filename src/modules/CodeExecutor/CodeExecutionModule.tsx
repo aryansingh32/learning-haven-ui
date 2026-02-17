@@ -43,32 +43,32 @@ export const CodeExecutionModule: React.FC<CodeExecutionModuleProps> = ({
         setTheme(prev => prev === 'light' ? 'dark' : 'light');
     };
 
-    const handleRun = async () => {
-        console.log("Run button clicked"); // Fail-safe log
+    const handleRun = async (): Promise<ExecutionResult | null> => {
         if (isExecuting) {
             logger.warn("Execution blocked: Already executing");
-            return;
+            return null;
         }
 
         logger.info("Starting Code Execution", { language, questionId: question.id });
         setIsExecuting(true);
-        setActiveTab('result'); // Auto-switch to result tab
+        setActiveTab('result');
         setExecutionResult(null);
 
         try {
-            const startTime = performance.now();
             const result = await executeCode(language, code, question);
-            const duration = performance.now() - startTime;
-
-            logger.info("Execution Completed", { status: result.status, duration });
+            logger.info("Execution Completed", { status: result.status, hasTestResults: !!result.testCaseResults?.length });
             setExecutionResult(result);
-        } catch (error: any) {
+            return result;
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Unknown error occurred';
             logger.error("Execution Failed", error);
-            setExecutionResult({
+            const errResult: ExecutionResult = {
                 status: 'Runtime Error',
-                output: error.message || 'Unknown error occurred',
+                output: message,
                 executionTime: 0
-            });
+            };
+            setExecutionResult(errResult);
+            return errResult;
         } finally {
             setIsExecuting(false);
         }
@@ -76,11 +76,10 @@ export const CodeExecutionModule: React.FC<CodeExecutionModuleProps> = ({
 
     const handleSubmit = async () => {
         logger.info("Submitting Solution", { language, questionId: question.id });
-        setActiveTab('result'); // Auto-switch to result tab
-        await handleRun();
-
-        if (onSolved && executionResult?.status === 'Accepted') {
-            onSolved(executionResult);
+        setActiveTab('result');
+        const result = await handleRun();
+        if (onSolved && result?.status === 'Accepted') {
+            onSolved(result);
         }
     };
 

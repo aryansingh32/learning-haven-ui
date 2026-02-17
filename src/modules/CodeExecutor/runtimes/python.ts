@@ -3,7 +3,7 @@ import { ExecutionResult, TestCase } from "../types";
 
 export const runPython = (code: string, testCases: TestCase[]): Promise<ExecutionResult> => {
     return new Promise((resolve, reject) => {
-        const worker = new Worker(new URL('./pyodideWorker.ts', import.meta.url), { type: 'module' });
+        const worker = new Worker('/pyodideWorker.js', { type: 'classic' });
 
         const timeout = setTimeout(() => {
             worker.terminate();
@@ -21,7 +21,8 @@ export const runPython = (code: string, testCases: TestCase[]): Promise<Executio
             if (type === 'error') {
                 resolve({
                     status: 'Runtime Error',
-                    output: logs + '\n\nError: ' + error
+                    output: (logs || '') + '\n\nError: ' + (error || ''),
+                    executionTime: 0
                 });
             } else {
                 const allPassed = results.every((r: any) => r.passed);
@@ -42,7 +43,8 @@ export const runPython = (code: string, testCases: TestCase[]): Promise<Executio
             worker.terminate();
             resolve({
                 status: 'Runtime Error',
-                output: `Worker Error: ${err.message}`
+                output: `Worker Error: ${err.message}`,
+                executionTime: 0
             });
         };
 
