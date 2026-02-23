@@ -5,8 +5,11 @@ import { EditorPanel } from './components/EditorPanel';
 import { ConsolePanel } from './components/ConsolePanel';
 import { QuestionData, SupportedLanguage, ExecutionResult } from './types';
 import { DEFAULT_CODE_TEMPLATES } from './constants';
-import { executeCode } from './runtimes/index';
+import { executeCode } from './runtimes';
 import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight, List, LayoutGrid, Timer, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { logger } from './logger';
 
 interface CodeExecutionModuleProps {
     question: QuestionData;
@@ -14,11 +17,6 @@ interface CodeExecutionModuleProps {
     initialCode?: string;
     theme?: 'light' | 'dark';
 }
-
-import { ChevronLeft, ChevronRight, List, LayoutGrid, Timer, Trophy } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-import { logger } from './logger';
 
 export const CodeExecutionModule: React.FC<CodeExecutionModuleProps> = ({
     question,
@@ -49,14 +47,16 @@ export const CodeExecutionModule: React.FC<CodeExecutionModuleProps> = ({
             return null;
         }
 
-        logger.info("Starting Code Execution", { language, questionId: question.id });
+        logger.info("Starting Code Execution (Unified Architecture)", { language, questionId: question.id });
         setIsExecuting(true);
         setActiveTab('result');
         setExecutionResult(null);
 
         try {
+            // The unified executeCode handles looping over test cases internally
             const result = await executeCode(language, code, question);
-            logger.info("Execution Completed", { status: result.status, hasTestResults: !!result.testCaseResults?.length });
+
+            logger.info("Execution Completed", { status: result.status });
             setExecutionResult(result);
             return result;
         } catch (error: unknown) {

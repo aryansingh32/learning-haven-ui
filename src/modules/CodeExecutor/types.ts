@@ -33,6 +33,7 @@ export interface ExecutionResult {
     status: 'Accepted' | 'Wrong Answer' | 'Time Limit Exceeded' | 'Runtime Error' | 'Compilation Error';
     output: string;
     expectedOutput?: string;
+    error?: string;
     executionTime?: number; // ms
     memoryUsage?: number; // bytes
     testCaseResults?: {

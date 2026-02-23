@@ -12,6 +12,23 @@ export const executeCode = async (
     question: QuestionData
 ): Promise<ExecutionResult> => {
 
+    // Input validation
+    if (!code || !code.trim()) {
+        return {
+            status: 'Runtime Error',
+            output: 'No code provided. Please write your solution before running.',
+            executionTime: 0
+        };
+    }
+
+    if (!question.examples || question.examples.length === 0) {
+        return {
+            status: 'Runtime Error',
+            output: 'No test cases available for this problem.',
+            executionTime: 0
+        };
+    }
+
     logger.debug(`Dispatching execution for ${language}`, { codeSnippet: code.substring(0, 50) + "..." });
 
     // Convert question examples to TestCases
@@ -21,21 +38,42 @@ export const executeCode = async (
         isHidden: false
     }));
 
+    const startTime = performance.now();
+
+    let result: ExecutionResult;
+
     switch (language) {
         case 'javascript':
-            return runJavascript(code, testCases);
+            result = await runJavascript(code, testCases);
+            break;
         case 'python':
-            return runPython(code, testCases);
+            result = await runPython(code, testCases);
+            break;
         case 'cpp':
         case 'c':
-            return runCpp(code, testCases);
+            result = await runCpp(code, testCases);
+            break;
         case 'java':
-            return runJava(code, testCases);
+            result = await runJava(code, testCases);
+            break;
         default:
-            return {
+            result = {
                 status: 'Runtime Error',
-                output: 'Language not supported',
+                output: `Language "${language}" is not supported. Available: JavaScript, Python, C++, C, Java.`,
                 executionTime: 0
             };
     }
+
+    const totalDuration = Math.round(performance.now() - startTime);
+
+    // Track analytics
+    logger.trackExecution({
+        language,
+        duration: totalDuration,
+        status: result.status,
+        codeLength: code.length,
+        testCaseCount: testCases.length,
+    });
+
+    return result;
 };
