@@ -3,7 +3,7 @@ import { ExecutionResult, TestCase } from "../types";
 
 /**
  * Run JavaScript code using the classic worker in the public folder.
- * This provides off-thread execution and helps prevent UI hangs from infinite loops.
+ * DUAL MODE: Free-form (console.log output shown) OR LeetCode problem mode.
  */
 export const runJavascript = (
     code: string,
@@ -28,13 +28,23 @@ export const runJavascript = (
 
         worker.onmessage = (e) => {
             clearTimeout(timeout);
-            const { type, results, logs, error } = e.data;
+            const { type, results, logs, error, freeForm } = e.data;
 
             if (type === 'error') {
                 resolve({
                     status: 'Runtime Error',
-                    output: (logs || '') + '\n\nError: ' + (error || ''),
+                    output: (logs || '') + (logs ? '\n\n' : '') + 'Error: ' + (error || ''),
                     executionTime: 0
+                });
+            } else if (freeForm) {
+                // Free-form mode: logs is the real output
+                const consoleOut = (logs || '').trim() || (results?.[0]?.actualOutput ?? '(no output)');
+                resolve({
+                    status: 'Accepted',
+                    output: consoleOut,
+                    executionTime: 0,
+                    freeForm: true,
+                    testCaseResults: undefined
                 });
             } else {
                 const allPassed = results.length > 0 && results.every((r: any) => r.passed);

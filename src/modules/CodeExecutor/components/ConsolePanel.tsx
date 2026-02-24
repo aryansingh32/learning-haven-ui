@@ -23,6 +23,7 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({
 }) => {
   const isAccepted = executionResult?.status === 'Accepted';
   const isErrorOrTimeout = executionResult && executionResult.status !== 'Accepted';
+  const isFreeForm = !!(executionResult as any)?.freeForm;
 
   return (
     <div className="h-full flex flex-col bg-zinc-950 border-t border-border/50">
@@ -98,78 +99,93 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({
 
                 {executionResult && !isExecuting && (
                   <div className="space-y-6">
-                    <div className={cn(
-                      "p-6 rounded-2xl border flex items-center justify-between",
-                      isAccepted ? "bg-emerald-500/5 border-emerald-500/20" : "bg-rose-500/5 border-rose-500/20"
-                    )}>
-                      <div className="flex items-center gap-4">
-                        {isAccepted ? (
-                          <CheckCircle2 className="h-8 w-8 text-emerald-500" />
-                        ) : (
-                          <XCircle className="h-8 w-8 text-rose-500" />
-                        )}
-                        <div>
-                          <h4 className={cn(
-                            "text-xl font-bold tracking-tight",
-                            isAccepted ? "text-emerald-500" : "text-rose-500"
-                          )}>{executionResult.status}</h4>
-                          <p className="text-xs text-zinc-500 mt-1 font-medium tracking-wide">
-                            {executionResult.executionTime != null ? `Execution time: ${executionResult.executionTime}ms` : "—"}
-                          </p>
+                    {/* Free-form output: just show the raw terminal output */}
+                    {isFreeForm ? (
+                      <div className="bg-black/60 border border-emerald-500/20 rounded-2xl p-5 space-y-3">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Terminal className="h-4 w-4 text-emerald-500" />
+                          <span className="text-[11px] font-bold text-emerald-500/70 uppercase tracking-wider">Program Output</span>
                         </div>
-                      </div>
-                    </div>
-
-                    {isErrorOrTimeout && executionResult.output && (
-                      <div className="bg-rose-500/5 border border-rose-500/20 rounded-xl p-4 space-y-2">
-                        <label className="text-[11px] font-bold text-rose-500/70 uppercase tracking-wider">Details</label>
-                        <pre className="text-xs text-rose-300 font-mono whitespace-pre-wrap leading-relaxed select-text">
-                          {executionResult.output}
+                        <pre className="text-sm text-emerald-400 font-mono whitespace-pre-wrap leading-relaxed select-text">
+                          {executionResult.output || '(no output)'}
                         </pre>
                       </div>
-                    )}
-
-                    {executionResult.testCaseResults && executionResult.testCaseResults.length > 0 && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {executionResult.testCaseResults.map((res, idx) => (
-                          <motion.div
-                            key={`res-${idx}`}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: idx * 0.05 }}
-                            className={cn(
-                              "p-4 rounded-xl border bg-black/40 transition-all hover:bg-zinc-900/50",
-                              res.passed ? "border-emerald-500/10" : "border-rose-500/10"
+                    ) : (
+                      <>
+                        <div className={cn(
+                          "p-6 rounded-2xl border flex items-center justify-between",
+                          isAccepted ? "bg-emerald-500/5 border-emerald-500/20" : "bg-rose-500/5 border-rose-500/20"
+                        )}>
+                          <div className="flex items-center gap-4">
+                            {isAccepted ? (
+                              <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+                            ) : (
+                              <XCircle className="h-8 w-8 text-rose-500" />
                             )}
-                          >
-                            <div className="flex items-center justify-between mb-3">
-                              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Case {idx + 1}</span>
-                              {res.passed ? (
-                                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
-                              ) : (
-                                <XCircle className="h-3.5 w-3.5 text-rose-500" />
-                              )}
+                            <div>
+                              <h4 className={cn(
+                                "text-xl font-bold tracking-tight",
+                                isAccepted ? "text-emerald-500" : "text-rose-500"
+                              )}>{executionResult.status}</h4>
+                              <p className="text-xs text-zinc-500 mt-1 font-medium tracking-wide">
+                                {executionResult.executionTime != null ? `Execution time: ${executionResult.executionTime}ms` : "—"}
+                              </p>
                             </div>
-                            {!res.passed && (
-                              <div className="space-y-3 mt-4">
-                                <div>
-                                  <label className="text-[9px] font-bold text-rose-500/50 uppercase block mb-1">Expected</label>
-                                  <code className="block bg-rose-500/5 p-2 text-xs rounded-lg text-rose-200 border border-rose-500/10 break-all">{res.expectedOutput}</code>
+                          </div>
+                        </div>
+
+                        {isErrorOrTimeout && executionResult.output && (
+                          <div className="bg-rose-500/5 border border-rose-500/20 rounded-xl p-4 space-y-2">
+                            <label className="text-[11px] font-bold text-rose-500/70 uppercase tracking-wider">Details</label>
+                            <pre className="text-xs text-rose-300 font-mono whitespace-pre-wrap leading-relaxed select-text">
+                              {executionResult.output}
+                            </pre>
+                          </div>
+                        )}
+
+                        {executionResult.testCaseResults && executionResult.testCaseResults.length > 0 && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {executionResult.testCaseResults.map((res, idx) => (
+                              <motion.div
+                                key={`res-${idx}`}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: idx * 0.05 }}
+                                className={cn(
+                                  "p-4 rounded-xl border bg-black/40 transition-all hover:bg-zinc-900/50",
+                                  res.passed ? "border-emerald-500/10" : "border-rose-500/10"
+                                )}
+                              >
+                                <div className="flex items-center justify-between mb-3">
+                                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Case {idx + 1}</span>
+                                  {res.passed ? (
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                                  ) : (
+                                    <XCircle className="h-3.5 w-3.5 text-rose-500" />
+                                  )}
                                 </div>
-                                <div>
-                                  <label className="text-[9px] font-bold text-rose-500/50 uppercase block mb-1">Actual</label>
-                                  <code className="block bg-zinc-900 p-2 text-xs rounded-lg text-zinc-300 border border-white/5 break-all">{res.actualOutput}</code>
-                                </div>
-                              </div>
-                            )}
-                            {res.passed && (
-                              <div className="h-4 flex items-center">
-                                <span className="text-[10px] text-emerald-500/60 font-medium tracking-wide">Output matches expected</span>
-                              </div>
-                            )}
-                          </motion.div>
-                        ))}
-                      </div>
+                                {!res.passed && (
+                                  <div className="space-y-3 mt-4">
+                                    <div>
+                                      <label className="text-[9px] font-bold text-rose-500/50 uppercase block mb-1">Expected</label>
+                                      <code className="block bg-rose-500/5 p-2 text-xs rounded-lg text-rose-200 border border-rose-500/10 break-all">{res.expectedOutput}</code>
+                                    </div>
+                                    <div>
+                                      <label className="text-[9px] font-bold text-rose-500/50 uppercase block mb-1">Actual</label>
+                                      <code className="block bg-zinc-900 p-2 text-xs rounded-lg text-zinc-300 border border-white/5 break-all">{res.actualOutput}</code>
+                                    </div>
+                                  </div>
+                                )}
+                                {res.passed && (
+                                  <div className="h-4 flex items-center">
+                                    <span className="text-[10px] text-emerald-500/60 font-medium tracking-wide">Output matches expected</span>
+                                  </div>
+                                )}
+                              </motion.div>
+                            ))}
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                 )}
