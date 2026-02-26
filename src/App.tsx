@@ -9,6 +9,8 @@ import { AuthLayout } from "@/components/layouts/AuthLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import SignIn from "@/pages/auth/SignIn";
 import SignUp from "@/pages/auth/SignUp";
+import Onboarding from "@/pages/Onboarding";
+import RoadmapPreview from "@/pages/RoadmapPreview";
 import CodeExecutorTest from "@/modules/CodeExecutor/test-page";
 import Index from "./pages/Index";
 import TopicsPage from "./pages/TopicsPage";
@@ -18,6 +20,8 @@ import ReferralsPage from "./pages/ReferralsPage";
 import CertificatesPage from "./pages/CertificatesPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
+import Pricing from "./pages/Pricing";
+import ChapterPage from "./pages/ChapterPage";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +38,12 @@ const App = () => (
             <Route element={<AuthLayout />}>
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/roadmap-preview" element={<RoadmapPreview />} />
             </Route>
+
+            {/* Public/Semi-public standalone pages */}
+            <Route path="/pricing" element={<Pricing />} />
 
             <Route path="/*" element={
               <ProtectedRoute>
@@ -47,6 +56,7 @@ const App = () => (
                     <Route path="/referrals" element={<ReferralsPage />} />
                     <Route path="/certificates" element={<CertificatesPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/chapter/:chapterId" element={<ChapterPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </AppLayout>

@@ -1,0 +1,48 @@
+{
+  "roadmap_slug": "java_dsa_90day",
+  "chapter_number": 2,
+  "title": "Time Complexity & Big O",
+  "topic_tag": "time-complexity",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Your algorithm works fine for 10 users, but crashes when 100,000 users try it. Welcome to Big O analysis.",
+  "whatsapp_msg": "Master Big O today! Learn to measure algorithm speed.",
+  "video": {
+    "youtube_id": "V42FBiohc6c",
+    "channel": "HackerRank",
+    "title": "Time Complexity and Big O Notation",
+    "duration_min": 15,
+    "timestamps": [
+      {
+        "label": "O(1) vs O(n)",
+        "seconds": 120
+      }
+    ]
+  },
+  "article": {
+    "url": "https://www.geeksforgeeks.org/understanding-time-complexity-simple-examples/",
+    "source": "GeeksForGeeks",
+    "title": "Understanding Time Complexity"
+  },
+  "problems": [],
+  "quiz": [
+    {
+      "q": "What is the time complexity of a loop running N times?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "answer": 1,
+      "explanation": "A loop running N times is linear, so O(n)."
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Analyze your code",
+      "description": "Find the time complexity of the last program you wrote.",
+      "difficulty": "EASY"
+    }
+  ]
+}

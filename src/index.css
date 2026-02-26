@@ -272,4 +272,39 @@
   .dark .floating-nav {
     box-shadow: 0 -4px 30px -4px hsl(38 92% 50% / 0.08);
   }
+
+  /* Roadmap preview animations */
+  @keyframes fade-slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-slide-up {
+    animation-name: fade-slide-up;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes locked-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .animate-locked-pulse {
+    animation-name: locked-pulse;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
 }

@@ -22,4 +22,16 @@ export const authService = {
         const response: any = await api.get('/users/me');
         return response;
     },
+
+    async phoneSendOtp(phone: string) {
+        return api.post('/auth/phone-send-otp', { phone });
+    },
+
+    async phoneVerifyOtp(phone: string, otp: string) {
+        return api.post('/auth/phone-verify-otp', { phone, otp });
+    },
+
+    async phoneCompleteProfile(data: any) {
+        return api.post('/auth/phone-complete-profile', data);
+    }
 };

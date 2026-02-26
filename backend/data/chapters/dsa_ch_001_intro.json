@@ -1,0 +1,71 @@
+{
+  "roadmap_slug": "java_dsa_90day",
+  "chapter_number": 1,
+  "title": "Introduction to DSA",
+  "topic_tag": "intro",
+  "difficulty": "BEGINNER",
+  "est_minutes": 45,
+  "story_hook": "You joined your first startup internship... and they asked you to optimize their massive user database search!",
+  "whatsapp_msg": "Welcome to Day 1! Start with the Intro to DSA.",
+  "video": {
+    "youtube_id": "_v3XkzbOlME",
+    "channel": "Abdul Bari",
+    "title": "Intro to Data Structures & Algorithms",
+    "duration_min": 25,
+    "timestamps": [
+      {
+        "label": "Definitions",
+        "seconds": 60
+      },
+      {
+        "label": "Types of DSA",
+        "seconds": 300
+      }
+    ]
+  },
+  "article": {
+    "url": "https://www.geeksforgeeks.org/introduction-to-data-structures-and-algorithms/",
+    "source": "GeeksForGeeks",
+    "title": "Introduction to DSA"
+  },
+  "problems": [
+    {
+      "name": "Solve Me First",
+      "platform": "HackerRank",
+      "difficulty": "EASY",
+      "url": "https://www.hackerrank.com/challenges/solve-me-first/problem",
+      "number": 1
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What does DSA stand for?",
+      "options": [
+        "Data Storage & Analysis",
+        "Data Structures & Algorithms",
+        "Database SQL Architecture",
+        "Deep Sequential Arrays"
+      ],
+      "answer": 1,
+      "explanation": "DSA stands for Data Structures & Algorithms."
+    },
+    {
+      "q": "Which is NOT a data structure?",
+      "options": [
+        "Array",
+        "Linked List",
+        "For Loop",
+        "Tree"
+      ],
+      "answer": 2,
+      "explanation": "A for loop is a control flow statement, not a data structure."
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Install your IDE",
+      "description": "Download and install VS Code or IntelliJ and run a Hello World program.",
+      "difficulty": "EASY"
+    }
+  ]
+}

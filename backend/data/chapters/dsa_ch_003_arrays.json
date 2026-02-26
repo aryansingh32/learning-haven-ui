@@ -1,0 +1,67 @@
+{
+  "roadmap_slug": "java_dsa_90day",
+  "chapter_number": 3,
+  "title": "Arrays Basics",
+  "topic_tag": "arrays",
+  "difficulty": "BEGINNER",
+  "est_minutes": 90,
+  "story_hook": "You are building an e-commerce dashboard and need to display the last 5 orders efficiently in a continuous block of memory.",
+  "whatsapp_msg": "Today: Arrays! Solve Rotate Array.",
+  "video": {
+    "youtube_id": "AT14lCXuMKI",
+    "channel": "Striver",
+    "title": "Arrays in Java — 12 min",
+    "duration_min": 12,
+    "timestamps": [
+      {
+        "label": "Concept",
+        "seconds": 0
+      },
+      {
+        "label": "Code",
+        "seconds": 210
+      }
+    ]
+  },
+  "article": {
+    "url": "https://www.geeksforgeeks.org/arrays-in-java/",
+    "source": "GeeksForGeeks",
+    "title": "Arrays in Java"
+  },
+  "problems": [
+    {
+      "name": "Rotate Array",
+      "platform": "LeetCode",
+      "difficulty": "MEDIUM",
+      "url": "https://leetcode.com/problems/rotate-array/",
+      "number": 189
+    },
+    {
+      "name": "Max Subarray",
+      "platform": "LeetCode",
+      "difficulty": "MEDIUM",
+      "url": "https://leetcode.com/problems/maximum-subarray/",
+      "number": 53
+    }
+  ],
+  "quiz": [
+    {
+      "q": "What is the time complexity of array access?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "answer": 0,
+      "explanation": "Arrays use index-based access — always O(1)."
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Rotate by K",
+      "description": "Write a function to rotate array right by K positions.",
+      "difficulty": "EASY"
+    }
+  ]
+}

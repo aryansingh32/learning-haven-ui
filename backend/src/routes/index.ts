@@ -14,6 +14,8 @@ import roadmapsRoutes from './roadmaps';
 import categoriesRoutes from './categories';
 import feedbackRoutes from './feedback';
 import executeRoutes from './execute';
+import chaptersRoutes from './chapters';
+import cronRoutes from './cron';
 import { SubmissionsController } from '../controllers/submissions.controller';
 
 const router = Router();
@@ -33,6 +35,8 @@ router.use('/roadmaps', roadmapsRoutes);
 router.use('/categories', categoriesRoutes);
 router.use('/feedback', feedbackRoutes);
 router.use('/execute', executeRoutes);
+router.use('/chapters', chaptersRoutes);
+router.use('/cron', cronRoutes);
 
 // Leaderboard alias (also available at /submissions/leaderboard)
 router.get('/leaderboard', SubmissionsController.getLeaderboard);
