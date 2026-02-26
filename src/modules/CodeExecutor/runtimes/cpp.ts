@@ -3,7 +3,7 @@ import { logger } from "../logger";
 
 /**
  * Run C/C++ code using the classic worker in the public folder.
- * This ensures execution happens off the main thread and uses JSCPP via CDN fallback.
+ * DUAL MODE: Free-form (cout/printf output shown) OR LeetCode problem mode (detected by cin/scanf usage).
  */
 export const runCpp = (
     code: string,
@@ -28,13 +28,23 @@ export const runCpp = (
 
         worker.onmessage = (e) => {
             clearTimeout(timeout);
-            const { type, results, logs, error } = e.data;
+            const { type, results, logs, error, freeForm } = e.data;
 
             if (type === 'error') {
                 resolve({
                     status: 'Runtime Error',
-                    output: (logs || '') + '\n\nError: ' + (error || ''),
+                    output: (logs || '') + (logs ? '\n\n' : '') + 'Error: ' + (error || ''),
                     executionTime: 0
+                });
+            } else if (freeForm) {
+                // Free-form mode: the output IS the program's stdout
+                const progOutput = (logs || '').trim() || (results?.[0]?.actualOutput ?? '(no output — try adding cout << "hello";)');
+                resolve({
+                    status: 'Accepted',
+                    output: progOutput,
+                    executionTime: results?.[0]?.executionTime ?? 0,
+                    freeForm: true,
+                    testCaseResults: undefined
                 });
             } else {
                 const allPassed = results.length > 0 && results.every((r: any) => r.passed);
@@ -60,7 +70,6 @@ export const runCpp = (
             });
         };
 
-        // Note: public/cppWorker.js handles its own input parsing/test case looping
         worker.postMessage({ code, testCases });
     });
 };

@@ -36,6 +36,7 @@ export interface ExecutionResult {
     error?: string;
     executionTime?: number; // ms
     memoryUsage?: number; // bytes
+    freeForm?: boolean; // true when running arbitrary code (not LeetCode problem mode)
     testCaseResults?: {
         passed: boolean;
         input: string;

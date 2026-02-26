@@ -1,260 +1,207 @@
 /**
  * JavaScript Runtime Worker (Classic Worker)
- * SaaS-grade: Supports ANY problem, not just Two Sum.
- * 
- * Function detection priority:
- *   1. Explicit `functionName` from message payload
- *   2. Solution class — auto-detects the first non-constructor method
- *   3. Last standalone function defined in the code
- *   4. Common names: solve, solution, main
+ * DUAL MODE:
+ *   1. FREE-FORM: No test cases → runs code as-is, console.log output shown.
+ *   2. PROBLEM: Has test cases + detects a function/Solution class → calls it per test case.
+ *
+ * Critical fix: code is never executed more than once.
  */
 
-// ─── Comparison Utilities ───────────────────────────────────────────
+// ─── Utilities ──────────────────────────────────────────────────────────────
+
+function stringify(val) {
+    if (val === null) return 'null';
+    if (val === undefined) return 'undefined';
+    if (typeof val === 'string') return val;
+    try { return JSON.stringify(val); } catch (e) { return String(val); }
+}
+
 function normalizeAndCompare(actual, expected) {
     if (actual === expected) return true;
-    // Try deep JSON comparison (handles [0,1] vs [0, 1])
     try {
-        var a = JSON.parse(actual);
-        var b = JSON.parse(expected);
-        return JSON.stringify(a) === JSON.stringify(b);
+        return JSON.stringify(JSON.parse(actual)) === JSON.stringify(JSON.parse(expected));
     } catch (e) {
         return actual.trim() === expected.trim();
     }
 }
 
-// ─── Input Parsing ──────────────────────────────────────────────────
-/**
- * Parse LeetCode-style input strings into function arguments.
- * Supports formats like:
- *   "nums = [2,7,11,15], target = 9"
- *   "[2,7,11,15], 9"
- *   "hello"
- *   "5"
- */
 function parseInput(inputStr) {
     if (!inputStr || !inputStr.trim()) return [];
-
-    // Strip variable names: "nums = [2,7], target = 9" → "[2,7], 9"
-    var cleaned = inputStr.replace(/[a-zA-Z_]\w*\s*=\s*/g, "");
-    cleaned = cleaned.trim();
-
-    // Try parsing as a JSON array wrapper
+    var cleaned = inputStr.replace(/[a-zA-Z_]\w*\s*=\s*/g, '').trim();
+    try { return JSON.parse('[' + cleaned + ']'); } catch (e) { }
     try {
-        return JSON.parse("[" + cleaned + "]");
-    } catch (e) {
-        // Fallback: try individual values
-        try {
-            var parts = [];
-            // Smart split: respect brackets and quotes
-            var depth = 0, inStr = false, current = "", strChar = "";
-            for (var i = 0; i < cleaned.length; i++) {
-                var ch = cleaned[i];
-                if (inStr) {
-                    current += ch;
-                    if (ch === strChar && cleaned[i - 1] !== "\\") inStr = false;
-                } else if (ch === '"' || ch === "'") {
-                    inStr = true;
-                    strChar = ch;
-                    current += ch;
-                } else if (ch === "[" || ch === "{" || ch === "(") {
-                    depth++;
-                    current += ch;
-                } else if (ch === "]" || ch === "}" || ch === ")") {
-                    depth--;
-                    current += ch;
-                } else if (ch === "," && depth === 0) {
-                    parts.push(current.trim());
-                    current = "";
-                } else {
-                    current += ch;
-                }
-            }
-            if (current.trim()) parts.push(current.trim());
-
-            return parts.map(function (p) {
-                try { return JSON.parse(p); } catch (e2) { return p; }
-            });
-        } catch (e3) {
-            return [cleaned];
+        var parts = [], depth = 0, current = '', inStr = false, strChar = '';
+        for (var i = 0; i < cleaned.length; i++) {
+            var ch = cleaned[i];
+            if (inStr) { current += ch; if (ch === strChar && cleaned[i - 1] !== '\\') inStr = false; }
+            else if (ch === '"' || ch === "'") { inStr = true; strChar = ch; current += ch; }
+            else if (ch === '[' || ch === '{' || ch === '(') { depth++; current += ch; }
+            else if (ch === ']' || ch === '}' || ch === ')') { depth--; current += ch; }
+            else if (ch === ',' && depth === 0) { parts.push(current.trim()); current = ''; }
+            else { current += ch; }
         }
-    }
+        if (current.trim()) parts.push(current.trim());
+        return parts.map(function (p) { try { return JSON.parse(p); } catch (e) { return p; } });
+    } catch (e) { return [cleaned]; }
 }
 
-// ─── Function Detection ─────────────────────────────────────────────
-/**
- * Detect the user's target function from evaluated code.
- * Returns the callable function or throws an error.
- */
-function detectFunction(code, hintName) {
-    // Strategy: Evaluate code, then find the function to call.
-    // The Function constructor creates a new scope, so we use
-    // a self-executing wrapper that returns the detected function.
+// ─── Console Capture ────────────────────────────────────────────────────────
 
-    // 1. Extract all function names from the code
-    var funcNameMatches = code.match(/(?:function\s+|(?:var|let|const)\s+)([a-zA-Z_$]\w*)\s*(?:=\s*function|\s*\()/g) || [];
-    var definedNames = funcNameMatches.map(function (m) {
-        var match = m.match(/(?:function\s+|(?:var|let|const)\s+)([a-zA-Z_$]\w*)/);
-        return match ? match[1] : null;
-    }).filter(Boolean);
+function setupConsoleCapture() {
+    var allLogs = '';
+    var orig = { log: console.log, error: console.error, warn: console.warn, info: console.info };
+    function capture(prefix) {
+        return function () {
+            var line = Array.prototype.slice.call(arguments).map(function (a) {
+                if (a === null) return 'null';
+                if (a === undefined) return 'undefined';
+                if (typeof a === 'object') { try { return JSON.stringify(a); } catch (e) { return String(a); } }
+                return String(a);
+            }).join(' ');
+            allLogs += (prefix || '') + line + '\n';
+        };
+    }
+    console.log = capture('');
+    console.info = capture('[INFO] ');
+    console.warn = capture('[WARN] ');
+    console.error = capture('[ERROR] ');
+    return {
+        restore: function () { Object.assign(console, orig); },
+        getLogs: function () { return allLogs; }
+    };
+}
 
-    // 2. Build detection script
+// ─── Function Detection (does NOT execute code — uses static analysis only) ──
+
+function extractFunctionNames(code) {
+    var names = [];
+    // Match: function foo(, var/let/const foo = function, var/let/const foo = (
+    var re = /(?:function\s+([a-zA-Z_$]\w*)\s*\()|(?:(?:var|let|const)\s+([a-zA-Z_$]\w*)\s*=\s*(?:function|\())/g;
+    var m;
+    while ((m = re.exec(code)) !== null) {
+        names.push(m[1] || m[2]);
+    }
+    return names;
+}
+
+function hasSolutionClass(code) {
+    return /class\s+Solution\s*\{/.test(code);
+}
+
+function hasTopLevelStatements(code) {
+    // Check if code has top-level statements (not just function/class definitions)
+    var stripped = code
+        .replace(/\/\/[^\n]*/g, '')           // remove // comments
+        .replace(/\/\*[\s\S]*?\*\//g, '')     // remove /* */ comments
+        .replace(/^\s*(function\s+\w+|class\s+\w+|var\s+\w+\s*=\s*function)/gm, ''); // remove func decls
+    return /^\s*[^{}()\s]/m.test(stripped);
+}
+
+// ─── Execute code ONCE, return { func, logs } ──────────────────────
+
+function executeCodeOnce(code, cap) {
+    var funcNames = extractFunctionNames(code);
+    var hasSol = hasSolutionClass(code);
+
+    // Build a runner that executes code and extracts the function
     var detectionParts = [];
 
-    // Priority 1: Explicit hint name
-    if (hintName) {
+    if (hasSol) {
         detectionParts.push(
-            "if (typeof " + hintName + " === 'function') return " + hintName + ";"
+            'if (typeof Solution !== "undefined") {',
+            '    var __sol = new Solution();',
+            '    var __methods = Object.getOwnPropertyNames(Object.getPrototypeOf(__sol))',
+            '        .filter(function(m) { return m !== "constructor" && typeof __sol[m] === "function"; });',
+            '    if (__methods.length > 0) return { fn: __sol[__methods[0]].bind(__sol) };',
+            '}'
         );
     }
 
-    // Priority 2: Solution class (any method)
-    detectionParts.push(
-        "if (typeof Solution !== 'undefined') {",
-        "    var sol = new Solution();",
-        "    var methods = Object.getOwnPropertyNames(Object.getPrototypeOf(sol))",
-        "        .filter(function(m) { return m !== 'constructor' && typeof sol[m] === 'function'; });",
-        "    if (methods.length > 0) return sol[methods[0]].bind(sol);",
-        "}"
-    );
-
-    // Priority 3: Last defined function in user code (most likely the answer)
-    for (var i = definedNames.length - 1; i >= 0; i--) {
+    // Last defined function = most likely the answer
+    for (var i = funcNames.length - 1; i >= 0; i--) {
         detectionParts.push(
-            "if (typeof " + definedNames[i] + " === 'function') return " + definedNames[i] + ";"
+            'if (typeof ' + funcNames[i] + ' === "function") return { fn: ' + funcNames[i] + ' };'
         );
     }
 
-    // Priority 4: Common names
-    var commonNames = ["solve", "solution", "main", "run", "calculate", "compute",
-        "maxProfit", "minCost", "findMedian", "isValid", "longestSubstring",
-        "reverseList", "mergeTwoLists", "hasCycle", "levelOrder"];
-    commonNames.forEach(function (name) {
-        if (definedNames.indexOf(name) === -1) {
-            detectionParts.push(
-                "if (typeof " + name + " === 'function') return " + name + ";"
-            );
-        }
-    });
+    detectionParts.push('return { fn: null };');
 
-    detectionParts.push(
-        "throw new Error('No executable function found. Define a function or a Solution class.');"
-    );
+    var fullScript = code + '\n' + detectionParts.join('\n');
 
-    var fullScript = code + "\n" + detectionParts.join("\n");
-
+    // Execute once
+    var result;
     try {
-        return new Function(fullScript)();
+        result = new Function(fullScript)();
     } catch (err) {
-        if (err.message && err.message.indexOf("No executable function") !== -1) {
-            throw err;
-        }
-        throw new Error("Compilation Error: " + (err.message || err));
+        throw new Error('Compilation Error: ' + (err.message || String(err)));
     }
+
+    return result && result.fn ? result.fn : null;
 }
 
-// ─── Main Message Handler ───────────────────────────────────────────
+// ─── Main Message Handler ────────────────────────────────────────────────────
+
 self.onmessage = function (e) {
     var code = e.data.code;
     var testCases = e.data.testCases || [];
-    var functionName = e.data.functionName || null; // Optional hint
-    var results = [];
-    var allLogs = "";
-
-    // Intercept console.log and console.error
-    var logBuffer = [];
-    var originalLog = console.log;
-    var originalError = console.error;
-    var originalWarn = console.warn;
-
-    console.log = function () {
-        var args = Array.prototype.slice.call(arguments);
-        var line = args.map(function (a) { return String(a); }).join(" ");
-        logBuffer.push(line);
-        allLogs += line + "\n";
-    };
-    console.error = function () {
-        var args = Array.prototype.slice.call(arguments);
-        var line = "[ERROR] " + args.map(function (a) { return String(a); }).join(" ");
-        logBuffer.push(line);
-        allLogs += line + "\n";
-    };
-    console.warn = function () {
-        var args = Array.prototype.slice.call(arguments);
-        var line = "[WARN] " + args.map(function (a) { return String(a); }).join(" ");
-        logBuffer.push(line);
-        allLogs += line + "\n";
-    };
+    var cap = setupConsoleCapture();
 
     try {
-        // Detect user function
-        var userFunction = detectFunction(code, functionName);
+        var hasFuncDefinition = extractFunctionNames(code).length > 0 || hasSolutionClass(code);
 
-        if (typeof userFunction !== "function") {
-            throw new Error("No executable function found in your code. Please define a function or Solution class.");
+        // PROBLEM MODE: test cases exist AND code appears to define a function/class
+        if (testCases.length > 0 && hasFuncDefinition) {
+            // Execute code ONCE — also detects the function
+            var userFn = executeCodeOnce(code, cap);
+
+            if (userFn !== null && typeof userFn === 'function') {
+                // Run each test case against the detected function
+                var results = [];
+                for (var i = 0; i < testCases.length; i++) {
+                    var tc = testCases[i];
+                    var start = performance.now();
+                    var args = [];
+                    try { args = parseInput(tc.input); }
+                    catch (pErr) {
+                        results.push({ passed: false, input: tc.input, expectedOutput: tc.output, actualOutput: 'Parse Error: ' + pErr.message, executionTime: 0 });
+                        continue;
+                    }
+                    try {
+                        var actual = userFn.apply(null, args);
+                        var elapsed = performance.now() - start;
+                        var actualStr = stringify(actual);
+                        var expectedStr = (tc.output || '').trim();
+                        results.push({ passed: normalizeAndCompare(actualStr, expectedStr), input: tc.input, expectedOutput: expectedStr, actualOutput: actualStr, executionTime: elapsed });
+                    } catch (rErr) {
+                        results.push({ passed: false, input: tc.input, expectedOutput: tc.output, actualOutput: 'Runtime Error: ' + rErr.message, executionTime: performance.now() - start });
+                    }
+                }
+                var logs = cap.getLogs();
+                cap.restore();
+                self.postMessage({ type: 'success', results: results, logs: logs });
+                return;
+            }
+            // Function not found despite having a definition — fall through to free-form
         }
 
-        // Run test cases
-        for (var i = 0; i < testCases.length; i++) {
-            var tc = testCases[i];
-            var start = performance.now();
-            var args = [];
-
-            try {
-                args = parseInput(tc.input);
-            } catch (parseErr) {
-                results.push({
-                    passed: false,
-                    input: tc.input,
-                    expectedOutput: tc.output,
-                    actualOutput: "Input Parse Error: " + parseErr.message,
-                    executionTime: 0
-                });
-                continue;
-            }
-
-            try {
-                var actual = userFunction.apply(null, args);
-                var elapsed = performance.now() - start;
-                var actualStr = (actual !== undefined && actual !== null)
-                    ? JSON.stringify(actual)
-                    : String(actual);
-                var expectedStr = (tc.output || "").trim();
-
-                var passed = normalizeAndCompare(actualStr, expectedStr);
-
-                results.push({
-                    passed: passed,
-                    input: tc.input,
-                    expectedOutput: expectedStr,
-                    actualOutput: actualStr,
-                    executionTime: elapsed
-                });
-            } catch (runErr) {
-                results.push({
-                    passed: false,
-                    input: tc.input,
-                    expectedOutput: tc.output,
-                    actualOutput: "Runtime Error: " + runErr.message,
-                    executionTime: performance.now() - start
-                });
-            }
+        // FREE-FORM MODE: run code as-is exactly once
+        try {
+            new Function(code)();
+        } catch (err) {
+            throw new Error(err.message || String(err));
         }
-
+        var logs = cap.getLogs();
+        cap.restore();
+        var output = logs.trim() || '(no output — try adding a console.log() statement)';
         self.postMessage({
-            type: "success",
-            results: results,
-            logs: allLogs
+            type: 'success',
+            results: [{ passed: true, input: '(free-form)', expectedOutput: '', actualOutput: output, executionTime: 0 }],
+            logs: logs,
+            freeForm: true
         });
 
     } catch (err) {
-        self.postMessage({
-            type: "error",
-            error: err.message || String(err),
-            logs: allLogs
-        });
-    } finally {
-        console.log = originalLog;
-        console.error = originalError;
-        console.warn = originalWarn;
+        cap.restore();
+        self.postMessage({ type: 'error', error: err.message || String(err), logs: cap.getLogs() });
     }
 };

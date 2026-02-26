@@ -21,18 +21,10 @@ export const executeCode = async (
         };
     }
 
-    if (!question.examples || question.examples.length === 0) {
-        return {
-            status: 'Runtime Error',
-            output: 'No test cases available for this problem.',
-            executionTime: 0
-        };
-    }
-
     logger.debug(`Dispatching execution for ${language}`, { codeSnippet: code.substring(0, 50) + "..." });
 
-    // Convert question examples to TestCases
-    const testCases = question.examples.map(ex => ({
+    // Convert question examples to TestCases (empty array = free-form / playground mode)
+    const testCases = (question.examples || []).map(ex => ({
         input: ex.input,
         output: ex.output,
         isHidden: false
