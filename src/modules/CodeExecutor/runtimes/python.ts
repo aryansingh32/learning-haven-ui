@@ -1,5 +1,6 @@
 import { ExecutionResult, TestCase } from "../types";
 import { logger } from "../logger";
+import { getWorkerUrl } from "./workerBase";
 
 /**
  * Run Python code using the Pyodide worker.
@@ -12,7 +13,7 @@ export const runPython = (code: string, testCases: TestCase[]): Promise<Executio
     });
 
     return new Promise((resolve) => {
-        const worker = new Worker('/pyodideWorker.js', { type: 'classic' });
+        const worker = new Worker(getWorkerUrl('pyodideWorker.js'), { type: 'classic' });
 
         // Pyodide initial load can take 5-10s, so use a longer timeout
         const timeout = setTimeout(() => {

@@ -10,62 +10,124 @@ import logger from '../config/logger';
 export const PLANS_FALLBACK = {
     'basic-monthly': {
         id: 'basic-monthly',
-        name: 'Basic Monthly',
+        name: 'Basic',
         price: 29900, // ₹299
         currency: 'INR',
         interval: 'monthly',
         features: [
-            'All free problems',
-            'Hints for all problems',
-            'Basic AI coach (50 queries/month)',
-            'Progress tracking',
+            'Guided 30-day roadmap',
+            'Chapters 1-20',
+            'WhatsApp daily tasks',
+            '5 problems per chapter',
+            '2 skip tokens/month'
+        ],
+        not_included: [
+            'AI Doubt Solver',
+            'Explorer Mode',
+            'Resume Builder'
         ],
         problem_access: 'basic',
+        ai_queries_limit: 0,
+    },
+    'standard-monthly': {
+        id: 'standard-monthly',
+        name: 'Standard',
+        price: 49900, // ₹499
+        currency: 'INR',
+        interval: 'monthly',
+        features: [
+            'All roadmaps',
+            'All chapters',
+            'All problems',
+            'College PYQs',
+            'Daily job alerts',
+            'Resume Builder',
+            '4 skip tokens/month'
+        ],
+        not_included: [
+            'AI Doubt Solver',
+            'Explorer Mode'
+        ],
+        problem_access: 'standard',
+        ai_queries_limit: 0,
+    },
+    'pro-monthly': {
+        id: 'pro-monthly',
+        name: 'Pro',
+        price: 79900, // ₹799
+        currency: 'INR',
+        interval: 'monthly',
+        features: [
+            'Everything in Standard',
+            'AI Doubt Solver (50/month)',
+            'Explorer Mode (all chapters unlocked)',
+            '10 skip tokens/month',
+            'Priority college rank'
+        ],
+        not_included: [],
+        problem_access: 'pro',
         ai_queries_limit: 50,
     },
     'basic-yearly': {
         id: 'basic-yearly',
-        name: 'Basic Yearly',
-        price: 249900, // ₹2,499 (save ~30%)
+        name: 'Basic',
+        price: 299900, // ₹2,999
         currency: 'INR',
         interval: 'yearly',
         features: [
-            'All Basic Monthly features',
-            'Save 30% vs monthly',
+            'Guided 30-day roadmap',
+            'Chapters 1-20',
+            'WhatsApp daily tasks',
+            '5 problems per chapter',
+            '2 skip tokens/month'
+        ],
+        not_included: [
+            'AI Doubt Solver',
+            'Explorer Mode',
+            'Resume Builder'
         ],
         problem_access: 'basic',
-        ai_queries_limit: 50,
+        ai_queries_limit: 0,
     },
-    'pro-monthly': {
-        id: 'pro-monthly',
-        name: 'Pro Monthly',
-        price: 59900, // ₹599
+    'standard-yearly': {
+        id: 'standard-yearly',
+        name: 'Standard',
+        price: 449900, // ₹4,499
         currency: 'INR',
-        interval: 'monthly',
+        interval: 'yearly',
         features: [
-            'All problems including premium',
-            'Full solutions with explanations',
-            'Unlimited AI coach',
-            'Priority support',
-            'Certificates',
-            'Company-wise problem sets',
+            'All roadmaps',
+            'All chapters',
+            'All problems',
+            'College PYQs',
+            'Daily job alerts',
+            'Resume Builder',
+            '4 skip tokens/month'
         ],
-        problem_access: 'pro',
-        ai_queries_limit: -1, // unlimited
+        not_included: [
+            'AI Doubt Solver',
+            'Explorer Mode'
+        ],
+        problem_access: 'standard',
+        ai_queries_limit: 0,
     },
     'pro-yearly': {
         id: 'pro-yearly',
-        name: 'Pro Yearly',
-        price: 499900, // ₹4,999 (save ~30%)
+        name: 'Pro',
+        price: 699900, // ₹6,999
         currency: 'INR',
         interval: 'yearly',
         features: [
-            'All Pro Monthly features',
-            'Save 30% vs monthly',
+            'Everything in Standard',
+            'AI Doubt Solver (50/month)',
+            'Explorer Mode (all chapters unlocked)',
+            '10 skip tokens/month',
+            'Priority college rank'
         ],
+        not_included: [],
         problem_access: 'pro',
-        ai_queries_limit: -1,
-    },
+        ai_queries_limit: 50,
+    }
 } as Record<string, any>;
 
 export type PlanId = string;
@@ -103,6 +165,7 @@ export async function getPlans(): Promise<Record<string, any>> {
                 currency: plan.currency || 'INR',
                 interval: plan.interval,
                 features: typeof plan.features === 'string' ? JSON.parse(plan.features) : plan.features,
+                not_included: plan.metadata?.not_included || [],
                 problem_access: plan.problem_access || 'basic',
                 ai_queries_limit: plan.ai_queries_limit ?? 50,
                 free_question_limit: plan.free_question_limit ?? 20,

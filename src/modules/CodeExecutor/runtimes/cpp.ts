@@ -1,5 +1,6 @@
 import { ExecutionResult, TestCase } from "../types";
 import { logger } from "../logger";
+import { getWorkerUrl } from "./workerBase";
 
 /**
  * Run C/C++ code using the classic worker in the public folder.
@@ -15,7 +16,7 @@ export const runCpp = (
     });
 
     return new Promise((resolve) => {
-        const worker = new Worker('/cppWorker.js', { type: 'classic' });
+        const worker = new Worker(getWorkerUrl('cppWorker.js'), { type: 'classic' });
 
         const timeout = setTimeout(() => {
             worker.terminate();

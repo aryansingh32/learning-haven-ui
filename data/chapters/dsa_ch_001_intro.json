@@ -1,0 +1,66 @@
+{
+    "roadmap_slug": "java_dsa_90day",
+    "chapter_number": 1,
+    "title": "Introduction to DSA",
+    "topic_tag": "intro",
+    "difficulty": "BEGINNER",
+    "est_minutes": 60,
+    "story_hook": "You joined your first startup internship...",
+    "whatsapp_msg": "Welcome to Day 1! Watch this intro and answer the quiz.",
+    "video": {
+        "youtube_id": "_v3XkzbOlME",
+        "channel": "Abdul Bari",
+        "title": "DSA intro",
+        "duration_min": 15,
+        "timestamps": []
+    },
+    "problems": [
+        {
+            "name": "Solve Me First",
+            "platform": "HackerRank",
+            "difficulty": "EASY",
+            "url": "https://www.hackerrank.com/challenges/solve-me-first"
+        },
+        {
+            "name": "Simple Array Sum",
+            "platform": "HackerRank",
+            "difficulty": "EASY",
+            "url": "https://www.hackerrank.com/challenges/simple-array-sum"
+        }
+    ],
+    "quiz": [
+        {
+            "q": "What is Data Structure?",
+            "options": [
+                "A programming language",
+                "A way to store and organize data",
+                "A software pattern",
+                "A cloud resource"
+            ],
+            "answer": 1,
+            "explanation": "Data structure is a specialized format for organizing and storing data."
+        },
+        {
+            "q": "What is an Algorithm?",
+            "options": [
+                "Hardware spec",
+                "A process or set of rules to be followed in calculations",
+                "A browser",
+                "A network protocol"
+            ],
+            "answer": 1,
+            "explanation": "Algorithm is a set of rules."
+        },
+        {
+            "q": "Which is not a data structure?",
+            "options": [
+                "Array",
+                "Linked List",
+                "For Loop",
+                "Tree"
+            ],
+            "answer": 2,
+            "explanation": "For Loop is a control structure."
+        }
+    ]
+}

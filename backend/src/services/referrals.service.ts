@@ -2,8 +2,21 @@ import { supabase } from '../config/database';
 import { CacheService } from './cache.service';
 import logger from '../config/logger';
 
-const REFERRAL_REWARD_AMOUNT = 10000; // ₹100 in paise
 const FRAUD_SCORE_THRESHOLD = 70;
+
+// Fetch the referral reward amount (in paise) from admin settings, fallback to ₹100
+async function getReferralRewardAmount(): Promise<number> {
+    try {
+        const { data } = await supabase
+            .from('settings')
+            .select('value')
+            .eq('key', 'referral_reward_amount_paise')
+            .maybeSingle();
+        return parseInt(data?.value ?? '10000', 10);
+    } catch {
+        return 10000; // default ₹100
+    }
+}
 
 export class ReferralsService {
     /**
@@ -166,12 +179,14 @@ export class ReferralsService {
                 return;
             }
 
+            const rewardAmount = await getReferralRewardAmount();
+
             // Activate and credit reward
             await supabase
                 .from('referrals')
                 .update({
                     status: 'active',
-                    earned_amount: REFERRAL_REWARD_AMOUNT,
+                    earned_amount: rewardAmount,
                     activated_at: new Date().toISOString(),
                 })
                 .eq('id', referral.id);
@@ -187,7 +202,7 @@ export class ReferralsService {
                 await supabase
                     .from('users')
                     .update({
-                        wallet_balance: (referrer.wallet_balance || 0) + REFERRAL_REWARD_AMOUNT,
+                        wallet_balance: (referrer.wallet_balance || 0) + rewardAmount,
                     })
                     .eq('id', referral.referrer_id);
             }
@@ -198,7 +213,7 @@ export class ReferralsService {
             logger.info('Referral activated', {
                 referralId: referral.id,
                 referrer: referral.referrer_id,
-                amount: REFERRAL_REWARD_AMOUNT,
+                amount: rewardAmount,
             });
         } catch (error) {
             logger.error('Activate referral error:', { referredUserId, error });

@@ -91,7 +91,7 @@ function loadJSCPP() {
     var errors = [];
 
     try {
-        var localPath = self.location.origin + "/jscpp.js";
+        var localPath = new URL("jscpp.js", self.location.href).toString();
         console.log("Worker: Loading JSCPP from:", localPath);
         var origDoc = self.document;
         self.document = { _mock: true };

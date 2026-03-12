@@ -1,7 +1,7 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Eye, Bot, Gift, Award, User,
-  Menu, X, Moon, Sun, LogOut
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -12,9 +12,11 @@ import { useAuth } from "@/context/AuthContext";
 
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/topics", icon: BookOpen, label: "Learn" },
+  { to: "/chapters", icon: BookOpen, label: "Learn" },
   { to: "/visualizer", icon: Eye, label: "Visualizer" },
+  { to: "/jobs", icon: Briefcase, label: "Jobs" },
   { to: "/ai-coach", icon: Bot, label: "AI" },
+  { to: "/resume", icon: FileText, label: "Resume" },
   { to: "/referrals", icon: Gift, label: "Referrals" },
   { to: "/certificates", icon: Award, label: "Certificates" },
   { to: "/profile", icon: User, label: "Profile" },

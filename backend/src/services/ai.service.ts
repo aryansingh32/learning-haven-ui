@@ -114,6 +114,20 @@ export class AIService {
     }
 
     /**
+     * One-shot text generation — used by Resume AI improver, WhatsApp doubts, etc.
+     * No history, no per-user rate limiting. Callers must check plan access themselves.
+     */
+    static async generateResponse(prompt: string): Promise<string> {
+        const completion = await openai.chat.completions.create({
+            model: AI_MODEL,
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: 500,
+            temperature: 0.5,
+        });
+        return completion.choices[0]?.message?.content || '';
+    }
+
+    /**
      * Get chat history
      */
     static async getChatHistory(userId: string, limit: number = 50) {

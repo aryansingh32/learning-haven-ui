@@ -1,5 +1,6 @@
 import { logger } from "../logger";
 import { ExecutionResult, TestCase } from "../types";
+import { getWorkerUrl } from "./workerBase";
 
 /**
  * Run JavaScript code using the classic worker in the public folder.
@@ -15,7 +16,7 @@ export const runJavascript = (
     });
 
     return new Promise((resolve) => {
-        const worker = new Worker('/javascriptWorker.js', { type: 'classic' });
+        const worker = new Worker(getWorkerUrl('javascriptWorker.js'), { type: 'classic' });
 
         const timeout = setTimeout(() => {
             worker.terminate();

@@ -1,24 +1,14 @@
-
 const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+require('dotenv').config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 async function listUsers() {
-    console.log('Listing public.users...');
-    const { data, error } = await supabase
-        .from('users')
-        .select('id, email, role')
-        .limit(5);
-
+    const { data: { users }, error } = await supabase.auth.admin.listUsers();
     if (error) {
-        console.error('Error listing users:', error);
-    } else {
-        console.log('Users found:', data);
+        console.error('Error:', error);
+        return;
     }
+    console.log(users.slice(0, 5).map(u => u.email));
 }
-
 listUsers();

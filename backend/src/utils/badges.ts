@@ -1,116 +1,76 @@
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 
-export async function checkBadges(userId: string): Promise<string | null> {
+export const checkBadges = async (userId: string) => {
     try {
-        let awarded: string | null = null;
+        const badgesToAward: Array<{ user_id: string; badge_type: string }> = [];
 
-        // First step: completed chapter 1
-        const { data: firstChapter } = await supabase
-            .from('chapters')
-            .select('id, chapter_number')
-            .eq('chapter_number', 1)
-            .order('created_at', { ascending: true })
-            .limit(1)
-            .maybeSingle();
-
-        if (firstChapter?.id) {
-            const { data: firstProgress } = await supabase
-                .from('user_chapter_progress')
-                .select('id, status')
-                .eq('user_id', userId)
-                .eq('chapter_id', firstChapter.id)
-                .eq('status', 'COMPLETED')
-                .maybeSingle();
-
-            if (firstProgress) {
-                await supabase
-                    .from('user_badges')
-                    .upsert({
-                        user_id: userId,
-                        badge_id: 'first_step',
-                        badge_name: 'First Step',
-                        badge_emoji: '⚔️',
-                    }, {
-                        onConflict: 'user_id,badge_id',
-                    });
-                awarded = awarded || 'first_step';
-            }
-        }
-
-        // Week streak: streak_count >= 7
-        const { data: streakUser } = await supabase
+        // 1. Fetch user data
+        const { data: user, error: userErr } = await supabase
             .from('users')
-            .select('streak')
+            .select('streak_count')
             .eq('id', userId)
-            .maybeSingle();
+            .single();
 
-        if ((streakUser?.streak || 0) >= 7) {
-            await supabase
-                .from('user_badges')
-                .upsert({
-                    user_id: userId,
-                    badge_id: 'week_streak',
-                    badge_name: 'Week Streak',
-                    badge_emoji: '🔥',
-                }, {
-                    onConflict: 'user_id,badge_id',
-                });
-            awarded = awarded || 'week_streak';
+        if (userErr || !user) {
+            logger.error('Error fetching user for badges', userErr);
+            return;
         }
 
-        // Fast learner: completed 5 chapters in last 7 days
-        const now = new Date();
-        const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-
-        const { data: recentCompleted } = await supabase
+        // 2. Fetch completed chapters
+        const { data: completedChapters, error: chaptersErr } = await supabase
             .from('user_chapter_progress')
-            .select('id')
-            .eq('user_id', userId)
-            .eq('status', 'COMPLETED')
-            .gte('completed_at', sevenDaysAgo.toISOString());
-
-        if ((recentCompleted || []).length >= 5) {
-            await supabase
-                .from('user_badges')
-                .upsert({
-                    user_id: userId,
-                    badge_id: 'fast_learner',
-                    badge_name: 'Fast Learner',
-                    badge_emoji: '⚡',
-                }, {
-                    onConflict: 'user_id,badge_id',
-                });
-            awarded = awarded || 'fast_learner';
-        }
-
-        // DSA champion: completed all 18 chapters
-        const { data: completedChapters } = await supabase
-            .from('user_chapter_progress')
-            .select('chapter_id')
+            .select('chapter_id, completed_at')
             .eq('user_id', userId)
             .eq('status', 'COMPLETED');
 
-        const completedSet = new Set((completedChapters || []).map(row => row.chapter_id));
-
-        if (completedSet.size >= 18) {
-            await supabase
-                .from('user_badges')
-                .upsert({
-                    user_id: userId,
-                    badge_id: 'dsa_champion',
-                    badge_name: 'DSA Champion',
-                    badge_emoji: '🏆',
-                }, {
-                    onConflict: 'user_id,badge_id',
-                });
-            awarded = awarded || 'dsa_champion';
+        if (chaptersErr) {
+            logger.error('Error fetching chapters for badges', chaptersErr);
+            return;
         }
 
-        return awarded;
-    } catch (error) {
-        logger.error('Check badges error:', { userId, error });
-        return null;
-    }
-}
+        const chapterCount = completedChapters?.length || 0;
 
+        // Check 'first_step'
+        if (chapterCount >= 1) {
+            badgesToAward.push({ user_id: userId, badge_type: 'first_step' });
+        }
+
+        // Check 'week_streak'
+        if (user.streak_count >= 7) {
+            badgesToAward.push({ user_id: userId, badge_type: 'week_streak' });
+        }
+
+        // Check 'dsa_champion'
+        if (chapterCount >= 18) {
+            badgesToAward.push({ user_id: userId, badge_type: 'dsa_champion' });
+        }
+
+        // Check 'fast_learner' (5 in 7 days)
+        if (chapterCount >= 5) {
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+            const recentCompletions = completedChapters.filter(c => {
+                return c.completed_at && new Date(c.completed_at) >= sevenDaysAgo;
+            });
+
+            if (recentCompletions.length >= 5) {
+                badgesToAward.push({ user_id: userId, badge_type: 'fast_learner' });
+            }
+        }
+
+        // Award badges
+        if (badgesToAward.length > 0) {
+            const { error: upsertErr } = await supabase
+                .from('user_badges')
+                .upsert(badgesToAward, { onConflict: 'user_id, badge_type', ignoreDuplicates: true });
+
+            if (upsertErr) {
+                logger.error('Error awarding badges', upsertErr);
+            }
+        }
+    } catch (err) {
+        logger.error('Check badges failed', err);
+    }
+};

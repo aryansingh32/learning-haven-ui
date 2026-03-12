@@ -12,11 +12,16 @@ export const runJava = async (code: string, testCases: TestCase[]): Promise<Exec
         testCaseCount: testCases.length,
     });
 
-    // Try backend execution
+    // Try backend execution (same-origin first, then env-configured API base)
+    const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+    const basePath = (import.meta.env.BASE_URL || '/');
+    const baseApiPath = basePath.endsWith('/') ? `${basePath}api/execute/java` : `${basePath}/api/execute/java`;
+
     const backendUrls = [
-        '/api/execute/java',                    // Same origin (proxied via Vite)
-        'http://localhost:3000/api/execute/java', // Direct backend
-    ];
+        '/api/execute/java',                     // Same origin (recommended)
+        baseApiPath,                             // Same origin when app is hosted under a sub-path
+        apiBase ? `${apiBase}/execute/java` : '', // Explicit API base (e.g. http://localhost:5000/api)
+    ].filter(Boolean);
 
     for (const url of backendUrls) {
         try {

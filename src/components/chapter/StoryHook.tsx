@@ -1,23 +1,22 @@
-import React from "react";
+import React from 'react';
 
 interface StoryHookProps {
-  story: string | null | undefined;
+  content?: string;
 }
 
-export const StoryHook: React.FC<StoryHookProps> = ({ story }) => {
-  if (!story) return null;
+export const StoryHook: React.FC<StoryHookProps> = ({ content }) => {
+  if (!content) return null;
 
   return (
-    <section className="mb-6">
-      <div className="border-l-4 border-orange-400 bg-white rounded-xl shadow-sm px-4 py-3">
-        <p className="text-xs font-semibold uppercase text-orange-700 mb-2">
-          📖 Why This Matters
-        </p>
-        <p className="text-base leading-relaxed text-gray-700">
-          {story}
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-8">
+      <div className="px-6 py-5 border-l-4 border-orange-400 bg-orange-50/30">
+        <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2 mb-3">
+          <span>📖</span> Why This Matters
+        </h2>
+        <p className="text-base leading-relaxed text-slate-700">
+          {content}
         </p>
       </div>
-    </section>
+    </div>
   );
 };
-

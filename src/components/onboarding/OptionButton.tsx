@@ -3,7 +3,7 @@ import { CheckCircle2, Circle } from "lucide-react";
 
 interface OptionButtonProps {
   label: string;
-  value: string;
+  value?: string;
   selected: boolean;
   onClick: () => void;
   icon?: React.ReactNode;
@@ -11,7 +11,6 @@ interface OptionButtonProps {
 
 export const OptionButton: React.FC<OptionButtonProps> = ({
   label,
-  value,
   selected,
   onClick,
   icon,
@@ -20,28 +19,27 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className={[
-        "w-full h-14 px-4 border-2 rounded-xl flex items-center gap-3 text-left",
-        "transition-colors duration-200",
-        selected
-          ? "border-blue-600 bg-blue-50 text-blue-700 font-medium"
-          : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50",
-      ].join(" ")}
+      className={`group w-full min-h-[4rem] sm:min-h-[4.5rem] px-5 sm:px-6 border-2 rounded-2xl flex items-center gap-4 text-left transition-all duration-300 ease-out ${selected
+          ? "border-blue-600 bg-blue-50/80 text-blue-700 shadow-md shadow-blue-900/5 -translate-y-0.5"
+          : "border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:shadow-md hover:shadow-blue-900/5 hover:-translate-y-0.5 pointer-events-auto"
+        }`}
     >
-      <div className="shrink-0 flex items-center justify-center">
+      <div className="shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
         {selected ? (
-          <CheckCircle2 className="w-5 h-5 text-blue-600" />
+          <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600 drop-shadow-sm" />
         ) : (
-          <Circle className="w-5 h-5 text-gray-300" />
+          <Circle className="w-6 h-6 sm:w-7 sm:h-7 text-gray-300 group-hover:text-blue-300 transition-colors" />
         )}
       </div>
 
       {icon && (
-        <span className="text-xl flex-shrink-0">
+        <span className="text-2xl sm:text-3xl flex-shrink-0 drop-shadow-sm">
           {icon}
         </span>
       )}
-      <span className="truncate flex-1">{label}</span>
+      <span className={`truncate flex-1 text-base sm:text-lg ${selected ? 'font-semibold' : 'font-medium'}`}>
+        {label}
+      </span>
     </button>
   );
 };

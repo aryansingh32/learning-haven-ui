@@ -9,6 +9,7 @@ export interface User {
     role?: string;
     level?: number;
     xp?: number;
+    skip_tokens_remaining?: number;
 }
 
 export interface AuthContextType {

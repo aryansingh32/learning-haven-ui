@@ -11,12 +11,7 @@ interface Message {
   isCode?: boolean;
 }
 
-const quickActions = [
-  { label: "Explain", icon: Lightbulb, color: "text-primary" },
-  { label: "Debug", icon: Bug, color: "text-destructive" },
-  { label: "Hint", icon: HelpCircle, color: "text-info" },
-  { label: "Summarize", icon: FileText, color: "text-success" },
-];
+// quickActions are fetched dynamically from settings API
 
 const AICoachPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,6 +30,14 @@ const AICoachPage = () => {
     ['ai-usage'],
     '/ai/usage'
   );
+
+  // 3. Fetch System Settings for Quick Actions
+  const { data: settings } = useApiQuery<any>(
+    ['public-settings'],
+    '/settings/public'
+  );
+
+  const dynamicQuickActions = settings?.ai_quick_actions || [];
 
   // 3. Clear History Mutation
   const clearMutation = useApiMutation<any, void>(
@@ -125,21 +128,28 @@ const AICoachPage = () => {
 
       {/* Quick Actions */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {quickActions.map((action, i) => (
-          <motion.button
-            key={action.label}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => handleSend(`${action.label} this: `)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl card-glass text-xs font-semibold text-foreground hover:bg-secondary/60 transition-all border border-border/50"
-          >
-            <action.icon className={cn("h-3.5 w-3.5", action.color)} />
-            {action.label}
-          </motion.button>
-        ))}
+        {dynamicQuickActions.length > 0 && dynamicQuickActions.map((action: any, i: number) => {
+          let IconElement = Lightbulb;
+          if (action.icon === "Bug") IconElement = Bug;
+          if (action.icon === "HelpCircle") IconElement = HelpCircle;
+          if (action.icon === "FileText") IconElement = FileText;
+
+          return (
+            <motion.button
+              key={action.label}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => handleSend(`${action.label} this: `)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl card-glass text-xs font-semibold text-foreground hover:bg-secondary/60 transition-all border border-border/50"
+            >
+              <IconElement className={cn("h-3.5 w-3.5", action.color)} />
+              {action.label}
+            </motion.button>
+          )
+        })}
       </div>
 
       {/* Chat Area */}

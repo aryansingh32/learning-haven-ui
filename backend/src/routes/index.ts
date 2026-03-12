@@ -16,7 +16,11 @@ import feedbackRoutes from './feedback';
 import executeRoutes from './execute';
 import chaptersRoutes from './chapters';
 import cronRoutes from './cron';
+import jobsRoutes from './jobs';
 import { SubmissionsController } from '../controllers/submissions.controller';
+import settingsRoutes from './settings';
+import resumeRoutes from './resume';
+import whatsappRoutes from './whatsapp';
 
 const router = Router();
 
@@ -37,6 +41,10 @@ router.use('/feedback', feedbackRoutes);
 router.use('/execute', executeRoutes);
 router.use('/chapters', chaptersRoutes);
 router.use('/cron', cronRoutes);
+router.use('/jobs', jobsRoutes);
+router.use('/settings', settingsRoutes);
+router.use('/resume', resumeRoutes);
+router.use('/whatsapp', whatsappRoutes);
 
 // Leaderboard alias (also available at /submissions/leaderboard)
 router.get('/leaderboard', SubmissionsController.getLeaderboard);

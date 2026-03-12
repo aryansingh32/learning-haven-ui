@@ -1,85 +1,82 @@
-import React from "react";
-
-type Timestamp = {
-  label?: string;
-  seconds?: number;
-};
+import React from 'react';
 
 interface VideoSectionProps {
-  youtubeId?: string | null;
-  channel?: string | null;
-  durationMinutes?: number | null;
-  timestamps?: Timestamp[] | null;
+  videoId: string;
+  channel?: string;
+  title?: string;
+  duration?: number;
+  timestamps?: Array<{ title: string; seconds: number }>;
 }
 
 export const VideoSection: React.FC<VideoSectionProps> = ({
-  youtubeId,
+  videoId,
   channel,
-  durationMinutes,
-  timestamps,
+  title,
+  duration,
+  timestamps = []
 }) => {
-  if (!youtubeId) return null;
+  if (!videoId) return null;
 
-  const baseWatchUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
-
-  const items = Array.isArray(timestamps) ? timestamps : [];
+  const formatDuration = (mins?: number) => {
+    if (!mins) return '';
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  };
 
   return (
-    <section className="mb-6">
-      <p className="text-sm font-semibold text-gray-800 mb-1">
-        🎥 Best Video for This Topic
-      </p>
-      <p className="text-xs text-gray-500 mb-3">
+    <div className="mb-10">
+      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-1">
+        <span>🎥</span> Best Video for This Topic
+      </h2>
+      <p className="text-slate-500 text-sm mb-4">
         We reviewed 10+ videos. This one is the best.
       </p>
 
-      <div className="overflow-hidden rounded-lg shadow-sm mb-3">
+      <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-lg mb-4 aspect-video relative">
         <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}`}
-          className="w-full aspect-video rounded-lg"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          className="w-full h-full absolute inset-0"
           allowFullScreen
-          title="Best video for this topic"
+          title={title || "YouTube Video"}
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
+      <div className="flex flex-wrap items-center gap-2 mb-4">
         {channel && (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 font-medium">
-            {channel}
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+            👤 {channel}
           </span>
         )}
-        {typeof durationMinutes === "number" && durationMinutes > 0 && (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 font-medium">
-            {durationMinutes} min watch
+        {duration && (
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+            ⏱️ {formatDuration(duration)}
           </span>
         )}
       </div>
 
-      {items.length > 0 && (
-        <div className="mt-2 space-y-1">
-          <p className="text-xs font-semibold text-gray-700">
-            Key Timestamps
-          </p>
-          <div className="flex flex-wrap gap-2 mt-1">
-            {items.map((ts, idx) => {
-              const seconds = ts.seconds ?? 0;
-              const href = `${baseWatchUrl}&t=${seconds}s`;
-              return (
+      {timestamps && timestamps.length > 0 && (
+        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+          <h4 className="text-sm font-bold text-slate-800 mb-2">Key Moments</h4>
+          <ul className="space-y-2">
+            {timestamps.map((ts, idx) => (
+              <li key={idx}>
                 <a
-                  key={`${seconds}-${idx}`}
-                  href={href}
+                  href={`https://youtube.com/watch?v=${videoId}&t=${ts.seconds}s`}
                   target="_blank"
-                  rel="noreferrer"
-                  className="text-[11px] px-2.5 py-1 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-2"
                 >
-                  {ts.label || `At ${seconds}s`}
+                  <span className="font-mono bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-xs">
+                    {Math.floor(ts.seconds / 60)}:{(ts.seconds % 60).toString().padStart(2, '0')}
+                  </span>
+                  {ts.title}
                 </a>
-              );
-            })}
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-    </section>
+    </div>
   );
 };
-

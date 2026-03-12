@@ -4,29 +4,37 @@
   "title": "Introduction to DSA",
   "topic_tag": "intro",
   "difficulty": "BEGINNER",
-  "est_minutes": 45,
-  "story_hook": "You joined your first startup internship... and they asked you to optimize their massive user database search!",
-  "whatsapp_msg": "Welcome to Day 1! Start with the Intro to DSA.",
+  "est_minutes": 60,
+  "story_hook": "You joined your first startup internship. The tech lead hands you a massive codebase and says: 'Find all duplicate user IDs.' You open the file — 10 million rows. Your for-loop crashes in 30 seconds. Welcome to DSA.",
+  "whatsapp_msg": "Day 1: What is DSA and why should you care? 🚀 Let's build the foundation.",
   "video": {
     "youtube_id": "_v3XkzbOlME",
     "channel": "Abdul Bari",
-    "title": "Intro to Data Structures & Algorithms",
-    "duration_min": 25,
+    "title": "Introduction to Data Structures & Algorithms",
+    "duration_min": 18,
     "timestamps": [
       {
-        "label": "Definitions",
-        "seconds": 60
+        "label": "What is DSA?",
+        "seconds": 0
       },
       {
-        "label": "Types of DSA",
-        "seconds": 300
+        "label": "Why DSA matters",
+        "seconds": 180
+      },
+      {
+        "label": "Types of DS",
+        "seconds": 480
+      },
+      {
+        "label": "Real-world use",
+        "seconds": 780
       }
     ]
   },
   "article": {
-    "url": "https://www.geeksforgeeks.org/introduction-to-data-structures-and-algorithms/",
+    "url": "https://www.geeksforgeeks.org/data-structures/",
     "source": "GeeksForGeeks",
-    "title": "Introduction to DSA"
+    "title": "Data Structures — A Complete Overview"
   },
   "problems": [
     {
@@ -34,37 +42,62 @@
       "platform": "HackerRank",
       "difficulty": "EASY",
       "url": "https://www.hackerrank.com/challenges/solve-me-first/problem",
-      "number": 1
+      "number": null
+    },
+    {
+      "name": "Simple Array Sum",
+      "platform": "HackerRank",
+      "difficulty": "EASY",
+      "url": "https://www.hackerrank.com/challenges/simple-array-sum/problem",
+      "number": null
+    },
+    {
+      "name": "Compare The Triplets",
+      "platform": "HackerRank",
+      "difficulty": "EASY",
+      "url": "https://www.hackerrank.com/challenges/compare-the-triplets/problem",
+      "number": null
     }
   ],
   "quiz": [
     {
       "q": "What does DSA stand for?",
       "options": [
-        "Data Storage & Analysis",
-        "Data Structures & Algorithms",
-        "Database SQL Architecture",
-        "Deep Sequential Arrays"
+        "Data Structures and Algorithms",
+        "Dynamic System Architecture",
+        "Data Science and Analytics",
+        "Digital Signal Analysis"
       ],
-      "answer": 1,
-      "explanation": "DSA stands for Data Structures & Algorithms."
+      "answer": 0,
+      "explanation": "DSA stands for Data Structures and Algorithms — the building blocks of efficient software."
     },
     {
-      "q": "Which is NOT a data structure?",
+      "q": "Which of the following is a data structure?",
       "options": [
+        "Sorting",
         "Array",
-        "Linked List",
-        "For Loop",
-        "Tree"
+        "Recursion",
+        "Loop"
       ],
-      "answer": 2,
-      "explanation": "A for loop is a control flow statement, not a data structure."
+      "answer": 1,
+      "explanation": "An Array is a data structure. Sorting, Recursion, and Loop are techniques or concepts."
+    },
+    {
+      "q": "What is an algorithm?",
+      "options": [
+        "A programming language",
+        "A set of step-by-step instructions to solve a problem",
+        "A type of database",
+        "A hardware component"
+      ],
+      "answer": 1,
+      "explanation": "An algorithm is a finite set of instructions that defines a procedure to solve a specific problem."
     }
   ],
   "tasks": [
     {
-      "title": "Install your IDE",
-      "description": "Download and install VS Code or IntelliJ and run a Hello World program.",
+      "title": "Write Your First Algorithm",
+      "description": "Write a function in Java that takes an integer array and returns the sum of all elements. Analyze: how many steps does it take for N elements?",
       "difficulty": "EASY"
     }
   ]

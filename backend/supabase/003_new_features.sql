@@ -1,5 +1,5 @@
--- ### 1. chapters
-CREATE TABLE IF NOT EXISTS chapters (
+-- 1. chapters
+CREATE TABLE chapters (
   id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   roadmap_id   UUID REFERENCES roadmaps(id) ON DELETE CASCADE,
   chapter_number INTEGER NOT NULL,
@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS chapters (
   created_at   TIMESTAMPTZ DEFAULT now(),
   UNIQUE(roadmap_id, chapter_number)
 );
-
--- ### 2. chapter_content (one-to-one with chapters)
-CREATE TABLE IF NOT EXISTS chapter_content (
+ 
+-- 2. chapter_content (one-to-one with chapters)
+CREATE TABLE chapter_content (
   id               UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   chapter_id       UUID REFERENCES chapters(id) ON DELETE CASCADE UNIQUE,
   video_youtube_id TEXT,
@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS chapter_content (
   tasks            JSONB DEFAULT '[]',
   created_at       TIMESTAMPTZ DEFAULT now()
 );
-
--- ### 3. user_chapter_progress
-CREATE TABLE IF NOT EXISTS user_chapter_progress (
+ 
+-- 3. user_chapter_progress
+CREATE TABLE user_chapter_progress (
   id                UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id           UUID REFERENCES users(id) ON DELETE CASCADE,
   chapter_id        UUID REFERENCES chapters(id) ON DELETE CASCADE,
@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS user_chapter_progress (
   created_at        TIMESTAMPTZ DEFAULT now(),
   UNIQUE(user_id, chapter_id)
 );
-
--- ### 4. job_alerts
-CREATE TABLE IF NOT EXISTS job_alerts (
+ 
+-- 4. job_alerts
+CREATE TABLE job_alerts (
   id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title           TEXT NOT NULL,
   company         TEXT NOT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS job_alerts (
   is_active       BOOLEAN DEFAULT true,
   posted_at       TIMESTAMPTZ DEFAULT now()
 );
-
--- ### 5. user_badges
+ 
+-- 5. user_badges (if it doesn't already exist)
 CREATE TABLE IF NOT EXISTS user_badges (
   id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id    UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS user_badges (
   earned_at  TIMESTAMPTZ DEFAULT now(),
   UNIQUE(user_id, badge_id)
 );
-
--- ### 6. otp_verifications
-CREATE TABLE IF NOT EXISTS otp_verifications (
+ 
+-- 6. otp_verifications
+CREATE TABLE otp_verifications (
   id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   phone       TEXT NOT NULL,
   otp_hash    TEXT NOT NULL,
@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS otp_verifications (
   verified    BOOLEAN DEFAULT false,
   created_at  TIMESTAMPTZ DEFAULT now()
 );
-
--- ### 7. ADD COLUMNS TO EXISTING users TABLE
+ 
+-- 7. ADD COLUMNS TO EXISTING users TABLE
 ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT UNIQUE;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS college_name TEXT;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS year_of_study TEXT;
@@ -95,11 +95,11 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS onboarding_answers JSONB;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS receive_job_alerts BOOLEAN DEFAULT true;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS doubt_queries_used INTEGER DEFAULT 0;
-
--- ### 8. CREATE INDEXES
-CREATE INDEX IF NOT EXISTS idx_chapters_roadmap ON chapters(roadmap_id);
-CREATE INDEX IF NOT EXISTS idx_ucp_user ON user_chapter_progress(user_id);
-CREATE INDEX IF NOT EXISTS idx_ucp_chapter ON user_chapter_progress(chapter_id);
-CREATE INDEX IF NOT EXISTS idx_job_alerts_active ON job_alerts(is_active, posted_at DESC);
-CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
-CREATE INDEX IF NOT EXISTS idx_users_college ON users(college_name);
+ 
+-- 8. CREATE INDEXES
+CREATE INDEX idx_chapters_roadmap ON chapters(roadmap_id);
+CREATE INDEX idx_ucp_user ON user_chapter_progress(user_id);
+CREATE INDEX idx_ucp_chapter ON user_chapter_progress(chapter_id);
+CREATE INDEX idx_job_alerts_active ON job_alerts(is_active, posted_at DESC);
+CREATE INDEX idx_users_phone ON users(phone);
+CREATE INDEX idx_users_college ON users(college_name);

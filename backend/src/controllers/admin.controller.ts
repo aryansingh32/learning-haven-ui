@@ -5,6 +5,7 @@ import { CategoriesService } from '../services/categories.service';
 import { RoadmapsService } from '../services/roadmaps.service';
 import { TasksService } from '../services/tasks.service';
 import { FeedbackService } from '../services/feedback.service';
+import { JobsService } from '../services/jobs.service';
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 
@@ -771,6 +772,31 @@ export class AdminController {
         } catch (error) {
             logger.error('Flagged referrals error:', error);
             res.status(500).json({ error: 'Failed to fetch flagged referrals' });
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // JOBS MANAGEMENT
+    // ══════════════════════════════════════════════════════════
+
+    static async createJob(req: Request, res: Response) {
+        try {
+            const result = await JobsService.createJob(req.body);
+            res.status(201).json(result);
+        } catch (error: any) {
+            logger.error('Admin create job error:', error);
+            res.status(400).json({ error: error.message || 'Failed to create job' });
+        }
+    }
+
+    static async updateJob(req: Request, res: Response) {
+        try {
+            const jobId = req.params.id as string;
+            const result = await JobsService.updateJob(jobId, req.body);
+            res.json(result);
+        } catch (error: any) {
+            logger.error('Admin update job error:', error);
+            res.status(400).json({ error: error.message || 'Failed to update job' });
         }
     }
 }

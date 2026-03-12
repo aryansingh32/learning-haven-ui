@@ -1,0 +1,23 @@
+{
+    "roadmap_slug": "java_dsa_90day",
+    "chapter_number": 2,
+    "title": "Time Complexity & Big O",
+    "topic_tag": "time_complexity",
+    "difficulty": "BEGINNER",
+    "est_minutes": 60,
+    "story_hook": "Your app is slow, and you need to find out why.",
+    "whatsapp_msg": "Day 2: Master Big O notation!",
+    "video": {
+        "youtube_id": "V42FBiohc6c",
+        "title": "Big O notation",
+        "duration_min": 20
+    },
+    "problems": [
+        {
+            "name": "Analyze nested loops",
+            "platform": "Custom",
+            "difficulty": "EASY",
+            "url": "https://example.com/analyze-loops"
+        }
+    ]
+}

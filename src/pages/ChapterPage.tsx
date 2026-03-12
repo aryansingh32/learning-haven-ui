@@ -1,251 +1,195 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useApiQuery, useApiMutation } from "@/hooks/useApi";
-import { api } from "@/services/api.svc";
-import { useAuth } from "@/context/AuthContext";
-import { Skeleton } from "@/components/ui/skeleton";
-import { StoryHook } from "@/components/chapter/StoryHook";
-import { VideoSection } from "@/components/chapter/VideoSection";
-import { ProblemsSection } from "@/components/chapter/ProblemsSection";
-import { QuizSection } from "@/components/chapter/QuizSection";
-import { TaskSection } from "@/components/chapter/TaskSection";
-import { UnlockSection } from "@/components/chapter/UnlockSection";
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useApiQuery } from '@/hooks/useApi';
+import { useAuth } from '@/context/AuthContext';
+import { StoryHook } from '@/components/chapter/StoryHook';
+import { VideoSection } from '@/components/chapter/VideoSection';
+import { CheatsheetSection } from '@/components/chapter/CheatsheetSection';
+import { ProblemsSection } from '@/components/chapter/ProblemsSection';
+import { QuizSection } from '@/components/chapter/QuizSection';
+import { TaskSection } from '@/components/chapter/TaskSection';
+import { UnlockSection } from '@/components/chapter/UnlockSection';
+import { Skeleton } from '@/components/ui/skeleton';
+import { AlertCircle, RefreshCw } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { api } from '@/services/api.svc';
 
-type ChapterContent = {
-  video_youtube_id?: string | null;
-  video_channel?: string | null;
-  video_title?: string | null;
-  video_duration?: number | null;
-  video_timestamps?: Array<{ label?: string; seconds?: number }> | null;
-  article_url?: string | null;
-  article_source?: string | null;
-  article_title?: string | null;
-  problems?: any[] | null;
-  quiz?: any[] | null;
-  tasks?: any[] | null;
-};
-
-type Chapter = {
-  id: string;
-  chapter_number?: number | null;
-  title?: string | null;
-  story_hook?: string | null;
-  chapter_content?: ChapterContent;
-};
-
-type Progress = {
-  status?: string;
-  quiz_score?: number | null;
-  quiz_attempts?: number | null;
-  tasks_completed?: number | null;
-  used_skip_token?: boolean | null;
-};
-
-type UserProfile = {
-  skip_tokens_remaining?: number | null;
-};
-
-type ChapterResponse = {
-  chapter: Chapter;
-  chapter_content?: ChapterContent;
-  content?: ChapterContent;
-};
-
-const ChapterPage: React.FC = () => {
+export default function ChapterPage() {
   const { chapterId } = useParams<{ chapterId: string }>();
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { user, isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const queryClient = useQueryClient();
 
-  React.useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      navigate("/signin", { replace: true });
+  useEffect(() => {
+    if (!isAuthLoading && !isAuthenticated) {
+      navigate('/signin');
     }
-  }, [authLoading, isAuthenticated, navigate]);
+  }, [isAuthenticated, isAuthLoading, navigate]);
 
   const {
-    data: chapterData,
-    isLoading: chapterLoading,
-    error: chapterError,
-    refetch: refetchChapter,
-  } = useApiQuery<ChapterResponse>(
-    ["chapter", chapterId],
-    `/chapters/${chapterId}`
+    data: chapterRes,
+    isLoading: isChapterLoading,
+    isError: isChapterError,
+    refetch: refetchChapter
+  } = useApiQuery<any>(
+    ['chapter', chapterId],
+    `/chapters/${chapterId}`,
+    { enabled: !!chapterId && !!isAuthenticated }
   );
 
   const {
-    data: progress,
-    isLoading: progressLoading,
-    error: progressError,
-    refetch: refetchProgress,
-  } = useApiQuery<Progress>(
-    ["chapter-progress", chapterId],
+    data: progressRes,
+    isLoading: isProgressLoading,
+    isError: isProgressError,
+  } = useApiQuery<any>(
+    ['chapterProgress', chapterId],
     `/chapters/${chapterId}/progress`,
-    {
-      enabled: !!chapterId,
-    }
+    { enabled: !!chapterId && !!isAuthenticated }
   );
 
-  const {
-    data: userProfile,
-  } = useApiQuery<UserProfile>(
-    ["user-profile-basic"],
-    "/users/me",
-    {
-      enabled: isAuthenticated,
+  const isLoading = isChapterLoading || isProgressLoading || isAuthLoading;
+  const isError = isChapterError || isProgressError;
+
+  const handleRefresh = () => {
+    refetchChapter();
+    queryClient.invalidateQueries({ queryKey: ['chapterProgress', chapterId] });
+  };
+
+  const handleQuizComplete = async (score: number, passed: boolean) => {
+    try {
+      await api.post(`/chapters/${chapterId}/progress/quiz`, {
+        score,
+        passed
+      });
+      if (passed) {
+        toast.success("Quiz passed successfully! 🎉");
+      } else {
+        toast.error("Quiz failed. You need at least 2/3 correct. Try again later.");
+      }
+      handleRefresh();
+    } catch (err: any) {
+      toast.error(err.response?.data?.error || 'Failed to save quiz score');
     }
-  );
+  };
 
-  const loading = chapterLoading || progressLoading || authLoading;
-  const error = chapterError || progressError;
-
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-6 space-y-4">
-        <Skeleton className="h-8 w-40" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-48 w-full" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-40 w-full" />
+      <div className="min-h-screen bg-slate-50 font-sans p-6 sm:p-12 pb-32 max-w-4xl mx-auto space-y-8">
+        <Skeleton className="h-12 w-3/4 rounded-2xl mb-10" />
+        <Skeleton className="h-32 w-full rounded-2xl" />
+        <Skeleton className="h-[400px] w-full rounded-2xl" />
+        <Skeleton className="h-40 w-full rounded-2xl" />
       </div>
     );
   }
 
-  if (error || !chapterData) {
+  if (isError || !chapterRes?.data) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-6">
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-          <p className="text-sm font-semibold text-red-800 mb-1">
-            Something went wrong
-          </p>
-          <p className="text-xs text-red-700 mb-3">
-            We couldn&apos;t load this chapter. Please try again.
-          </p>
+      <div className="min-h-screen bg-slate-50 font-sans flex items-center justify-center p-6 pb-32">
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center max-w-md w-full">
+          <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <AlertCircle className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-800 mb-2">Oops! Something went wrong</h2>
+          <p className="text-slate-500 mb-6">We couldn't load this chapter. Please check your connection and try again.</p>
           <button
-            type="button"
-            onClick={() => {
-              refetchChapter();
-              refetchProgress();
-            }}
-            className="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs font-semibold"
+            onClick={handleRefresh}
+            className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
           >
-            Try again
+            <RefreshCw className="w-4 h-4" /> Try Again
           </button>
         </div>
       </div>
     );
   }
 
-  const chapter = chapterData.chapter;
-  const content: ChapterContent =
-    (chapterData.content as ChapterContent | undefined) ??
-    (chapterData.chapter_content as ChapterContent | undefined) ??
-    (chapter.chapter_content as ChapterContent | undefined) ??
-    {};
+  const chapter = chapterRes.data;
+  const content = chapterRes.data.content || {}; // The chapter_content merged or appended
+  const progress = progressRes?.data || {};
 
-  const quizPassed = (progress?.quiz_score ?? 0) >= 66;
-  const taskCompleted = (progress?.tasks_completed ?? 0) > 0;
+  // For testing, mock tasks if they are null
+  const fallbackTask = { title: "Reflect on this chapter", description: "Write down 3 things you learned." };
+  let taskData = fallbackTask;
+  if (content.tasks && Array.isArray(content.tasks) && content.tasks.length > 0) {
+    taskData = content.tasks[0];
+  } else if (content.tasks && typeof content.tasks === 'object' && content.tasks.title) {
+    taskData = content.tasks; // Handle case where it's a single object
+  }
 
-  const mainTask =
-    Array.isArray(content.tasks) && content.tasks.length > 0
-      ? content.tasks[0]
-      : null;
-
-  const quizMutation = useApiMutation(
-    (payload: { score: number; passed: boolean }) =>
-      api.post(`/chapters/${chapter.id}/progress/quiz`, payload)
-  );
-
-  const handleQuizComplete = async (score: number, passed: boolean) => {
-    try {
-      await quizMutation.mutateAsync({ score, passed });
-      await refetchProgress();
-    } catch {
-      // silently ignore; unlock section still uses last known progress
-    }
-  };
+  const quizPassed = (progress.quiz_score !== null && progress.quiz_score >= 2);
+  const taskCompleted = (progress.tasks_completed > 0);
+  const skipTokens = user?.skip_tokens_remaining || 0;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-6">
-      <header className="mb-5">
-        <p className="text-xs font-semibold text-blue-600 mb-1 uppercase">
-          Chapter {chapter.chapter_number}
-        </p>
-        <h1 className="text-xl font-bold text-gray-900">
-          {chapter.title}
-        </h1>
-      </header>
+    <div className="min-h-screen bg-slate-50 font-sans pb-32">
+      {/* Hero Header */}
+      <div className="bg-white border-b border-slate-200 pt-10 pb-8 px-6 mb-8 relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 opacity-70 pointer-events-none" />
 
-      {/* PART 1 — STORY HOOK */}
-      <StoryHook story={chapter.story_hook} />
-
-      {/* PART 2 — CURATED VIDEO */}
-      <VideoSection
-        youtubeId={content.video_youtube_id}
-        channel={content.video_channel}
-        durationMinutes={content.video_duration ?? undefined}
-        timestamps={content.video_timestamps as any}
-      />
-
-      {/* PART 3 — CHEATSHEET */}
-      {content.article_url && (
-        <section className="mb-6">
-          <p className="text-sm font-semibold text-gray-800 mb-2">
-            📄 Read This (Just This One Article)
-          </p>
-          <div className="rounded-xl border border-gray-200 bg-white p-4 space-y-2">
-            <p className="text-sm font-semibold text-gray-900">
-              {content.article_title || "Recommended Article"}
-            </p>
-            {content.article_source && (
-              <span className="inline-flex px-2.5 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-700">
-                {content.article_source}
-              </span>
-            )}
-            <button
-              type="button"
-              className="mt-2 inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700"
-              onClick={() => {
-                window.open(content.article_url as string, "_blank", "noopener,noreferrer");
-              }}
-            >
-              Open Article →
-            </button>
-            <p className="text-[11px] text-gray-500">
-              This is the only article you need for this topic.
-            </p>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="px-3 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-full tracking-wide uppercase">
+              Chapter {chapter.chapter_number}
+            </span>
+            <span className="px-3 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-full">
+              {chapter.difficulty || 'Beginner'}
+            </span>
           </div>
-        </section>
-      )}
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            {chapter.title}
+          </h1>
+        </div>
+      </div>
 
-      {/* PART 4 — PRACTICE PROBLEMS */}
-      <ProblemsSection problems={content.problems as any[]} />
+      <div className="max-w-4xl mx-auto px-6 space-y-2">
+        {/* PARt 1: STORY HOOK */}
+        <StoryHook content={chapter.story_hook} />
 
-      {/* PART 5 — MINI QUIZ */}
-      <QuizSection
-        chapterId={chapter.id}
-        questions={(content.quiz as any[]) || []}
-        onComplete={handleQuizComplete}
-      />
+        {/* PARt 2: VIDEO */}
+        <VideoSection
+          videoId={content.video_youtube_id}
+          channel={content.video_channel}
+          title={content.video_title}
+          duration={content.video_duration}
+          timestamps={content.video_timestamps}
+        />
 
-      {/* PART 6 — TASK */}
-      <TaskSection
-        chapterId={chapter.id}
-        task={mainTask}
-        initialCompleted={taskCompleted}
-      />
+        {/* PARt 3: CHEATSHEET */}
+        <CheatsheetSection
+          url={content.article_url}
+          source={content.article_source}
+          title={content.article_title}
+        />
 
-      {/* PART 7 — CHAPTER UNLOCK */}
-      <UnlockSection
-        chapterId={chapter.id}
-        chapterNumber={chapter.chapter_number ?? undefined}
-        quizPassed={quizPassed}
-        taskCompleted={taskCompleted}
-        usedSkipToken={progress?.used_skip_token ?? undefined}
-        skipTokensRemaining={userProfile?.skip_tokens_remaining ?? null}
-      />
+        {/* PARt 4: PRACTICE PROBLEMS */}
+        <ProblemsSection problems={content.problems} />
+
+        {/* PARt 5: MINI QUIZ */}
+        <QuizSection
+          chapterId={chapterId!}
+          questions={content.quiz}
+          onComplete={handleQuizComplete}
+        />
+
+        {/* PARt 6: TASK */}
+        <TaskSection
+          chapterId={chapterId!}
+          task={taskData}
+          isCompleted={taskCompleted}
+          onComplete={handleRefresh}
+        />
+
+        {/* PARt 7: UNLOCK NEXT CHAPTER */}
+        <UnlockSection
+          chapterId={chapterId!}
+          quizPassed={quizPassed}
+          taskCompleted={taskCompleted}
+          skipTokens={skipTokens}
+          onSkipped={handleRefresh}
+          onUnlocked={handleRefresh}
+        />
+      </div>
     </div>
   );
-};
-
-export default ChapterPage;
-
+}

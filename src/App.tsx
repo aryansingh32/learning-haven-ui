@@ -22,6 +22,9 @@ import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import Pricing from "./pages/Pricing";
 import ChapterPage from "./pages/ChapterPage";
+import ChaptersOverviewPage from "./pages/ChaptersOverviewPage";
+import JobsPage from "./pages/JobsPage";
+import ResumePage from "./pages/ResumePage";
 
 const queryClient = new QueryClient();
 
@@ -51,11 +54,14 @@ const App = () => (
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/topics" element={<TopicsPage />} />
+                    <Route path="/chapters" element={<ChaptersOverviewPage />} />
                     <Route path="/visualizer" element={<VisualizerPage />} />
                     <Route path="/ai-coach" element={<AICoachPage />} />
+                    <Route path="/resume" element={<ResumePage />} />
                     <Route path="/referrals" element={<ReferralsPage />} />
                     <Route path="/certificates" element={<CertificatesPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/jobs" element={<JobsPage />} />
                     <Route path="/chapter/:chapterId" element={<ChapterPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>

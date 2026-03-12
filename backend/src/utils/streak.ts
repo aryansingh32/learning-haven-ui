@@ -1,69 +1,66 @@
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 
-export async function updateStreak(userId: string) {
+/**
+ * Helper to update user streak.
+ * Run when a chapter is unlocked/completed.
+ */
+export const updateStreak = async (userId: string) => {
     try {
-        const { data: user, error } = await supabase
+        const { data: user, error: fetchErr } = await supabase
             .from('users')
-            .select('id, last_active_date, streak, longest_streak')
+            .select('last_active_date, streak_count')
             .eq('id', userId)
             .single();
 
-        if (error || !user) {
-            throw error || new Error('User not found');
+        if (fetchErr || !user) {
+            logger.error('Error fetching user for streak update', fetchErr);
+            return { streak: 0 };
         }
 
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-        let newStreak = user.streak || 0;
-        const lastActiveRaw = user.last_active_date as string | null | undefined;
+        let lastActive = null;
+        if (user.last_active_date) {
+            lastActive = new Date(user.last_active_date);
+            lastActive.setHours(0, 0, 0, 0);
+        }
 
-        if (!lastActiveRaw) {
+        let newStreak = user.streak_count || 0;
+
+        if (!lastActive) {
+            // First time active
             newStreak = 1;
         } else {
-            const lastActiveDate = new Date(lastActiveRaw);
-            const last = new Date(lastActiveDate.getFullYear(), lastActiveDate.getMonth(), lastActiveDate.getDate());
-            const diffMs = today.getTime() - last.getTime();
-            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const diffTime = Math.abs(today.getTime() - lastActive.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            if (diffDays === 0) {
-                // already counted for today
-            } else if (diffDays === 1) {
-                newStreak = (user.streak || 0) + 1;
+            if (diffDays === 1) {
+                // Active yesterday
+                newStreak += 1;
             } else if (diffDays > 1) {
+                // Missed a day
                 newStreak = 1;
             }
+            // If diffDays === 0, they already updated today, no change
         }
 
-        const longest = Math.max(user.longest_streak || 0, newStreak);
-
-        const todayIso = today.toISOString();
-
-        const { error: updateError } = await supabase
+        const { error: updateErr } = await supabase
             .from('users')
             .update({
-                streak: newStreak,
-                longest_streak: longest,
-                last_active_date: todayIso,
+                last_active_date: new Date().toISOString(),
+                streak_count: newStreak
             })
             .eq('id', userId);
 
-        if (updateError) {
-            throw updateError;
+        if (updateErr) {
+            logger.error('Error updating streak', updateErr);
         }
 
-        return {
-            streak: newStreak,
-            longest_streak: longest,
-        };
-    } catch (error) {
-        logger.error('Update streak error:', { userId, error });
-        // Do not throw hard failure to avoid breaking main flows
-        return {
-            streak: 0,
-            longest_streak: 0,
-        };
+        return { streak: newStreak };
+    } catch (err) {
+        logger.error('Update streak failed', err);
+        return { streak: 0 };
     }
-}
-
+};

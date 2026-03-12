@@ -120,4 +120,10 @@ router.get('/logs', AdminController.getAuditLogs);
 router.get('/withdrawals', AdminController.getWithdrawals);
 router.post('/withdrawals/:id/process', AdminController.processWithdrawal);
 
+// ══════════════════════════════════════════════════════════
+// JOBS
+// ══════════════════════════════════════════════════════════
+router.post('/jobs', AdminController.createJob);
+router.put('/jobs/:id', AdminController.updateJob);
+
 export default router;

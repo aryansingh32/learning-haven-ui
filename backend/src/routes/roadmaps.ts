@@ -18,7 +18,7 @@ router.get('/', RoadmapsController.listRoadmaps);
  * @desc    Get roadmap chapters with user progress status
  * @access  Private
  */
-router.get('/:roadmapId/chapters', authenticateUser, async (req: AuthRequest, res) => {
+router.get('/:roadmapId/chapters', authenticateUser, async (req: any, res: any) => {
     try {
         const userId = req.user?.id;
         const { roadmapId } = req.params;

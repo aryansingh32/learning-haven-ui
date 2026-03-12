@@ -279,6 +279,7 @@
       opacity: 0;
       transform: translateY(12px);
     }
+
     100% {
       opacity: 1;
       transform: translateY(0);
@@ -293,9 +294,12 @@
   }
 
   @keyframes locked-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 0.4;
     }
+
     50% {
       opacity: 0.6;
     }
@@ -306,5 +310,250 @@
     animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+  }
+
+  /* ═══════════════════════════════════════════════
+     CHAPTERS OVERVIEW PAGE — Scrollable Map Theme
+     ═══════════════════════════════════════════════ */
+
+  .map-scroll-container {
+    overscroll-behavior: contain;
+
+    /* Custom scrollbar for webkit */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .map-background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background: url('/space-bg.png') center center / cover no-repeat;
+    overflow: hidden;
+  }
+
+  /* Stat card (Right Side Widgets) */
+  .stat-card {
+    background: rgba(18, 18, 24, 0.7);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 18px 22px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Chapter Cards ── */
+
+  /* Completed card (White Glass) */
+  .chapter-card-completed {
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    padding: 16px 20px;
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.15),
+      0 0 40px rgba(255, 255, 255, 0.1);
+    min-width: 340px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .chapter-card-completed:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.2),
+      0 0 50px rgba(255, 255, 255, 0.15);
+  }
+
+  /* Active card (Orange/Yellow Glow) */
+  .chapter-card-active {
+    background: linear-gradient(135deg,
+        hsl(32, 95%, 52%) 0%,
+        hsl(28, 92%, 48%) 50%,
+        hsl(24, 90%, 42%) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow:
+      0 12px 40px rgba(234, 114, 25, 0.4),
+      0 0 60px rgba(234, 114, 25, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-width: 380px;
+    transition: transform 0.3s ease;
+  }
+
+  .chapter-card-active:hover {
+    transform: scale(1.015);
+  }
+
+  .chapter-card-active::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 0%,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 40%);
+    pointer-events: none;
+  }
+
+  .chapter-badge-premium {
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .chapter-btn-resume {
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: white;
+    color: hsl(24, 90%, 40%);
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .chapter-btn-resume:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .chapter-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chapter-btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+  }
+
+  /* Locked card (Dark Glass) */
+  .chapter-card-locked {
+    background: rgba(15, 15, 20, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 16px 20px;
+    text-align: center;
+    width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    cursor: not-allowed;
+  }
+
+  .chapter-card-locked:hover {
+    transform: scale(1.02);
+  }
+
+  /* Glow Animation */
+  @keyframes locked-pulse {
+
+    0%,
+    100% {
+      opacity: 0.8;
+    }
+
+    50% {
+      opacity: 1;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.1));
+    }
+  }
+
+  @keyframes floatCard {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes floatNode {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
   }
 }

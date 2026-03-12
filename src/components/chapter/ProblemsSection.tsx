@@ -1,118 +1,104 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { ExternalLink, CheckCircle2, Circle } from 'lucide-react';
 
-type Problem = {
-  id?: string;
-  name?: string;
-  title?: string;
-  platform?: string;
-  difficulty?: string;
-  url?: string;
-};
-
-interface ProblemsSectionProps {
-  problems?: Problem[] | null;
+interface Problem {
+  id: string;
+  name: string;
+  url: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  platform: 'LeetCode' | 'GFG' | 'CodeChef' | 'HackerRank' | string;
 }
 
-const platformColors: Record<string, string> = {
-  LeetCode: "bg-orange-100 text-orange-700",
-  "GeeksForGeeks": "bg-green-100 text-green-700",
-  GFG: "bg-green-100 text-green-700",
-  CodeChef: "bg-purple-100 text-purple-700",
-};
-
-const difficultyColors: Record<string, string> = {
-  Easy: "bg-green-50 text-green-700 border-green-200",
-  Medium: "bg-yellow-50 text-yellow-800 border-yellow-200",
-  Hard: "bg-red-50 text-red-700 border-red-200",
-};
+interface ProblemsSectionProps {
+  problems: Problem[];
+}
 
 export const ProblemsSection: React.FC<ProblemsSectionProps> = ({ problems }) => {
-  const [tappedIds, setTappedIds] = useState<Record<string, boolean>>({});
+  const [tapped, setTapped] = useState<Record<string, boolean>>({});
 
   if (!problems || problems.length === 0) return null;
 
-  const handleTap = (key: string) => {
-    setTappedIds((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggleTapped = (id: string) => {
+    setTapped(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const getDifficultyColor = (diff: string) => {
+    switch (diff.toLowerCase()) {
+      case 'easy': return 'bg-emerald-100 text-emerald-700';
+      case 'medium': return 'bg-amber-100 text-amber-700';
+      case 'hard': return 'bg-rose-100 text-rose-700';
+      default: return 'bg-slate-100 text-slate-700';
+    }
+  };
+
+  const getPlatformColor = (plat: string) => {
+    switch (plat.toLowerCase()) {
+      case 'leetcode': return 'bg-orange-100 text-orange-700';
+      case 'gfg': return 'bg-green-100 text-green-700';
+      case 'codechef': return 'bg-purple-100 text-purple-700';
+      default: return 'bg-slate-100 text-slate-700';
+    }
   };
 
   return (
-    <section className="mb-6">
-      <p className="text-sm font-semibold text-gray-800 mb-3">
-        💻 Practice Problems
-      </p>
-      <div className="space-y-2">
-        {problems.map((p, idx) => {
-          const key = p.id ?? `${p.platform}-${p.name ?? p.title}-${idx}`;
-          const name = p.name ?? p.title ?? "Problem";
-          const platform = p.platform ?? "";
-          const difficulty = p.difficulty ?? "";
+    <div className="mb-10">
+      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4 mt-8">
+        <span>💻</span> Practice Problems
+      </h2>
 
-          const platformClass =
-            platformColors[platform] ?? "bg-gray-100 text-gray-700";
-          const diffClass =
-            difficultyColors[difficulty] ?? "bg-gray-50 text-gray-600 border-gray-200";
-
-          const tapped = !!tappedIds[key];
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden divide-y divide-slate-100">
+        {problems.map((prob) => {
+          const isTapped = tapped[prob.id];
 
           return (
             <div
-              key={key}
-              className="flex items-center justify-between rounded-lg border border-gray-200 px-3 py-2 bg-white"
+              key={prob.id}
+              className={`p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${isTapped ? 'bg-slate-50' : 'hover:bg-slate-50/50'}`}
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-start gap-4">
                 <button
-                  type="button"
-                  onClick={() => handleTap(key)}
-                  className={[
-                    "w-5 h-5 rounded-full border flex items-center justify-center text-[11px]",
-                    tapped
-                      ? "bg-green-500 border-green-500 text-white"
-                      : "border-gray-300 text-gray-300",
-                  ].join(" ")}
+                  onClick={() => toggleTapped(prob.id)}
+                  className="mt-0.5 shrink-0 text-slate-400 hover:text-blue-600 transition-colors"
+                  aria-label={isTapped ? "Mark as unsolved" : "Mark as solved"}
                 >
-                  ✓
+                  {isTapped ? (
+                    <CheckCircle2 className="w-6 h-6 text-green-500" />
+                  ) : (
+                    <Circle className="w-6 h-6 text-slate-300 hover:text-blue-400" />
+                  )}
                 </button>
-                <div className="min-w-0">
-                  <p className="text-sm text-gray-800 truncate">{name}</p>
-                  <div className="flex flex-wrap gap-1 mt-1 text-[11px]">
-                    {platform && (
-                      <span
-                        className={[
-                          "px-2 py-0.5 rounded-full font-medium",
-                          platformClass,
-                        ].join(" ")}
-                      >
-                        {platform}
-                      </span>
-                    )}
-                    {difficulty && (
-                      <span
-                        className={[
-                          "px-2 py-0.5 rounded-full font-medium border",
-                          diffClass,
-                        ].join(" ")}
-                      >
-                        {difficulty}
-                      </span>
-                    )}
+
+                <div>
+                  <h3 className={`text-base font-bold mb-1.5 transition-colors ${isTapped ? 'text-slate-500 line-through' : 'text-slate-800'}`}>
+                    {prob.name}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`px-2 py-0.5 rounded text-xs font-bold ${getPlatformColor(prob.platform)}`}>
+                      {prob.platform}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-bold ${getDifficultyColor(prob.difficulty)}`}>
+                      {prob.difficulty}
+                    </span>
                   </div>
                 </div>
               </div>
-              {p.url && (
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ml-3 text-xs font-semibold text-blue-600 hover:text-blue-700 whitespace-nowrap"
-                >
-                  Solve →
-                </a>
-              )}
+
+              <a
+                href={prob.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setTapped(prev => ({ ...prev, [prob.id]: true }))}
+                className={`shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold transition-colors ${isTapped
+                    ? 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                    : 'bg-slate-900 text-white hover:bg-slate-800 shadow-sm'
+                  }`}
+              >
+                Solve <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           );
         })}
       </div>
-    </section>
+    </div>
   );
 };
-

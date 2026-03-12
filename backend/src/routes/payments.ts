@@ -1,10 +1,18 @@
 import { Router } from 'express';
 import { PaymentsController } from '../controllers/payments.controller';
+import { PublicPaymentsController } from '../controllers/payments.public.controller';
 import { authenticateUser } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 import { createOrderSchema, verifyPaymentSchema } from '../utils/validators';
 
 const router = Router();
+
+/**
+ * @route   GET /api/payments/plans
+ * @desc    Get all available subscription plans
+ * @access  Public
+ */
+router.get('/plans', PublicPaymentsController.getPlans);
 
 /**
  * @route   POST /api/payments/create-order
