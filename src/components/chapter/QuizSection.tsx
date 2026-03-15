@@ -66,12 +66,8 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
   };
 
   return (
-    <div className="mb-10">
-      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4">
-        <span>🧠</span> Quick Check ({questions.length} Questions)
-      </h2>
-
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+    <div className="pt-2">
+      <div className="bg-slate-50 rounded-xl border border-slate-200 p-6 sm:p-8 mb-6">
         {state === 'idle' && (
           <div className="text-center py-8">
             <h3 className="text-lg font-bold text-slate-800 mb-2">Ready to test your knowledge?</h3>

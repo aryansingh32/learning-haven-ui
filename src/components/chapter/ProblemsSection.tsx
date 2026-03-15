@@ -11,9 +11,10 @@ interface Problem {
 
 interface ProblemsSectionProps {
   problems: Problem[];
+  onMarkDone?: () => void;
 }
 
-export const ProblemsSection: React.FC<ProblemsSectionProps> = ({ problems }) => {
+export const ProblemsSection: React.FC<ProblemsSectionProps> = ({ problems, onMarkDone }) => {
   const [tapped, setTapped] = useState<Record<string, boolean>>({});
 
   if (!problems || problems.length === 0) return null;
@@ -41,12 +42,8 @@ export const ProblemsSection: React.FC<ProblemsSectionProps> = ({ problems }) =>
   };
 
   return (
-    <div className="mb-10">
-      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4 mt-8">
-        <span>💻</span> Practice Problems
-      </h2>
-
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden divide-y divide-slate-100">
+    <div className="pt-2">
+      <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-100 mb-6">
         {problems.map((prob) => {
           const isTapped = tapped[prob.id];
 
@@ -99,6 +96,16 @@ export const ProblemsSection: React.FC<ProblemsSectionProps> = ({ problems }) =>
           );
         })}
       </div>
+
+      {onMarkDone && (
+          <button 
+              onClick={onMarkDone}
+              className="flex items-center justify-center gap-2 w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors"
+          >
+              <CheckCircle2 className="w-5 h-5" />
+              Mark as Done
+          </button>
+      )}
     </div>
   );
 };

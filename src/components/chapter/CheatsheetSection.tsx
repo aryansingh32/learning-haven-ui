@@ -1,29 +1,24 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, CheckCircle2 } from 'lucide-react';
 
 interface CheatsheetSectionProps {
     url: string;
     source: string;
     title: string;
+    onMarkDone?: () => void;
 }
 
 export const CheatsheetSection: React.FC<CheatsheetSectionProps> = ({
     url,
     source,
-    title
+    title,
+    onMarkDone
 }) => {
     if (!url) return null;
 
     return (
-        <div className="mb-10">
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-1">
-                <span>📄</span> Read This (Just This One Article)
-            </h2>
-            <p className="text-slate-500 text-sm mb-4">
-                This is the only article you need for this topic.
-            </p>
-
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="pt-2">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-md mb-2">
@@ -44,6 +39,16 @@ export const CheatsheetSection: React.FC<CheatsheetSectionProps> = ({
                     </a>
                 </div>
             </div>
+
+            {onMarkDone && (
+                <button 
+                    onClick={onMarkDone}
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors mt-6"
+                >
+                    <CheckCircle2 className="w-5 h-5" />
+                    Mark as Done
+                </button>
+            )}
         </div>
     );
 };

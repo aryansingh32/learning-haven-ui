@@ -58,13 +58,9 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
   };
 
   return (
-    <div className="mb-10">
-      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4">
-        <span>✅</span> Your Task
-      </h2>
-
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+    <div className="pt-2">
+      <div className="bg-slate-50 rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+        <div className="p-6 border-b border-slate-200 bg-white">
           <h3 className="font-bold text-lg text-slate-800 mb-2">{task.title}</h3>
           <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap">
             {task.description}
@@ -96,7 +92,7 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
                 className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors shadow-sm"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                Mark Task as Done
+                Submit & Mark Done
               </button>
             )}
           </div>

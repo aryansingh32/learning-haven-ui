@@ -1,195 +1,401 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useApiQuery } from '@/hooks/useApi';
-import { useAuth } from '@/context/AuthContext';
-import { StoryHook } from '@/components/chapter/StoryHook';
-import { VideoSection } from '@/components/chapter/VideoSection';
-import { CheatsheetSection } from '@/components/chapter/CheatsheetSection';
-import { ProblemsSection } from '@/components/chapter/ProblemsSection';
-import { QuizSection } from '@/components/chapter/QuizSection';
-import { TaskSection } from '@/components/chapter/TaskSection';
-import { UnlockSection } from '@/components/chapter/UnlockSection';
-import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, RefreshCw } from 'lucide-react';
-import { useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { api } from '@/services/api.svc';
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  Brain,
+  Flame,
+  Gamepad2,
+  LockOpen,
+  Play,
+  Sparkles,
+  Trophy,
+  Share2,
+  CheckCircle2,
+  CircleDot,
+  Lock,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { getMissionById, getNextMission, phaseOne } from "@/data/chapters";
 
-export default function ChapterPage() {
-  const { chapterId } = useParams<{ chapterId: string }>();
-  const navigate = useNavigate();
-  const { user, isAuthenticated, isLoading: isAuthLoading } = useAuth();
-  const queryClient = useQueryClient();
+const difficultyStyles: Record<string, string> = {
+  easy: "bg-success/15 text-success",
+  medium: "bg-primary/15 text-primary",
+  hard: "bg-destructive/15 text-destructive",
+};
 
-  useEffect(() => {
-    if (!isAuthLoading && !isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, isAuthLoading, navigate]);
-
-  const {
-    data: chapterRes,
-    isLoading: isChapterLoading,
-    isError: isChapterError,
-    refetch: refetchChapter
-  } = useApiQuery<any>(
-    ['chapter', chapterId],
-    `/chapters/${chapterId}`,
-    { enabled: !!chapterId && !!isAuthenticated }
-  );
-
-  const {
-    data: progressRes,
-    isLoading: isProgressLoading,
-    isError: isProgressError,
-  } = useApiQuery<any>(
-    ['chapterProgress', chapterId],
-    `/chapters/${chapterId}/progress`,
-    { enabled: !!chapterId && !!isAuthenticated }
-  );
-
-  const isLoading = isChapterLoading || isProgressLoading || isAuthLoading;
-  const isError = isChapterError || isProgressError;
-
-  const handleRefresh = () => {
-    refetchChapter();
-    queryClient.invalidateQueries({ queryKey: ['chapterProgress', chapterId] });
-  };
-
-  const handleQuizComplete = async (score: number, passed: boolean) => {
-    try {
-      await api.post(`/chapters/${chapterId}/progress/quiz`, {
-        score,
-        passed
-      });
-      if (passed) {
-        toast.success("Quiz passed successfully! 🎉");
-      } else {
-        toast.error("Quiz failed. You need at least 2/3 correct. Try again later.");
-      }
-      handleRefresh();
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || 'Failed to save quiz score');
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 font-sans p-6 sm:p-12 pb-32 max-w-4xl mx-auto space-y-8">
-        <Skeleton className="h-12 w-3/4 rounded-2xl mb-10" />
-        <Skeleton className="h-32 w-full rounded-2xl" />
-        <Skeleton className="h-[400px] w-full rounded-2xl" />
-        <Skeleton className="h-40 w-full rounded-2xl" />
-      </div>
-    );
-  }
-
-  if (isError || !chapterRes?.data) {
-    return (
-      <div className="min-h-screen bg-slate-50 font-sans flex items-center justify-center p-6 pb-32">
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center max-w-md w-full">
-          <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertCircle className="w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-bold text-slate-800 mb-2">Oops! Something went wrong</h2>
-          <p className="text-slate-500 mb-6">We couldn't load this chapter. Please check your connection and try again.</p>
-          <button
-            onClick={handleRefresh}
-            className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
-          >
-            <RefreshCw className="w-4 h-4" /> Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const chapter = chapterRes.data;
-  const content = chapterRes.data.content || {}; // The chapter_content merged or appended
-  const progress = progressRes?.data || {};
-
-  // For testing, mock tasks if they are null
-  const fallbackTask = { title: "Reflect on this chapter", description: "Write down 3 things you learned." };
-  let taskData = fallbackTask;
-  if (content.tasks && Array.isArray(content.tasks) && content.tasks.length > 0) {
-    taskData = content.tasks[0];
-  } else if (content.tasks && typeof content.tasks === 'object' && content.tasks.title) {
-    taskData = content.tasks; // Handle case where it's a single object
-  }
-
-  const quizPassed = (progress.quiz_score !== null && progress.quiz_score >= 2);
-  const taskCompleted = (progress.tasks_completed > 0);
-  const skipTokens = user?.skip_tokens_remaining || 0;
+function ArrayVisualizer() {
+  const values = [5, 2, 9, 1, 7];
+  const [index, setIndex] = useState(2);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans pb-32">
-      {/* Hero Header */}
-      <div className="bg-white border-b border-slate-200 pt-10 pb-8 px-6 mb-8 relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 opacity-70 pointer-events-none" />
+    <div className="rounded-2xl border border-border/50 bg-secondary/50 p-4">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold text-foreground">Array Visualizer</p>
+        <span className="text-[11px] text-muted-foreground">Pointer at index {index}</span>
+      </div>
+      <div className="mt-3 flex items-center gap-2">
+        {values.map((value, idx) => (
+          <div
+            key={value}
+            className={cn(
+              "w-10 h-10 rounded-xl flex items-center justify-center text-xs font-semibold border",
+              idx === index
+                ? "bg-primary text-primary-foreground border-primary shadow-card"
+                : "bg-background border-border text-foreground"
+            )}
+          >
+            {value}
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <button
+          onClick={() => setIndex((prev) => (prev === 0 ? values.length - 1 : prev - 1))}
+          className="px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-background border border-border"
+        >
+          Prev
+        </button>
+        <button
+          onClick={() => setIndex((prev) => (prev + 1) % values.length)}
+          className="px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-primary text-primary-foreground"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="px-3 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-full tracking-wide uppercase">
-              Chapter {chapter.chapter_number}
+export default function ChapterPage() {
+  const { chapterId } = useParams();
+  const navigate = useNavigate();
+  const mission = useMemo(() => getMissionById(chapterId || ""), [chapterId]);
+  const nextMission = useMemo(() => (mission ? getNextMission(mission.id) : null), [mission]);
+  const practiceProblems = [
+    { id: "lc-1", name: "Two Sum", difficulty: "Easy", status: "Solved" },
+    { id: "lc-2", name: "Binary Search", difficulty: "Easy", status: "Unsolved" },
+    { id: "lc-3", name: "Arrays & Hashing", difficulty: "Easy", status: "Solved" },
+    { id: "lc-4", name: "Two Pointers", difficulty: "Medium", status: "Unsolved" },
+  ];
+  const shareText =
+    "I just completed Chapter 3: Arrays Basics on DSA OS. Learning data structures step by step. #DSA #CodingJourney";
+  const stepLabels = [
+    "Story Hook",
+    "Curated Video",
+    "Cheatsheet",
+    "Practice Problems",
+    "Mini Quiz",
+    "The Task",
+    "Complete Chapter",
+  ];
+
+  if (!mission) {
+    return (
+      <div className="max-w-3xl mx-auto card-layer-2 rounded-3xl p-8 text-center">
+        <p className="text-lg font-semibold text-foreground">Mission not found</p>
+        <p className="text-sm text-muted-foreground mt-2">Choose a mission from the Learn page.</p>
+        <button
+          onClick={() => navigate("/chapters")}
+          className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold"
+        >
+          Back to Learn <ArrowLeft className="h-4 w-4" />
+        </button>
+      </div>
+    );
+  }
+
+  const progressPercent = Math.round((mission.completedSteps / mission.totalSteps) * 100);
+  const isComplete = mission.completedSteps === mission.totalSteps;
+
+  return (
+    <div className="max-w-5xl mx-auto space-y-4">
+      <section className="rounded-2xl card-layer-2 p-5 md:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="text-[11px] text-muted-foreground">
+              Learn &gt; Roadmap &gt; Java &amp; DSA &gt; {mission.title}
+            </div>
+            <h1 className="mt-2 font-display text-2xl font-bold text-foreground">{mission.title}</h1>
+            <p className="mt-1 text-xs text-muted-foreground">{mission.concept}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => navigate("/chapters")}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground border border-border/50 rounded-2xl px-3 py-1.5"
+            >
+              <ArrowLeft className="h-4 w-4" /> Back to Learn
+            </button>
+            <span
+              className={cn(
+                "text-[11px] px-3 py-1 rounded-full font-semibold",
+                difficultyStyles[mission.difficulty]
+              )}
+            >
+              {mission.difficulty.toUpperCase()}
             </span>
-            <span className="px-3 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-full">
-              {chapter.difficulty || 'Beginner'}
+            <span className="text-[11px] px-3 py-1 rounded-full bg-secondary text-muted-foreground">
+              {mission.timeMinutes} minutes
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            {chapter.title}
-          </h1>
         </div>
-      </div>
 
-      <div className="max-w-4xl mx-auto px-6 space-y-2">
-        {/* PARt 1: STORY HOOK */}
-        <StoryHook content={chapter.story_hook} />
+        <div className="mt-4 grid gap-3 md:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-2xl bg-background/70 border border-border/50 p-4">
+            <div className="flex items-center justify-between text-sm font-semibold text-foreground">
+              <span>Chapter Progress</span>
+              <span>{progressPercent}%</span>
+            </div>
+            <div className="mt-3 h-2.5 rounded-full bg-secondary overflow-hidden">
+              <motion.div
+                className="h-full gradient-golden"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercent}%` }}
+                transition={{ duration: 0.8 }}
+              />
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground">
+              {mission.completedSteps} / {mission.totalSteps} steps completed
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+              <Flame className="h-4 w-4 text-primary" /> Keep the streak alive with one more step.
+            </div>
+          </div>
+          <div className="rounded-2xl bg-gradient-to-br from-primary/15 via-background to-background border border-primary/20 p-4">
+            <p className="text-xs uppercase tracking-[0.28em] text-primary font-semibold">Mentor Note</p>
+            <p className="mt-2 text-xs text-foreground font-medium">{mission.mentorNote}</p>
+          </div>
+        </div>
+      </section>
 
-        {/* PARt 2: VIDEO */}
-        <VideoSection
-          videoId={content.video_youtube_id}
-          channel={content.video_channel}
-          title={content.video_title}
-          duration={content.video_duration}
-          timestamps={content.video_timestamps}
-        />
+      {isComplete && (
+        <section className="rounded-2xl bg-success/10 border border-success/30 p-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Trophy className="h-6 w-6 text-success" />
+            <div>
+              <p className="text-sm font-semibold text-foreground">Mission Complete!</p>
+              <p className="text-xs text-muted-foreground">+{mission.reward.xp} XP and {mission.reward.badge} unlocked</p>
+            </div>
+          </div>
+          {nextMission && (
+            <button
+              onClick={() => navigate(`/chapter/${nextMission.id}`)}
+              className="inline-flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold"
+            >
+              Start Next Mission <ArrowRight className="h-4 w-4" />
+            </button>
+          )}
+        </section>
+      )}
 
-        {/* PARt 3: CHEATSHEET */}
-        <CheatsheetSection
-          url={content.article_url}
-          source={content.article_source}
-          title={content.article_title}
-        />
+      <section className="grid gap-5 lg:grid-cols-[1.4fr_0.9fr]">
+        <div className="space-y-3">
+          <div className="rounded-2xl card-glass p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Story Hook</p>
+                <p className="text-sm font-semibold text-foreground">Why this chapter matters</p>
+              </div>
+              <span className="text-xs text-muted-foreground">Narrative</span>
+            </div>
+            <div className="rounded-2xl bg-secondary/40 border border-border/50 p-3 text-xs text-foreground">
+              Imagine you are building a search engine. Millions of pages need to be stored in memory efficiently.
+              Arrays are the simplest structure that makes this possible.
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {mission.realWorld.map((item) => (
+                <span key={item} className="text-[11px] px-3 py-1 rounded-full bg-primary/10 text-primary">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
 
-        {/* PARt 4: PRACTICE PROBLEMS */}
-        <ProblemsSection problems={content.problems} />
+          <div className="rounded-2xl card-layer-2 p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Chapter Timeline</p>
+                <p className="text-sm font-semibold text-foreground">Follow the path</p>
+              </div>
+              <span className="text-xs text-muted-foreground">Step {Math.min(2, stepLabels.length)} of {stepLabels.length}</span>
+            </div>
+            <div className="space-y-2">
+              {stepLabels.map((label, index) => {
+                const isDone = index < 2;
+                const isActive = index === 2;
+                const isLocked = index > 2;
 
-        {/* PARt 5: MINI QUIZ */}
-        <QuizSection
-          chapterId={chapterId!}
-          questions={content.quiz}
-          onComplete={handleQuizComplete}
-        />
+                return (
+                  <div
+                    key={label}
+                    className={cn(
+                      "rounded-2xl border p-3 flex items-center gap-3 transition-all",
+                      isActive
+                        ? "border-primary bg-primary/10 shadow-glow"
+                        : "border-border/50 bg-secondary/40"
+                    )}
+                  >
+                    <div className="h-8 w-8 rounded-lg flex items-center justify-center text-xs font-semibold">
+                      {isDone && <CheckCircle2 className="h-4 w-4 text-success" />}
+                      {isActive && <CircleDot className="h-4 w-4 text-primary" />}
+                      {isLocked && <Lock className="h-4 w-4 text-muted-foreground" />}
+                    </div>
+                    <div className="flex-1">
+                      <p className={cn("text-xs font-semibold", isLocked ? "text-muted-foreground" : "text-foreground")}>
+                        {label}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground mt-1">
+                        {isDone
+                          ? "Completed"
+                          : isActive
+                            ? "Current step"
+                            : "Unlock by finishing previous step"}
+                      </p>
+                    </div>
+                    <button
+                      className={cn(
+                        "px-3 py-1.5 rounded-xl text-[11px] font-semibold",
+                        isLocked
+                          ? "bg-secondary text-muted-foreground"
+                          : "bg-background border border-border"
+                      )}
+                      disabled={isLocked}
+                    >
+                      {isLocked ? "Locked" : "Start"}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-        {/* PARt 6: TASK */}
-        <TaskSection
-          chapterId={chapterId!}
-          task={taskData}
-          isCompleted={taskCompleted}
-          onComplete={handleRefresh}
-        />
+          <div className="rounded-2xl card-layer-2 p-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Gamepad2 className="h-4 w-4 text-primary" />
+              Practice Problems
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">Problems solved in this chapter: 2 / 4</p>
+            <div className="mt-3 space-y-2">
+              {practiceProblems.map((problem) => (
+                <div
+                  key={problem.id}
+                  className="rounded-2xl border border-border/50 bg-secondary/40 p-3 flex items-center justify-between text-xs"
+                >
+                  <div>
+                    <p className="text-xs font-semibold text-foreground">{problem.name}</p>
+                    <p className="text-[11px] text-muted-foreground">Difficulty: {problem.difficulty}</p>
+                  </div>
+                  <span
+                    className={cn(
+                      "text-[10px] px-2 py-1 rounded-full font-semibold",
+                      problem.status === "Solved" ? "bg-success/15 text-success" : "bg-secondary text-muted-foreground"
+                    )}
+                  >
+                    {problem.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-        {/* PARt 7: UNLOCK NEXT CHAPTER */}
-        <UnlockSection
-          chapterId={chapterId!}
-          quizPassed={quizPassed}
-          taskCompleted={taskCompleted}
-          skipTokens={skipTokens}
-          onSkipped={handleRefresh}
-          onUnlocked={handleRefresh}
-        />
-      </div>
+        <aside className="space-y-3">
+          <ArrayVisualizer />
+
+          <div className="rounded-2xl card-layer-2 p-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Brain className="h-4 w-4 text-primary" /> Real World Connection
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {mission.realWorld.map((item) => (
+                <span
+                  key={item}
+                  className="text-[11px] px-3 py-1 rounded-full bg-primary/10 text-primary"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-gradient-to-br from-secondary/70 via-background to-background border border-border/50 p-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Sparkles className="h-4 w-4 text-primary" /> Rewards
+            </div>
+            <div className="mt-3 flex items-center gap-3">
+              <BadgeCheck className="h-6 w-6 text-primary" />
+              <div>
+                <p className="text-xs font-semibold text-foreground">+{mission.reward.xp} XP</p>
+                <p className="text-xs text-muted-foreground">{mission.reward.badge} badge</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-background border border-border/50 p-4">
+            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Community Progress</p>
+            <p className="mt-2 text-xs font-semibold text-foreground">423 learners completed this chapter</p>
+            <p className="text-xs text-muted-foreground mt-1">87 shared their progress today</p>
+          </div>
+
+          <div className="rounded-2xl bg-primary text-primary-foreground p-4 shadow-card">
+            <p className="text-xs uppercase tracking-[0.28em] opacity-80">Ready?</p>
+            <p className="mt-2 text-sm font-semibold">Start the next step now.</p>
+            <button className="mt-3 inline-flex items-center gap-2 rounded-2xl bg-white/20 px-3 py-1.5 text-xs font-semibold">
+              <Play className="h-4 w-4" /> Start Step 1
+            </button>
+          </div>
+
+          <div className="rounded-2xl card-layer-2 p-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Share2 className="h-4 w-4 text-primary" /> Learn in Public
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Share your progress and build your learning identity.
+            </p>
+            <div className="mt-3 rounded-2xl bg-secondary/40 border border-border/50 p-3 text-[11px] text-muted-foreground">
+              {shareText}
+            </div>
+            <button className="mt-3 inline-flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold">
+              Share on LinkedIn <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          {nextMission && (
+            <div className="rounded-2xl border border-border/50 bg-background/70 p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <LockOpen className="h-4 w-4 text-primary" /> Next Chapter
+              </div>
+              <p className="mt-2 text-xs text-foreground">{nextMission.title}</p>
+              <button
+                onClick={() => navigate(`/chapter/${nextMission.id}`)}
+                className="mt-3 inline-flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold"
+              >
+                Go Next <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </aside>
+      </section>
+
+      <section className="rounded-2xl card-layer-2 p-5">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Phase 1 Progress</p>
+            <p className="text-sm font-semibold text-foreground">{phaseOne.title}</p>
+          </div>
+          <button
+            onClick={() => navigate("/chapters")}
+            className="inline-flex items-center gap-2 rounded-2xl bg-secondary px-3 py-1.5 text-xs font-semibold text-foreground"
+          >
+            Back to Mission List <ArrowLeft className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="mt-4 h-2.5 rounded-full bg-secondary overflow-hidden">
+          <div className="h-full gradient-golden" style={{ width: `${phaseOne.progressPercent}%` }} />
+        </div>
+      </section>
     </div>
   );
 }

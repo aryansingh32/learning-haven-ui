@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle2 } from 'lucide-react';
 
 interface VideoSectionProps {
   videoId: string;
@@ -6,6 +7,7 @@ interface VideoSectionProps {
   title?: string;
   duration?: number;
   timestamps?: Array<{ title: string; seconds: number }>;
+  onMarkDone?: () => void;
 }
 
 export const VideoSection: React.FC<VideoSectionProps> = ({
@@ -13,7 +15,8 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   channel,
   title,
   duration,
-  timestamps = []
+  timestamps = [],
+  onMarkDone
 }) => {
   if (!videoId) return null;
 
@@ -25,15 +28,8 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   };
 
   return (
-    <div className="mb-10">
-      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-1">
-        <span>🎥</span> Best Video for This Topic
-      </h2>
-      <p className="text-slate-500 text-sm mb-4">
-        We reviewed 10+ videos. This one is the best.
-      </p>
-
-      <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-lg mb-4 aspect-video relative">
+    <div className="pt-2">
+      <div className="bg-slate-900 rounded-xl overflow-hidden shadow-sm mb-4 aspect-video relative">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}`}
           className="w-full h-full absolute inset-0"
@@ -76,6 +72,16 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
             ))}
           </ul>
         </div>
+      )}
+
+      {onMarkDone && (
+          <button 
+              onClick={onMarkDone}
+              className="mt-6 flex items-center justify-center gap-2 w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors"
+          >
+              <CheckCircle2 className="w-5 h-5" />
+              Mark as Done
+          </button>
       )}
     </div>
   );

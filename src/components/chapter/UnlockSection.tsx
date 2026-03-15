@@ -78,9 +78,7 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
   };
 
   return (
-    <div className="mt-16 mb-8 border-t-2 border-slate-100 pt-10">
-      <div className="max-w-xl mx-auto text-center">
-
+    <div className="pt-2 text-center">
         {!isReady ? (
           <div className="bg-slate-50 border-2 border-slate-100 rounded-3xl p-8">
             <div className="w-16 h-16 bg-slate-200 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -149,7 +147,6 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
             </button>
           </div>
         )}
-      </div>
     </div>
   );
 };
