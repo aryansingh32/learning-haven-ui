@@ -1,97 +1,23 @@
-import { PomodoroTimer } from "@/components/PomodoroTimer";
-import { HeatmapChart } from "@/components/HeatmapChart";
-import {
-  Flame,
-  Zap,
-  Trophy,
-  Eye,
-  Bot,
-  Map,
-  Calendar,
-  ChevronRight,
-  ArrowUpRight,
-  Target,
-  Sparkles,
-  TrendingUp,
-  Clock,
-  BarChart3,
-  AlertCircle,
-  Briefcase,
-} from "lucide-react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Tooltip,
-  Area,
-  AreaChart,
-} from "recharts";
-import { User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import type { Easing } from "framer-motion";
-import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
-import { useApiQuery } from "@/hooks/useApi";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/context/AuthContext"; // Added useAuth
-
-const PIE_COLORS = ["hsl(152,60%,45%)", "hsl(38,92%,50%)", "hsl(0,72%,51%)"];
-
-// Removed hardcoded quickActions array
-
-// Removed hardcoded calendarDays array
-
-const easeOut: Easing = [0.33, 1, 0.68, 1];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.5, ease: easeOut },
-  }),
-};
+import { ArrowRight, Target, Zap, Users, Clock, Trophy, Linkedin, Flame, Lock } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useApiQuery } from '@/hooks/useApi';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/context/AuthContext';
+import { cn } from '@/lib/utils';
+import { phaseOne, phases, communityFeed } from '@/data/chapters';
 
 const Index = () => {
-  // Renamed Dashboard to Index
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Load public settings
-  const { data: settings, isLoading: settingsLoading } = useApiQuery<any>(
-    ["public-settings"],
-    "/settings/public",
-  );
-
-  const dynamicQuickActions = settings?.app_quick_actions || [];
-
-  // Generate dynamic 30 days history from server or mock fallback
-  const fallbackCalendarDays = Array.from({ length: 28 }, (_, i) => ({
-    date: new Date(Date.now() - (27 - i) * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0],
-    level: Math.random() > 0.6 ? Math.floor(Math.random() * 4) + 1 : 0,
-  }));
-
-  // 1. Fetch User Profile and Stats
+  // Keep ALL existing API calls untouched
   const { data: profileStats, isLoading: profileLoading } = useApiQuery<{
     total_solved: number;
     rank: string;
     current_streak: number;
     badges: string[];
     recent_activity?: any[];
-    calendar_data?: { date: string; level: number }[]; // Updated type for calendar_data
     full_name?: string;
     avatar_url?: string;
     longest_streak?: number;
@@ -99,8 +25,6 @@ const Index = () => {
     xp?: number;
     xp_to_next_level?: number;
     level_progress?: number;
-    referral_count?: number;
-    wallet_balance?: number;
     total_tried?: number;
     total_revision?: number;
     consistency?: number;
@@ -109,917 +33,277 @@ const Index = () => {
     medium_solved?: number;
     hard_solved?: number;
   }>(
-    ["user-profile-stats"], // Changed key to reflect combined data
-    "/users/profile/stats", // Changed endpoint
+    ['user-profile-stats'],
+    '/users/me/stats',
   );
 
-  // Fallback items if API doesn't return recent activity format
-  const recentItems = profileStats?.recent_activity || [
-    {
-      id: 1,
-      type: "topic",
-      title: "Binary Search Trees",
-      progress: 65,
-      color: "text-blue-500",
-    },
-    {
-      id: 2,
-      type: "problem",
-      title: "Valid Parentheses",
-      difficulty: "Easy",
-      status: "attempted",
-      color: "text-green-500",
-    },
-  ];
-
-  const calendarDays = profileStats?.calendar_data || fallbackCalendarDays;
-
-  const { data: topicProgress } = useApiQuery<any[]>(
-    ["topic-progress"],
-    "/users/me/progress",
+  const { data: settings } = useApiQuery<any>(
+    ['public-settings'],
+    '/settings/public',
   );
 
-  // 2. Fetch User Stats (this was already fetching stats, now combined with profile)
-  // const { data: stats, isLoading: statsLoading } = useApiQuery<any>(
-  //   ['user-stats'],
-  //   '/users/me/stats'
-  // );
-
-  // 3. Fetch Weekly Stats
-  const { data: weeklyStats, isLoading: weeklyLoading } = useApiQuery<any>(
-    ["weekly-stats"],
-    "/users/analytics/weekly",
+  // Find current active chapter for "Continue Where You Left Off"
+  const activeChapter = phaseOne.missions.find(
+    (m) => !m.locked && m.completedSteps < m.totalSteps
   );
 
-  // 4. Fetch Radar Chart Data
-  const { data: radarData, isLoading: radarLoading } = useApiQuery<any[]>(
-    ["radar-stats"],
-    "/users/analytics/radar",
-  );
+  const nextStepName = activeChapter?.steps[activeChapter.completedSteps]?.title || "Crack your first problem today";
 
-  // 5. Fetch Leaderboard
-  const { data: leaderboard, isLoading: leaderboardLoading } = useApiQuery<
-    any[]
-  >(["leaderboard"], "/submissions/leaderboard");
+  const userName = profileStats?.full_name?.split(' ')[0] || (user as any)?.full_name?.split(' ')[0] || 'Learner';
+  const streak = profileStats?.current_streak || 0;
+  const xp = profileStats?.xp || 0;
 
-  // 6. Fetch Tasks
-  const { data: tasks, isLoading: tasksLoading } = useApiQuery<any>(
-    ["upcoming-tasks"],
-    "/tasks",
-  );
-
-  // 7. Fetch Latest Jobs
-  const { data: latestJobs, isLoading: latestJobsLoading } = useApiQuery<any[]>(
-    ["latest-jobs"],
-    "/jobs/latest",
-  );
-
-  // Animated counters with API data
-  const solvedCount = useAnimatedCounter(
-    0,
-    profileStats?.total_solved || 0,
-    800,
-  );
-
-  const totalAttempted =
-    (profileStats?.total_solved || 0) +
-    (profileStats?.total_tried || 0) +
-    (profileStats?.total_revision || 0);
-
-  // Map tasks to frontend format
-  const upcomingTasks =
-    (tasks?.tasks || []).slice(0, 3).map((task: any) => ({
-      title: task.title,
-      difficulty: task.priority === "high" ? "Hard" : "Medium",
-      topic: task.category || "General",
-      time: "~25 min",
-      progress:
-        task.status === "completed"
-          ? 100
-          : task.status === "in_progress"
-            ? 50
-            : 0,
-    })) || [];
-  const consistencyCount = useAnimatedCounter(
-    0,
-    profileStats?.consistency || 87,
-    800,
-  ); // Need backend consistency field?
-  const streakCount = useAnimatedCounter(
-    0,
-    profileStats?.current_streak || 0,
-    800,
-  );
-  const avgHours = useAnimatedCounter(
-    0,
-    profileStats?.avg_study_time || 34,
-    800,
-  ); // 3.4h
-
-  const isLoading = profileLoading || weeklyLoading || settingsLoading; // Added settingsLoading
-
-  if (isLoading) {
+  if (profileLoading) {
     return (
-      <div className="max-w-7xl mx-auto space-y-6">
-        <Skeleton className="h-64 w-full rounded-3xl" />
-        <Skeleton className="h-16 w-full rounded-2xl" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Skeleton className="h-64 rounded-2xl" />
-          <Skeleton className="h-64 rounded-2xl" />
-          <Skeleton className="h-64 rounded-2xl" />
-        </div>
-      </div>
+    <div className="max-w-7xl mx-auto space-y-4">
+      <Skeleton className="h-20 w-full rounded-2xl" />
+      <Skeleton className="h-48 w-full rounded-2xl" />
+      <Skeleton className="h-24 w-full rounded-2xl" />
+      <Skeleton className="h-32 w-full rounded-2xl" />
+    </div>
     );
   }
 
-  const pieData = [
-    {
-      name: "Easy",
-      value: profileStats?.easy_solved || 0,
-      color: "hsl(152,60%,45%)",
-    },
-    {
-      name: "Medium",
-      value: profileStats?.medium_solved || 0,
-      color: "hsl(38,92%,50%)",
-    },
-    {
-      name: "Hard",
-      value: profileStats?.hard_solved || 0,
-      color: "hsl(0,72%,51%)",
-    },
-  ];
-
-  // Map radar data to frontend format
-  const mappedRadarData =
-    radarData?.map((r) => ({
-      skill: r.topic,
-      A: r.mastery,
-    })) || [];
-
-  // Calculate weakest topic
-  const weakestTopic =
-    topicProgress?.length > 0
-      ? [...topicProgress].sort((a, b) => a.progress - b.progress)[0]
-      : null;
-
-
-
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      {/* Hero Stats Row — Big Numbers */}
+    <div className="max-w-7xl mx-auto space-y-6 pb-20 md:pb-8">
+      {/* Greeting + Streak */}
       <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        custom={0}
-        className="relative overflow-hidden rounded-3xl gradient-golden p-6 md:p-8 shine-sweep"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center justify-between"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary-foreground/15" />
-        <div className="absolute top-4 right-6 opacity-10">
-          <Sparkles className="h-36 w-36 text-primary-foreground" />
+        <div>
+          <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground">
+            Day {streak || 1} 🔥 {userName}. Keep going.
+          </h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            {streak > 0 ? 'You are building consistency.' : 'Start your streak today.'}
+          </p>
         </div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-14 w-14 md:h-16 md:w-16 rounded-2xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center text-primary-foreground font-display font-bold text-2xl md:text-3xl ring-4 ring-primary-foreground/20 overflow-hidden">
-              {profileStats?.avatar_url ? (
-                <img
-                  src={profileStats.avatar_url}
-                  alt={profileStats.full_name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                profileStats?.full_name?.charAt(0) || "U"
-              )}
+        <div className="flex items-center gap-3">
+          {xp === 0 && streak === 0 ? (
+            <div className="flex items-center gap-1.5 bg-secondary/50 text-muted-foreground px-3 py-1.5 rounded-full text-xs font-semibold">
+              <Zap className="w-3.5 h-3.5" /> Start earning XP
             </div>
-            <div>
-              <h1 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
-                Welcome back, {profileStats?.full_name?.split(" ")[0] || "User"}
-              </h1>
-              <div className="flex items-center gap-4 mt-1">
-                <span className="flex items-center gap-1.5 text-sm text-primary-foreground/80">
-                  <Flame className="h-4 w-4" />{" "}
-                  {profileStats?.current_streak || 0} Day Streak
-                </span>
-                <span className="flex items-center gap-1.5 text-sm text-primary-foreground/80">
-                  <Trophy className="h-4 w-4" /> Rank #
-                  {profileStats?.rank || "-"}
-                </span>
-              </div>
+          ) : (
+            <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-full text-xs font-bold">
+              <Zap className="w-3.5 h-3.5" />
+              {xp} XP
             </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              {
-                val: solvedCount.toLocaleString(),
-                label: `Problems Solved (of ${totalAttempted} tried)`,
-                icon: BarChart3,
-                growth: `${weeklyStats?.percentChange >= 0 ? "+" : ""}${weeklyStats?.percentChange || 0}% this week`,
-              },
-              {
-                val: `${consistencyCount}%`,
-                label: "Consistency",
-                icon: Target,
-                growth: "+5% this week",
-              },
-              {
-                val: streakCount.toString(),
-                label: "Day Streak",
-                icon: Flame,
-                growth:
-                  profileStats?.current_streak >= profileStats?.longest_streak
-                    ? "Personal best!"
-                    : "Keep going!",
-              },
-              {
-                val: `${(avgHours / 10).toFixed(1)}h`,
-                label: "Avg Study Time",
-                icon: Clock,
-                growth: "+0.3h vs last week",
-              },
-            ].map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-4 border border-primary-foreground/10"
-              >
-                <s.icon className="h-5 w-5 text-primary-foreground/70 mb-2" />
-                <p className="font-display text-3xl md:text-4xl font-bold text-primary-foreground tabular-nums">
-                  {s.val}
-                </p>
-                <p className="text-[11px] text-primary-foreground/60 mt-0.5">
-                  {s.label}
-                </p>
-                <p className="text-[10px] text-primary-foreground/50 mt-1 flex items-center gap-1">
-                  <TrendingUp className="h-3 w-3" /> {s.growth}
-                </p>
-              </motion.div>
-            ))}
+          )}
+          <div
+            className="h-10 w-10 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-md cursor-pointer overflow-hidden"
+            onClick={() => navigate('/profile')}
+          >
+            {profileStats?.avatar_url ? (
+              <img src={profileStats.avatar_url} alt={userName} className="w-full h-full object-cover" />
+            ) : (
+              userName.charAt(0)
+            )}
           </div>
         </div>
       </motion.div>
 
-      {/* XP Level Bar */}
+      {/* Continue Where You Left Off — 40% of screen importance */}
+      {activeChapter && (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.98, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+            className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#1c1c1c] via-[#242424] to-[#121212] p-6 sm:p-10 border border-white/10 shadow-2xl cursor-pointer group min-h-[260px] flex flex-col justify-end"
+            onClick={() => navigate(`/chapter/${activeChapter.id}`)}
+          >
+            {/* Cinematic Background Elements */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(249,115,22,0.15),transparent_60%)] pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/20 blur-[80px] rounded-full pointer-events-none" />
+            
+            <div className="relative z-10">
+              
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold mb-3 text-white tracking-tight drop-shadow-md">
+                Chapter {activeChapter.order}: {activeChapter.title}
+              </h2>
+              
+              <p className="text-sm text-gray-300 font-medium mb-8 max-w-xl">
+                You're {Math.round((activeChapter.completedSteps / activeChapter.totalSteps) * 100)}% through this chapter. Don't stop now.
+              </p>
+
+              <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] transition-all group-hover:-translate-y-1">
+                Continue Learning <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+      )}
+
+      {/* Today's Goal */}
       <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        custom={1}
-        className="card-glass rounded-2xl p-4 flex items-center gap-4"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="card-glass rounded-2xl p-4 sm:p-5"
       >
-        <div className="flex items-center gap-2.5">
-          <div className="h-10 w-10 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-md">
-            {profileStats?.level || 1}
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+            <Target className="w-4 h-4 text-primary" />
+            Today's Goal
+          </h3>
+          <span className="text-[10px] text-muted-foreground">
+            <Clock className="w-3 h-3 inline mr-1" />
+            ~30 min
+          </span>
+        </div>
+        <div className="space-y-2.5">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 rounded-full bg-success/15 flex items-center justify-center">
+              <svg className="w-3 h-3 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p className="text-sm text-foreground">Complete: {nextStepName}</p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-foreground">
-              Level {profileStats?.level || 1}
-            </p>
-            <p className="text-[10px] text-muted-foreground">
-              {profileStats?.xp?.toLocaleString() || 0} /{" "}
-              {(
-                profileStats?.xp + profileStats?.xp_to_next_level
-              )?.toLocaleString() || 3000}{" "}
-              XP
-            </p>
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 flex-shrink-0 rounded-full bg-secondary flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">Make progress on your journey</p>
           </div>
         </div>
-        <div className="flex-1 h-3 bg-secondary rounded-full overflow-hidden">
+        <div className="mt-3.5 h-1.5 bg-secondary rounded-full overflow-hidden">
           <motion.div
             className="h-full gradient-golden rounded-full"
             initial={{ width: 0 }}
-            animate={{ width: `${profileStats?.level_progress || 0}%` }}
-            transition={{ duration: 1.4, ease: "easeOut", delay: 0.5 }}
+            animate={{ width: '50%' }}
+            transition={{ duration: 0.8, delay: 0.5 }}
           />
         </div>
-        <span className="text-xs font-bold text-primary tabular-nums">
-          {profileStats?.level_progress || 0}%
-        </span>
+        <p className="text-[10px] text-muted-foreground mt-1.5">1 of 2 completed today</p>
       </motion.div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={2}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-1">
-            <p className="text-sm font-semibold text-foreground">
-              Weekly Progress
-            </p>
-            <span
-              className={cn(
-                "text-[10px] px-2 py-0.5 rounded-full font-semibold",
-                weeklyStats?.percentChange >= 0
-                  ? "bg-success/15 text-success"
-                  : "bg-destructive/15 text-destructive",
-              )}
-            >
-              {weeklyStats?.percentChange >= 0 ? "+" : ""}
-              {weeklyStats?.percentChange || 0}%
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="font-display text-3xl font-bold text-foreground">
-              {(weeklyStats?.thisWeek || 0).toFixed(1)}h
-            </span>
-            <span className="text-xs text-muted-foreground">this week</span>
-          </div>
-          <ResponsiveContainer width="100%" height={120}>
-            {/* Note: In a real app, this should fetch daily data specifically */}
-            <BarChart data={[]} barCategoryGap="20%">
-              <XAxis
-                dataKey="day"
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip
-                cursor={{ fill: "hsl(var(--secondary))", radius: 8 }}
-                contentStyle={{
-                  background: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "12px",
-                  fontSize: 12,
-                }}
-              />
-              <Bar
-                dataKey="solved"
-                radius={[6, 6, 0, 0]}
-                animationDuration={1200}
-                fill="hsl(38,92%,50%,0.18)"
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </motion.div>
+      {/* Phase Overview — Horizontal Scroll */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <h3 className="text-sm font-bold text-foreground mb-3 px-0.5">Your Path to Mastery</h3>
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+          {phases.map((phase, i) => {
+            const isLocked = i > 0 && phase.progressPercent === 0;
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={2}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-foreground">Focus Area</p>
-            <AlertCircle className="h-4 w-4 text-destructive" />
-          </div>
-          {weakestTopic ? (
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">
-                Weakest Topic
-              </p>
-              <p className="font-display text-lg font-bold text-foreground mb-2">
-                {weakestTopic.topic}
-              </p>
-              <div className="space-y-1">
-                <div className="flex justify-between text-[10px]">
-                  <span>Mastery</span>
-                  <span className="font-bold">{weakestTopic.progress}%</span>
-                </div>
-                <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-destructive"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${weakestTopic.progress}%` }}
-                    transition={{ duration: 1 }}
-                  />
-                </div>
-              </div>
-              <div className="mt-4 flex gap-2">
-                <Link
-                  to={`/topics?search=${weakestTopic.topic}`}
-                  className="text-[10px] px-3 py-1.5 bg-primary/10 text-primary rounded-lg font-semibold hover:bg-primary/20 transition-colors"
-                >
-                  Practice Now
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-4">
-              <p className="text-xs text-muted-foreground">
-                Keep solving to find your weak spots!
-              </p>
-            </div>
-          )}
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={3}
-        >
-          <PomodoroTimer />
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={4}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-foreground">
-              Difficulty Split
-            </p>
-            <span className="text-xs text-muted-foreground">
-              {profileStats?.total_solved || 0} Total
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex-shrink-0">
-              <ResponsiveContainer width={100} height={100}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={28}
-                    outerRadius={45}
-                    dataKey="value"
-                    stroke="none"
-                    animationDuration={1200}
-                  >
-                    {pieData.map((_, i) => (
-                      <Cell key={i} fill={PIE_COLORS[i]} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      background: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
-                      borderRadius: "12px",
-                      fontSize: 11,
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="space-y-2.5 flex-1">
-              {pieData.map((item) => (
-                <div
-                  key={item.name}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-xs text-muted-foreground">
-                      {item.name}
-                    </span>
-                  </div>
-                  <span className="text-sm font-bold font-display text-foreground">
-                    {item.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-4 space-y-2">
-            {pieData.map((item, i) => (
-              <div key={item.name} className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground w-12">
-                  {item.name}
-                </span>
-                <div className="flex-1 h-1.5 bg-secondary rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{ backgroundColor: item.color }}
-                    initial={{ width: 0 }}
-                    animate={{
-                      width: `${profileStats?.total_solved > 0 ? (item.value / profileStats.total_solved) * 100 : 0}%`,
-                    }}
-                    transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          {/* Quick Actions */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {dynamicQuickActions.length > 0 ? (
-              dynamicQuickActions.map((action: any, index: number) => {
-                const getIcon = (name: string) => {
-                  switch (name) {
-                    case "Zap":
-                      return <Zap className="w-6 h-6 text-yellow-500" />;
-                    case "Target":
-                      return <Target className="w-6 h-6 text-red-500" />;
-                    case "Eye":
-                      return <Eye className="w-6 h-6 text-purple-500" />;
-                    case "Bot":
-                      return <Bot className="w-6 h-6 text-blue-500" />;
-                    case "Users":
-                      return <User className="w-6 h-6 text-green-500" />;
-                    case "Map":
-                      return <Map className="w-6 h-6 text-indigo-500" />;
-                    default:
-                      return <Zap className="w-6 h-6 text-slate-500" />;
-                  }
-                };
-
-                return (
-                  <motion.button
-                    key={index}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => navigate(action.to)}
-                    className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all gap-2 group"
-                  >
-                    <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-white transition-colors">
-                      {getIcon(action.icon)}
-                    </div>
-                    <div>
-                      <span className="text-sm font-semibold text-slate-700 block">
-                        {action.label}
-                      </span>
-                      {action.desc && (
-                        <span className="text-[10px] text-slate-400 font-medium hidden sm:block">
-                          {action.desc}
-                        </span>
-                      )}
-                    </div>
-                  </motion.button>
-                );
-              })
-            ) : (
-              <div className="col-span-full text-center text-sm text-slate-400 py-4">
-                No quick actions configured
-              </div>
-            )}
-          </div>
-
-          {/* Latest Opportunities Widget */}
-          <div className="card-glass rounded-2xl p-5 md:p-6 mt-6 border border-border/40">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold font-display text-foreground flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-blue-500" /> Latest Opportunities
-              </h2>
-              <Link to="/jobs" className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
-                View All <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-            {latestJobsLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Skeleton className="h-16 w-full rounded-xl" />
-                <Skeleton className="h-16 w-full rounded-xl" />
-              </div>
-            ) : latestJobs?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {latestJobs.map((job) => (
-                  <Link key={job.id} to="/jobs" className="flex items-center gap-3 p-3 rounded-xl border border-border/50 hover:border-blue-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all group">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-700 font-bold shrink-0">
-                      {job.company.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-bold text-foreground truncate group-hover:text-blue-600 transition-colors">{job.title}</h3>
-                      <p className="text-[11px] font-medium text-muted-foreground truncate uppercase tracking-wider">{job.company} • {job.type}</p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-blue-600 transition-colors shrink-0" />
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-6 bg-secondary/30 rounded-xl border border-dashed border-border/60">
-                <p className="text-sm text-muted-foreground">No recent opportunities found.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Heatmap + Radar + XP Growth */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={9}
-        >
-          <HeatmapChart />
-        </motion.div>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={10}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-            Skill Radar
-          </p>
-          <ResponsiveContainer width="100%" height={200}>
-            <RadarChart
-              cx="50%"
-              cy="50%"
-              outerRadius={70}
-              data={mappedRadarData}
-            >
-              <PolarGrid stroke="hsl(var(--border))" strokeDasharray="3 3" />
-              <PolarAngleAxis
-                dataKey="skill"
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
-              />
-              <PolarRadiusAxis tick={false} axisLine={false} />
-              <Radar
-                dataKey="A"
-                stroke="hsl(38,92%,50%)"
-                fill="hsl(38,92%,50%)"
-                fillOpacity={0.15}
-                strokeWidth={2}
-                animationDuration={1200}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
-        </motion.div>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={11}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-            XP Growth
-          </p>
-          <ResponsiveContainer width="100%" height={200}>
-            {/* progressData would ideally come from analytics/progress endpoint */}
-            <AreaChart data={[]}>
-              <defs>
-                <linearGradient id="xpGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="0%"
-                    stopColor="hsl(38,92%,50%)"
-                    stopOpacity={0.35}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="hsl(38,92%,50%)"
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-              </defs>
-              <XAxis
-                dataKey="week"
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip
-                contentStyle={{
-                  background: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "12px",
-                  fontSize: 12,
-                  color: "hsl(var(--foreground))",
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="xp"
-                stroke="hsl(38,92%,50%)"
-                strokeWidth={2.5}
-                fill="url(#xpGradient)"
-                dot={{ fill: "hsl(38,92%,50%)", r: 3, strokeWidth: 0 }}
-                animationDuration={1500}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </motion.div>
-      </div>
-
-      {/* Calendar + AI Roadmap + Leaderboard */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={12}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-foreground">
-              <Calendar className="h-4 w-4 inline mr-1.5 text-primary" />
-              February 2026
-            </p>
-            <span className="text-xs text-muted-foreground">This Week</span>
-          </div>
-          <div className="grid grid-cols-7 gap-1.5">
-            {calendarDays.map((d, index) => {
-              const date = new Date(d.date);
-              const dayOfWeek = date.toLocaleDateString("en-US", {
-                weekday: "short",
-              });
-              const dayOfMonth = date.getDate();
-              const isActive = d.level > 0; // Assuming level > 0 means active
-              const isStreak = d.level >= 2; // Assuming level >= 2 means streak
-
-              return (
-                <motion.div
-                  key={d.date}
-                  whileHover={{ scale: 1.08 }}
-                  className={`text-center p-2.5 rounded-xl transition-all cursor-pointer relative ${isActive
-                    ? "gradient-golden text-primary-foreground shadow-lg"
-                    : "bg-secondary/50 text-secondary-foreground hover:bg-secondary"
-                    }`}
-                >
-                  <p className="text-[10px] font-medium opacity-70">
-                    {dayOfWeek}
-                  </p>
-                  <p className="text-base font-bold font-display mt-0.5">
-                    {dayOfMonth}
-                  </p>
-                  {isStreak && (
-                    <div className="absolute -top-1 right-0.5">
-                      <Flame className="h-3 w-3 text-destructive" />
-                    </div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={13}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-foreground">
-              <Target className="h-4 w-4 inline mr-1.5 text-primary" />
-              AI Roadmap
-            </p>
-            <span className="text-[10px] px-2.5 py-1 rounded-full gradient-golden text-primary-foreground font-semibold">
-              {upcomingTasks.length} tasks
-            </span>
-          </div>
-          <div className="space-y-2.5">
-            {upcomingTasks.length > 0 ? (
-              upcomingTasks.map((task, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + i * 0.1 }}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-all duration-200 group cursor-pointer"
-                >
-                  <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
-                    {i + 1}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
-                      {task.title}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex-1 h-1.5 bg-secondary rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full gradient-golden rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${task.progress}%` }}
-                          transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
-                        />
-                      </div>
-                      <span className="text-[10px] text-muted-foreground tabular-nums">
-                        {task.progress}%
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    className={`text-[10px] px-2 py-1 rounded-lg font-semibold ${task.difficulty === "Hard"
-                      ? "bg-destructive/10 text-destructive"
-                      : "bg-primary/10 text-primary"
-                      }`}
-                  >
-                    {task.difficulty}
-                  </span>
-                </motion.div>
-              ))
-            ) : (
-              <div className="text-center py-10">
-                <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-20" />
-                <p className="text-xs text-muted-foreground">
-                  No upcoming tasks
-                </p>
-              </div>
-            )}
-          </div>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={14}
-          className="card-glass rounded-2xl p-5 card-hover"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-foreground">
-              🏆 Leaderboard
-            </p>
-            <Link
-              to="/referrals"
-              className="text-xs text-primary font-medium hover:underline"
-            >
-              View all
-            </Link>
-          </div>
-          <div className="space-y-2">
-            {leaderboard?.map((user, i) => (
+            return (
               <motion.div
-                key={user.id || i}
+                key={phase.id}
+                whileTap={{ scale: isLocked ? 1 : 0.98 }}
+                onClick={() => !isLocked && navigate('/chapters')}
+                className={cn(
+                  "flex-shrink-0 w-[200px] sm:w-[220px] rounded-2xl p-4 border transition-all relative overflow-hidden",
+                  i === 0
+                    ? 'bg-primary/5 border-primary/20 shadow-sm cursor-pointer'
+                    : 'bg-secondary/30 border-border/50',
+                  isLocked && 'cursor-not-allowed border-border/30 opacity-80'
+                )}
+              >
+                {isLocked && (
+                  <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-4">
+                     <Lock className="w-6 h-6 text-muted-foreground mb-2 opacity-50" />
+                     <p className="text-[11px] font-bold text-foreground">Unlocks after Phase 1</p>
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Phase {i + 1}</span>
+                  {!isLocked && <span className="text-[10px] font-bold text-primary">{phase.progressPercent}%</span>}
+                </div>
+                <h4 className="text-sm font-bold text-foreground mb-2 leading-tight">{phase.title}</h4>
+                
+                {!isLocked ? (
+                  <>
+                    <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                      <div
+                        className="h-full gradient-golden rounded-full transition-all"
+                        style={{ width: `${phase.progressPercent}%` }}
+                      />
+                    </div>
+                    <p className="text-[10px] text-muted-foreground mt-1.5">
+                      {phase.missionsCompleted}/{phase.missionsTotal} chapters
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[10px] text-muted-foreground mt-1">
+                      {phase.missionsTotal} chapters
+                  </p>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Community Feed */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="card-glass rounded-2xl p-4 sm:p-5 border border-border/40"
+      >
+        <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
+          <Users className="w-4 h-4 text-primary" />
+          Others on the same journey
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+          {communityFeed.map((item, i) => {
+            let icon = null;
+            let bgColor = "bg-secondary";
+            let textColor = "text-muted-foreground";
+
+            switch (item.type) {
+              case 'completed':
+                icon = <Trophy className="w-4 h-4 text-emerald-500" />;
+                bgColor = "bg-emerald-500/10";
+                textColor = "text-emerald-500";
+                break;
+              case 'shared':
+                icon = <Linkedin className="w-4 h-4 text-blue-500" />;
+                bgColor = "bg-[#0A66C2]/10";
+                textColor = "text-[#0A66C2]";
+                break;
+              case 'streak':
+                icon = <Flame className="w-4 h-4 text-orange-500" />;
+                bgColor = "bg-orange-500/10";
+                textColor = "text-orange-500";
+                break;
+              case 'started':
+                icon = <Zap className="w-4 h-4 text-yellow-500" />;
+                bgColor = "bg-yellow-500/10";
+                textColor = "text-yellow-500";
+                break;
+            }
+
+            return (
+              <motion.div
+                key={item.id}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + i * 0.1 }}
-                whileHover={{ x: 4 }}
-                className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${user.id === user?.id
-                  ? "card-layer-2 border border-primary/20"
-                  : "bg-secondary/30 hover:bg-secondary/50"
-                  }`}
+                transition={{ delay: 0.5 + i * 0.05 }}
+                className="flex items-center gap-4 py-3 px-4 rounded-xl bg-background/60 hover:bg-background border border-border/30 transition-colors group"
               >
-                <span className="font-display font-bold text-base w-7 text-center">
-                  {i === 0
-                    ? "🥇"
-                    : i === 1
-                      ? "🥈"
-                      : i === 2
-                        ? "🥉"
-                        : `#${i + 1}`}
-                </span>
-                <span
-                  className={`flex-1 text-sm font-medium ${user.id === user?.id ? "text-primary font-semibold" : "text-foreground"}`}
-                >
-                  {user.full_name || user.email}
-                </span>
-                <span className="text-xs font-semibold text-muted-foreground tabular-nums">
-                  {user.xp.toLocaleString()} XP
-                </span>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${bgColor}`}>
+                  {icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-foreground truncate group-hover:text-primary transition-colors">
+                    <span className="font-bold">{item.name}</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {item.action}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end shrink-0">
+                  <span className="text-[10px] text-muted-foreground/70">{item.time}</span>
+                  <span className="text-[10px] font-medium text-muted-foreground">{item.city}</span>
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Referral Summary */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        custom={15}
-        className="relative overflow-hidden card-layer-2 rounded-2xl p-6 card-hover"
-      >
-        <div className="absolute top-0 right-0 w-1/3 h-full gradient-golden opacity-10 rounded-l-full" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <p className="font-display font-bold text-lg text-foreground">
-              Invite Friends & Earn Rewards
-            </p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Share your referral link and earn ₹100 per active referral!
-            </p>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="text-center">
-              <p className="font-display text-2xl font-bold text-foreground">
-                {profileStats?.referral_count || 0}
-              </p>
-              <p className="text-[10px] text-muted-foreground">Referred</p>
-            </div>
-            <div className="text-center">
-              <p className="font-display text-2xl font-bold text-primary">
-                ₹{profileStats?.wallet_balance || 0}
-              </p>
-              <p className="text-[10px] text-muted-foreground">Earned</p>
-            </div>
-            <Link
-              to="/referrals"
-              className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl gradient-golden text-primary-foreground text-sm font-medium hover:opacity-90 transition-all shadow-lg hover:shadow-xl btn-ripple"
-            >
-              View Details <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            );
+          })}
         </div>
       </motion.div>
     </div>

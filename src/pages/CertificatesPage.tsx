@@ -1,160 +1,189 @@
 import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
+import { phaseOne } from "@/data/chapters";
 
 const CertificatesPage = () => {
-  // 1. Fetch User Profile for name
+  const { user } = useAuth();
+
+  // Keep ALL existing API calls
   const { data: profile } = useApiQuery<any>(
     ['user-profile'],
     '/users/me'
   );
 
-  // 2. Fetch User Certificates
   const { data: certificates, isLoading: certsLoading } = useApiQuery<any[]>(
     ['user-certificates'],
     '/certificates'
   );
 
-  const activeCert = certificates?.[0]; // Show the most recent one as main
+  const userName = profile?.full_name || (user as any)?.full_name || 'Learner';
+
+  // Generate share text for LinkedIn card
+  const getShareText = (certName: string) =>
+    `🎓 I just earned a certificate in "${certName}" on DSA OS!\n\nFrom problem solving 101 to real challenges — the structured approach works.\n\n#DSA #CodingJourney #Placements #LearningInPublic`;
 
   if (certsLoading) {
     return (
-      <div className="max-w-5xl mx-auto space-y-6">
-        <Skeleton className="h-72 w-full rounded-2xl" />
-        <Skeleton className="h-64 w-full rounded-2xl" />
+      <div className="max-w-7xl mx-auto space-y-4">
+        <Skeleton className="h-20 w-full rounded-2xl" />
+        <Skeleton className="h-48 w-full rounded-2xl" />
       </div>
     );
   }
 
+  const activeCert = certificates?.[0];
+
   return (
-    <div className="max-w-5xl mx-auto space-y-5">
+    <div className="max-w-7xl mx-auto space-y-6 pb-20 md:pb-8">
       <div>
-        <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Certificates</h1>
-        <p className="text-sm text-muted-foreground mt-1">Your achievements & verifiable learning milestones</p>
+        <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground">Certificates</h1>
+        <p className="text-xs text-muted-foreground mt-0.5">Your verified achievements & learning milestones</p>
       </div>
 
       {activeCert ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="card-layer-3 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden shine-sweep"
+          className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 p-6 sm:p-10 text-center text-white relative"
         >
-          {/* Paper texture overlay */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23000000\" fill-opacity=\"0.4\"%3E%3Cpath d=\"m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }} />
-          {/* Decorative border */}
-          <div className="absolute inset-3 border-2 border-dashed border-primary/15 rounded-xl pointer-events-none" />
-          <div className="absolute inset-4 border border-primary/8 rounded-xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_50%)]" />
           <div className="relative z-10">
-            {/* Gold embossed seal */}
-            <div className="relative inline-block mb-5">
-              <div className="h-16 w-16 rounded-full gradient-golden flex items-center justify-center mx-auto shadow-xl animate-glow-pulse">
-                <Award className="h-8 w-8 text-primary-foreground" />
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+            >
+              <div className="w-16 h-16 mx-auto rounded-full bg-white/20 backdrop-blur flex items-center justify-center mb-4 ring-4 ring-white/30">
+                <Award className="w-8 h-8 text-white" />
               </div>
-              <Sparkles className="absolute -top-1 -right-1 h-5 w-5 text-primary animate-float" />
-            </div>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-[0.3em] mb-3 font-semibold">Certificate of Achievement</p>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">{activeCert.topic_name || activeCert.title || "DSA Mastery"}</h2>
-            <p className="text-sm text-muted-foreground mb-1">Awarded to <strong className="text-foreground">{profile?.full_name || "Code Haven User"}</strong></p>
-            <p className="text-xs text-muted-foreground mb-8">For demonstrating exceptional skills in {activeCert.topic_name || "Data Structures and Algorithms"}</p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl gradient-golden text-primary-foreground text-sm font-medium transition-all shadow-lg hover:shadow-xl btn-ripple"
+            </motion.div>
+            <p className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-2">Certificate of Achievement</p>
+            <h2 className="text-xl sm:text-2xl font-extrabold mb-1">
+              {activeCert.topic_name || activeCert.title || "DSA Mastery"}
+            </h2>
+            <p className="text-sm opacity-80 mb-1">Awarded to <strong>{userName}</strong></p>
+            <p className="text-xs opacity-60 mb-5">
+              For demonstrating exceptional skills in {activeCert.topic_name || "Data Structures and Algorithms"}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+              <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-orange-600 text-sm font-bold shadow-md hover:shadow-lg transition-all">
+                <Download className="w-4 h-4" /> Download PDF
+              </button>
+              <button
+                onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank')}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/20 text-white text-sm font-bold border border-white/30 backdrop-blur hover:bg-white/30 transition-all"
               >
-                <Download className="h-4 w-4" /> Download PDF
-              </motion.button>
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium hover:bg-muted transition-all border border-border/50"
-              >
-                <Share2 className="h-4 w-4" /> Share Credentials
-              </motion.button>
+                <Share2 className="w-4 h-4" /> Share on LinkedIn
+              </button>
             </div>
           </div>
         </motion.div>
       ) : (
-        <div className="card-glass rounded-3xl p-16 text-center border border-dashed border-border/60">
-          <div className="h-16 w-16 rounded-2xl bg-secondary/50 flex items-center justify-center mx-auto mb-4 opacity-40">
-            <Trophy className="h-8 w-8" />
+        <div className="card-glass rounded-2xl p-10 sm:p-14 text-center border border-dashed border-border/50">
+          <div className="w-14 h-14 rounded-2xl bg-secondary/50 flex items-center justify-center mx-auto mb-4 opacity-30">
+            <Trophy className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-bold text-foreground mb-2">No Certificates Yet</h3>
-          <p className="text-sm text-muted-foreground max-w-sm mx-auto mb-6">Complete a learning track to earn your first certified achievement and showcase your DSA expertise.</p>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 rounded-xl gradient-golden text-primary-foreground text-sm font-semibold shadow-md"
-          >
+          <h3 className="text-lg font-bold text-foreground mb-1">No Certificates Yet</h3>
+          <p className="text-sm text-muted-foreground max-w-sm mx-auto mb-5">
+            Complete a learning phase to earn your first verified certificate and showcase your DSA skills.
+          </p>
+          <button className="px-5 py-2.5 rounded-xl gradient-golden text-white text-sm font-bold shadow-md">
             Start Learning
-          </motion.button>
+          </button>
         </div>
       )}
 
-      {/* Share Options */}
+      {/* LinkedIn Share Preview */}
       {activeCert && (
-        <div className="card-glass rounded-2xl p-5">
-          <p className="text-sm font-semibold text-foreground mb-3">Share to Social</p>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="card-glass rounded-2xl p-4 sm:p-5"
+        >
+          <h3 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+            <Share2 className="w-4 h-4 text-primary" />
+            LinkedIn Share Preview
+          </h3>
+          <div className="bg-secondary/50 rounded-xl p-4 border border-border/50 mb-3">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-full gradient-golden flex items-center justify-center text-white font-bold text-xs">
+                {userName.charAt(0)}
+              </div>
+              <div>
+                <p className="text-xs font-bold text-foreground">{userName}</p>
+                <p className="text-[10px] text-muted-foreground">DSA OS Certificate Holder</p>
+              </div>
+            </div>
+            <p className="text-[11px] text-muted-foreground whitespace-pre-line leading-relaxed">
+              {getShareText(activeCert.topic_name || activeCert.title || 'DSA Mastery')}
+            </p>
+          </div>
           <div className="flex flex-wrap gap-2">
             {["LinkedIn", "Twitter / X", "WhatsApp", "Copy Link"].map((platform, i) => (
               <motion.button
                 key={platform}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-secondary/30 text-foreground text-sm font-medium hover:bg-secondary/60 transition-all border border-border/40"
+                transition={{ delay: 0.3 + i * 0.05 }}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/30 text-foreground text-xs font-medium hover:bg-secondary/60 transition-all border border-border/40"
               >
-                <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                <ExternalLink className="w-3 h-3 text-primary" />
                 {platform}
               </motion.button>
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
 
-      {/* Certificates List */}
-      <div className="card-glass rounded-2xl p-5">
-        <p className="text-sm font-semibold text-foreground mb-4">All Achievements</p>
-        <div className="space-y-2">
-          {certificates?.map((cert, i) => (
-            <motion.div
-              key={cert.id || cert.certificate_code}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06 }}
-              whileHover={{ x: 4 }}
-              className="flex items-center gap-4 p-4 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-all card-hover group"
-            >
-              <div className="h-11 w-11 rounded-xl gradient-golden flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
-                <BadgeCheck className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{cert.topic_name || cert.title || "Track Mastery"}</p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Calendar className="h-3 w-3 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground">{new Date(cert.created_at || cert.date).toLocaleDateString()}</span>
-                  <span className="text-xs text-muted-foreground">• {cert.certificate_code || cert.id}</span>
+      {/* All Certificates */}
+      {certificates && certificates.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="card-glass rounded-2xl p-4 sm:p-5"
+        >
+          <h3 className="text-sm font-bold text-foreground mb-3">All Achievements</h3>
+          <div className="space-y-2">
+            {certificates.map((cert, i) => (
+              <motion.div
+                key={cert.id || cert.certificate_code || i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 + i * 0.05 }}
+                className="flex items-center gap-3 p-3 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-all group"
+              >
+                <div className="w-10 h-10 rounded-xl gradient-golden flex items-center justify-center text-white flex-shrink-0 shadow-sm">
+                  <BadgeCheck className="w-5 h-5" />
                 </div>
-              </div>
-              <div className="flex gap-1.5 flex-shrink-0">
-                <motion.button whileTap={{ scale: 0.9 }} className="p-2.5 rounded-xl card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
-                  <Download className="h-4 w-4" />
-                </motion.button>
-                <motion.button whileTap={{ scale: 0.9 }} className="p-2.5 rounded-xl card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
-                  <Share2 className="h-4 w-4" />
-                </motion.button>
-              </div>
-            </motion.div>
-          ))}
-          {!certsLoading && (!certificates || certificates.length === 0) && (
-            <div className="py-10 text-center opacity-30 italic text-sm">
-              Your achievements will appear here.
-            </div>
-          )}
-        </div>
-      </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                    {cert.topic_name || cert.title || "Track Mastery"}
+                  </p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <Calendar className="w-3 h-3 text-muted-foreground" />
+                    <span className="text-[10px] text-muted-foreground">
+                      {new Date(cert.created_at || cert.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex gap-1 flex-shrink-0">
+                  <button className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
+                    <Download className="w-3.5 h-3.5" />
+                  </button>
+                  <button className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
+                    <Share2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };

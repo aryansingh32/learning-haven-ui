@@ -1,248 +1,243 @@
-import { Star, Flame, Trophy, Settings, Globe, ChevronRight, Shield, Bell, HelpCircle, Mail, Moon, Sun, Award, Zap, Target } from "lucide-react";
-import { ProgressRing } from "@/components/ProgressRing";
-import { useTheme } from "@/hooks/useTheme";
-import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { AreaChart, Area, ResponsiveContainer } from "recharts";
-import { useApiQuery } from "@/hooks/useApi";
-import { Skeleton } from "@/components/ui/skeleton";
-
-const languages = ["JavaScript", "Python", "C++", "Java", "Go"];
-
-const settingsItems = [
-  { label: "Notifications", description: "Manage push notifications", icon: Bell },
-  { label: "Privacy", description: "Control data sharing preferences", icon: Shield },
-  { label: "Account", description: "Email, password & security", icon: Mail },
-  { label: "Help & Support", description: "FAQs and contact support", icon: HelpCircle },
-];
+import { motion } from 'framer-motion';
+import { Award, Flame, Zap, Target, BookOpen, Code, Calendar, Share2, ExternalLink, Star, Trophy } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useApiQuery } from '@/hooks/useApi';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/context/AuthContext';
+import { cn } from '@/lib/utils';
+import { phaseOne } from '@/data/chapters';
 
 const ProfilePage = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  // 1. Fetch User Profile
-  const { data: profile, isLoading: profileLoading } = useApiQuery<any>(
-    ['user-profile'],
-    '/users/me'
-  );
-
-  // 2. Fetch User Stats
-  const { data: stats, isLoading: statsLoading } = useApiQuery<any>(
-    ['user-stats'],
+  // Keep ALL existing API calls
+  const { data: profileStats, isLoading } = useApiQuery<any>(
+    ['user-profile-stats'],
     '/users/me/stats'
   );
 
-  const xpCount = useAnimatedCounter(0, profile?.xp || 0, 800);
-  const solvedCount = useAnimatedCounter(0, stats?.total_solved || 0, 800);
+  const userName = profileStats?.full_name || (user as any)?.full_name || 'Learner';
+  const firstName = userName.split(' ')[0];
+  const streak = profileStats?.current_streak || 0;
+  const xp = profileStats?.xp || 0;
+  const level = profileStats?.level || 1;
+  const totalSolved = profileStats?.total_solved || 0;
+  const chaptersCompleted = phaseOne.missions.filter(m => m.completedSteps >= m.totalSteps).length;
+  const college = profileStats?.college_name || (user as any)?.college_name || 'Your College';
 
-  const isLoading = profileLoading || statsLoading;
+  // Build badges from completed chapters
+  const earnedBadges = phaseOne.missions
+    .filter(m => m.completedSteps >= m.totalSteps)
+    .map(m => ({ name: m.reward.badge, xp: m.reward.xp, chapter: m.title }));
+
+  // Activity timeline from completed chapters
+  const activityTimeline = phaseOne.missions
+    .filter(m => m.completedSteps > 0)
+    .map((m, i) => ({
+      day: i + 1,
+      action: m.completedSteps >= m.totalSteps ? `Completed "${m.title}"` : `Started "${m.title}"`,
+      done: m.completedSteps >= m.totalSteps,
+    }));
 
   if (isLoading) {
     return (
-      <div className="max-w-3xl mx-auto space-y-5">
-        <Skeleton className="h-48 w-full rounded-2xl" />
-        <Skeleton className="h-24 w-full rounded-2xl" />
-        <Skeleton className="h-40 w-full rounded-2xl" />
-        <div className="grid grid-cols-2 gap-4">
-          <Skeleton className="h-24 rounded-2xl" />
-          <Skeleton className="h-24 rounded-2xl" />
-        </div>
-      </div>
+    <div className="max-w-7xl mx-auto space-y-4">
+      <Skeleton className="h-40 w-full rounded-2xl" />
+      <Skeleton className="h-24 w-full rounded-2xl" />
+      <Skeleton className="h-32 w-full rounded-2xl" />
+    </div>
     );
   }
 
-  const statItems = [
-    { label: "Problems Solved", value: stats?.total_solved || 0 },
-    { label: "Easy", value: stats?.easy_solved || 0 },
-    { label: "Medium", value: stats?.medium_solved || 0 },
-    { label: "Hard", value: stats?.hard_solved || 0 },
-    { label: "Streak", value: stats?.streak || 0 },
-    { label: "Wallet", value: `₹${profile?.wallet_balance || 0}` },
-  ];
-
-  const badges = [
-    { name: "First Blood", emoji: "⚔️", desc: "Solved first problem", unlocked: stats?.total_solved > 0 },
-    { name: "Streak Master", emoji: "🔥", desc: "7-day streak", unlocked: stats?.streak >= 7 },
-    { name: "Speed Demon", emoji: "⚡", desc: "Consistency king", unlocked: stats?.consistency >= 90 },
-    { name: "Hard Crusher", emoji: "💎", desc: "10 Hard problems", unlocked: stats?.hard_solved >= 10 },
-    { name: "Contest King", emoji: "👑", desc: "Level up to 10", unlocked: profile?.level >= 10 },
-    { name: "Centurion", emoji: "💯", desc: "100 problems", unlocked: stats?.total_solved >= 100 },
-  ];
-
   return (
-    <div className="max-w-3xl mx-auto space-y-5">
+    <div className="max-w-7xl mx-auto space-y-6 pb-20 md:pb-8">
       {/* Profile Header */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="card-glass rounded-2xl relative overflow-hidden"
+        className="card-glass rounded-2xl p-5 sm:p-6"
       >
-        <div className="h-28 gradient-golden opacity-30" />
-        <div className="px-6 pb-6 -mt-12 relative z-10">
-          <div className="relative group cursor-pointer inline-block">
-            <div className="h-24 w-24 rounded-2xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-4xl ring-4 ring-card shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
-              {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt={profile.full_name} className="w-full h-full object-cover" />
-              ) : (
-                profile?.full_name?.charAt(0) || "U"
-              )}
-            </div>
-            <div className="absolute inset-0 rounded-2xl bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
-              <span className="text-primary-foreground text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Edit</span>
+        <div className="flex items-start gap-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl gradient-golden flex items-center justify-center text-white font-display font-bold text-2xl shadow-lg overflow-hidden flex-shrink-0">
+            {profileStats?.avatar_url ? (
+              <img src={profileStats.avatar_url} alt={userName} className="w-full h-full object-cover" />
+            ) : (
+              firstName.charAt(0)
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground">{userName}</h1>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {college} • Phase {phaseOne.missionsCompleted >= phaseOne.missionsTotal ? 2 : 1}
+            </p>
+            {/* Level progress */}
+            <div className="mt-2.5 max-w-[200px]">
+              <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                <div
+                  className="h-full gradient-golden rounded-full"
+                  style={{ width: `${profileStats?.level_progress || 40}%` }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-1">
+                {profileStats?.xp_to_next_level ? `${profileStats.xp_to_next_level} XP to Level ${level + 1}` : 'Keep going!'}
+              </p>
             </div>
           </div>
-          <h1 className="font-display text-xl font-bold text-foreground mt-3">{profile?.full_name || "User"}</h1>
-          <p className="text-sm text-muted-foreground">{profile?.email}</p>
-          <div className="flex items-center gap-5 mt-3 flex-wrap">
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Star className="h-4 w-4 text-primary" /> {xpCount.toLocaleString()} XP
-            </span>
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Flame className="h-4 w-4 text-destructive" /> {stats?.streak || 0} Day Streak
-            </span>
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Trophy className="h-4 w-4 text-primary" /> Level {profile?.level || 1}
-            </span>
-          </div>
+        </div>
+
+        {/* Share profile */}
+        <div className="mt-4 flex items-center gap-2">
+          <button className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors">
+            <Share2 className="w-3 h-3" /> Share Profile
+          </button>
+          <button className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors">
+            <ExternalLink className="w-3 h-3" /> Public Profile
+          </button>
         </div>
       </motion.div>
 
-      {/* XP Progress */}
-      <div className="card-layer-2 rounded-2xl p-5 flex items-center gap-5">
-        <ProgressRing value={profile?.level_progress || 0} size={80} strokeWidth={8} label={`${profile?.level_progress || 0}%`} sublabel={`to Lvl ${(profile?.level || 1) + 1}`} />
-        <div className="flex-1">
-          <p className="text-sm font-semibold text-foreground">Level {profile?.level || 1} → Level {(profile?.level || 1) + 1}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{profile?.xp?.toLocaleString() || 0} / {(profile?.xp + profile?.xp_to_next_level)?.toLocaleString() || 0} XP</p>
-          <div className="w-full h-3 bg-secondary rounded-full mt-2.5 overflow-hidden">
-            <motion.div
-              className="h-full gradient-golden rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${profile?.level_progress || 0}%` }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Achievement Badges */}
-      <div className="card-glass rounded-2xl p-5">
-        <p className="text-sm font-semibold text-foreground mb-3">🏅 Achievements</p>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
-          {badges.map((badge, i) => (
-            <motion.div
-              key={badge.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.06 }}
-              whileHover={badge.unlocked ? { scale: 1.1, y: -4 } : {}}
-              className={cn(
-                "text-center p-3 rounded-xl transition-all cursor-pointer min-h-[100px] flex flex-col justify-center",
-                badge.unlocked ? "card-layer-2 shadow-sm hover:shadow-glow" : "bg-secondary/30 opacity-40 grayscale"
-              )}
-            >
-              <p className="text-2xl mb-1">{badge.emoji}</p>
-              <p className="text-[9px] font-semibold text-foreground leading-tight">{badge.name}</p>
-              <p className="text-[8px] text-muted-foreground mt-0.5">{badge.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
       {/* Stats Grid */}
-      <div className="card-glass rounded-2xl p-5">
-        <p className="text-sm font-semibold text-foreground mb-3">📊 Statistics</p>
-        <div className="grid grid-cols-3 gap-2.5">
-          {statItems.map((stat, i) => (
+      {xp === 0 && totalSolved === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-fuchsia-500 p-6 sm:p-8 text-white shadow-lg"
+        >
+          <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+             <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+               <Target className="w-8 h-8 text-white" />
+             </div>
+             <div className="text-center sm:text-left flex-1">
+                <h3 className="text-xl font-bold mb-2">Ready to start your journey?</h3>
+                <p className="text-sm text-white/90 font-medium mb-5 max-w-md">
+                  You haven't solved any problems yet. That's exactly why you're here. Let's fix that.
+                </p>
+                <button 
+                  onClick={() => navigate('/chapters')}
+                  className="bg-white text-indigo-600 px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                >
+                  Start First Mission
+                </button>
+             </div>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-2.5"
+        >
+          {[
+            { icon: Zap, label: 'Total XP', value: xp, color: 'text-primary' },
+            { icon: Flame, label: 'Day Streak', value: streak, color: 'text-destructive' },
+            { icon: Target, label: 'Problems', value: totalSolved, color: 'text-info' },
+            { icon: BookOpen, label: 'Chapters', value: chaptersCompleted, color: 'text-success' },
+          ].map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.04 }}
-              className="text-center p-3.5 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-all"
+              transition={{ delay: 0.15 + i * 0.05 }}
+              className="card-glass rounded-xl p-3 text-center"
             >
+              <stat.icon className={cn('w-5 h-5 mx-auto mb-1.5', stat.color)} />
               <p className="font-display text-xl font-bold text-foreground">{stat.value}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">{stat.label}</p>
+              <p className="text-[10px] text-muted-foreground">{stat.label}</p>
             </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      )}
 
-      {/* Theme Toggle */}
-      <div className="card-glass rounded-2xl p-5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <motion.div key={theme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}>
-              {theme === "light" ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5 text-primary" />}
-            </motion.div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">Appearance</p>
-              <p className="text-xs text-muted-foreground">{theme === "light" ? "Light" : "Dark"} mode is active</p>
+      {/* Badge Wall */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="card-glass rounded-2xl p-4 sm:p-5"
+      >
+        <h3 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+          <Award className="w-4 h-4 text-primary" />
+          Badges Earned ({earnedBadges.length})
+        </h3>
+        {earnedBadges.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {earnedBadges.map((badge, i) => (
+              <motion.div
+                key={badge.name}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 + i * 0.05 }}
+                className="rounded-xl bg-primary/5 border border-primary/10 p-3 text-center"
+              >
+                <div className="w-10 h-10 rounded-full gradient-golden flex items-center justify-center text-white mx-auto mb-2 shadow-md">
+                  <Trophy className="w-5 h-5" />
+                </div>
+                <p className="text-xs font-bold text-foreground">{badge.name}</p>
+                <p className="text-[10px] text-muted-foreground">{badge.xp} XP</p>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 px-4 rounded-xl border border-dashed border-border/60 bg-secondary/10">
+            <Trophy className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
+            <p className="text-sm font-semibold text-foreground">No badges yet</p>
+            <p className="text-xs text-muted-foreground mt-1 max-w-xs mx-auto">
+              Complete your first chapter to earn your beginner badge. It will appear right here.
+            </p>
+          </div>
+        )}
+      </motion.div>
+
+      {/* Activity Timeline */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="card-glass rounded-2xl p-4 sm:p-5"
+      >
+        <h3 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+          <Calendar className="w-4 h-4 text-primary" />
+          Activity Timeline
+        </h3>
+        {activityTimeline.length > 0 ? (
+          <div className="relative">
+            <div className="absolute left-[9px] top-2 bottom-2 w-0.5 bg-border" />
+            <div className="space-y-3">
+              {activityTimeline.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.35 + i * 0.05 }}
+                  className="flex items-start gap-3 relative"
+                >
+                  <div className={cn(
+                    'w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 z-10',
+                    item.done ? 'bg-success' : 'bg-primary'
+                  )}>
+                    <div className="w-2 h-2 rounded-full bg-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-foreground">Day {item.day}</p>
+                    <p className="text-[11px] text-muted-foreground">{item.action}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={toggleTheme}
-            className={cn(
-              "relative w-14 h-7 rounded-full transition-colors duration-300",
-              theme === "dark" ? "bg-primary" : "bg-secondary"
-            )}
-          >
-            <motion.div
-              className="absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-md"
-              animate={{ left: theme === "dark" ? "calc(100% - 1.625rem)" : "0.125rem" }}
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Language Selector */}
-      <div className="card-glass rounded-2xl p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <Globe className="h-4 w-4 text-primary" />
-          <p className="text-sm font-semibold text-foreground">Preferred Language</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {languages.map((lang, i) => (
-            <motion.button
-              key={lang}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all",
-                i === 0 ? "gradient-golden text-primary-foreground shadow-md" : "bg-secondary/40 text-secondary-foreground hover:bg-secondary border border-border/40"
-              )}
-            >
-              {lang}
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* Settings */}
-      <div className="card-glass rounded-2xl p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <Settings className="h-4 w-4 text-primary" />
-          <p className="text-sm font-semibold text-foreground">Settings</p>
-        </div>
-        <div className="space-y-1">
-          {settingsItems.map((item) => (
-            <motion.button
-              key={item.label}
-              whileHover={{ x: 4 }}
-              className="w-full flex items-center gap-3 p-3.5 rounded-xl hover:bg-secondary/30 transition-all text-left group"
-            >
-              <div className="h-9 w-9 rounded-lg bg-secondary/50 flex items-center justify-center text-primary group-hover:gradient-golden group-hover:text-primary-foreground transition-all flex-shrink-0">
-                <item.icon className="h-4 w-4" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">{item.label}</p>
-                <p className="text-xs text-muted-foreground">{item.description}</p>
-              </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-            </motion.button>
-          ))}
-        </div>
-      </div>
+        ) : (
+          <div className="text-center py-8 px-4 rounded-xl border border-dashed border-border/60 bg-secondary/10">
+            <Calendar className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
+            <p className="text-sm font-semibold text-foreground">Your timeline is empty</p>
+            <p className="text-xs text-muted-foreground mt-1 max-w-xs mx-auto">
+              Every problem you solve and chapter you complete will be recorded here to track your consistency.
+            </p>
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 };

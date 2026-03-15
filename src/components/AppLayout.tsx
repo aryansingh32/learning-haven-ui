@@ -10,16 +10,21 @@ import { useTheme } from "@/hooks/useTheme";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 
-const navItems = [
-  { to: "/", icon: LayoutDashboard, label: "Dashboard" },
+// Primary nav — simplified for the new flow
+const primaryNav = [
+  { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { to: "/chapters", icon: BookOpen, label: "Learn" },
+  { to: "/profile", icon: User, label: "Profile" },
+];
+
+// Secondary nav — retain ALL existing routes
+const secondaryNav = [
   { to: "/visualizer", icon: Eye, label: "Visualizer" },
   { to: "/jobs", icon: Briefcase, label: "Jobs" },
-  { to: "/ai-coach", icon: Bot, label: "AI" },
+  { to: "/ai-coach", icon: Bot, label: "AI Coach" },
   { to: "/resume", icon: FileText, label: "Resume" },
   { to: "/referrals", icon: Gift, label: "Referrals" },
   { to: "/certificates", icon: Award, label: "Certificates" },
-  { to: "/profile", icon: User, label: "Profile" },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -28,6 +33,39 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const { user, logout } = useAuth();
+
+  const renderNavItem = (item: typeof primaryNav[0], onClick?: () => void) => (
+    <RouterNavLink
+      key={item.to}
+      to={item.to}
+      end={item.to === "/dashboard"}
+      onClick={onClick}
+      className={({ isActive }) =>
+        cn(
+          "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative",
+          isActive
+            ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+            : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
+        )
+      }
+    >
+      {({ isActive }) => (
+        <>
+          {isActive && (
+            <motion.div
+              layoutId="sidebar-active"
+              className="absolute inset-0 rounded-xl gradient-golden shadow-md"
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+            />
+          )}
+          <span className="relative z-10 flex items-center gap-3">
+            <item.icon className="h-[18px] w-[18px] transition-transform group-hover:scale-110" />
+            {item.label}
+          </span>
+        </>
+      )}
+    </RouterNavLink>
+  );
 
   return (
     <div className="min-h-screen bg-depth transition-colors duration-400">
@@ -40,39 +78,35 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </h1>
             <p className="text-[11px] text-muted-foreground mt-0.5 tracking-wide">Master Algorithms</p>
           </div>
+
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-            {navItems.map((item) => (
-              <RouterNavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === "/"}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative",
-                    isActive
-                      ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                      : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
-                  )
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {isActive && (
-                      <motion.div
-                        layoutId="sidebar-active"
-                        className="absolute inset-0 rounded-xl gradient-golden shadow-md"
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10 flex items-center gap-3">
-                      <item.icon className="h-[18px] w-[18px] transition-transform group-hover:scale-110" />
-                      {item.label}
-                    </span>
-                  </>
-                )}
-              </RouterNavLink>
-            ))}
+            {/* Primary navigation */}
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Main</p>
+            {primaryNav.map((item) => renderNavItem(item))}
+
+            {/* Secondary navigation */}
+            <div className="pt-3 mt-3 border-t border-border/30">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">More</p>
+              {secondaryNav.map((item) => (
+                <RouterNavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex items-center gap-3 px-4 py-2 rounded-xl text-[13px] font-medium transition-all duration-200",
+                      isActive
+                        ? "bg-secondary text-foreground"
+                        : "text-muted-foreground/70 hover:bg-secondary/60 hover:text-muted-foreground"
+                    )
+                  }
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.label}
+                </RouterNavLink>
+              ))}
+            </div>
           </nav>
+
           <div className="p-3 border-t border-border/40">
             <button
               onClick={toggleTheme}
@@ -89,6 +123,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               {theme === "light" ? "Dark Mode" : "Light Mode"}
             </button>
           </div>
+
           <div className="p-4 border-t border-border/40 space-y-2">
             <RouterNavLink to="/profile" className="flex items-center gap-3 p-2 rounded-xl hover:bg-secondary/80 transition-colors group">
               <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-sm group-hover:shadow-md transition-shadow">
@@ -153,43 +188,47 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 </h1>
               </div>
               <nav className="flex-1 p-3 space-y-0.5">
-                {navItems.map((item) => (
-                  <RouterNavLink
-                    key={item.to}
-                    to={item.to}
-                    end={item.to === "/"}
-                    onClick={() => setSidebarOpen(false)}
-                    className={({ isActive }) =>
-                      cn(
-                        "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all",
-                        isActive
-                          ? "bg-primary text-primary-foreground shadow-md"
-                          : "text-muted-foreground hover:bg-secondary/80"
-                      )
-                    }
-                  >
-                    <item.icon className="h-[18px] w-[18px]" />
-                    {item.label}
-                  </RouterNavLink>
-                ))}
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Main</p>
+                {primaryNav.map((item) => renderNavItem(item, () => setSidebarOpen(false)))}
+                <div className="pt-3 mt-3 border-t border-border/30">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">More</p>
+                  {secondaryNav.map((item) => (
+                    <RouterNavLink
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setSidebarOpen(false)}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex items-center gap-3 px-4 py-2 rounded-xl text-[13px] font-medium transition-all",
+                          isActive
+                            ? "bg-secondary text-foreground"
+                            : "text-muted-foreground/70 hover:bg-secondary/60"
+                        )
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </RouterNavLink>
+                  ))}
+                </div>
               </nav>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
 
-      {/* Mobile Floating Bottom Nav */}
+      {/* Mobile Floating Bottom Nav — primary only */}
       {isMobile && (
         <nav className="fixed bottom-3 left-0 right-0 z-30 flex justify-center">
-          <div className="card-glass floating-nav border border-border/40 flex justify-around py-2 px-2 w-[calc(100%-2rem)]">
-            {navItems.slice(0, 5).map((item) => (
+          <div className="card-glass floating-nav border border-border/40 flex justify-around py-2 px-3 w-[calc(100%-2rem)]">
+            {primaryNav.map((item) => (
               <RouterNavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-[10px] font-medium transition-all duration-200 relative",
+                    "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-[10px] font-medium transition-all duration-200 relative",
                     isActive ? "text-primary" : "text-muted-foreground"
                   )
                 }
