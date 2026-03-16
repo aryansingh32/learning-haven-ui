@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 9,
+  "title": "Trees",
+  "topic_tag": "trees",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1320,
+  "story_hook": "File system, DOM, decision trees - everything is a tree.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "File system, DOM, decision trees - everything is a tree."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=Et9OCDNvJ78",
+        "title": "Binary Tree Introduction",
+        "channel": "takeUforward",
+        "focus_note": "Focus on traversal orders and recursive structure."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Tree = nodes with children.\n\nTraversals: inorder, preorder, postorder, level order."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Tree Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/binarytree",
+          "task": "Traverse a tree using different orders.",
+          "notes": "Observe how recursion visits nodes."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "t1",
+            "prompt": "Inorder, preorder, postorder traversals.",
+            "input_type": "text"
+          },
+          {
+            "id": "t2",
+            "prompt": "Compute height of a binary tree.",
+            "input_type": "text"
+          },
+          {
+            "id": "t3",
+            "prompt": "Find diameter of a binary tree.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Preorder traversal visits",
+            "options": [
+              "root-left-right",
+              "left-root-right",
+              "left-right-root"
+            ],
+            "correctAnswer": "root-left-right",
+            "explanation": "Preorder visits root first."
+          },
+          {
+            "question": "Height of a tree is",
+            "options": [
+              "max depth",
+              "number of nodes",
+              "number of leaves"
+            ],
+            "correctAnswer": "max depth",
+            "explanation": "Height equals longest path to a leaf."
+          },
+          {
+            "question": "Level order traversal uses",
+            "options": [
+              "queue",
+              "stack",
+              "recursion only"
+            ],
+            "correctAnswer": "queue",
+            "explanation": "Level order is BFS with a queue."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement level order traversal using a queue."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Recursion + Queues -> Trees",
+        "recall_questions": [
+          "Which traversal is DFS?",
+          "Why does level order use a queue?",
+          "What is tree height?"
+        ],
+        "identity_affirmation": "You can now navigate tree structures confidently.",
+        "streak_reminder": "BST is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "Tree Ranger Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

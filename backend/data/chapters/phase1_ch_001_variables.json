@@ -1,0 +1,149 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 1,
+  "title": "Variables & Memory",
+  "topic_tag": "variables",
+  "difficulty": "BEGINNER",
+  "est_minutes": 720,
+  "story_hook": "Your phone has 128 GB of memory. Where does Instagram store your crush's photos? Today you learn how computers actually store data - like boxes with names on them. This is the first real skill every FAANG engineer uses every single day.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Your phone has 128 GB of memory. Where does Instagram store your crush's photos? Today you learn how computers actually store data - like boxes with names on them. This is the first real skill every FAANG engineer uses every single day."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=7v7y1zqJ9g8",
+        "title": "Variables in C++/JS 2026",
+        "channel": "Apna College",
+        "duration_min": 18,
+        "focus_note": "Watch first 12 minutes only. Notice how memory boxes are created and destroyed."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Variables = named boxes in RAM. int x = 5 means 'box named x now holds 5'.\n\nScope, lifetime, stack vs heap explained with hostel room analogy."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Memory Boxes Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/memory",
+          "task": "Drag values into boxes to simulate variables.",
+          "notes": "Observe how variables appear/disappear with scope."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "v1",
+            "prompt": "Declare 3 variables for your name, age, college.",
+            "input_type": "text"
+          },
+          {
+            "id": "v2",
+            "prompt": "Swap two numbers without extra variable.",
+            "input_type": "text"
+          },
+          {
+            "id": "v3",
+            "prompt": "Predict output of a scope example.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What does 'int x = 5' actually mean?",
+            "options": [
+              "A box named x stores 5",
+              "x is a magic word",
+              "x is a file"
+            ],
+            "correctAnswer": "A box named x stores 5",
+            "explanation": "Variables are named memory locations that store values."
+          },
+          {
+            "question": "Where are local variables typically stored?",
+            "options": [
+              "Stack",
+              "Heap",
+              "Hard disk"
+            ],
+            "correctAnswer": "Stack",
+            "explanation": "Local variables usually live on the stack with limited lifetime."
+          },
+          {
+            "question": "What is scope?",
+            "options": [
+              "Where a variable can be accessed",
+              "The size of the program",
+              "The speed of the CPU"
+            ],
+            "correctAnswer": "Where a variable can be accessed",
+            "explanation": "Scope defines the region where a variable is visible."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that stores your daily expenses in variables."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "How to Think -> Variables (first real box)",
+        "recall_questions": [
+          "What does a variable represent in memory?",
+          "Why does scope matter?",
+          "Where do local variables live?"
+        ],
+        "identity_affirmation": "You just stored your first data like a real programmer.",
+        "completion_celebration": {
+          "message": "Variables Master Unlocked!",
+          "linkedin_card_text": "Variables Master Unlocked! Day X of new coder identity 🔥"
+        },
+        "streak_reminder": "Keep the streak alive - tomorrow's decision-making chapter is waiting.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Memory Box Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

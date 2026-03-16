@@ -1,0 +1,155 @@
+{
+  "roadmap_slug": "phase-0-mindset-revolution",
+  "chapter_number": 3,
+  "title": "How to Read Code Before Writing It",
+  "topic_tag": "code-reading",
+  "difficulty": "BEGINNER",
+  "est_minutes": 600,
+  "story_hook": "Your crush's Instagram feed has 1 million posts. You don't write code first - you read and trace how others did it. Today you become a code detective.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Your crush's Instagram feed has 1 million posts. You don't write code first - you read and trace how others did it. Today you become a code detective."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=KnuYHTIIt88",
+        "title": "Learn How To Read Code",
+        "channel": "ForrestKnight",
+        "focus_note": "Watch the tracing technique. Pause and predict before running.",
+        "backup_urls": [
+          "https://www.youtube.com/results?search_query=The+Cherno+read+code"
+        ]
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Read line-by-line. Predict output before running.\n\nPro tip: use pen and paper."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Code Tracing Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Trace execution with a line highlighter.",
+          "notes": "Follow the variable values at each line."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "c1",
+            "prompt": "Predict output: x=5; y=x+2; print(y)",
+            "expected_output": "7"
+          },
+          {
+            "id": "c2",
+            "prompt": "Predict output: a=3; b=a*2; a=b+1; print(a)",
+            "expected_output": "7"
+          },
+          {
+            "id": "c3",
+            "prompt": "Predict output: for i in range(3): print(i)",
+            "expected_output": "0 1 2"
+          },
+          {
+            "id": "c4",
+            "prompt": "Predict output: s='hi'; print(s[1])",
+            "expected_output": "i"
+          },
+          {
+            "id": "c5",
+            "prompt": "Predict output: n=4; if n>2: print('yes') else: print('no')",
+            "expected_output": "yes"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What should you do before running code you didn't write?",
+            "options": [
+              "Run it immediately",
+              "Read and predict the output",
+              "Delete it"
+            ],
+            "correctAnswer": "Read and predict the output",
+            "explanation": "Prediction builds deep understanding and catches mistakes early."
+          },
+          {
+            "question": "Why use pen and paper while tracing?",
+            "options": [
+              "It slows you down",
+              "It makes variable changes visible",
+              "It replaces debugging"
+            ],
+            "correctAnswer": "It makes variable changes visible",
+            "explanation": "Writing states helps you follow the execution flow."
+          },
+          {
+            "question": "Reading code well helps you learn",
+            "options": [
+              "5x faster",
+              "Only the same speed",
+              "Slower"
+            ],
+            "correctAnswer": "5x faster",
+            "explanation": "Reading and tracing builds mental models quickly."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Trace a friend's code line-by-line and explain the output before running it."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Clear algorithms make code easier to read.",
+        "recall_questions": [
+          "What is the first thing you do when you see unfamiliar code?",
+          "Why does predicting output matter?",
+          "How will this help you in interviews?"
+        ],
+        "identity_affirmation": "You are a coder who reads before writing.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+15 XP",
+            "Code Detective Badge",
+            "Focus Streak Boost"
+          ]
+        }
+      }
+    }
+  ]
+}

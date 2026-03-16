@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 6,
+  "title": "Strings",
+  "topic_tag": "strings",
+  "difficulty": "BEGINNER",
+  "est_minutes": 600,
+  "story_hook": "Your WhatsApp messages are strings. Learn to manipulate them like a pro.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Your WhatsApp messages are strings. Learn to manipulate them like a pro."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Striver+Strings",
+        "title": "Strings for Beginners",
+        "channel": "Striver",
+        "focus_note": "Focus on character indexing and traversal."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Strings are character arrays. Common operations: reverse, palindrome check, count characters."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Character Array Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate characters in a string as array cells.",
+          "notes": "See how indexing works on characters."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "s1",
+            "prompt": "Reverse a string.",
+            "input_type": "text"
+          },
+          {
+            "id": "s2",
+            "prompt": "Check if a string is a palindrome.",
+            "input_type": "text"
+          },
+          {
+            "id": "s3",
+            "prompt": "Count vowels in a string.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Strings are",
+            "options": [
+              "arrays of characters",
+              "numbers",
+              "loops"
+            ],
+            "correctAnswer": "arrays of characters",
+            "explanation": "Strings are sequences of characters in memory."
+          },
+          {
+            "question": "Which technique helps palindrome check?",
+            "options": [
+              "Two pointers",
+              "Binary search",
+              "Hashing only"
+            ],
+            "correctAnswer": "Two pointers",
+            "explanation": "Two pointers compare characters from both ends."
+          },
+          {
+            "question": "Indexing a character is",
+            "options": [
+              "O(1)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": "O(1)",
+            "explanation": "Direct indexing is constant time."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a function that removes all vowels from a string."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Arrays -> Strings (character arrays)",
+        "recall_questions": [
+          "What is a string in memory?",
+          "Which loop is best for string traversal?",
+          "How do arrays relate to strings?"
+        ],
+        "identity_affirmation": "You can now manipulate text like a real coder.",
+        "streak_reminder": "Complexity is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+25 XP",
+            "String Tamer Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

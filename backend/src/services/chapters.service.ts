@@ -26,6 +26,16 @@ export class ChaptersService {
                 throw contentError;
             }
 
+            const { data: steps, error: stepsError } = await supabase
+                .from('steps')
+                .select('*')
+                .eq('chapter_id', chapterId)
+                .order('step_number', { ascending: true });
+
+            if (stepsError) {
+                throw stepsError;
+            }
+
             let { data: progress, error: progressError } = await supabase
                 .from('user_chapter_progress')
                 .select('*')
@@ -61,7 +71,10 @@ export class ChaptersService {
 
             return {
                 chapter,
-                content,
+                content: {
+                    ...(content || {}),
+                    steps: steps || [],
+                },
                 progress,
             };
         } catch (error) {
@@ -214,6 +227,55 @@ export class ChaptersService {
         } catch (error) {
             logger.error('Update task progress error:', { userId, chapterId, error });
             throw new Error('Failed to update task progress');
+        }
+    }
+
+    static async updateStepProgress(userId: string, chapterId: string, stepId: string) {
+        try {
+            const { data: existing, error: fetchError } = await supabase
+                .from('user_chapter_progress')
+                .select('id, steps_completed')
+                .eq('user_id', userId)
+                .eq('chapter_id', chapterId)
+                .maybeSingle();
+
+            if (fetchError && fetchError.code !== 'PGRST116') {
+                throw fetchError;
+            }
+
+            const completed = new Set<string>(existing?.steps_completed || []);
+            completed.add(stepId);
+
+            const payload: any = {
+                steps_completed: Array.from(completed),
+                updated_at: new Date().toISOString(),
+            };
+
+            if (!existing) {
+                payload.user_id = userId;
+                payload.chapter_id = chapterId;
+                payload.status = 'IN_PROGRESS';
+            }
+
+            const query = supabase.from('user_chapter_progress');
+
+            if (existing) {
+                const { error: updateError } = await query
+                    .update(payload)
+                    .eq('id', existing.id);
+                if (updateError) throw updateError;
+            } else {
+                const { error: insertError } = await query.insert(payload);
+                if (insertError) throw insertError;
+            }
+
+            return {
+                success: true,
+                steps_completed: Array.from(completed),
+            };
+        } catch (error) {
+            logger.error('Update step progress error:', { userId, chapterId, stepId, error });
+            throw new Error('Failed to update step progress');
         }
     }
 
@@ -444,4 +506,3 @@ export class ChaptersService {
         }
     }
 }
-

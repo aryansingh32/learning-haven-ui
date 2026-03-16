@@ -1,0 +1,138 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 9,
+  "title": "Greedy Pattern",
+  "topic_tag": "greedy",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Activity selection, fractional knapsack - locally optimal choice leads to global optimum.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Activity selection, fractional knapsack - locally optimal choice leads to global optimum."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/playlist?list=PLgUwDviBIf0pmWCl2nepwGDO05a0-7EfJ",
+        "title": "Greedy Algorithms Playlist",
+        "channel": "takeUforward",
+        "focus_note": "Watch the intro to learn when greedy works and when it doesn't."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Greedy chooses the best local option.\n\nSignal: locally optimal choice leads to global optimum."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Greedy Choice Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate greedy picks in activity selection.",
+          "notes": "Observe how local picks lead to optimal."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "gr1",
+            "prompt": "Jump Game.",
+            "input_type": "text"
+          },
+          {
+            "id": "gr2",
+            "prompt": "Activity Selection.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Greedy works when",
+            "options": [
+              "local optimum leads to global",
+              "always",
+              "never"
+            ],
+            "correctAnswer": "local optimum leads to global",
+            "explanation": "Greedy is valid only with this property."
+          },
+          {
+            "question": "Activity selection requires",
+            "options": [
+              "sorting by finish time",
+              "sorting by start time",
+              "no sorting"
+            ],
+            "correctAnswer": "sorting by finish time",
+            "explanation": "Earliest finish leaves room for more activities."
+          },
+          {
+            "question": "Greedy may fail when",
+            "options": [
+              "choices are not globally optimal",
+              "arrays are sorted",
+              "graphs are trees"
+            ],
+            "correctAnswer": "choices are not globally optimal",
+            "explanation": "Local best can block global best."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Solve activity selection and explain why greedy works."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "DP -> Greedy (when greedy is valid)",
+        "recall_questions": [
+          "What is the greedy signal?",
+          "Why can greedy fail?",
+          "Which problems are classic greedy?"
+        ],
+        "identity_affirmation": "You now know when greedy works and when it doesn't.",
+        "streak_reminder": "Monotonic stack is next - finish strong.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Greedy Strategist Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

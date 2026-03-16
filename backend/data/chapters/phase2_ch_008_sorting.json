@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 8,
+  "title": "Sorting Algorithms",
+  "topic_tag": "sorting",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Why built-in sort sometimes fails interviews.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Why built-in sort sometimes fails interviews."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=WIrA4YexLRQ",
+        "title": "Quick Sort for Beginners",
+        "channel": "Programiz",
+        "focus_note": "Focus on divide and conquer and pivot placement."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Bubble, selection, insertion for intuition.\n\nMerge sort and quick sort for real interviews.\n\nKnow when to use built-in sort."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Sorting Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/sorting",
+          "task": "Compare bubble, merge, and quick sort animations.",
+          "notes": "Observe stable vs unstable behavior."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "so1",
+            "prompt": "Implement merge sort.",
+            "input_type": "text"
+          },
+          {
+            "id": "so2",
+            "prompt": "Implement quick sort.",
+            "input_type": "text"
+          },
+          {
+            "id": "so3",
+            "prompt": "Sort array by parity.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Merge sort time complexity is",
+            "options": [
+              "O(n log n)",
+              "O(n^2)",
+              "O(n)"
+            ],
+            "correctAnswer": "O(n log n)",
+            "explanation": "Divide and conquer leads to n log n."
+          },
+          {
+            "question": "Quick sort worst case is",
+            "options": [
+              "O(n^2)",
+              "O(n log n)",
+              "O(log n)"
+            ],
+            "correctAnswer": "O(n^2)",
+            "explanation": "Bad pivot splits cause quadratic behavior."
+          },
+          {
+            "question": "Stable sort means",
+            "options": [
+              "equal elements keep order",
+              "sort is fast",
+              "sort uses O(1) space"
+            ],
+            "correctAnswer": "equal elements keep order",
+            "explanation": "Stability preserves original ordering."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement merge sort and explain why it is stable."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Binary Search -> Sorting (ordered data)",
+        "recall_questions": [
+          "Why is merge sort stable?",
+          "When is quick sort faster in practice?",
+          "When do you use built-in sort?"
+        ],
+        "identity_affirmation": "You now control order like a sorting engineer.",
+        "streak_reminder": "Trees are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Sorting Wizard Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "title": "DSA Patterns Mastery",
+  "slug": "phase-3-dsa-patterns",
+  "description": "Stop memorising solutions. Start recognising patterns. This phase turns 500 problems into 1000+ solvable ones.",
+  "type": "phase",
+  "difficulty_level": "intermediate",
+  "duration_days": 84,
+  "is_premium": false,
+  "is_published": true,
+  "meta": {
+    "order": 3,
+    "est_hours": 180,
+    "icon": "🧠",
+    "phase_consolidation": {
+      "title": "Phase 3 Consolidation",
+      "mental_map": "Two Pointers -> Sliding Window -> Fast/Slow -> Merge Intervals -> Binary Search on Answer -> BFS -> DFS/Backtracking -> DP -> Greedy -> Monotonic Stack",
+      "mixed_problems": [
+        "Two Sum (sorted array) using two pointers.",
+        "Longest substring without repeating characters (sliding window).",
+        "Detect cycle in linked list (fast/slow).",
+        "Merge overlapping intervals.",
+        "Aggressive cows (binary search on answer).",
+        "Rotten oranges (BFS).",
+        "Generate all subsets (DFS/backtracking).",
+        "House Robber (DP).",
+        "Activity selection (greedy).",
+        "Next greater element (monotonic stack).",
+        "Minimum window substring (sliding window).",
+        "Find duplicate number (fast/slow).",
+        "Word ladder (BFS).",
+        "N-Queens (backtracking).",
+        "Trapping rain water (monotonic stack)."
+      ],
+      "self_rating": [
+        "Two Pointer Pattern",
+        "Sliding Window Pattern",
+        "Fast & Slow Pointers",
+        "Merge Intervals",
+        "Binary Search on Answer",
+        "BFS Pattern",
+        "DFS & Backtracking",
+        "Dynamic Programming",
+        "Greedy Pattern",
+        "Monotonic Stack"
+      ],
+      "weak_spot_tasks": [
+        "20-min Two Pointer recap: pair sum + container.",
+        "20-min Sliding Window recap: max sum subarray.",
+        "20-min Fast/Slow recap: detect cycle.",
+        "20-min Merge Intervals recap: meeting rooms.",
+        "20-min Binary Search on Answer recap: Koko.",
+        "20-min BFS recap: level order.",
+        "20-min DFS recap: subsets.",
+        "20-min DP recap: climbing stairs.",
+        "20-min Greedy recap: activity selection.",
+        "20-min Monotonic Stack recap: next greater."
+      ],
+      "linkedin_card": {
+        "headline": "I just completed DSA Patterns on DSA OS - I can now solve 1000 LeetCode problems with eyes closed 🧠 Day X streak!",
+        "subhead": "DSA Patterns Mastery",
+        "bullets": [
+          "10 patterns mastered",
+          "Templates for 1000+ problems",
+          "BFS/DFS/DP/Greedy",
+          "Pattern recognition unlocked"
+        ]
+      }
+    }
+  }
+}

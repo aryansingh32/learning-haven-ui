@@ -1,0 +1,162 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 3,
+  "title": "Loops - The Most Important Chapter",
+  "topic_tag": "loops",
+  "difficulty": "BEGINNER",
+  "est_minutes": 1080,
+  "story_hook": "Instagram needs to show 1 million posts? One loop does it. This single chapter powers 70% of all coding interviews.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Instagram needs to show 1 million posts? One loop does it. This single chapter powers 70% of all coding interviews."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=2vJ2z1f3Z3Y",
+        "title": "Loops Explained",
+        "channel": "Striver",
+        "focus_note": "Watch nested loops carefully - they appear everywhere in FAANG.",
+        "backup_urls": [
+          "https://www.youtube.com/results?search_query=Apna+College+loops+playlist"
+        ]
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "for, while, do-while with real examples.\n\nLoops = repeat the same logic without rewriting code."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Loop Counter Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/loop",
+          "task": "Watch a live counter increment and stop at conditions.",
+          "notes": "Notice how nested loops multiply work."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "l1",
+            "prompt": "Print numbers 1 to N.",
+            "input_type": "text"
+          },
+          {
+            "id": "l2",
+            "prompt": "Sum of array elements using a loop.",
+            "input_type": "text"
+          },
+          {
+            "id": "l3",
+            "prompt": "Print a right triangle star pattern.",
+            "input_type": "text"
+          },
+          {
+            "id": "l4",
+            "prompt": "Print a pyramid pattern.",
+            "input_type": "text"
+          },
+          {
+            "id": "l5",
+            "prompt": "Find factorial of N with a loop.",
+            "input_type": "text"
+          },
+          {
+            "id": "l6",
+            "prompt": "Count digits of a number using a loop.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Which loop is best when you know the count in advance?",
+            "options": [
+              "for",
+              "while",
+              "do-while"
+            ],
+            "correctAnswer": "for",
+            "explanation": "for loops are ideal for known iteration counts."
+          },
+          {
+            "question": "Nested loops usually imply",
+            "options": [
+              "O(n)",
+              "O(n^2)",
+              "O(1)"
+            ],
+            "correctAnswer": "O(n^2)",
+            "explanation": "Two loops over n lead to n * n iterations."
+          },
+          {
+            "question": "When does a while loop stop?",
+            "options": [
+              "When condition becomes false",
+              "After one iteration",
+              "Never"
+            ],
+            "correctAnswer": "When condition becomes false",
+            "explanation": "while loops run until the condition fails."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a program to print all even numbers from 1 to N using a loop."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Variables + Conditionals -> Loops",
+        "recall_questions": [
+          "What is the difference between for and while loops?",
+          "Why do nested loops matter?",
+          "Which loop would you use to traverse an array?"
+        ],
+        "identity_affirmation": "You can now repeat logic like a real programmer.",
+        "streak_reminder": "Keep the streak alive - functions are next.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+25 XP",
+            "Loop Master Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

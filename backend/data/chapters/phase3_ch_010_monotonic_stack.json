@@ -1,0 +1,138 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 10,
+  "title": "Monotonic Stack Pattern",
+  "topic_tag": "monotonic-stack",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Next greater element or largest rectangle in histogram - keep the stack strictly increasing/decreasing.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Next greater element or largest rectangle in histogram - keep the stack strictly increasing/decreasing."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=e7XQLtOQM3I",
+        "title": "Next Greater Element",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on monotonic invariant."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Monotonic stack keeps elements increasing or decreasing.\n\nSignal: next greater/smaller, ranges."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Monotonic Stack Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Build a monotonic stack and watch pops when invariant breaks.",
+          "notes": "Observe how it finds next greater elements."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "ms1",
+            "prompt": "Next Greater Element.",
+            "input_type": "text"
+          },
+          {
+            "id": "ms2",
+            "prompt": "Trapping Rain Water.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Monotonic stack maintains",
+            "options": [
+              "sorted order",
+              "random order",
+              "duplicates only"
+            ],
+            "correctAnswer": "sorted order",
+            "explanation": "Elements are kept monotonic."
+          },
+          {
+            "question": "Next greater element uses",
+            "options": [
+              "stack",
+              "queue",
+              "hash map"
+            ],
+            "correctAnswer": "stack",
+            "explanation": "Stack tracks decreasing sequence."
+          },
+          {
+            "question": "Trapping rain water often uses",
+            "options": [
+              "monotonic stack",
+              "binary search",
+              "heaps only"
+            ],
+            "correctAnswer": "monotonic stack",
+            "explanation": "Stack tracks boundaries for water."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement next greater element using monotonic stack."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Stacks -> Monotonic Stack",
+        "recall_questions": [
+          "What invariant does the stack maintain?",
+          "Why does this run in O(n)?",
+          "Which problems signal monotonic stacks?"
+        ],
+        "identity_affirmation": "You mastered the last powerful pattern.",
+        "streak_reminder": "Phase 3 consolidation is ready - share your win.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "Monotonic Master Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

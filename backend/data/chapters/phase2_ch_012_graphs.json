@@ -1,0 +1,149 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 12,
+  "title": "Graphs",
+  "topic_tag": "graphs",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1200,
+  "story_hook": "Social network, Google Maps, recommendation engine - all graphs.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Social network, Google Maps, recommendation engine - all graphs."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=bTtm2ky7I3Y",
+        "title": "Graph Representation in C++",
+        "channel": "takeUforward",
+        "focus_note": "Focus on adjacency list vs matrix, BFS and DFS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Graphs are nodes + edges.\n\nRepresent with adjacency list or matrix.\n\nCore traversals: BFS and DFS."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Graph Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/graph",
+          "task": "Run BFS and DFS and watch visited order.",
+          "notes": "Observe connected components."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "g1",
+            "prompt": "BFS traversal of a graph.",
+            "input_type": "text"
+          },
+          {
+            "id": "g2",
+            "prompt": "DFS traversal of a graph.",
+            "input_type": "text"
+          },
+          {
+            "id": "g3",
+            "prompt": "Detect cycle in an undirected graph.",
+            "input_type": "text"
+          },
+          {
+            "id": "g4",
+            "prompt": "Count connected components.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Adjacency list is better for",
+            "options": [
+              "sparse graphs",
+              "dense graphs only",
+              "no graphs"
+            ],
+            "correctAnswer": "sparse graphs",
+            "explanation": "Adjacency list saves space in sparse graphs."
+          },
+          {
+            "question": "BFS uses",
+            "options": [
+              "queue",
+              "stack",
+              "recursion only"
+            ],
+            "correctAnswer": "queue",
+            "explanation": "BFS explores level by level using a queue."
+          },
+          {
+            "question": "DFS uses",
+            "options": [
+              "stack/recursion",
+              "queue",
+              "heap"
+            ],
+            "correctAnswer": "stack/recursion",
+            "explanation": "DFS goes deep via stack or recursion."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement BFS and DFS for an undirected graph."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Queues + Stacks -> Graph Traversal",
+        "recall_questions": [
+          "When do you use adjacency list vs matrix?",
+          "Why does BFS find shortest path in unweighted graphs?",
+          "What is a connected component?"
+        ],
+        "identity_affirmation": "You can now model complex systems as graphs.",
+        "streak_reminder": "Phase consolidation is ready - finish strong.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+45 XP",
+            "Graph Explorer Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

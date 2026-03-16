@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 1,
+  "title": "Two Pointer Pattern",
+  "topic_tag": "two-pointers",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1080,
+  "story_hook": "Sorted array + find a pair that sums to target = two pointers magic. This single pattern solves 40+ interview questions.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Sorted array + find a pair that sums to target = two pointers magic. This single pattern solves 40+ interview questions."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=9kdHxplyl5I",
+        "title": "L1 Introduction to Sliding Window & 2 Pointers",
+        "channel": "TakeUForward",
+        "focus_note": "Watch the template explanation carefully."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Two pointers shrink the search space from both ends.\n\nSignals: sorted arrays, pair sums, opposites."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Two Pointers Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate left/right pointers moving toward each other.",
+          "notes": "Observe how decisions shrink the range."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "tp1",
+            "prompt": "Two Sum (sorted array version).",
+            "input_type": "text"
+          },
+          {
+            "id": "tp2",
+            "prompt": "Three Sum.",
+            "input_type": "text"
+          },
+          {
+            "id": "tp3",
+            "prompt": "Container With Most Water.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Two pointers are best when",
+            "options": [
+              "array is sorted",
+              "data is random",
+              "we need recursion"
+            ],
+            "correctAnswer": "array is sorted",
+            "explanation": "Ordering allows controlled pointer movement."
+          },
+          {
+            "question": "Moving the left pointer usually",
+            "options": [
+              "increases sum",
+              "decreases sum",
+              "sorts array"
+            ],
+            "correctAnswer": "increases sum",
+            "explanation": "In sorted arrays, moving left pointer right increases value."
+          },
+          {
+            "question": "Two pointers reduce complexity from",
+            "options": [
+              "O(n^2) to O(n)",
+              "O(log n) to O(1)",
+              "O(n) to O(n^2)"
+            ],
+            "correctAnswer": "O(n^2) to O(n)",
+            "explanation": "Pairs can be checked in linear time."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement two pointers to find a pair with target sum in a sorted array."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Phase 2 Arrays -> Two Pointers",
+        "recall_questions": [
+          "What signal suggests two pointers?",
+          "How do pointers move based on sum?",
+          "Why is this O(n)?"
+        ],
+        "identity_affirmation": "You just unlocked your first pattern - you are no longer guessing.",
+        "streak_reminder": "Sliding window is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Two Pointer Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 11,
+  "title": "Heaps & Priority Queues",
+  "topic_tag": "heaps",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Top 10 trending songs on YouTube = heap.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Top 10 trending songs on YouTube = heap."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=HqPJF2L5h9U",
+        "title": "Heap - Heap Sort - Heapify - Priority Queues",
+        "channel": "Brian S. Unter",
+        "focus_note": "Focus on min-heap vs max-heap and heapify."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Heap = complete binary tree with heap property.\n\nUse for top-k, priority scheduling, and streaming."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Heap Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Insert and extract from a min-heap and max-heap.",
+          "notes": "Observe heapify operations."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "hp1",
+            "prompt": "Find kth largest element in an array.",
+            "input_type": "text"
+          },
+          {
+            "id": "hp2",
+            "prompt": "Merge k sorted lists using a heap.",
+            "input_type": "text"
+          },
+          {
+            "id": "hp3",
+            "prompt": "Top K frequent elements.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Heap is a",
+            "options": [
+              "complete binary tree",
+              "binary search tree",
+              "graph"
+            ],
+            "correctAnswer": "complete binary tree",
+            "explanation": "Heaps are complete binary trees."
+          },
+          {
+            "question": "In max-heap, root is",
+            "options": [
+              "maximum element",
+              "minimum element",
+              "random element"
+            ],
+            "correctAnswer": "maximum element",
+            "explanation": "Heap property keeps max at root."
+          },
+          {
+            "question": "Heap insert time is",
+            "options": [
+              "O(log n)",
+              "O(1)",
+              "O(n)"
+            ],
+            "correctAnswer": "O(log n)",
+            "explanation": "Heapify up takes log n."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement a priority queue with push and pop operations."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "BST -> Heaps (priority ordering)",
+        "recall_questions": [
+          "What does heap property guarantee?",
+          "Why is heap good for top-k?",
+          "How is heap different from BST?"
+        ],
+        "identity_affirmation": "You can now rank and prioritize at scale.",
+        "streak_reminder": "Graphs are next - finish strong.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Heap Commander Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "roadmap_slug": "phase-0-mindset-revolution",
+  "chapter_number": 1,
+  "title": "How to Think Like a Programmer",
+  "topic_tag": "mindset",
+  "difficulty": "BEGINNER",
+  "est_minutes": 600,
+  "story_hook": "You're at 2 AM in your hostel, craving Maggi. You don't just throw everything in - you follow steps: boil water -> add masala -> wait 2 min. That's an algorithm! Today you learn how computers think exactly like you make Maggi - step by step. Your old lazy self ends here. Welcome to your new coder identity.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "You're at 2 AM in your hostel, craving Maggi. You don't just throw everything in - you follow steps: boil water -> add masala -> wait 2 min. That's an algorithm! Today you learn how computers think exactly like you make Maggi - step by step. Your old lazy self ends here. Welcome to your new coder identity."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=Ebe9NFgQnnU",
+        "title": "How to Start Coding? Learn Programming for Beginners | 2026",
+        "channel": "Apna College",
+        "duration_min": 15,
+        "focus_note": "Watch only the first 12 minutes. Pay attention to 'algorithm = real-life steps'. Pause and think: how would I explain this to my mom?"
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Algorithm = clear steps to solve any problem.\n\nPseudocode = English steps before real code.\n\nExample: Maggi algorithm -> boil -> add -> stir.\n\nReal-life exercise: Write steps to 'search your crush's name on Instagram'."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Flowchart Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://www.draw.io",
+          "task": "Drag boxes to make the Maggi algorithm flowchart.",
+          "notes": "Saves automatically to progress."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1",
+            "prompt": "Write pseudocode steps for making tea.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2",
+            "prompt": "Write steps for finding a book in your room.",
+            "input_type": "text"
+          },
+          {
+            "id": "p3",
+            "prompt": "Write steps for checking if you have enough money for a new phone.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is an algorithm?",
+            "options": [
+              "Magic",
+              "Step-by-step plan",
+              "Only for computers"
+            ],
+            "correctAnswer": "Step-by-step plan",
+            "explanation": "An algorithm is a clear step-by-step plan to solve a problem."
+          },
+          {
+            "question": "Why do we use pseudocode first?",
+            "options": [
+              "To think clearly before syntax confuses us",
+              "Because code is always wrong",
+              "To skip testing"
+            ],
+            "correctAnswer": "To think clearly before syntax confuses us",
+            "explanation": "Pseudocode helps you focus on logic before syntax."
+          }
+        ],
+        "pass_rule": "3/5 to unlock next"
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write pseudocode for your daily college routine (wake up -> college -> sleep)."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Real-life steps -> Computer steps",
+        "recall_questions": [
+          "What is the first step in any algorithm?",
+          "Why did the Maggi example matter?",
+          "How does this connect to your future FAANG job?"
+        ],
+        "identity_affirmation": "You just took the first step to becoming the coder version of yourself.",
+        "completion_celebration": {
+          "message": "Day 1 Coder Identity Unlocked!",
+          "linkedin_card_text": "Day 1 of DSA OS - I now think like a programmer 🔥"
+        },
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+10 XP",
+            "Focus Streak Boost",
+            "Motivation Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

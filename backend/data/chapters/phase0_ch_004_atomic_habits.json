@@ -1,0 +1,149 @@
+{
+  "roadmap_slug": "phase-0-mindset-revolution",
+  "chapter_number": 4,
+  "title": "Atomic Habits for Coders",
+  "topic_tag": "habits",
+  "difficulty": "BEGINNER",
+  "est_minutes": 720,
+  "story_hook": "1% better every day = 37x better in a year. James Clear's Atomic Habits applied to your lazy tier-4 life. This chapter makes you unstoppable.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "1% better every day = 37x better in a year. James Clear's Atomic Habits applied to your lazy tier-4 life. This chapter makes you unstoppable."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=JremUFwtcwE",
+        "title": "Atomic Habits For Coding Productivity",
+        "focus_note": "Look for the 4 laws and how they map to coding routines.",
+        "backup_urls": [
+          "https://www.youtube.com/watch?v=PZ7lDrwYdZc"
+        ]
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The 4 laws: Make it obvious (habit stacking), attractive, easy, satisfying.\n\nCoding environment design + 2-minute rule."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Habit Tracker",
+      "content": {
+        "visualizer": {
+          "task": "Build your first 7-day streak visual.",
+          "notes": "Check off each day you code - even 2 minutes counts."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "h1",
+            "prompt": "Design your personal coding environment (desk, distractions, time).",
+            "input_type": "text"
+          },
+          {
+            "id": "h2",
+            "prompt": "Write your habit stack: 'after tea -> open DSA OS'.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Which law is 'habit stacking' part of?",
+            "options": [
+              "Make it obvious",
+              "Make it easy",
+              "Make it satisfying"
+            ],
+            "correctAnswer": "Make it obvious",
+            "explanation": "Habit stacking makes the cue visible and obvious."
+          },
+          {
+            "question": "What is the 2-minute rule?",
+            "options": [
+              "Code only for 2 minutes",
+              "Make the habit so easy you can start in 2 minutes",
+              "Take a 2-minute break every hour"
+            ],
+            "correctAnswer": "Make the habit so easy you can start in 2 minutes",
+            "explanation": "Starting is the hardest part, so make it tiny."
+          },
+          {
+            "question": "Which law makes a habit feel rewarding?",
+            "options": [
+              "Make it attractive",
+              "Make it satisfying",
+              "Make it obvious"
+            ],
+            "correctAnswer": "Make it satisfying",
+            "explanation": "Immediate reward reinforces the behavior."
+          },
+          {
+            "question": "Which law reduces friction to start?",
+            "options": [
+              "Make it easy",
+              "Make it attractive",
+              "Make it obvious"
+            ],
+            "correctAnswer": "Make it easy",
+            "explanation": "Lower friction equals higher consistency."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write your 30-day coder identity plan. Focus on the smallest daily habit you will never miss."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Thinking clearly -> Reading errors -> Reading code -> Daily habits = unstoppable progress.",
+        "recall_questions": [
+          "Which habit will you stack with coding?",
+          "How will you make coding easy to start?",
+          "What reward will make it satisfying?"
+        ],
+        "identity_affirmation": "You are now the kind of coder who shows up every day.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Consistency Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

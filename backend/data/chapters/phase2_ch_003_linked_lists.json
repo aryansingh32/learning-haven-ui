@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 3,
+  "title": "Linked Lists",
+  "topic_tag": "linked-list",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1080,
+  "story_hook": "Instagram's 'next post' button is a linked list.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Instagram's 'next post' button is a linked list."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=JdQeNxWCguQ",
+        "title": "Doubly Linked List",
+        "channel": "mycodeschool",
+        "focus_note": "Focus on node structure and pointer updates."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Linked lists are nodes with pointers.\n\nUse when dynamic size and insert/delete matter."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Linked List Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/linkedlist",
+          "task": "Insert, delete, and reverse nodes.",
+          "notes": "Watch pointer changes carefully."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "ll1",
+            "prompt": "Reverse a linked list.",
+            "input_type": "text"
+          },
+          {
+            "id": "ll2",
+            "prompt": "Detect a cycle in a linked list.",
+            "input_type": "text"
+          },
+          {
+            "id": "ll3",
+            "prompt": "Find middle of a linked list.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Linked lists store elements",
+            "options": [
+              "non-contiguously",
+              "contiguously",
+              "in arrays"
+            ],
+            "correctAnswer": "non-contiguously",
+            "explanation": "Nodes live anywhere in memory, connected by pointers."
+          },
+          {
+            "question": "Main advantage of linked list is",
+            "options": [
+              "dynamic size",
+              "constant indexing",
+              "sorting"
+            ],
+            "correctAnswer": "dynamic size",
+            "explanation": "Linked lists grow/shrink without reallocation."
+          },
+          {
+            "question": "Accessing kth element in linked list is",
+            "options": [
+              "O(n)",
+              "O(1)",
+              "O(log n)"
+            ],
+            "correctAnswer": "O(n)",
+            "explanation": "You must traverse nodes to reach kth."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement insert and delete operations in a singly linked list."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Arrays -> Linked Lists (dynamic memory)",
+        "recall_questions": [
+          "Why are linked lists good for insert/delete?",
+          "What is the time to access kth node?",
+          "How do pointers connect nodes?"
+        ],
+        "identity_affirmation": "You mastered dynamic memory.",
+        "streak_reminder": "Stacks are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Linked List Ninja Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 2,
+  "title": "Sliding Window Pattern",
+  "topic_tag": "sliding-window",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1320,
+  "story_hook": "Longest substring without repeating characters or minimum window substring - one template solves them all.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Longest substring without repeating characters or minimum window substring - one template solves them all."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=-zSxTJkcdAo",
+        "title": "Longest Substring Without Repeating Characters",
+        "channel": "TakeUForward",
+        "focus_note": "Watch the expand-shrink template carefully."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Sliding window maintains a range [l..r].\n\nSignals: subarrays, substrings, 'longest'/'minimum' windows."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Sliding Window Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate window expansion and contraction.",
+          "notes": "Track counts/frequency while moving."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "sw1",
+            "prompt": "Maximum Sum Subarray (fixed window).",
+            "input_type": "text"
+          },
+          {
+            "id": "sw2",
+            "prompt": "Longest Substring Without Repeating Characters.",
+            "input_type": "text"
+          },
+          {
+            "id": "sw3",
+            "prompt": "Minimum Window Substring.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Sliding window is useful for",
+            "options": [
+              "subarray/substrings",
+              "trees",
+              "graphs only"
+            ],
+            "correctAnswer": "subarray/substrings",
+            "explanation": "Windows track contiguous ranges."
+          },
+          {
+            "question": "Variable window expands when",
+            "options": [
+              "condition not satisfied",
+              "condition satisfied",
+              "array sorted"
+            ],
+            "correctAnswer": "condition not satisfied",
+            "explanation": "Expand until condition is met, then shrink."
+          },
+          {
+            "question": "Time complexity is usually",
+            "options": [
+              "O(n)",
+              "O(n^2)",
+              "O(log n)"
+            ],
+            "correctAnswer": "O(n)",
+            "explanation": "Each pointer moves at most n steps."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement sliding window to find longest substring without repeating characters."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Two Pointers -> Sliding Window",
+        "recall_questions": [
+          "When do you use fixed vs variable window?",
+          "What does the window represent?",
+          "Why is it O(n)?"
+        ],
+        "identity_affirmation": "You now have the most used pattern in FAANG interviews.",
+        "streak_reminder": "Fast & slow pointers are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "Window Master Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

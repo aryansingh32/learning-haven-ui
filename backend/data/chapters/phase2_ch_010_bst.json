@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 10,
+  "title": "Binary Search Trees",
+  "topic_tag": "bst",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Dictionary in your phone = BST.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Dictionary in your phone = BST."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=_pEdRla4iXI",
+        "title": "Binary Search Tree",
+        "channel": "Bro Code",
+        "focus_note": "Focus on BST property, insert, search, delete."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "BST property: left < root < right.\n\nInorder traversal gives sorted order."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "BST Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Insert and delete nodes while maintaining BST property.",
+          "notes": "Observe how tree rearranges."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "bst1",
+            "prompt": "Validate a BST.",
+            "input_type": "text"
+          },
+          {
+            "id": "bst2",
+            "prompt": "Insert a node into BST.",
+            "input_type": "text"
+          },
+          {
+            "id": "bst3",
+            "prompt": "Find lowest common ancestor in BST.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Inorder traversal of BST gives",
+            "options": [
+              "sorted order",
+              "reverse order",
+              "random order"
+            ],
+            "correctAnswer": "sorted order",
+            "explanation": "BST inorder is ascending."
+          },
+          {
+            "question": "BST search time average is",
+            "options": [
+              "O(log n)",
+              "O(n)",
+              "O(1)"
+            ],
+            "correctAnswer": "O(log n)",
+            "explanation": "Balanced BSTs give log n."
+          },
+          {
+            "question": "BST property relates to",
+            "options": [
+              "left < root < right",
+              "level order",
+              "heap order"
+            ],
+            "correctAnswer": "left < root < right",
+            "explanation": "This property enables binary search."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement BST insertion and search.",
+        "notes": "Handle duplicates consistently."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Trees -> BST (ordered structure)",
+        "recall_questions": [
+          "Why is inorder sorted?",
+          "What breaks BST balance?",
+          "When is BST faster than array?"
+        ],
+        "identity_affirmation": "You can now reason with ordered trees.",
+        "streak_reminder": "Heaps are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "BST Architect Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

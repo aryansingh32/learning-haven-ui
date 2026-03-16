@@ -1,0 +1,35 @@
+{
+  "title": "Mindset Revolution",
+  "slug": "phase-0-mindset-revolution",
+  "description": "From 'I'm lazy and lost' to 'I'm a disciplined coder who never quits' - the hidden foundation nobody teaches in college.",
+  "type": "phase",
+  "difficulty_level": "beginner",
+  "duration_days": 14,
+  "is_premium": false,
+  "is_published": true,
+  "meta": {
+    "order": 0,
+    "est_hours": 50,
+    "icon": "🔥",
+    "phase_consolidation": {
+      "title": "Phase 0 Consolidation",
+      "mental_map": "REAL-LIFE THINKING -> ALGORITHMIC THINKING\n        -> ERRORS ARE FEEDBACK\n        -> READ CODE BEFORE WRITING\n        -> ATOMIC HABITS -> CONSISTENCY",
+      "self_rating": [
+        "How to Think Like a Programmer",
+        "How to Read Errors",
+        "How to Read Code",
+        "Atomic Habits for Coders"
+      ],
+      "linkedin_card": {
+        "headline": "I just completed Phase 0 on DSA OS - my lazy self is officially dead 🔥",
+        "subhead": "Mindset Revolution",
+        "bullets": [
+          "How to think like a programmer before writing code",
+          "How to read errors and get unstuck",
+          "How to read code before writing it",
+          "Atomic habits for consistent coding"
+        ]
+      }
+    }
+  }
+}

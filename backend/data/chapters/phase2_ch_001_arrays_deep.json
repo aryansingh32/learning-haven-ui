@@ -1,0 +1,154 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 1,
+  "title": "Arrays Deep Dive",
+  "topic_tag": "arrays",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1080,
+  "story_hook": "Spotify stores 10,000 songs in one array. Today you control memory rows like a pro.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Spotify stores 10,000 songs in one array. Today you control memory rows like a pro."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=37E9ckMDdTk",
+        "title": "Arrays Intro Video",
+        "channel": "takeUforward",
+        "focus_note": "Focus on traversal, indexing, and memory layout."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Arrays are contiguous memory blocks.\n\nTechniques: two pointers, sliding window intro, prefix sums.\n\nSignal: when you need fast indexed access, think arrays."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Array Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/array",
+          "task": "Traverse and update array boxes; observe index-address mapping.",
+          "notes": "Watch how two pointers move from both ends."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "a1",
+            "prompt": "LeetCode 1: Two Sum (https://leetcode.com/problems/two-sum/)",
+            "input_type": "text"
+          },
+          {
+            "id": "a2",
+            "prompt": "LeetCode 217: Contains Duplicate (https://leetcode.com/problems/contains-duplicate/)",
+            "input_type": "text"
+          },
+          {
+            "id": "a3",
+            "prompt": "LeetCode 53: Maximum Subarray (https://leetcode.com/problems/maximum-subarray/)",
+            "input_type": "text"
+          },
+          {
+            "id": "a4",
+            "prompt": "Custom: Find second largest element in an array.",
+            "input_type": "text"
+          },
+          {
+            "id": "a5",
+            "prompt": "Custom: Rotate array by k positions.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Array indexing is",
+            "options": [
+              "O(1)",
+              "O(n)",
+              "O(log n)"
+            ],
+            "correctAnswer": "O(1)",
+            "explanation": "Arrays map indices directly to addresses."
+          },
+          {
+            "question": "Two pointers are useful when",
+            "options": [
+              "searching sorted arrays",
+              "printing only",
+              "building graphs"
+            ],
+            "correctAnswer": "searching sorted arrays",
+            "explanation": "Two pointers shrink the search space efficiently."
+          },
+          {
+            "question": "Prefix sums help with",
+            "options": [
+              "range sum queries",
+              "sorting",
+              "graph traversal"
+            ],
+            "correctAnswer": "range sum queries",
+            "explanation": "Prefix sums compute ranges in O(1)."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Build an array utility that returns sum, max, and prefix sum array."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Phase 1 Loops -> Arrays (traversal)",
+        "recall_questions": [
+          "Why are arrays cache-friendly?",
+          "When do you use two pointers?",
+          "What does a prefix sum array store?"
+        ],
+        "identity_affirmation": "You just became dangerous with the most used data structure in FAANG.",
+        "streak_reminder": "Hashing is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+30 XP",
+            "Array Pro Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

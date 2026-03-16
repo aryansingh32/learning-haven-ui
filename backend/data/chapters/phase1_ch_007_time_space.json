@@ -1,0 +1,153 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 7,
+  "title": "Time & Space Complexity",
+  "topic_tag": "complexity",
+  "difficulty": "BEGINNER",
+  "est_minutes": 720,
+  "story_hook": "Google searches 1 billion records in 0.001 sec because of Big O. Today you learn the language of FAANG interviewers.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Google searches 1 billion records in 0.001 sec because of Big O. Today you learn the language of FAANG interviewers."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=...",
+        "title": "Time Complexity 2026",
+        "channel": "Striver",
+        "focus_note": "Watch how loop counts translate to Big O."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Big O measures growth: O(1), O(n), O(n^2), O(log n).\n\nTime vs space trade-offs explained with examples."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Complexity Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Compare O(n) vs O(n^2) growth live.",
+          "notes": "See how small input changes explode runtime."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "t1",
+            "prompt": "Calculate complexity of a single loop.",
+            "input_type": "text"
+          },
+          {
+            "id": "t2",
+            "prompt": "Calculate complexity of nested loops.",
+            "input_type": "text"
+          },
+          {
+            "id": "t3",
+            "prompt": "Calculate complexity of a loop that halves n.",
+            "input_type": "text"
+          },
+          {
+            "id": "t4",
+            "prompt": "Calculate complexity of two consecutive loops.",
+            "input_type": "text"
+          },
+          {
+            "id": "t5",
+            "prompt": "Calculate complexity of recursion with one call.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Which is faster for large n?",
+            "options": [
+              "O(n)",
+              "O(n^2)",
+              "O(n^3)"
+            ],
+            "correctAnswer": "O(n)",
+            "explanation": "Lower growth rate wins for large inputs."
+          },
+          {
+            "question": "A loop that halves n each time is",
+            "options": [
+              "O(log n)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": "O(log n)",
+            "explanation": "Halving steps produce logarithmic growth."
+          },
+          {
+            "question": "Big O describes",
+            "options": [
+              "growth rate",
+              "syntax",
+              "variable names"
+            ],
+            "correctAnswer": "growth rate",
+            "explanation": "Big O measures how runtime grows with input size."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Analyze the time complexity of two solutions: one with nested loops and one with a hash map."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Loops + Arrays + Strings -> Complexity",
+        "recall_questions": [
+          "Why does Big O matter in interviews?",
+          "Which patterns lead to O(n^2)?",
+          "How can extra memory reduce time?"
+        ],
+        "identity_affirmation": "You can now speak the language of efficiency.",
+        "streak_reminder": "Space complexity is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+30 XP",
+            "Big O Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

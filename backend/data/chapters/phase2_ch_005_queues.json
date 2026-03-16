@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 5,
+  "title": "Queues",
+  "topic_tag": "queues",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 600,
+  "story_hook": "Ticket counter line = queue. BFS starts here.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Ticket counter line = queue. BFS starts here."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/live/q5oOYxfOD1c",
+        "title": "Queue Data Structure",
+        "channel": "GeeksforGeeks",
+        "focus_note": "Focus on FIFO behavior and circular queue concept."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Queue = FIFO.\n\nUse for scheduling, BFS, and streaming."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Queue Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Enqueue and dequeue elements to see FIFO.",
+          "notes": "Track front and rear pointers."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "q1",
+            "prompt": "Implement a queue using two stacks.",
+            "input_type": "text"
+          },
+          {
+            "id": "q2",
+            "prompt": "Sliding window maximum (intro).",
+            "input_type": "text"
+          },
+          {
+            "id": "q3",
+            "prompt": "First non-repeating character in a stream.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Queue follows",
+            "options": [
+              "FIFO",
+              "LIFO",
+              "Random"
+            ],
+            "correctAnswer": "FIFO",
+            "explanation": "First in, first out."
+          },
+          {
+            "question": "Which traversal uses a queue?",
+            "options": [
+              "BFS",
+              "DFS",
+              "Binary search"
+            ],
+            "correctAnswer": "BFS",
+            "explanation": "Breadth-first search relies on queues."
+          },
+          {
+            "question": "Circular queue helps with",
+            "options": [
+              "space reuse",
+              "sorting",
+              "hashing"
+            ],
+            "correctAnswer": "space reuse",
+            "explanation": "Circular queues reuse freed slots."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Build a queue with enqueue, dequeue, and front operations."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Stacks -> Queues (opposite order)",
+        "recall_questions": [
+          "What does FIFO mean?",
+          "Why does BFS need a queue?",
+          "When do you use a circular queue?"
+        ],
+        "identity_affirmation": "You now control order of execution.",
+        "streak_reminder": "Recursion is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+30 XP",
+            "Queue Captain Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 5,
+  "title": "Binary Search on Answer",
+  "topic_tag": "binary-search-answer",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1080,
+  "story_hook": "Koko eating bananas or aggressive cows - minimise the maximum or maximise the minimum.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Koko eating bananas or aggressive cows - minimise the maximum or maximise the minimum."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=Kb3KOTQfjew",
+        "title": "Binary Search Problems on Answers",
+        "channel": "Striver",
+        "focus_note": "Focus on monotonic condition and answer range."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Search on answer uses binary search over feasible values.\n\nSignal: minimize the maximum or maximize the minimum."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Search Space Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate shrinking answer range with feasible check.",
+          "notes": "Observe monotonic condition."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "ba1",
+            "prompt": "Koko Eating Bananas.",
+            "input_type": "text"
+          },
+          {
+            "id": "ba2",
+            "prompt": "Capacity To Ship Packages Within D Days.",
+            "input_type": "text"
+          },
+          {
+            "id": "ba3",
+            "prompt": "Aggressive Cows.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Binary search on answer needs",
+            "options": [
+              "monotonic condition",
+              "sorted input only",
+              "recursion only"
+            ],
+            "correctAnswer": "monotonic condition",
+            "explanation": "Feasibility must be monotonic."
+          },
+          {
+            "question": "We search over",
+            "options": [
+              "answer range",
+              "indices only",
+              "hash map"
+            ],
+            "correctAnswer": "answer range",
+            "explanation": "We binary search on possible answers."
+          },
+          {
+            "question": "Aggressive cows is",
+            "options": [
+              "maximize minimum distance",
+              "minimize time only",
+              "sort only"
+            ],
+            "correctAnswer": "maximize minimum distance",
+            "explanation": "Classic maximize-minimum pattern."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement a generic binary search on answer template."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Binary Search -> Search on Answer",
+        "recall_questions": [
+          "What makes a condition monotonic?",
+          "How do you pick low/high bounds?",
+          "Why does binary search work here?"
+        ],
+        "identity_affirmation": "You just learned one of the most powerful interview patterns.",
+        "streak_reminder": "BFS pattern is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "Answer Hunter Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

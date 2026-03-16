@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 6,
+  "title": "Recursion - The Chapter That Changes Everything",
+  "topic_tag": "recursion",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1500,
+  "story_hook": "Factorial is simple recursion. N-Queens will blow your mind.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Factorial is simple recursion. N-Queens will blow your mind."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/live/yVdKa8dnKiE",
+        "title": "Introduction to Recursion",
+        "channel": "takeUforward",
+        "focus_note": "Focus on base case, recursion tree, and stack space."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Recursion = function calls itself.\n\nRules: base case, move toward base case, solve smaller subproblem."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Recursion Tree Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/recursion",
+          "task": "Watch recursion tree grow and stack frames build.",
+          "notes": "Trace Fibonacci and subset generation."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "r1",
+            "prompt": "Fibonacci using recursion (and memoization).",
+            "input_type": "text"
+          },
+          {
+            "id": "r2",
+            "prompt": "Generate all subsets of an array.",
+            "input_type": "text"
+          },
+          {
+            "id": "r3",
+            "prompt": "Generate permutations of a string.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Every recursion must have",
+            "options": [
+              "a base case",
+              "a loop",
+              "a class"
+            ],
+            "correctAnswer": "a base case",
+            "explanation": "Base case stops infinite recursion."
+          },
+          {
+            "question": "Recursion uses",
+            "options": [
+              "call stack",
+              "heap only",
+              "database"
+            ],
+            "correctAnswer": "call stack",
+            "explanation": "Each call pushes a stack frame."
+          },
+          {
+            "question": "Overlapping subproblems suggests",
+            "options": [
+              "memoization",
+              "binary search",
+              "sorting"
+            ],
+            "correctAnswer": "memoization",
+            "explanation": "Memoization avoids recomputation."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Solve N-Queens for small n and trace the recursion tree."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Stacks -> Recursion (call stack)",
+        "recall_questions": [
+          "What are the three laws of recursion?",
+          "Why does recursion use stack space?",
+          "When do you choose recursion over loops?"
+        ],
+        "identity_affirmation": "You just learned the most feared topic in India - and you OWN it.",
+        "streak_reminder": "Binary search is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "Recursion Conqueror Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

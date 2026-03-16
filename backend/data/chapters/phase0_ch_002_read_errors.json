@@ -1,0 +1,149 @@
+{
+  "roadmap_slug": "phase-0-mindset-revolution",
+  "chapter_number": 2,
+  "title": "How to Read Errors & Get Unstuck",
+  "topic_tag": "debugging",
+  "difficulty": "BEGINNER",
+  "est_minutes": 720,
+  "story_hook": "That red screen that made you quit last time? Today it becomes your best friend. Tier-4 students who learn this never drop out again.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "That red screen that made you quit last time? Today it becomes your best friend. Tier-4 students who learn this never drop out again."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=ERm0K7N_l0g",
+        "title": "Finding and Fixing Code Errors for Beginners",
+        "channel": "CodeLucky",
+        "focus_note": "Watch how the error message is actually helping you.",
+        "backup_urls": [
+          "https://www.youtube.com/results?search_query=Apna+College+error+fixing"
+        ]
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Error = computer's love letter.\n\nGoogle the exact message + 'Python/Java'.\n\n15-minute rule: try 15 min, then ask."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Error Highlighter",
+      "content": {
+        "visualizer": {
+          "task": "Paste sample buggy code and see the line highlighted.",
+          "notes": "Focus on reading the line number and message." 
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "e1",
+            "prompt": "Fix the missing quote error.",
+            "buggy_code": "print(Hello)",
+            "expected_fix": "print('Hello')"
+          },
+          {
+            "id": "e2",
+            "prompt": "Fix the missing parenthesis error.",
+            "buggy_code": "print('Maggi'",
+            "expected_fix": "print('Maggi')"
+          },
+          {
+            "id": "e3",
+            "prompt": "Fix the variable name error.",
+            "buggy_code": "name = 'Ravi'\nprint(nmae)",
+            "expected_fix": "name = 'Ravi'\nprint(name)"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What part of an error tells you the exact line to check?",
+            "options": [
+              "The file name and line number",
+              "The compiler logo",
+              "The last printed output"
+            ],
+            "correctAnswer": "The file name and line number",
+            "explanation": "Line numbers point you to the precise location of the issue."
+          },
+          {
+            "question": "What should you Google when stuck?",
+            "options": [
+              "The exact error message",
+              "The entire codebase",
+              "A random tutorial"
+            ],
+            "correctAnswer": "The exact error message",
+            "explanation": "Searching the exact error message gives the most relevant results."
+          },
+          {
+            "question": "What is the 15-minute rule?",
+            "options": [
+              "Give up after 15 minutes",
+              "Try for 15 minutes, then ask for help",
+              "Only code for 15 minutes a day"
+            ],
+            "correctAnswer": "Try for 15 minutes, then ask for help",
+            "explanation": "You learn by trying first, then asking with clear context."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Debug this 5-line Maggi recipe code that has 2 errors.",
+        "buggy_code": "boil('water')\nadd(masala)\nwait 2\nadd(noodles)\nserve()"
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Errors happen when your algorithm step is wrong.",
+        "recall_questions": [
+          "What does an error message usually tell you first?",
+          "Why is Googling an error not cheating?",
+          "What is your personal 15-minute rule?"
+        ],
+        "identity_affirmation": "You are the kind of coder who reads errors calmly and keeps moving.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+15 XP",
+            "Debugging Confidence Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

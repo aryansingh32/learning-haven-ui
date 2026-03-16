@@ -1,0 +1,138 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 8,
+  "title": "Space Complexity",
+  "topic_tag": "space",
+  "difficulty": "BEGINNER",
+  "est_minutes": 480,
+  "story_hook": "Sometimes extra memory saves huge time. Today you learn the trade-offs engineers make every day.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Sometimes extra memory saves huge time. Today you learn the trade-offs engineers make every day."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=...",
+        "title": "Space Complexity Basics",
+        "channel": "Striver",
+        "focus_note": "Focus on memory vs time trade-offs."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Space complexity measures extra memory used.\n\nUsing extra arrays can reduce runtime - this is a valid engineering decision."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Memory Trade-off Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Compare in-place vs extra-array solutions.",
+          "notes": "See how memory usage changes."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "sp1",
+            "prompt": "Identify extra space used in a solution with an extra array.",
+            "input_type": "text"
+          },
+          {
+            "id": "sp2",
+            "prompt": "Convert an algorithm to in-place to save space.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Space complexity measures",
+            "options": [
+              "extra memory used",
+              "runtime only",
+              "syntax quality"
+            ],
+            "correctAnswer": "extra memory used",
+            "explanation": "Space complexity focuses on additional memory beyond input."
+          },
+          {
+            "question": "Using a hash map often",
+            "options": [
+              "increases memory",
+              "reduces memory",
+              "does nothing"
+            ],
+            "correctAnswer": "increases memory",
+            "explanation": "Hash maps trade space for speed."
+          },
+          {
+            "question": "In-place algorithms use",
+            "options": [
+              "O(1) extra space",
+              "O(n) extra space",
+              "O(n^2) extra space"
+            ],
+            "correctAnswer": "O(1) extra space",
+            "explanation": "In-place means constant extra space."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Rewrite a solution to use less memory while keeping it correct."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Time Complexity -> Space Complexity (trade-offs)",
+        "recall_questions": [
+          "What does O(1) extra space mean?",
+          "When is extra memory worth it?",
+          "How do space and time trade-off?"
+        ],
+        "identity_affirmation": "You now think like an engineer about trade-offs.",
+        "streak_reminder": "Phase 1 consolidation is ready - finish strong.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Trade-off Thinker Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

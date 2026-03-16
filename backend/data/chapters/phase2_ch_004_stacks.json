@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 4,
+  "title": "Stacks",
+  "topic_tag": "stacks",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 720,
+  "story_hook": "Browser back button = stack. Undo in Photoshop = stack.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Browser back button = stack. Undo in Photoshop = stack."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/live/jBY4JD25Iks",
+        "title": "Stack Data Structure",
+        "channel": "GeeksforGeeks",
+        "focus_note": "Focus on LIFO behavior and common stack operations."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Stack = LIFO.\n\nUse for undo, backtracking, and parsing problems."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Stack Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Push and pop elements to see LIFO in action.",
+          "notes": "Track top pointer changes."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "st1",
+            "prompt": "Next greater element.",
+            "input_type": "text"
+          },
+          {
+            "id": "st2",
+            "prompt": "Valid parentheses check.",
+            "input_type": "text"
+          },
+          {
+            "id": "st3",
+            "prompt": "Reverse a string using stack.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Stack follows",
+            "options": [
+              "LIFO",
+              "FIFO",
+              "Random"
+            ],
+            "correctAnswer": "LIFO",
+            "explanation": "Last in, first out."
+          },
+          {
+            "question": "Top of stack refers to",
+            "options": [
+              "last inserted element",
+              "first inserted element",
+              "middle element"
+            ],
+            "correctAnswer": "last inserted element",
+            "explanation": "Top points to most recent push."
+          },
+          {
+            "question": "Which problem signals stack usage?",
+            "options": [
+              "matching brackets",
+              "finding min in array",
+              "binary search"
+            ],
+            "correctAnswer": "matching brackets",
+            "explanation": "Stacks track nested pairs."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement a stack with push, pop, and peek operations."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Linked Lists -> Stacks (LIFO behavior)",
+        "recall_questions": [
+          "What is LIFO?",
+          "Which real-world feature uses stacks?",
+          "Why is next greater element a stack problem?"
+        ],
+        "identity_affirmation": "LIFO is now in your blood.",
+        "streak_reminder": "Queues are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+30 XP",
+            "Stack Warrior Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

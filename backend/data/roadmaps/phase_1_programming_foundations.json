@@ -1,0 +1,68 @@
+{
+  "title": "Programming Foundations",
+  "slug": "phase-1-programming-foundations",
+  "description": "Master the basics before DSA touches you. This phase turns you from a complete beginner into someone who can actually write and understand code.",
+  "type": "phase",
+  "difficulty_level": "beginner",
+  "duration_days": 42,
+  "is_premium": false,
+  "is_published": true,
+  "meta": {
+    "order": 1,
+    "est_hours": 100,
+    "icon": "🛠️",
+    "total_hours_note": "80-120 hours (4-6 weeks at 1-1.5 hrs/day)",
+    "mid_phase_checkpoint": {
+      "after_chapter": 4,
+      "message": "You now have Variables + Decisions + Loops + Functions - 60% of all interview questions solved already!"
+    },
+    "phase_consolidation": {
+      "title": "Phase 1 Consolidation",
+      "mental_map": "Variables -> Loops -> Functions -> Arrays -> Big O",
+      "mixed_problems": [
+        "Write a function that counts numbers greater than average in an array.",
+        "Remove vowels from a string and state the time complexity.",
+        "Check palindrome using two pointers and analyze space complexity.",
+        "Grade calculator using if-else and loops for multiple students.",
+        "Find max in array and report steps count.",
+        "Swap two variables without extra space.",
+        "Count characters in a string using a loop.",
+        "Write a function that returns sum of even numbers in array.",
+        "Compare two strings and return which is longer.",
+        "Predict output of nested loop snippet.",
+        "Find second largest element without sorting.",
+        "Determine complexity of a loop inside a function."
+      ],
+      "self_rating": [
+        "Variables & Memory",
+        "Conditionals",
+        "Loops",
+        "Functions",
+        "Arrays",
+        "Strings",
+        "Time Complexity",
+        "Space Complexity"
+      ],
+      "weak_spot_tasks": [
+        "20-min Variables recap: declare, assign, scope",
+        "20-min Conditionals recap: grade calculator",
+        "20-min Loops recap: pattern printing",
+        "20-min Functions recap: reusable calculator",
+        "20-min Arrays recap: traversal and max",
+        "20-min Strings recap: reverse + palindrome",
+        "20-min Time Complexity recap: 5 snippets",
+        "20-min Space Complexity recap: in-place vs extra"
+      ],
+      "linkedin_card": {
+        "headline": "I just finished Programming Foundations on DSA OS - I can now write real code! 🛠️",
+        "subhead": "Programming Foundations",
+        "bullets": [
+          "8 chapters",
+          "Variables, loops, functions, arrays, strings",
+          "Time + space complexity",
+          "Ready for DSA next"
+        ]
+      }
+    }
+  }
+}

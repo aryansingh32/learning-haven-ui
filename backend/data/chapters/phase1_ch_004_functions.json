@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 4,
+  "title": "Functions - Stop Repeating Yourself",
+  "topic_tag": "functions",
+  "difficulty": "BEGINNER",
+  "est_minutes": 720,
+  "story_hook": "You don't want to write the same code 100 times. Functions are reusable machines.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "You don't want to write the same code 100 times. Functions are reusable machines."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Apna+College+Functions",
+        "title": "Functions in Programming",
+        "channel": "Apna College",
+        "focus_note": "Focus on parameters, return values, and reuse."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Functions are reusable machines. Input goes in, output comes out.\n\nParameters vs arguments, return values, and scope basics."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Function Call Stack Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Watch the call stack grow and shrink when functions call each other.",
+          "notes": "Notice how each call has its own memory frame."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "f1",
+            "prompt": "Write a function to add two numbers.",
+            "input_type": "text"
+          },
+          {
+            "id": "f2",
+            "prompt": "Write a function to find the max of three numbers.",
+            "input_type": "text"
+          },
+          {
+            "id": "f3",
+            "prompt": "Write a function to check if a number is prime.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the purpose of a function?",
+            "options": [
+              "Reuse code",
+              "Store data",
+              "Render UI"
+            ],
+            "correctAnswer": "Reuse code",
+            "explanation": "Functions avoid repetition by packaging logic."
+          },
+          {
+            "question": "What is a return value?",
+            "options": [
+              "The output of a function",
+              "The input to a loop",
+              "A variable name"
+            ],
+            "correctAnswer": "The output of a function",
+            "explanation": "Return value is what the function gives back."
+          },
+          {
+            "question": "Parameters are",
+            "options": [
+              "Inputs to a function",
+              "Outputs of a function",
+              "Global variables"
+            ],
+            "correctAnswer": "Inputs to a function",
+            "explanation": "Parameters define what data a function receives."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Create reusable calculator functions (add, subtract, multiply, divide)."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Variables + Conditionals + Loops -> Functions",
+        "recall_questions": [
+          "Why do functions reduce repetition?",
+          "What is the difference between parameters and arguments?",
+          "How does the call stack help functions?"
+        ],
+        "identity_affirmation": "You now build reusable machines in code.",
+        "streak_reminder": "Mid-phase checkpoint unlocked after this chapter.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+25 XP",
+            "Function Builder Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

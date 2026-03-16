@@ -1,0 +1,144 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 6,
+  "title": "BFS Pattern",
+  "topic_tag": "bfs",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1080,
+  "story_hook": "Shortest path in unweighted graph or rotten oranges - level by level is the key.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Shortest path in unweighted graph or rotten oranges - level by level is the key."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=-tgVpUgsQ5k",
+        "title": "Breadth-First Search (BFS)",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on level-order traversal and queue usage."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "BFS explores level by level using a queue.\n\nIt finds shortest path in unweighted graphs."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "BFS Visualizer",
+      "content": {
+        "visualizer": {
+          "url": "https://visualgo.net/en/bfs",
+          "task": "Run BFS and watch level expansion.",
+          "notes": "Track visited nodes."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "bfs1",
+            "prompt": "Rotten Oranges.",
+            "input_type": "text"
+          },
+          {
+            "id": "bfs2",
+            "prompt": "Word Ladder.",
+            "input_type": "text"
+          },
+          {
+            "id": "bfs3",
+            "prompt": "Level Order Traversal.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "BFS uses",
+            "options": [
+              "queue",
+              "stack",
+              "recursion only"
+            ],
+            "correctAnswer": "queue",
+            "explanation": "Queue maintains level order."
+          },
+          {
+            "question": "BFS finds shortest path when",
+            "options": [
+              "edges are unweighted",
+              "edges are weighted",
+              "graph is a tree only"
+            ],
+            "correctAnswer": "edges are unweighted",
+            "explanation": "Each edge has equal weight."
+          },
+          {
+            "question": "BFS explores nodes",
+            "options": [
+              "level by level",
+              "depth first",
+              "randomly"
+            ],
+            "correctAnswer": "level by level",
+            "explanation": "Queue ensures level expansion."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement BFS for shortest path in an unweighted graph."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Queues + Graphs -> BFS Pattern",
+        "recall_questions": [
+          "Why does BFS find shortest path?",
+          "What does visited prevent?",
+          "When is BFS better than DFS?"
+        ],
+        "identity_affirmation": "You now solve shortest path problems effortlessly.",
+        "streak_reminder": "DFS & backtracking are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+40 XP",
+            "BFS Pathfinder Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

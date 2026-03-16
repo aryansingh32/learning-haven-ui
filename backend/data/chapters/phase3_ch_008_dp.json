@@ -1,0 +1,148 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 8,
+  "title": "Dynamic Programming",
+  "topic_tag": "dynamic-programming",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1500,
+  "story_hook": "Fibonacci is recursion + memo = DP. House robber, longest common subsequence - everything has overlapping subproblems.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Fibonacci is recursion + memo = DP. House robber, longest common subsequence - everything has overlapping subproblems."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=tyB0ztf0DNY",
+        "title": "DP 1 Introduction to Dynamic Programming",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on memoization and dp table meaning."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "DP = optimal substructure + overlapping subproblems.\n\nDefine dp[i], build recurrence, fill table."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "DP Table Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate dp table filling for Fibonacci and LCS.",
+          "notes": "Observe transitions."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "dp1",
+            "prompt": "Climbing Stairs.",
+            "input_type": "text"
+          },
+          {
+            "id": "dp2",
+            "prompt": "House Robber.",
+            "input_type": "text"
+          },
+          {
+            "id": "dp3",
+            "prompt": "0/1 Knapsack.",
+            "input_type": "text"
+          },
+          {
+            "id": "dp4",
+            "prompt": "Longest Common Subsequence.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "DP is used when",
+            "options": [
+              "subproblems overlap",
+              "array is sorted",
+              "graph is acyclic"
+            ],
+            "correctAnswer": "subproblems overlap",
+            "explanation": "Overlapping subproblems are key."
+          },
+          {
+            "question": "Memoization means",
+            "options": [
+              "caching results",
+              "sorting",
+              "recursion only"
+            ],
+            "correctAnswer": "caching results",
+            "explanation": "Memoization stores computed answers."
+          },
+          {
+            "question": "dp[i] should be",
+            "options": [
+              "clearly defined",
+              "left undefined",
+              "always global"
+            ],
+            "correctAnswer": "clearly defined",
+            "explanation": "DP starts with a clear state definition."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Solve House Robber with both memoization and tabulation."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Recursion -> DP (memoization)",
+        "recall_questions": [
+          "What is dp[i]?",
+          "When do you choose DP?",
+          "Why is memoization faster?"
+        ],
+        "identity_affirmation": "You just unlocked the Mount Everest of DSA.",
+        "streak_reminder": "Greedy is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "DP Summit Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

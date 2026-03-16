@@ -42,7 +42,13 @@ const ChapterSchema = z.object({
   }).optional(),
   problems: z.array(z.any()).optional(),
   quiz: z.array(z.any()).optional(),
-  tasks: z.array(z.any()).optional()
+  tasks: z.array(z.any()).optional(),
+  steps: z.array(z.object({
+    step_number: z.number(),
+    type: z.string(),
+    title: z.string(),
+    content: z.any()
+  })).optional()
 });
 
 async function runSeeder() {
@@ -131,7 +137,28 @@ async function runSeeder() {
         continue;
       }
 
-      // d. Log Success
+      // d. Upsert steps if provided
+      if (chapter.steps && chapter.steps.length > 0) {
+        const stepsPayload = chapter.steps.map(step => ({
+          chapter_id: upsertedChapter.id,
+          step_number: step.step_number,
+          type: step.type,
+          title: step.title,
+          content: step.content
+        }));
+
+        const { error: stepsErr } = await supabase
+          .from('steps')
+          .upsert(stepsPayload, { onConflict: 'chapter_id,step_number' });
+
+        if (stepsErr) {
+          console.error(`[ERROR] File ${file}: Failed to upsert steps - ${stepsErr.message}`);
+          errorCount++;
+          continue;
+        }
+      }
+
+      // e. Log Success
       console.log(`Chapter ${chapter.chapter_number}: ${chapter.title} — ✓ seeded`);
       seededCount++;
 

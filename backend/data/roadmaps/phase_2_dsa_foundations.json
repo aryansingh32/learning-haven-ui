@@ -1,0 +1,78 @@
+{
+  "title": "DSA Foundations",
+  "slug": "phase-2-dsa-foundations",
+  "description": "Build each weapon one by one. After this phase you already solve 60% of all interview questions.",
+  "type": "phase",
+  "difficulty_level": "intermediate",
+  "duration_days": 84,
+  "is_premium": false,
+  "is_published": true,
+  "meta": {
+    "order": 2,
+    "est_hours": 180,
+    "icon": "⚔️",
+    "mid_phase_checkpoint": {
+      "after_chapter": 6,
+      "message": "You now know Arrays + Hashing + Linked Lists + Recursion - 50% of all Indian product company questions solved. Celebrate!"
+    },
+    "phase_consolidation": {
+      "title": "Phase 2 Consolidation",
+      "mental_map": "Arrays -> Hashing -> Linked Lists -> Stacks -> Queues -> Recursion -> Binary Search -> Sorting -> Trees -> BST -> Heaps -> Graphs",
+      "mixed_problems": [
+        "Use hashing to detect duplicates in an array.",
+        "Reverse a linked list and explain time complexity.",
+        "Implement stack using two queues.",
+        "Find next greater element using stack.",
+        "Binary search in rotated sorted array.",
+        "Implement merge sort and analyze complexity.",
+        "Check if a binary tree is balanced.",
+        "Validate a BST.",
+        "Find kth largest element using a heap.",
+        "Detect cycle in an undirected graph using BFS.",
+        "Generate all subsets using recursion.",
+        "Queue-based level order traversal of a tree.",
+        "Find diameter of a binary tree.",
+        "Top K frequent elements using heap + hashing.",
+        "Shortest path in unweighted graph using BFS."
+      ],
+      "self_rating": [
+        "Arrays Deep Dive",
+        "Hashing & HashMaps",
+        "Linked Lists",
+        "Stacks",
+        "Queues",
+        "Recursion",
+        "Binary Search",
+        "Sorting Algorithms",
+        "Trees",
+        "Binary Search Trees",
+        "Heaps & Priority Queues",
+        "Graphs"
+      ],
+      "weak_spot_tasks": [
+        "20-min Arrays recap: two pointers + prefix sums",
+        "20-min Hashing recap: frequency maps",
+        "20-min Linked List recap: reverse + cycle",
+        "20-min Stacks recap: next greater element",
+        "20-min Queues recap: BFS intro",
+        "20-min Recursion recap: subset + permutation",
+        "20-min Binary Search recap: search on answer",
+        "20-min Sorting recap: merge vs quick",
+        "20-min Trees recap: traversals",
+        "20-min BST recap: validate + insert",
+        "20-min Heaps recap: kth largest",
+        "20-min Graphs recap: BFS/DFS"
+      ],
+      "linkedin_card": {
+        "headline": "I just finished DSA Foundations on DSA OS - 60% of interviews are now easy for me ⚔️",
+        "subhead": "DSA Foundations",
+        "bullets": [
+          "12 chapters",
+          "Arrays to Graphs",
+          "Stacks, queues, trees, heaps",
+          "Interview-ready foundations"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 3,
+  "title": "Fast & Slow Pointers (Floyd's Cycle)",
+  "topic_tag": "fast-slow",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Detect cycle in linked list or find duplicate in array - tortoise and hare never fail.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Detect cycle in linked list or find duplicate in array - tortoise and hare never fail."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=wiOo4DC5GGA",
+        "title": "Detect loop in LinkedList",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on tortoise-hare movement and cycle entry."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Fast pointer moves 2x, slow pointer moves 1x.\n\nIf they meet, a cycle exists."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Tortoise & Hare Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate fast and slow pointers on a cycle.",
+          "notes": "Observe meeting point and cycle entry."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "fs1",
+            "prompt": "Linked List Cycle.",
+            "input_type": "text"
+          },
+          {
+            "id": "fs2",
+            "prompt": "Find Duplicate Number.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Fast pointer speed is",
+            "options": [
+              "2x slow",
+              "same as slow",
+              "random"
+            ],
+            "correctAnswer": "2x slow",
+            "explanation": "Fast pointer moves twice as fast."
+          },
+          {
+            "question": "If pointers meet, it means",
+            "options": [
+              "cycle exists",
+              "list is empty",
+              "list is sorted"
+            ],
+            "correctAnswer": "cycle exists",
+            "explanation": "Meeting implies a cycle."
+          },
+          {
+            "question": "Fast/slow works because",
+            "options": [
+              "relative speed in cycle",
+              "array is sorted",
+              "hashing is used"
+            ],
+            "correctAnswer": "relative speed in cycle",
+            "explanation": "Speed difference guarantees meeting if cycle exists."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement cycle detection and return cycle start node."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Linked Lists -> Fast/Slow Pointers",
+        "recall_questions": [
+          "Why do pointers meet in a cycle?",
+          "How do you find cycle start?",
+          "Which array problem uses this trick?"
+        ],
+        "identity_affirmation": "You mastered the smartest pointer trick.",
+        "streak_reminder": "Merge intervals are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Floyd Master Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

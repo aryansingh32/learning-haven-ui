@@ -1,0 +1,138 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 4,
+  "title": "Merge Intervals",
+  "topic_tag": "merge-intervals",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Meeting rooms, insert interval, merge overlapping intervals - sort once and merge.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Meeting rooms, insert interval, merge overlapping intervals - sort once and merge."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=IexN60k62jo",
+        "title": "Merge Overlapping Intervals",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on sorting by start time and merging greedily."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Sort intervals by start time.\n\nMerge when current.start <= last.end."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Intervals Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate interval merging after sorting.",
+          "notes": "Watch overlaps collapse into one."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "mi1",
+            "prompt": "Merge Intervals.",
+            "input_type": "text"
+          },
+          {
+            "id": "mi2",
+            "prompt": "Non-overlapping Intervals.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "First step in merge intervals is",
+            "options": [
+              "sort by start",
+              "sort by end",
+              "use stack"
+            ],
+            "correctAnswer": "sort by start",
+            "explanation": "Sorting by start makes merging linear."
+          },
+          {
+            "question": "Intervals overlap when",
+            "options": [
+              "current.start <= last.end",
+              "current.start > last.end",
+              "equal lengths"
+            ],
+            "correctAnswer": "current.start <= last.end",
+            "explanation": "Overlap means current starts before last ends."
+          },
+          {
+            "question": "Merge intervals complexity is",
+            "options": [
+              "O(n log n)",
+              "O(n^2)",
+              "O(log n)"
+            ],
+            "correctAnswer": "O(n log n)",
+            "explanation": "Sorting dominates."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Given meeting times, merge overlaps and output free slots."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Sorting -> Merge Intervals",
+        "recall_questions": [
+          "Why sort by start?",
+          "When do you merge?",
+          "What is the time complexity?"
+        ],
+        "identity_affirmation": "You now handle overlapping real-life problems like a pro.",
+        "streak_reminder": "Binary search on answer is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Interval Pro Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

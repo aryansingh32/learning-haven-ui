@@ -1,0 +1,148 @@
+{
+  "roadmap_slug": "phase-1-programming-foundations",
+  "chapter_number": 2,
+  "title": "Conditionals & Decision Making",
+  "topic_tag": "conditionals",
+  "difficulty": "BEGINNER",
+  "est_minutes": 600,
+  "story_hook": "Should I buy this phone? Should I attend the class? Computers make millions of decisions per second. Today you become the decision-maker.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Should I buy this phone? Should I attend the class? Computers make millions of decisions per second. Today you become the decision-maker."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=0v2Q5o7a7fU",
+        "title": "If-Else in Programming",
+        "channel": "Apna College",
+        "focus_note": "Watch how real-life choices become code."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "If-else, switch, ternary - with Indian student examples (marks > 40 -> Pass)."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Decision Tree Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate branching paths for if-else decisions.",
+          "notes": "Follow the true/false branch selection."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "c1",
+            "prompt": "Check if marks > 40 -> Pass else Fail.",
+            "input_type": "text"
+          },
+          {
+            "id": "c2",
+            "prompt": "Check if a number is positive, negative, or zero.",
+            "input_type": "text"
+          },
+          {
+            "id": "c3",
+            "prompt": "Find the largest of three numbers.",
+            "input_type": "text"
+          },
+          {
+            "id": "c4",
+            "prompt": "Check if a year is a leap year.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What does an if-else statement do?",
+            "options": [
+              "Repeats code",
+              "Makes a decision",
+              "Stores data"
+            ],
+            "correctAnswer": "Makes a decision",
+            "explanation": "If-else selects a path based on a condition."
+          },
+          {
+            "question": "Which is a short form of if-else?",
+            "options": [
+              "for loop",
+              "ternary",
+              "array"
+            ],
+            "correctAnswer": "ternary",
+            "explanation": "Ternary is the compact form of an if-else."
+          },
+          {
+            "question": "Switch statements are useful when",
+            "options": [
+              "checking many equal cases",
+              "doing math only",
+              "declaring variables"
+            ],
+            "correctAnswer": "checking many equal cases",
+            "explanation": "Switch is clean for multiple equality checks."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Build a grade calculator: input marks and output grade with if-else."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Variables -> Decisions (conditionals)",
+        "recall_questions": [
+          "What does a condition return?",
+          "When should you use switch vs if-else?",
+          "How do variables feed decision logic?"
+        ],
+        "identity_affirmation": "You are now the decision-maker in code.",
+        "streak_reminder": "Keep the streak alive - loops are next.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Decision Maker Badge",
+            "Focus Streak Boost"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -84,6 +84,26 @@ router.post('/:chapterId/progress/task', authenticateUser, async (req: any, res:
 });
 
 /**
+ * POST /api/chapters/:chapterId/progress/step
+ */
+router.post('/:chapterId/progress/step', authenticateUser, async (req: any, res: Response) => {
+    try {
+        const { chapterId } = req.params;
+        const { step_id } = req.body;
+        const userId = req.user?.id;
+
+        if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+        if (!step_id) return res.status(400).json({ error: 'Missing step_id' });
+
+        const result = await ChaptersService.updateStepProgress(userId, chapterId, step_id);
+        return res.json(result);
+    } catch (err) {
+        logger.error('Step progress POST error', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+/**
  * POST /api/chapters/unlock
  */
 router.post('/unlock', authenticateUser, async (req: any, res: Response) => {

@@ -1,0 +1,148 @@
+{
+  "roadmap_slug": "phase-3-dsa-patterns",
+  "chapter_number": 7,
+  "title": "DFS & Backtracking Pattern",
+  "topic_tag": "dfs-backtracking",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 1320,
+  "story_hook": "Subsets, permutations, N-Queens - explore all possibilities and undo.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Subsets, permutations, N-Queens - explore all possibilities and undo."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=BLlqSpWyjFM",
+        "title": "DFS of Graph + Backtracking",
+        "channel": "TakeUForward",
+        "focus_note": "Focus on choose-explore-unchoose template."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Backtracking = make choice, explore, undo choice.\n\nUse for subsets, permutations, and constraint problems."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Backtracking Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate recursion tree with undo steps.",
+          "notes": "See how choices branch and backtrack."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "dfs1",
+            "prompt": "Subsets.",
+            "input_type": "text"
+          },
+          {
+            "id": "dfs2",
+            "prompt": "Permutations.",
+            "input_type": "text"
+          },
+          {
+            "id": "dfs3",
+            "prompt": "N-Queens.",
+            "input_type": "text"
+          },
+          {
+            "id": "dfs4",
+            "prompt": "Sudoku Solver.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Backtracking requires",
+            "options": [
+              "undoing choices",
+              "sorting only",
+              "binary search"
+            ],
+            "correctAnswer": "undoing choices",
+            "explanation": "Undo step allows exploring alternate paths."
+          },
+          {
+            "question": "Backtracking is best for",
+            "options": [
+              "all possibilities",
+              "single path",
+              "hashing only"
+            ],
+            "correctAnswer": "all possibilities",
+            "explanation": "It explores all combinations."
+          },
+          {
+            "question": "DFS uses",
+            "options": [
+              "stack/recursion",
+              "queue",
+              "heap"
+            ],
+            "correctAnswer": "stack/recursion",
+            "explanation": "DFS is depth-first."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Solve N-Queens and show the recursion tree depth."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Recursion -> DFS & Backtracking",
+        "recall_questions": [
+          "What are the three backtracking steps?",
+          "Why is undo important?",
+          "Which problems use this template?"
+        ],
+        "identity_affirmation": "You conquered the scariest pattern in India.",
+        "streak_reminder": "Dynamic programming is next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+45 XP",
+            "Backtracking Legend Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}

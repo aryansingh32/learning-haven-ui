@@ -1,0 +1,143 @@
+{
+  "roadmap_slug": "phase-2-dsa-foundations",
+  "chapter_number": 7,
+  "title": "Binary Search",
+  "topic_tag": "binary-search",
+  "difficulty": "INTERMEDIATE",
+  "est_minutes": 900,
+  "story_hook": "Google searches 1 billion records in milliseconds because of this.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Google searches 1 billion records in milliseconds because of this."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/watch?v=rjEJeYCasHs",
+        "title": "Binary Search Tutorial",
+        "channel": "takeUforward",
+        "focus_note": "Focus on halving the search space and boundary conditions."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Binary search applies when search space is ordered.\n\nAlso used for 'search on answer' problems."
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "visualizer",
+      "title": "Binary Search Visualizer",
+      "content": {
+        "visualizer": {
+          "task": "Animate low, mid, high pointers on a sorted array.",
+          "notes": "Watch how space halves each iteration."
+        }
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "bs1",
+            "prompt": "Search in rotated sorted array.",
+            "input_type": "text"
+          },
+          {
+            "id": "bs2",
+            "prompt": "Find first and last position of element.",
+            "input_type": "text"
+          },
+          {
+            "id": "bs3",
+            "prompt": "Find minimum in rotated array.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "Binary search works on",
+            "options": [
+              "sorted data",
+              "random data",
+              "graphs"
+            ],
+            "correctAnswer": "sorted data",
+            "explanation": "Ordering is required for halving."
+          },
+          {
+            "question": "Time complexity of binary search is",
+            "options": [
+              "O(log n)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": "O(log n)",
+            "explanation": "Search space halves each step."
+          },
+          {
+            "question": "Search on answer means",
+            "options": [
+              "binary search over possible answers",
+              "linear scan",
+              "sorting only"
+            ],
+            "correctAnswer": "binary search over possible answers",
+            "explanation": "Binary search the answer space when monotonic."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Implement binary search and handle all boundary cases."
+      }
+    },
+    {
+      "step_number": 8,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Arrays -> Binary Search (ordered space)",
+        "recall_questions": [
+          "Why does ordering matter?",
+          "What are common off-by-one errors?",
+          "When do you use search on answer?"
+        ],
+        "identity_affirmation": "You now think in halves like an engineer.",
+        "streak_reminder": "Sorting algorithms are next - keep the streak alive.",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+35 XP",
+            "Binary Search Ace Badge",
+            "Streak Shield"
+          ]
+        }
+      }
+    }
+  ]
+}
