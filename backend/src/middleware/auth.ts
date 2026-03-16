@@ -17,15 +17,30 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
 
     const token = authHeader.split(' ')[1];
 
-    // Try Supabase auth first
-    const { data: { user }, error } = await supabase.auth.getUser(token);
+    // Try Supabase auth with timeout
+    let user = null;
+    let error = null;
+
+    try {
+      const authPromise = supabase.auth.getUser(token);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Supabase Auth Timeout')), 5000)
+      );
+
+      const result = await Promise.race([authPromise, timeoutPromise]) as any;
+      user = result.data?.user;
+      error = result.error;
+    } catch (err: any) {
+      logger.warn(`Supabase auth failed or timed out: ${err.message}`);
+      error = err;
+    }
 
     if (!error && user) {
       req.user = user;
       return next();
     }
 
-    // DEV ONLY: Fall back to local JWT verification if Supabase auth fails
+    // DEV ONLY: Fall back to local JWT verification
     if (process.env.NODE_ENV === 'development') {
       try {
         const secret = process.env.JWT_SECRET || 'development-secret-key-change-in-prod-min-32-chars';

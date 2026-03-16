@@ -1,4 +1,4 @@
-import { supabase } from '../config/database';
+import { supabase, pool } from '../config/database';
 import { CacheService } from './cache.service';
 import logger from '../config/logger';
 
@@ -12,17 +12,17 @@ export class RoadmapsService {
             const cached = await CacheService.get<any>(cacheKey);
             if (cached) return cached;
 
-            let query = supabase
-                .from('roadmaps')
-                .select('*')
-                .order('created_at', { ascending: false });
-
+            let queryStr = 'SELECT * FROM public.roadmaps';
+            const params: any[] = [];
+            
             if (!includeUnpublished) {
-                query = query.eq('is_published', true);
+                queryStr += ' WHERE is_published = true';
             }
+            
+            queryStr += ' ORDER BY created_at DESC';
 
-            const { data, error } = await query;
-            if (error) throw error;
+            const resultRows = await pool.query(queryStr, params);
+            const data = resultRows.rows;
 
             const result = data || [];
             await CacheService.set(cacheKey, result, 300);

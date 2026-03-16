@@ -1,4 +1,4 @@
-import { supabase } from '../config/database';
+import { supabase, pool } from '../config/database';
 import { CacheService } from './cache.service';
 import { calculateLevel, xpToNextLevel } from '../utils/xp';
 import logger from '../config/logger';
@@ -9,13 +9,13 @@ export class UsersService {
      */
     static async getProfile(user_id: string) {
         try {
-            const { data, error } = await supabase
-                .from('users')
-                .select('*')
-                .eq('id', user_id)
-                .single();
+            const result = await pool.query(
+                'SELECT * FROM public.users WHERE id = $1',
+                [user_id]
+            );
 
-            if (error) throw error;
+            const data = result.rows[0];
+            if (!data) throw new Error('User not found');
 
             // Calculate level
             const level_info = xpToNextLevel(data.xp);
@@ -87,17 +87,21 @@ export class UsersService {
 
         try {
             // Get user data
-            const { data: user } = await supabase
-                .from('users')
-                .select('xp, streak, longest_streak')
-                .eq('id', user_id)
-                .single();
+            const userResult = await pool.query(
+                'SELECT xp, streak, longest_streak FROM public.users WHERE id = $1',
+                [user_id]
+            );
+            const user = userResult.rows[0];
 
-            // Get submission counts by status
-            const { data: problemStatus } = await supabase
-                .from('user_problem_status')
-                .select('status, problems(difficulty)')
-                .eq('user_id', user_id);
+            // Get problem counts by status (using a join or simple queries)
+            const statusResult = await pool.query(
+                `SELECT ups.status, p.difficulty 
+                 FROM public.user_problem_status ups
+                 JOIN public.problems p ON ups.problem_id = p.id
+                 WHERE ups.user_id = $1`,
+                [user_id]
+            );
+            const problemStatus = statusResult.rows;
 
             const solved = problemStatus?.filter(s => s.status === 'solved') || [];
             const tried = problemStatus?.filter(s => s.status === 'tried') || [];
@@ -107,9 +111,9 @@ export class UsersService {
                 total_solved: solved.length,
                 total_tried: tried.length,
                 total_revision: revision.length,
-                easy_solved: solved.filter(s => (s.problems as any)?.difficulty === 'easy').length,
-                medium_solved: solved.filter(s => (s.problems as any)?.difficulty === 'medium').length,
-                hard_solved: solved.filter(s => (s.problems as any)?.difficulty === 'hard').length,
+                easy_solved: solved.filter(s => s.difficulty === 'easy').length,
+                medium_solved: solved.filter(s => s.difficulty === 'medium').length,
+                hard_solved: solved.filter(s => s.difficulty === 'hard').length,
                 xp: user?.xp || 0,
                 level: calculateLevel(user?.xp || 0),
                 streak: user?.streak || 0,
@@ -139,17 +143,20 @@ export class UsersService {
 
         try {
             // Get all topics with problem counts
-            const { data: topics } = await supabase
-                .from('problems')
-                .select('topic, difficulty, id')
-                .order('topic');
+            const topicsResult = await pool.query(
+                'SELECT topic, difficulty, id FROM public.problems ORDER BY topic'
+            );
+            const topics = topicsResult.rows;
 
-            // Get user's problem status
-            const { data: userStatus } = await supabase
-                .from('user_problem_status')
-                .select('problem_id, status, problems(topic, difficulty)')
-                .eq('user_id', user_id)
-                .eq('status', 'solved');
+            // Get user\'s problem status
+            const statusResult = await pool.query(
+                `SELECT ups.problem_id, ups.status, p.topic, p.difficulty 
+                 FROM public.user_problem_status ups
+                 JOIN public.problems p ON ups.problem_id = p.id
+                 WHERE ups.user_id = $1 AND ups.status = 'solved'`,
+                [user_id]
+            );
+            const userStatus = statusResult.rows;
 
             // Group by topic
             const topicMap = new Map<string, any>();
@@ -189,16 +196,16 @@ export class UsersService {
             });
 
             userStatus?.forEach(status => {
-                const topicName = (status.problems as any)?.topic;
+                const topicName = status.topic;
                 if (!topicName || !topicMap.has(topicName)) return;
 
                 const topic = topicMap.get(topicName);
                 topic.solved++;
-                topic.solved_weight += getWeight((status.problems as any).difficulty);
+                topic.solved_weight += getWeight(status.difficulty);
 
-                if ((status.problems as any).difficulty === 'easy') topic.easy_solved++;
-                if ((status.problems as any).difficulty === 'medium') topic.medium_solved++;
-                if ((status.problems as any).difficulty === 'hard') topic.hard_solved++;
+                if (status.difficulty === 'easy') topic.easy_solved++;
+                if (status.difficulty === 'medium') topic.medium_solved++;
+                if (status.difficulty === 'hard') topic.hard_solved++;
             });
 
             // Calculate progress percentages
@@ -226,25 +233,20 @@ export class UsersService {
      */
     static async updateStudyTime(user_id: string, seconds: number) {
         try {
-            const { data: user } = await supabase
-                .from('users')
-                .select('study_time_total')
-                .eq('id', user_id)
-                .single();
+            const userResult = await pool.query(
+                'SELECT study_time_total FROM public.users WHERE id = $1',
+                [user_id]
+            );
+            const user = userResult.rows[0];
 
             if (!user) throw new Error('User not found');
 
             const newTotal = (user.study_time_total || 0) + seconds;
 
-            const { error } = await supabase
-                .from('users')
-                .update({
-                    study_time_total: newTotal,
-                    last_study_session: new Date().toISOString(),
-                })
-                .eq('id', user_id);
-
-            if (error) throw error;
+            await pool.query(
+                'UPDATE public.users SET study_time_total = $1, last_study_session = $2 WHERE id = $3',
+                [newTotal, new Date().toISOString(), user_id]
+            );
 
             // Invalidate stats cache
             await CacheService.del(`user:${user_id}:stats`);
@@ -268,12 +270,12 @@ export class UsersService {
             const oneYearAgo = new Date();
             oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-            const { data } = await supabase
-                .from('user_problem_status')
-                .select('solved_at')
-                .eq('user_id', user_id)
-                .eq('status', 'solved')
-                .gte('solved_at', oneYearAgo.toISOString());
+            const result = await pool.query(
+                `SELECT solved_at FROM public.user_problem_status 
+                 WHERE user_id = $1 AND status = 'solved' AND solved_at >= $2`,
+                [user_id, oneYearAgo.toISOString()]
+            );
+            const data = result.rows;
 
             const activityMap = new Map<string, number>();
 
@@ -329,11 +331,12 @@ export class UsersService {
             const endOfLastWeek = new Date(startOfWeek);
             endOfLastWeek.setSeconds(endOfLastWeek.getSeconds() - 1);
 
-            const { data: submissions } = await supabase
-                .from('submissions')
-                .select('submitted_at, solved')
-                .eq('user_id', user_id)
-                .gte('submitted_at', startOfLastWeek.toISOString());
+            const queryResult = await pool.query(
+                `SELECT submitted_at, solved FROM public.submissions 
+                 WHERE user_id = $1 AND submitted_at >= $2`,
+                [user_id, startOfLastWeek.toISOString()]
+            );
+            const submissions = queryResult.rows;
 
             let thisWeekSolved = 0;
             let lastWeekSolved = 0;

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { supabase } from '../config/database';
+import { supabase, pool } from '../config/database';
 import logger from '../config/logger';
 
 export class SettingsController {
@@ -16,12 +16,13 @@ export class SettingsController {
                 'referral_reward_amount'
             ];
 
-            const { data: settings, error } = await supabase
-                .from('system_settings')
-                .select('key, value')
-                .in('key', publicKeys);
+            const result = await pool.query(
+                'SELECT key, value FROM public.system_settings WHERE key = ANY($1)',
+                [publicKeys]
+            );
+            const settings = result.rows;
 
-            if (error) throw error;
+            if (!settings) throw new Error('Settings not found');
 
             // Reduce to key-value object
             const config = settings.reduce((acc: any, curr) => {

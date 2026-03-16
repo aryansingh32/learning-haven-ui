@@ -5,7 +5,7 @@ import { useApiQuery } from '@/hooks/useApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
-import { phaseOne, phases, communityFeed } from '@/data/chapters';
+import { phaseOne, phases, communityFeed, getMissionById } from '@/data/chapters';
 
 const Index = () => {
   const { user } = useAuth();
@@ -43,11 +43,13 @@ const Index = () => {
   );
 
   // Find current active chapter for "Continue Where You Left Off"
-  const activeChapter = phaseOne.missions.find(
+  const activeChapterData = phaseOne.missions.find(
     (m) => !m.locked && m.completedSteps < m.totalSteps
   );
 
-  const nextStepName = activeChapter?.steps[activeChapter.completedSteps]?.title || "Crack your first problem today";
+  const activeChapter = activeChapterData ? getMissionById(activeChapterData.id) : null;
+
+  const nextStepName = activeChapter?.steps?.[activeChapterData?.completedSteps || 0]?.title || "Crack your first problem today";
 
   const userName = profileStats?.full_name?.split(' ')[0] || (user as any)?.full_name?.split(' ')[0] || 'Learner';
   const streak = profileStats?.current_streak || 0;

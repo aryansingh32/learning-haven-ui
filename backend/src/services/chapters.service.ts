@@ -1,4 +1,4 @@
-import { supabase } from '../config/database';
+import { supabase, pool } from '../config/database';
 import logger from '../config/logger';
 import { updateStreak } from '../utils/streak';
 import { checkBadges } from '../utils/badges';
@@ -6,46 +6,33 @@ import { checkBadges } from '../utils/badges';
 export class ChaptersService {
     static async getChapterWithProgress(userId: string, chapterId: string) {
         try {
-            const { data: chapter, error: chapterError } = await supabase
-                .from('chapters')
-                .select('*')
-                .eq('id', chapterId)
-                .single();
+            const chapterResult = await pool.query(
+                'SELECT * FROM public.chapters WHERE id = $1',
+                [chapterId]
+            );
+            const chapter = chapterResult.rows[0];
 
-            if (chapterError || !chapter) {
-                throw chapterError || new Error('Chapter not found');
+            if (!chapter) {
+                throw new Error('Chapter not found');
             }
 
-            const { data: content, error: contentError } = await supabase
-                .from('chapter_content')
-                .select('*')
-                .eq('chapter_id', chapterId)
-                .maybeSingle();
+            const contentResult = await pool.query(
+                'SELECT * FROM public.chapter_content WHERE chapter_id = $1',
+                [chapterId]
+            );
+            const content = contentResult.rows[0];
 
-            if (contentError) {
-                throw contentError;
-            }
+            const stepsResult = await pool.query(
+                'SELECT * FROM public.steps WHERE chapter_id = $1 ORDER BY step_number ASC',
+                [chapterId]
+            );
+            const steps = stepsResult.rows;
 
-            const { data: steps, error: stepsError } = await supabase
-                .from('steps')
-                .select('*')
-                .eq('chapter_id', chapterId)
-                .order('step_number', { ascending: true });
-
-            if (stepsError) {
-                throw stepsError;
-            }
-
-            let { data: progress, error: progressError } = await supabase
-                .from('user_chapter_progress')
-                .select('*')
-                .eq('user_id', userId)
-                .eq('chapter_id', chapterId)
-                .maybeSingle();
-
-            if (progressError && progressError.code !== 'PGRST116') {
-                throw progressError;
-            }
+            const progressResult = await pool.query(
+                'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = $2',
+                [userId, chapterId]
+            );
+            let progress = progressResult.rows[0];
 
             if (!progress) {
                 const defaultStatus = chapter.chapter_number === 1 ? 'UNLOCKED' : 'LOCKED';
@@ -85,13 +72,11 @@ export class ChaptersService {
 
     static async getRoadmapChaptersForUser(userId: string, roadmapId: string) {
         try {
-            const { data: chapters, error } = await supabase
-                .from('chapters')
-                .select('*')
-                .eq('roadmap_id', roadmapId)
-                .order('chapter_number', { ascending: true });
-
-            if (error) throw error;
+            const chaptersResult = await pool.query(
+                'SELECT * FROM public.chapters WHERE roadmap_id = $1 ORDER BY chapter_number ASC',
+                [roadmapId]
+            );
+            const chapters = chaptersResult.rows;
 
             if (!chapters || chapters.length === 0) {
                 return [];
@@ -99,15 +84,11 @@ export class ChaptersService {
 
             const chapterIds = chapters.map(c => c.id);
 
-            const { data: progressRows, error: progressError } = await supabase
-                .from('user_chapter_progress')
-                .select('*')
-                .eq('user_id', userId)
-                .in('chapter_id', chapterIds);
-
-            if (progressError) {
-                throw progressError;
-            }
+            const progressResult = await pool.query(
+                'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = ANY($2)',
+                [userId, chapterIds]
+            );
+            const progressRows = progressResult.rows;
 
             const progressByChapter = new Map<string, any>();
             (progressRows || []).forEach(row => {
