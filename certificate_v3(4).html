@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate of Appreciation – WebDzen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #060608;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   CERTIFICATE SHELL — 1123×794 px preview
+   (scales to 3508×2480 px for print via transform)
+═══════════════════════════════════════════ */
+.cert {
+  width: 1123px;
+  height: 794px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* Outer frame glow */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 0 80px rgba(0,0,0,0.95),
+    0 0 160px rgba(0,0,0,0.7);
+}
+
+/* ═══════════════════════════════════════════
+   GLOBAL BACKGROUND
+═══════════════════════════════════════════ */
+.cert-bg {
+  position: absolute;
+  inset: 0;
+  background: #13141a;
+  z-index: 0;
+}
+
+/* Geometric diamond wireframe overlay (centre-right region) */
+.cert-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='890' height='794' viewBox='0 0 890 794'%3E%3Cg stroke='rgba(255,255,255,0.032)' stroke-width='0.8' fill='none'%3E%3Cpolygon points='445,40 820,397 445,754 70,397'/%3E%3Cpolygon points='445,100 765,397 445,694 125,397'/%3E%3Cpolygon points='445,160 710,397 445,634 180,397'/%3E%3Cpolygon points='445,220 655,397 445,574 235,397'/%3E%3Cline x1='445' y1='40' x2='445' y2='754'/%3E%3Cline x1='70' y1='397' x2='820' y2='397'/%3E%3Cline x1='200' y1='130' x2='690' y2='664'/%3E%3Cline x1='690' y1='130' x2='200' y2='664'/%3E%3Cline x1='150' y1='260' x2='740' y2='534'/%3E%3Cline x1='740' y1='260' x2='150' y2='534'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: right center;
+  pointer-events: none;
+}
+
+/* ── TOP-RIGHT CORNER GLOW (blue-indigo) ── */
+.glow-top-right {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 420px;
+  height: 340px;
+  background:
+    radial-gradient(ellipse 75% 65% at 85% 10%,
+      rgba(72,100,240,0.22) 0%,
+      rgba(60,85,210,0.10) 38%,
+      transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── BOTTOM-LEFT SIGNATURE GLOW (blue-indigo) ── */
+.glow-bottom-left {
+  position: absolute;
+  bottom: -40px;
+  left: 190px; /* sits in main area, after sidebar */
+  width: 380px;
+  height: 260px;
+  background:
+    radial-gradient(ellipse 70% 65% at 15% 90%,
+      rgba(60,90,240,0.20) 0%,
+      rgba(50,75,200,0.08) 45%,
+      transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar {
+  position: relative;
+  z-index: 3;
+  width: 228px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg,
+    #0b0c0f 0%,
+    #0d0e12 50%,
+    #0c0d11 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  /* Right border */
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+/* Diagonal hatching texture */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -52deg,
+    transparent 0px,
+    transparent 11px,
+    rgba(255,255,255,0.028) 11px,
+    rgba(255,255,255,0.028) 12px
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Bottom-left sidebar glow (subtle blue) */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 60%;
+  background: radial-gradient(ellipse 110% 80% at 20% 115%,
+    rgba(70,110,255,0.09) 0%,
+    transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Glass sheen on sidebar (top highlight edge) */
+.sb-glass {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(130deg,
+    rgba(255,255,255,0.025) 0%,
+    transparent 45%,
+    rgba(0,0,0,0.08) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Geometric accent: vertical left-edge line */
+.sb-accent-line {
+  position: absolute;
+  top: 0; left: 5px;
+  width: 1px; height: 100%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(80,120,255,0.12) 30%,
+    rgba(80,120,255,0.18) 50%,
+    rgba(80,120,255,0.10) 70%,
+    transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Geometric accent: horizontal mid separator */
+.sb-accent-h {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.06) 20%,
+    rgba(255,255,255,0.06) 80%,
+    transparent);
+  z-index: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ── Info box (top of sidebar) ── */
+.sb-infobox {
+  position: relative;
+  z-index: 2;
+  margin: 18px 14px 0;
+  width: calc(100% - 28px);
+  padding: 11px 12px 12px;
+  text-align: center;
+  border: 1.5px solid rgba(255,255,255,0.17);
+  background: rgba(255,255,255,0.025);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Corner notches on infobox (geometric detail) */
+.sb-infobox::before,
+.sb-infobox::after {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  border-color: rgba(100,140,255,0.45);
+  border-style: solid;
+}
+.sb-infobox::before {
+  top: -2px; left: -2px;
+  border-width: 2px 0 0 2px;
+}
+.sb-infobox::after {
+  bottom: -2px; right: -2px;
+  border-width: 0 2px 2px 0;
+}
+
+.sb-brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7b9ef5;
+  margin-bottom: 7px;
+  letter-spacing: 0.01em;
+}
+
+.sb-grants {
+  font-size: 10.5px;
+  color: #b8bcc8;
+  line-height: 1.55;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.sb-date-rule {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  margin-bottom: 8px;
+}
+
+.sb-date {
+  font-size: 11px;
+  color: #e0e4f4;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ── Watermark WEBDZEN (vertical, behind) ── */
+.sb-watermark {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.80;
+  pointer-events: none;
+  user-select: none;
+}
+.sb-watermark span {
+  font-size: 50px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.038);
+  letter-spacing: -0.04em;
+  display: block;
+}
+
+/* ── QR Code (above logo) ── */
+.sb-qr-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.sb-qr-label {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: rgba(170,185,230,0.6);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* QR code box with glass blend */
+.sb-qr-frame {
+  position: relative;
+  padding: 5px;
+  border: 1px solid rgba(120,155,245,0.22);
+  background: rgba(255,255,255,0.028);
+  backdrop-filter: blur(4px);
+}
+.sb-qr-frame::before,
+.sb-qr-frame::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  border-color: rgba(100,140,255,0.40);
+  border-style: solid;
+}
+.sb-qr-frame::before { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
+.sb-qr-frame::after  { bottom: -1px; right: -1px; border-width: 0 1.5px 1.5px 0; }
+
+.sb-qr-frame svg {
+  display: block;
+  opacity: 0.72;
+  filter: drop-shadow(0 0 3px rgba(100,140,255,0.15));
+}
+
+.sb-qr-url {
+  font-size: 6.5px;
+  color: rgba(140,160,220,0.55);
+  letter-spacing: 0.06em;
+}
+
+/* ── Logo at very bottom ── */
+.sb-logo-wrap {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.sb-logo-icon {
+  width: 52px;
+  height: 36px;
+}
+
+.sb-logo-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d4d8ec;
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT AREA
+═══════════════════════════════════════════ */
+.main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 40px 14px 60px;
+  overflow: hidden;
+}
+
+/* ── Partner logos row (top-right) ── */
+.partner-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 3;
+}
+
+.partner-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.03);
+  padding: 6px 12px;
+  backdrop-filter: blur(4px);
+}
+
+.partner-divider {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(255,255,255,0.18) 20%,
+    rgba(255,255,255,0.18) 80%,
+    transparent);
+  flex-shrink: 0;
+}
+
+/* MSME */
+.msme-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.msme-seal-svg { width: 28px; height: 28px; }
+.msme-label { text-align: center; }
+.msme-label-top {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+.msme-label-sub {
+  display: block;
+  font-size: 5.5px;
+  color: #9fa5ba;
+  line-height: 1.4;
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
+
+/* Study Comrade */
+.sc-block {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.sc-arrow-svg { width: 28px; height: 28px; }
+.sc-texts { display: flex; flex-direction: column; gap: 2px; }
+.sc-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #e0e4f4;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.sc-tag {
+  font-size: 6px;
+  font-weight: 600;
+  color: #7b9ef5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Title block ── */
+.cert-title-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.0;
+  margin-bottom: 0;
+}
+
+.title-cert {
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.93;
+  background: linear-gradient(92deg,
+    #c8d6ff 0%,
+    #8cacf5 35%,
+    #6b90f0 65%,
+    #7b9ef5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-appre {
+  font-size: 52px;
+  font-weight: 700;
+  color: #dde2f0;
+  line-height: 1.0;
+  letter-spacing: -0.015em;
+}
+
+/* ── Given To ── */
+.given-to {
+  font-size: 14px;
+  color: #b4b8cc;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  letter-spacing: 0.025em;
+}
+
+/* ── Recipient name ── */
+.recipient {
+  font-family: 'Great Vibes', cursive;
+  font-size: 62px;
+  color: #8cacf5;
+  line-height: 1.0;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+/* ── Description paragraph ── */
+.cert-desc {
+  font-size: 16px;
+  color: #b8bcd0;
+  line-height: 1.60;
+  text-align: justify;
+  max-width: 75%;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  word-spacing: 0.08em;
+}
+.cert-desc strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+.cert-desc .prog {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ── Footer ── */
+.cert-footer {
+  margin-top: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Spacer between desc and footer — absorbs leftover space */
+.cert-spacer {
+  flex: 1;
+  min-height: 10px;
+  max-height: 60px;
+}
+.cert-spacer-desc {
+  flex: 1;
+  min-height: 20px;
+  max-height: 25px;
+}
+.cert-spacer-recipient {
+  flex: 1;
+  min-height: 20px;
+  max-height: 25px;
+}
+.cert-spacer-givento {
+  flex: 1;
+  min-height: 20px;
+  max-height: 25px;
+}
+
+
+/* Signature block */
+.sig-block {
+  position: relative;
+  z-index: 2;
+}
+
+.sig-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: 40px;
+  color: #eaeef8;
+  line-height: 1.0;
+  margin-bottom: 4px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(80,110,240,0.18));
+}
+
+.sig-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #7b9ef5;
+  letter-spacing: 0.14em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sig-title {
+  font-size: 11px;
+  color: #8088a8;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Circular seal */
+.cert-seal {
+  width: 118px;
+  height: 118px;
+  flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+
+<div class="cert">
+
+  <!-- ══ BACKGROUND ══ -->
+  <div class="cert-bg"></div>
+
+  <!-- Top-right glow -->
+  <div class="glow-top-right"></div>
+  <!-- Bottom-left signature glow -->
+  <div class="glow-bottom-left"></div>
+
+  <!-- ═════════════ SIDEBAR ═════════════ -->
+  <div class="sidebar">
+
+    <!-- Glass sheen -->
+    <div class="sb-glass"></div>
+    <!-- Geometric accents -->
+    <div class="sb-accent-line"></div>
+    <div class="sb-accent-h"></div>
+
+    <!-- Watermark -->
+    <div class="sb-watermark">
+      <span>W</span><span>E</span><span>B</span>
+      <span>D</span><span>Z</span><span>E</span><span>N</span>
+    </div>
+
+    <!-- Info box -->
+    <div class="sb-infobox">
+      <div class="sb-brand">The WebDzen</div>
+      <div class="sb-grants">grants and certifies<br>this certificate on</div>
+      <hr class="sb-date-rule">
+      <div class="sb-date">23 Sept, 2025</div>
+    </div>
+
+    <!-- QR Code (verification) -->
+    <div class="sb-qr-wrap">
+      <div class="sb-qr-label">Verify Certificate</div>
+      <div class="sb-qr-frame">
+        <!-- QR Code SVG — encodes "https://webdzen.in/verify" -->
+        <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect width="70" height="70" fill="transparent"/>
+          <!-- Finder pattern TL -->
+          <rect x="2" y="2" width="19" height="19" rx="1" fill="none" stroke="#8cacf5" stroke-width="1.5"/>
+          <rect x="5" y="5" width="13" height="13" fill="rgba(140,172,245,0.08)"/>
+          <rect x="7" y="7" width="9" height="9" rx="0.5" fill="#8cacf5"/>
+          <!-- Finder pattern TR -->
+          <rect x="49" y="2" width="19" height="19" rx="1" fill="none" stroke="#8cacf5" stroke-width="1.5"/>
+          <rect x="52" y="5" width="13" height="13" fill="rgba(140,172,245,0.08)"/>
+          <rect x="54" y="7" width="9" height="9" rx="0.5" fill="#8cacf5"/>
+          <!-- Finder pattern BL -->
+          <rect x="2" y="49" width="19" height="19" rx="1" fill="none" stroke="#8cacf5" stroke-width="1.5"/>
+          <rect x="5" y="52" width="13" height="13" fill="rgba(140,172,245,0.08)"/>
+          <rect x="7" y="54" width="9" height="9" rx="0.5" fill="#8cacf5"/>
+          <!-- Timing pattern -->
+          <rect x="23" y="2"  width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="29" y="2"  width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="35" y="2"  width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="41" y="2"  width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="2"  y="23" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="2"  y="29" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="2"  y="35" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="2"  y="41" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="65" y="23" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="65" y="29" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="65" y="35" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="65" y="41" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <!-- Data cells (pattern) -->
+          <rect x="23" y="23" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="29" y="23" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="35" y="23" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="41" y="23" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="47" y="23" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="23" y="29" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="29" y="29" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="35" y="29" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="41" y="29" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="47" y="29" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="53" y="29" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="59" y="29" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="23" y="35" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="29" y="35" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="35" y="35" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="41" y="35" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="47" y="35" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="53" y="35" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="59" y="35" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="65" y="35" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="23" y="41" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="29" y="41" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="35" y="41" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="41" y="41" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="47" y="41" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="53" y="41" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="59" y="41" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="23" y="47" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="29" y="47" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="35" y="47" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="41" y="47" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="47" y="47" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="53" y="47" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="59" y="47" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="65" y="47" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="23" y="53" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="29" y="53" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="35" y="53" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="41" y="53" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="47" y="53" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="53" y="53" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="59" y="53" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="23" y="59" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="29" y="59" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="35" y="59" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="41" y="59" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="47" y="59" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="53" y="59" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+          <rect x="59" y="59" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="65" y="59" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="65" y="53" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="65" y="65" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="59" y="65" width="3" height="3" fill="#8cacf5" opacity="0.4"/>
+          <rect x="53" y="65" width="3" height="3" fill="#8cacf5" opacity="0.8"/>
+          <rect x="47" y="65" width="3" height="3" fill="#8cacf5" opacity="0.6"/>
+          <rect x="41" y="65" width="3" height="3" fill="#8cacf5" opacity="0.9"/>
+          <rect x="35" y="65" width="3" height="3" fill="#8cacf5" opacity="0.3"/>
+          <rect x="29" y="65" width="3" height="3" fill="#8cacf5" opacity="0.7"/>
+          <rect x="23" y="65" width="3" height="3" fill="#8cacf5" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="sb-qr-url">verify.webdzen.in</div>
+    </div>
+
+    <!-- Webdzen Logo -->
+    <div class="sb-logo-wrap">
+      <svg class="sb-logo-icon" viewBox="0 0 80 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="35%"  stop-color="#b0c6ff"/>
+            <stop offset="100%" stop-color="#8b7cf8"/>
+          </linearGradient>
+          <linearGradient id="lg2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#ccd8ff"/>
+            <stop offset="100%" stop-color="#7264f5"/>
+          </linearGradient>
+        </defs>
+        <!-- Left lobe -->
+        <path d="M 40,26 C40,14 26,7 17,13 C8,19 8,33 17,39 C26,45 40,38 40,26 Z"
+              fill="none" stroke="url(#lg1)" stroke-width="5" stroke-linecap="round"/>
+        <!-- Right lobe -->
+        <path d="M 40,26 C40,14 54,7 63,13 C72,19 72,33 63,39 C54,45 40,38 40,26 Z"
+              fill="none" stroke="url(#lg2)" stroke-width="5" stroke-linecap="round"/>
+        <!-- Center highlight -->
+        <circle cx="40" cy="26" r="3.5" fill="rgba(195,210,255,0.55)"/>
+      </svg>
+      <div class="sb-logo-text">webdzen</div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+  <!-- ═════════════ MAIN ═════════════ -->
+  <div class="main">
+
+    <!-- Partner logos row -->
+    <div class="partner-row">
+      <div class="partner-box">
+
+        <!-- MSME Govt. of India emblem -->
+        <div class="msme-block">
+          <svg class="msme-seal-svg" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="22" fill="none" stroke="#c8a44a" stroke-width="2.2"/>
+            <circle cx="30" cy="30" r="4.5" fill="#c8a44a"/>
+            <g stroke="#c8a44a" stroke-width="1.1">
+              <line x1="30" y1="8"  x2="30" y2="52"/>
+              <line x1="8"  y1="30" x2="52" y2="30"/>
+              <line x1="14" y1="14" x2="46" y2="46"/>
+              <line x1="46" y1="14" x2="14" y2="46"/>
+              <line x1="10" y1="20" x2="50" y2="40"/>
+              <line x1="50" y1="20" x2="10" y2="40"/>
+              <line x1="20" y1="10" x2="40" y2="50"/>
+              <line x1="40" y1="10" x2="20" y2="50"/>
+            </g>
+            <g fill="#c8a44a">
+              <circle cx="30" cy="8"  r="1.3"/>
+              <circle cx="30" cy="52" r="1.3"/>
+              <circle cx="8"  cy="30" r="1.3"/>
+              <circle cx="52" cy="30" r="1.3"/>
+            </g>
+          </svg>
+          <div class="msme-label">
+            <span class="msme-label-top">MSME</span>
+            <span class="msme-label-sub">Ministry of MSME,<br>Govt. of India</span>
+          </div>
+        </div>
+
+        <div class="partner-divider"></div>
+
+        <!-- Study Comrade -->
+        <div class="sc-block">
+          <svg class="sc-arrow-svg" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="scg" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#5a80ec"/>
+                <stop offset="100%" stop-color="#8cacf5"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,0 22,0 38,19 22,38 0,38 16,19" fill="url(#scg)"/>
+          </svg>
+          <div class="sc-texts">
+            <span class="sc-name">Study Comrade</span>
+            <span class="sc-tag">MAKE IT TOGETHER</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /partner-row -->
+
+    <!-- Certificate Title -->
+    <div class="cert-title-block">
+      <span class="title-cert">Certificate</span>
+      <span class="title-appre">Of Appreciation</span>
+    </div>
+    <div class="cert-spacer-givento"></div>
+    <!-- Given To -->
+    <div class="given-to">This Certificate Is Given To</div>
+    <div class="cert-spacer-recipient"></div>
+    <!-- Recipient Name -->
+    <span class="recipient" id="recipientName">Toumik Haque</span>
+    <div class="cert-spacer-desc"></div>
+    <!-- Description paragraph -->
+    <p class="cert-desc" id="certDesc">
+      Has successfully completed &ldquo;<strong>React Development Internship</strong>&rdquo;
+      program for 2 months at webdzen technologies showcasing
+      grand excellence &amp; dedication
+    </p>
+
+    <!-- Flex spacer — caps the gap, never more than 60px -->
+    <div class="cert-spacer"></div>
+
+    <!-- Footer -->
+    <div class="cert-footer">
+
+      <!-- Signature block -->
+      <div class="sig-block">
+        <span class="sig-script" id="sigScript">Dinesh Lolabhattu</span>
+        <span class="sig-name" id="sigName">L.DINESH</span>
+        <span class="sig-title" id="sigTitle">(Founder- Webdzen)</span>
+      </div>
+
+      <!-- Circular stamp seal -->
+      <div class="cert-seal">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <linearGradient id="sealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#a8c0ff"/>
+              <stop offset="100%" stop-color="#8b7cf8"/>
+            </linearGradient>
+          </defs>
+          <!-- Outer ring -->
+          <circle cx="60" cy="60" r="57" fill="none" stroke="#4a5e9a" stroke-width="1.5"/>
+          <!-- Inner dashed ring -->
+          <circle cx="60" cy="60" r="49" fill="none" stroke="#4a5e9a" stroke-width="1"
+                  stroke-dasharray="3 2.5"/>
+          <!-- Fill ring (very subtle) -->
+          <circle cx="60" cy="60" r="57" fill="rgba(70,90,180,0.04)"/>
+
+          <!-- Top arc text: WE TRANSFORM IDEAS -->
+          <path id="topArcS" d="M 11,60 A 49,49 0 0,1 109,60" fill="none"/>
+          <text font-size="8.2" font-family="Montserrat,sans-serif" font-weight="700"
+                fill="#7b9ef5" letter-spacing="2.2">
+            <textPath href="#topArcS" startOffset="4%">WE TRANSFORM IDEAS</textPath>
+          </text>
+
+          <!-- Bottom arc text: INTO DIGITAL REALITIES -->
+          <path id="botArcS" d="M 109,60 A 49,49 0 0,1 11,60" fill="none"/>
+          <text font-size="8.2" font-family="Montserrat,sans-serif" font-weight="700"
+                fill="#7b9ef5" letter-spacing="1.5">
+            <textPath href="#botArcS" startOffset="2%">INTO DIGITAL REALITIES</textPath>
+          </text>
+
+          <!-- Inner infinity logo -->
+          <path d="M 60,60 C60,50 50,43 43,47 C36,51 36,69 43,73 C50,77 60,70 60,60 Z"
+                fill="none" stroke="url(#sealGrad)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M 60,60 C60,50 70,43 77,47 C84,51 84,69 77,73 C70,77 60,70 60,60 Z"
+                fill="none" stroke="url(#sealGrad)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="60" cy="60" r="2.5" fill="rgba(180,200,255,0.5)"/>
+
+          <!-- WEBDZEN inside seal -->
+          <text x="60" y="92" font-size="7" font-family="Montserrat,sans-serif"
+                font-weight="800" fill="#7b9ef5" letter-spacing="2"
+                text-anchor="middle">WEBDZEN</text>
+        </svg>
+      </div>
+
+    </div><!-- /cert-footer -->
+
+  </div><!-- /main -->
+
+</div><!-- /cert -->
+
+</body>
+</html>

@@ -63,6 +63,18 @@ router.delete('/roadmaps/:id/items/:itemId', AdminController.removeRoadmapItem);
 router.put('/roadmaps/:id/reorder', AdminController.reorderRoadmapItems);
 
 // ══════════════════════════════════════════════════════════
+// CHAPTER MANAGEMENT (Learn)
+// ══════════════════════════════════════════════════════════
+router.get('/chapters', AdminController.listChapters);
+router.get('/chapters/:id', AdminController.getChapter);
+router.post('/chapters', AdminController.createChapter);
+router.put('/chapters/:id', AdminController.updateChapter);
+router.delete('/chapters/:id', AdminController.deleteChapter);
+router.put('/chapters/:id/content', AdminController.upsertChapterContent);
+router.put('/chapters/:id/steps', AdminController.replaceChapterSteps);
+router.put('/chapters/:id/progress', AdminController.setUserChapterProgress);
+
+// ══════════════════════════════════════════════════════════
 // PLANS MANAGEMENT (Dynamic)
 // ══════════════════════════════════════════════════════════
 router.get('/plans', AdminController.listPlans);

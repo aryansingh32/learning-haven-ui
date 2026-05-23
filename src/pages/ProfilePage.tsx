@@ -21,6 +21,7 @@ const ProfilePage = () => {
   const firstName = userName.split(' ')[0];
   const streak = profileStats?.current_streak || 0;
   const xp = profileStats?.xp || 0;
+  const apprenticeshipXp = profileStats?.apprenticeship_xp || 0;
   const level = profileStats?.level || 1;
   const totalSolved = profileStats?.total_solved || 0;
   const chaptersCompleted = phaseOne.missions.filter(m => m.completedSteps >= m.totalSteps).length;
@@ -148,6 +149,26 @@ const ProfilePage = () => {
               <p className="text-[10px] text-muted-foreground">{stat.label}</p>
             </motion.div>
           ))}
+        </motion.div>
+      )}
+
+      {apprenticeshipXp > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.18 }}
+          className="card-glass rounded-2xl p-4 sm:p-5"
+        >
+          <h3 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-primary" />
+            Apprenticeship XP
+          </h3>
+          <div className="rounded-xl border border-primary/10 bg-primary/5 p-4">
+            <p className="text-2xl font-display font-bold text-foreground">{apprenticeshipXp}</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              XP earned from verified apprenticeship project stages and completions.
+            </p>
+          </div>
         </motion.div>
       )}
 

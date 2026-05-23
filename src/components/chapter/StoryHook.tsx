@@ -1,5 +1,5 @@
-import React from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChapterCta } from './ChapterCta';
 
 interface StoryHookProps {
   content?: string;
@@ -10,25 +10,21 @@ export const StoryHook: React.FC<StoryHookProps> = ({ content, onMarkDone }) => 
   if (!content) return null;
 
   return (
-    <div className="pt-2">
-      <div className="border-l-4 border-orange-400 bg-orange-50/30 p-4 rounded-r-xl mb-6">
-        <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2 mb-2">
-          <span>📖</span> Why This Matters
-        </h2>
-        <p className="text-sm leading-relaxed text-slate-700">
+    <motion.div className="mt-6 space-y-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <motion.div className="relative p-6 px-8 rounded-2xl bg-orange-500/5 border border-orange-500/20">
+        <motion.div className="absolute -top-4 -left-1 text-[80px] text-orange-500/10 font-serif leading-none select-none pointer-events-none">
+          &ldquo;
+        </motion.div>
+        <p className="text-[15px] font-medium text-foreground leading-relaxed relative z-10">
           {content}
         </p>
-      </div>
-      
+      </motion.div>
+
       {onMarkDone && (
-          <button 
-              onClick={onMarkDone}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors"
-          >
-              <CheckCircle2 className="w-5 h-5" />
-              Mark as Done
-          </button>
+        <ChapterCta onClick={onMarkDone}>
+          Understood, let&apos;s practice
+        </ChapterCta>
       )}
-    </div>
+    </motion.div>
   );
 };

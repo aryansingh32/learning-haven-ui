@@ -21,6 +21,8 @@ import { SubmissionsController } from '../controllers/submissions.controller';
 import settingsRoutes from './settings';
 import resumeRoutes from './resume';
 import whatsappRoutes from './whatsapp';
+import apprenticeshipRoutes from '../modules/apprenticeship/routes';
+import buildHavenRoutes from '../modules/build-haven/routes';
 
 const router = Router();
 
@@ -45,6 +47,8 @@ router.use('/jobs', jobsRoutes);
 router.use('/settings', settingsRoutes);
 router.use('/resume', resumeRoutes);
 router.use('/whatsapp', whatsappRoutes);
+router.use('/v1/apprenticeship', apprenticeshipRoutes);
+router.use('/v1/build', buildHavenRoutes);
 
 // Leaderboard alias (also available at /submissions/leaderboard)
 router.get('/leaderboard', SubmissionsController.getLeaderboard);

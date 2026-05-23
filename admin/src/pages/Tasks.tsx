@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { tasksService } from '../services/tasks.service';
 import { usersService } from '../services/users.service';
 import { Button } from '@/components/ui/button';
@@ -8,11 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Send, Users, ListTodo } from 'lucide-react';
+import { Send, Users, ListTodo } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Tasks = () => {
-    const queryClient = useQueryClient();
     const [mode, setMode] = useState<'individual' | 'all'>('individual');
     const [form, setForm] = useState({ title: '', description: '', problem_id: '', due_date: '' });
     const [selectedUser, setSelectedUser] = useState('');

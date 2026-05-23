@@ -1,7 +1,7 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, BookOpen, Eye, Bot, Gift, Award, User,
-  Menu, X, Moon, Sun, LogOut, Briefcase, FileText
+  LayoutDashboard, BookOpen, Bot, Gift, Award, User,
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -14,12 +14,11 @@ import { useAuth } from "@/context/AuthContext";
 const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { to: "/chapters", icon: BookOpen, label: "Learn" },
+  { to: "/projects", icon: Hammer, label: "Projects" },
   { to: "/profile", icon: User, label: "Profile" },
 ];
 
-// Secondary nav — retain ALL existing routes
 const secondaryNav = [
-  { to: "/visualizer", icon: Eye, label: "Visualizer" },
   { to: "/jobs", icon: Briefcase, label: "Jobs" },
   { to: "/ai-coach", icon: Bot, label: "AI Coach" },
   { to: "/resume", icon: FileText, label: "Resume" },

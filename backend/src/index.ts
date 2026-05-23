@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const app = express();
 const port = process.env.PORT || 5000;

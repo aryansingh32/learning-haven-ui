@@ -1,5 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import './workers/email.worker';
+import './workers/verification.worker';
+import './workers/build-verification.worker';
 import helmet from 'helmet';
 import compression from 'compression';
 import { authenticateUser } from './middleware/auth';
@@ -13,7 +16,13 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(compression());
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req: any, _res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 // Routes
 app.use('/api', routes);

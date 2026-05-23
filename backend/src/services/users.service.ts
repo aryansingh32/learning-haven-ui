@@ -103,6 +103,14 @@ export class UsersService {
             );
             const problemStatus = statusResult.rows;
 
+            const apprenticeshipXpResult = await pool.query(
+                `SELECT COALESCE(SUM(total_xp_earned), 0) AS apprenticeship_xp
+                 FROM public.apprenticeship_project_progress
+                 WHERE user_id = $1`,
+                [user_id]
+            );
+            const apprenticeshipXp = Number(apprenticeshipXpResult.rows[0]?.apprenticeship_xp || 0);
+
             const solved = problemStatus?.filter(s => s.status === 'solved') || [];
             const tried = problemStatus?.filter(s => s.status === 'tried') || [];
             const revision = problemStatus?.filter(s => s.status === 'revision') || [];
@@ -115,6 +123,7 @@ export class UsersService {
                 medium_solved: solved.filter(s => s.difficulty === 'medium').length,
                 hard_solved: solved.filter(s => s.difficulty === 'hard').length,
                 xp: user?.xp || 0,
+                apprenticeship_xp: apprenticeshipXp,
                 level: calculateLevel(user?.xp || 0),
                 streak: user?.streak || 0,
                 longest_streak: user?.longest_streak || 0,
@@ -366,4 +375,3 @@ export class UsersService {
         }
     }
 }
-

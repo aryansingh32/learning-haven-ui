@@ -119,13 +119,33 @@ export type Phase = {
   };
 };
 
+export type ChapterCelebrationMeta = {
+  xp: number;
+  badge_name: string;
+  skills: string[];
+  linkedin_text: string;
+  reward_options?: string[];
+  identity_affirmation?: string | null;
+};
+
 export type ChapterWithProgressResponse = {
   chapter: Chapter;
+  roadmap?: { id: string; title: string; slug?: string } | null;
   content: {
     steps: ChapterStep[];
   };
   progress: ChapterProgress;
+  celebration?: ChapterCelebrationMeta;
+  user?: {
+    full_name: string;
+    streak_day: number;
+    skip_tokens_remaining?: number;
+  };
 };
+
+export async function fetchChapterCelebration(chapterId: string) {
+  return api.get(`/chapters/${chapterId}/celebration`);
+}
 
 export async function fetchPhases() {
   return api.get('/roadmaps');

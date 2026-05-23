@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useApiQuery } from '@/hooks/useApi';
-import { Briefcase, MapPin, Clock, ExternalLink, Bookmark, ChevronRight } from 'lucide-react';
+import { Briefcase, Clock, ExternalLink, Bookmark, ChevronRight, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ApprenticeshipOpportunities } from '@/components/jobs/ApprenticeshipOpportunities';
 
 type JobType = 'JOB' | 'INTERNSHIP' | 'HACKATHON' | 'SCHOLARSHIP';
 
@@ -27,7 +29,11 @@ const TABS: { label: string; value: JobType | 'ALL' }[] = [
     { label: 'Scholarships', value: 'SCHOLARSHIP' },
 ];
 
+type JobsSection = 'opportunities' | 'apprenticeships';
+
 export const JobsPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const section: JobsSection = searchParams.get('tab') === 'apprenticeships' ? 'apprenticeships' : 'opportunities';
     const [activeTab, setActiveTab] = useState<JobType | 'ALL'>('ALL');
     const [page, setPage] = useState(1);
     const [savedJobs, setSavedJobs] = useState<Record<string, boolean>>({});
@@ -89,6 +95,17 @@ export const JobsPage = () => {
                 </div>
             </motion.div>
 
+            <div className="flex gap-2 p-1 rounded-xl bg-secondary/50 w-fit">
+                <button type="button" onClick={() => setSearchParams({})} className={`px-4 py-2 rounded-lg text-sm font-semibold ${section === 'opportunities' ? 'bg-background shadow' : 'text-muted-foreground'}`}>
+                    <Briefcase className="inline h-4 w-4 mr-1.5" /> Opportunities
+                </button>
+                <button type="button" onClick={() => setSearchParams({ tab: 'apprenticeships' })} className={`px-4 py-2 rounded-lg text-sm font-semibold ${section === 'apprenticeships' ? 'bg-background shadow' : 'text-muted-foreground'}`}>
+                    <GraduationCap className="inline h-4 w-4 mr-1.5" /> Apprenticeships
+                </button>
+            </div>
+
+            {section === 'apprenticeships' ? <ApprenticeshipOpportunities /> : (
+            <>
             {/* Filter Tabs */}
             <div className="flex overflow-x-auto hide-scrollbar border-b border-border/50 bg-background/50 backdrop-blur-sm sticky top-0 z-20 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0">
                 <div className="flex gap-6 pb-3">
@@ -227,6 +244,8 @@ export const JobsPage = () => {
                     </div>
                 )}
             </div>
+            </>
+            )}
         </div>
     );
 };

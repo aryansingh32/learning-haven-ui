@@ -5,6 +5,7 @@ import {
     LayoutDashboard,
     Users,
     Code,
+    BookOpen,
     FileText,
     GitBranch,
     Settings,
@@ -20,7 +21,8 @@ import {
     ListTodo,
     Bot,
     Share2,
-    Zap
+    Zap,
+    GraduationCap
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
@@ -40,7 +42,27 @@ const navSections = [
             { name: 'Categories', href: '/categories', icon: FileText },
             { name: 'Patterns', href: '/patterns', icon: Share2 },
             { name: 'Roadmaps', href: '/roadmaps', icon: GitBranch },
+            { name: 'Learn Chapters', href: '/chapters', icon: BookOpen },
             { name: 'Tasks', href: '/tasks', icon: ListTodo },
+        ],
+    },
+    {
+        label: 'Build Haven',
+        items: [
+            { name: 'Build Projects', href: '/build-challenges', icon: Code },
+            { name: 'Challenge Users', href: '/build-challenges/users', icon: Users },
+        ],
+    },
+    {
+        label: 'Apps',
+        items: [
+            { name: 'Apprenticeship Overview', href: '/apprenticeship', icon: GraduationCap },
+            { name: 'Programs', href: '/apprenticeship/programs', icon: FileText },
+            { name: 'Submissions', href: '/apprenticeship/submissions', icon: Code },
+            { name: 'Students', href: '/apprenticeship/students', icon: Users },
+            { name: 'Apprenticeship Analytics', href: '/apprenticeship/analytics', icon: BarChart3 },
+            { name: 'Apprenticeship Coupons', href: '/apprenticeship/coupons', icon: CreditCard },
+            { name: 'Apprenticeship Notifications', href: '/apprenticeship/notifications', icon: MessageSquare },
         ],
     },
     {

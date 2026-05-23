@@ -2,7 +2,7 @@ import Redis from 'ioredis';
 import dotenv from 'dotenv';
 import logger from './logger';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const redisUrl = process.env.REDIS_URL;
 

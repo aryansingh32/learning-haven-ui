@@ -9,6 +9,7 @@ import ProblemEditor from './pages/ProblemEditor';
 import Categories from './pages/Categories';
 import Patterns from './pages/Patterns';
 import Roadmaps from './pages/Roadmaps';
+import Chapters from './pages/Chapters';
 import Tasks from './pages/Tasks';
 import Feedback from './pages/Feedback';
 import Referrals from './pages/Referrals';
@@ -21,6 +22,19 @@ import AuditLogs from './pages/AuditLogs';
 import { Loader2 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 import DashboardLayout from './layouts/DashboardLayout';
+
+import ProgramsPage from './pages/apprenticeship/ProgramsPage';
+import ProgramEditorPage from './pages/apprenticeship/ProgramEditorPage';
+import ProjectEditorPage from './pages/apprenticeship/ProjectEditorPage';
+import OverviewPage from './pages/apprenticeship/OverviewPage';
+import SubmissionsPage from './pages/apprenticeship/SubmissionsPage';
+import StudentsPage from './pages/apprenticeship/StudentsPage';
+import StudentDetailPage from './pages/apprenticeship/StudentDetailPage';
+import ApprenticeshipAnalyticsPage from './pages/apprenticeship/AnalyticsPage';
+import CouponsPage from './pages/apprenticeship/CouponsPage';
+import NotificationsPage from './pages/apprenticeship/NotificationsPage';
+import BuildChallengesPage from './pages/apprenticeship/BuildChallengesPage';
+import BuildChallengeUsersPage from './pages/build-haven/BuildChallengeUsersPage';
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -75,7 +89,24 @@ function App() {
               <Route path="/categories" element={<Categories />} />
               <Route path="/patterns" element={<Patterns />} />
               <Route path="/roadmaps" element={<Roadmaps />} />
+              <Route path="/chapters" element={<Chapters />} />
               <Route path="/tasks" element={<Tasks />} />
+
+              {/* Apps */}
+              <Route path="/apprenticeship" element={<OverviewPage />} />
+              <Route path="/apprenticeship/programs" element={<ProgramsPage />} />
+              <Route path="/apprenticeship/programs/new" element={<ProgramEditorPage />} />
+              <Route path="/apprenticeship/programs/:id/edit" element={<ProgramEditorPage />} />
+              <Route path="/apprenticeship/programs/:id/projects/new" element={<ProjectEditorPage />} />
+              <Route path="/apprenticeship/programs/:id/projects/:projectId/edit" element={<ProjectEditorPage />} />
+              <Route path="/apprenticeship/submissions" element={<SubmissionsPage />} />
+              <Route path="/apprenticeship/students" element={<StudentsPage />} />
+              <Route path="/apprenticeship/students/:userId" element={<StudentDetailPage />} />
+              <Route path="/apprenticeship/analytics" element={<ApprenticeshipAnalyticsPage />} />
+              <Route path="/apprenticeship/coupons" element={<CouponsPage />} />
+              <Route path="/apprenticeship/notifications" element={<NotificationsPage />} />
+              <Route path="/build-challenges" element={<BuildChallengesPage />} />
+              <Route path="/build-challenges/users" element={<BuildChallengeUsersPage />} />
 
               {/* People */}
               <Route path="/users" element={<Users />} />

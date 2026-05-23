@@ -82,6 +82,35 @@ export const signin = async (req: Request, res: Response) => {
     }
 };
 
+export const refreshSession = async (req: Request, res: Response) => {
+    const refresh_token = req.body?.refresh_token;
+
+    if (!refresh_token || typeof refresh_token !== 'string') {
+        return res.status(400).json({ error: 'refresh_token is required' });
+    }
+
+    try {
+        const { data, error } = await supabase.auth.refreshSession({ refresh_token });
+
+        if (error || !data.session?.access_token) {
+            logger.warn(`Session refresh failed: ${error?.message || 'no session'}`);
+            return res.status(401).json({ error: error?.message || 'Failed to refresh session', code: 'TOKEN_EXPIRED' });
+        }
+
+        res.json({
+            session: {
+                access_token: data.session.access_token,
+                refresh_token: data.session.refresh_token,
+                expires_in: data.session.expires_in,
+                expires_at: data.session.expires_at,
+            },
+        });
+    } catch (err: unknown) {
+        logger.error('Refresh session error', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 export const signout = async (req: Request, res: Response) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(400).json({ error: 'No token provided' });

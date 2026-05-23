@@ -1,0 +1,459 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { buildHavenService } from '@/services/build-haven.service';
+import { apprenticeshipService } from '@/services/apprenticeship.service';
+import { MarkdownContent } from '@/components/build-haven/MarkdownContent';
+import { BuildDifficultyBadge } from '@/components/build-haven/BuildDifficultyBadge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { CheckCircle2, Loader2, ChevronRight, ArrowLeft, Clock, Layers, Code2, ChevronDown } from 'lucide-react';
+import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext';
+import { cn } from '@/lib/utils';
+import { buildGitHubReturnPath, handleGitHubOAuthReturn, stripGitHubOAuthParams } from '@/lib/githubOAuth';
+
+/* ── Language icon button ──────────────────────────────────────────── */
+function LanguageButton({
+  lang,
+  selected,
+  onClick,
+}: {
+  lang: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'flex items-center gap-2 rounded-xl border-2 px-4 py-2.5 text-sm font-medium transition-all duration-200',
+        selected
+          ? 'border-primary bg-primary/10 text-primary shadow-sm shadow-primary/10'
+          : 'border-border/60 bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground'
+      )}
+    >
+      <Code2 className="h-4 w-4" />
+      <span className="capitalize">{lang}</span>
+    </button>
+  );
+}
+
+/* ── Difficulty bar chart (CodeCrafters style) ─────────────────────── */
+function DifficultyBars({ difficulty }: { difficulty?: string }) {
+  const levels: Record<string, number> = {
+    'very easy': 1,
+    easy: 2,
+    medium: 3,
+    hard: 4,
+  };
+  const level = levels[(difficulty || 'medium').toLowerCase()] || 2;
+  return (
+    <div className="flex items-end gap-0.5">
+      {[1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          className={cn(
+            'w-1 rounded-sm transition-colors',
+            i <= level ? 'bg-primary' : 'bg-muted-foreground/20'
+          )}
+          style={{ height: `${6 + i * 3}px` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── Recent attempts sidebar component ─────────────────────────────── */
+function RecentAttempts({
+  rows,
+  totalStages,
+  currentUserId,
+}: {
+  rows: any[];
+  totalStages: number;
+  currentUserId?: string;
+}) {
+  const sorted = useMemo(
+    () =>
+      [...rows].sort(
+        (a, b) => new Date(b.updated_at || 0).getTime() - new Date(a.updated_at || 0).getTime()
+      ),
+    [rows]
+  );
+
+  return (
+    <div className="space-y-2">
+      {sorted.slice(0, 10).map((row) => {
+        const isYou = row.user_id === currentUserId;
+        const completed = row.stages_completed ?? 0;
+        const pct = totalStages > 0 ? (completed / totalStages) * 100 : 0;
+        return (
+          <div
+            key={row.user_id}
+            className={cn(
+              'flex items-center gap-3 rounded-lg px-3 py-2 text-xs',
+              isYou ? 'bg-primary/5 ring-1 ring-primary/30' : 'bg-muted/30'
+            )}
+          >
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/80 to-primary text-[10px] font-bold text-white">
+              {isYou ? 'U' : String(row.user_id).charAt(0).toUpperCase()}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between">
+                <span className={cn('truncate font-medium', isYou && 'text-primary')}>
+                  {isYou ? 'You' : row.display_name || `${String(row.user_id).slice(0, 8)}…`}
+                </span>
+                <span className="shrink-0 text-muted-foreground">
+                  {completed}/{totalStages}
+                </span>
+              </div>
+              <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-border">
+                <div
+                  className="h-full rounded-full bg-primary transition-all duration-500"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+      {!sorted.length && (
+        <p className="py-4 text-center text-xs text-muted-foreground">
+          No attempts yet — be the first!
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MAIN PAGE COMPONENT
+   ══════════════════════════════════════════════════════════════════════ */
+export default function BuildChallengePage() {
+  const { slug = '' } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const [language, setLanguage] = useState('');
+
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ['build-challenge', slug],
+    queryFn: () => buildHavenService.getChallengeBySlug(slug),
+    enabled: Boolean(slug),
+  });
+
+  const githubStatusQuery = useQuery({
+    queryKey: ['apprenticeship-github-status'],
+    queryFn: () => apprenticeshipService.getGithubStatus(),
+  });
+
+  const workspaceQuery = useQuery({
+    queryKey: ['build-workspace-preview', slug, language],
+    queryFn: () => buildHavenService.getWorkspace(slug, language ? { language } : undefined),
+    enabled: Boolean(slug),
+  });
+
+  const leaderboardQuery = useQuery({
+    queryKey: ['build-leaderboard', slug, language],
+    queryFn: () => buildHavenService.getLeaderboard(slug, language ? { language } : undefined),
+    enabled: Boolean(slug),
+  });
+
+  const challenge = data?.challenge;
+  const languages = challenge?.languages || [];
+  const stages = useMemo(
+    () => [...(challenge?.stages || [])].sort((a: any, b: any) => a.stage_number - b.stage_number),
+    [challenge?.stages]
+  );
+
+  useEffect(() => {
+    if (!language && languages[0]?.language) {
+      setLanguage(languages[0].language);
+    }
+  }, [languages, language]);
+
+  useEffect(() => {
+    handleGitHubOAuthReturn(location.search, () => {
+      void githubStatusQuery.refetch();
+    });
+    if (location.search.includes('github_connected')) {
+      const clean = stripGitHubOAuthParams(location.search);
+      navigate(`${location.pathname}${clean}`, { replace: true });
+    }
+  }, [location.search, location.pathname, navigate, githubStatusQuery]);
+
+  const isGithubConnected = githubStatusQuery.data?.connected;
+  const existingEnrollment = workspaceQuery.data?.workspace?.enrollment;
+
+  const startMutation = useMutation({
+    mutationFn: () => buildHavenService.startChallenge(slug, language),
+    onSuccess: () => {
+      toast.success('Repository ready — let\'s build!');
+      void refetch();
+      navigate(`/projects/${slug}/workspace?language=${encodeURIComponent(language)}`);
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const githubConnectMutation = useMutation({
+    mutationFn: () =>
+      apprenticeshipService.getGithubAuthUrl(
+        buildGitHubReturnPath(location.pathname, location.search)
+      ),
+    onSuccess: (data: { url?: string }) => {
+      if (data?.url) {
+        window.location.href = data.url;
+        return;
+      }
+      toast.error('GitHub auth URL is unavailable');
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  if (isLoading || !challenge) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  const totalMinutes = stages.reduce((acc: number, s: any) => acc + (s.estimated_minutes || 0), 0);
+
+  return (
+    <div className="mx-auto max-w-7xl space-y-0 pb-16">
+      {/* ── Breadcrumb ─────────────────────────────────────────── */}
+      <div className="mb-6">
+        <button
+          type="button"
+          onClick={() => navigate('/projects')}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Catalog
+        </button>
+      </div>
+
+      {/* ── Hero / Overview Header ─────────────────────────────── */}
+      <section className="rounded-2xl border border-border/50 bg-gradient-to-br from-card via-background to-card/80 p-8">
+        <div className="flex flex-wrap items-center gap-2">
+          <BuildDifficultyBadge difficulty={challenge.difficulty_level} />
+          {challenge.is_free && (
+            <Badge className="bg-success/10 text-success border-success/30">Free in beta</Badge>
+          )}
+          {/* TODO(payments): gate Start / premium examples when Razorpay membership is integrated */}
+          {challenge.status === 'beta' && <Badge variant="secondary">Beta</Badge>}
+        </div>
+
+        <h1 className="mt-4 font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+          {challenge.title}
+        </h1>
+
+        {challenge.short_tagline && (
+          <p className="mt-2 text-lg text-muted-foreground">{challenge.short_tagline}</p>
+        )}
+
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          {challenge.description}
+        </p>
+
+        {/* Language selector */}
+        {languages.length > 0 && (
+          <div className="mt-6">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Select a language
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {languages.map((l: any) => (
+                <LanguageButton
+                  key={l.language}
+                  lang={l.language}
+                  selected={language === l.language}
+                  onClick={() => setLanguage(l.language)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* CTA */}
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          {!isGithubConnected ? (
+            <Button
+              size="lg"
+              className="bg-[#24292F] text-white hover:bg-[#24292F]/90 shadow-lg"
+              disabled={githubConnectMutation.isPending}
+              onClick={() => githubConnectMutation.mutate()}
+            >
+              {githubConnectMutation.isPending ? 'Redirecting…' : 'Connect GitHub to Start'}
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              className="gradient-golden text-primary-foreground shadow-lg shadow-primary/20 px-8"
+              disabled={!language || startMutation.isPending}
+              onClick={() => {
+                if (existingEnrollment?.repo_url) {
+                  navigate(`/projects/${slug}/workspace?language=${encodeURIComponent(language)}`);
+                } else {
+                  startMutation.mutate();
+                }
+              }}
+            >
+              {startMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Setting up…
+                </>
+              ) : existingEnrollment?.repo_url ? (
+                <>
+                  Resume Building
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  Start Building
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </>
+              )}
+            </Button>
+          )}
+          {isGithubConnected && (
+            <p className="flex items-center gap-1 text-xs text-success">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              GitHub connected
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── Main content + Sidebar ─────────────────────────────── */}
+      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_300px]">
+        {/* Left: Stage list */}
+        <div className="space-y-6">
+          <div>
+            <h2 className="font-display text-xl font-semibold text-foreground">Stages</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Complete each stage in order. Push your code to trigger automated tests.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            {stages.map((stage: any) => (
+              <div
+                key={stage.id}
+                className="group flex items-center gap-4 rounded-xl border border-border/50 bg-card/60 px-5 py-4 transition-all hover:border-primary/30 hover:bg-card/80"
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 font-mono text-sm font-bold text-primary">
+                  {stage.stage_number}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium text-foreground">{stage.title}</p>
+                  {stage.description && (
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      {stage.description.replace(/[#*`]/g, '').slice(0, 80)}
+                    </p>
+                  )}
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  {stage.estimated_minutes ? (
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {stage.estimated_minutes}m
+                    </span>
+                  ) : null}
+                  <DifficultyBars difficulty={stage.difficulty} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Info blocks as dropdowns */}
+          {(challenge.what_you_build || challenge.what_you_learn) && (
+            <div className="grid gap-4">
+              {challenge.what_you_build && (
+                <Collapsible>
+                  <CollapsibleTrigger className="flex w-full items-center justify-between rounded-t-xl border border-border/50 bg-card/60 p-4 font-display text-sm font-semibold text-foreground hover:bg-card/80 transition-colors">
+                    What you'll build
+                    <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="rounded-b-xl border border-t-0 border-border/50 bg-card/20 p-5">
+                    <div className="text-sm text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
+                      <MarkdownContent content={challenge.what_you_build} />
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+              {challenge.what_you_learn && (
+                <Collapsible>
+                  <CollapsibleTrigger className="flex w-full items-center justify-between rounded-t-xl border border-border/50 bg-card/60 p-4 font-display text-sm font-semibold text-foreground hover:bg-card/80 transition-colors">
+                    What you'll learn
+                    <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="rounded-b-xl border border-t-0 border-border/50 bg-card/20 p-5">
+                    <div className="text-sm text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
+                      <MarkdownContent content={challenge.what_you_learn} />
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Right sidebar */}
+        <div className="space-y-4">
+          {/* Challenge stats */}
+          <div className="rounded-xl border border-border/50 bg-card/60 p-5">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Challenge info
+            </h3>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div className="flex items-center justify-between">
+                <dt className="flex items-center gap-2 text-muted-foreground">
+                  <Layers className="h-3.5 w-3.5" />
+                  Stages
+                </dt>
+                <dd className="font-medium text-foreground">{stages.length}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5" />
+                  Est. time
+                </dt>
+                <dd className="font-medium text-foreground">{totalMinutes || '—'} min</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="flex items-center gap-2 text-muted-foreground">
+                  <Code2 className="h-3.5 w-3.5" />
+                  Languages
+                </dt>
+                <dd className="font-medium text-foreground">{languages.length}</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Recent attempts */}
+          <div className="rounded-xl border border-border/50 bg-card/60 overflow-hidden">
+            <div className="border-b border-border/50 px-5 py-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Recent attempts
+              </h3>
+            </div>
+            <ScrollArea className="max-h-[400px] p-3">
+              <RecentAttempts
+                rows={leaderboardQuery.data?.leaderboard || []}
+                totalStages={stages.length}
+                currentUserId={user?.id}
+              />
+            </ScrollArea>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

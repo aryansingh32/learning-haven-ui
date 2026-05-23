@@ -1,175 +1,247 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
+import { ChapterCta } from './ChapterCta';
 
 export interface QuizQuestion {
   q?: string;
-  question?: string; // fallback for older data structures
+  question?: string;
   options: string[];
   answer?: number;
-  correctAnswer?: number; // fallback
+  correctAnswer?: number;
   explanation: string;
 }
 
 interface QuizSectionProps {
-  questions: QuizQuestion[];
   chapterId: string;
-  onComplete: (score: number, passed: boolean) => void;
+  questions: QuizQuestion[];
+  savedScorePercent?: number | null;
+  alreadySubmitted?: boolean;
+  onSubmitQuiz: (score: number, passed: boolean, totalQuestions: number) => void;
+  onProceed: () => void;
 }
 
+type Phase = 'form' | 'results' | 'previously_submitted';
+
 export const QuizSection: React.FC<QuizSectionProps> = ({
-  questions = [],
   chapterId,
-  onComplete
+  questions = [],
+  savedScorePercent,
+  alreadySubmitted = false,
+  onSubmitQuiz,
+  onProceed,
 }) => {
-  const [state, setState] = useState<'idle' | 'answering' | 'reviewing' | 'complete'>('idle');
-  const [currentQ, setCurrentQ] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
+  const storageKey = `lh_quiz_${chapterId}`;
 
-  if (!questions || questions.length === 0) return null;
+  const [phase, setPhase] = useState<Phase>(() =>
+    alreadySubmitted && savedScorePercent != null ? 'previously_submitted' : 'form'
+  );
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleStart = () => {
-    setState('answering');
-    setCurrentQ(0);
-    setScore(0);
-    setSelectedOption(null);
-  };
+  const normalized = useMemo(
+    () =>
+      questions.map((q, i) => ({
+        id: i,
+        text: q.q || q.question || '',
+        options: q.options || [],
+        correctIndex: q.answer ?? q.correctAnswer ?? 0,
+        explanation: q.explanation || '',
+      })),
+    [questions]
+  );
 
-  const currentQuestion = questions[currentQ] || {};
-  const qText = currentQuestion.q || currentQuestion.question || '';
-  const ansIdx = currentQuestion.answer ?? currentQuestion.correctAnswer ?? 0;
-
-  const handleSubmit = () => {
-    if (selectedOption === null) return;
-    const isCorrect = selectedOption === ansIdx;
-    if (isCorrect) setScore(s => s + 1);
-    setState('reviewing');
-  };
-
-  const handleNext = () => {
-    if (currentQ < questions.length - 1) {
-      setCurrentQ(q => q + 1);
-      setSelectedOption(null);
-      setState('answering');
-    } else {
-      setState('complete');
-      const passed = score >= 2;
-      onComplete(score, passed);
+  useEffect(() => {
+    if (alreadySubmitted && savedScorePercent != null) {
+      setPhase('previously_submitted');
     }
+  }, [alreadySubmitted, savedScorePercent]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (raw && phase === 'form') {
+        const parsed = JSON.parse(raw) as { answers?: Record<number, number>; submitted?: boolean };
+        if (parsed.answers) setAnswers(parsed.answers);
+        if (parsed.submitted) setSubmitted(true);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [storageKey, phase]);
+
+  if (!normalized.length) return null;
+
+  const scoreCount = normalized.reduce((acc, q) => (answers[q.id] === q.correctIndex ? acc + 1 : acc), 0);
+  const scorePercent = Math.round((scoreCount / normalized.length) * 100);
+  const passed = scorePercent >= 66;
+  const allAnswered = normalized.every((q) => answers[q.id] !== undefined);
+
+  const persistLocal = (nextAnswers: Record<number, number>, isSubmitted: boolean) => {
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({ answers: nextAnswers, submitted: isSubmitted, scorePercent })
+    );
+  };
+
+  const handleSubmitAll = () => {
+    if (!allAnswered) return;
+    const finalScore = normalized.reduce(
+      (acc, q) => (answers[q.id] === q.correctIndex ? acc + 1 : acc),
+      0
+    );
+    const percent = Math.round((finalScore / normalized.length) * 100);
+    const didPass = percent >= 66;
+    setSubmitted(true);
+    setPhase('results');
+    persistLocal(answers, true);
+    onSubmitQuiz(finalScore, didPass, normalized.length);
   };
 
   const handleRetake = () => {
-    setState('idle');
-    setCurrentQ(0);
-    setScore(0);
-    setSelectedOption(null);
+    setAnswers({});
+    setSubmitted(false);
+    setPhase('form');
+    localStorage.removeItem(storageKey);
   };
 
-  return (
-    <div className="pt-2">
-      <div className="bg-slate-50 rounded-xl border border-slate-200 p-6 sm:p-8 mb-6">
-        {state === 'idle' && (
-          <div className="text-center py-8">
-            <h3 className="text-lg font-bold text-slate-800 mb-2">Ready to test your knowledge?</h3>
-            <p className="text-slate-500 mb-6 font-medium">Take a short quiz to unlock the next chapter.</p>
+  if (phase === 'previously_submitted' && savedScorePercent != null) {
+    const wasPassed = savedScorePercent >= 66;
+    return (
+      <div className="pt-2 space-y-4">
+        <div
+          className={`rounded-2xl border p-6 text-center ${wasPassed ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-orange-500/10 border-orange-500/30'}`}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
+            Previous attempt
+          </p>
+          <p className="text-4xl font-extrabold text-foreground mb-1">{savedScorePercent}%</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            {wasPassed ? 'You passed this quiz.' : 'Review the material and retake if you want.'}
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center">
             <button
-              onClick={handleStart}
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors shadow-sm"
+              type="button"
+              onClick={handleRetake}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border text-sm font-semibold hover:bg-secondary"
             >
-              Start Quiz
+              <RotateCcw className="w-4 h-4" /> Retake quiz
             </button>
+            <ChapterCta onClick={onProceed}>I&apos;ve reviewed my knowledge</ChapterCta>
           </div>
-        )}
-
-        {(state === 'answering' || state === 'reviewing') && (
-          <div className="animate-in fade-in duration-300">
-            <div className="flex justify-between items-center text-sm text-slate-500 mb-4 font-bold tracking-wide uppercase">
-              <span>Question {currentQ + 1} of {questions.length}</span>
-            </div>
-
-            <h3 className="text-lg font-semibold mb-6 text-slate-800 leading-relaxed">
-              {qText}
-            </h3>
-
-            <div className="space-y-3 mb-6">
-              {currentQuestion.options?.map((opt, idx) => {
-                let btnCls = 'border-slate-200 hover:border-blue-400 bg-white';
-                const isSelected = selectedOption === idx;
-                const isCorrectOption = idx === ansIdx;
-
-                if (state === 'answering') {
-                  if (isSelected) btnCls = 'border-blue-600 bg-blue-50 ring-1 ring-blue-600';
-                } else if (state === 'reviewing') {
-                  if (isCorrectOption) {
-                    btnCls = 'border-green-500 bg-green-50 ring-1 ring-green-500';
-                  } else if (isSelected && !isCorrectOption) {
-                    btnCls = 'border-red-500 bg-red-50 ring-1 ring-red-500';
-                  } else {
-                    btnCls = 'border-slate-200 bg-slate-50 opacity-50';
-                  }
-                }
-
-                return (
-                  <button
-                    key={idx}
-                    disabled={state === 'reviewing'}
-                    onClick={() => setSelectedOption(idx)}
-                    className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center justify-between gap-4 ${btnCls}`}
-                  >
-                    <span className="font-semibold text-slate-700">{opt}</span>
-                    {state === 'reviewing' && isCorrectOption && <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />}
-                    {state === 'reviewing' && isSelected && !isCorrectOption && <XCircle className="w-5 h-5 text-red-600 shrink-0" />}
-                  </button>
-                );
-              })}
-            </div>
-
-            {state === 'reviewing' && (
-              <div className="text-sm text-slate-600 bg-slate-50 border border-slate-100 p-4 rounded-xl mb-6 shadow-inner">
-                <span className="font-bold text-slate-800 block mb-1">Explanation:</span>
-                {currentQuestion.explanation}
-              </div>
-            )}
-
-            <div className="flex justify-end">
-              {state === 'answering' ? (
-                <button
-                  disabled={selectedOption === null}
-                  onClick={handleSubmit}
-                  className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors shadow-sm"
-                >
-                  Submit Answer
-                </button>
-              ) : (
-                <button
-                  onClick={handleNext}
-                  className="px-6 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm"
-                >
-                  {currentQ < questions.length - 1 ? 'Next Question' : 'See Results'}
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {state === 'complete' && (() => {
-          const passed = score >= 2;
-          return (
-            <div className={`p-8 rounded-2xl text-center shadow-sm border ${passed ? 'bg-green-50 border-green-100' : 'bg-orange-50 border-orange-100'} animate-in fade-in zoom-in-95 duration-500`}>
-              <div className="text-5xl font-extrabold mb-4 text-slate-800">{score} / {questions.length}</div>
-              <p className={`font-semibold text-lg mb-8 ${passed ? 'text-green-800' : 'text-orange-800'}`}>
-                {passed ? '🎉 Great job! Chapter unlocked.' : '📚 Review the material and try again.'}
-              </p>
-              <button
-                onClick={handleRetake}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-colors shadow-sm hover:border-slate-300"
-              >
-                <RotateCcw className="w-4 h-4" /> Retake Quiz
-              </button>
-            </div>
-          );
-        })()}
+        </div>
       </div>
+    );
+  }
+
+  if (phase === 'results' && submitted) {
+    return (
+      <div className="pt-2 space-y-5">
+        <div
+          className={`rounded-2xl border p-5 text-center ${passed ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-orange-500/10 border-orange-500/30'}`}
+        >
+          <p className="text-3xl font-extrabold text-foreground">
+            {scoreCount} / {normalized.length}
+          </p>
+          <p className="text-sm font-semibold text-muted-foreground mt-1">{scorePercent}% — {passed ? 'Passed' : 'Keep practicing'}</p>
+        </div>
+
+        <div className="space-y-4">
+          {normalized.map((q) => {
+            const selected = answers[q.id];
+            const isCorrect = selected === q.correctIndex;
+            return (
+              <div key={q.id} className="rounded-xl border border-border/60 bg-secondary/20 p-4 space-y-3">
+                <div className="flex items-start gap-2">
+                  {isCorrect ? (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                  ) : (
+                    <XCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+                  )}
+                  <p className="text-sm font-semibold text-foreground leading-relaxed">{q.text}</p>
+                </div>
+                <div className="space-y-2 pl-7">
+                  {q.options.map((opt, idx) => {
+                    const isSelected = selected === idx;
+                    const isRight = idx === q.correctIndex;
+                    let cls = 'border-border/50 bg-background/50 opacity-60';
+                    if (isRight) cls = 'border-emerald-500/50 bg-emerald-500/10';
+                    if (isSelected && !isRight) cls = 'border-destructive/50 bg-destructive/10';
+                    return (
+                      <div key={idx} className={`rounded-lg border px-3 py-2 text-xs font-medium ${cls}`}>
+                        {opt}
+                        {isRight && <span className="ml-2 text-emerald-600">✓ Correct</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="pl-7 text-xs text-muted-foreground bg-background/60 rounded-lg p-3 border border-border/40">
+                  <span className="font-bold text-foreground block mb-1">Explanation</span>
+                  {q.explanation}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="flex flex-wrap gap-3 justify-end">
+          <button
+            type="button"
+            onClick={handleRetake}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border text-sm font-semibold hover:bg-secondary"
+          >
+            <RotateCcw className="w-4 h-4" /> Retake
+          </button>
+          <ChapterCta onClick={onProceed}>I&apos;ve reviewed my knowledge</ChapterCta>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="pt-2 space-y-4">
+      <p className="text-sm text-muted-foreground">
+        Answer all questions, then submit to see explanations and your score together.
+      </p>
+
+      <div className="space-y-5">
+        {normalized.map((q, qi) => (
+          <div key={q.id} className="rounded-xl border border-border/50 bg-secondary/20 p-4">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-orange-500 mb-2">
+              Question {qi + 1}
+            </p>
+            <p className="text-sm font-semibold text-foreground mb-3 leading-relaxed">{q.text}</p>
+            <div className="space-y-2">
+              {q.options.map((opt, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    const next = { ...answers, [q.id]: idx };
+                    setAnswers(next);
+                    persistLocal(next, false);
+                  }}
+                  className={`w-full text-left rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-all ${
+                    answers[q.id] === idx
+                      ? 'border-orange-500 bg-orange-500/10 ring-1 ring-orange-500/30'
+                      : 'border-border/50 hover:border-orange-400/50 bg-background'
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ChapterCta
+        onClick={handleSubmitAll}
+        disabled={!allAnswered}
+        className={!allAnswered ? 'opacity-50 pointer-events-none' : ''}
+      >
+        Submit quiz
+      </ChapterCta>
     </div>
   );
 };
+

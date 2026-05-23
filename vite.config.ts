@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: "::",
       port: 5173,
+      allowedHosts: ["unhumorous-expeditiously-sparkle.ngrok-free.dev"],
       hmr: {
         overlay: false,
       },

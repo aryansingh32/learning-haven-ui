@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { adminService } from '../services/admin.service';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Code, CreditCard, TrendingUp, Activity, Zap, ArrowUpRight, ArrowDownRight } from 'lucide-react';
-import { Loader2 } from 'lucide-react';
 
 const StatCard = ({ title, value, icon: Icon, trend, trendUp, gradient, delay }: {
     title: string;

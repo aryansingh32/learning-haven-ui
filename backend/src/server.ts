@@ -2,7 +2,7 @@ import app from './app';
 import dotenv from 'dotenv';
 import logger from './config/logger';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const PORT = process.env.PORT || 5000;
 

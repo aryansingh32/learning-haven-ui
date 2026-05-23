@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { signup, signin, signout } from '../controllers/auth.controller';
+import { signup, signin, signout, refreshSession } from '../controllers/auth.controller';
 import { phoneSendOtp, phoneVerifyOtp, phoneCompleteProfile } from '../controllers/auth-phone.controller';
 
 const router = Router();
 
 router.post('/signup', signup);
 router.post('/signin', signin);
+router.post('/refresh', refreshSession);
 router.post('/signout', signout);
 
 // Phone OTP Auth Routes (MSG91)

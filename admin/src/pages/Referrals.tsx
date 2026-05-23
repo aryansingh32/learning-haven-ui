@@ -4,8 +4,8 @@ import { referralsService } from '../services/referrals.service';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Zap, CheckCircle, XCircle, AlertTriangle, Users, TrendingUp } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Loader2, Zap, CheckCircle, XCircle, AlertTriangle, Users } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Referrals = () => {

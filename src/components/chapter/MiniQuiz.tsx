@@ -181,7 +181,7 @@ export default function MiniQuiz({ questions, onComplete }: MiniQuizProps) {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </AnimatePresence>
 
       {showFeedback && (

@@ -6,6 +6,7 @@ import { RoadmapsService } from '../services/roadmaps.service';
 import { TasksService } from '../services/tasks.service';
 import { FeedbackService } from '../services/feedback.service';
 import { JobsService } from '../services/jobs.service';
+import { AdminChaptersService } from '../services/admin-chapters.service';
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 
@@ -307,6 +308,107 @@ export class AdminController {
         } catch (error) {
             logger.error('Reorder roadmap items error:', error);
             res.status(500).json({ error: 'Failed to reorder items' });
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // CHAPTER MANAGEMENT (Learn path)
+    // ══════════════════════════════════════════════════════════
+
+    static async listChapters(req: Request, res: Response) {
+        try {
+            const roadmapId = req.query.roadmap_id as string;
+            if (!roadmapId) {
+                return res.status(400).json({ error: 'roadmap_id query required' });
+            }
+            const chapters = await AdminChaptersService.listByRoadmap(roadmapId);
+            res.json({ chapters });
+        } catch (error) {
+            logger.error('Admin list chapters error:', error);
+            res.status(500).json({ error: 'Failed to list chapters' });
+        }
+    }
+
+    static async getChapter(req: Request, res: Response) {
+        try {
+            const data = await AdminChaptersService.getById(req.params.id as string);
+            res.json(data);
+        } catch (error: any) {
+      logger.error('Error:', error);
+            if (error.message === 'Chapter not found') {
+                return res.status(404).json({ error: error.message });
+            }
+            logger.error('Admin get chapter error:', error);
+            res.status(500).json({ error: 'Failed to get chapter' });
+        }
+    }
+
+    static async createChapter(req: Request, res: Response) {
+        try {
+            const chapter = await AdminChaptersService.create(req.body);
+            res.status(201).json({ chapter });
+        } catch (error) {
+            logger.error('Admin create chapter error:', error);
+            res.status(500).json({ error: 'Failed to create chapter' });
+        }
+    }
+
+    static async updateChapter(req: Request, res: Response) {
+        try {
+            const chapter = await AdminChaptersService.update(req.params.id as string, req.body);
+            res.json({ chapter });
+        } catch (error) {
+            logger.error('Admin update chapter error:', error);
+            res.status(500).json({ error: 'Failed to update chapter' });
+        }
+    }
+
+    static async deleteChapter(req: Request, res: Response) {
+        try {
+            const result = await AdminChaptersService.delete(req.params.id as string);
+            res.json(result);
+        } catch (error) {
+            logger.error('Admin delete chapter error:', error);
+            res.status(500).json({ error: 'Failed to delete chapter' });
+        }
+    }
+
+    static async upsertChapterContent(req: Request, res: Response) {
+        try {
+            const content = await AdminChaptersService.upsertContent(req.params.id as string, req.body);
+            res.json({ content });
+        } catch (error) {
+            logger.error('Admin upsert chapter content error:', error);
+            res.status(500).json({ error: 'Failed to save chapter content' });
+        }
+    }
+
+    static async replaceChapterSteps(req: Request, res: Response) {
+        try {
+            const { steps } = req.body;
+            const saved = await AdminChaptersService.replaceSteps(req.params.id as string, steps || []);
+            res.json({ steps: saved });
+        } catch (error) {
+            logger.error('Admin replace chapter steps error:', error);
+            res.status(500).json({ error: 'Failed to save steps' });
+        }
+    }
+
+    static async setUserChapterProgress(req: Request, res: Response) {
+        try {
+            const { user_id, status } = req.body;
+            if (!user_id || !status) {
+                return res.status(400).json({ error: 'user_id and status required' });
+            }
+            const progress = await AdminChaptersService.adminUnlockForUser(
+                user_id,
+                req.params.id as string,
+                status
+            );
+            res.json({ progress });
+        } catch (error) {
+            logger.error('Admin set chapter progress error:', error);
+            res.status(500).json({ error: 'Failed to update progress' });
         }
     }
 

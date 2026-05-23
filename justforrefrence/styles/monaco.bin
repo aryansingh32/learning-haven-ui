@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Monaco';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Monaco'), url('../images/Monaco.woff') format('woff');
+}
+
+

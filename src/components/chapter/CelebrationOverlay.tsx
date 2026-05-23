@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Star, Share2, ArrowRight, X, Flame, Zap } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence, animate } from 'framer-motion';
+import { X, Download, Copy, Linkedin, ArrowRight, Loader2 } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { toPng } from 'html-to-image';
+import { toast } from 'sonner';
+import { LinkedInAchievementCard } from './LinkedInAchievementCard';
 
-interface CelebrationOverlayProps {
+export interface CelebrationOverlayProps {
   isOpen: boolean;
   onClose: () => void;
   chapterTitle: string;
@@ -11,7 +16,36 @@ interface CelebrationOverlayProps {
   skills: string[];
   streakDay: number;
   userName: string;
+  linkedInText?: string;
+  chapterNumber?: number;
+  roadmapTitle?: string;
   onNext?: () => void;
+}
+
+function buildLinkedInCaption(props: {
+  userName: string;
+  chapterTitle: string;
+  xpEarned: number;
+  streakDay: number;
+  badgeName: string;
+  skills: string[];
+  custom?: string;
+}) {
+  if (props.custom?.trim()) return props.custom.trim();
+
+  const tags = ['#LearningInPublic', '#DSA', '#SoftwareEngineering', '#Placements']
+    .concat(props.skills.filter(Boolean).slice(0, 2).map((s) => `#${s.replace(/[^a-zA-Z0-9]/g, '')}`))
+    .join(' ');
+
+  return `🎉 I just completed "${props.chapterTitle}" on Learning Haven!
+
+✅ Milestone: ${props.badgeName}
+⚡ +${props.xpEarned} XP earned
+🔥 ${props.streakDay}-day learning streak
+
+Structured DSA roadmaps built for engineers from Tier 2/3 colleges — if you're preparing for tech interviews, this platform is worth exploring.
+
+${tags}`;
 }
 
 export default function CelebrationOverlay({
@@ -23,163 +57,270 @@ export default function CelebrationOverlay({
   skills,
   streakDay,
   userName,
+  linkedInText,
+  chapterNumber,
+  roadmapTitle,
   onNext,
 }: CelebrationOverlayProps) {
-  const [showContent, setShowContent] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [displayXp, setDisplayXp] = useState(0);
+  const [downloading, setDownloading] = useState(false);
+  const [sharing, setSharing] = useState(false);
+
+  const caption = buildLinkedInCaption({
+    userName,
+    chapterTitle,
+    xpEarned,
+    streakDay,
+    badgeName,
+    skills,
+    custom: linkedInText,
+  });
 
   useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => setShowContent(true), 400);
-      return () => clearTimeout(timer);
-    } else {
-      setShowContent(false);
+    if (!isOpen) {
+      setDisplayXp(0);
+      return;
     }
-  }, [isOpen]);
 
-  const linkedInText = `🎉 Just completed "${chapterTitle}" on DSA OS!\n\nSkills learned: ${skills.join(', ')}\n📊 ${xpEarned} XP earned · Day ${streakDay} streak 🔥\n\nIf you're from a Tier 3/4 college, this step-by-step approach is worth checking out.\n\n#DSA #CodingJourney #Placements #LearningInPublic`;
+    document.body.style.overflow = 'hidden';
+    const duration = 1600;
+    const end = Date.now() + duration;
 
-  return (
+    const frame = () => {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 50,
+        origin: { x: 0, y: 0.7 },
+        colors: ['#f97316', '#fbbf24'],
+      });
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 50,
+        origin: { x: 1, y: 0.7 },
+        colors: ['#f97316', '#fbbf24'],
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+
+    const controls = animate(0, xpEarned, {
+      duration: 1.4,
+      ease: 'easeOut',
+      onUpdate: (v) => setDisplayXp(Math.floor(v)),
+    });
+
+    return () => {
+      document.body.style.overflow = '';
+      controls.stop();
+    };
+  }, [isOpen, xpEarned]);
+
+  const generatePng = useCallback(async () => {
+    if (!cardRef.current) throw new Error('Card not ready');
+    const node = cardRef.current;
+    return toPng(node, {
+      cacheBust: true,
+      pixelRatio: 2,
+      backgroundColor: '#ea580c',
+      width: node.offsetWidth,
+      height: node.offsetHeight,
+      skipFonts: true,
+    });
+  }, []);
+
+  const downloadCard = useCallback(async () => {
+    setDownloading(true);
+    try {
+      const dataUrl = await generatePng();
+      const link = document.createElement('a');
+      const slug = chapterTitle.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+      link.download = `learning-haven-${slug}.png`;
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.success('Achievement card downloaded!');
+      return dataUrl;
+    } catch (e) {
+      console.error(e);
+      toast.error('Could not generate image. Try again.');
+      return null;
+    } finally {
+      setDownloading(false);
+    }
+  }, [chapterTitle, generatePng]);
+
+  const copyCaption = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(caption);
+      toast.success('Caption copied to clipboard.');
+    } catch {
+      toast.error('Could not copy caption.');
+    }
+  }, [caption]);
+
+  const shareLinkedIn = useCallback(async () => {
+    setSharing(true);
+    try {
+      await copyCaption();
+      const dataUrl = await generatePng();
+      if (!dataUrl) return;
+
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], 'learning-haven-achievement.png', { type: 'image/png' });
+
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          title: 'Learning Haven — Chapter complete',
+          text: caption,
+          files: [file],
+        });
+        toast.success('Shared! If LinkedIn did not open, use Download + paste caption.');
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.download = `learning-haven-${chapterTitle.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.png`;
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.open(
+        `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+      toast.success('Image downloaded & caption copied. Attach the image in your LinkedIn post.');
+    } catch (e) {
+      if ((e as Error)?.name !== 'AbortError') {
+        toast.error('Share failed. Try Download card + Copy caption.');
+      }
+    } finally {
+      setSharing(false);
+    }
+  }, [caption, chapterTitle, copyCaption, generatePng]);
+
+  const overlay = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="celebration-title"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[200]"
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+          <button
+            type="button"
+            aria-label="Close celebration"
+            className="absolute inset-0 bg-black/55 backdrop-blur-xl"
+            onClick={onClose}
+          />
 
-          {/* Confetti effect (CSS-based) */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 rounded-sm"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  backgroundColor: ['#f59e0b', '#ef4444', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899'][i % 6],
-                }}
-                initial={{ top: '-10%', rotate: 0, opacity: 1 }}
-                animate={{
-                  top: '110%',
-                  rotate: 360 * (Math.random() > 0.5 ? 1 : -1),
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: 2 + Math.random() * 2,
-                  delay: Math.random() * 0.5,
-                  ease: 'easeOut',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Content */}
-          <motion.div
-            initial={{ scale: 0.8, y: 40, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.8, y: 40, opacity: 0 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="relative bg-white dark:bg-card rounded-3xl p-6 sm:p-8 w-full max-w-md text-center shadow-2xl z-10 max-h-[90vh] overflow-y-auto"
-          >
-            {/* Close */}
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-secondary transition-colors"
-            >
-              <X className="w-4 h-4 text-muted-foreground" />
-            </button>
-
-            {/* Badge animation */}
+          <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 pointer-events-none">
             <motion.div
-              initial={{ scale: 0, rotate: -30 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.5, type: 'spring', stiffness: 200, damping: 12 }}
-              className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-xl shadow-orange-500/20 mb-5"
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.99 }}
+              transition={{ type: 'spring', damping: 30, stiffness: 380 }}
+              className="pointer-events-auto w-full max-w-[400px] max-h-[min(92vh,720px)] flex flex-col rounded-2xl border border-white/10 bg-[#121212] shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <Trophy className="w-10 h-10 text-white" />
-            </motion.div>
-
-            <AnimatePresence>
-              {showContent && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-foreground mb-1">
-                    Chapter Complete! 🎉
+              {/* Sticky header — close always visible */}
+              <div className="shrink-0 flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10 bg-[#121212]">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-orange-400">
+                    Chapter complete
+                  </p>
+                  <h2 id="celebration-title" className="text-lg font-bold text-white truncate">
+                    You leveled up 🚀
                   </h2>
-                  <p className="text-base font-bold text-primary mb-4">{chapterTitle}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="shrink-0 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-                  {/* Skills tags */}
-                  <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                    {skills.map((skill) => (
-                      <span key={skill} className="text-[10px] px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-3">
+                <div className="text-center">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-orange-500/15 border border-orange-500/25 px-3 py-1 text-sm font-bold text-orange-400">
+                    +{displayXp} XP · {chapterTitle}
+                  </span>
+                </div>
 
-                  {/* Stats row */}
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    <div className="flex items-center gap-1 text-sm font-bold text-foreground">
-                      <Zap className="w-4 h-4 text-primary" /> +{xpEarned} XP
-                    </div>
-                    <div className="flex items-center gap-1 text-sm font-bold text-foreground">
-                      <Flame className="w-4 h-4 text-destructive" /> Day {streakDay}
-                    </div>
-                    <div className="flex items-center gap-1 text-sm font-bold text-foreground">
-                      <Star className="w-4 h-4 text-primary" /> {badgeName}
-                    </div>
-                  </div>
+                <p className="text-center text-[11px] text-white/40 -mt-1">
+                  Download or share this card on LinkedIn
+                </p>
 
-                  {/* LinkedIn card preview */}
-                  <div className="bg-slate-50 dark:bg-secondary/50 rounded-xl p-4 mb-5 text-left border border-border/50">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white font-bold text-xs">
-                        {userName.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-foreground">{userName}</p>
-                        <p className="text-[10px] text-muted-foreground">DSA OS Student</p>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-muted-foreground whitespace-pre-line leading-relaxed">
-                      {linkedInText.substring(0, 150)}...
-                    </p>
-                  </div>
+                <LinkedInAchievementCard
+                  ref={cardRef}
+                  userName={userName}
+                  chapterTitle={chapterTitle}
+                  xpEarned={xpEarned}
+                  streakDay={streakDay}
+                  badgeName={badgeName}
+                  skills={skills}
+                  chapterNumber={chapterNumber}
+                  roadmapTitle={roadmapTitle}
+                />
 
-                  {/* Actions */}
+                <button
+                  type="button"
+                  onClick={() => void downloadCard()}
+                  disabled={downloading || sharing}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white py-3 text-sm font-bold disabled:opacity-60"
+                >
+                  {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+                  Download card (PNG)
+                </button>
+
+                <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank')}
-                    className="w-full py-3 bg-[#0077B5] text-white rounded-xl font-bold text-sm mb-3 hover:bg-[#006699] transition-colors flex items-center justify-center gap-2"
+                    type="button"
+                    onClick={() => void copyCaption()}
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 py-2.5 text-xs font-bold text-white"
                   >
-                    <Share2 className="w-4 h-4" /> Share on LinkedIn
+                    <Copy className="w-3.5 h-3.5" /> Copy caption
                   </button>
-
-                  {onNext && (
-                    <button
-                      onClick={onNext}
-                      className="w-full py-3 gradient-golden text-white rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
-                    >
-                      Go to Next Chapter <ArrowRight className="w-4 h-4" />
-                    </button>
-                  )}
-
                   <button
-                    onClick={onClose}
-                    className="mt-3 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    type="button"
+                    onClick={() => void shareLinkedIn()}
+                    disabled={sharing || downloading}
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-[#0A66C2] py-2.5 text-xs font-bold text-white disabled:opacity-60"
                   >
-                    Skip for now
+                    {sharing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Linkedin className="w-3.5 h-3.5" />}
+                    Share on LinkedIn
                   </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+
+                {onNext ? (
+                  <button
+                    type="button"
+                    onClick={onNext}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/10 py-2.5 text-xs font-bold text-white"
+                  >
+                    Next chapter <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : null}
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-}
+
+  if (typeof document === 'undefined') return null;
+  return createPortal(overlay, document.body);
+};

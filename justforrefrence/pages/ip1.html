@@ -1,0 +1,1099 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <script type="text/javascript" src="../scripts/vendor.4969c740.js"></script><script type="text/javascript" src="../scripts/main.a6cfe222.js"></script><script type="text/javascript" async src="../scripts/beacon-v2.helpscout.net"></script><script type="text/javascript" async src="../scripts/gtm.js"></script><script type="text/javascript" async src="/gtag/js"></script><script type="text/javascript" async src="/gtag/js"></script><script async src="../scripts/gtm.js"></script><script type="text/javascript" data-fastboot-ignore="">
+      // Remove default meta tags to prevent tag duplication after Ember loads
+      !function () { var tags = document.head.querySelectorAll('meta[data-default-meta-tag]'); for (var i = 0; i < tags.length; i++) { tags[i].parentNode.removeChild(tags[i]); } }();
+    </script>
+
+    <meta name="codecrafters-frontend/config/environment" content="%7B%22modulePrefix%22%3A%22codecrafters-frontend%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22codecrafters-frontend%22%2C%22version%22%3A%220.0.3%2B9b766966%22%7D%2C%22%40sentry%2Fember%22%3A%7B%22disablePerformance%22%3Atrue%2C%22disableInstrumentComponents%22%3Atrue%7D%2C%22emberKeyboard%22%3A%7B%22disableOnInputFields%22%3Atrue%7D%2C%22x%22%3A%7B%22backendUrl%22%3A%22https%3A%2F%2Fbackend.codecrafters.io%22%2C%22defaultMetaTags%22%3A%7B%22type%22%3A%22website%22%2C%22siteName%22%3A%22CodeCrafters%22%2C%22title%22%3A%22CodeCrafters%20%7C%20Build%20Your%20Own%20Redis%2C%20Git%20%26%20SQLite%20From%20Scratch%22%2C%22description%22%3A%22Advanced%20programming%20challenges%20for%20experienced%20engineers.%20Rebuild%20real%20production%20tools%20like%20Redis%2C%20Git%2C%20and%20SQLite%20from%20scratch%20in%20your%20IDE.%22%2C%22imageUrl%22%3A%22https%3A%2F%2Fcodecrafters.io%2Fimages%2Fog-index.jpg%22%2C%22twitterCard%22%3A%22summary_large_image%22%2C%22twitterSite%22%3A%22%40codecraftersio%22%7D%2C%22helpscoutBeaconId%22%3A%22bb089ae9-a4ae-4114-8f7a-b660f6310158%22%2C%22isCI%22%3Afalse%2C%22metaTagImagesBaseURL%22%3A%22https%3A%2F%2Fcodecrafters.io%2Fimages%2Fapp_og%2F%22%2C%22stripePublishableKey%22%3A%22pk_live_51L1aPXJtewx3LJ9VdPeyPB6tb3498n8Z5JVkKWwsBhwmO0LGcWXfEW5N1IRKpxtX8402PUq242T54vNN5pvHkx1K00itifTLUo%22%2C%22vercelAnalyticsId%22%3A%22ehX1OJPdpDnKuVh8DcafZnNfEDz%22%2C%22version%22%3A%2248.0.9b76696%22%7D%2C%22fastboot%22%3A%7B%22hostWhitelist%22%3A%5B%7B%7D%5D%7D%7D">
+<!-- EMBER_CLI_FASTBOOT_TITLE --><!-- EMBER_CLI_FASTBOOT_HEAD -->
+
+    
+
+<link integrity="" rel="stylesheet" href="../styles/vendor.40282115ccc53a25dda7bcbced0d1cec.css">
+    
+
+<link integrity="" rel="stylesheet" href="../styles/codecrafters-frontend.8f8e7c09c87b05d7aa54463c995909e9.css">
+    <link rel="icon" href="/assets/images/favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/assets/images/favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="any">
+
+    
+
+    <link href="/css2" rel="stylesheet">
+    <link href="/css2" rel="stylesheet">
+    <link href="/css2" rel="stylesheet">
+
+    <link href="/css/monaco" rel="stylesheet">
+
+    <!-- HelpScout Beacon -->
+    <script type="text/javascript" data-fastboot-ignore="">
+      !function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});
+    </script>
+    <!-- End HelpScout Beacon -->
+
+    <!-- Google Tag Manager -->
+    <script data-fastboot-ignore="">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P75248HQ');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Facebook Pixel Code -->
+    <!-- 
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1218366289258395');
+      fbq('track', 'PageView');
+    </script>
+    -->
+    <!-- End Facebook Pixel Code -->
+  
+<link href="../styles/chunk.1a81c25e382e2f46704f.css" rel="stylesheet">  <meta name="ember-cli-head-start" content="">
+  
+
+
+<meta name="description" content="Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeCrafters">
+<meta property="og:title" content="CodeCrafters | Build Your Own Redis, Git & SQLite From Scratch">
+<meta property="og:description" content="Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.">
+<meta property="og:image" content="https://codecrafters.io/images/og-index.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@codecraftersio">
+<meta name="twitter:title" content="CodeCrafters | Build Your Own Redis, Git & SQLite From Scratch">
+<meta name="twitter:description" content="Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.">
+<meta name="twitter:image" content="https://codecrafters.io/images/og-index.jpg">
+
+<!---->
+  <meta name="ember-cli-head-end" content="">
+<title>CodeCrafters</title><script type="text/javascript" async src="/pagead/viewthroughconversion/17631844394/"></script><script type="text/javascript" async src="/pagead/viewthroughconversion/17600698133/"></script><style hs-beacon="active" data-styled-version="5.1.1"></style></head>
+  <!-- Tailwind equivalent: "m-0 bg-gray-950" -->
+  <body style="margin: 0; background-color: oklch(13% 0.028 261.692)" class="ember-application">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P75248HQ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    
+
+    <style>
+      .ember-load-indicator {
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        margin-top: 52px;
+        display:none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .ember-load-indicator .indicator-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .ember-load-indicator .indicator-spinner-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+      .ember-load-indicator .indicator-loading-text {
+        font-family: Montserrat, sans-serif;
+        color: #64748B;
+        margin-top: 1.5em;
+      }
+
+      .ember-load-indicator[is-fastboot=true] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        margin-top: 0;
+        z-index: 1000;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-container {
+        margin-top: 56px;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-spinner-container {
+        margin-top: 0;
+        padding: 8px 0;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-icon {
+        display: none;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-loading-text {
+        display: none;
+      }
+
+      .sk-circle {
+        width: 40px;
+        height: 40px;
+        position: relative;
+      }
+      .sk-circle .sk-child {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .sk-circle .sk-child:before {
+        content: '';
+        display: block;
+        margin: 0 auto;
+        width: 15%;
+        height: 15%;
+        background-color: #64748B;
+        border-radius: 100%;
+        -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+        animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+      }
+      .sk-circle .sk-circle2 {
+        -webkit-transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+        transform: rotate(30deg); }
+      .sk-circle .sk-circle3 {
+        -webkit-transform: rotate(60deg);
+        -ms-transform: rotate(60deg);
+        transform: rotate(60deg); }
+      .sk-circle .sk-circle4 {
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg); }
+      .sk-circle .sk-circle5 {
+        -webkit-transform: rotate(120deg);
+        -ms-transform: rotate(120deg);
+        transform: rotate(120deg); }
+      .sk-circle .sk-circle6 {
+        -webkit-transform: rotate(150deg);
+        -ms-transform: rotate(150deg);
+        transform: rotate(150deg); }
+      .sk-circle .sk-circle7 {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg); }
+      .sk-circle .sk-circle8 {
+        -webkit-transform: rotate(210deg);
+        -ms-transform: rotate(210deg);
+        transform: rotate(210deg); }
+      .sk-circle .sk-circle9 {
+        -webkit-transform: rotate(240deg);
+        -ms-transform: rotate(240deg);
+        transform: rotate(240deg); }
+      .sk-circle .sk-circle10 {
+        -webkit-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg); }
+      .sk-circle .sk-circle11 {
+        -webkit-transform: rotate(300deg);
+        -ms-transform: rotate(300deg);
+        transform: rotate(300deg); }
+      .sk-circle .sk-circle12 {
+        -webkit-transform: rotate(330deg);
+        -ms-transform: rotate(330deg);
+        transform: rotate(330deg); }
+      .sk-circle .sk-circle2:before {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s; }
+      .sk-circle .sk-circle3:before {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s; }
+      .sk-circle .sk-circle4:before {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s; }
+      .sk-circle .sk-circle5:before {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s; }
+      .sk-circle .sk-circle6:before {
+        -webkit-animation-delay: -0.7s;
+        animation-delay: -0.7s; }
+      .sk-circle .sk-circle7:before {
+        -webkit-animation-delay: -0.6s;
+        animation-delay: -0.6s; }
+      .sk-circle .sk-circle8:before {
+        -webkit-animation-delay: -0.5s;
+        animation-delay: -0.5s; }
+      .sk-circle .sk-circle9:before {
+        -webkit-animation-delay: -0.4s;
+        animation-delay: -0.4s; }
+      .sk-circle .sk-circle10:before {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s; }
+      .sk-circle .sk-circle11:before {
+        -webkit-animation-delay: -0.2s;
+        animation-delay: -0.2s; }
+      .sk-circle .sk-circle12:before {
+        -webkit-animation-delay: -0.1s;
+        animation-delay: -0.1s; }
+
+      @-webkit-keyframes sk-circleBounceDelay {
+        0%, 80%, 100% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 40% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+          }
+      }
+
+      @keyframes sk-circleBounceDelay {
+        0%, 80%, 100% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 40% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+          }
+      }
+    </style>
+
+    <script type="text/javascript" crossorigin="anonymous" src="../scripts/surveys.js"></script><script type="text/javascript" crossorigin="anonymous" src="../scripts/config.js"></script><script type="text/javascript" crossorigin="anonymous" src="../scripts/dead-clicks-autocapture.js"></script><script type="text/javascript" crossorigin="anonymous" src="../scripts/posthog-recorder.js"></script><script data-fastboot-ignore="">
+      // Wait for the DOM to render fully
+      setTimeout(() => {
+        const shoeBoxes = document.querySelectorAll('script[type="fastboot/shoebox"]'); // Find all FastBoot Shoeboxes
+        const isFastBootPage = shoeBoxes.length > 0; // If Shoeboxes exist, assume this is a FastBoot page
+        // Delay the appearence of the loading indicator
+        setTimeout(() => {
+          const elems = document.querySelectorAll('.ember-load-indicator');
+          // Iterate over the NodeList this way to maintain ie11 compatibility
+          for (let i = 0; i < elems.length; i++) {
+            elems[i].style.display = 'flex';
+            elems[i].style.opacity = '1';
+            elems[i].setAttribute('is-fastboot', isFastBootPage); // CSS uses this to show FastBoot-specific indicator
+          }
+        }, isFastBootPage ? 3000 : 3000); // Different delay for FastBoot and regular indicator
+      }, 0); // Postpone to the next run-loop
+    </script>
+
+    <!-- EMBER_CLI_FASTBOOT_BODY -->
+
+    
+<script src="../scripts/vendor.8acbab4e34f89bdddbfddfac7fd2187d.js"></script>
+
+<fastboot-script src="/ember-fetch/fetch-fastboot.js"></fastboot-script>
+<fastboot-script src="/assets/embroider_macros_fastboot_init.js"></fastboot-script>
+    
+<fastboot-script src="/assets/chunk.2ce0c63a3aac04b285c0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.56e7a6c1742eb20fa4dd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b13315f8ab842dba8301.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.93679969d41fe131cebe.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5120ff0d8393261914fd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d8734005c9ec05eafd51.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9b57fb0b314842d2e8d5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2c8f840604a4de67c8a3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.24c321e368487b44685c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.22bc9942e2716eb8ef8d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a8572e60e560d76a2399.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4fac8cfd7f24eda78751.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7a5f60353a77c0368602.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.caf6f6eac098a4d24363.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a8d5f371c7dcbf489b6b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f3253bc9d88c7c7160c9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6a10c83374d1c363c903.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6704856bb59a16ac60b4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2899f14fd9049c224e0f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8d3acac16e745654e525.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c5cef1857bb9d19ece9e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f737dbca17270f543c97.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bd454c3ff0cbdf3f815f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0077974569ff1e56041a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f18b69fbda10270cbaca.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.576bd932fa41aad8ef2b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.52a32a3167f9b07ee335.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d8f191f28aae6cd73e09.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.068829244f8e58c02287.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a84e2d5eeac1a1cc663c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ced75022eacdfb75d3a8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f299901df02519ddbe43.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f6c271a9e76e9e472245.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.60da6c4e7c23c8473271.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f91f2cfe851a470f0f34.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c5829bf16158282c5f6f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9852258105a559e6961f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.87d7b2387a2066dc83ee.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.31a91dc19a0ff7d792fd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d528a68c22399f27de6f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a6af64f8fb3e6e64efd4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.538f8c8dc70e4c7257bb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.025002db4d945be35029.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a1c154031c54a4e27f4a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.55e677014bb719a53848.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0a4d7ea968d6d1ea467d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.490835f6a5b35fde18cc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.724914d324dfc3a73e4c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.828e787a46b5d884bbf9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c3d7c6353f91d1a91bbc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.df21c0e3184668d3fea8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2ac922e880c7e9a99112.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4724b258712cc0b4c83b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.975c3bdb9e2dd99ef094.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.451450413de66df95652.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4af3e351c024a3f25fd9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1b6bfb35c281cd2c8319.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9db8b2464feb6c4b1d43.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bfc38c7afd0598611ed0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.39d4443323382f5600a0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.327e335ab9fb865149f1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4efcc329b8b8c0d02a35.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5e6673ec4dbb17cad471.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7525e799d184d48659f2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.84599525e3c2a8abacc8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5d4adaf2fef94fab25da.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.009d128349639b469b00.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.33884285128cd1bf327c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2adc75d8a7e2900580e0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.172c5638247aab4b21f9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.257f6d144989bf682b93.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a78ee56e885e52cdf767.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.82f1ac1f0f6c8c935eb0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.296b8c5a27fc828ab75e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.86420bb90ca9217b051f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.dc4354ebe64c5100ba11.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.67cb3edc4c2419728749.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.454b8824a063b74d9a50.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bfaf7fb331490dd5bdc7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3b052128d6164efa756e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7edd161022653517cdb4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fd5809c06562477fc310.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.784f3023323aeb70a93f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.759421cd69e6bfbe5229.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6dc3e6fa1699f480ff4f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5215531b561fe73ce75b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6b2ded737beebf096eaf.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.81b5c33ddbd1656d88fd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.99a5e77548e5f9028ec9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.431ea85a14a2df5ce7c8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c3841f53802dee1d6644.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fb34af252ba94e4adcb0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6e83d45fe5c12eac1551.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.40218b96acae783226bd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.50e38522dd773d30a962.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1cafbcee204817d2a10d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3595c93716f02130910b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b6bdf86baa0a79f1014a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9e8e93430d5328193f25.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.32fbf029d76b6ba48bc8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.dacc87dd353bdc7f675d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.85eb051fc4fb8adc0dd9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.58e504cbdf7cf7b459b7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f2760df469395da23cc6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6fbce50af36a98352a7a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.14e5c3dfff8833537d33.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e77a443980d9a772d2ae.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bea264c833babcd8007d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b4c95e23d6f35364c68a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.40406008ed0dcf7e4b67.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.700e6fb92e8d9e83d640.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9763ddd12d5c25f37c8f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bc030b39ce7b3b757410.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ea464aab3a620b92bb63.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.332745887d6903ccc6b1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.579b0539e0c93ec1fada.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9e3049c35a13f3e5e853.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9db02bbd72408fd2f3be.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ed88d01acb789bb2c655.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.abb49ba1608909272768.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8c7add30db4d3574da5f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a07683272f112732041e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.032311812680acfeff4d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8840bdd33a7166ee33fc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.057e83955eb8a2b7347b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4d8095b5247449ea2b4e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e3ec4a8dfbe74c5df0b0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.889db8db8b518251b600.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a5db34c01c6d4cd01632.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.61a7f43d6528dae77f3b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3ed2cc1e9cda4746fbfa.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.727c01b5800bbda85379.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2599634e75742df111b4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.15675263def99ae14dc5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.34baccb067bb47076bc5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.21b04cd718b2f2a29815.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f2e70bd19a1034f2dbcd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c73cd4cf7ff424189749.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b8e5155088567ec57652.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7b725e00e045d7d23742.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1c491a7de8081872d0b5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.275ac76ba0a675a83e77.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e3d114452959038fddf5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.96587f878d783c5345c1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.13c6a918b7219321e9e3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2464a3fbe270cefe82de.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d46445795558ca396839.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.739bb44d1b5a6d7d6495.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.456c052f1eeb28004c23.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4c9057d790b526c0085f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.526ad91754c13ef4c7a2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b6a7771e9f2e366e3855.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e6a9590196ca1225dc27.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.dd264c7ff1e6431e63cc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.195828e2db7334479c0c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6824ba944bbc6d91d03b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.11b378d3a496b210e22d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bec072c0e46586f939b9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.be062f7a757f7d151af9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2907d5b07c6ecf780aee.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.15b4dc2016a0b53886e7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e92e422c9c0d95b6ee6c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.32becf946dc8c7dbf97a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.786bd7535e8276642c17.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e189c430ffd8b865397f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.56c4747252671d7aa0eb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.68cb654604817dc7fa71.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.02a4115b44979b8ee95f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fa00f1948bdd2ae2c6ab.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b905d2c84177343a702b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0552092af684070b899a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6b0876a527888af7c0b0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ff2bf01493cf0015d08a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6bc03fcb77d331e60e72.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0b7b045e9015e81e6cbf.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.647037fec5dcf58e8d26.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b75d8dbb3989b38fe044.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e6ff6463ba112560bc2e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b3f671eeed72858f96f0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1a12e65b3301e8a9fbb4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.085882da1afade3d0407.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5e9bc6dc49640e8fee51.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1cf9985e95929fb2f69c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6d7fe90a739a357a24f8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c408f3ac44d5de069f03.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9404068751ea8e3cd7a6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b66a9331f89dc68448c8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.546d3956397c45b83282.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.23aa596d19ac5678178f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.799696cb996f96c04a4d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.726d51f8cb09c45280db.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.83e497d40b4b455a520a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.81081699e1648b6f28af.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2cb787edc43c7a6999a7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e676d0adbdc500e05194.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a133911b6b49ab24afff.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.70db175fda7276a8b266.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.26ecf77a36c86bcd4905.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d392c0980686a0931613.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2d8228a7d36c12c1c839.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7860bb1100a75fb55b0d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a9e0a3c34c581e1e448e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4e26386affa6a2e05bad.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.231151b331e60ccf003b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1f4dec162d584a05506f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.82b69440ba110a82f7d6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b242c7d8677af79e2a10.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.eba103d970ca0783f019.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2a40150121ea1b6dfb14.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e53f6ae5190ba7e9f595.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2b7d5dfa67637ee03021.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7716351817a1e9602320.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.aa6870deeabbcded78a9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b21904f3786fa08428eb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5feffcc58b56bd7c7bb6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6954ba458f4c8d9ac6f9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b169650ff176221dd784.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.99da8ceb4e7c1a9771b2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.605c68661dffd8e72e8e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b60932cc484813839eb2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c95d85158d81a2309b44.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d0cf59b70ccdb77a5682.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6c6c0fc2e07a0f51de24.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.cb06e4e2311c94268d1d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.23bb2af492fb97dcf5a5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ed20fd6be6d72502da97.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c3a697d39880f9de1305.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.69edffad25db64239e91.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.49fcde9a05eea0e6bac3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.13313c6d16e83954add2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f5adb2983388417d92a6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.56b8239380391c4397b6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f7e1fc7705808193fef7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.cd3d25b1fc6ef4f93466.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.584290ac26f23f971c7b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.39a6d7be23f33821bdc6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6a55612a58a0c556bbca.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.cff82f85eee2c3697903.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d9ccc9cd98fe75c2c170.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.153ec05ae37f7688d2d5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5721c2370e77169cad60.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9b0fd07ec7463588bfac.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.82c1448b1dded14d1b12.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7817c48a644f404eaa34.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ec92d1a602006b7406ba.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fb86392e7adb24663fe9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0e2d82dc33379814958c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8aafb5bd70c2fe5021eb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.425501d92ada6d24e1a5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.eb655d684bfc2ca8c14d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d201a483d1396d677aa9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a4fd3e193c11f1e01067.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2c1a2cedce5a8ef73d89.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0fde5ba3947b76b2c655.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.de279a54e3f467394897.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2f7c4e1f8c345783b282.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c7b45fa1f7f807ce88a5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c2e20e9cd8ef1abdd18e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3effb893ea8911fb7111.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c4473b2cbb3ece116231.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e7473a80e38ebc9a7baa.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.cabcb80fdd9cee2c1ed8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.db3235ecd129d9100a42.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f56588b7a63e36cfb4a2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.02e28843f6db2f1dff28.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.876f3b091c3b71ac5478.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b57ce41c5eba18964872.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.329aa58fbf025233af59.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3cb043d358bdd94015d4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2769dcc151594b3e3033.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7780a7c1deedb916466b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bca152b445577902cf0b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.452dbd0839f6de9dc71c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.67a063e273047b02f89c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.80547a49c5ffbdb76bf5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.76ca613476e2ed7f91a1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a0ab4e478323cd103af0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ae88d506bc31162f0ff4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fe439ec935fa9f5597f7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.39a103a05678f353578c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f3801c1025fbaf7ba834.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.114a279d34f55dc16032.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.052fcef5922800747236.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.192add9a264da0c38621.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a2285ea0c865639ad5df.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.259f13b5e34e529d6904.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9f178eac817c85671079.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f7944a0b5b43f008233b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.875fd075a6553a1091b0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.328f92a01300550f2a9d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7df87f7c7dfe7d26f1dc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bab907d2c5efad9c63e4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.274c5528b1c12f1a6b88.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8e70b9cfb673070384d3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7a3924a58b207ea2c326.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6977de922a5dbd2569e5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.02a6e98399b8600a9530.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.39449da2e9825668b6f8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.af4910627af0b6994fb1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d83e525e66916fdbb3a8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f96986efff6b40367c82.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6148c33161336b9cc9b5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.87049b15702ae055c6b8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.42fefe37704e41c2a03f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2a0968a26929b5f08be4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5dc29c5759c918fa4cd3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.df7d9fe6df859a50f03f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.11b89d9d9b4cf72a081c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.028b459db3b668258945.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.aa84f0b5b20f7c0c24bb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5512cd186507f5cc7c08.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c2ac1aba838f6bff6f71.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a806abf7483e20d1efdd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2501cd8f7852b97b989f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.83b8496503fd83ea8911.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.49b5ad0b71339d8bb3a3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.496364fec31ae5c490db.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.00b7a2f6358a03981973.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e71e6eaf588d0bdf08de.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8d10910ee0147d429318.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f4dd5e519c12b6781822.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.62b665556a4240151503.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.21d9d32d1a8122b70709.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b1653b63304ced0f06cc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.641c7379b535367b1c18.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a2c8968df95439a46c5f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c678ac18a2569186059e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.15222b394f32194bf2cb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9bc476281f14d63bae33.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c6f6533e68fdbe37cbbb.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.4d5de5e2d94d4ec50787.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.401d9d881a48b66c5e04.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a867ddf59135f5138370.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c739c52bfe4acad7a990.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.fc1307626594d189b523.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a9e05dcaf0cd368e6fb8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.341e71e853094139ef26.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.25508c1bf62cc4247667.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e09f9943fb5eafdaa3e3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8f984b5c5613a0a21a31.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ebe33231e285cbc8a111.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.42235cabb48ff727bbb6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.772ec74aba03d5e84259.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.60e6c2a72cac06aee1f2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.25f594916cc33d5591ac.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b9445f6fb8c5fbb9d980.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.06dbcab2586dc6dcbc64.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b9b0f0ab7651c7d69b0c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c06305af9be12478b582.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a239b1ab7a5bd24526c3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3f385c6c6e670a3e0aae.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f9d261f6163daeb61abf.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c05d138057b427778b06.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.750a1fd06a67f205b47b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.1e76e4b1f5a3b765b0ae.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.95ced97d4ddf021e5cd1.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9d5a817ae2a6bc57c161.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.11bb100b32f97eb0c55c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6deedb6a372f5003192c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8658056cc810a9a40804.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.3877cb66d1100e76c2e6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.607f57a2e7871227bdd0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d66cdd959e6e25a95f0f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.32ee719f918bf70b071e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.46c56f4b98e2210040fd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7e37b0d0a16e51957d5a.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.77ba838e0561c9e21b6f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.520e44d3f1717f74a309.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.062f0ace3a7241b7a1f8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b2e2896c050121fb9172.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.375d8ea0ba9b12f3563c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.01b05ca774b8ae6ffa81.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.355b9f13aa0725e9e345.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ee74356ad3ddefdb5ad0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.428bbed0fa0cf64b18f0.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.831d21005bb2e0b346c2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.235ec78fca70b1d1e766.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b6e13e4877572ebd4120.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6bab9a650aa9468626c8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bd63f6bc2578fcbf91d5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.b4b3780bc8b77cebb45b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c3610de9ab49a9980f77.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f406ba84cae03468e6aa.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.666381983b366188a01f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f58daa7f558fac17b799.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.2d105ab57b85632b71cd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f0c00b3dab604f7b738e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c0dac4187fa88f2113ac.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a43af6591266a063c3f3.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.95c51a833c8dd5598a15.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.21f59ef9024b63072e45.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.8c1580bb31585e117359.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c271d306771afedc9fc6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.c3feb6e82f148036de70.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a17223bff5e75dbe1fe9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ae0df7726f6b8143135b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.9df21e6e31fd1de641dc.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.85f4304daa11e2a08989.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.81d7fb706f26a10c3df9.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.ca99042c2ccea00ef01b.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.bdc307c992161c0926ef.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.6bcc61d1674b84dac2b4.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0654c5bd5ae6a080a5ec.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.e83e80e7f6013410f710.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.a7b73263f7f70f90ee77.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.848640aa02f287d159bd.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.58b13ab1c6595470041f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.cd32c787774b14d4626c.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d273120171a7f816590e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.210f4d4cc8547b392c4e.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.32d2f9140a27d3dd9481.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.61e83bd62179cd2d7fc2.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7f419fe0b0134551bdb6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.270b6d25768d7dae82c7.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f8e105c7ccccebc6c3d5.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.20c46040a16752576a65.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.618e73d90b9996a03b36.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.f356e8e52636c7eccd2f.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0eb4919c3fe4997f9c7d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7f572eeac4a56d651ab8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0133a24703fac586cbca.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.026225f9daea67d21a77.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d51a6cec92fcd57e0012.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.7920ec9cdc804af2b5f8.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.5dd03f19f6e232acef7d.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.d0451b7374c9c2d3d615.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.0f063d64a9a126b499a6.js"></fastboot-script>
+<fastboot-script src="/assets/chunk.35fdf5782a605b7ec27d.js"></fastboot-script>
+<script src="../scripts/chunk.1a81c25e382e2f46704f.js" data-fastboot-src="/assets/chunk.4aaa4805913f0e961fe4.js"></script>
+<script src="../scripts/chunk.44198c9f6222f5fc86e1.js" data-fastboot-src="/assets/chunk.d277e5a802a99de6a5b4.js"></script>
+
+<fastboot-script src="/ember-cli-fastboot/app-factory.js"></fastboot-script>
+
+    
+  
+
+<!---->
+
+
+
+<div class="min-h-screen dark bg-gray-950" id="application-container" data-test-application-container="">
+  
+    <div id="ember-basic-dropdown-wormhole"></div>
+  
+
+    <div class="shadow-sm relative bg-white dark:bg-gray-950 dark:border-b dark:border-white/5" data-test-header="">
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto flex items-stretch flex-col md:flex-row px-3 md:px-6">
+    <div class="flex items-center justify-between">
+      <div class="flex">
+        <div class="text-gray-700 dark:text-gray-300 pr-5 text-sm grow">
+          <a id="ember4" class="ember-view flex items-center" href="../pages/catalog.html">
+            <img class="h-5 hidden dark:block" src="../images/23c5199ce34638047eb8.svg" alt="CodeCrafters">
+            <img class="h-5 dark:hidden" src="../images/5a0604398ecc67a6b4fa.svg" alt="CodeCrafters">
+          </a>
+        </div>
+      </div>
+
+      <button class="md:hidden text-gray-600 dark:text-gray-400 pl-10 py-3 focus:outline-hidden" type="button">
+        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path class="heroicon-ui" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="h-[56px] hidden md:flex items-center justify-between grow">
+      <div class="flex items-center">
+        <div class="bg-gray-200 dark:bg-white/5 w-px h-5 mr-3"></div>
+
+        <div class="relative">
+              <a id="ember19" class="ember-view text-sm relative hover:text-gray-950 dark:hover:text-gray-100 text-gray-600 dark:text-gray-400 px-2" data-test-header-link="" data-route-is-active="false" href="../pages/catalog.html">
+    Catalog
+  </a>
+
+              <a id="ember20" class="ember-view text-sm relative hover:text-gray-950 dark:hover:text-gray-100 text-gray-600 dark:text-gray-400 px-2" data-test-header-link="" data-route-is-active="false" href="../pages/roadmap.html">
+    Roadmap
+  </a>
+
+              <a id="ember21" class="ember-view text-sm relative hover:text-gray-950 dark:hover:text-gray-100 text-gray-600 dark:text-gray-400 px-2" data-test-header-link="" data-route-is-active="false" href="../pages/java.html">
+    Leaderboard
+  </a>
+
+
+          <div class="absolute -bottom-[18px] h-0.5 bg-teal-500 transition-[left,width,opacity] duration-300 ease-fling" style="left: 0px; width: 0px; opacity: 0;"></div>
+        </div>
+      </div>
+
+      <div class="invisible md:visible flex items-center ml-6">
+<!---->
+        
+        <div class="ember-basic-dropdown">
+  
+        <div id="ember9" class="ember-view ember-basic-dropdown-trigger ember-basic-dropdown-trigger--in-place" tabindex="0" role="button" data-ebd-id="ember8-trigger" aria-owns="ember-basic-dropdown-content-ember8" aria-controls="ember-basic-dropdown-content-ember8" aria-expanded="false" aria-disabled="false">
+          
+    <div class="mr-4">
+      
+          <div role="button" class="rounded-sm border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-gray-500 px-2 py-1 text-xs" data-test-feedback-button="">
+            Feedback
+          </div>
+        
+    </div>
+  
+        </div>
+  
+  
+      <div id="ember-basic-dropdown-content-ember8" class="ember-basic-dropdown-content-placeholder" style="display: none;"></div>
+  
+</div>
+  
+
+          <div class="mr-3">
+    <a id="ember10" class="ember-view inline-block border px-1.5 py-1 rounded-sm shadow-xs font-semibold text-xs active:scale-99 transition-transform duration-75 ease-out bg-teal-500 dark:bg-teal-900 hover:bg-teal-600 dark:hover:bg-teal-800 dark:border-teal-700 dark:hover:border-teal-600 border-teal-500 hover:border-teal-600 text-white dark:text-teal-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500" data-test-upgrade-button="" href="../pages/pay.html">
+  
+  
+      <span class="flex items-center gap-x-1">
+        <span>Upgrade</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4"><path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" /></svg>
+      </span>
+    
+
+</a>
+  </div>
+          
+        
+  
+        <div id="ember12" class="ember-view ember-basic-dropdown-trigger" tabindex="0" role="button" data-ebd-id="ember11-trigger" aria-owns="ember-basic-dropdown-content-ember11" aria-controls="ember-basic-dropdown-content-ember11" aria-expanded="false" aria-disabled="false">
+          
+    <div class="flex items-center justify-between py-3 outline-hidden w-full sm:w-auto text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-100" data-test-account-dropdown-trigger="">
+      <span class="mr-0.5 text-sm md:text-xs">
+        aryansingh32
+      </span>
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="fill-current w-5 transform"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+    </div>
+  
+        </div>
+  
+  
+      <div id="ember-basic-dropdown-content-ember11" class="ember-basic-dropdown-content-placeholder" style="display: none;"></div>
+  
+
+  
+      </div>
+    </div>
+
+<!---->  </div>
+</div>
+
+  <div data-test-loading="" class="container mx-auto lg:max-w-(--breakpoint-lg) px-6">
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <div class="transition-opacity duration-300 opacity-100">
+  <svg width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0)">
+      <g filter="url(#filter0_d)">
+        <path d="M494.841 237.638L379.155 115.073C372.276 107.569 360.395 106.944 352.891 114.448C345.387 121.326 344.761 133.208 352.265 140.712L455.445 250.77L351.64 360.203C344.761 367.707 344.761 379.588 352.265 386.467C356.017 389.594 360.395 391.47 365.397 391.47C370.4 391.47 375.403 389.594 379.155 385.842L494.841 263.277C501.72 256.398 501.72 245.142 494.841 237.638Z" fill="url(#paint0_linear)" />
+      </g>
+      <g filter="url(#filter1_d)">
+        <path d="M147.157 114.448C139.653 107.569 127.771 107.569 120.893 115.073L4.58107 237.638C-2.29758 245.142 -2.29758 256.398 4.58107 263.277L120.267 385.842C124.019 389.594 129.022 391.47 134.025 391.47C138.402 391.47 143.405 389.594 147.157 386.467C154.661 379.588 155.286 367.707 147.782 360.203L43.977 250.77L147.782 141.337C154.661 133.833 154.661 121.952 147.157 114.448Z" fill="url(#paint1_linear)" />
+      </g>
+      <g filter="url(#filter2_d)">
+        <path d="M280.352 51.9145C270.347 50.6638 260.342 57.5424 259.091 67.5478L204.062 427.739C202.811 437.744 209.69 447.749 219.695 449C220.946 449 221.571 449 222.822 449C232.202 449 239.706 442.121 241.582 433.367L296.611 73.1757C297.236 63.1704 290.358 53.7905 280.352 51.9145Z" fill="url(#paint2_linear)" />
+      </g>
+    </g>
+    <defs>
+      <filter id="filter0_d" x="346.557" y="109.123" width="173.443" height="302.347" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feflood flood-opacity="0" result="BackgroundImageFix" />
+        <fecolormatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" type="matrix" />
+        <feoffset dx="10" dy="10" />
+        <fegaussianblur stdDeviation="5" />
+        <fecomposite in2="hardAlpha" operator="out" />
+        <fecolormatrix values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" type="matrix" />
+        <feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+        <feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+      </filter>
+      <filter id="filter1_d" x="-0.577919" y="109.364" width="173.685" height="302.105" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feflood flood-opacity="0" result="BackgroundImageFix" />
+        <fecolormatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" type="matrix" />
+        <feoffset dx="10" dy="10" />
+        <fegaussianblur stdDeviation="5" />
+        <fecomposite in2="hardAlpha" operator="out" />
+        <fecolormatrix values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" type="matrix" />
+        <feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+        <feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+      </filter>
+      <filter id="filter2_d" x="203.915" y="51.7678" width="112.735" height="417.232" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feflood flood-opacity="0" result="BackgroundImageFix" />
+        <fecolormatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" type="matrix" />
+        <feoffset dx="10" dy="10" />
+        <fegaussianblur stdDeviation="5" />
+        <fecomposite in2="hardAlpha" operator="out" />
+        <fecolormatrix values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" type="matrix" />
+        <feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+        <feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+      </filter>
+      <lineargradient id="paint0_linear" x1="423.279" y1="2.72149" x2="423.279" y2="445.507" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#00EFD1" />
+        <stop offset="1" stop-color="#00ACEA" />
+      </lineargradient>
+      <lineargradient id="paint1_linear" x1="76.2647" y1="2.72148" x2="76.2647" y2="445.507" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#00EFD1" />
+        <stop offset="1" stop-color="#00ACEA" />
+      </lineargradient>
+      <lineargradient id="paint2_linear" x1="250.283" y1="2.7215" x2="250.283" y2="445.507" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#00EFD1" />
+        <stop offset="1" stop-color="#00ACEA" />
+      </lineargradient>
+      <clippath id="clip0">
+        <rect width="500" height="500" fill="white" />
+      </clippath>
+    </defs>
+  </svg>
+
+  <div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+    <div class="sk-circle">
+      <div class="sk-circle1 sk-child"></div>
+      <div class="sk-circle2 sk-child"></div>
+      <div class="sk-circle3 sk-child"></div>
+      <div class="sk-circle4 sk-child"></div>
+      <div class="sk-circle5 sk-child"></div>
+      <div class="sk-circle6 sk-child"></div>
+      <div class="sk-circle7 sk-child"></div>
+      <div class="sk-circle8 sk-child"></div>
+      <div class="sk-circle9 sk-child"></div>
+      <div class="sk-circle10 sk-child"></div>
+      <div class="sk-circle11 sk-child"></div>
+      <div class="sk-circle12 sk-child"></div>
+    </div>
+    <span class="text-gray-500 mt-6">
+      Loading...
+    </span>
+  </div>
+</div>
+  </div>
+</div>
+
+  <div id="modal-backdrop-container">
+  </div>
+
+    <div class="bg-gray-950 border-t border-white/5">
+  <footer aria-labelledby="footer-heading" class="container lg:max-w-(--breakpoint-lg) mx-auto">
+    <h2 id="footer-heading" class="sr-only">Footer</h2>
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+        <div class="xl:col-span-1">
+          <a href="https://codecrafters.io" class="inline-flex" target="_blank" rel="noopener noreferrer">
+            <img class="h-6" src="../images/23c5199ce34638047eb8.svg" alt="CodeCrafters">
+          </a>
+          <p class="mt-8 text-gray-300 text-base">
+            Programming challenges for seasoned developers.
+          </p>
+          <div class="mt-8 flex space-x-6">
+            <a href="https://twitter.com/codecraftersio" class="text-gray-400 hover:text-gray-300">
+              <span class="sr-only">Twitter</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+              </svg>
+            </a>
+
+            <a href="http://github.com/codecrafters-io" class="text-gray-400 hover:text-gray-300">
+              <span class="sr-only">GitHub</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 xl:mt-0 xl:col-span-2">
+            <div>
+              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
+                Challenges
+              </h3>
+              <ul class="mt-4 space-y-4">
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Git
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Redis
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Shell
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      SQLite
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Grep
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      BitTorrent
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      HTTP Server
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../pages/overview.html" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      DNS Server
+                    </a>
+                  </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
+                Support
+              </h3>
+              <ul class="mt-4 space-y-4">
+                  <li>
+                    <a href="https://docs.codecrafters.io/" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Docs
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://status.codecrafters.io/" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Status
+                    </a>
+                  </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
+                Company
+              </h3>
+              <ul class="mt-4 space-y-4">
+                  <li>
+                    <a href="https://codecrafters.io/about" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://forum.codecrafters.io/c/announcements/10" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Changelog
+                    </a>
+                  </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
+                Legal
+              </h3>
+              <ul class="mt-4 space-y-4">
+                  <li>
+                    <a href="https://codecrafters.io/terms" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Terms
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://codecrafters.io/privacy" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                      Privacy
+                    </a>
+                  </li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-white/5 pt-8">
+        <p class="text-base text-gray-600 xl:text-center">
+          © 2026 CodeCrafters, Inc. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+    <div data-test-helpscout-beacon="">
+</div>
+
+    <div></div>
+
+    <div></div>
+
+    <div></div>
+
+  <!---->
+    <div></div>
+
+
+</div>
+
+<div></div><script id="lobbyside-widget-f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4" src="../scripts/widget.js" data-widget-id="f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4" data-lobbyside-initialized="true"></script><script id="lobbyside-widget-b0d7150e-77e2-431c-a57c-765e080d9c72" src="../scripts/widget.js" data-widget-id="b0d7150e-77e2-431c-a57c-765e080d9c72" data-lobbyside-initialized="true"></script><script id="lobbyside-widget-32695525-023a-4f48-8fe7-0e8df214edb7" src="../scripts/widget.js" data-widget-id="32695525-023a-4f48-8fe7-0e8df214edb7" data-lobbyside-initialized="true"></script><script id="lobbyside-widget-9c921a57-e736-4376-8507-2333901c46e0" src="../scripts/widget.js" data-widget-id="9c921a57-e736-4376-8507-2333901c46e0" data-lobbyside-initialized="true"></script><div data-lobbyside-widget="f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4"></div><div id="beacon-container"><div class="hsds-beacon"><div class="Beacon"><div class="ContainerGradient-sc-62zoy-0 dkxqZi"></div><div class="ContainerFramecss__WrapperUI-sc-d7rzhh-0 idbzdx BeaconContainer is-configDisplayRight" role="dialog" aria-label="Help Scout Beacon"></div><div class="FabButtonFramecss__FabButtonFrameUI-sc-y1b4md-0 bbHIsf BeaconFabButtonFrame" style="border-radius: 60px; height: 60px; position: fixed; transform: scale(1); width: 60px; z-index: 1049;"><span class="FabButtonFramecss__FabButtonPulseUI-sc-y1b4md-1 gFRUdL"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M60 30C60 51.25 51.25 60 30 60C8.75 60 1.99634e-09 51.25 1.99563e-09 30C1.99492e-09 8.75 8.75 0 30 0C51.25 0 60 8.75 60 30Z" />
+</svg>
+</span><span class="FabButtonFramecss__FabButtonPulseUI-sc-y1b4md-1 gFRUdL"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M60 30C60 51.25 51.25 60 30 60C8.75 60 1.99634e-09 51.25 1.99563e-09 30C1.99492e-09 8.75 8.75 0 30 0C51.25 0 60 8.75 60 30Z" />
+</svg>
+</span><iframe title="Help Scout Beacon - Open" allowtransparency="true" data-cy="FrameComponent"></iframe></div></div></div></div></body></html>
