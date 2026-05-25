@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 type Props = {
   verdict: string;
   isVerifying: boolean;
+  activeCommitHash?: string | null;
   stageNumber?: number;
   testOutput?: string | null;
   showLogs: boolean;
@@ -16,6 +17,7 @@ type Props = {
 export function BuildTestRunner({
   verdict,
   isVerifying,
+  activeCommitHash,
   stageNumber,
   testOutput,
   showLogs,
@@ -61,7 +63,9 @@ export function BuildTestRunner({
 
           {/* Status text */}
           {isVerifying ? (
-            <span className="font-medium text-primary">Running tests…</span>
+            <span className="font-medium text-primary">
+              Running tests{activeCommitHash ? ` for commit ${activeCommitHash.substring(0, 7)}` : ''}…
+            </span>
           ) : passed ? (
             <span className="font-medium text-success">
               Tests passed{stageNumber ? ` · Stage ${stageNumber}` : ''}

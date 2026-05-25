@@ -1,0 +1,573 @@
+.
+├── admin
+│   ├── admin.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── public
+│   ├── README.md
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   ├── components
+│   │   │   ├── build-haven
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── ui
+│   │   ├── context
+│   │   │   └── AuthContext.tsx
+│   │   ├── hooks
+│   │   │   └── useDebounce.ts
+│   │   ├── index.css
+│   │   ├── layouts
+│   │   │   └── DashboardLayout.tsx
+│   │   ├── lib
+│   │   │   └── utils.ts
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   │   ├── AIConfig.tsx
+│   │   │   ├── Analytics.tsx
+│   │   │   ├── apprenticeship
+│   │   │   ├── AuditLogs.tsx
+│   │   │   ├── build-haven
+│   │   │   ├── Categories.tsx
+│   │   │   ├── Chapters.tsx
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── Feedback.tsx
+│   │   │   ├── Leaderboard.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── Patterns.tsx
+│   │   │   ├── Plans.tsx
+│   │   │   ├── ProblemEditor.tsx
+│   │   │   ├── Problems.tsx
+│   │   │   ├── Referrals.tsx
+│   │   │   ├── Roadmaps.tsx
+│   │   │   ├── Settings.tsx
+│   │   │   ├── Tasks.tsx
+│   │   │   ├── Users.tsx
+│   │   │   └── Withdrawals.tsx
+│   │   ├── services
+│   │   │   ├── admin.service.ts
+│   │   │   ├── api.ts
+│   │   │   ├── apprenticeship.service.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── build-haven.service.ts
+│   │   │   ├── categories.service.ts
+│   │   │   ├── chapters.service.ts
+│   │   │   ├── feedback.service.ts
+│   │   │   ├── patterns.service.ts
+│   │   │   ├── plans.service.ts
+│   │   │   ├── problems.service.ts
+│   │   │   ├── referrals.service.ts
+│   │   │   ├── roadmaps.service.ts
+│   │   │   ├── tasks.service.ts
+│   │   │   ├── users.service.ts
+│   │   │   └── withdrawals.service.ts
+│   │   └── types
+│   │       └── auth.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── analysis
+├── apprenticeship-platform
+│   ├── README.md
+│   └── supabase
+│       └── migrations
+│           ├── 20260428_apprenticeship_platform.sql
+│           └── 20260428_apprenticeship_scale_indexes.sql
+├── apprenticeship_system_ai_prompt.md
+├── backend
+│   ├── backend.md
+│   ├── data
+│   │   ├── chapters
+│   │   │   ├── dsa_ch_001_intro.json
+│   │   │   ├── dsa_ch_002_time_complexity.json
+│   │   │   ├── dsa_ch_003_arrays.json
+│   │   │   ├── phase0_ch_001_think_like_programmer.json
+│   │   │   ├── phase0_ch_002_read_errors.json
+│   │   │   ├── phase0_ch_003_read_code.json
+│   │   │   ├── phase0_ch_004_atomic_habits.json
+│   │   │   ├── phase1_ch_001_variables.json
+│   │   │   ├── phase1_ch_002_conditionals.json
+│   │   │   ├── phase1_ch_003_loops.json
+│   │   │   ├── phase1_ch_004_functions.json
+│   │   │   ├── phase1_ch_005_arrays.json
+│   │   │   ├── phase1_ch_006_strings.json
+│   │   │   ├── phase1_ch_007_time_space.json
+│   │   │   ├── phase1_ch_008_space.json
+│   │   │   ├── phase2_ch_001_arrays_deep.json
+│   │   │   ├── phase2_ch_002_hashing.json
+│   │   │   ├── phase2_ch_003_linked_lists.json
+│   │   │   ├── phase2_ch_004_stacks.json
+│   │   │   ├── phase2_ch_005_queues.json
+│   │   │   ├── phase2_ch_006_recursion.json
+│   │   │   ├── phase2_ch_007_binary_search.json
+│   │   │   ├── phase2_ch_008_sorting.json
+│   │   │   ├── phase2_ch_009_trees.json
+│   │   │   ├── phase2_ch_010_bst.json
+│   │   │   ├── phase2_ch_011_heaps.json
+│   │   │   ├── phase2_ch_012_graphs.json
+│   │   │   ├── phase3_ch_001_two_pointer.json
+│   │   │   ├── phase3_ch_002_sliding_window.json
+│   │   │   ├── phase3_ch_003_fast_slow.json
+│   │   │   ├── phase3_ch_004_merge_intervals.json
+│   │   │   ├── phase3_ch_005_bs_on_answer.json
+│   │   │   ├── phase3_ch_006_bfs.json
+│   │   │   ├── phase3_ch_007_dfs_backtracking.json
+│   │   │   ├── phase3_ch_008_dp.json
+│   │   │   ├── phase3_ch_009_greedy.json
+│   │   │   └── phase3_ch_010_monotonic_stack.json
+│   │   └── roadmaps
+│   │       ├── phase_0_mindset_revolution.json
+│   │       ├── phase_1_programming_foundations.json
+│   │       ├── phase_2_dsa_foundations.json
+│   │       └── phase_3_dsa_patterns.json
+│   ├── migrations.sql
+│   ├── package.json
+│   ├── run_migration.js
+│   ├── scripts
+│   │   ├── create-admin.ts
+│   │   ├── create-otp-table.sql
+│   │   ├── create-super-admin.js
+│   │   ├── generate-token.js
+│   │   ├── generate-token.ts
+│   │   ├── list-users.js
+│   │   ├── run-migration.js
+│   │   ├── run-sql.js
+│   │   ├── seed-chapters.ts
+│   │   ├── seed-dynamic-settings.ts
+│   │   ├── seed-pg.js
+│   │   ├── seed-plans.ts
+│   │   ├── seed-roadmaps.ts
+│   │   ├── simulate-build-webhook.ts
+│   │   ├── update-role-admin.js
+│   │   ├── update-user-role.js
+│   │   └── upsert-user.js
+│   ├── src
+│   │   ├── app.ts
+│   │   ├── config
+│   │   │   ├── database.ts
+│   │   │   ├── logger.ts
+│   │   │   ├── openai.ts
+│   │   │   ├── razorpay.ts
+│   │   │   └── redis.ts
+│   │   ├── controllers
+│   │   │   ├── admin.controller.ts
+│   │   │   ├── ai.controller.ts
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth-phone.controller.ts
+│   │   │   ├── certificates.controller.ts
+│   │   │   ├── execute.controller.ts
+│   │   │   ├── feedback.controller.ts
+│   │   │   ├── jobs.controller.ts
+│   │   │   ├── payments.controller.ts
+│   │   │   ├── payments.public.controller.ts
+│   │   │   ├── problems.controller.ts
+│   │   │   ├── referrals.controller.ts
+│   │   │   ├── resume.controller.ts
+│   │   │   ├── roadmaps.controller.ts
+│   │   │   ├── settings.controller.ts
+│   │   │   ├── submissions.controller.ts
+│   │   │   ├── subscriptions.controller.ts
+│   │   │   ├── tasks.controller.ts
+│   │   │   ├── users.controller.ts
+│   │   │   └── whatsapp.controller.ts
+│   │   ├── index.ts
+│   │   ├── jobs
+│   │   ├── middleware
+│   │   │   ├── adminLogging.ts
+│   │   │   ├── apprenticeshipTracker.ts
+│   │   │   ├── auth.ts
+│   │   │   ├── requireAdmin.ts
+│   │   │   ├── requirePlan.ts
+│   │   │   └── validate.ts
+│   │   ├── modules
+│   │   │   ├── apprenticeship
+│   │   │   ├── build-haven
+│   │   │   └── github
+│   │   ├── routes
+│   │   │   ├── admin.ts
+│   │   │   ├── ai.ts
+│   │   │   ├── auth.ts
+│   │   │   ├── categories.ts
+│   │   │   ├── certificates.ts
+│   │   │   ├── chapters.ts
+│   │   │   ├── cron.ts
+│   │   │   ├── execute.ts
+│   │   │   ├── feedback.ts
+│   │   │   ├── index.ts
+│   │   │   ├── jobs.ts
+│   │   │   ├── payments.ts
+│   │   │   ├── problems.ts
+│   │   │   ├── referrals.ts
+│   │   │   ├── resume.ts
+│   │   │   ├── roadmaps.ts
+│   │   │   ├── settings.ts
+│   │   │   ├── submissions.ts
+│   │   │   ├── subscriptions.ts
+│   │   │   ├── tasks.ts
+│   │   │   ├── users.ts
+│   │   │   └── whatsapp.ts
+│   │   ├── scripts
+│   │   │   ├── test_all_apis.sh
+│   │   │   └── verify_system.ts
+│   │   ├── server.ts
+│   │   ├── services
+│   │   │   ├── admin-chapters.service.ts
+│   │   │   ├── admin.service.ts
+│   │   │   ├── ai.service.ts
+│   │   │   ├── cache.service.ts
+│   │   │   ├── categories.service.ts
+│   │   │   ├── certificates.service.ts
+│   │   │   ├── chapters.service.ts
+│   │   │   ├── email.service.ts
+│   │   │   ├── feedback.service.ts
+│   │   │   ├── googleSheets.service.ts
+│   │   │   ├── javaExecutor.ts
+│   │   │   ├── jobs.service.ts
+│   │   │   ├── notes.service.ts
+│   │   │   ├── payments.service.ts
+│   │   │   ├── problems.service.ts
+│   │   │   ├── referrals.service.ts
+│   │   │   ├── roadmaps.service.ts
+│   │   │   ├── status.service.ts
+│   │   │   ├── submissions.service.ts
+│   │   │   ├── subscriptions.service.ts
+│   │   │   ├── tasks.service.ts
+│   │   │   ├── users.service.ts
+│   │   │   └── whatsapp.service.ts
+│   │   ├── types
+│   │   ├── utils
+│   │   │   ├── badges.ts
+│   │   │   ├── githubRedirect.ts
+│   │   │   ├── plans.ts
+│   │   │   ├── streak.ts
+│   │   │   ├── supabaseJwt.ts
+│   │   │   ├── validators.ts
+│   │   │   └── xp.ts
+│   │   └── workers
+│   │       ├── build-verification.worker.ts
+│   │       ├── email.worker.ts
+│   │       └── verification.worker.ts
+│   ├── supabase
+│   │   ├── 003_new_features.sql
+│   │   └── migrations
+│   │       ├── 20260215000001_init.sql
+│   │       ├── 20260215000003_add_study_time.sql
+│   │       ├── 20260216000001_add_problems.sql
+│   │       ├── 20260216000002_advanced_admin.sql
+│   │       ├── 20260511000001_build_haven_stage_columns.sql
+│   │       ├── 20260520000001_build_haven_complete.sql
+│   │       ├── 20260523000001_build_haven_monitoring.sql
+│   │       ├── 20260523100001_build_stages_concepts.sql
+│   │       └── 20260523110001_build_stages_rls_admin.sql
+│   ├── test-db.js
+│   ├── test-supabase-connection.ts
+│   └── tsconfig.json
+├── bun.lockb
+├── certificate_v3(4).html
+├── certificate_v4.html
+├── components.json
+├── content
+│   ├── PHASE_0_FULL_SPEC.md
+│   └── PRODUCT_SPEC.md
+├── cursor_build_haven_platform_requirement.md
+├── data
+│   └── chapters
+│       ├── dsa_ch_001_intro.json
+│       ├── dsa_ch_002_time_complexity.json
+│       └── dsa_ch_003_arrays.json
+├── DEBUGGING.md
+├── docs
+│   ├── CPP-WASM-EXECUTION.md
+│   └── PROJECT_AUDIT.md
+├── eslint.config.js
+├── FINAL-FIXES.md
+├── FIXES-APPLIED.md
+├── FIXES-SUMMARY.md
+├── frontend.md
+├── index.html
+├── justforrefrence
+│   ├── app.codecrafters.io-courses-shell-overview-1779438176130.html
+│   ├── app.codecrafters.io-courses-shell-stages-pn5-1779438518429.html
+│   ├── app.codecrafters.io-courses-shell-stages-pn5-1779438561108.html
+│   ├── app.codecrafters.io-courses-shell-stages-pn5-code-examples-1779516282306.html
+│   ├── app.codecrafters.io-courses-shell-stages-pn5-code-examples-1779516315810.html
+│   ├── app.codecrafters.io-courses-shell-stages-pn5-code-examples-1779516374574.html
+│   ├── app.codecrafters.io-courses-shell-stages-qp2-1779438630038.html
+│   ├── app.codecrafters.io-courses-shell-stages-qp2-1779438737716.html
+│   ├── images
+│   │   ├── 4iC86LVlZsRSjQhpWGedwyOoW-0A6_kpsyNmpALHGYNn.woff2
+│   │   ├── 4iC86LVlZsRSjQhpWGedwyOoW-0A6_kpsyNmpAzHGQ.woff2
+│   │   ├── affiliate-link-page.css
+│   │   ├── bkg-noise.webp
+│   │   ├── code-walkthrough-page.css
+│   │   ├── course-stage-solution-page.css
+│   │   ├── JTUSjIg1_i6t8kCHKm459W1hyzbi.woff2
+│   │   ├── JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2
+│   │   ├── JTUSjIg1_i6t8kCHKm459Wlhyw.woff2
+│   │   ├── JTUSjIg1_i6t8kCHKm459WRhyzbi.woff2
+│   │   ├── JTUSjIg1_i6t8kCHKm459WZhyzbi.woff2
+│   │   ├── m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2
+│   │   ├── m8JVjfNVeKWVnh3QMuKkFcZVZ0uH5dI.woff2
+│   │   ├── modals.css
+│   │   ├── Monaco.woff
+│   │   ├── _next_image.webp
+│   │   ├── overrides.css
+│   │   ├── prism-dark-theme.css
+│   │   ├── prism-light-theme.css
+│   │   └── utilities.css
+│   ├── index.html
+│   ├── pages
+│   │   ├── alok-2007.html
+│   │   ├── AnHaiTrinh.html
+│   │   ├── aryansingh32.html
+│   │   ├── br2.html
+│   │   ├── catalog.html
+│   │   ├── cz2.html
+│   │   ├── ff0.html
+│   │   ├── ip1.html
+│   │   ├── java.html
+│   │   ├── jn-lp.html
+│   │   ├── my0.html
+│   │   ├── oo8.html
+│   │   ├── overview.html
+│   │   ├── pay.html
+│   │   ├── pn5.html
+│   │   ├── rithvikrangan.html
+│   │   ├── roadmap.html
+│   │   ├── Ryanu01.html
+│   │   ├── sandeep-643.html
+│   │   ├── shell.html
+│   │   ├── sj9102001.html
+│   │   ├── user707180.html
+│   │   ├── VishnuKrishnathu.html
+│   │   └── xvanzai.html
+│   ├── scripts
+│   │   ├── chunk.1a81c25e382e2f46704f.js
+│   │   ├── chunk.44198c9f6222f5fc86e1.js
+│   │   ├── config.js
+│   │   ├── dead-clicks-autocapture.js
+│   │   ├── gtm.js
+│   │   ├── js.bin
+│   │   ├── main.a6cfe222.js
+│   │   ├── posthog-recorder.js
+│   │   ├── surveys.js
+│   │   ├── vendor.4969c740.js
+│   │   ├── vendor.8acbab4e34f89bdddbfddfac7fd2187d.js
+│   │   └── widget.js
+│   └── styles
+│       ├── chunk.1a81c25e382e2f46704f.css
+│       ├── codecrafters-frontend.8f8e7c09c87b05d7aa54463c995909e9.css
+│       ├── css2.bin
+│       ├── monaco.bin
+│       └── vendor.40282115ccc53a25dda7bcbced0d1cec.css
+├── logic_and_integration.md
+├── overall_report.md
+├── package.json
+├── postcss.config.js
+├── public
+│   ├── cppWorker.js
+│   ├── javascriptWorker.js
+│   ├── jscpp.js
+│   ├── pyodideWorker.js
+│   └── robots.txt
+├── QUICKSTART.md
+├── README.md
+├── referral_system_audit.md
+├── reports
+│   ├── admin_analysis.md
+│   ├── apprenticeship_platform_analysis.md
+│   ├── backend_analysis.md
+│   ├── codecrafters-project-system-report-2026-05-22.md
+│   ├── frontend_analysis.md
+│   └── saas_audit.md
+├── repo-structure.txt
+├── RESTART-ANALYSIS.md
+├── scripts
+│   ├── compile-server.js
+│   └── seed-chapters.ts
+├── src
+│   ├── App.css
+│   ├── App.tsx
+│   ├── components
+│   │   ├── AppLayout.tsx
+│   │   ├── build-haven
+│   │   │   ├── BuildDifficultyBadge.tsx
+│   │   │   ├── BuildExampleGate.tsx
+│   │   │   ├── BuildLanguageGrid.tsx
+│   │   │   ├── BuildLeaderboardPanel.tsx
+│   │   │   ├── BuildRepoSetup.tsx
+│   │   │   ├── BuildStageSidebar.tsx
+│   │   │   ├── BuildTestRunner.tsx
+│   │   │   ├── BuildWorkspaceTopBar.tsx
+│   │   │   ├── MarkdownContent.tsx
+│   │   │   └── utils.ts
+│   │   ├── chapter
+│   │   │   ├── CelebrationOverlay.tsx
+│   │   │   ├── ChapterCta.tsx
+│   │   │   ├── CheatsheetSection.tsx
+│   │   │   ├── CompleteStepSection.tsx
+│   │   │   ├── DocSection.tsx
+│   │   │   ├── LinkedInAchievementCard.tsx
+│   │   │   ├── MicroRevisionSection.tsx
+│   │   │   ├── MiniQuiz.tsx
+│   │   │   ├── ProblemsSection.tsx
+│   │   │   ├── QuizSection.tsx
+│   │   │   ├── StoryHook.tsx
+│   │   │   ├── TaskSection.tsx
+│   │   │   ├── UnlockSection.tsx
+│   │   │   ├── VideoSection.tsx
+│   │   │   └── VisualizerSection.tsx
+│   │   ├── HeatmapChart.tsx
+│   │   ├── jobs
+│   │   │   └── ApprenticeshipOpportunities.tsx
+│   │   ├── layouts
+│   │   │   └── AuthLayout.tsx
+│   │   ├── NavLink.tsx
+│   │   ├── NotesModal.tsx
+│   │   ├── onboarding
+│   │   │   ├── OnboardingStep.tsx
+│   │   │   └── OptionButton.tsx
+│   │   ├── PomodoroTimer.tsx
+│   │   ├── ProgressRing.tsx
+│   │   ├── ProtectedRoute.tsx
+│   │   ├── StatCard.tsx
+│   │   └── ui
+│   │       ├── accordion.tsx
+│   │       ├── alert-dialog.tsx
+│   │       ├── alert.tsx
+│   │       ├── aspect-ratio.tsx
+│   │       ├── avatar.tsx
+│   │       ├── badge.tsx
+│   │       ├── breadcrumb.tsx
+│   │       ├── button.tsx
+│   │       ├── calendar.tsx
+│   │       ├── card.tsx
+│   │       ├── carousel.tsx
+│   │       ├── chart.tsx
+│   │       ├── checkbox.tsx
+│   │       ├── collapsible.tsx
+│   │       ├── command.tsx
+│   │       ├── context-menu.tsx
+│   │       ├── dialog.tsx
+│   │       ├── drawer.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── form.tsx
+│   │       ├── hover-card.tsx
+│   │       ├── input-otp.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── menubar.tsx
+│   │       ├── navigation-menu.tsx
+│   │       ├── pagination.tsx
+│   │       ├── popover.tsx
+│   │       ├── progress.tsx
+│   │       ├── radio-group.tsx
+│   │       ├── resizable.tsx
+│   │       ├── scroll-area.tsx
+│   │       ├── select.tsx
+│   │       ├── separator.tsx
+│   │       ├── sheet.tsx
+│   │       ├── sidebar.tsx
+│   │       ├── skeleton.tsx
+│   │       ├── slider.tsx
+│   │       ├── sonner.tsx
+│   │       ├── switch.tsx
+│   │       ├── table.tsx
+│   │       ├── tabs.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toaster.tsx
+│   │       ├── toast.tsx
+│   │       ├── toggle-group.tsx
+│   │       ├── toggle.tsx
+│   │       ├── tooltip.tsx
+│   │       └── use-toast.ts
+│   ├── context
+│   │   └── AuthContext.tsx
+│   ├── data
+│   │   └── chapters.ts
+│   ├── hooks
+│   │   ├── useAnimatedCounter.ts
+│   │   ├── useApi.ts
+│   │   ├── useLearnRoadmap.ts
+│   │   ├── use-mobile.tsx
+│   │   ├── useTheme.ts
+│   │   └── use-toast.ts
+│   ├── index.css
+│   ├── lib
+│   │   ├── authSession.ts
+│   │   ├── githubOAuth.ts
+│   │   ├── logger.ts
+│   │   ├── supabase.ts
+│   │   ├── tracker.ts
+│   │   └── utils.ts
+│   ├── main.tsx
+│   ├── modules
+│   │   └── CodeExecutor
+│   │       ├── CodeExecutionModule.tsx
+│   │       ├── CodeWorkspace.tsx
+│   │       ├── components
+│   │       ├── constants.ts
+│   │       ├── hooks
+│   │       ├── index.ts
+│   │       ├── logger.ts
+│   │       ├── runtimes
+│   │       ├── test-page.tsx
+│   │       ├── types.ts
+│   │       └── utils
+│   ├── pages
+│   │   ├── AICoachPage.tsx
+│   │   ├── ApprenticeshipCertificatePage.tsx
+│   │   ├── ApprenticeshipDashboardPage.tsx
+│   │   ├── ApprenticeshipEnrollmentPage.tsx
+│   │   ├── ApprenticeshipProgramPage.tsx
+│   │   ├── ApprenticeshipsPage.tsx
+│   │   ├── auth
+│   │   │   ├── SignIn.tsx
+│   │   │   └── SignUp.tsx
+│   │   ├── BuildCatalogPage.tsx
+│   │   ├── BuildChallengePage.tsx
+│   │   ├── BuildWorkspacePage.tsx
+│   │   ├── CertificatesPage.tsx
+│   │   ├── ChapterPage.tsx
+│   │   ├── ChaptersOverviewPage.tsx
+│   │   ├── Index.tsx
+│   │   ├── JobsPage.tsx
+│   │   ├── LandingPage.tsx
+│   │   ├── LearnChapterPage.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── Onboarding.tsx
+│   │   ├── PhaseCompletionPage.tsx
+│   │   ├── Pricing.tsx
+│   │   ├── ProfilePage.tsx
+│   │   ├── ProjectsPage.tsx
+│   │   ├── ReferralsPage.tsx
+│   │   ├── ResumePage.tsx
+│   │   ├── RoadmapPreview.tsx
+│   │   ├── TopicsPage.tsx
+│   │   ├── VisualizerPage.tsx
+│   │   └── WorkspacePage.tsx
+│   ├── services
+│   │   ├── api.svc.ts
+│   │   ├── apprenticeship.service.ts
+│   │   ├── auth.service.ts
+│   │   └── build-haven.service.ts
+│   ├── test
+│   │   ├── example.test.ts
+│   │   └── setup.ts
+│   └── vite-env.d.ts
+├── tailwind.config.ts
+├── TEST-JSCPP.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── uirefrence
+├── vite.config.ts
+├── vitest.config.ts
+├── walkthroug1h.md
+└── walkthrough.md
+
+77 directories, 494 files

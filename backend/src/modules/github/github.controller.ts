@@ -123,6 +123,20 @@ export class GitHubController {
 
         if (event === 'push' && branch === 'main') {
           await BuildHavenController.enqueueVerificationByRepo(repoName, commitSha);
+          
+          try {
+            await supabase.channel(`build:${buildEnrollment.id}`).send({
+              type: 'broadcast',
+              event: 'verification_queued',
+              payload: {
+                enrollmentId: buildEnrollment.id,
+                commitHash: commitSha,
+              },
+            });
+          } catch (err) {
+            logger.warn('Failed to broadcast verification_queued', { repoName, err });
+          }
+
           return res.status(200).json(ok({ received: true, mode: 'build_haven' }));
         }
 

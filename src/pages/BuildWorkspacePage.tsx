@@ -32,15 +32,32 @@ type ViewMode = 'setup' | number;
 
 export default function BuildWorkspacePage() {
   const { slug = '' } = useParams<{ slug: string }>();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const languageFromUrl = searchParams.get('language') || undefined;
   const { user } = useAuth();
   const qc = useQueryClient();
 
-  const [viewMode, setViewMode] = useState<ViewMode | null>(null);
+  const [viewModeState, setViewModeState] = useState<ViewMode | null>(() => {
+    const stageFromUrl = searchParams.get('stage');
+    if (stageFromUrl === 'setup') return 'setup';
+    if (stageFromUrl && !isNaN(parseInt(stageFromUrl, 10))) return parseInt(stageFromUrl, 10);
+    return null;
+  });
+
+  const setViewMode = useCallback((mode: ViewMode | null) => {
+    setViewModeState(mode);
+    setSearchParams(prev => {
+      if (mode !== null) prev.set('stage', mode.toString());
+      else prev.delete('stage');
+      return prev;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  const viewMode = viewModeState;
   const [hintsRevealed, setHintsRevealed] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [activeCommitHash, setActiveCommitHash] = useState<string | null>(null);
   const [showLogsOpen, setShowLogsOpen] = useState(false);
   const celebratedRef = useRef<Set<number>>(new Set());
   const [dismissedOverlayStages, setDismissedOverlayStages] = useState<Set<number>>(new Set());
@@ -90,7 +107,12 @@ export default function BuildWorkspacePage() {
   }, [stagesSorted, activeView]);
 
   const hints: string[] = Array.isArray(viewedStage?.hints) ? viewedStage.hints : [];
-  const lastResult = attempts[0];
+  const stageAttempts = useMemo(() => {
+    if (typeof activeView !== 'number') return [];
+    return attempts.filter((a: any) => a.build_stages?.stage_number === activeView);
+  }, [attempts, activeView]);
+
+  const lastResult = stageAttempts[0];
   const structured = (lastResult?.structured_feedback || {}) as Record<string, unknown>;
   const verdict = String(structured.verdict || lastResult?.status || 'pending');
 
@@ -133,12 +155,17 @@ export default function BuildWorkspacePage() {
   useEffect(() => {
     if (!enrollment?.id) return;
     const unsubscribe = buildHavenService.subscribeToEnrollmentEvents(enrollment.id, (event) => {
-      if (event.type === 'attempt_started' || event.type === 'verification_started') {
+      if (event.type === 'attempt_started' || event.type === 'verification_started' || event.type === 'verification_queued') {
         setIsVerifying(true);
+        if (event.payload?.commitHash) setActiveCommitHash(event.payload.commitHash as string);
       } else if (event.type === 'stage_result' || event.type === 'verification_complete') {
         setIsVerifying(false);
+        setActiveCommitHash(null);
         if (event.type === 'stage_result' && event.payload?.status === 'passed') {
           const passedStageNum = event.payload?.stage_number as number | undefined;
+          if (passedStageNum) {
+            setDismissedOverlayStages(prev => new Set(prev).add(passedStageNum));
+          }
           const celebratedStages: number[] = enrollment.celebrated_stages || [];
           if (
             passedStageNum &&
@@ -281,7 +308,7 @@ export default function BuildWorkspacePage() {
                     </p>
                     <Button 
                       className="w-full mt-2" 
-                      onClick={() => handleStageClick(enrollment?.current_stage_number ?? enrollment?.current_stage ?? 1)}
+                      onClick={() => setViewMode(enrollment?.current_stage_number ?? enrollment?.current_stage ?? 1)}
                     >
                       Go to Current Stage
                     </Button>
@@ -480,7 +507,7 @@ export default function BuildWorkspacePage() {
                       )}
 
                       {/* Stage complete — next stage prompt */}
-                      {verdict === 'passed' && isViewingTestTarget && nextStage && (
+                      {verdict === 'passed' && nextStage && (
                         <div className="flex items-center gap-3 rounded-xl border border-success/30 bg-success/5 p-4">
                           <p className="text-sm text-foreground">
                             🎉 Stage complete! Ready for the next challenge?
@@ -540,6 +567,7 @@ export default function BuildWorkspacePage() {
               <BuildTestRunner
                 verdict={verdict}
                 isVerifying={isVerifying}
+                activeCommitHash={activeCommitHash}
                 stageNumber={lastResult?.build_stages?.stage_number}
                 testOutput={lastResult?.test_output}
                 showLogs={showLogsOpen}
@@ -550,7 +578,7 @@ export default function BuildWorkspacePage() {
                 onNextStage={
                   activeView === (lastResult?.build_stages?.stage_number || activeView) &&
                   (enrollment?.current_stage_number ?? enrollment?.current_stage ?? 1) > activeView
-                    ? () => handleStageClick(enrollment?.current_stage_number ?? enrollment?.current_stage ?? 1)
+                    ? () => setViewMode(enrollment?.current_stage_number ?? enrollment?.current_stage ?? 1)
                     : undefined
                 }
               />

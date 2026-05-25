@@ -3,6 +3,7 @@ import Redis from 'ioredis';
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 import { BuildHavenService } from '../modules/build-haven/service';
+import { GitHubService } from '../modules/github/github.service';
 
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
   maxRetriesPerRequest: null,
@@ -119,6 +120,8 @@ const worker = new Worker<BuildVerificationPayload>(
         commitHash: job.data.commitHash,
       });
 
+      const userToken = await GitHubService.getUserToken(enrollment.user_id) || undefined;
+
       const result = await BuildHavenService.runStageVerification({
         repoFullName: job.data.repoFullName,
         commitHash: job.data.commitHash,
@@ -129,6 +132,7 @@ const worker = new Worker<BuildVerificationPayload>(
         timeoutMs,
         successCriteria,
         hints,
+        githubToken: userToken,
       });
 
       await BuildHavenService.completeStage({

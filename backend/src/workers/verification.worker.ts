@@ -8,6 +8,7 @@ import { pool, supabase as supabaseAdmin } from '../config/database';
 import logger from '../config/logger';
 import { ApprenticeshipCertificatesService } from '../modules/apprenticeship/certificates.service';
 import { sendProjectPassedEmail } from '../services/email.service';
+import { GitHubService } from '../modules/github/github.service';
 
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
   maxRetriesPerRequest: null,
@@ -71,9 +72,10 @@ const worker = new Worker<VerificationJobPayload>(
       data: { status: 'testing' },
     });
 
-    try {
+      try {
       await fs.mkdir(workdir, { recursive: true });
-      await cloneExactCommit(job.data.repoFullName, job.data.commitHash, workdir);
+      const userToken = await GitHubService.getUserToken(job.data.userId) || undefined;
+      await cloneExactCommit(job.data.repoFullName, job.data.commitHash, workdir, userToken);
 
       await logStage(job.data.submissionId, {
         stage: 0,
@@ -242,8 +244,10 @@ worker.on('failed', async (job, error) => {
   if (!job || job.attemptsMade < 3) return;
 });
 
-async function cloneExactCommit(repoFullName: string, commitHash: string, workdir: string) {
-  await runProcess('git', ['clone', '--depth=1', `https://${process.env.GITHUB_BOT_TOKEN}@github.com/${repoFullName}`, workdir]);
+async function cloneExactCommit(repoFullName: string, commitHash: string, workdir: string, githubToken?: string) {
+  const token = githubToken || process.env.GITHUB_BOT_TOKEN || '';
+  const authPrefix = token ? `${token}@` : '';
+  await runProcess('git', ['clone', '--depth=1', `https://${authPrefix}github.com/${repoFullName}`, workdir]);
   await runProcess('git', ['-C', workdir, 'fetch', '--depth=1', 'origin', commitHash]);
   await runProcess('git', ['-C', workdir, 'checkout', commitHash]);
 }

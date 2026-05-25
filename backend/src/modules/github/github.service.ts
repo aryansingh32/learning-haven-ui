@@ -324,4 +324,16 @@ export class GitHubService {
     decrypted += decipher.final('utf8');
     return decrypted;
   }
+
+  static async getUserToken(userId: string): Promise<string | null> {
+    const { data: connection } = await supabaseAdmin
+      .from('apprenticeship_github_connections')
+      .select('access_token')
+      .eq('user_id', userId)
+      .eq('is_active', true)
+      .maybeSingle();
+
+    if (!connection?.access_token) return null;
+    return this.decryptToken(connection.access_token);
+  }
 }

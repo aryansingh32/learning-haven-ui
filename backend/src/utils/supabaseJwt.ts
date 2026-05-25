@@ -8,8 +8,24 @@ export type VerifiedSupabaseUser = {
   role?: string;
 };
 
+function jwtExpiryMs(token: string): number | null {
+  try {
+    const segment = token.split('.')[1];
+    if (!segment) return null;
+    const payload = JSON.parse(Buffer.from(segment, 'base64url').toString('utf8')) as { exp?: number };
+    return typeof payload.exp === 'number' ? payload.exp * 1000 : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Verify a Supabase access token locally (JWKS ES256 or legacy HS256 secret). */
 export function verifySupabaseAccessToken(token: string): VerifiedSupabaseUser | null {
+  const expMs = jwtExpiryMs(token);
+  if (expMs !== null && expMs < Date.now()) {
+    return null;
+  }
+
   const jwksRaw = process.env.SUPABASE_JWT_JWKS;
   if (jwksRaw) {
     try {

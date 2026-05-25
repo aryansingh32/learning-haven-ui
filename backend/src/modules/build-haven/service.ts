@@ -468,6 +468,7 @@ export class BuildHavenService {
     timeoutMs: number;
     successCriteria: Record<string, unknown>;
     hints: string[];
+    githubToken?: string;
   }) {
     const workdir = path.join('/tmp/verify-build', `${params.stageId}-${Date.now()}`);
     await fs.mkdir(workdir, { recursive: true });
@@ -481,7 +482,9 @@ export class BuildHavenService {
     };
 
     try {
-      await runProcess('git', ['clone', '--depth=1', `https://${process.env.GITHUB_BOT_TOKEN}@github.com/${params.repoFullName}`, workdir], 180_000);
+      const token = params.githubToken || process.env.GITHUB_BOT_TOKEN || '';
+      const authPrefix = token ? `${token}@` : '';
+      await runProcess('git', ['clone', '--depth=1', `https://${authPrefix}github.com/${params.repoFullName}`, workdir], 180_000);
       await runProcess('git', ['-C', workdir, 'fetch', '--depth=1', 'origin', params.commitHash], 120_000);
       await runProcess('git', ['-C', workdir, 'checkout', params.commitHash], 60_000);
 

@@ -10,6 +10,10 @@ const EXPIRY_BUFFER_MS = 5 * 60 * 1000;
 let refreshInFlight: Promise<string | null> | null = null;
 let refreshIntervalId: ReturnType<typeof setInterval> | null = null;
 
+export function isSupabaseClientConfigured(): boolean {
+  return Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY && supabase);
+}
+
 export function getAccessToken(): string | null {
   return localStorage.getItem(ACCESS_KEY);
 }
@@ -34,7 +38,7 @@ async function syncSupabaseClient(session: Pick<Session, 'access_token' | 'refre
       refresh_token: session.refresh_token,
     });
   } catch {
-    /* non-fatal — refreshSession still works with refresh_token alone */
+    /* non-fatal */
   }
 }
 
@@ -65,8 +69,39 @@ export function isAccessTokenStale(accessToken: string | null): boolean {
   return exp - Date.now() < EXPIRY_BUFFER_MS;
 }
 
+function parseRefreshResponse(body: unknown): { access_token: string; refresh_token?: string } | null {
+  if (!body || typeof body !== 'object') return null;
+  const record = body as Record<string, unknown>;
+  const session = (record.session ?? (record.data as Record<string, unknown> | undefined)?.session) as
+    | { access_token?: string; refresh_token?: string }
+    | undefined;
+  if (!session?.access_token) return null;
+  return { access_token: session.access_token, refresh_token: session.refresh_token };
+}
+
+async function refreshViaApi(refreshToken: string): Promise<string | null> {
+  const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
+  const response = await fetch(`${apiBase}/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refresh_token: refreshToken }),
+  });
+
+  if (!response.ok) return null;
+
+  const body = await response.json();
+  const session = parseRefreshResponse(body);
+  if (!session) return null;
+
+  persistSession({
+    access_token: session.access_token,
+    refresh_token: session.refresh_token || refreshToken,
+  });
+  return session.access_token;
+}
+
 /**
- * Exchange refresh token for a new access token (Supabase refresh flow).
+ * Exchange refresh token for a new access token (Supabase client or API fallback).
  */
 export async function refreshAccessToken(): Promise<string | null> {
   if (refreshInFlight) return refreshInFlight;
@@ -74,10 +109,6 @@ export async function refreshAccessToken(): Promise<string | null> {
   refreshInFlight = (async () => {
     const refresh = getRefreshToken();
     if (!refresh) return null;
-
-    if (!supabase?.auth) {
-      return null;
-    }
 
     try {
       if (supabase?.auth) {
@@ -88,29 +119,7 @@ export async function refreshAccessToken(): Promise<string | null> {
         }
       }
 
-      const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
-      const response = await fetch(`${apiBase}/auth/refresh`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refresh_token: refresh }),
-      });
-
-      if (!response.ok) {
-        return null;
-      }
-
-      const body = (await response.json()) as {
-        session?: { access_token: string; refresh_token?: string };
-      };
-      if (!body.session?.access_token) {
-        return null;
-      }
-
-      persistSession({
-        access_token: body.session.access_token,
-        refresh_token: body.session.refresh_token || refresh,
-      });
-      return body.session.access_token;
+      return await refreshViaApi(refresh);
     } catch {
       return null;
     } finally {
@@ -134,7 +143,7 @@ export async function ensureValidAccessToken(): Promise<string | null> {
 
   if (isAccessTokenStale(access)) {
     const renewed = await refreshAccessToken();
-    return renewed ?? access;
+    return renewed;
   }
 
   return access;

@@ -477,8 +477,15 @@ export default function LearnChapterPage() {
             cinemaMode && activeStepIsVideo ? 'grid-cols-1' : 'lg:grid-cols-[260px_1fr]'
           )}
         >
-          {/* Timeline */}
-          <div className="relative lg:sticky lg:top-24 h-fit rounded-2xl card-layer-2 p-5 border border-border/40">
+          {/* Timeline — below video in cinema mode */}
+          <div
+            className={cn(
+              'relative h-fit rounded-2xl card-layer-2 p-5 border border-border/40',
+              cinemaMode && activeStepIsVideo
+                ? 'order-2'
+                : 'order-1 lg:order-none lg:sticky lg:top-24'
+            )}
+          >
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-5">Timeline</p>
             <div className="relative">
               <div className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-secondary/50 rounded-full" />
@@ -536,8 +543,13 @@ export default function LearnChapterPage() {
             </div>
           </div>
 
-          {/* Active step */}
-          <div className="space-y-4">
+          {/* Active step — above timeline in cinema mode */}
+          <div
+            className={cn(
+              'space-y-4',
+              cinemaMode && activeStepIsVideo ? 'order-1' : 'order-2 lg:order-none'
+            )}
+          >
             {steps.map((step, index) => {
               const locked = !isStepUnlocked(index);
               const done = isStepDone(step.id);
@@ -555,15 +567,17 @@ export default function LearnChapterPage() {
                     cinemaMode && step.type === 'video' && 'border-0 p-0 md:p-0 bg-transparent shadow-none'
                   )}
                 >
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-1">
-                        Step {index + 1}
-                      </p>
-                      <h3 className="text-2xl font-extrabold text-foreground tracking-tight">{step.title}</h3>
+                  {!(cinemaMode && step.type === 'video') && (
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-1">
+                          Step {index + 1}
+                        </p>
+                        <h3 className="text-2xl font-extrabold text-foreground tracking-tight">{step.title}</h3>
+                      </div>
+                      {done && <CheckCircle2 className="h-6 w-6 text-success shrink-0" />}
                     </div>
-                    {done && <CheckCircle2 className="h-6 w-6 text-success shrink-0" />}
-                  </div>
+                  )}
 
                   {renderStepContent(step, index)}
                 </motion.div>
