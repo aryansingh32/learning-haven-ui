@@ -1,0 +1,22 @@
+{
+  "title": "Learning Haven Production Overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "API Request Rate",
+      "targets": [{ "expr": "sum(rate(learning_haven_http_requests_total[5m]))" }]
+    },
+    {
+      "type": "timeseries",
+      "title": "API 5xx Rate",
+      "targets": [{ "expr": "sum(rate(learning_haven_http_errors_total[5m]))" }]
+    },
+    {
+      "type": "timeseries",
+      "title": "API p95 Latency",
+      "targets": [{ "expr": "learning_haven_http_latency_ms{quantile=\"0.95\"}" }]
+    }
+  ]
+}

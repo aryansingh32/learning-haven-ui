@@ -1,0 +1,183 @@
+import fs from 'fs';
+import path from 'path';
+import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+import ws from 'ws';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    persistSession: false
+  },
+  global: {
+    fetch: fetch
+  },
+  realtime: {
+    transport: ws
+  }
+});
+
+const ChapterSchema = z.object({
+  roadmap_slug: z.string(),
+  chapter_number: z.number(),
+  title: z.string(),
+  topic_tag: z.string().optional(),
+  difficulty: z.enum(['BEGINNER', 'INTERMEDIATE', 'ADVANCED']).optional(),
+  est_minutes: z.number().optional(),
+  story_hook: z.string().optional(),
+  whatsapp_msg: z.string().optional(),
+  video: z.object({
+    youtube_id: z.string(),
+    channel: z.string().optional(),
+    title: z.string().optional(),
+    duration_min: z.number().optional(),
+    timestamps: z.array(z.object({
+      label: z.string(),
+      seconds: z.number()
+    })).optional()
+  }).optional(),
+  article: z.object({
+    url: z.string(),
+    source: z.string().optional(),
+    title: z.string().optional()
+  }).optional(),
+  problems: z.array(z.any()).optional(),
+  quiz: z.array(z.any()).optional(),
+  tasks: z.array(z.any()).optional(),
+  steps: z.array(z.object({
+    step_number: z.number(),
+    type: z.string(),
+    title: z.string(),
+    content: z.any()
+  })).optional()
+});
+
+async function runSeeder() {
+  const chaptersDir = path.resolve(__dirname, '../data/chapters');
+
+  if (!fs.existsSync(chaptersDir)) {
+    console.error(`Directory not found: ${chaptersDir}`);
+    process.exit(1);
+  }
+
+  const files = fs.readdirSync(chaptersDir).filter(f => f.endsWith('.json'));
+
+  let seededCount = 0;
+  let warningCount = 0;
+  let errorCount = 0;
+
+  console.log(`Found ${files.length} JSON files. Beginning ingestion...`);
+
+  for (const file of files) {
+    const filePath = path.join(chaptersDir, file);
+    try {
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const data = JSON.parse(raw);
+      const chapter = ChapterSchema.parse(data);
+
+      // a. Find course by slug
+      const { data: course, error: courseErr } = await supabase
+        .from('courses')
+        .select('id')
+        .eq('slug', chapter.roadmap_slug)
+        .single();
+
+      if (courseErr || !course) {
+        console.warn(`[WARNING] File ${file}: Course not found with slug: ${chapter.roadmap_slug}. Skipping.`);
+        warningCount++;
+        continue;
+      }
+
+      // b. Upsert chapter (match on course_id, chapter_number)
+      const { data: upsertedChapter, error: chapterErr } = await supabase
+        .from('chapters')
+        .upsert({
+          course_id: course.id,
+          chapter_number: chapter.chapter_number,
+          title: chapter.title,
+          topic_tag: chapter.topic_tag,
+          difficulty: chapter.difficulty,
+          story_hook: chapter.story_hook,
+          whatsapp_msg: chapter.whatsapp_msg,
+          est_minutes: chapter.est_minutes
+        }, { onConflict: 'course_id,chapter_number' })
+        .select('id')
+        .single();
+
+      if (chapterErr || !upsertedChapter) {
+        console.error(`[ERROR] File ${file}: Failed to upsert chapter - ${chapterErr?.message}`);
+        errorCount++;
+        continue;
+      }
+
+      // c. Upsert chapter_content
+      const contentPayload = {
+        chapter_id: upsertedChapter.id,
+        video_youtube_id: chapter.video?.youtube_id || null,
+        video_channel: chapter.video?.channel || null,
+        video_title: chapter.video?.title || null,
+        video_duration: chapter.video?.duration_min || null,
+        video_timestamps: chapter.video?.timestamps || [],
+        article_url: chapter.article?.url || null,
+        article_source: chapter.article?.source || null,
+        article_title: chapter.article?.title || null,
+        problems: chapter.problems || [],
+        quiz: chapter.quiz || [],
+        tasks: chapter.tasks || [],
+      };
+
+      const { error: contentErr } = await supabase
+        .from('chapter_content')
+        .upsert(contentPayload, { onConflict: 'chapter_id' });
+
+      if (contentErr) {
+        console.error(`[ERROR] File ${file}: Failed to upsert content - ${contentErr.message}`);
+        errorCount++;
+        continue;
+      }
+
+      // d. Upsert steps if provided
+      if (chapter.steps && chapter.steps.length > 0) {
+        const stepsPayload = chapter.steps.map(step => ({
+          chapter_id: upsertedChapter.id,
+          step_number: step.step_number,
+          type: step.type,
+          title: step.title,
+          content: step.content
+        }));
+
+        const { error: stepsErr } = await supabase
+          .from('steps')
+          .upsert(stepsPayload, { onConflict: 'chapter_id,step_number' });
+
+        if (stepsErr) {
+          console.error(`[ERROR] File ${file}: Failed to upsert steps - ${stepsErr.message}`);
+          errorCount++;
+          continue;
+        }
+      }
+
+      // e. Log Success
+      console.log(`Chapter ${chapter.chapter_number}: ${chapter.title} — ✓ seeded`);
+      seededCount++;
+
+    } catch (err: any) {
+      console.error(`[ERROR] File ${file}: ${err.message || 'Unknown error during ingestion'}`);
+      errorCount++;
+    }
+  }
+
+  console.log(`\nDONE: ${seededCount} chapters seeded, ${warningCount} warnings, ${errorCount} errors`);
+}
+
+runSeeder();

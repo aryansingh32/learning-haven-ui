@@ -1,0 +1,286 @@
+import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
+import {
+  LayoutDashboard, BookOpen, Bot, Gift, Award,
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks
+} from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useTheme } from "@/hooks/useTheme";
+import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
+import { useApiQuery } from "@/hooks/useApi";
+import type { Identity } from "@/lib/gamification";
+import { RoadmapProvider } from "@/context/RoadmapContext";
+import { GlobalAIAssistant } from "@/components/GlobalAIAssistant";
+import { EntitlementProvider } from "@/services/entitlement.service";
+
+const primaryNav = [
+  { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
+  { to: "/courses", icon: BookOpen, label: "Learn" },
+  { to: "/topics", icon: ListChecks, label: "Practice" },
+  { to: "/projects", icon: Hammer, label: "Challenges" },
+  { to: "/ai-coach", icon: Bot, label: "Mentor" },
+  { to: "/profile", icon: Trophy, label: "Profile" },
+];
+
+const careerNav = [
+  { to: "/resume", icon: FileText, label: "Resume" },
+  { to: "/jobs", icon: Briefcase, label: "Jobs" },
+  { to: "/referrals", icon: Gift, label: "Referrals" },
+  { to: "/certificates", icon: Award, label: "Certificates" },
+  { to: "/subscription", icon: CreditCard, label: "Billing" },
+];
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const location = useLocation();
+  const { user, logout } = useAuth();
+  const { data: identity } = useApiQuery<Identity>(['user-identity'], '/users/me/identity');
+
+  const renderNavItem = (item: typeof primaryNav[0], onClick?: () => void) => (
+    <RouterNavLink
+      key={item.to}
+      to={item.to}
+      end={item.to === "/dashboard"}
+      onClick={onClick}
+      aria-label={item.label}
+      className={({ isActive }) =>
+        cn(
+          "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative",
+          isActive
+            ? "text-primary-foreground"
+            : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
+        )
+      }
+    >
+      {({ isActive }) => (
+        <>
+          {isActive && (
+            <motion.div
+              layoutId="sidebar-active"
+              className="absolute inset-0 rounded-xl bg-primary shadow-md shadow-primary/20"
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+            />
+          )}
+          <span className="relative z-10 flex items-center gap-3">
+            <item.icon className="h-[18px] w-[18px] transition-transform group-hover:scale-110" aria-hidden="true" />
+            {item.label}
+          </span>
+        </>
+      )}
+    </RouterNavLink>
+  );
+
+  return (
+    <div className="min-h-screen bg-depth transition-colors duration-400">
+      {/* Desktop Sidebar */}
+      {!isMobile && (
+        <aside className="fixed left-0 top-0 bottom-0 w-[260px] bg-sidebar z-30 flex flex-col border-r border-border/40">
+          <div className="p-6 border-b border-border/40">
+            <h1 className="font-display text-xl font-bold text-foreground tracking-tight">
+              <span className="text-gradient-golden">FORGE</span>
+            </h1>
+            <p className="text-meta text-muted-foreground mt-0.5 tracking-wide">From zero to hired</p>
+          </div>
+
+          <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
+            <p className="text-caption font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
+            {primaryNav.map((item) => renderNavItem(item))}
+
+            <div className="pt-3 mt-3 border-t border-border/30">
+              <p className="text-caption font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">Career Center</p>
+              {careerNav.map((item) => (
+                <RouterNavLink
+                  key={item.to}
+                  to={item.to}
+                  aria-label={item.label}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex items-center gap-3 px-4 py-2 rounded-xl text-meta font-medium transition-all duration-200",
+                      isActive
+                        ? "bg-secondary text-foreground"
+                        : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                    )
+                  }
+                >
+                  <item.icon className="h-4 w-4" aria-hidden="true" />
+                  {item.label}
+                </RouterNavLink>
+              ))}
+            </div>
+          </nav>
+
+          <div className="p-3 border-t border-border/40">
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-secondary/80 hover:text-foreground transition-all group"
+            >
+              <motion.div
+                key={theme}
+                initial={{ rotate: -30, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {theme === "light" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
+              </motion.div>
+              {theme === "light" ? "Dark Mode" : "Light Mode"}
+            </button>
+          </div>
+
+          <div className="p-4 border-t border-border/40 space-y-2">
+            <RouterNavLink to="/profile" className="flex items-center gap-3 p-2 rounded-xl hover:bg-secondary/80 transition-colors group">
+              <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-sm group-hover:shadow-md transition-shadow">
+                {user?.full_name?.[0] || user?.email?.[0] || "U"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{user?.full_name || "User"}</p>
+                <p className="text-caption text-reward font-semibold truncate">{identity?.identity.title || 'Novice Coder'}</p>
+                <p className="text-caption text-muted-foreground">Level {identity?.level || (user as any)?.level || 1} • {identity?.xp || (user as any)?.xp || 0} XP</p>
+              </div>
+            </RouterNavLink>
+            <button
+              onClick={logout}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-destructive transition-colors"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Sign Out
+            </button>
+          </div>
+        </aside>
+      )}
+
+      {/* Mobile Top Bar */}
+      {isMobile && (
+        <header className="fixed top-0 left-0 right-0 h-14 card-glass z-30 flex items-center justify-between px-4 border-b border-border/40">
+          <div className="flex items-center">
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-xl hover:bg-secondary transition-colors">
+              {sidebarOpen ? <X className="h-5 w-5 text-foreground" /> : <Menu className="h-5 w-5 text-foreground" />}
+            </button>
+            <h1 className="ml-3 font-display text-lg font-bold text-foreground">
+              <span className="text-gradient-golden">FORGE</span>
+            </h1>
+          </div>
+          <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-secondary transition-colors">
+            <motion.div key={theme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}>
+              {theme === "light" ? <Moon className="h-4 w-4 text-muted-foreground" /> : <Sun className="h-4 w-4 text-muted-foreground" />}
+            </motion.div>
+          </button>
+        </header>
+      )}
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {isMobile && sidebarOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40"
+              onClick={() => setSidebarOpen(false)}
+            />
+            <motion.aside
+              initial={{ x: -280 }}
+              animate={{ x: 0 }}
+              exit={{ x: -280 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed left-0 top-0 bottom-0 w-64 card-glass z-50 shadow-card-hover flex flex-col border-r border-border/40"
+            >
+              <div className="p-6 border-b border-border/40">
+                <h1 className="font-display text-xl font-bold text-foreground">
+                  <span className="text-gradient-golden">FORGE</span>
+                </h1>
+              </div>
+              <nav className="flex-1 p-3 space-y-0.5">
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
+                {primaryNav.map((item) => renderNavItem(item, () => setSidebarOpen(false)))}
+                <div className="pt-3 mt-3 border-t border-border/30">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">Career Center</p>
+                  {careerNav.map((item) => (
+                    <RouterNavLink
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setSidebarOpen(false)}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex items-center gap-3 px-4 py-2 rounded-xl text-[13px] font-medium transition-all",
+                          isActive
+                            ? "bg-secondary text-foreground"
+                            : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                        )
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </RouterNavLink>
+                  ))}
+                </div>
+              </nav>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Floating Bottom Nav — primary only */}
+      {isMobile && (
+        <nav className="fixed bottom-3 left-0 right-0 z-30 flex justify-center">
+          <div className="card-glass floating-nav border border-border/40 flex justify-around py-2 px-3 w-[calc(100%-2rem)]">
+            {primaryNav.map((item) => (
+              <RouterNavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/dashboard"}
+                className={({ isActive }) =>
+                  cn(
+                    "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-[10px] font-medium transition-all duration-200 relative",
+                    isActive ? "text-primary" : "text-muted-foreground"
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.div
+                        layoutId="mobile-tab"
+                        className="absolute -top-1 w-6 h-1 rounded-full bg-primary"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                    <item.icon className={cn("h-5 w-5 transition-transform", isActive && "scale-110")} />
+                    {item.label}
+                  </>
+                )}
+              </RouterNavLink>
+            ))}
+          </div>
+        </nav>
+      )}
+
+      {/* Main Content */}
+      <main className={cn(
+        "min-h-screen transition-all duration-300",
+        isMobile ? "pt-14 pb-24 px-4" : "ml-[260px] p-6 lg:p-8"
+      )}>
+        <EntitlementProvider>
+          <RoadmapProvider>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
+            <GlobalAIAssistant />
+          </RoadmapProvider>
+        </EntitlementProvider>
+      </main>
+    </div>
+  );
+}
