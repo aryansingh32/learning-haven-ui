@@ -4,300 +4,304 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPhases } from '@/data/chapters';
 import { useCatalogSettings } from '@/hooks/useCatalogSettings';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Brain, Briefcase, Code, LineChart, ArrowRight,
-} from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AlertTriangle, ArrowRight, BookOpen, Compass, GraduationCap, Layers, Sparkles } from 'lucide-react';
 import { HeroCarousel } from '@/components/catalog/HeroCarousel';
 import { PartnerMarquee } from '@/components/catalog/PartnerMarquee';
-import { PathActionCards } from '@/components/catalog/PathActionCards';
 import { YourPathSection } from '@/components/catalog/YourPathSection';
 import { CatalogSearch } from '@/components/catalog/CatalogSearch';
 import { PremiumCourseCard } from '@/components/catalog/PremiumCourseCard';
 import { TrendingLists } from '@/components/catalog/TrendingLists';
 import { CareerExplorer } from '@/components/catalog/CareerExplorer';
-import {
-  DEFAULT_CAREERS, DEFAULT_HERO_SLIDES, DEFAULT_PARTNERS, type HeroSlide,
-} from '@/components/catalog/catalog-utils';
+import { chapterCount, derivedTopics, type CatalogCourse, type HeroSlide } from '@/components/catalog/catalog-utils';
+import { cn } from '@/lib/utils';
 
-const IconMap: Record<string, typeof Code> = {
-  Briefcase, Brain, LineChart, Code,
-};
+type Filter = 'all' | 'beginner' | 'intermediate' | 'advanced' | 'free' | 'premium';
 
-function buildHeroSlides(layout: any): HeroSlide[] {
-  if (layout?.sliderActive && layout?.sliderBanners?.length > 0) {
-    return layout.sliderBanners.map((slide: any, i: number) => {
-      const isLight = slide.bgColor?.includes('slate-100') || slide.bgColor?.includes('white');
-      return {
-        id: slide.id || `slide-${i}`,
-        title: slide.title,
-        subtitle: slide.subtitle,
-        buttonText: slide.buttonText,
-        buttonLink: slide.buttonLink || '/courses',
-        image: slide.image,
-        variant: isLight ? 'dark' : (i === 0 ? 'primary' : 'dark'),
-        tags: slide.tags,
-        stat: slide.stat,
-      } as HeroSlide;
-    });
+function buildHeroSlides(layout: any, courses: CatalogCourse[]): HeroSlide[] {
+  if (layout?.sliderActive && Array.isArray(layout?.sliderBanners) && layout.sliderBanners.length > 0) {
+    return layout.sliderBanners.map((slide: any, i: number) => ({
+      id: slide.id || `slide-${i}`,
+      title: slide.title,
+      subtitle: slide.subtitle,
+      buttonText: slide.buttonText || 'Explore courses',
+      buttonLink: slide.buttonLink || '/courses',
+      image: slide.image,
+      variant: i === 0 ? 'primary' : i % 2 === 0 ? 'accent' : 'dark',
+      tags: slide.tags,
+      stat: slide.stat,
+    })) as HeroSlide[];
   }
-  return [];
+
+  if (!courses.length) return [];
+  const totalChapters = courses.reduce((sum, c) => sum + chapterCount(c), 0);
+  return [
+    {
+      id: 'catalog',
+      title: 'Learn the skills that get you hired',
+      subtitle: 'Structured learning paths with guided chapters, hands-on practice and AI feedback at every step.',
+      tags: courses.slice(0, 4).map((c) => c.title),
+      stat: `${courses.length} learning path${courses.length === 1 ? '' : 's'}${totalChapters ? ` · ${totalChapters} chapters` : ''}`,
+      buttonText: 'Browse paths',
+      buttonLink: '/courses',
+      variant: 'primary',
+    },
+  ];
 }
 
-function buildPartners(layout: any) {
-  const partners = layout?.sections?.universities?.partners;
-  if (partners && Array.isArray(partners) && partners.length > 0) return partners;
-  return [];
-}
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: 'all', label: 'All paths' },
+  { id: 'beginner', label: 'Beginner' },
+  { id: 'intermediate', label: 'Intermediate' },
+  { id: 'advanced', label: 'Advanced' },
+  { id: 'free', label: 'Free' },
+  { id: 'premium', label: 'Premium' },
+];
 
-function buildCareers(layout: any) {
-  const items = layout?.sections?.careers?.items;
-  if (!items?.length) return [];
-  return items.map((c: any, i: number) => ({
-    id: c.id || `career-${i}`,
-    title: c.title,
-    salary: c.salary,
-    jobs: c.jobs,
-    skills: c.skills,
-    image: c.image,
-    description: c.description,
-  }));
+function StatPill({ icon: Icon, value, label }: { icon: typeof BookOpen; value: string | number; label: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card px-4 py-3 shadow-[var(--shadow-card)]">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+        <Icon className="h-4.5 w-4.5" />
+      </span>
+      <div className="min-w-0">
+        <p className="font-display text-card-title font-bold leading-none">{value}</p>
+        <p className="text-caption text-muted-foreground truncate">{label}</p>
+      </div>
+    </div>
+  );
 }
 
 export default function CoursesCatalogPage() {
   const [query, setQuery] = useState('');
-  const [partnerFilter, setPartnerFilter] = useState<string | null>(null);
+  const [filter, setFilter] = useState<Filter>('all');
   const navigate = useNavigate();
 
   const { data: layout, isLoading: isLayoutLoading } = useCatalogSettings();
-  const { data: phases, isLoading: isCoursesLoading } = useQuery({
+  const {
+    data: phases, isLoading: isCoursesLoading, isError, refetch,
+  } = useQuery({
     queryKey: ['learn-phases'],
     queryFn: async () => {
       const courses = await fetchPhases();
-      return Array.isArray(courses) ? courses : [];
+      return Array.isArray(courses) ? (courses as CatalogCourse[]) : [];
     },
     staleTime: 60_000,
   });
 
-  const courses = useMemo(() => {
-    let list = (phases || []) as any[];
-    const q = (query || '').toLowerCase().trim();
+  const allCourses = useMemo(() => (phases || []) as CatalogCourse[], [phases]);
+
+  const visibleCourses = useMemo(() => {
+    let list = allCourses;
+    const q = query.toLowerCase().trim();
     if (q) {
       list = list.filter((item) =>
-        `${item.title} ${item.description || ''} ${item.slug || ''}`.toLowerCase().includes(q)
+        `${item.title} ${item.description || ''} ${item.slug || ''} ${item.difficulty_level || ''}`
+          .toLowerCase()
+          .includes(q)
       );
     }
-    if (partnerFilter) {
-      list = list.filter((_, i) =>
-        DEFAULT_PARTNERS[i % DEFAULT_PARTNERS.length].name === partnerFilter
-      );
-    }
+    if (filter === 'free') list = list.filter((c) => !c.is_premium);
+    else if (filter === 'premium') list = list.filter((c) => c.is_premium);
+    else if (filter !== 'all') list = list.filter((c) => (c.difficulty_level || '').toLowerCase() === filter);
     return list;
-  }, [phases, query, partnerFilter]);
+  }, [allCourses, query, filter]);
 
-  const heroSlides = useMemo(() => buildHeroSlides(layout), [layout]);
-  const partners = useMemo(() => buildPartners(layout), [layout]);
-  const careers = useMemo(() => buildCareers(layout), [layout]);
+  const heroSlides = useMemo(() => buildHeroSlides(layout, allCourses), [layout, allCourses]);
+  const partners = layout?.sections?.universities?.partners;
+  const careers = layout?.sections?.careers?.items;
+  const topics = useMemo(() => derivedTopics(allCourses), [allCourses]);
+  const totalChapters = useMemo(
+    () => allCourses.reduce((sum, c) => sum + chapterCount(c), 0),
+    [allCourses]
+  );
+  const isFiltering = Boolean(query.trim()) || filter !== 'all';
 
   const goToCourse = (id: string) => navigate(`/course/${id}/chapters`);
 
   if (isLayoutLoading || isCoursesLoading) {
     return (
       <div className="space-y-6 pb-20">
-        <Skeleton className="h-[280px] w-full rounded-none md:rounded-2xl md:max-w-7xl md:mx-auto" />
-        <Skeleton className="h-16 w-full" />
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-4">
-          <Skeleton className="h-40" /><Skeleton className="h-40" /><Skeleton className="h-40" />
+        <Skeleton className="h-[260px] w-full rounded-none md:rounded-3xl md:max-w-7xl md:mx-auto" />
+        <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
+          <Skeleton className="h-16 w-full rounded-2xl" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Skeleton key={i} className="h-[300px] rounded-2xl" />
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
-  const allCourses = (phases || []) as any[];
-  const categories = layout?.sections?.categories;
-  const jobReady = layout?.sections?.jobReady;
-  const newAndPopular = layout?.sections?.newAndPopular;
-  const trendingColumns = newAndPopular?.columns?.length
-    ? newAndPopular.columns
-    : [
-        { id: 'popular', title: 'Most popular' },
-        { id: 'hot', title: 'Hot new releases' },
-        { id: 'trending', title: 'Trending now' },
-      ];
-
   return (
-    <div className="pb-20 md:pb-8">
-      {/* 1. Hero — transformation slides, always high contrast */}
+    <div className="pb-24 md:pb-10">
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
-      {/* 2. Partner marquee — dense trust strip */}
-      <PartnerMarquee
-        title={layout?.sections?.universities?.text || 'Learn from courses inspired by industry leaders'}
-        partners={partners}
-        onPartnerClick={(p) => {
-          setPartnerFilter(partnerFilter === p.name ? null : p.name);
-          setQuery('');
-        }}
-      />
-      {partnerFilter && (
-        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-2 mb-2">
-          <p className="text-meta text-muted-foreground">
-            Showing courses from <strong className="text-foreground">{partnerFilter}</strong>
-            <button type="button" className="ml-2 text-primary font-semibold" onClick={() => setPartnerFilter(null)}>Clear</button>
-          </p>
-        </div>
+      {Array.isArray(partners) && partners.length > 0 && (
+        <PartnerMarquee
+          title={layout?.sections?.universities?.text}
+          partners={partners}
+        />
       )}
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8 md:space-y-10">
-        {/* 2.5 Your Path Section */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8 md:space-y-12">
+        {/* Catalog stats — derived from live data */}
+        {allCourses.length > 0 && (
+          <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <StatPill icon={Layers} value={allCourses.length} label="Learning paths" />
+            <StatPill icon={BookOpen} value={totalChapters || '—'} label="Guided chapters" />
+            <StatPill
+              icon={GraduationCap}
+              value={allCourses.filter((c) => !c.is_premium).length}
+              label="Free to start"
+            />
+            <StatPill
+              icon={Sparkles}
+              value={allCourses.filter((c) => c.is_premium).length}
+              label="Premium paths"
+            />
+          </section>
+        )}
+
         <YourPathSection />
 
-        {/* 3. Career path action cards */}
-        <PathActionCards />
+        {/* Search + filters */}
+        <section className="space-y-4">
+          <CatalogSearch query={query} onQueryChange={setQuery} topics={topics} />
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter courses">
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                role="tab"
+                aria-selected={filter === f.id}
+                onClick={() => setFilter(f.id)}
+                className={cn(
+                  'h-9 px-4 rounded-full text-meta font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  filter === f.id
+                    ? 'bg-primary text-primary-foreground border-primary shadow-[var(--shadow-card)]'
+                    : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
+                )}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </section>
 
-        {/* 4. Search + trending */}
-        <CatalogSearch query={query} onQueryChange={(q) => { setQuery(q); setPartnerFilter(null); }} />
+        {/* Error state */}
+        {isError && (
+          <section className="rounded-2xl border border-destructive/30 bg-destructive/5 p-8 text-center space-y-3">
+            <AlertTriangle className="w-8 h-8 mx-auto text-destructive" />
+            <h2 className="font-display text-section-title font-bold">We couldn't load the catalog</h2>
+            <p className="text-meta text-muted-foreground">Check your connection and try again.</p>
+            <Button onClick={() => refetch()}>Retry</Button>
+          </section>
+        )}
 
-        {query || partnerFilter ? (
+        {/* Course grid */}
+        {!isError && (
           <section className="space-y-4">
-            <h2 className="font-display text-section-title font-bold">
-              {courses.length} result{courses.length !== 1 ? 's' : ''}
-            </h2>
-            {courses.length === 0 ? (
-              <p className="text-muted-foreground py-12 text-center">No courses match. Try a trending topic above.</p>
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <h2 className="font-display text-section-title font-bold">
+                  {isFiltering ? 'Search results' : layout?.sections?.jobReady?.title || 'Explore learning paths'}
+                </h2>
+                <p className="text-meta text-muted-foreground mt-0.5">
+                  {isFiltering
+                    ? `${visibleCourses.length} path${visibleCourses.length === 1 ? '' : 's'} found`
+                    : layout?.sections?.jobReady?.subtitle || 'Guided, chapter-by-chapter paths built for real interviews.'}
+                </p>
+              </div>
+              {isFiltering && (
+                <Button variant="ghost" size="sm" onClick={() => { setQuery(''); setFilter('all'); }}>
+                  Clear filters
+                </Button>
+              )}
+            </div>
+
+            {visibleCourses.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-border bg-card/50 p-12 text-center space-y-3">
+                <Compass className="w-8 h-8 mx-auto text-muted-foreground" />
+                <h3 className="font-display text-card-title font-bold">
+                  {allCourses.length === 0 ? 'No courses published yet' : 'No paths match your filters'}
+                </h3>
+                <p className="text-meta text-muted-foreground">
+                  {allCourses.length === 0
+                    ? 'New learning paths appear here as soon as they are published.'
+                    : 'Try a different keyword or clear the filters.'}
+                </p>
+                {allCourses.length > 0 && (
+                  <Button variant="outline" onClick={() => { setQuery(''); setFilter('all'); }}>
+                    Show all paths
+                  </Button>
+                )}
+              </div>
             ) : (
-              <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
-                {courses.map((course, i) => (
-                  <PremiumCourseCard key={course.id} course={course} index={i} onClick={() => goToCourse(course.id)} />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                {visibleCourses.map((course, i) => (
+                  <PremiumCourseCard
+                    key={course.id}
+                    course={course}
+                    index={i}
+                    onClick={() => goToCourse(course.id)}
+                    className="min-w-0 max-w-none"
+                  />
                 ))}
               </div>
             )}
           </section>
-        ) : (
-          <>
-            {/* 5. Categories — compact tags */}
-            {categories?.active !== false && (
-              <section className="space-y-3">
-                <h2 className="font-display text-section-title font-bold">
-                  {categories?.title || 'Explore categories'}
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {(categories?.items || [
-                    { name: 'Computer Science', icon: 'Code' },
-                    { name: 'Data Science', icon: 'LineChart' },
-                    { name: 'Artificial Intelligence', icon: 'Brain' },
-                    { name: 'Business', icon: 'Briefcase' },
-                  ]).map((cat: any, i: number) => {
-                    const Icon = IconMap[cat.icon] || Code;
-                    return (
-                      <Button
-                        key={i}
-                        variant="outline"
-                        size="sm"
-                        className="rounded-full h-9 px-4 font-medium hover:bg-primary/5 hover:border-primary/30"
-                        onClick={() => setQuery(cat.name || cat.title)}
-                      >
-                        <Icon className="w-3.5 h-3.5 mr-1.5 text-primary" />
-                        {cat.name || cat.title}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </section>
-            )}
-
-            {/* 6. Get job ready — horizontal premium carousel, tight padding */}
-            {jobReady?.active !== false && allCourses.length > 0 && (
-              <section className="rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/5 to-transparent p-4 md:p-6 space-y-4">
-                <div>
-                  <h2 className="font-display text-section-title font-bold">
-                    {jobReady?.title || 'Get job-ready for an in-demand career'}
-                  </h2>
-                  <p className="text-meta text-muted-foreground mt-1">
-                    {jobReady?.subtitle || 'Professional certificates with real projects and interview prep.'}
-                  </p>
-                </div>
-                <Tabs defaultValue={jobReady?.tabs?.[0]?.id || 'all'} className="w-full">
-                  <TabsList className="bg-transparent border-b w-full justify-start rounded-none h-auto p-0 mb-4 overflow-x-auto gap-0">
-                    {(jobReady?.tabs?.length ? jobReady.tabs : [{ id: 'all', label: 'All Paths' }]).map((tab: any) => (
-                      <TabsTrigger
-                        key={tab.id}
-                        value={tab.id}
-                        className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-4 py-2.5 text-meta font-semibold"
-                      >
-                        {tab.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                  {(jobReady?.tabs?.length ? jobReady.tabs : [{ id: 'all', label: 'All' }]).map((tab: any) => (
-                    <TabsContent key={tab.id} value={tab.id} className="outline-none mt-0">
-                      <div className="flex gap-4 overflow-x-auto pb-2 snap-x -mx-1 px-1">
-                        {allCourses.slice(0, 8).map((course, i) => (
-                          <PremiumCourseCard key={course.id} course={course} index={i} onClick={() => goToCourse(course.id)} />
-                        ))}
-                      </div>
-                    </TabsContent>
-                  ))}
-                </Tabs>
-              </section>
-            )}
-
-            {/* 7. New & popular — Coursera-style compact 3-column lists */}
-            {newAndPopular?.active !== false && allCourses.length > 0 && (
-              <section className="space-y-4">
-                <h2 className="font-display text-section-title font-bold">
-                  {newAndPopular?.title || 'New and popular'}
-                </h2>
-                <TrendingLists
-                  columns={trendingColumns}
-                  courses={allCourses}
-                  onCourseClick={goToCourse}
-                />
-              </section>
-            )}
-
-            {/* 8. All learning paths — Netflix-style row */}
-            {allCourses.length > 0 && (
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="font-display text-section-title font-bold">All learning paths</h2>
-                  <span className="text-meta text-muted-foreground">{allCourses.length} paths</span>
-                </div>
-                <div className="flex gap-4 overflow-x-auto pb-2 snap-x">
-                  {allCourses.map((course, i) => (
-                    <PremiumCourseCard key={course.id} course={course} index={i} onClick={() => goToCourse(course.id)} />
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* 9. Career explorer — 6+ cards */}
-            {layout?.sections?.careers?.active !== false && (
-              <CareerExplorer
-                title={layout?.sections?.careers?.title || 'Explore careers'}
-                careers={careers}
-                onCareerClick={(c) => setQuery(c.title.split(' ')[0])}
-              />
-            )}
-
-            {/* 10. AI recommended CTA strip */}
-            <section className="rounded-2xl bg-gradient-to-r from-[#020817] via-[#071126] to-[#0B1730] border border-primary/20 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <h2 className="font-display text-section-title font-bold text-white">AI-recommended for you</h2>
-                <p className="text-meta text-white/70 mt-1 max-w-lg">
-                  Based on your progress, your mentor suggests starting with structured paths and daily missions.
-                </p>
-              </div>
-              <Button
-                className="bg-reward hover:bg-reward/90 text-reward-foreground font-bold shrink-0"
-                onClick={() => navigate('/ai-coach')}
-              >
-                Get Recommendations <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </section>
-          </>
         )}
+
+        {/* Trending — only meaningful with enough courses */}
+        {!isFiltering && allCourses.length >= 6 && (
+          <section className="space-y-4">
+            <h2 className="font-display text-section-title font-bold">
+              {layout?.sections?.newAndPopular?.title || 'New and popular'}
+            </h2>
+            <TrendingLists
+              columns={
+                layout?.sections?.newAndPopular?.columns?.length
+                  ? layout.sections.newAndPopular.columns
+                  : [
+                      { id: 'popular', title: 'Most popular' },
+                      { id: 'new', title: 'Recently added' },
+                      { id: 'advanced', title: 'Level up' },
+                    ]
+              }
+              courses={allCourses}
+              onCourseClick={goToCourse}
+            />
+          </section>
+        )}
+
+        {/* CMS-managed careers */}
+        {Array.isArray(careers) && careers.length > 0 && layout?.sections?.careers?.active !== false && (
+          <CareerExplorer
+            title={layout?.sections?.careers?.title || 'Explore careers'}
+            careers={careers}
+            onCareerClick={(c) => setQuery(c.title.split(' ')[0])}
+          />
+        )}
+
+        {/* AI coach CTA */}
+        <section className="rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/10 via-card to-reward/10 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div>
+            <h2 className="font-display text-section-title font-bold text-foreground">Not sure where to start?</h2>
+            <p className="text-meta text-muted-foreground mt-1 max-w-lg">
+              Your AI coach reviews your progress and recommends the next path, chapter and practice set.
+            </p>
+          </div>
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shrink-0"
+            onClick={() => navigate('/ai-coach')}
+          >
+            Get recommendations <ArrowRight className="ml-2 w-4 h-4" />
+          </Button>
+        </section>
       </div>
     </div>
   );
