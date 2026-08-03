@@ -77,7 +77,7 @@ export default function CoursesCatalogPage() {
   const [filter, setFilter] = useState<Filter>('all');
   const navigate = useNavigate();
 
-  const { data: layout, isLoading: isLayoutLoading } = useCatalogSettings();
+  const { data: layout } = useCatalogSettings();
   const {
     data: phases, isLoading: isCoursesLoading, isError, refetch,
   } = useQuery({
@@ -133,7 +133,7 @@ export default function CoursesCatalogPage() {
 
   const goToCourse = (id: string) => navigate(`/course/${id}/chapters`);
 
-  if (isLayoutLoading || isCoursesLoading) {
+  if (isCoursesLoading) {
     return (
       <div className="space-y-6 pb-20">
         <Skeleton className="h-[260px] w-full rounded-none md:rounded-3xl md:max-w-7xl md:mx-auto" />
