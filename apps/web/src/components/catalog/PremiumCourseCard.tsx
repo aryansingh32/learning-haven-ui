@@ -1,44 +1,69 @@
-import { ArrowRight, Clock, Star, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Crown, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
-  courseCover, courseDifficulty, courseDuration, coursePartner, courseRating, formatLearners, learnerCount,
+  accentIndex, chapterCount, COVER_GRADIENTS, courseCover, courseDifficulty, courseDuration,
+  courseInitials, difficultyClass, formatCount, type CatalogCourse,
 } from './catalog-utils';
 
 type Props = {
-  course: any;
+  course: CatalogCourse;
   index?: number;
   onClick: () => void;
   variant?: 'vertical' | 'horizontal';
   className?: string;
 };
 
-export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className }: Props) {
-  const rating = courseRating(course.id);
-  const learners = formatLearners(learnerCount(course));
-  const partner = coursePartner(course, index);
+function Cover({ course, className }: { course: CatalogCourse; className?: string }) {
   const cover = courseCover(course);
+  const gradient = COVER_GRADIENTS[accentIndex(course.id, COVER_GRADIENTS.length)];
+
+  if (cover) {
+    return (
+      <img
+        src={cover}
+        alt={course.title}
+        loading="lazy"
+        className={cn('w-full h-full object-cover transition-transform duration-500 group-hover:scale-105', className)}
+      />
+    );
+  }
+  return (
+    <div className={cn('w-full h-full bg-gradient-to-br flex items-center justify-center', gradient, className)}>
+      <span className="font-display text-3xl font-bold text-primary-foreground/95 tracking-tight">
+        {courseInitials(course.title)}
+      </span>
+    </div>
+  );
+}
+
+export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className }: Props) {
   const difficulty = courseDifficulty(course);
   const duration = courseDuration(course);
+  const chapters = chapterCount(course);
+  const learners = course.enrolled_count || 0;
 
   if (variant === 'horizontal') {
     return (
       <button
         type="button"
         onClick={onClick}
+        aria-label={`Open ${course.title}`}
         className={cn(
-          'group w-full flex gap-3 p-2 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-md transition-all text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+          'group w-full flex gap-3 p-2 rounded-xl bg-card border border-border/60 hover:border-primary/40 hover:shadow-[var(--shadow-card-hover)] transition-all text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           className
         )}
       >
-        <div className="w-[88px] h-[72px] shrink-0 rounded-lg overflow-hidden bg-secondary">
-          <img src={cover} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+        <div className="w-[76px] h-[64px] shrink-0 rounded-lg overflow-hidden bg-secondary">
+          <Cover course={course} />
         </div>
         <div className="flex-1 min-w-0 py-0.5">
-          <p className="text-caption font-semibold text-muted-foreground">{partner}</p>
-          <h4 className="text-meta font-bold text-foreground line-clamp-2 leading-snug group-hover:text-primary">{course.title}</h4>
+          <h4 className="text-meta font-bold text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors">
+            {course.title}
+          </h4>
           <div className="flex items-center gap-2 mt-1 text-caption text-muted-foreground">
-            <Star className="w-3 h-3 text-reward fill-reward" /> {rating}
+            {difficulty && <span className="font-medium">{difficulty}</span>}
+            {chapters > 0 && <span>{chapters} chapters</span>}
           </div>
         </div>
       </button>
@@ -47,44 +72,55 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04 }}
-      className={cn(
-        'group flex flex-col rounded-2xl border border-border/60 bg-card overflow-hidden cursor-pointer',
-        'hover:border-primary/35 hover:shadow-lg hover:-translate-y-1 transition-all duration-200',
-        'focus-within:ring-2 focus-within:ring-primary min-w-[240px] max-w-[260px] shrink-0 snap-start',
-        className
-      )}
+      transition={{ duration: 0.25, delay: Math.min(index, 8) * 0.04 }}
       onClick={onClick}
-      onKeyDown={(e) => e.key === 'Enter' && onClick()}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
       tabIndex={0}
       role="button"
+      aria-label={`Open ${course.title}`}
+      className={cn(
+        'group flex h-full flex-col rounded-2xl border border-border/60 bg-card overflow-hidden cursor-pointer',
+        'shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] hover:border-primary/40 hover:-translate-y-1',
+        'transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        className
+      )}
     >
-      <div className="relative h-[140px] overflow-hidden bg-secondary">
-        <img src={cover} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-white/90 dark:bg-black/70 text-caption font-bold text-foreground">
-          {partner}
-        </div>
+      <div className="relative h-[132px] overflow-hidden bg-secondary">
+        <Cover course={course} />
+        {course.is_premium && (
+          <span className="absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-reward text-reward-foreground text-caption font-bold shadow-sm">
+            <Crown className="w-3 h-3" /> Premium
+          </span>
+        )}
+        {difficulty && (
+          <span className={cn('absolute bottom-2 left-2 px-2 py-0.5 rounded-md border text-caption font-bold backdrop-blur-sm bg-card/85', difficultyClass(course.difficulty_level))}>
+            {difficulty}
+          </span>
+        )}
       </div>
+
       <div className="p-4 flex flex-col flex-1 gap-2">
         <h3 className="font-display text-card-title font-bold text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors">
           {course.title}
         </h3>
-        <div className="flex flex-wrap gap-x-3 gap-y-1 text-caption text-muted-foreground">
-          <span className="font-medium">{difficulty}</span>
-          <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" /> {duration}</span>
+        {course.description && (
+          <p className="text-meta text-muted-foreground line-clamp-2">{course.description}</p>
+        )}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-caption text-muted-foreground pt-0.5">
+          {chapters > 0 && (
+            <span className="inline-flex items-center gap-1"><BookOpen className="w-3.5 h-3.5" /> {chapters} chapters</span>
+          )}
+          {duration && (
+            <span className="inline-flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {duration}</span>
+          )}
+          {learners > 0 && (
+            <span className="inline-flex items-center gap-1"><Users className="w-3.5 h-3.5" /> {formatCount(learners)}</span>
+          )}
         </div>
-        <div className="flex items-center justify-between text-meta">
-          <span className="inline-flex items-center gap-1 font-semibold text-foreground">
-            <Star className="w-3.5 h-3.5 text-reward fill-reward" /> {rating}
-          </span>
-          <span className="inline-flex items-center gap-1 text-muted-foreground">
-            <Users className="w-3.5 h-3.5" /> {learners}
-          </span>
-        </div>
-        <span className="mt-auto inline-flex items-center gap-1 text-meta font-bold text-primary group-hover:text-reward transition-colors pt-1">
-          Start Learning <ArrowRight className="w-3.5 h-3.5" />
+        <span className="mt-auto inline-flex items-center gap-1 text-meta font-bold text-primary pt-2 group-hover:gap-2 transition-all">
+          Start learning <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
     </motion.article>
