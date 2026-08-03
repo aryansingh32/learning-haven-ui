@@ -109,7 +109,21 @@ export default function CoursesCatalogPage() {
 
   const heroSlides = useMemo(() => buildHeroSlides(layout, allCourses), [layout, allCourses]);
   const partners = layout?.sections?.universities?.partners;
-  const careers = layout?.sections?.careers?.items;
+  const careers = useMemo(
+    () =>
+      (Array.isArray(layout?.sections?.careers?.items) ? layout.sections.careers.items : []).map(
+        (c: any, i: number) => ({
+          id: c.id || `career-${i}`,
+          title: c.title,
+          salary: c.salary,
+          jobs: c.jobs,
+          skills: c.skills,
+          image: c.image,
+          description: c.description,
+        })
+      ),
+    [layout]
+  );
   const topics = useMemo(() => derivedTopics(allCourses), [allCourses]);
   const totalChapters = useMemo(
     () => allCourses.reduce((sum, c) => sum + chapterCount(c), 0),
@@ -278,7 +292,7 @@ export default function CoursesCatalogPage() {
         )}
 
         {/* CMS-managed careers */}
-        {Array.isArray(careers) && careers.length > 0 && layout?.sections?.careers?.active !== false && (
+        {careers.length > 0 && layout?.sections?.careers?.active !== false && (
           <CareerExplorer
             title={layout?.sections?.careers?.title || 'Explore careers'}
             careers={careers}
