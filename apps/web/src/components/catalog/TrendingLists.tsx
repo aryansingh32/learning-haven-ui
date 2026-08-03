@@ -13,7 +13,8 @@ export function TrendingLists({ columns, courses, onCourseClick }: Props) {
   return (
     <div className="grid md:grid-cols-3 gap-4">
       {columns.map((col, colIdx) => {
-        const slice = courses.slice(colIdx * 5, colIdx * 5 + 5);
+        const slice = courses.filter((_, i) => i % columns.length === colIdx).slice(0, 5);
+        if (slice.length === 0) return null;
         return (
           <div key={col.id} className="rounded-xl border border-border/60 bg-card/50 p-4">
             <h3 className="font-display text-card-title font-bold flex items-center justify-between mb-3 group cursor-default">
