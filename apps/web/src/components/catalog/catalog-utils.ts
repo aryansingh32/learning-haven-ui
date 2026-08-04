@@ -29,11 +29,13 @@ export type HeroSlide = {
   buttonText: string;
   buttonLink: string;
   image?: string;
+  backgroundImage?: string;
   variant: 'primary' | 'dark' | 'accent';
 };
 
 export function chapterCount(course: CatalogCourse): number {
-  return course.chapter_count ?? course.item_count ?? 0;
+  const c = course.chapter_count ?? 0;
+  return typeof c === 'string' ? parseInt(c, 10) || 0 : c;
 }
 
 export function courseDuration(course: CatalogCourse): string | null {

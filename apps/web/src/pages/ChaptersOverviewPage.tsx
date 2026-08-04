@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowRight, CheckCircle2, Clock, Flame, Lock,
+  ArrowRight, ArrowLeft, CheckCircle2, Clock, Flame, Lock,
   Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -81,6 +81,14 @@ export default function ChaptersOverviewPage() {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
     >
+      <button
+        type="button"
+        onClick={() => navigate('/courses')}
+        className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back to courses
+      </button>
+
       <section className="rounded-2xl card-layer-2 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -133,169 +141,207 @@ export default function ChaptersOverviewPage() {
               transition={{ duration: 1, delay: 0.2 }}
             />
 
-            {missions.map((mission, index) => {
-              const isComplete = mission.status === "COMPLETED" || index < safeActiveIndex;
-              const isActuallyActive = index === safeActiveIndex && !mission.locked && !mission.paywalled;
-              const isLockedOrPaywalled = mission.locked || mission.paywalled;
-              const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.locked ? "Locked" : "Active";
-              const IconComponent = iconMap[mission.icon] || Grid;
+            {(() => {
+              const needsBlur = missions.some(m => m.paywalled);
+              const visibleCount = needsBlur ? 4 : missions.length;
+              const visibleMissions = missions.slice(0, visibleCount);
+              const blurredMissions = missions.slice(visibleCount);
 
-              return (
-                <motion.div
-                  key={mission.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.04 }}
-                  className="flex gap-4 sm:gap-6 relative z-10 group"
-                >
-                  <motion.div className="w-12 shrink-0 hidden sm:flex items-start justify-center pt-8">
+              const renderMission = (mission: typeof missions[0], index: number, isBlurredSection: boolean = false) => {
+                const isComplete = mission.status === "COMPLETED" || index < safeActiveIndex;
+                const isActuallyActive = index === safeActiveIndex && !mission.locked && !mission.paywalled;
+                const isLockedOrPaywalled = mission.locked || mission.paywalled;
+                const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.locked ? "Locked" : "Active";
+                const IconComponent = iconMap[mission.icon] || Grid;
+
+                return (
+                  <motion.div
+                    key={mission.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.04 }}
+                    className={cn("flex gap-4 sm:gap-6 relative z-10 group", isBlurredSection && "blur-[3px] opacity-70 pointer-events-none select-none")}
+                  >
+                    <motion.div className="w-12 shrink-0 hidden sm:flex items-start justify-center pt-8">
+                      <div
+                        className={cn(
+                          "h-4 w-4 rounded-full border-2 z-10 transition-all duration-300",
+                          isComplete
+                            ? "bg-orange-500 border-orange-500"
+                            : isActuallyActive
+                              ? "bg-orange-500 border-background shadow-[0_0_0_4px_rgba(249,115,22,0.3)] ring-2 ring-orange-500 scale-125"
+                              : "bg-background border-border/80"
+                        )}
+                      />
+                    </motion.div>
+
                     <div
-                      className={cn(
-                        "h-4 w-4 rounded-full border-2 z-10 transition-all duration-300",
-                        isComplete
-                          ? "bg-orange-500 border-orange-500"
-                          : isActuallyActive
-                            ? "bg-orange-500 border-background shadow-[0_0_0_4px_rgba(249,115,22,0.3)] ring-2 ring-orange-500 scale-125"
-                            : "bg-background border-border/80"
-                      )}
-                    />
-                  </motion.div>
-
-                  <div
-                    role="button"
-                    tabIndex={mission.locked ? -1 : 0}
-                    onClick={() => {
-                      if (mission.paywalled) navigate('/pricing');
-                      else if (!mission.locked) navigate(`/chapter/${mission.id}`);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
+                      role="button"
+                      tabIndex={mission.locked || isBlurredSection ? -1 : 0}
+                      onClick={() => {
+                        if (isBlurredSection) return;
                         if (mission.paywalled) navigate('/pricing');
                         else if (!mission.locked) navigate(`/chapter/${mission.id}`);
-                      }
-                    }}
-                    className={cn(
-                      "flex-1 rounded-2xl border p-5 sm:p-6 transition-all duration-300 relative overflow-hidden",
-                      isActuallyActive
-                        ? "bg-[#111111] border-orange-500/40 shadow-xl scale-[1.02] cursor-pointer hover:-translate-y-1 hover:shadow-2xl ring-1 ring-orange-500/20"
-                        : mission.locked
-                          ? "bg-background/20 backdrop-blur-sm border-border/20 text-muted-foreground opacity-60 cursor-not-allowed grayscale-[0.3]"
-                          : "bg-background/80 border-border/60 cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:bg-background"
-                    )}
-                  >
-                    {isLockedOrPaywalled && (
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
-                        <Lock className="w-32 h-32" />
-                      </div>
-                    )}
-
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative z-10">
-                      <div className="flex gap-4">
-                        <div
-                          className={cn(
-                            "w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors",
-                            isComplete ? "bg-orange-500/10 text-orange-500" :
-                            isActuallyActive ? "bg-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]" :
-                            "bg-secondary/80 text-muted-foreground"
-                          )}
-                        >
-                          <IconComponent className="w-6 h-6 sm:w-7 sm:h-7" />
+                      }}
+                      onKeyDown={(e) => {
+                        if (isBlurredSection) return;
+                        if (e.key === "Enter") {
+                          if (mission.paywalled) navigate('/pricing');
+                          else if (!mission.locked) navigate(`/chapter/${mission.id}`);
+                        }
+                      }}
+                      className={cn(
+                        "flex-1 rounded-2xl border p-5 sm:p-6 transition-all duration-300 relative overflow-hidden",
+                        isActuallyActive
+                          ? "bg-[#111111] border-orange-500/40 shadow-xl scale-[1.02] cursor-pointer hover:-translate-y-1 hover:shadow-2xl ring-1 ring-orange-500/20"
+                          : mission.locked
+                            ? "bg-background/20 backdrop-blur-sm border-border/20 text-muted-foreground opacity-60 cursor-not-allowed grayscale-[0.3]"
+                            : "bg-background/80 border-border/60 cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:bg-background"
+                      )}
+                    >
+                      {isLockedOrPaywalled && (
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
+                          <Lock className="w-32 h-32" />
                         </div>
-                        <div className="flex flex-col justify-center">
-                          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">
-                            Chapter {mission.order}
-                          </p>
-                          <h3 className={cn(
-                            "text-lg sm:text-xl font-display font-extrabold tracking-tight",
-                            isActuallyActive ? "text-white" : mission.locked ? "text-muted-foreground" : "text-foreground"
-                          )}>
-                            {mission.title}
-                          </h3>
-                          <p className={cn(
-                            "text-sm mt-1 max-w-xl",
-                            isActuallyActive ? "text-white/70" : mission.locked ? "text-muted-foreground/60" : "text-muted-foreground"
-                          )}>
-                            {mission.concept}
-                          </p>
-                        </div>
-                      </div>
+                      )}
 
-                      <div className="flex flex-col items-end gap-2 shrink-0">
-                        {mission.paywalled && <PremiumLockBadge className="mb-1" />}
-                        <span className={cn(
-                          "text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider",
-                          isComplete ? "bg-success/10 text-success" :
-                          isActuallyActive ? "bg-orange-500/20 text-orange-400 border border-orange-500/30" :
-                          "bg-secondary text-muted-foreground"
-                        )}>
-                          {statusLabel}
-                        </span>
-                        {!mission.locked && !mission.paywalled && (
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative z-10">
+                        <div className="flex gap-4">
+                          <div
+                            className={cn(
+                              "w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors",
+                              isComplete ? "bg-orange-500/10 text-orange-500" :
+                              isActuallyActive ? "bg-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]" :
+                              "bg-secondary/80 text-muted-foreground"
+                            )}
+                          >
+                            <IconComponent className="w-6 h-6 sm:w-7 sm:h-7" />
+                          </div>
+                          <div className="flex flex-col justify-center">
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">
+                              Chapter {mission.order}
+                            </p>
+                            <h3 className={cn(
+                              "text-lg sm:text-xl font-display font-extrabold tracking-tight",
+                              isActuallyActive ? "text-white" : mission.locked ? "text-muted-foreground" : "text-foreground"
+                            )}>
+                              {mission.title}
+                            </h3>
+                            <p className={cn(
+                              "text-sm mt-1 max-w-xl",
+                              isActuallyActive ? "text-white/70" : mission.locked ? "text-muted-foreground/60" : "text-muted-foreground"
+                            )}>
+                              {mission.concept}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col items-end gap-2 shrink-0">
+                          {mission.paywalled && !isBlurredSection && <PremiumLockBadge className="mb-1" />}
                           <span className={cn(
-                            "text-[10px] px-2.5 py-1 rounded-full font-bold tracking-wider uppercase border",
-                            difficultyStyles[mission.difficulty] || difficultyStyles.medium
+                            "text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider",
+                            isComplete ? "bg-success/10 text-success" :
+                            isActuallyActive ? "bg-orange-500/20 text-orange-400 border border-orange-500/30" :
+                            "bg-secondary text-muted-foreground"
                           )}>
-                            {mission.difficulty}
+                            {statusLabel}
                           </span>
-                        )}
+                          {!mission.locked && !mission.paywalled && (
+                            <span className={cn(
+                              "text-[10px] px-2.5 py-1 rounded-full font-bold tracking-wider uppercase border",
+                              difficultyStyles[mission.difficulty] || difficultyStyles.medium
+                            )}>
+                              {mission.difficulty}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {!mission.locked && !isBlurredSection && (
+                        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 relative z-10">
+                          <motion.div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                            <span className={cn(
+                              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border",
+                              isActuallyActive ? "bg-white/5 border-white/10 text-white/90" : "bg-background border-border text-foreground"
+                            )}>
+                              <CheckCircle2 className="h-4 w-4" /> {mission.completedSteps}/{mission.totalSteps} steps
+                            </span>
+                            <span className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-500 px-3 py-1.5 rounded-lg">
+                              <Flame className="h-4 w-4" /> +{mission.reward.xp} XP
+                            </span>
+                            <span className={cn(
+                              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border",
+                              isActuallyActive ? "bg-white/5 border-white/10 text-white/90" : "bg-background border-border text-foreground"
+                            )}>
+                              <Clock className="h-4 w-4" /> ~{mission.timeMinutes} min
+                            </span>
+                          </motion.div>
+
+                          <button
+                            type="button"
+                            className={cn(
+                              "inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all shadow-sm",
+                              isComplete
+                                ? "bg-secondary hover:bg-secondary/80 text-foreground"
+                                : "bg-orange-500 hover:bg-orange-600 text-white hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(249,115,22,0.3)]"
+                            )}
+                          >
+                            {isComplete ? "Review Chapter" : "Start"} <ArrowRight className="h-4 w-4" />
+                          </button>
+                        </div>
+                      )}
+
+                      {mission.locked && !mission.paywalled && !isBlurredSection && (
+                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest relative z-10">
+                          <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
+                        </div>
+                      )}
+
+                      {mission.paywalled && !isBlurredSection && (
+                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-orange-500 uppercase tracking-widest relative z-10">
+                          <Lock className="w-3.5 h-3.5" /> Pro required to unlock this chapter
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              };
+
+              return (
+                <>
+                  {visibleMissions.map((mission, index) => renderMission(mission, index, false))}
+                  
+                  {blurredMissions.length > 0 && (
+                    <div className="relative mt-6">
+                      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-background/20 backdrop-blur-[2px] rounded-2xl border border-orange-500/20">
+                        <div className="bg-background/80 p-8 rounded-2xl shadow-2xl border border-border/50 text-center max-w-sm mx-auto backdrop-blur-md">
+                          <Lock className="w-12 h-12 text-orange-500 mx-auto mb-4 opacity-80" />
+                          <h3 className="text-xl font-bold mb-2">Unlock the Full Course</h3>
+                          <p className="text-sm text-muted-foreground mb-6">
+                            Get Learning Haven Pro to access all {missions.length} chapters and master the complete curriculum.
+                          </p>
+                          <button
+                            onClick={() => navigate('/pricing')}
+                            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-all bg-orange-500 hover:bg-orange-600 text-white shadow-[0_4px_14px_rgba(249,115,22,0.3)] hover:-translate-y-0.5"
+                          >
+                            Upgrade to Premium <ArrowRight className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="space-y-6">
+                        {blurredMissions.map((mission, index) => renderMission(mission, visibleCount + index, true))}
                       </div>
                     </div>
-
-                    {!mission.locked && (
-                      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 relative z-10">
-                        <motion.div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-                          <span className={cn(
-                            "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border",
-                            isActuallyActive ? "bg-white/5 border-white/10 text-white/90" : "bg-background border-border text-foreground"
-                          )}>
-                            <CheckCircle2 className="h-4 w-4" /> {mission.completedSteps}/{mission.totalSteps} steps
-                          </span>
-                          <span className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-500 px-3 py-1.5 rounded-lg">
-                            <Flame className="h-4 w-4" /> +{mission.reward.xp} XP
-                          </span>
-                          <span className={cn(
-                            "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border",
-                            isActuallyActive ? "bg-white/5 border-white/10 text-white/90" : "bg-background border-border text-foreground"
-                          )}>
-                            <Clock className="h-4 w-4" /> ~{mission.timeMinutes} min
-                          </span>
-                        </motion.div>
-
-                        <button
-                          type="button"
-                          className={cn(
-                            "inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all shadow-sm",
-                            isComplete
-                              ? "bg-secondary hover:bg-secondary/80 text-foreground"
-                              : "bg-orange-500 hover:bg-orange-600 text-white hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(249,115,22,0.3)]"
-                          )}
-                        >
-                          {isComplete ? "Review Chapter" : "Start"} <ArrowRight className="h-4 w-4" />
-                        </button>
-                      </div>
-                    )}
-
-                    {mission.locked && !mission.paywalled && (
-                      <div className="mt-4 flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest relative z-10">
-                        <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
-                      </div>
-                    )}
-
-                    {mission.paywalled && (
-                      <div className="mt-4 flex items-center gap-2 text-xs font-bold text-orange-500 uppercase tracking-widest relative z-10">
-                        <Lock className="w-3.5 h-3.5" /> Pro required to unlock this chapter
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
+                  )}
+                </>
               );
-            })}
+            })()}
           </motion.div>
         </section>
       )}
 
-      {activeChapter && (
-        <p className="text-xs text-muted-foreground text-center">
+      {activeChapter && !activeChapter.status.includes('PAYWALL') && (
+        <p className="text-xs text-muted-foreground text-center mt-6">
           Current: {activeChapter.title} ({activeChapter.status})
         </p>
       )}

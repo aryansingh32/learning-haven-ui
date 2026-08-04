@@ -12,6 +12,7 @@ type Props = {
   onClick: () => void;
   variant?: 'vertical' | 'horizontal';
   className?: string;
+  isEnrolled?: boolean;
 };
 
 function Cover({ course, className }: { course: CatalogCourse; className?: string }) {
@@ -37,7 +38,7 @@ function Cover({ course, className }: { course: CatalogCourse; className?: strin
   );
 }
 
-export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className }: Props) {
+export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className, isEnrolled }: Props) {
   const difficulty = courseDifficulty(course);
   const duration = courseDuration(course);
   const chapters = chapterCount(course);
@@ -95,18 +96,18 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
           </span>
         )}
         {difficulty && (
-          <span className={cn('absolute bottom-2 left-2 px-2 py-0.5 rounded-md border text-caption font-bold backdrop-blur-sm bg-card/85', difficultyClass(course.difficulty_level))}>
+          <span className={cn('absolute bottom-2 left-2 px-1.5 py-0 rounded border text-[10px] tracking-wide font-bold backdrop-blur-sm bg-card/85', difficultyClass(course.difficulty_level))}>
             {difficulty}
           </span>
         )}
       </div>
 
       <div className="p-4 flex flex-col flex-1 gap-2">
-        <h3 className="font-display text-card-title font-bold text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors">
+        <h3 className="font-display font-semibold text-base text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors">
           {course.title}
         </h3>
         {course.description && (
-          <p className="text-meta text-muted-foreground line-clamp-2">{course.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{course.description}</p>
         )}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-caption text-muted-foreground pt-0.5">
           {chapters > 0 && (
@@ -120,7 +121,7 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
           )}
         </div>
         <span className="mt-auto inline-flex items-center gap-1 text-meta font-bold text-primary pt-2 group-hover:gap-2 transition-all">
-          Start learning <ArrowRight className="w-3.5 h-3.5" />
+          {isEnrolled ? 'Continue learning' : 'Start learning'} <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
     </motion.article>

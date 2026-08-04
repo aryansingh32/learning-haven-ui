@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
+import Fuse from 'fuse.js';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchPhases } from '@/data/chapters';
+import { api } from '@/services/api.svc';
 import { useCatalogSettings } from '@/hooks/useCatalogSettings';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -13,6 +15,9 @@ import { CatalogSearch } from '@/components/catalog/CatalogSearch';
 import { PremiumCourseCard } from '@/components/catalog/PremiumCourseCard';
 import { TrendingLists } from '@/components/catalog/TrendingLists';
 import { CareerExplorer } from '@/components/catalog/CareerExplorer';
+import { EnrolledPaths } from '@/components/catalog/EnrolledPaths';
+import { AIRecommendations } from '@/components/catalog/AIRecommendations';
+import { fetchMyCourseEnrollments } from '@/data/chapters';
 import { chapterCount, derivedTopics, type CatalogCourse, type HeroSlide } from '@/components/catalog/catalog-utils';
 import { cn } from '@/lib/utils';
 
@@ -27,6 +32,7 @@ function buildHeroSlides(layout: any, courses: CatalogCourse[]): HeroSlide[] {
       buttonText: slide.buttonText || 'Explore courses',
       buttonLink: slide.buttonLink || '/courses',
       image: slide.image,
+      backgroundImage: slide.backgroundImage,
       variant: i === 0 ? 'primary' : i % 2 === 0 ? 'accent' : 'dark',
       tags: slide.tags,
       stat: slide.stat,
@@ -75,7 +81,9 @@ function StatPill({ icon: Icon, value, label }: { icon: typeof BookOpen; value: 
 export default function CoursesCatalogPage() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
+  const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
+  const qc = useQueryClient();
 
   const { data: layout } = useCatalogSettings();
   const {
@@ -84,10 +92,25 @@ export default function CoursesCatalogPage() {
     queryKey: ['learn-phases'],
     queryFn: async () => {
       const courses = await fetchPhases();
-      return Array.isArray(courses) ? (courses as CatalogCourse[]) : [];
+      if (!Array.isArray(courses)) return [];
+      return (courses as CatalogCourse[]).filter(c => chapterCount(c) > 0);
     },
     staleTime: 60_000,
   });
+
+  const { data: enrollmentsData } = useQuery({
+    queryKey: ['my-course-enrollments'],
+    queryFn: async () => {
+      try {
+        const res: any = await fetchMyCourseEnrollments();
+        return res?.enrollments || [];
+      } catch (e) {
+        return [];
+      }
+    },
+  });
+
+  const enrollments = enrollmentsData || [];
 
   const allCourses = useMemo(() => (phases || []) as CatalogCourse[], [phases]);
 
@@ -95,11 +118,16 @@ export default function CoursesCatalogPage() {
     let list = allCourses;
     const q = query.toLowerCase().trim();
     if (q) {
-      list = list.filter((item) =>
-        `${item.title} ${item.description || ''} ${item.slug || ''} ${item.difficulty_level || ''}`
-          .toLowerCase()
-          .includes(q)
-      );
+      const fuse = new Fuse(list, {
+        keys: [
+          { name: 'title', weight: 3 },
+          { name: 'description', weight: 2 },
+          { name: 'difficulty_level', weight: 1 },
+          { name: 'slug', weight: 1 }
+        ],
+        threshold: 0.4,
+      });
+      list = fuse.search(q).map(res => res.item);
     }
     if (filter === 'free') list = list.filter((c) => !c.is_premium);
     else if (filter === 'premium') list = list.filter((c) => c.is_premium);
@@ -108,7 +136,15 @@ export default function CoursesCatalogPage() {
   }, [allCourses, query, filter]);
 
   const heroSlides = useMemo(() => buildHeroSlides(layout, allCourses), [layout, allCourses]);
-  const partners = layout?.sections?.universities?.partners;
+  const partners = useMemo(() => {
+    const raw = layout?.sections?.universities?.partners;
+    if (Array.isArray(raw) && raw.length > 0) return raw;
+    const logos = layout?.sections?.universities?.logos;
+    if (Array.isArray(logos) && logos.length > 0) {
+      return logos.map((logo: string, i: number) => ({ name: `Partner ${i+1}`, logo, courses: 10 }));
+    }
+    return [];
+  }, [layout]);
   const careers = useMemo(
     () =>
       (Array.isArray(layout?.sections?.careers?.items) ? layout.sections.careers.items : []).map(
@@ -130,7 +166,14 @@ export default function CoursesCatalogPage() {
     [allCourses]
   );
   const isFiltering = Boolean(query.trim()) || filter !== 'all';
+  const shouldPaginate = !showAll && !isFiltering;
+  const displayedCourses = shouldPaginate ? visibleCourses.slice(0, 12) : visibleCourses;
 
+  const aiRecommendations = useMemo(() => {
+    if (enrollments.length < 3 || allCourses.length === 0) return [];
+    const enrolledCourseIds = new Set(enrollments.map((e: any) => e.course_id));
+    return allCourses.filter(c => !enrolledCourseIds.has(c.id)).slice(0, 4);
+  }, [allCourses, enrollments]);
   const goToCourse = (id: string) => navigate(`/course/${id}/chapters`);
 
   if (isCoursesLoading) {
@@ -157,6 +200,13 @@ export default function CoursesCatalogPage() {
         <PartnerMarquee
           title={layout?.sections?.universities?.text}
           partners={partners}
+          onPartnerClick={(p) => {
+            if (p.name) {
+              setQuery(p.name);
+              setShowAll(true);
+              window.scrollTo({ top: 400, behavior: 'smooth' });
+            }
+          }}
         />
       )}
 
@@ -165,7 +215,7 @@ export default function CoursesCatalogPage() {
         {allCourses.length > 0 && (
           <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <StatPill icon={Layers} value={allCourses.length} label="Learning paths" />
-            <StatPill icon={BookOpen} value={totalChapters || '—'} label="Guided chapters" />
+            <StatPill icon={BookOpen} value={totalChapters} label="Guided chapters" />
             <StatPill
               icon={GraduationCap}
               value={allCourses.filter((c) => !c.is_premium).length}
@@ -179,7 +229,11 @@ export default function CoursesCatalogPage() {
           </section>
         )}
 
-        <YourPathSection />
+        {enrollments.length > 0 ? (
+          <EnrolledPaths enrollments={enrollments} />
+        ) : (
+          <YourPathSection />
+        )}
 
         {/* Search + filters */}
         <section className="space-y-4">
@@ -254,23 +308,33 @@ export default function CoursesCatalogPage() {
                 )}
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {visibleCourses.map((course, i) => (
-                  <PremiumCourseCard
-                    key={course.id}
-                    course={course}
-                    index={i}
-                    onClick={() => goToCourse(course.id)}
-                    className="min-w-0 max-w-none"
-                  />
-                ))}
+              <div className="space-y-8">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {displayedCourses.map((course, i) => (
+                    <PremiumCourseCard
+                      key={course.id}
+                      course={course}
+                      index={i}
+                      onClick={() => goToCourse(course.id)}
+                      className="min-w-0 max-w-none"
+                      isEnrolled={enrollments.some((e: any) => e.course_id === course.id)}
+                    />
+                  ))}
+                </div>
+                {shouldPaginate && visibleCourses.length > 12 && (
+                  <div className="flex justify-center pt-2">
+                    <Button variant="outline" size="lg" className="rounded-full px-8 font-bold border-border hover:border-primary hover:text-primary transition-colors bg-card shadow-[var(--shadow-card)]" onClick={() => setShowAll(true)}>
+                      Explore all paths <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
               </div>
             )}
           </section>
         )}
 
-        {/* Trending — only meaningful with enough courses */}
-        {!isFiltering && allCourses.length >= 6 && (
+        {/* Trending */}
+        {!isFiltering && allCourses.length > 0 && (
           <section className="space-y-4">
             <h2 className="font-display text-section-title font-bold">
               {layout?.sections?.newAndPopular?.title || 'New and popular'}
@@ -287,6 +351,7 @@ export default function CoursesCatalogPage() {
               }
               courses={allCourses}
               onCourseClick={goToCourse}
+              enrollments={enrollments}
             />
           </section>
         )}
@@ -296,8 +361,20 @@ export default function CoursesCatalogPage() {
           <CareerExplorer
             title={layout?.sections?.careers?.title || 'Explore careers'}
             careers={careers}
-            onCareerClick={(c) => setQuery(c.title.split(' ')[0])}
+            onCareerClick={(c) => {
+              setQuery(c.title.split(' ')[0]);
+              setShowAll(true);
+              window.scrollTo({ top: 400, behavior: 'smooth' });
+            }}
+            onExploreAllClick={() => {
+              setShowAll(true);
+              window.scrollTo({ top: 400, behavior: 'smooth' });
+            }}
           />
+        )}
+
+        {aiRecommendations.length > 0 && (
+          <AIRecommendations recommendations={aiRecommendations} />
         )}
 
         {/* AI coach CTA */}

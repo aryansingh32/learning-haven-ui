@@ -7,9 +7,10 @@ type Props = {
   columns: Column[];
   courses: any[];
   onCourseClick: (id: string) => void;
+  enrollments?: any[];
 };
 
-export function TrendingLists({ columns, courses, onCourseClick }: Props) {
+export function TrendingLists({ columns, courses, onCourseClick, enrollments = [] }: Props) {
   return (
     <div className="grid md:grid-cols-3 gap-4">
       {columns.map((col, colIdx) => {
@@ -17,9 +18,8 @@ export function TrendingLists({ columns, courses, onCourseClick }: Props) {
         if (slice.length === 0) return null;
         return (
           <div key={col.id} className="rounded-xl border border-border/60 bg-card/50 p-4">
-            <h3 className="font-display text-card-title font-bold flex items-center justify-between mb-3 group cursor-default">
+            <h3 className="font-display text-card-title font-bold mb-3 cursor-default">
               {col.title}
-              <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </h3>
             <div className="space-y-2">
               {slice.map((course, i) => (
@@ -29,6 +29,7 @@ export function TrendingLists({ columns, courses, onCourseClick }: Props) {
                   index={i}
                   variant="horizontal"
                   onClick={() => onCourseClick(course.id)}
+                  isEnrolled={enrollments.some((e: any) => e.course_id === course.id)}
                 />
               ))}
             </div>

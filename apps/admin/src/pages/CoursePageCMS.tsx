@@ -150,10 +150,18 @@ export default function CoursePageCMS() {
                                             }} />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label>Image URL</Label>
+                                            <Label>Image URL (Foreground)</Label>
                                             <Input value={slide.image} onChange={(e) => {
                                                 const newSlides = [...layout.sliderBanners];
                                                 newSlides[index].image = e.target.value;
+                                                updateLayout(['sliderBanners'], newSlides);
+                                            }} />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Background Image URL</Label>
+                                            <Input value={slide.backgroundImage || ''} onChange={(e) => {
+                                                const newSlides = [...layout.sliderBanners];
+                                                newSlides[index].backgroundImage = e.target.value;
                                                 updateLayout(['sliderBanners'], newSlides);
                                             }} />
                                         </div>
@@ -161,7 +169,7 @@ export default function CoursePageCMS() {
                                 </Card>
                             ))}
                             <Button variant="outline" className="w-full" onClick={() => {
-                                updateLayout(['sliderBanners'], [...(layout.sliderBanners || []), { id: Date.now().toString(), title: "New Slide", subtitle: "", buttonText: "Click Here", buttonLink: "/courses", image: "" }])
+                                updateLayout(['sliderBanners'], [...(layout.sliderBanners || []), { id: Date.now().toString(), title: "New Slide", subtitle: "", buttonText: "Click Here", buttonLink: "/courses", image: "", backgroundImage: "" }])
                             }}><Plus className="w-4 h-4 mr-2" /> Add Hero Slide</Button>
                         </CardContent>
                     </Card>

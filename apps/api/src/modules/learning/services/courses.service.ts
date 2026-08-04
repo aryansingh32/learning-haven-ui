@@ -12,14 +12,14 @@ export class CoursesService {
             const cached = await CacheService.get<any>(cacheKey);
             if (cached) return cached;
 
-            let queryStr = 'SELECT * FROM public.courses';
+            let queryStr = 'SELECT c.*, (SELECT COUNT(*)::integer FROM public.chapters ch WHERE ch.course_id = c.id) as chapter_count FROM public.courses c';
             const params: any[] = [];
             
             if (!includeUnpublished) {
-                queryStr += ' WHERE is_published = true';
+                queryStr += ' WHERE c.is_published = true';
             }
             
-            queryStr += ' ORDER BY order_index ASC, created_at DESC';
+            queryStr += ' ORDER BY c.order_index ASC, c.created_at DESC';
 
             const resultRows = await pool.query(queryStr, params);
             const data = resultRows.rows;
@@ -71,6 +71,74 @@ export class CoursesService {
         } catch (error) {
             logger.error('Get course error:', { idOrSlug, error });
             throw new Error('Failed to get course');
+        }
+    }
+
+    // ── Enrollments ─────────────────────────────────────────
+
+    static async getMyEnrollments(userId: string) {
+        try {
+            const { data, error } = await supabase
+                .from('course_enrollments')
+                .select('*, courses(*)')
+                .eq('user_id', userId)
+                .order('enrolled_at', { ascending: false });
+
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            logger.error('Get my enrollments error:', error);
+            throw new Error('Failed to fetch enrollments');
+        }
+    }
+
+    static async enroll(userId: string, courseId: string) {
+        try {
+            const { data, error } = await supabase
+                .from('course_enrollments')
+                .upsert({ user_id: userId, course_id: courseId, status: 'active', progress_percentage: 0 }, { onConflict: 'user_id, course_id' })
+                .select()
+                .single();
+
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            logger.error('Enroll error:', error);
+            throw new Error('Failed to enroll in course');
+        }
+    }
+
+    static async updateCourseProgress(userId: string, courseId: string) {
+        try {
+            // Count total chapters
+            const totalResult = await pool.query(
+                'SELECT COUNT(*)::int as total FROM public.chapters WHERE course_id = $1',
+                [courseId]
+            );
+            const total = totalResult.rows[0]?.total || 0;
+
+            if (total === 0) return;
+
+            // Count completed chapters
+            const completedResult = await pool.query(
+                `SELECT COUNT(*)::int as completed 
+                 FROM public.user_chapter_progress ucp
+                 JOIN public.chapters c ON c.id = ucp.chapter_id
+                 WHERE ucp.user_id = $1 AND c.course_id = $2 AND ucp.status = 'COMPLETED'`,
+                [userId, courseId]
+            );
+            const completed = completedResult.rows[0]?.completed || 0;
+
+            const progressPercentage = Math.round((completed / total) * 100);
+
+            await supabase
+                .from('course_enrollments')
+                .update({ progress_percentage: progressPercentage })
+                .eq('user_id', userId)
+                .eq('course_id', courseId);
+                
+        } catch (error) {
+            logger.error('Update course progress error:', error);
         }
     }
 

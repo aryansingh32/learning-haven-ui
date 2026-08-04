@@ -2,6 +2,7 @@ import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
 import { updateStreak } from '../../../utils/streak';
 import { checkBadges } from '../../../utils/badges';
+import { CoursesService } from './courses.service';
 
 type StepRow = { type?: string; content?: Record<string, unknown> };
 
@@ -159,13 +160,25 @@ export class ChaptersService {
                 .eq('id', userId)
                 .maybeSingle();
 
+            const { data: course } = await supabase
+                .from('courses')
+                .select('is_premium')
+                .eq('id', chapter.course_id)
+                .maybeSingle();
+
             // Paywall logic
-            const isFree = user?.current_plan === 'free';
-            const isPaywalled = isFree && chapter.chapter_number > 3;
+            const isFreeUser = user?.current_plan === 'free';
+            const isPremiumCourse = course?.is_premium === true;
             
-            // Override progress status if paywalled
-            if (isPaywalled && progress?.status !== 'COMPLETED') {
-                progress = { ...progress, status: 'LOCKED_PAYWALL' };
+            // If premium course, free users can't access ANY chapters (unless completed previously)
+            // They also can't even see chapter > 4.
+            if (isPremiumCourse && isFreeUser) {
+                if (chapter.chapter_number > 4) {
+                    throw new Error('Chapter not found');
+                }
+                if (progress?.status !== 'COMPLETED') {
+                    progress = { ...progress, status: 'LOCKED_PAYWALL' };
+                }
             }
 
             const celebration = ChaptersService.buildCelebrationMeta(chapter, steps);
@@ -243,7 +256,14 @@ export class ChaptersService {
                 .eq('id', userId)
                 .maybeSingle();
 
-            const isFree = user?.current_plan === 'free';
+            const { data: course } = await supabase
+                .from('courses')
+                .select('is_premium')
+                .eq('id', courseId)
+                .maybeSingle();
+
+            const isFreeUser = user?.current_plan === 'free';
+            const isPremiumCourse = course?.is_premium === true;
 
             return chapters.map(chapter => {
                 const prog = progressByChapter.get(chapter.id);
@@ -254,7 +274,7 @@ export class ChaptersService {
                 
                 let status = prog?.status || (chapter.chapter_number === 1 ? 'UNLOCKED' : 'LOCKED');
                 
-                if (isFree && chapter.chapter_number > 3 && status !== 'COMPLETED') {
+                if (isPremiumCourse && isFreeUser && status !== 'COMPLETED') {
                     status = 'LOCKED_PAYWALL';
                 }
 
@@ -557,6 +577,9 @@ export class ChaptersService {
                 }
             }
 
+            // Update course progress asynchronously
+            CoursesService.updateCourseProgress(userId, chapter.course_id).catch(() => {});
+
             return {
                 success: true,
                 next_chapter: nextChapter,
@@ -676,6 +699,9 @@ export class ChaptersService {
 
                 nextChapter = next;
             }
+
+            // Update course progress asynchronously
+            CoursesService.updateCourseProgress(userId, chapter.course_id).catch(() => {});
 
             return {
                 success: true,

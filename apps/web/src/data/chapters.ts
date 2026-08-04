@@ -155,6 +155,14 @@ export async function fetchPhaseChapters(courseId: string) {
   return api.get(`/courses/${courseId}/chapters`);
 }
 
+export async function fetchMyCourseEnrollments() {
+  return api.get('/courses/enrollments/mine');
+}
+
+export async function enrollInCourse(courseId: string) {
+  return api.post(`/courses/${courseId}/enroll`);
+}
+
 export async function fetchChapterWithProgress(chapterId: string): Promise<ChapterWithProgressResponse> {
   return api.get(`/chapters/${chapterId}`);
 }

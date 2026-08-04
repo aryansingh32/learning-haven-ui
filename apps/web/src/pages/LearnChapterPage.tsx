@@ -185,6 +185,14 @@ export default function LearnChapterPage() {
     (stepId: string, index: number) => {
       if (!isStepUnlocked(index)) return;
 
+      const currentStep = steps.find(s => s.id === stepId);
+      if (currentStep?.type === 'story_hook' && data?.course?.id) {
+        // Mark as enrolled if they completed a story hook step
+        api.post(`/courses/${data.course.id}/enroll`).then(() => {
+          qc.invalidateQueries({ queryKey: ['my-course-enrollments'] });
+        }).catch(() => {});
+      }
+
       if (index + 1 < steps.length) {
         setActiveStepIndex(index + 1);
       }
@@ -207,7 +215,7 @@ export default function LearnChapterPage() {
         },
       });
     },
-    [chapterId, isStepUnlocked, qc, stepMutation, steps.length]
+    [chapterId, isStepUnlocked, qc, stepMutation, steps, data]
   );
 
   const handleCelebrate = (stepId: string, index: number) => {
@@ -239,10 +247,10 @@ export default function LearnChapterPage() {
         <p className="text-lg font-semibold">Chapter not found</p>
         <button
           type="button"
-          onClick={() => navigate('/chapters')}
+          onClick={() => navigate('/courses')}
           className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to Learn
+          <ArrowLeft className="h-4 w-4" /> Back to courses
         </button>
       </div>
     );
@@ -266,7 +274,7 @@ export default function LearnChapterPage() {
             : "Complete the previous chapter to unlock this one."}
         </p>
         <div className="flex items-center justify-center gap-4 mt-6">
-          <ChapterCta variant="secondary" onClick={() => navigate('/chapters')}>
+          <ChapterCta variant="secondary" onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}>
             Back to course
           </ChapterCta>
           {isPaywall && (
@@ -426,7 +434,7 @@ export default function LearnChapterPage() {
     >
       <button
         type="button"
-        onClick={() => navigate('/chapters')}
+        onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}
         className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" /> Back to course
@@ -626,7 +634,7 @@ export default function LearnChapterPage() {
         isOpen={showCelebration}
         onClose={() => {
           setShowCelebration(false);
-          if (progress?.status === 'COMPLETED') navigate('/chapters');
+          if (progress?.status === 'COMPLETED') navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses');
         }}
         chapterTitle={chapter.title}
         chapterNumber={chapter.chapter_number}
@@ -640,7 +648,7 @@ export default function LearnChapterPage() {
         onNext={
           celebrationPayload?.nextChapterId
             ? () => navigate(`/chapter/${celebrationPayload.nextChapterId}`)
-            : () => navigate('/chapters')
+            : () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')
         }
       />
     </motion.div>

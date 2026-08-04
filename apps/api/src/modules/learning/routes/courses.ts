@@ -14,6 +14,20 @@ const router = Router();
 router.get('/', CoursesController.listCourses);
 
 /**
+ * @route   GET /api/courses/enrollments/mine
+ * @desc    Get user's enrolled courses
+ * @access  Private
+ */
+router.get('/enrollments/mine', authenticateUser, CoursesController.getMyEnrollments);
+
+/**
+ * @route   POST /api/courses/:id/enroll
+ * @desc    Enroll in a course
+ * @access  Private
+ */
+router.post('/:id/enroll', authenticateUser, CoursesController.enroll);
+
+/**
  * @route   GET /api/courses/:courseId/chapters
  * @desc    Get course chapters with user progress status
  * @access  Private
@@ -27,20 +41,8 @@ router.get('/:courseId/chapters', authenticateUser, async (req: any, res: any) =
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const access = await accessService.canAccess(userId, 'course', courseId);
-        if (!access.allowed) {
-            return res.status(403).json({
-                success: false,
-                error: {
-                    code: 'ACCESS_DENIED',
-                    message: `This course requires ${access.requiredPlanName || 'an upgrade'}`,
-                    upgradeRequired: true,
-                    requiredPlanSlug: access.requiredPlanSlug,
-                    requiredPlanName: access.requiredPlanName,
-                    requiredPlanPrice: access.requiredPlanPrice,
-                },
-            });
-        }
+        // The syllabus should be visible to everyone. 
+        // Individual chapters are paywalled within getCourseChaptersForUser.
 
         const chapters = await ChaptersService.getCourseChaptersForUser(userId, courseId);
         return res.json({ chapters });
