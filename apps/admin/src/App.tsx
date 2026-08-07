@@ -29,6 +29,7 @@ import AuditLogs from './pages/AuditLogs';
 import CMSControl from './pages/CMSControl';
 import NetworkMonitoring from './pages/NetworkMonitoring';
 import CoursePageCMS from './pages/CoursePageCMS';
+import ContentImport from './pages/ContentImport';
 import { Loader2 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -105,6 +106,7 @@ function App() {
               <Route path="/catalog-builder" element={<CoursePageCMS />} />
               <Route path="/chapters" element={<Chapters />} />
               <Route path="/tasks" element={<Tasks />} />
+              <Route path="/content-import" element={<ContentImport />} />
 
               {/* Apps */}
               <Route path="/apprenticeship" element={<OverviewPage />} />

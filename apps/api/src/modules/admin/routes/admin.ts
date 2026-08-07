@@ -1,11 +1,26 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { AdminController } from '../controllers/admin.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { requireAdmin, requireSuperAdmin } from '../../../middleware/requireAdmin';
 import { adminLogging } from '../../../middleware/adminLogging';
 import { AdminPermissionsController } from '../controllers/admin.permissions.controller';
+import { ContentImportController } from '../controllers/contentImport.controller';
 
 const router = Router();
+
+// Multer: memory storage, 5 MB limit, .csv only (used only for POST /content/import)
+const csvUpload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+        if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only .csv files are allowed'));
+        }
+    },
+}).single('file');
 
 // All admin routes require authentication + admin role
 router.use(authenticateUser, requireAdmin, adminLogging);
@@ -162,6 +177,17 @@ router.get('/roles', requireSuperAdmin, AdminPermissionsController.getRoles);
 router.post('/roles', requireSuperAdmin, AdminPermissionsController.createRole);
 router.get('/roles/:roleId/permissions', requireSuperAdmin, AdminPermissionsController.getRolePermissions);
 router.put('/roles/:roleId/permissions', requireSuperAdmin, AdminPermissionsController.updateRolePermissions);
+
+// ══════════════════════════════════════════════════════════
+// CONTENT IMPORT (Staged CSV/Sheet import pipeline)
+// ══════════════════════════════════════════════════════════
+// Template download & history BEFORE :batchId to avoid param collisions
+router.get('/content/templates/:contentType', ContentImportController.downloadTemplate);
+router.get('/content/import/history', ContentImportController.getHistory);
+router.post('/content/import', csvUpload, ContentImportController.importContent);
+router.get('/content/import/:batchId', ContentImportController.getBatch);
+router.patch('/content/import/:batchId/rows/:rowId', ContentImportController.updateRow);
+router.post('/content/import/:batchId/publish', ContentImportController.publishBatch);
 
 export default router;
 

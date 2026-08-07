@@ -78,7 +78,7 @@ class ApiService {
         }
 
         if (status === 401) {
-          const msg = (message || '').toLowerCase();
+          const msg = String(message || '').toLowerCase();
           const hadSession = Boolean(getAccessToken() || getRefreshToken());
           const refreshUnavailable = !getRefreshToken();
           const isTerminal =

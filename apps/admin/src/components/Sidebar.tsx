@@ -34,7 +34,8 @@ import {
     FlaskConical,
     Map,
     Hammer,
-    Briefcase
+    Briefcase,
+    FileUp,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
@@ -56,7 +57,7 @@ const categories = [
         id: 'learn',
         label: 'Learn',
         icon: BookOpen,
-        basePaths: ['/courses', '/chapters', '/categories', '/roadmap-builder', '/catalog-builder'],
+        basePaths: ['/courses', '/chapters', '/categories', '/roadmap-builder', '/catalog-builder', '/content-import'],
         exactPaths: [],
         items: [
             { name: 'Courses', href: '/courses', icon: GitBranch },
@@ -64,6 +65,7 @@ const categories = [
             { name: 'Categories', href: '/categories', icon: FileText },
             { name: 'Visual Roadmap', href: '/roadmap-builder', icon: Map },
             { name: 'Landing Page CMS', href: '/catalog-builder', icon: LayoutTemplate },
+            { name: 'Content Import', href: '/content-import', icon: FileUp },
         ]
     },
     {

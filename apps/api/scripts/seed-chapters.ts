@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
+import { chapterRowSchema } from '../src/modules/admin/schemas/contentImport.schemas';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import ws from 'ws';
@@ -27,15 +28,12 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   }
 });
 
-const ChapterSchema = z.object({
-  roadmap_slug: z.string(),
-  chapter_number: z.number(),
-  title: z.string(),
-  topic_tag: z.string().optional(),
-  difficulty: z.enum(['BEGINNER', 'INTERMEDIATE', 'ADVANCED']).optional(),
-  est_minutes: z.number().optional(),
-  story_hook: z.string().optional(),
-  whatsapp_msg: z.string().optional(),
+// ChapterSchema is now imported from the shared schemas file.
+// See: src/modules/admin/schemas/contentImport.schemas.ts
+// The seed script accepts the same flat-CSV shape used by the import pipeline,
+// PLUS a legacy nested shape for backwards compatibility.
+const LegacyChapterSchema = chapterRowSchema.extend({
+  // Legacy nested structure accepted by the seeder (JSON files use nested objects)
   video: z.object({
     youtube_id: z.string(),
     channel: z.string().optional(),
@@ -83,7 +81,7 @@ async function runSeeder() {
     try {
       const raw = fs.readFileSync(filePath, 'utf8');
       const data = JSON.parse(raw);
-      const chapter = ChapterSchema.parse(data);
+      const chapter = LegacyChapterSchema.parse(data);
 
       // a. Find course by slug
       const { data: course, error: courseErr } = await supabase
@@ -121,19 +119,20 @@ async function runSeeder() {
       }
 
       // c. Upsert chapter_content
+      // Support both legacy nested and flat CSV shapes
       const contentPayload = {
         chapter_id: upsertedChapter.id,
-        video_youtube_id: chapter.video?.youtube_id || null,
-        video_channel: chapter.video?.channel || null,
-        video_title: chapter.video?.title || null,
-        video_duration: chapter.video?.duration_min || null,
-        video_timestamps: chapter.video?.timestamps || [],
-        article_url: chapter.article?.url || null,
-        article_source: chapter.article?.source || null,
-        article_title: chapter.article?.title || null,
-        problems: chapter.problems || [],
-        quiz: chapter.quiz || [],
-        tasks: chapter.tasks || [],
+        video_youtube_id: (chapter as any).video?.youtube_id || chapter.video_youtube_id || null,
+        video_channel: (chapter as any).video?.channel || chapter.video_channel || null,
+        video_title: (chapter as any).video?.title || chapter.video_title || null,
+        video_duration: (chapter as any).video?.duration_min || chapter.video_duration_min || null,
+        video_timestamps: (chapter as any).video?.timestamps || chapter.video_timestamps_json || [],
+        article_url: (chapter as any).article?.url || chapter.article_url || null,
+        article_source: (chapter as any).article?.source || chapter.article_source || null,
+        article_title: (chapter as any).article?.title || chapter.article_title || null,
+        problems: (chapter as any).problems || chapter.problems_json || [],
+        quiz: (chapter as any).quiz || chapter.quiz_json || [],
+        tasks: (chapter as any).tasks || chapter.tasks_json || [],
       };
 
       const { error: contentErr } = await supabase
