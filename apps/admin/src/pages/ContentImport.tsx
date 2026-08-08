@@ -47,8 +47,8 @@ import { cn } from '@/lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────
 
-const CONTENT_TYPES: { key: ContentType; label: string }[] = [
-    { key: 'chapters', label: 'Chapters' },
+// Non-chapter content types rendered via the generic loop
+const NON_CHAPTER_CONTENT_TYPES: { key: ContentType; label: string }[] = [
     { key: 'problems', label: 'Problems' },
     { key: 'build_stages', label: 'Build Stages' },
 ];
@@ -457,7 +457,12 @@ const HistoryTab: React.FC = () => {
                     className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
                 >
                     <option value="">All types</option>
-                    {CONTENT_TYPES.map((ct) => (
+                    {([
+                        { key: 'chapters_meta',  label: 'Chapter Metadata' },
+                        { key: 'chapter_steps',  label: 'Chapter Steps' },
+                        { key: 'problems',       label: 'Problems' },
+                        { key: 'build_stages',   label: 'Build Stages' },
+                    ] as { key: ContentType; label: string }[]).map((ct) => (
                         <option key={ct.key} value={ct.key}>
                             {ct.label}
                         </option>
@@ -608,14 +613,52 @@ const ContentImport: React.FC = () => {
 
             {/* Main Tabs */}
             <Tabs defaultValue="chapters">
-                <TabsList className="grid grid-cols-4 w-full max-w-lg">
+                <TabsList className="grid grid-cols-5 w-full max-w-2xl">
                     <TabsTrigger value="chapters">Chapters</TabsTrigger>
                     <TabsTrigger value="problems">Problems</TabsTrigger>
                     <TabsTrigger value="build_stages">Build Stages</TabsTrigger>
                     <TabsTrigger value="history">History</TabsTrigger>
                 </TabsList>
 
-                {CONTENT_TYPES.map(({ key, label }) => (
+                {/* ── Chapters tab: split into metadata + steps sub-panels ── */}
+                <TabsContent value="chapters" className="mt-6 space-y-8">
+                    {/* Ordering note */}
+                    <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                        <strong>Order matters:</strong> publish <em>Chapter Metadata</em> first.
+                        Chapter Steps rows will fail to publish if the chapter does not already
+                        exist in <code className="bg-amber-100 px-1 rounded text-xs">public.chapters</code>.
+                    </div>
+
+                    {/* Sub-panel: Chapter Metadata */}
+                    <div className="space-y-3">
+                        <div>
+                            <h3 className="text-lg font-semibold">Chapter Metadata</h3>
+                            <p className="text-sm text-muted-foreground">
+                                8-column file — one row per chapter (roadmap_slug, chapter_number,
+                                title, topic_tag, difficulty, est_minutes, story_hook, whatsapp_msg).
+                            </p>
+                        </div>
+                        <ImportPanel contentType="chapters_meta" />
+                    </div>
+
+                    <div className="border-t" />
+
+                    {/* Sub-panel: Chapter Steps */}
+                    <div className="space-y-3">
+                        <div>
+                            <h3 className="text-lg font-semibold">Chapter Steps</h3>
+                            <p className="text-sm text-muted-foreground">
+                                6-column file — one row per step (roadmap_slug, chapter_number,
+                                step_number, step_type, step_title, step_content_json). Uploading
+                                replaces <em>all</em> existing steps for each chapter in the batch.
+                            </p>
+                        </div>
+                        <ImportPanel contentType="chapter_steps" />
+                    </div>
+                </TabsContent>
+
+                {/* ── Other content types ── */}
+                {NON_CHAPTER_CONTENT_TYPES.map(({ key, label }) => (
                     <TabsContent key={key} value={key} className="mt-6">
                         <ImportPanel contentType={key} />
                     </TabsContent>

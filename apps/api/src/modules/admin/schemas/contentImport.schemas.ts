@@ -6,18 +6,18 @@
  *  - contentImport.service.ts  (validate rows before staging)
  *  - apps/api/scripts/seed-chapters.ts  (validate JSON files before seeding)
  *
- * Flat CSV columns are used for structured chapter data; nested objects
- * are reconstructed by the service from the flat fields.
+ * Chapters are now a TWO-FILE pipeline:
+ *   1. chapters_meta  – one row per chapter (8 metadata fields)
+ *   2. chapter_steps  – one row per step (step_type + step_content_json blob)
  */
 import { z } from 'zod';
 
 // ─────────────────────────────────────────────────────────────
-// Chapter Row Schema
-// Matches public.chapters + public.chapter_content columns.
+// Chapter Meta Row Schema
+// Matches public.chapters columns only (no chapter_content).
 // "roadmap_slug" is resolved to a courses.slug lookup at validation time.
 // ─────────────────────────────────────────────────────────────
-export const chapterRowSchema = z.object({
-    // Chapter fields
+export const chapterMetaRowSchema = z.object({
     roadmap_slug:   z.string().min(1, 'roadmap_slug is required'),
     chapter_number: z.union([z.number(), z.string().transform((v) => parseInt(v, 10))]).pipe(
         z.number().int().positive()
@@ -31,29 +31,155 @@ export const chapterRowSchema = z.object({
     ]).pipe(z.number().int().positive()).optional(),
     story_hook:     z.string().optional(),
     whatsapp_msg:   z.string().optional(),
-
-    // Chapter content — flat CSV columns (video)
-    video_youtube_id:    z.string().optional(),
-    video_channel:       z.string().optional(),
-    video_title:         z.string().optional(),
-    video_duration_min:  z.union([
-        z.number().int().nonnegative(),
-        z.string().transform((v) => parseInt(v, 10)),
-    ]).pipe(z.number().int().nonnegative()).optional(),
-    video_timestamps_json: z.any().optional(), // array of {label, seconds}
-
-    // Chapter content — flat CSV columns (article)
-    article_url:    z.string().url().optional().or(z.literal('')),
-    article_source: z.string().optional(),
-    article_title:  z.string().optional(),
-
-    // Chapter content — JSON blob columns (arrays)
-    problems_json:  z.any().optional(), // array of problem refs
-    quiz_json:      z.any().optional(), // array of quiz items
-    tasks_json:     z.any().optional(), // array of tasks
 });
 
-export type ChapterRow = z.infer<typeof chapterRowSchema>;
+export type ChapterMetaRow = z.infer<typeof chapterMetaRowSchema>;
+
+// ─────────────────────────────────────────────────────────────
+// Step Content Discriminated Unions
+// One branch per StepType — fields taken directly from what
+// LearnChapterPage.tsx reads for that type (renderStepContent switch).
+// ─────────────────────────────────────────────────────────────
+
+const storyHookContentSchema = z.object({
+    step_type: z.literal('story_hook'),
+    // c.story  (LearnChapterPage.tsx line 298)
+    story: z.string().optional(),
+});
+
+const videoContentSchema = z.object({
+    step_type: z.literal('video'),
+    // c.youtube_url / c.youtube_id  (lines 305-306)
+    youtube_url:  z.string().optional(),
+    youtube_id:   z.string().optional(),
+    // c.title, c.channel, c.duration_min, c.focus_note  (lines 306-309)
+    title:        z.string().optional(),
+    channel:      z.string().optional(),
+    duration_min: z.union([z.number(), z.string().transform(Number)]).pipe(z.number()).optional(),
+    focus_note:   z.string().optional(),
+});
+
+const docContentSchema = z.object({
+    step_type: z.literal('doc'),
+    // c.doc_md  (line 316)
+    doc_md: z.string().optional(),
+});
+
+const visualizerContentSchema = z.object({
+    step_type: z.literal('visualizer'),
+    // c.visualizer.url / .task / .notes  (lines 320-323)
+    visualizer: z.object({
+        url:   z.string().optional(),
+        task:  z.string().optional(),
+        notes: z.string().optional(),
+    }).optional(),
+});
+
+const practiceProblemSchema = z.object({
+    id:              z.string(),
+    prompt:          z.string(),
+    input_type:      z.enum(['text', 'code', 'mcq']).optional(),
+    buggy_code:      z.string().optional(),
+    expected_fix:    z.string().optional(),
+    expected_output: z.string().optional(),
+    url:             z.string().optional(),
+});
+
+const practiceContentSchema = z.object({
+    step_type: z.literal('practice'),
+    // c.practice_problems  (line 329)
+    practice_problems: z.array(practiceProblemSchema).optional(),
+});
+
+const quizQuestionSchema = z.object({
+    // LearnChapterPage.tsx line 347-350:
+    //   q.question, q.options, q.correctAnswer (TEXT — not index!), q.explanation
+    question:      z.string(),
+    options:       z.array(z.string()),
+    correctAnswer: z.string(),   // the answer TEXT; page does options.indexOf(correctAnswer)
+    explanation:   z.string().optional(),
+});
+
+const quizContentSchema = z.object({
+    step_type: z.literal('quiz'),
+    // c.quiz_questions  (line 346)
+    quiz_questions: z.array(quizQuestionSchema).optional(),
+    pass_rule:      z.string().optional(),
+});
+
+const taskContentSchema = z.object({
+    step_type: z.literal('task'),
+    // c.task_prompt  (line 365)
+    task_prompt: z.string().optional(),
+});
+
+const microRevisionContentSchema = z.object({
+    step_type: z.literal('micro_revision'),
+    // c.connection_map, c.recall_questions, c.identity_affirmation, c.streak_reminder
+    // (LearnChapterPage.tsx lines 375-378)
+    connection_map:       z.string().optional(),
+    recall_questions:     z.array(z.string()).optional(),
+    identity_affirmation: z.string().optional(),
+    streak_reminder:      z.string().optional(),
+});
+
+const completeContentSchema = z.object({
+    step_type: z.literal('complete'),
+    // c.completion_celebration.message  (line 401)
+    completion_celebration: z.object({
+        message:           z.string().optional(),
+        linkedin_card_text: z.string().optional(),
+    }).optional(),
+});
+
+/**
+ * Discriminated union on step_type — covers all 9 real StepType values.
+ * This is what step_content_json must deserialise to.
+ */
+export const stepContentUnion = z.discriminatedUnion('step_type', [
+    storyHookContentSchema,
+    videoContentSchema,
+    docContentSchema,
+    visualizerContentSchema,
+    practiceContentSchema,
+    quizContentSchema,
+    taskContentSchema,
+    microRevisionContentSchema,
+    completeContentSchema,
+]);
+
+export type StepContentUnion = z.infer<typeof stepContentUnion>;
+
+// ─────────────────────────────────────────────────────────────
+// Chapter Step Row Schema
+// One row per step.  step_content_json is a JSON *string* in the CSV;
+// validateRows parses it then runs it through stepContentUnion.
+// ─────────────────────────────────────────────────────────────
+export const stepRowSchema = z.object({
+    roadmap_slug:   z.string().min(1, 'roadmap_slug is required'),
+    chapter_number: z.union([z.number(), z.string().transform((v) => parseInt(v, 10))]).pipe(
+        z.number().int().positive()
+    ),
+    step_number:    z.union([z.number(), z.string().transform((v) => parseInt(v, 10))]).pipe(
+        z.number().int().positive()
+    ),
+    step_type: z.enum([
+        'story_hook',
+        'video',
+        'doc',
+        'visualizer',
+        'practice',
+        'quiz',
+        'task',
+        'micro_revision',
+        'complete',
+    ]),
+    step_title:        z.string().min(1, 'step_title is required'),
+    // Stored as a JSON string in the CSV; parsed + validated by validateRows
+    step_content_json: z.string().min(1, 'step_content_json is required'),
+});
+
+export type StepRow = z.infer<typeof stepRowSchema>;
 
 // ─────────────────────────────────────────────────────────────
 // Problem Row Schema
@@ -122,11 +248,13 @@ export type BuildStageRow = z.infer<typeof buildStageRowSchema>;
 
 // ─────────────────────────────────────────────────────────────
 // Content type → schema mapping (convenience)
+// 'chapters' is split into 'chapters_meta' + 'chapter_steps'
 // ─────────────────────────────────────────────────────────────
 export const CONTENT_TYPE_SCHEMAS = {
-    chapters:     chapterRowSchema,
-    problems:     problemRowSchema,
-    build_stages: buildStageRowSchema,
+    chapters_meta:  chapterMetaRowSchema,
+    chapter_steps:  stepRowSchema,
+    problems:       problemRowSchema,
+    build_stages:   buildStageRowSchema,
 } as const;
 
 export type ContentType = keyof typeof CONTENT_TYPE_SCHEMAS;
@@ -137,26 +265,23 @@ export type ContentType = keyof typeof CONTENT_TYPE_SCHEMAS;
 // from the actual Zod schema field names.
 // ─────────────────────────────────────────────────────────────
 export const TEMPLATE_EXAMPLES: Record<ContentType, Record<string, string>> = {
-    chapters: {
-        roadmap_slug:        'dsa-masterclass',
-        chapter_number:      '1',
-        title:               'Arrays & Hashing',
-        topic_tag:           'Arrays',
-        difficulty:          'BEGINNER',
-        est_minutes:         '45',
-        story_hook:          'In this chapter you will master array manipulation.',
-        whatsapp_msg:        'Chapter 1 is now live!',
-        video_youtube_id:    'dQw4w9WgXcQ',
-        video_channel:       'NeetCode',
-        video_title:         'Arrays Explained',
-        video_duration_min:  '30',
-        video_timestamps_json: '',
-        article_url:         'https://example.com/arrays',
-        article_source:      'GeeksForGeeks',
-        article_title:       'Arrays in DSA',
-        problems_json:       '',
-        quiz_json:           '',
-        tasks_json:          '',
+    chapters_meta: {
+        roadmap_slug:   'dsa-masterclass',
+        chapter_number: '1',
+        title:          'Arrays & Hashing',
+        topic_tag:      'Arrays',
+        difficulty:     'BEGINNER',
+        est_minutes:    '45',
+        story_hook:     'In this chapter you will master array manipulation.',
+        whatsapp_msg:   'Chapter 1 is now live!',
+    },
+    chapter_steps: {
+        roadmap_slug:      'dsa-masterclass',
+        chapter_number:    '1',
+        step_number:       '1',
+        step_type:         'story_hook',
+        step_title:        'Why Arrays Matter',
+        step_content_json: JSON.stringify({ step_type: 'story_hook', story: 'Arrays are the backbone of every algorithm you will ever write.' }),
     },
     problems: {
         title:           'Two Sum',

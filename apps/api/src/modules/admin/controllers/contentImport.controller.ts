@@ -16,7 +16,7 @@ import { type ContentType } from '../schemas/contentImport.schemas';
 import logger from '../../../config/logger';
 import { supabase } from '../../../config/database';
 
-const VALID_CONTENT_TYPES: ContentType[] = ['chapters', 'problems', 'build_stages'];
+const VALID_CONTENT_TYPES: ContentType[] = ['chapters_meta', 'chapter_steps', 'problems', 'build_stages'];
 
 function isValidContentType(v: unknown): v is ContentType {
     return VALID_CONTENT_TYPES.includes(v as ContentType);

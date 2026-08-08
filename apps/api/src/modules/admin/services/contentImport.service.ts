@@ -1,7 +1,7 @@
 /**
  * contentImport.service.ts
  *
- * Staged import pipeline for chapters, problems, and build_stages.
+ * Staged import pipeline for chapters_meta, chapter_steps, problems, and build_stages.
  *
  * Flow:
  *   parseSource → validateRows → stageBatch → (admin reviews) → publishBatch
@@ -14,11 +14,14 @@ import { supabase, pool } from '../../../config/database';
 import { GoogleSheetsService } from '../../core/services/googleSheets.service';
 import { parseCsv } from '../../core/utils/csv.util';
 import { CategoriesService } from '../../learning/services/categories.service';
+import { AdminChaptersService } from './admin-chapters.service';
 import {
     CONTENT_TYPE_SCHEMAS,
     TEMPLATE_EXAMPLES,
+    stepContentUnion,
     type ContentType,
-    type ChapterRow,
+    type ChapterMetaRow,
+    type StepRow,
     type ProblemRow,
     type BuildStageRow,
 } from '../schemas/contentImport.schemas';
@@ -80,7 +83,7 @@ export class ContentImportService {
         let courseSlugToId: Map<string, string> | null = null;
         let programSlugToId: Map<string, string> | null = null;
 
-        if (contentType === 'chapters') {
+        if (contentType === 'chapters_meta' || contentType === 'chapter_steps') {
             courseSlugToId = await this._loadCourseSlugs();
         }
         if (contentType === 'build_stages') {
@@ -91,6 +94,7 @@ export class ContentImportService {
         const seenChapterKeys = new Set<string>();   // `${course_id}:${chapter_number}`
         const seenSlugs = new Set<string>();          // derived problem slugs
         const seenStageKeys = new Set<string>();      // `${program_id}:${stage_number}`
+        const seenStepKeys = new Set<string>();       // `${roadmap_slug}:${chapter_number}:${step_number}`
 
         for (const row of rows) {
             const errors: string[] = [];
@@ -108,22 +112,66 @@ export class ContentImportService {
             const data = parsed.success ? parsed.data : row;
 
             // — Business rule checks —
-            if (contentType === 'chapters' && courseSlugToId) {
-                const courseId = courseSlugToId.get((data as ChapterRow).roadmap_slug);
+
+            if (contentType === 'chapters_meta' && courseSlugToId) {
+                const courseId = courseSlugToId.get((data as ChapterMetaRow).roadmap_slug);
                 if (!courseId) {
                     errors.push(
-                        `roadmap_slug "${(data as ChapterRow).roadmap_slug}" does not match any course slug`
+                        `roadmap_slug "${(data as ChapterMetaRow).roadmap_slug}" does not match any course slug`
                     );
                     status = 'error';
                 } else {
-                    const key = `${courseId}:${(data as ChapterRow).chapter_number}`;
+                    const key = `${courseId}:${(data as ChapterMetaRow).chapter_number}`;
                     if (seenChapterKeys.has(key)) {
                         errors.push(
-                            `Duplicate chapter_number ${(data as ChapterRow).chapter_number} for course "${(data as ChapterRow).roadmap_slug}" within this batch`
+                            `Duplicate chapter_number ${(data as ChapterMetaRow).chapter_number} for course "${(data as ChapterMetaRow).roadmap_slug}" within this batch`
                         );
                         status = 'error';
                     } else {
                         seenChapterKeys.add(key);
+                    }
+                }
+            }
+
+            if (contentType === 'chapter_steps' && courseSlugToId) {
+                const rowData = data as StepRow;
+
+                // Within-batch step_number uniqueness per (roadmap_slug, chapter_number)
+                const stepKey = `${rowData.roadmap_slug}:${rowData.chapter_number}:${rowData.step_number}`;
+                if (seenStepKeys.has(stepKey)) {
+                    errors.push(
+                        `Duplicate step_number ${rowData.step_number} for chapter ${rowData.chapter_number} of "${rowData.roadmap_slug}" within this batch`
+                    );
+                    status = 'error';
+                } else {
+                    seenStepKeys.add(stepKey);
+                }
+
+                // step_content_json must be valid JSON and match its step_type branch
+                if (rowData.step_content_json) {
+                    let parsed_content: unknown;
+                    try {
+                        parsed_content = JSON.parse(rowData.step_content_json);
+                    } catch {
+                        errors.push('step_content_json is not valid JSON');
+                        status = 'error';
+                        parsed_content = null;
+                    }
+
+                    if (parsed_content !== null) {
+                        // Inject step_type into the content object so the discriminated union works
+                        const contentObj =
+                            typeof parsed_content === 'object' && parsed_content !== null
+                                ? { ...parsed_content as Record<string, unknown>, step_type: rowData.step_type }
+                                : parsed_content;
+
+                        const contentResult = stepContentUnion.safeParse(contentObj);
+                        if (!contentResult.success) {
+                            contentResult.error.issues.forEach((issue) => {
+                                errors.push(`[step_content_json.${issue.path.join('.') || 'root'}] ${issue.message}`);
+                            });
+                            status = 'error';
+                        }
                     }
                 }
             }
@@ -290,18 +338,95 @@ export class ContentImportService {
 
             const contentType: ContentType = batch.content_type;
 
-            for (const row of eligibleRows) {
-                try {
-                    const entityId = await this._upsertRow(
-                        contentType,
-                        row.raw_data,
-                        client
+            // ── chapter_steps: group by (roadmap_slug, chapter_number) and call replaceSteps ──
+            if (contentType === 'chapter_steps') {
+                // Build groups
+                const groups = new Map<string, Array<{ rowId: string; data: StepRow }>>();
+                for (const row of eligibleRows) {
+                    const d = row.raw_data as StepRow;
+                    const key = `${d.roadmap_slug}:${d.chapter_number}`;
+                    if (!groups.has(key)) groups.set(key, []);
+                    groups.get(key)!.push({ rowId: row.id, data: d });
+                }
+
+                for (const [groupKey, groupRows] of groups) {
+                    const [roadmapSlug, chapterNumberStr] = groupKey.split(':');
+                    const chapterNumber = parseInt(chapterNumberStr, 10);
+
+                    // Resolve chapter_id — chapter MUST already exist (publish chapters_meta first)
+                    const chapterRes = await client.query(
+                        `SELECT c.id FROM public.chapters c
+                         JOIN public.courses co ON co.id = c.course_id
+                         WHERE co.slug = $1 AND c.chapter_number = $2
+                         LIMIT 1`,
+                        [roadmapSlug, chapterNumber]
                     );
-                    publishedIds[row.id] = entityId;
-                    published++;
-                } catch (err: any) {
-                    publishErrors.push(`Row ${row.row_number}: ${err.message}`);
-                    skipped++;
+
+                    if (chapterRes.rows.length === 0) {
+                        const errMsg = `Chapter not found for roadmap_slug "${roadmapSlug}", chapter_number ${chapterNumber}. Publish chapters_meta first.`;
+                        publishErrors.push(`Group ${groupKey}: ${errMsg}`);
+                        for (const { rowId } of groupRows) {
+                            skipped++;
+                        }
+                        continue;
+                    }
+
+                    const chapterId: string = chapterRes.rows[0].id;
+
+                    // Sort by step_number, build steps array for replaceSteps
+                    const sortedRows = groupRows
+                        .slice()
+                        .sort((a, b) => a.data.step_number - b.data.step_number);
+
+                    const steps = sortedRows.map(({ data }) => {
+                        let content: Record<string, unknown> = {};
+                        try {
+                            const parsed = JSON.parse(data.step_content_json);
+                            // Remove the step_type discriminator key from the stored content object
+                            const { step_type: _discrim, ...rest } = parsed as Record<string, unknown>;
+                            content = rest;
+                        } catch {
+                            // Already validated; should not reach here for valid rows
+                        }
+                        return {
+                            step_number: data.step_number,
+                            type: data.step_type,
+                            title: data.step_title,
+                            content,
+                        };
+                    });
+
+                    try {
+                        // replaceSteps deletes existing steps and inserts fresh ones
+                        await AdminChaptersService.replaceSteps(chapterId, steps);
+                        // Mark all rows in this group as published
+                        for (const { rowId } of sortedRows) {
+                            publishedIds[rowId] = chapterId;
+                            published++;
+                        }
+                    } catch (err: any) {
+                        const errMsg = `replaceSteps failed for chapter ${chapterId}: ${err.message}`;
+                        publishErrors.push(`Group ${groupKey}: ${errMsg}`);
+                        for (const { rowId: _rid } of sortedRows) {
+                            skipped++;
+                        }
+                    }
+                }
+            } else {
+                // ── All other content types: row-by-row upsert ──
+                for (const row of eligibleRows) {
+                    try {
+                        const entityId = await this._upsertRow(
+                            contentType,
+                            row.raw_data,
+                            client
+                        );
+                        publishedIds[row.id] = entityId;
+                        published++;
+                    } catch (err: any) {
+                        publishErrors.push(`Row ${row.row_number}: ${err.message}`);
+                        skipped++;
+                    }
                 }
             }
 
@@ -359,8 +484,11 @@ export class ContentImportService {
         const headers = Object.keys(example);
         const values = headers.map((h) => {
             const v = example[h];
-            // Quote values that contain commas
-            return v.includes(',') ? `"${v}"` : v;
+            // Quote values that contain commas or double-quotes
+            if (v.includes(',') || v.includes('"')) {
+                return `"${v.replace(/"/g, '""')}"`;
+            }
+            return v;
         });
         return [headers.join(','), values.join(',')].join('\n');
     }
@@ -375,8 +503,8 @@ export class ContentImportService {
         rawData: Record<string, any>,
         client: any
     ): Promise<string> {
-        if (contentType === 'chapters') {
-            return this._upsertChapter(rawData as ChapterRow, client);
+        if (contentType === 'chapters_meta') {
+            return this._upsertChapterMeta(rawData as ChapterMetaRow, client);
         }
         if (contentType === 'problems') {
             return this._upsertProblem(rawData as ProblemRow);
@@ -384,11 +512,12 @@ export class ContentImportService {
         if (contentType === 'build_stages') {
             return this._upsertBuildStage(rawData as BuildStageRow, client);
         }
+        // chapter_steps is handled separately in publishBatch (grouped replaceSteps)
         throw new Error(`Unknown content type: ${contentType}`);
     }
 
-    /** Upsert chapter + chapter_content. Uses raw pg client for transaction safety. */
-    private static async _upsertChapter(data: ChapterRow, client: any): Promise<string> {
+    /** Upsert chapter metadata only (no chapter_content, no steps). */
+    private static async _upsertChapterMeta(data: ChapterMetaRow, client: any): Promise<string> {
         // Resolve course slug → course_id
         const courseRes = await client.query(
             `SELECT id FROM public.courses WHERE slug = $1 LIMIT 1`,
@@ -399,7 +528,7 @@ export class ContentImportService {
         }
         const courseId: string = courseRes.rows[0].id;
 
-        // Upsert chapter
+        // Upsert chapter (metadata fields only — no writes to chapter_content)
         const chapterRes = await client.query(
             `INSERT INTO public.chapters
                (course_id, chapter_number, title, topic_tag, difficulty,
@@ -425,45 +554,7 @@ export class ContentImportService {
                 data.est_minutes ?? null,
             ]
         );
-        const chapterId: string = chapterRes.rows[0].id;
-
-        // Upsert chapter_content
-        await client.query(
-            `INSERT INTO public.chapter_content
-               (chapter_id, video_youtube_id, video_channel, video_title,
-                video_duration, video_timestamps, article_url, article_source,
-                article_title, problems, quiz, tasks)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-             ON CONFLICT (chapter_id)
-             DO UPDATE SET
-               video_youtube_id = EXCLUDED.video_youtube_id,
-               video_channel    = EXCLUDED.video_channel,
-               video_title      = EXCLUDED.video_title,
-               video_duration   = EXCLUDED.video_duration,
-               video_timestamps = EXCLUDED.video_timestamps,
-               article_url      = EXCLUDED.article_url,
-               article_source   = EXCLUDED.article_source,
-               article_title    = EXCLUDED.article_title,
-               problems         = EXCLUDED.problems,
-               quiz             = EXCLUDED.quiz,
-               tasks            = EXCLUDED.tasks`,
-            [
-                chapterId,
-                data.video_youtube_id ?? null,
-                data.video_channel ?? null,
-                data.video_title ?? null,
-                data.video_duration_min ?? null,
-                JSON.stringify(data.video_timestamps_json ?? []),
-                data.article_url || null,
-                data.article_source ?? null,
-                data.article_title ?? null,
-                JSON.stringify(data.problems_json ?? []),
-                JSON.stringify(data.quiz_json ?? []),
-                JSON.stringify(data.tasks_json ?? []),
-            ]
-        );
-
-        return chapterId;
+        return chapterRes.rows[0].id;
     }
 
     /**
