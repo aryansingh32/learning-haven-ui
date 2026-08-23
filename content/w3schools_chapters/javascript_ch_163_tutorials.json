@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 163,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "HTML DOM allows JavaScript to react to HTML events:\n\nOften, when events happen, you may want to do something.\n\nWhen JavaScript is used in HTML pages,JavaScript can react on events.\n\nJavaScript lets you execute code when events are detected.\n\nHTML allows event handler attributes,with JavaScript code, to be added to HTML elements.\n\nIn the following example, anonclickattribute (with code), is added to a<button>element:\n\nIn the example above, the JavaScript code changes the content of \nthe element with id=\"demo\".\n\nIn the next example, the code changes the content of \nits own element usingthis.innerHTML:\n\nJavaScript code can often be several lines long.\n\nIt is more common to use the event attribute to call a function:\n\nHere is a list of some common HTML events:\n\nThe list is much longer:W3Schools JavaScript Reference HTML DOM Events.\n\nAn event handler is JavaScript code that runs when an event happens.\n\nEvent handlers can be used to handle and verify user input, user actions, \nand browser actions:\n\nMany different methods can be used to let JavaScript work with events:\n\nUsing event attributes likeonclickare easy to use.\n\nNevertheless, usingaddEventListener()is the recommended way to handle events.\n\nTheaddEventListener()method keeps HTML and JavaScript separated.\n\n### Code Snippets\n\n```\n<\nelement\nevent\n=\n'\nsome JavaScript\n'\n>\n\n---\n\n<\nelement\nevent\n=\n\"\nsome JavaScript\n\"\n>\n\n---\n\n<button onclick=\"document.getElementById('demo').innerHTML = Date()\">The time is?</button>\n\n---\n\n<button onclick=\"this.innerHTML = Date()\">The time is?</button>\n\n---\n\n<button onclick=\"displayDate()\">The time is?</button>\n<script>\nfunction displayDate() {\ndocument.getElementById(\"demo\").innerHTML = Date();\n}\n</script>\n\n---\n\n<button onclick=\"displayDate()\">Time is?</button>\n<p id=\"demo\"></p>\n<script>\n// Function to display date\nfunction displayDate() {\ndocument.getElementById(\"demo\").innerHTML = Date();\n}\n</script>\n\n---\n\n<button id=\"myBtn\">Click me</button>\n<p id=\"demo\"></p>\n<script>\nconst btn = document.getElementById(\"myBtn\");\n// Add EventListener to btn\nbtn.addEventListener(\"click\", function () {\ndocument.getElementById(\"demo\").innerHTML = Date();\n});\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_162",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

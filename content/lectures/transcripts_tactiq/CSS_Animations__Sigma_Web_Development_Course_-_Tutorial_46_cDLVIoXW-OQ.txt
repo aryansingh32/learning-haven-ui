@@ -1,0 +1,798 @@
+Video URL: https://www.youtube.com/watch?v=cDLVIoXW-OQ
+Video Title: CSS Animations | Sigma Web Development Course - Tutorial #46
+--------------------------------------------------
+
+00:00:00.000
+We saw transitions in CSS, it was amazing.
+00:00:03.440
+Our website was looking great by making smooth transitions.
+00:00:06.680
+Animations are also very similar.
+00:00:08.400
+The only difference in transition animation is that
+00:00:10.520
+you can change more than one property with the help of animation.
+00:00:14.880
+You can change more than one property in transition as well.
+00:00:17.320
+But you can define in animation
+00:00:19.680
+which property will go from where to where,
+00:00:21.960
+in how much time,
+00:00:23.160
+which keyframes will be there,
+00:00:24.600
+what are keyframes
+00:00:26.020
+I am going to tell you everything in this video
+00:00:29.020
+Just like this video and write sigma patch op in the comment section
+00:00:32.040
+Let's go to the computer screen to understand all these things
+00:00:35.040
+Let's roll the intro
+00:00:54.500
+So guys I have come to my computer screen and I have made this folder with the name of video 46 and opened it in VS code and here I have made a file with the name of index.html Now my hands are running slow computer, my hands are running fast, the computer is hanging
+00:00:59.140
+No matter, today we are going to see CSS animations and to see CSS animations I will make a container again
+00:01:06.000
+and a box, many people ask
+00:01:08.000
+you told me about transition
+00:01:10.000
+what is the need of animation
+00:01:12.000
+sometimes some complex things happen
+00:01:14.000
+which we have to do through CSS animations
+00:01:16.000
+let me show you
+00:01:18.000
+what is being talked about here
+00:01:20.000
+first of all, you can access it
+00:01:22.000
+I have also put the source code of the previous videos
+00:01:24.000
+so you can also access the source code of all the previous videos. So you can access the source code, I will write here D O X and here
+00:01:29.600
+I will write style to put some styles and I tell you again and again in every video
+00:01:34.100
+that I made this style tag here, that I want to keep the whole transparency.
+00:01:38.600
+There will be some people who are watching this course, there will be some people
+00:01:41.600
+who are watching this course to learn CSS animation.
+00:01:45.440
+So I have to take care of both.
+00:01:46.960
+I hope that makes sense.
+00:01:48.200
+Now I'll show you, nothing happened here.
+00:01:49.720
+This box has come.
+00:01:50.440
+Now what I will do is I will fast forward things a little bit.
+00:01:53.000
+And here I will add some styles quickly.
+00:01:54.880
+Like I did here.
+00:01:56.000
+80 VH, 30 VW and it is looking like this now.
+00:02:00.160
+This is the box and this is its parent box.
+00:02:01.960
+Okay, I will change the background of the parent box a little bit.
+00:02:04.560
+Yes, it looks much better now. Now you will see here that I have given the width type to the box. I have the parent box i will change the background of parent box
+00:02:06.000
+now you can see i have given the width and height of the box
+00:02:09.000
+and i want to make some animations
+00:02:12.000
+in css to make animations you directly use keyframes
+00:02:15.000
+so here you have written keyframes
+00:02:18.000
+after this you can put the name of animation
+00:02:21.000
+i can write any name of this, i can write the name of harry's animation
+00:02:24.000
+so i will make it readable I can write the name of this Harry's animation ok
+00:02:26.000
+to make it readable
+00:02:28.000
+I can write any name
+00:02:30.000
+like a variable
+00:02:32.000
+I have written Harry's animation
+00:02:34.000
+I can say
+00:02:36.000
+that it goes from here
+00:02:38.000
+to here
+00:02:40.000
+and which properties
+00:02:42.000
+I have to change
+00:02:44.000
+I will say transform transform to translate
+00:02:46.500
+x
+00:02:48.500
+I will say
+00:02:50.500
+10 pixels
+00:02:52.500
+animation starts from here
+00:02:54.500
+or I can leave from blank
+00:02:56.500
+we have to translate it to 1000 pixels
+00:02:58.500
+ok, so you see
+00:03:00.500
+I will apply this animation on box
+00:03:02.500
+how I will apply, animation on box
+00:03:04.500
+first you will put name then duration, then timing function, then delay So as soon as I apply this animation on the box How will I apply?
+00:03:06.000
+First you will put name, then duration, then timing function, then delay, then iteration count, then direction, then fill mode
+00:03:11.000
+VS code is helping you a lot, telling you what will come where
+00:03:14.000
+You can fill these, but for now, leave the VS code that I told you
+00:03:19.000
+I will simply write here Harry's animation
+00:03:22.000
+I wrote Harry's animation
+00:03:24.000
+Now here you will see that this animation is not will see that this animation is not applied
+00:03:26.000
+Now you will see that this animation is not applied
+00:03:29.000
+Now I will do that there is a property called animation duration
+00:03:32.000
+There are many properties related to animation
+00:03:35.000
+Now you will say that we had transition so what is the need of animation
+00:03:38.000
+Animation takes things to a different level
+00:03:41.000
+You will see duration, timing function, name, delay, fill mode
+00:03:44.000
+You will see many properties related to animation duration, timing function, name, delay, fill mode and many more properties you can see here
+00:03:46.000
+and all these properties are useful here
+00:03:49.000
+I will set animation duration to 3 seconds
+00:03:52.000
+I will say I want animation for 3 seconds
+00:03:55.000
+so as soon as I reload it, it is translating 100 pixels
+00:03:58.000
+and then it comes back
+00:04:01.000
+can I repeat it? yes I can
+00:04:04.000
+by using animation repeat property.
+00:04:06.000
+But I want to tell you one thing that I also
+00:04:09.000
+have not kept anything. I also refer
+00:04:12.000
+such documentation. These properties
+00:04:15.000
+will not be remembered even after 5 days. 99% of you
+00:04:18.000
+people. See there is an exception of 1%. Some people remember.
+00:04:21.000
+It is their habit to remember. But I am telling you
+00:04:24.000
+reality that you people will not remember this thing.
+00:04:27.000
+And you will have to come here and refer.
+00:04:29.200
+You will have to refer from somewhere, you will have to see the documentation.
+00:04:33.200
+And the best way to see the documentation is to do anything related to animation.
+00:04:37.000
+Or hover and click on MDN reference.
+00:04:39.600
+You will reach the page.
+00:04:40.800
+And see all the properties one by one.
+00:04:43.200
+Animation duration, how long it will run
+00:04:46.560
+then you have animation, you have to repeat it or not
+00:04:49.560
+and for that what you use
+00:04:52.560
+animation iteration count
+00:04:55.560
+how many times animation should run
+00:04:58.560
+so here you see select a count to start
+00:05:01.560
+animation is finished, it runs once
+00:05:04.560
+then it will run again and finished it will run once
+00:05:06.000
+then it will run again and then it will not run again
+00:05:09.000
+so we also use the iteration count property
+00:05:12.000
+we will say animation iteration count
+00:05:15.000
+animation iteration count 3
+00:05:18.000
+so when i reload it
+00:05:21.000
+1
+00:05:22.200
+then 2
+00:05:25.760
+then 3
+00:05:28.760
+and it worked 3 times
+00:05:31.760
+one thing i want to tell you
+00:05:34.760
+if you make animation count infinite
+00:05:37.760
+it will keep running
+00:05:41.100
+it will keep running
+00:05:44.100
+now i can change its timing function
+00:05:46.400
+and i can say that animation timing function
+00:05:49.400
+we have already done it in transition
+00:05:52.400
+but i will tell you, one is ease in, one is ease out
+00:05:55.400
+one is ease and one is ease in out
+00:05:58.400
+so by ease out, animation will run like this
+00:06:01.400
+i can change this function by clicking here
+00:06:04.400
+can you see it below, I can change this function by clicking here
+00:06:06.000
+and make my function
+00:06:09.000
+let's say I want to make an aggressive function
+00:06:12.000
+which will run fast and slow down at the end
+00:06:15.000
+like you have played carom
+00:06:18.000
+you know how it goes when you hit a goat
+00:06:21.000
+so if I make it like this
+00:06:24.000
+so you can see how it will look
+00:06:26.000
+see this
+00:06:28.000
+this is how it looks
+00:06:30.000
+like someone pushed something on the floor
+00:06:32.000
+like this
+00:06:34.000
+and once you have this function
+00:06:36.000
+you can copy this cubeier bezier
+00:06:38.000
+and after copying this
+00:06:40.000
+you can replace this cubic bezier
+00:06:42.000
+in animation timing function
+00:06:44.000
+oops, i will delete this first and then replace it
+00:06:46.000
+i hope you got it
+00:06:48.000
+how to use animation timing function
+00:06:52.000
+see i made my animation timing function
+00:06:54.000
+after this i already told you about animation iteration count
+00:06:58.000
+animation delay means how long animation starts
+00:07:00.000
+now if i do animation delay
+00:07:02.000
+say 1 second
+00:07:04.000
+so when you reload the page
+00:07:06.000
+it will start after 1 second, you see
+00:07:09.000
+it started after 1 second and then it will repeat
+00:07:12.000
+so how long should this animation delay run
+00:07:15.000
+if I do 11 seconds, then it will start after 11 seconds
+00:07:18.000
+so all these properties are related to animation
+00:07:21.000
+now what is the need of transition
+00:07:24.000
+what to use between animation and transition
+00:07:26.000
+then I will say
+00:07:28.000
+see it is working after 10-11 seconds
+00:07:30.000
+animation and transition for simple property
+00:07:32.000
+you use transition and if you
+00:07:34.000
+want to make complex animations which are repeated
+00:07:36.000
+and you have to put in different elements
+00:07:38.000
+then you can make an animation with the name of Harry's animation
+00:07:40.000
+and you can use it in multiple places
+00:07:42.000
+so it is your own use case, there is nothing like
+00:07:44.000
+one is fast and other is slow
+00:07:45.680
+it doesn't matter
+00:07:47.160
+if you are using animation or transition
+00:07:50.160
+where you are using it for maintaining your code
+00:07:53.320
+and what you are finding easy
+00:07:56.320
+you can use that
+00:07:59.320
+if you think you are using simple transition then use that
+00:08:02.320
+if you think you are using all these properties Or any of these properties
+00:08:05.000
+Like delay, iteration count
+00:08:07.000
+Then you use animation
+00:08:09.000
+By the way, transition also makes animation
+00:08:11.000
+Just transition property is different
+00:08:13.000
+I hope this thing is clear to you
+00:08:15.000
+After this, we have seen animation name
+00:08:18.000
+We have seen iteration count
+00:08:20.000
+Animation direction is very important
+00:08:22.000
+Sometimes you can also do alternate reverse it, now what is this
+00:08:26.000
+I will tell you, if I do this animation direction
+00:08:29.000
+reverse, ok, let's say I reverse it
+00:08:32.000
+I will do it for a second, otherwise animation will start after 11 seconds
+00:08:35.000
+which I don't want, now see if I reverse it
+00:08:38.000
+it will start from reverse, see it is starting from reverse
+00:08:41.000
+and if I do this
+00:08:42.000
+let's say I do alternate reverse
+00:08:46.260
+it will go like this and come like this
+00:08:49.260
+and it has lot of use
+00:08:52.220
+and it is obeying the timing function
+00:08:55.220
+if I make it linear
+00:08:58.240
+it will go straight
+00:09:01.240
+this happens many times
+00:09:04.240
+if you know physics you must have heard of simple harmonic motion
+00:09:06.000
+So if I want to make animations of simple harmonic motion
+00:09:09.000
+Then I can do this
+00:09:11.000
+And mathematics is directly related to this
+00:09:13.000
+You can write exact function by doing simple harmonic motion
+00:09:16.000
+Showing a block
+00:09:18.000
+I don't want to go into all that now
+00:09:20.000
+But I am just telling you that you can make very good simulations of physics
+00:09:23.000
+By using only CSS You can make good physics simulations only by using css
+00:09:26.040
+you can make good intros for your videos
+00:09:29.040
+just think about it
+00:09:32.040
+you can make it, you can write code
+00:09:35.040
+I hope you are getting it
+00:09:38.040
+next is animation play start
+00:09:41.040
+I will comment it out and leave the rest
+00:09:43.680
+next is animation play state this comes animation play state
+00:09:46.380
+what is animation play state
+00:09:49.400
+if I talk about its values
+00:09:52.480
+paused and running
+00:09:55.360
+ideally we use javascript
+00:09:58.360
+to pause our animations
+00:10:01.360
+now I paused it
+00:10:04.360
+now you have to see one thing here
+00:10:06.000
+when i make animation play state running
+00:10:09.000
+and when i pause, wherever i pause
+00:10:11.920
+it will stop there
+00:10:14.820
+as soon as i remove it, it will start moving
+00:10:17.860
+so you want it to stop there and start moving
+00:10:20.820
+so you can pause the animation
+00:10:23.820
+in transition it becomes difficult when you can do all the things
+00:10:26.000
+with animation properties
+00:10:28.000
+that's it
+00:10:30.000
+now you know we are lazy
+00:10:32.000
+and we are people who
+00:10:34.000
+write lorem 45, we don't even write 49
+00:10:36.000
+we write it because it is around 4 or 5
+00:10:38.000
+so for people like us, animation
+00:10:40.000
+is made for short hand, that in one property
+00:10:42.000
+you can set everything
+00:10:44.000
+ok now i have heard one thing I am strongly against learning and memorizing I am strongly against learning and memorizing
+00:10:46.000
+I am strongly against learning and memorizing
+00:10:49.000
+I am strongly against learning and memorizing
+00:10:52.000
+I am strongly against learning and memorizing
+00:10:55.000
+I am strongly against learning and memorizing
+00:10:58.000
+I am strongly against learning and memorizing
+00:11:01.000
+I am strongly against learning and memorizing
+00:11:04.000
+I am strongly against learning and memorizing I am telling you
+00:11:06.000
+to use VS Code
+00:11:08.000
+I am telling you to use VS Code
+00:11:10.000
+here you can put name, duration, timing function, delay
+00:11:12.000
+or iteration count
+00:11:14.000
+or direction or fill mode
+00:11:16.000
+I will tell you about animation fill mode
+00:11:18.000
+but you can fill all these things
+00:11:20.000
+and do everything in one property
+00:11:22.000
+so let's say I put here
+00:11:24.000
+Harry's animation Harry's animation
+00:11:26.000
+Harry's animation
+00:11:28.000
+duration i put 1 second
+00:11:30.000
+put in timing function
+00:11:32.000
+is in out
+00:11:34.000
+and put in delay
+00:11:36.000
+2 seconds and
+00:11:38.000
+i make it 3 seconds so that animation will run for 3 seconds
+00:11:40.000
+i put in iteration count
+00:11:42.000
+infinite
+00:11:44.000
+put in direction, let's say reverse, I will put it in reverse, or I don't want to use direction and I don't want to use any property, I can leave it empty, so I will show you now by reloading, here Harry's animation is not defined, so if you have written the name of the animation wrong, it will tell you, so I didn't capitalize K, and now my animation will run, you and now my animation is running
+00:12:06.060
+and all these things are applying
+00:12:09.060
+now suppose i want
+00:12:12.060
+i will do one thing
+00:12:15.300
+i will comment the short end of animation
+00:12:18.300
+first name then duration then timing function
+00:12:21.300
+then delay, suppose i don't want to give delay
+00:12:24.300
+will it work then? yes it will and then timing function and then delay I don't want to give delay, I want to remove it
+00:12:26.000
+will it work then also? yes it will work
+00:12:29.000
+if I miss a property then automatically it will pick all these properties
+00:12:32.000
+I hope you are getting it
+00:12:35.000
+one thing I didn't tell you is
+00:12:38.000
+animation fill mode, let's talk about it
+00:12:41.000
+here I will turn off the animation repeat
+00:12:44.000
+here I will turn off the animation repeat i will turn off the iteration count
+00:12:46.000
+so that my animation will run only once
+00:12:49.000
+and i will
+00:12:52.000
+change the background color to red
+00:12:55.000
+and finally i will change the background color of the box
+00:12:58.000
+from red to
+00:13:01.000
+yellow
+00:13:04.000
+so if i leave my animation
+00:13:06.000
+fill mode empty, means I keep it as none
+00:13:09.000
+by default it is none, so what will happen, it will start from here
+00:13:12.000
+see my box is starting from here, it became red, then it came here
+00:13:15.000
+it became yellow, then by default it was like that
+00:13:18.000
+means there was no background in it, now what I will do
+00:13:21.000
+if I forward it, forwards
+00:13:24.000
+so what will happen
+00:13:26.380
+and it will remain here
+00:13:29.380
+it will retain the final property
+00:13:32.380
+earlier it was animating and it was returning back to the original
+00:13:35.180
+it was animating and it forgot that it was animating
+00:13:38.220
+it retained the properties
+00:13:41.600
+if i make it backwards
+00:13:44.820
+then you will see
+00:13:46.000
+then it will be very strange
+00:13:48.000
+it came here
+00:13:50.000
+and when i made it backwards
+00:13:52.000
+it retains the initial style
+00:13:54.000
+now i will make the animation delay
+00:13:56.000
+3 seconds
+00:13:58.000
+so when i will make the animation delay 3 seconds
+00:14:00.000
+so till the time animation delay is applied
+00:14:02.000
+the keyframe properties will be retained
+00:14:04.000
+and it will be the the same frame as before and it will be in the same frame as before
+00:14:06.000
+I hope you are getting it
+00:14:09.000
+and to be honest this property is not used much
+00:14:12.000
+but if I remove the animation property
+00:14:15.000
+then you can see that after 3 seconds
+00:14:18.000
+it is back to normal
+00:14:21.000
+and it is back to normal
+00:14:24.000
+now if I remove the animation and put it back
+00:14:26.000
+so see it will turn red after 3 seconds
+00:14:29.000
+but if i put it back
+00:14:32.000
+then you can see that the properties of the first keyframe has been retained
+00:14:35.000
+and the first keyframe is here
+00:14:38.000
+in from which i have put it and after that it has started running
+00:14:41.000
+and then it has started running
+00:14:44.000
+and finally the situation
+00:14:46.000
+was the same, so if I remove it
+00:14:48.000
+it will immediately turn red
+00:14:50.000
+it will turn red during animation delay
+00:14:52.000
+and then it will start
+00:14:54.000
+so this is the animation fill mode
+00:14:56.000
+again, it is used very less but you should know
+00:14:58.000
+what it is, so forwards and backwards
+00:15:00.000
+you can use it, but
+00:15:02.000
+you can use any of these properties
+00:15:04.000
+and add animations, one more thing I want to tell you that the CSS animations you can use it but you can use any of these properties to make animations
+00:15:06.000
+one more thing i want to tell you
+00:15:08.000
+that you can make multiple css animations
+00:15:10.000
+let's say i make a animation
+00:15:12.000
+of harry 2
+00:15:14.000
+and i say that this time i won't tell you from and to
+00:15:16.000
+this time i will tell you
+00:15:18.000
+what to do when animation is 0%
+00:15:20.000
+and what to do when it is 1%
+00:15:22.000
+let's say i want to tell you
+00:15:24.000
+0, 20%, 50%, 80%
+00:15:26.000
+and 100%
+00:15:29.180
+I want to do this
+00:15:32.160
+and I want this transform to be
+00:15:35.080
+translate or let me do one thing
+00:15:38.220
+I will put rotate and I will say
+00:15:41.580
+300 degree, no not 300 degree, 100 degree
+00:15:44.360
+ok and then I want it to be 200 at 20% 300 degree no not 300 degree, 100 degree
+00:15:46.000
+and then I want it to be 200 at 20%
+00:15:49.780
+and then I want
+00:15:52.620
+it to be
+00:15:56.940
+220 at 50% and how much at 80%
+00:15:59.760
+let's say 500
+00:16:02.720
+and 500 is more, 300
+00:16:06.000
+and then 310, let's say I want to do something like this
+00:16:08.000
+and here I will do
+00:16:10.000
+rotate 310 degree
+00:16:12.000
+ok, now I will tell you
+00:16:14.000
+how to add multiple animations
+00:16:16.000
+if you want to add multiple animations
+00:16:18.000
+then you can use comma separated values
+00:16:20.000
+here you can see that
+00:16:22.000
+I have used comma separated values
+00:16:24.000
+and I have put my first values and I have put my first animation here
+00:16:26.000
+then I put its duration, then I put timing function, then I put delay, then I put iteration count
+00:16:30.000
+same I did with other animation
+00:16:32.000
+my first animation which changes only background color is that
+00:16:35.000
+and my second animation which changes transform from 0% all the way till 100% is that
+00:16:41.000
+let's see how it looks, I will reload
+00:16:43.000
+so see both animations will run after 3 seconds
+00:16:46.000
+as soon as 3 seconds are completed, it is rotating and the color is also changing
+00:16:49.000
+and it is working according to these timings
+00:16:52.000
+and it is working according to these functions
+00:16:55.000
+you can always use one animation to animate multiple properties
+00:16:58.000
+but again if you want to apply multiple animations for some reason
+00:17:01.000
+let's say you have already made animations
+00:17:04.000
+then you can use this property so this was about css animations
+00:17:06.000
+now you can
+00:17:08.000
+do a lot of creative work
+00:17:10.000
+with multiple animations
+00:17:12.000
+and your imagination
+00:17:14.000
+can take you to the next level
+00:17:16.000
+css animations
+00:17:18.000
+possibilities are endless
+00:17:20.000
+and we are going to see it through projects
+00:17:22.000
+you can access the playlist of
+00:17:24.000
+sigma web development series and source code is updated
+00:17:26.000
+time to time
+00:17:28.680
+so you should not have any problem
+00:17:31.680
+thank you so much for watching this video

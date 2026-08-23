@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 28,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe<iostream>library provides objects which can read user input and output data to the console or to a file.\n\nA list of all iostream objects can be found in the table below.\n\n## Tutorials\n\nThe<fstream>library provides classes for reading and writing into files or data streams.\n\nA list of useful fstream classes can be found in the table below.\n\nLearn more about files in ourC++ Files Tutorial.\n\n## Tutorials\n\nThe<cmath>library has many functions that allow you to perform mathematical tasks on numbers.\n\nA list of all math functions can be found in the table below:\n\nLearn more about math in ourC++ Math Tutorial.\n\n## Tutorials\n\nThe<string>library has many functions that allow you to perform tasks on strings.\n\nA list of all string functions can be found in the table below.\n\nLearn more about strings in ourC++ Strings Tutorial.\n\n## Tutorials\n\nThe<cstring>library has many functions that allow you to perform tasks on arrays and C-style strings.\n\nNote that C-style strings are different than regularstrings. A C-style string is an array of characters, created with thechartype. To learn more about C-style strings, read ourC Strings Tutorial.\n\nA list of allcstringfunctions can be found in the table below.\n\nLearn more about c-style strings in ourC-Style Strings Tutorial.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_28",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_28",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

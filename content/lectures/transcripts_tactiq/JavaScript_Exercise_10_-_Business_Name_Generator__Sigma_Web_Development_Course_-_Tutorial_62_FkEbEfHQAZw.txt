@@ -1,0 +1,122 @@
+Video URL: https://www.youtube.com/watch?v=FkEbEfHQAZw
+Video Title: JavaScript Exercise 10 - Business Name Generator | Sigma Web Development Course - Tutorial #62
+--------------------------------------------------
+
+00:00:00.000
+JavaScript is used a lot to make SaaS products.
+00:00:04.000
+SaaS stands for Software as a Service.
+00:00:06.080
+Today we will make a SaaS product which is a simple business name generator.
+00:00:11.200
+A very good example of SaaS product is Canva.
+00:00:14.000
+It used JavaScript to create a product which is a big hit in the world of design.
+00:00:19.920
+Today I want you to understand my question and try to make this business name generator
+00:00:25.000
+By this you will know how to solve real world problems with the help of javascript
+00:00:30.000
+So you also like this video and write challenge accepted in the comment section
+00:00:34.000
+If you accept this challenge then let's go to the computer screen
+00:00:37.000
+Let's roll the intro
+00:01:06.000
+So guys I want to give you an exercise here, so I will make a new file named index.js what i will do here
+00:01:08.000
+create a business name
+00:01:10.000
+generator by combining
+00:01:14.000
+list of adjectives
+00:01:18.000
+i will toggle word wrap here
+00:01:20.000
+by combining list of
+00:01:22.000
+adjectives and
+00:01:24.000
+shop name and another word
+00:01:30.400
+so you have to generate a business name by combining three different words
+00:01:37.200
+so how will that business name be generated
+00:01:39.200
+so here I will give you some adjectives
+00:01:41.800
+like I will give you crazy, I will give you amazing, I will give you some adjectives like crazy, amazing
+00:01:46.240
+fire
+00:01:49.240
+you have to use these three in the starting
+00:01:52.240
+so this is our list of adjectives
+00:01:55.240
+and I want to tell you that you don't have to use arrays
+00:01:58.240
+if you use arrays then I will consider you
+00:02:01.240
+that you are depending on arrays
+00:02:04.240
+and you are not a good JavaScript developer
+00:02:05.000
+because I am giving you a restriction here
+00:02:07.000
+I am telling you that you have to do something like this
+00:02:10.000
+that you will not use arrays
+00:02:12.000
+you will use functions
+00:02:14.000
+and you will use strings
+00:02:16.000
+so you have to use these adjectives
+00:02:18.000
+in the first word
+00:02:19.000
+after this what you have to do in shop name
+00:02:21.000
+you have to use something like this
+00:02:24.000
+engine or you have to do in shop name, use something like this engine or you want to do foods
+00:02:28.000
+or after that you can do
+00:02:31.000
+whose shop we open, garments
+00:02:34.000
+ok, something like this and after this you want to use another word
+00:02:38.000
+ok
+00:02:40.000
+use a bros, you want to use a limited and you want to use a bros, you have to use a limited
+00:02:45.960
+and you have to use a hub
+00:02:49.700
+now you have to take one word from this, one word from this and one word from this randomly
+00:02:54.360
+and generate a new name, a business name will be generated like
+00:02:57.720
+crazy foods limited, like crazy engine hub
+00:03:01.680
+a name like this will be generated, don't use arrays
+00:03:06.000
+you will use disqualify exercise
+00:03:09.000
+you have to make a string and write it
+00:03:12.000
+generate random numbers, all that is allowed
+00:03:15.000
+you can use functions, don't use arrays
+00:03:18.000
+I am giving you a challenge
+00:03:21.000
+that you don't have to use arrays
+00:03:24.000
+I hope you will solve this exercise
+00:03:26.300
+so that's it for this video
+00:03:28.300
+if you haven't accessed the playlist yet, then do it
+00:03:31.300
+thank you so much guys for watching this video

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 32,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheindexOf()method returns theindex(position)\nof thefirstoccurrence of a string in a string, or it returns -1 if the string is not found:\n\nThelastIndexOf()method returns theindexof thelastoccurrence of a specified text in a string:\n\nBothindexOf(), andlastIndexOf()return -1\nif the text is not found:\n\nBoth methods accept a second parameter as the starting position for the \nsearch:\n\nThelastIndexOf()methods searches backwards \n(from the end to the beginning), meaning:\nif the second parameter is15, the search starts at position \n15, and searches to the beginning of the string.\n\nThesearch()method searches a string for a string (or a regular expression)\nand returns the position of the match:\n\nThe two methods,indexOf()andsearch(), areequal?\n\nThey accept the same arguments (parameters), and return the same value?\n\nThe two methods areNOTequal. These are the differences:\n\nYou will learn more about \nregular expressions in a later chapter.\n\nThematch()method returns an array containing the results of matching\na string against a string (or a regular expression).\n\nThematchAll()method returns an iterator containing the results of matching\na string against a string (or a regular expression).\n\nIf the parameter is a regular expression, the global flag (g) must be set, otherwise\na TypeError is thrown.\n\nIf you want to search case insensitive, the insensitive flag (i) must be set:\n\nTheincludes()method returns true if a string contains a specified value.\n\nOtherwise it returnsfalse.\n\nThestartsWith()method returnstrueif a string begins with a specified value.\n\nOtherwise it returnsfalse:\n\nA start position for the search can be specified:\n\nTheendsWith()method returnstrueif a string ends with a specified value.\n\nOtherwise it returnsfalse:\n\n### Code Snippets\n\n```\nlet text = \"Please locate where 'locate' occurs!\";\nlet index = text.indexOf(\"locate\");\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\nlet index = text.lastIndexOf(\"locate\");\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\nlet index = text.lastIndexOf(\"John\");\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\nlet index = text.indexOf(\"locate\", 15);\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\ntext.lastIndexOf(\"locate\", 15);\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\ntext.search(\"locate\");\n\n---\n\nlet text = \"Please locate where 'locate' occurs!\";\ntext.search(/locate/);\n\n---\n\nlet text = \"The rain in SPAIN stays mainly in the plain\";\ntext.match(\"ain\");\n\n---\n\nlet text = \"The rain in SPAIN stays mainly in the plain\";\ntext.match(/ain/);\n\n---\n\nlet text = \"The rain in SPAIN stays mainly in the plain\";\ntext.match(/ain/g);\n\n---\n\nlet text = \"The rain in SPAIN stays mainly in the plain\";\ntext.match(/ain/gi);\n\n---\n\nconst iterator = text.matchAll(\"Cats\");\n\n---\n\nconst iterator = text.matchAll(/Cats/g);\n\n---\n\nconst iterator = text.matchAll(/Cats/gi);\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.includes(\"world\");\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.includes(\"world\", 12);\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.startsWith(\"Hello\");\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.startsWith(\"world\")\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.startsWith(\"world\", 5)\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.startsWith(\"world\", 6)\n\n---\n\nlet text = \"John Doe\";\ntext.endsWith(\"Doe\");\n\n---\n\nlet text = \"Hello world, welcome to the universe.\";\ntext.endsWith(\"world\", 11);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_31",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 8,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "From the examples you can guess:\n\nVariables are identified withnamescalledidentifiers.\n\nNames can be short like x, y, z.\n\nNames can be descriptive like age, sum, carName.\n\nThe rules for constructing names (identifiers) are:\n\nJavaScript treats underscore as a letter.\n\nIdentifiers containing _ are valid variable names:\n\nA convention among professional programmers is to start a name with underscore for \"private\" variables.\n\nJavaScript also treats a dollar sign as a letter.\n\nIdentifiers containing $ are valid variable names:\n\nUsing the $ is not very common in JavaScript, but professional programmers often use it as an alias\nfor the main function in JavaScript libraries.\n\nCreating a variablein JavaScript is calleddeclaringa variable.\n\nYou declare a JavaScript variable with theletkeyword or\ntheconstkeyword.\n\nAfter the declaration, the variable has no value (technically it isundefined).\n\nToassigna value to the variable, use the equal sign:\n\nMost often you will assign a value to the variable when you declare it:\n\nAlways useconstif the value should not be changed\n\nThe two variablesprice1andprice2are declared with theconstkeyword.\n\nThe values of price1 and price2 cannot be changed.\n\nThe variabletotalis declared with theletkeyword.\n\nThe value of total can be changed.\n\nUndeclared variables areautomatically declaredwhen first used:\n\nThevarkeyword was used in all JavaScript code before 2015.\n\nTheletandconstkeywords were new to JavaScript in 2015.\n\nJavaScript variables can hold8 datatypes, but for now, just think ofnumbersandstrings.\n\nStringsare text writteninside quotes.\n\nNumbersare writtenwithout quotes.\n\nIf you put a number in quotes, it will be treated as a text string.\n\nYou can declare many variables in one statement.\n\nStart the statement withletorconstand separate the variables bycomma:\n\nA declaration can span multiple lines:\n\nIn JavaScript, the equal sign (=) is anassignmentoperator, not anequal tooperator.\n\nThis is different from algebra. The following does not make sense in algebra:\n\nIn JavaScript, however, it makes perfect sense: it assigns the value of x + 5 to \nx.\n\n(It calculates the value of x + 5 and puts the result into x. The value of x \nis incremented by 5.)\n\nAs with algebra, you can do arithmetic with JavaScript variables, using \noperators like=and+:\n\nYou can also add strings, but strings will be concatenated:\n\n### Code Snippets\n\n```\nlet x = 5;\nlet y = 6;\nlet z = x + y;\n\n---\n\nconst x = 5;\nconst y = 6;\nconst z = x + y;\n\n---\n\nlet _lastName = \"Johnson\";\nlet _x = 2;\nlet _100 = 5;\n\n---\n\nlet $ = \"Hello World\";\nlet $$$ = 2;\nlet $myMoney = 5;\n\n---\n\nlet carName;\n\n---\n\ncarName = \"Volvo\";\n\n---\n\nlet carName = \"Volvo\";\n\n---\n\nconst carName = \"Volvo\";\n\n---\n\nconst price1 = 5;\nconst price2 = 6;\nlet total = price1 + price2;\n\n---\n\nx = 5;\ny = 6;\nz = x + y;\n\n---\n\nvar x = 5;\nvar y = 6;\nvar z = x + y;\n\n---\n\nconst pi = 3.14;\nlet person = \"John Doe\";\nlet answer = 'Yes I am!';\n\n---\n\nlet person = \"John Doe\", carName = \"Volvo\", price = 200;\n\n---\n\nlet person = \"John Doe\",\ncarName = \"Volvo\",\nprice = 200;\n\n---\n\nx = x + 5\n\n---\n\nlet x = 5 + 2 + 3;\n\n---\n\nlet x = \"John\" + \" \" + \"Doe\";\n\n---\n\nlet x = \"5\" + 2 + 3;\n\n---\n\nlet x = 2 + 3 + \"5\";\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 262,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Typed Arrays were designed to provide an efficient way to handle binary data,\nunlike traditional JavaScript arrays which can hold elements of mixed data types.\n\nTyped arrays are raw memory, so JavaScript can pass them directly to any function\nwithout converting the data to another representation.\n\nTyped arrays are seriously faster than normal arrays for passing data\nto functions that can use raw binary data. Typed Arrays are highly suitable for:\n\nThe difference between an Uint8Array and  an Uint8ClampedArray is how values are added.\n\nIf you set one element in an Uint8ClampedArray to a value outside the 0-255 range,\nit will default to 0 or 255.\n\nA typed array will just take the first 8 bits of the value.\n\nAs specified by theECMAScriptstandard, arithmetic in JavaScript shall be done using double-precision\nfloating-point arithmetic:\n\nTyped Arraysis anES6  feature.\n\nES6 is fully supported in all modern browsers since June 2017:\n\n### Code Snippets\n\n```\nconst myArr = new Uint8Array(5);\n\n---\n\nconst myArr = new Uint8Array([0,1,2,3,4]);\n\n---\n\nconst myArr = Uint8Array.of(0,1,2,3,4);\n\n---\n\nconst myArr = Uint8Array.from([0,1,2,3,4]);\n\n---\n\nfetch(url)\n.then(request => request.arrayBuffer())\n.then(arrayBuffer =>...);\n\n---\n\nconst canvas = document.getElementById('my_canvas');\nconst context = canvas.getContext('2d');\nconst imageData = context.getImageData(0, 0, canvas.width, canvas.height);\nconst uint8ClampedArray = imageData.data;\n\n---\n\nconst myArr = new Int8Array(10);\n\n---\n\nconst myArr = new Uint8Array(10);\n\n---\n\nconst myArr = new Uint8ClampedArray(10);\n\n---\n\nconst myArr = new Int16Array(10);\n\n---\n\nconst myArr = new Uint16Array(10);\n\n---\n\nconst myArr = new Int32Array(10);\n\n---\n\nconst myArr = new Uint32Array(10);\n\n---\n\nconst myArr = new Bigint64Array(10);\n\n---\n\nconst myArr = new Biguint64Array(10);\n\n---\n\nconst myArr = new Float16Array(10);\n\n---\n\nconst myArr = new Float32Array(10);\n\n---\n\nconst myArr = new Float64Array(10);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_261",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 37,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Rebasingmoves or combines a sequence of commits to a new base commit.\n\nIt is often used to keep a clean, linear project history.\n\nRebasing can make your commit history easier to read by avoiding unnecessary merge commits.\n\nUse Git Rebase to:\n\nTo move your current branch on top of another branch (e.g., update your feature branch with latest main):\n\nThis reapplies your feature branch changes on top of the latestmainbranch.\n\ngit rebase -i <base>lets you edit, reorder, squash, or fix up commits before a certain point.\n\nThis is useful for cleaning up your commit history before sharing it with others.\n\nThis opens an editor where you can:\n\nFollow these steps:\n\nIf you hit a conflict or need to finish editing a commit, usegit rebase --continueafter resolving the issue.\n\nThis tells Git to keep going with the rebase process.\n\nIf something goes wrong or you want to stop the rebase, usegit rebase --abort.\n\nThis will put your branch back to how it was before you started rebasing.\n\nIf you can't fix a commit during a rebase (for example, if a conflict can't be resolved), you can skip it withgit rebase --skip.\n\nGit will leave out that commit and move on to the next one.\n\nAfter completing the rebase, review your changes to ensure everything is correct.\n\nRebasing rewrites commit history.\n\nAvoid rebasing commits that you have already pushed to a shared repository.\n\nUsegit rebase -ito edit, reorder, squash, or fix up commits before a certain point.\n\nUsegit rebase --continueto continue a rebase after resolving conflicts.\n\nUsegit rebase --abortto cancel a rebase in progress.\n\nIf you encounter conflicts during a rebase, resolve them and then usegit rebase --continueto continue the rebase process.\n\nIf you can't fix a commit during a rebase, usegit rebase --skipto skip it.\n\nNote:Rebasing rewrites commit history.\n\nAvoid rebasing commits that you have already pushed to a shared repository.\n\n### Code Snippets\n\n```\nExample: Rebase onto main\ngit checkout feature-branch\ngit rebase main\n\n---\n\nExample: Start Interactive Rebase\ngit rebase -i HEAD~3\n\n---\n\nExample\ngit add fixed_file.txt\ngit rebase --continue\n\n---\n\nExample\ngit rebase --abort\n\n---\n\nExample\ngit rebase --skip\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_36",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

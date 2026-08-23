@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 109,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A lambda function is a small anonymous function.\n\nA lambda function can take any number of arguments, but can only have one expression.\n\nThe expression is executed and the result is returned:\n\nLambda functions can take any number of arguments:\n\nThe power of lambda is better shown when you use them as an anonymous \nfunction inside another function.\n\nSay you have a function definition that takes one argument, and that argument \nwill be multiplied with an unknown number:\n\nUse that function definition to make a function that always doubles the \nnumber you send in:\n\nOr, use the same function definition to make a function that alwaystriplesthe \nnumber you send in:\n\nOr, use the same function definition to make both functions, in the same \nprogram:\n\nLambda functions are commonly used with built-in functions likemap(),filter(), andsorted().\n\nThemap()function applies a function to every item in an iterable:\n\nThefilter()function creates a list of items for which a function returnsTrue:\n\nThesorted()function can use a lambda as a key for custom sorting:\n\n### Code Snippets\n\n```\nlambda\narguments\n:\nexpression\n\n---\n\nx = lambda a : a + 10\nprint(x(5))\n\n---\n\nx = lambda a, b : a * b\nprint(x(5, 6))\n\n---\n\nx = lambda a, b, c : a + b + c\nprint(x(5, 6, \n  2))\n\n---\n\ndef myfunc(n):\nreturn lambda a : a * n\n\n---\n\ndef myfunc(n):\nreturn lambda a : a * n\nmydoubler = myfunc(2)\nprint(mydoubler(11))\n\n---\n\ndef myfunc(n):\nreturn lambda a : a * n\nmytripler = myfunc(3)\nprint(mytripler(11))\n\n---\n\ndef myfunc(n):\nreturn lambda a : a * n\nmydoubler = myfunc(2)\nmytripler = myfunc(3)\nprint(mydoubler(11))\nprint(mytripler(11))\n\n---\n\nnumbers = [1, 2, 3, 4, 5]\ndoubled = list(map(lambda x: x * 2, numbers))\nprint(doubled)\n\n---\n\nnumbers = [1, 2, 3, 4, 5, 6, 7, 8]\nodd_numbers = list(filter(lambda x: x % 2 != 0, numbers))\nprint(odd_numbers)\n\n---\n\nstudents = [(\"Emil\", 25), (\"Tobias\", 22), (\"Linus\", 28)]\nsorted_students = sorted(students, key=lambda x: x[1])\nprint(sorted_students)\n\n---\n\nwords = [\"apple\", \"pie\", \"banana\", \"cherry\"]\nsorted_words = sorted(words, key=lambda x: len(x))\nprint(sorted_words)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_108",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

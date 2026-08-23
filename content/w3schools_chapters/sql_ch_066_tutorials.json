@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 66,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "SQL prepared statements can be used to protect a web site from SQL injections.\n\nPrepared statements seperates the query structure (the SQL) from the actual \ndata (user input).\n\nPrepared statements basically work like this:\n\nPrepared statements have four main advantages:\n\nThe following example is taken fromPHP MySQL Prepared Statements, \nand uses prepared statements in MySQL:\n\nIn the SQL, the question marks (?) are placeholders forfirstname,lastname, andemailvalues:\n\nNow, look at thebind_param()function. This function bind variables to the placeholders \nin the SQL query. The placeholders (?) will be replaced by the actual values \nheld in the variables at the time of execution. The \"sss\" argument lists thetypeof data each parameter is. Thescharacter tells mysql that the parameter is a string. We must define one of these for \nEACH parameter. By telling mysql what type of data to expect, we minimize the \nrisk of SQL injections:\n\nThe type argument can be one of four types:\n\n### Code Snippets\n\n```\n<?php\n$servername = \"localhost\";\n$username = \"username\";\n$password = \"password\";\n$dbname = \"myDB\";\n// Create connection\n$conn = new mysqli($servername, $username, $password, $dbname);\n// Check connection\nif ($conn->connect_error) {\ndie(\"Connection failed: \" . $conn->connect_error);\n}\n// SQL query template\n$sql = \"INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)\";\n// Prepare the SQL query template\nif($stmt = $conn->prepare($sql)) {\n// Bind parameters\n$stmt->bind_param(\"sss\", $firstname, $lastname, $email);\n// \n  Set parameters and execute\n$firstname = \"John\";\n$lastname = \"Doe\";\n$email = \"john@example.com\";\n$stmt->execute();\n$firstname = \"Mary\";\n$lastname = \"Moe\";\n$email = \"mary@example.com\";\n$stmt->execute();\n$firstname = \"Julie\";\n$lastname = \"Dooley\";\n$email = \"julie@example.com\";\n$stmt->execute();\necho \"New records created successfully\";\n} else {\necho \"Error: \" . $sql . \"<br>\" . $conn->error;\n}\n$stmt->close();\n$conn->close();\n?>\n\n---\n\n\"INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)\"\n\n---\n\n$stmt->bind_param(\"sss\", $firstname, $lastname, $email);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_65",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

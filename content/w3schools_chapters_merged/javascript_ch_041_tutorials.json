@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 41,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheTis a literal to separate the date from the time.\n\nAnPlainDateTime objectcan be created in several different ways:\n\nYou can create aPlainDateTime objectusing thenewconstructor.\n\nThe constructor takesparameterslike year, month, day, hours, and minutes.\n\nYou can create aPlainDateTime objectfrom anISO 8601 / RFC 9557 string.\n\nTheTis a literal to separate the date from the time.\n\nYou should read it as an abbreviation forTime.\n\nIt is the separator required by theISO 8601 format.\n\nYou can create aPlainDateTime objectfrom current time.\n\nYou can safely add or subtract time.\n\nThe original value does not change.\n\nYou cancomparePlaneDateTime values using theequals()method.\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nA PlainDateTime object does not include time zone information.\n\nYou canconvertit to aZonedDateTimeif needed.\n\nTheTemporal.PlainDateTime objecthas22 propertiesof date information.\n\n### Code Examples\n\n```\n// Create a PlainDateTime object\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\n\n---\n\n// Create a PlainDateTime object\nconst date = new Temporal.PlainDateTime(2026, 5, 17, 14, 30);\n\n---\n\n// Create a PlainDateTime object\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T10:00:00\");\n\n---\n\nconst now = Temporal.Now.plainDateTimeISO();\n\n---\n\n// Create a PlainDateTime object\nconst date = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\n// Add and subtract time\nconst earlier = date.subtract({ minutes: 30 });\nconst later = date.add({ hours: 2 });\n\n---\n\nconst d1 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nconst d2 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nlet result = d1.equals(d2)\n\n---\n\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T10:00:00\");\nconst zoned = dateTime.toZonedDateTime(\"Europe/Oslo\");\n\n---\n\nconst date = new Temporal.PlainDateTime(2026, 5, 1, 14, 30);\n```\n\n## Tutorials\n\nAnPlainDateTime objectcan be created in several different ways:\n\nYou can create aPlainDateobject using thenewconstructor.\n\nThe constructor takes year, month, and dayparameters.\n\nTheTemporal.PlainDate()method above:\n\nYou can create aPlainDate objectfrom anISO 8601 / RFC 9557 string.\n\nIn the example above:\n\nYou can create aPlainDate objectfrom anobject.\n\nFrom the example above, you can reason that the from() method can accept\nbothobject literalsandPlainDate objects.\n\nTheTemporal.Nowobject has a method for gettingthe current date:\n\nTheTemporal.Now.plainDateISO()method is used to get the current date.\n\nIt returns aPlainDateobject with the (year, month, day)\nin the ISO 8601 calendar, specifically ignoring time zones and times.\n\nUse theadd()method toadd time.\n\nUse thesubtract()method tosubtract time.\n\nAll temporal objectshave their ownadd() method:\n\nAll temporal objectshave their ownsubtract() method:\n\nWith JavaScriptDate, you must often calculate time differences\nmanually using milliseconds.\n\nThesince()method calculates the duration between two temporal dates.\n\nThewith()method creates a new PlainDate object\nwith specific field replaced.\n\nThecompare(date1,date2)method returns -1, 0 or 1:\n\nYou can also useequals()to check if two dates are the same.\n\nTheTemporal.PlainDateobject has16 propertiesof calendar date information.\n\nTemporal.PlainDatedefaults to theISO 8601calendar.\n\nIf you want a specific calendar, you canadd a calenderparameter:\n\nThefrom()method supports calendars using the [u-ca=calendar] syntax or a calendar\nproperty in objects.\n\nValid calendar identifiers (calendar_id) for Temporal objects:\n\nYou can list supported values in your environment with:\n\nWithDate, you always get a time and time zone.\n\nThis can create confusion when you only need a calendar date.\n\nPlainDateavoids this by storing only year, month, and day.\n\n### Code Examples\n\n```\n// Create a PlainDate object\nconst date = new Temporal.PlainDate(2026, 5, 17);\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from({year:2026, month:5, day:1});\n\n---\n\n// Create a PlainDate object\nconst d1 = Temporal.PlainDate.from({year:2026, month:5, day:1});\n// Create another PlainDate object\nconst d2 = Temporal.PlainDate.from(d1);\n\n---\n\nlet today = Temporal.Now.plainDateISO();\n\n---\n\nlet date = Temporal.PlainDate.from(\"2026-05-17\");\nlet nextWeek = date.add({ days: 7 });\n\n---\n\nlet date = Temporal.PlainDate.from(\"2026-05-17\");\nlet previousWeek = date.subtract({ days: 7 });\n\n---\n\nconst start = new Date(\"2026-05-01\");\nconst end = new Date(\"2026-05-17\");\nlet diff = end - start;\n\n---\n\nt1\n.since(\nt2, options\n)\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration = end.since(start);\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n// Replace month and day\nconst customDate = date.with({ month:12, day:25 });\n\n---\n\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from(\"2026-02-17\");\nconst date2 = Temporal.PlainDate.from(\"2026-03-01\");\n// Compare the dates\nlet result = Temporal.PlainDate.compare(date1, date2);\n\n---\n\n// Create two Temporal objects\nconst a = Temporal.PlainDate.from(\"2026-02-17\");\nconst b = Temporal.PlainDate.from(\"2026-02-17\");\n// Compare the dates\nlet result = (a.equals(b));\n\n---\n\nconst time = new Temporal.PlainDate(2026, 5, 17);\n\n---\n\nnew Temporal.PlainDate(2026, 5, 17, \"gregory\")\n\n---\n\nTemporal.PlainDate.from(\"2026-05-17[u-ca=chinese]\")\n\n---\n\nTemporal.PlainDate.from({year:2026, month:5, day:17, calendar:\"hebrew\"})\n\n---\n\nIntl.supportedValuesOf(\"calendar\");\n\n---\n\nlet d = new Date(\"2026-05-17\");\n\n---\n\nconst date = new Temporal.PlainDate(2026, 5, 17);\n```\n\n## Tutorials\n\nAnPlainYearMonth objectcan be created in different ways:\n\nThenew PlainYearMonth()constructor creates a new PlainYearMonth object\nwith integers as input parameters.\n\nThefrom()method creates a new PlainYearMonth object with anobjectas input parameter.\n\nThefrom()method creates a new PlainYearMonth object with anISO / RFC 9557string as input parameter.\n\nTheadd()method accept a duration object as input.\n\nAll temporal objectshave their ownadd() method:\n\nAll temporal objectshave their ownsubtract() method:\n\nThewith()method returns a new PlainYearMonth object with specified field(s) replaced.\n\n### Code Examples\n\n```\n// Create a PlainYearMonth object\nconst date = new Temporal.PlainYearMonth(2026, 5);\n\n---\n\n// Create a PlainYearMonth object\nconst date = new Temporal.PlainYearMonth({year:2026, month:5});\n\n---\n\n// Create a PlainYearMonth object\nconst date = Temporal.PlainYearMonth.from(\"2025-05\");\n\n---\n\n// Create a PlainYearMonth object\nconst date = Temporal.PlainYearMonth.from(\"2025-05-17\");\n\n---\n\nconst date = new Temporal.PlainYearMonth(2026, 5);\n\n---\n\nconst yearMonth = new Temporal.PlainYearMonth(2026, 5);\nconst date = yearMonth.toPlainDate({ day: 17 });\n\n---\n\n// Create a new PlainYearMonth object\nconst d1 = Temporal.PlainYearMonth.from(\"2026-05\");\n// Add a duration\nconst d2 = d1.add({years:2, months:2})\n\n---\n\n// Create a PlainYearMonth object\nconst date = Temporal.PlainYearMonth.from(\"2026-05\");\n// Replace month\nconst newDate = date.with({ month:12 });\n```\n\n## Tutorials\n\nAnPlainMonthDayTime objectcan be created in several different ways:\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nThewith()method returns a new PlainMonthDay object with specified field(s) replaced.\n\n### Code Examples\n\n```\n// Create a new PlainMonthDay object\nconst date = new Temporal.PlainMonthDay(5, 17);\n\n---\n\n// Create a new PlainMonthDay object\nconst date = Temporal.PlainMonthDay.from({month:5, day:17});\n\n---\n\n// Create a new PlainMonthDay object\nconst date = Temporal.PlainMonthDay.from(\"05-17\");\n\n---\n\n// Create a new PlainMonthDay object\nconst date = Temporal.PlainMonthDay.from(\"2026-05-17\");\n\n---\n\n// Create two PlainMonthDay objects\nconst date1 = Temporal.PlainMonthDay.from(\"05-17\");\nconst date2 = Temporal.PlainMonthDay.from(\"07-19\");\n// Compare\nlet result = date1.equals(date2);\n\n---\n\n// Create a PlainMonthDay object\nconst date = Temporal.PlainMonthDay.from(\"05-17\");\n// Replace month\nconst newDate = date.with({ month:12 });\n\n---\n\nconst date = new Temporal.PlainMonthDay(5, 17);\n```\n\n## Tutorials\n\nTheTemporal PlainTimeobject is a time object with no date.\n\nIt represents an ISO 8601wall-clock timewithout a date or time zone.\n\nExample:14:30:00.\n\nYou can create a PlainTime from a string.\n\nYou can also create a PlainTime using numeric values.\n\nYou can get the current local time usingTemporal.Now.plainTimeISO().\n\nYou can read the different parts of a PlainTime value.\n\nUseadd()andsubtract()to do PlainTime math.\n\nPlainTime is immutable, so the original value is not changed.\n\nIf the time passes midnight, it wraps around:\n\nUsesince()anduntil()to calculate PlainTime differences.\n\nBoth methods return aTemporal.Duration object.\n\nAll temporal date objectshave their ownsince() method:\n\nAll temporal objectshave their ownuntil() method:\n\nUseTemporal.PlainTime.compare()to compare times.\n\nThe result is:\n\nAll temporal objectshave their owncompare() method:\n\nUseequals()to check if two times are the same.\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nTheTemporal.PlainTimeobject has6 propertiesof time information.\n\n### Code Examples\n\n```\nconst date = new Temporal.PlainTime(14, 30);\n\n---\n\nconst time = Temporal.PlainTime.from(\"14:30\");\n\n---\n\nconst time = new Temporal.PlainTime(14, 30);\n\n---\n\nconst now = Temporal.Now.plainTimeISO();\n\n---\n\nconst time = Temporal.PlainTime.from(\"14:30:15.123\");\n\n---\n\nconst time = Temporal.PlainTime.from(\"14:30\");\nconst later = time.add({ minutes: 45 });\nconst earlier = time.subtract({ hours: 2 });\n\n---\n\nconst time = Temporal.PlainTime.from(\"23:30\");\nconst result = time.add({ minutes: 90 });\n\n---\n\n// Create two PlainTime objects\nconst start = Temporal.PlainTime.from(\"09:00\");\nconst end = Temporal.PlainTime.from(\"17:30\");\n// Calculate the difference\nconst diff = start.since(end);\n\n---\n\n// Create two PlainTime objects\nconst start = Temporal.PlainTime.from(\"09:00\");\nconst end = Temporal.PlainTime.from(\"17:30\");\n// Calculate the difference\nconst diff = start.until(end);\n\n---\n\n// Create two PlainTime objects\nconst a = Temporal.PlainTime.from(\"08:30\");\nconst b = Temporal.PlainTime.from(\"14:30\");\n// Compare the two objects\nresult = Temporal.PlainTime.compare(a, b));\n\n---\n\n// Create two PlainTime objects\nconst a = Temporal.PlainTime.from(\"14:30\");\nconst b = Temporal.PlainTime.from(\"14:30\");\n// Compare the two objects\nresult = a.equals(b);\n\n---\n\nconst date = new Temporal.PlainTime(14, 30);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_41",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_41",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 104,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "UseSymbol()to create a Symbol:\n\nThe two Symbols are different:\n\nYou can add a description to a Symbol:\n\nThe description is only for debugging and readability.\n\nIt does not make the Symbol unique.\n\nSymbols are often used as object property keys.\n\nThis lets you create hidden or unique properties.\n\nA JavaScript Symbol is a primitive data type just like Number, String, or Boolean.\n\nThe JavaScript type of a Symbol issymbol:\n\nA Symbol represents aunique \"hidden\" identifierthat no code can accidentally access.\n\nFor instance, if different programmers want to add a person.id property to a person object belonging to a third-party code,\nthey could mix each others values.\n\nUsing Symbol() to create a unique identifiers, solves this problem:\n\nSymbol properties are ignored byfor...inloops:\n\nSymbol properties are ignored byJSON.stringify():\n\nJavaScript has a global Symbol registry.\n\nUseSymbol.for()to create or reuse a global Symbol:\n\nJavaScript provides built-in Symbols called well-known Symbols.\n\nThese Symbols control JavaScript behaviors.\n\nExamples:\n\nTheSymbol.iteratorSymbol defines an iterable object.\n\nThis makes objects work with loops likefor...of.\n\nUse Symbols when you need:\n\nSymbols are not commonly used in everyday JavaScript code.\n\nDo not use Symbols unless you need unique property keys or advanced object behavior.\n\nFor normal object properties, use strings names instead.\n\nSymbolis anES6  feature.\n\nES6 is fully supported in all modern browsers since June 2017:\n\n### Code Snippets\n\n```\nconst id1 = Symbol();\nconst id2 = Symbol();\n\n---\n\nconst id1 = Symbol();\nconst id2 = Symbol();\nlet result = (id1 === id2);\n\n---\n\nconst id = Symbol(\"id\");\n\n---\n\nconst id1 = Symbol(\"id\");\nconst id2 = Symbol(\"id\");\nlet result = (id1 === id2);\n\n---\n\nSymbol(\"id\") == Symbol(\"id\"); // false\n\n---\n\nconst id = Symbol(\"id\");\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\"\n};\nperson[id] = 123;\n\n---\n\nconst id = Symbol(\"id\");\nlet type = typeof id;\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\nlet id = Symbol('id');\nperson[id] = 140353;\n// Now person[id] = 140353\n// but person.id is still undefined\n\n---\n\nconst id = Symbol(\"id\");\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\"\n};\nperson[id] = 123;\nlet text = \"\";\nfor (let x in person) {\ntext += x + \"<br>\";\n}\n// Display text\n\n---\n\nconst id = Symbol(\"id\");\nconst person = {\nname: \"John\"\n};\nperson[id] = 123;\nlet text = JSON.stringify(person);\n\n---\n\nconst id1 = Symbol.for(\"id\");\nconst id2 = Symbol.for(\"id\");\nlet result = (id1 === id2);\n\n---\n\nconst myObject = {\ndata: [\"A\", \"B\", \"C\"],\n[Symbol.iterator]() {\nlet index = 0;\nlet data = this.data;\nreturn {\nnext() {\nif (index < data.length) {\nreturn {value:data[index++], done:false};\n} else {\nreturn {done:true};\n}\n}\n};\n}\n};\nlet text = \"\";\nfor (const x of myObject) {\ntext += x + \"<br>\";\n}\n// Display text\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_103",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

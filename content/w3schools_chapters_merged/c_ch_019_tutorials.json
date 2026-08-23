@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 19,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nYou can also passarraysto \na function:\n\n### Code Examples\n\n```\nvoid myFunction(int myNumbers[5]) {\nfor (int i = 0; i < 5; i++) {\ncout << myNumbers[i] << \"\\n\";\n}\n}\nint main() {\nint \n    myNumbers[5] = {10, 20, 30, 40, 50};\nmyFunction(myNumbers);\nreturn 0;\n}\n```\n\n## Tutorials\n\nYou can also pass a structure to a function.\n\nThis is useful when you want to \nwork with grouped data inside a function:\n\nNote:Since the structure is passed by value, the function \ngets a copy of the structure.\n\nThis means that the original data is not changed.\n\nYou can also pass a structure by reference, using&.\n\nThis allows the function to modify the original data:\n\nTip:Use reference if you want the function to change the structure's data, or to avoid copying large structures.\n\n### Code Examples\n\n```\nstruct Car {\nstring brand;\nint year;\n};\nvoid myFunction(Car \n    c) {\ncout << \"Brand: \" << c.brand << \", Year: \" << c.year << \"\\n\";\n}\nint main() {\nCar myCar = {\"Toyota\", 2020};\nmyFunction(myCar);\nreturn 0;\n}\n\n---\n\nstruct Car {\nstring brand;\nint year;\n};\nvoid updateYear(Car &c) {\nc.year++;\n}\nint main() {\nCar myCar = {\"Toyota\", 2020};\nupdateYear(myCar);\ncout << \"The \" << myCar.brand << \" is now from \n    year \" << myCar.year << \".\\n\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nTo demonstrate a practical example of using functions, let's create a program that converts a value from fahrenheit to celsius:\n\n### Code Examples\n\n```\n// Function to convert \n  Fahrenheit to Celsius\nfloat toCelsius(float fahrenheit) {\nreturn \n  (5.0 / 9.0) * (fahrenheit - 32.0);\n}\nint main() {\n// Set a \n  fahrenheit value\nfloat f_value = 98.8;\n// Call the \n  function with the fahrenheit value\nfloat result = \n  toCelsius(f_value);\n// Print the fahrenheit value\ncout \n  << \"Fahrenheit: \" << f_value << \"\\n\";\n// Print the result\ncout << \"Convert Fahrenheit to Celsius: \" << result << \"\\n\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nFunction overloadingallows multiple functions to have the same name, as long as their parameters are different intypeornumber:\n\nThis lets you use the same function name for similar tasks.\n\nConsider the following example, which have two functions that add numbers of different type:\n\nProblem:We had to create two different function names for the same logic.\n\nInstead of defining two functions that should do the same thing, it is better to overload one.\n\nIn the example below, we overload theplusFuncfunction to work for bothintanddouble:\n\nIn this example, we overload a function by using a different number of parameters:\n\n### Code Examples\n\n```\nint myFunction(int x)\nfloat myFunction(float x)\ndouble \n  myFunction(double x, double y)\n\n---\n\nint plusFuncInt(int x, int y) {\nreturn x + y;\n}\ndouble plusFuncDouble(double x, double y) {\nreturn x + y;\n}\nint main() {\nint myNum1 = plusFuncInt(8, \n  5);\ndouble myNum2 = plusFuncDouble(4.3, 6.26);\ncout << \n  \"Int: \" << myNum1 << \"\\n\";\ncout << \"Double: \" << myNum2;\nreturn 0;\n}\n\n---\n\nint plusFunc(int x, int \n  y) {\nreturn x + y;\n}\ndouble plusFunc(double x, double y) {\nreturn x + y;\n}\nint main() {\nint myNum1 = plusFunc(8, \n  5);\ndouble myNum2 = plusFunc(4.3, 6.26);\ncout << \"Int: \" << \n  myNum1 << \"\\n\";\ncout << \"Double: \" << myNum2;\nreturn 0;\n}\n\n---\n\nint plusFunc(int x, int y) {\nreturn x + y;\n}\nint plusFunc(int x, int y, int z) {\nreturn x + y + z;\n}\nint main() {\nint result1 = plusFunc(3, 7);\nint result2 = plusFunc(1, 2, 3);\ncout << \"Sum of 2 numbers: \" << result1 << \"\\n\";\ncout << \"Sum of 3 numbers: \" << result2;\nreturn 0;\n}\n```\n\n## Tutorials\n\nNow that you understand how functions work, it is important to \nlearn how variables act inside and outside of functions.\n\nIn C++, variables are only accessible inside the region they are created. This is calledscope.\n\nA variable created inside a function belongs to thelocal scopeof that function, and can only be used inside that function:\n\nAlocal variablecannot be used outside the function it belongs to.\n\nIf you try to access it outside the function, an error occurs:\n\nA variable created outside of a function, is called aglobal variableand \nbelongs to theglobal scope.Global variables are available from within any scope, global and local:ExampleA variable created outside of a function is global and can therefore be used by anyone:// Global variable xint x = 5;void myFunction() {// \n  We can use x herecout << x << \"\\n\";}int main() {myFunction();// We can also use x herecout << x;return 0;}Try it Yourself \u00bbNaming VariablesIf you operate with the same variable name inside and outside of a function, \nC++ will treat them as two separate variables; One available in the global scope (outside the function) and one available in the local scope (inside the function):ExampleThe function will print the localx, and \n  then the code will print the globalx:// Global variable xint x = 5;void myFunction() {// \n    Local variable with the same name as the global variable (x)int x \n    = 22;cout << x << \"\\n\"; // Refers to the local variable x}int main() \n    {myFunction();cout << x; // Refers to the global \n    variable xreturn 0;}Try it Yourself \u00bbHowever, you should avoid using the same variable name for both globally and locally variables as it can lead to errors and confusion.In general, you should be careful with global variables, since they can be \naccessed and modified from any function:ExampleChange the value ofxfrommyFunction:// Global variable xint x = 5;void myFunction() {cout << ++x << \"\\n\"; // Increment the value of x by 1 and print it}int \n    main() {myFunction();cout << x; // Print the \n    global variable xreturn 0;}// The value of \n    x is now 6 (no longer 5)Try it Yourself \u00bbConclusionTo sum up, use local variables (with good variable names) as much as you can. This will make your code easier to maintain and \nbetter to understand. However, you may find global variables when working on existing C++ programs or \nwhile collaborating with others. Therefore, it is good to understand how the scope works and how to use it effectively to make sure your code is clear and functional.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nvoid myFunction() {\n// Local variable that belongs to myFunction\nint x = 5;\n// Print the variable x\ncout << x;\n}\nint main() {\nmyFunction();\nreturn 0;\n}\n\n---\n\nvoid myFunction() {\n// Local variable that belongs to myFunction\nint x = 5;\n}\nint main() {\nmyFunction();\n// Print \n  the variable x in the main function\ncout << x;\nreturn 0;\n}\n\n---\n\n// Global variable x\nint x = 5;\nvoid myFunction() {\n// \n  We can use x here\ncout << x << \"\\n\";\n}\nint main() {\nmyFunction();\n// We can also use x here\ncout << x;\nreturn 0;\n}\n\n---\n\n// Global variable x\nint x = 5;\nvoid myFunction() {\n// \n    Local variable with the same name as the global variable (x)\nint x \n    = 22;\ncout << x << \"\\n\"; // Refers to the local variable x\n}\nint main() \n    {\nmyFunction();\ncout << x; // Refers to the global \n    variable x\nreturn 0;\n}\n\n---\n\n// Global variable x\nint x = 5;\nvoid myFunction() {\ncout << ++x << \"\\n\"; // Increment the value of x by 1 and print it\n}\nint \n    main() {\nmyFunction();\ncout << x; // Print the \n    global variable x\nreturn 0;\n}\n// The value of \n    x is now 6 (no longer 5)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_19",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

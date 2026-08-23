@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 215,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Insertion Sort algorithm uses one part of the array to hold the sorted values,\n  and the other part of the array to hold values that are not sorted yet.\n\nThe algorithm takes one value at a time from the unsorted part of the array and puts it into the right place in the sorted part of the array, until the array is sorted.\n\nBefore we implement the Insertion Sort algorithm in a Python program, let's manually run through a short array, just to get the idea.\n\nStep 1:We start with an unsorted array.\n\nStep 2:We can consider the first value as the initial sorted part of the array. If it is just one value, it must be sorted, right?\n\nStep 3:The next value 12 should now be moved into the correct position in the sorted part of the array. But 12 is higher than 7, so it is already in the correct position.\n\nStep 4:Consider the next value 9.\n\nStep 5:The value 9 must now be moved into the correct position inside the sorted part of the array, so we move 9 in between 7 and 12.\n\nStep 6:The next value is 11.\n\nStep 7:We move it in between 9 and 12 in the sorted part of the array.\n\nStep 8:The last value to insert into the correct position is 3.\n\nStep 9:We insert 3 in front of all other values because it is the lowest value.\n\nFinally, the array is sorted.\n\nRun the simulation below to see the steps above animated:\n\nTo implement the Insertion Sort algorithm in a Python program, we need:\n\nThe resulting code looks like this:\n\nInsertion Sort can be improved a little bit more.\n\nThe way the code above first removes a value and then inserts it somewhere else is intuitive. It is how you would do Insertion Sort physically with a hand of cards for example. If low value cards are sorted to the left, you pick up a new unsorted card, and insert it in the correct place between the other already sorted cards.\n\nThe problem with this way of programming it is that when removing a value from the array, all elements above must be shifted one index place down:\n\nAnd when inserting the removed value into the array again, there are also many shift operations that must be done: all following elements must shift one position up to make place for the inserted value:\n\nThese shifting operations can take a lot of time, especially for an array with many elements.\n\nYou can read more about how arrays are stored in memoryhere.\n\nWe can avoid most of these shift operations by only shifting the values necessary:\n\nIn the image above, first value 7 is copied, then values 11 and 12 are shifted one place up in the array, and at last value 7 is put where value 11 was before.\n\nThe number of shifting operations is reduced from 12 to 2 in this case.\n\nThis improvement is implemented in the example below:\n\nWhat is also done in the code above is to break out of the inner loop. That is because there is no need to continue comparing values when we have already found the correct place for the current value.\n\nInsertion Sort sorts an array of \\(n\\) values.\n\nOn average, each value must be compared to about \\(\\frac{n}{2}\\) other values to find the correct place to insert it.\n\nInsertion Sort must run the loop to insert a value in its correct place approximately \\(n\\) times.\n\nWe get time complexity for Insertion Sort: \\( O( \\frac{n}{2} \\cdot n) = {O(n^2)} \\)\n\nThe time complexity for Insertion Sort can be displayed like this:\n\nFor Insertion Sort, there is a big difference between best, average and worst case scenarios.\n\nNext up is Quicksort. Finally we will see a faster sorting algorithm!\n\n### Code Snippets\n\n```\n[ 7, 12, 9, 11, 3]\n\n---\n\n[\n7\n, 12, 9, 11, 3]\n\n---\n\n[ 7,\n12\n, 9, 11, 3]\n\n---\n\n[ 7, 12,\n9\n, 11, 3]\n\n---\n\n[ 7,\n9\n, 12, 11, 3]\n\n---\n\n[ 7, 9, 12, > 11\n, 3]\n\n---\n\n[ 7, 9,\n11\n, 12, 3]\n\n---\n\n[ 7, 9, 11, 12,\n3\n]\n\n---\n\n[\n3\n,7, 9, 11, 12]\n\n---\n\nmylist = [64, 34, 25, 12, 22, 11, 90, 5]\nn = len(mylist)\nfor i in range(1,n):\ninsert_index = i\ncurrent_value = mylist.pop(i)\nfor j in range(i-1, -1, -1):\nif mylist[j] > current_value:\ninsert_index = j\nmylist.insert(insert_index, current_value)\nprint(mylist)\n\n---\n\nmylist = [64, 34, 25, 12, 22, 11, 90, 5]\nn = len(mylist)\nfor i in range(1,n):\ninsert_index = i\ncurrent_value = mylist[i]\nfor j in range(i-1, -1, -1):\nif mylist[j] > current_value:\nmylist[j+1] = mylist[j]\ninsert_index = j\nelse:\nbreak\nmylist[insert_index] = current_value\nprint(mylist)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_214",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

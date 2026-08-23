@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 190,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "It is a table that is used in classification problems to assess where errors in the model were made.\n\nThe rows represent the actual classes the outcomes should have been.\nWhile the columns represent the predictions we have made.\nUsing this table it is easy to see which predictions are wrong.\n\nConfusion matrixes can be created by predictions made from a logistic regression.\n\nFor now we will generate actual and predicted values by utilizing NumPy:\n\nNext we will need to generate the numbers for \"actual\" and \"predicted\" values.\n\nIn order to create the confusion matrix we need to import metrics from the sklearn module.\n\nOnce metrics is imported we can use the confusion matrix function on our actual and predicted values.\n\nTo create a more interpretable visual display we need to convert the table into a confusion matrix display.\n\nVizualizing the display requires that we import pyplot from matplotlib.\n\nFinally to display the plot we can use the functions plot() and show() from pyplot.\n\nSee the whole example in action:\n\nThe Confusion Matrix created has four different quadrants:\n\nTrue Negative (Top-Left Quadrant)False Positive (Top-Right Quadrant)False Negative (Bottom-Left Quadrant)True Positive (Bottom-Right Quadrant)\n\nTrue means that the values were accurately predicted, False means that there was an error or wrong prediction.\n\nNow that we have made a Confusion Matrix, we can calculate different measures to quantify the quality of the model. First, lets look at Accuracy.\n\nThe matrix provides us with many useful metrics that help us to evaluate our classification model.\n\nThe different measures include: Accuracy, Precision, Sensitivity (Recall), Specificity, and the F-score, explained below.\n\nAccuracy measures how often the model is correct.\n\n(True Positive + True Negative) / Total Predictions\n\nOf the positives predicted, what percentage is truly positive?\n\nTrue Positive / (True Positive + False Positive)\n\nPrecision does not evaluate the correctly predicted negative cases:\n\nOf all the positive cases, what percentage are predicted positive?\n\nSensitivity (sometimes called Recall) measures how good the model is at predicting positives.\n\nThis means it looks at true positives and false negatives (which are positives that have been incorrectly predicted as negative).\n\nTrue Positive / (True Positive + False Negative)\n\nSensitivity is good at understanding how well the model predicts something is positive:\n\nHow well the model is at prediciting negative results?\n\nSpecificity is similar to sensitivity, but looks at it from the perspective of negative results.\n\nTrue Negative / (True Negative + False Positive)\n\nSince it is just the opposite of Recall, we use the recall_score function, taking the opposite position label:\n\nF-score is the \"harmonic mean\" of precision and sensitivity.\n\nIt considers both false positive and false negative cases and is good for imbalanced datasets.\n\n2 * ((Precision * Sensitivity) / (Precision + Sensitivity))\n\nThis score does not take into consideration the True Negative values:\n\nAll calulations in one:\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nimport numpy\nfrom sklearn import metrics\nactual = numpy.random.binomial(1,.9,size = 1000)\npredicted = \n  numpy.random.binomial(1,.9,size = 1000)\nconfusion_matrix = \n  metrics.confusion_matrix(actual, predicted)\ncm_display = \n  metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, \n  display_labels = [0, 1])\ncm_display.plot()\nplt.show()\n\n---\n\nAccuracy = metrics.accuracy_score(actual, predicted)\n\n---\n\nPrecision = metrics.precision_score(actual, predicted)\n\n---\n\nSensitivity_recall = metrics.recall_score(actual, predicted)\n\n---\n\nSpecificity = metrics.recall_score(actual, predicted, pos_label=0)\n\n---\n\nF1_score = metrics.f1_score(actual, predicted)\n\n---\n\n#metrics\nprint({\"Accuracy\":Accuracy,\"Precision\":Precision,\"Sensitivity_recall\":Sensitivity_recall,\"Specificity\":Specificity,\"F1_score\":F1_score})\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_189",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

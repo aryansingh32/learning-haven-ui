@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 164,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "CSS allows you to add multiple background images for an element, through thebackground-imageproperty.\n\nThe different background images are separated by commas, and the images are \nstacked on top of each other, where the first image is closest to the viewer.\n\nThe following example has two background images, the first image is a flower \n(aligned to the right-bottom) and the second image is a paper-like background (aligned to the top-left corner):\n\nMultiple background images can be specified using either the individual \nbackground properties (as above) or with thebackgroundshorthand property.\n\nThe following example uses thebackgroundshorthand property (same result as \nexample above):\n\n### Code Snippets\n\n```\n#example1 {\nbackground-image: url(img_flwr.gif), url(paper.gif);\nbackground-position: right bottom, left top;\nbackground-repeat: no-repeat, repeat;\n}\n\n---\n\n#example1 {\nbackground: url(img_flwr.gif) right bottom \nno-repeat, url(paper.gif) left top repeat;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_163",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

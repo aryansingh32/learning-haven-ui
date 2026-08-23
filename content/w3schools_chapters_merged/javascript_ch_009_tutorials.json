@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 9,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nFunctions help you to:\n\nA function can be created with thefunctionkeyword, aname, andparentheses.\n\nThe code to run is written insidecurly brackets.\n\nTo run a function, you call it by using its name followed by parentheses likesayHello():\n\nFunctions are defined with thefunctionkeyword:\n\nThefunction namefollows the naming rules for variables.\n\nOptional parametersare listed inside parentheses:(p1, p2, ...)\n\nCode to be executedis listed inside curly brackets:{ }\n\nFunctions canreturn an optional valueback to the caller.\n\nA big benefit is that you can call the same function whenever you need it.\n\nVariables declaredwithina JavaScript function, becomeLOCALto \nthe function.\n\nLocal variables can only be accessed from within the function.\n\nSince local variables are only recognized inside their functions, variables with the same name can be used in different functions.\n\nFunctions can be used as variables, in all types of formulas, assignments, and calculations.\n\nThe most useful functions work like this:\n\nIn the next chapters, you will learn more aboutinputandreturnvalues.\n\n### Code Examples\n\n```\nfunction sayHello() { return \"Hello World\"; }\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nlet message = sayHello();\n\n---\n\nfunction\nname\n(\np1, p2, ...\n) {\n// code to be executed\n}\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\n\n---\n\nfunction add(a, b) {\nreturn a + b;\n}\nlet sum1 = add(5, 5);\nlet sum2 = add(50, 50);\n\n---\n\n// code here can NOT use carName\nfunction myFunction() {\nlet carName = \"Volvo\";\n// code here CAN use carName\n}\n// code here can NOT use carName\n\n---\n\nlet x = toCelsius(77);\nlet text = \"The temperature is \" + x + \" Celsius\";\n\n---\n\nlet text = \"The temperature is \" + toCelsius(77) + \" Celsius\";\n```\n\n## Tutorials\n\nThe code inside a function isNOT executedwhen the function isdefined.\n\nThe code inside a functionwill executewhen \"something\"invokesthe function:\n\nIt is common to use the terminvoke, because a function can be invoked without being called.\n\nIt is also common to use say:\n\nThe function below returns the text\"Hello World\".\n\nBut it will not run before you call it.\n\nThe code below calls the function.\n\nBut it does not use the result.\n\nWhen a function returns a value, you can store the value in a variable.\n\nYou can display the returned value in many ways, for example using console.log() or HTML.\n\nYou can call the same function whenever you need it.\n\nThe () operator invokes a function.\n\nAccessing a function without () returns the function itself and not the result:\n\nThis is an important difference:\n\nsayHellorefers to thefunction itself. It returns the function.\n\nsayHello()refers to thefunction result. It returns the result.\n\nYou can call functions from other functions, from events, or from any code block.\n\n### Code Examples\n\n```\nfunction sayHello() {\nreturn \"Hello World\";\n}\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nsayHello();\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nlet greeting = sayHello();\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nconsole.log(sayHello());\n\n---\n\n<p id=\"demo\"></p>\n<script>\nfunction sayHello() {\nreturn \"Hello World\";\n}\ndocument.getElementById(\"demo\").innerHTML = sayHello();\n</script>\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nlet a = sayHello();\nlet b = sayHello();\nlet c = sayHello();\n\n---\n\n// Convert Fahrenheit to Celsius:\nfunction toCelsius(fahrenheit) {\nreturn (5/9) * (fahrenheit-32);\n}\n// Call the toCelcius() function\nlet value = toCelsius(77);\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5/9) * (fahrenheit-32);\n}\nlet value = toCelsius;\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nlet text = sayHello;\n\n---\n\nfunction sayHello() {\nreturn \"Hello World\";\n}\nfunction showHello() {\ndocument.getElementById(\"demo\").innerHTML = sayHello();\n}\n\n---\n\n<p id=\"demo\"></p>\n<button onclick=\"showHello()\">Click Me</button>\n<script>\nfunction sayHello() {\nreturn \"Hello World\";\n}\nfunction showHello() {\ndocument.getElementById(\"demo\").innerHTML = sayHello();\n}\n</script>\n```\n\n## Tutorials\n\nA function can have one parameter.\n\nYou can add as many parameters as you want, separated by commas.\n\nIn JavaScript, functionparametersandargumentsare distinct concepts:\n\nParametersare thenameslisted in thefunction definition.\n\nArgumentsare thereal valuespassed to, andreceived by the function.\n\nJavaScript function definitionsdo not specify data typesfor parameters.\n\nJavaScript functionsdo not perform type checkingon the arguments.\n\nJavaScript functionsdo not check the numberof arguments received.\n\nAccessing a function with an incorrect parameter can return an incorrect answer:\n\nECMAScript 2015allows function parameters to have default values.\n\nThe default value is used if no argument is provided.\n\n### Code Examples\n\n```\nfunction multiply(a, b) {\nreturn a * b;\n}\nlet result = multiply(4, 5);\n\n---\n\nfunction sayHello(name) {\nreturn \"Hello \" + name;\n}\nlet greeting = sayHello(\"John\");\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5 / 9) * (fahrenheit - 32);\n}\nlet value = toCelsius(77);\n\n---\n\nfunction fullName(firstName, lastName) {\nreturn firstName + \" \" + lastName;\n}\nlet name = fullName(\"John\", \"Doe\");\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5/9) * (fahrenheit-32);\n}\nlet value = toCelsius();\n\n---\n\nfunction myFunction(x, y = 10) {\nreturn x + y;\n}\nmyFunction(5);\n```\n\n## Tutorials\n\nWhen a function reaches areturnstatement, the functionstops executing.\n\nThevalueafter thereturnkeywordis sent backto the caller.\n\nMost functions return the result of a calculation or an operation.\n\nThe returned value can be used anywhere a value is expected.\n\nYou can use a function call inside another expression.\n\nA function can return any type of value (not only numbers).\n\nCode written after areturnstatement willNOT be executed.\n\nIf a function does not return a value, the return value will beundefined.\n\nYou can usereturnto stop a function early, based on a condition.\n\nReturned function values are often used to update HTML content.\n\n### Code Examples\n\n```\nfunction sayHello() {\nreturn \"Hello World\";\n}\nlet message = sayHello();\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\nlet result = multiply(4, 5);\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\nlet total = multiply(2, 3) * 10;\n\n---\n\nfunction fullName(firstName, lastName) {\nreturn firstName + \" \" + lastName;\n}\nlet name = fullName(\"John\", \"Doe\");\n\n---\n\nfunction multiply(a, b) {\nreturn \"Done\";\n// Next line will never run\nreturn a * b;\n}\nlet result = multiply(4, 3);\n\n---\n\nfunction multiply(a, b) {\nlet x = a * b;\n}\nlet result = multiply(4, 3);\n\n---\n\nfunction checkAge(age) {\nif (age < 18) {\nreturn \"Too young\";\n}\nreturn \"Access granted\";\n}\n\n---\n\n<p id=\"demo\"></p>\n<script>\nfunction toCelsius(farenheit) {\nreturn (5 / 9) * (farenheit - 32);\n}\ndocument.getElementById(\"demo\").innerHTML = toCelsius(77);\n</script>\n```\n\n## Tutorials\n\nIn the example above:\n\nThe argument4is assigned to the parametera.\n\nThe argument5is assigned to the parameterb.\n\nJavaScript functions have a built-in object called the arguments \nobject.\n\nThe argument object contains an array of the arguments used when the function \nwas called (invoked).\n\nThis way you can simply use a function to find (for instance) the highest \nvalue in a list of numbers:\n\nOr create a function to sum all input values:\n\nArguments are assigned to parameters in the order they appear.\n\nArguments do not have to be values. They can also be variables.\n\nJavaScript function definitionsdo not specify data typesfor arguments.\n\nJavaScript functionsdo not perform type checkingon the passed arguments.\n\nJavaScript functionsdo not check the numberof arguments received.\n\nIncorrect arguments can return incorrect answers:\n\nIf a function is called with fewer arguments than parameters, the missing values becomeundefined.\n\nIn the example above,bisundefined, so the result isNaN.\n\nIf a function is called withmissing arguments(less than declared), the missing values are set toundefined.\n\nSometimes this is acceptable, but sometimes it is better to assign a default \nvalue to the parameter:\n\nECMAScript 2015allows function parameters to have default values.\n\nYou can now set a default value for a parameter.\n\nThe default value is used if no argument is provided.\n\nThe rest parameter (...) allows a function to treat an indefinite number of arguments as an array:\n\nThe parameters, in a function call, are the function's arguments.\n\nJavaScript arguments are passed byvalue: The function only \ngets to know the values, not the argument's locations.\n\nIf a function changes an argument's value, it does not change the parameter's \noriginal value.\n\nChanges to arguments are not visible (reflected) outside the function.\n\nIn JavaScript, object references are values.\n\nBecause of this, objects will behave like they are passed byreference:\n\nIf a function changes an object property, it changes the original value.\n\nChanges to object properties are visible (reflected) outside the function.\n\n### Code Examples\n\n```\nfunction multiply(a, b) {\nreturn a * b;\n}\nlet result = multiply(4, 5);\n\n---\n\nx = findMax(1, 123, 500, 115, 44, 88);\nfunction findMax() {\nlet max = -Infinity;\nfor (let i = 0; i < arguments.length; i++) {\nif (arguments[i] > max) {\nmax = arguments[i];\n}\n}\nreturn max;\n}\n\n---\n\nx = sumAll(1, 123, 500, 115, 44, 88);\nfunction sumAll() {\nlet sum = 0;\nfor (let i = 0; i < arguments.length; i++) {\nsum += arguments[i];\n}\nreturn sum;\n}\n\n---\n\nfunction subtract(a, b) {\nreturn a - b;\n}\nlet x1 = subtract(10, 5);\nlet x2 = subtract(5, 10);\n\n---\n\nlet x = 5;\nlet y = 6;\nfunction multiply(a, b) {\nreturn a * b;\n}\nmultiply(x, y);\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5/9) * (fahrenheit-32);\n}\nlet value = toCelsius(\"John\");\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\nmultiply(4);\n\n---\n\nfunction myFunction(x, y) {\nif (y === undefined) {\ny = 2;\n}\n}\n\n---\n\nfunction myFunction(x, y = 10) {\nreturn x + y;\n}\nmyFunction(5);\n\n---\n\nfunction sum(...args) {\nlet sum = 0;\nfor (let arg of args) sum += arg;\nreturn sum;\n}\nlet x = sum(4, 9, 16, 25, 29, 100, 66, 77);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_9",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

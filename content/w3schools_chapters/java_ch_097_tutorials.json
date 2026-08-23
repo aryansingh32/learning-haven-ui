@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 97,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Java does not have a built-in Date class, but we can import thejava.timepackage to work with the date and time API. The package includes many date and time classes. \nFor example:\n\nTo display the current date, import thejava.time.LocalDateclass, and use itsnow()method:\n\nTo display the current time (hour, minute, second, and nanoseconds), import thejava.time.LocalTimeclass, and use itsnow()method:\n\nTo display the current date and time, import thejava.time.LocalDateTimeclass, and use itsnow()method:\n\nThe \"T\" in the example above is used to separate the date from the time. You can use theDateTimeFormatterclass \nwith theofPattern()method in the same package to format or parse date-time objects. \nThe following example will remove both the \"T\" and nanoseconds from the date-time:\n\nTheofPattern()method accepts all sorts of values, if you want to display \nthe date and time in a different format. For example:\n\n### Code Snippets\n\n```\nExample\nimport java.time.LocalDate; // import the LocalDate class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDate myObj = LocalDate.now(); // Create a date object\n\u00a0\u00a0\u00a0 System.out.println(myObj); // Display the current date\n\u00a0 }\n}\nThe output will be:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalTime; // import the LocalTime class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalTime myObj = LocalTime.now();\n\u00a0\u00a0\u00a0 System.out.println(myObj);\n\u00a0 }\n}\nThis example displays the server's local time, which may differ from your \nlocal time:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalDateTime; // import the LocalDateTime class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDateTime myObj = LocalDateTime.now();\n\u00a0\u00a0\u00a0 System.out.println(myObj);\n\u00a0 }\n}\nThe output will be something like this:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalDateTime; // Import the LocalDateTime class\nimport java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDateTime myDateObj = LocalDateTime.now();\n\u00a0\u00a0\u00a0 System.out.println(\"Before formatting: \" + myDateObj);\n\u00a0\u00a0\u00a0 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm:ss\");\n\n\u00a0\u00a0\u00a0 String formattedDate = myDateObj.format(myFormatObj);\n\u00a0\u00a0\u00a0 System.out.println(\"After formatting: \" + formattedDate);\n\u00a0 }\n}\nThe output will be:\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_96",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

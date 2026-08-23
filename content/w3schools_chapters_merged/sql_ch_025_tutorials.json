@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 25,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheIS NULLcommand is used to test for \nempty values (NULL values).\n\nThe following SQL lists all customers with a NULL value in the \"Address\" \nfield:\n\n### Code Examples\n\n```\nSELECT CustomerName, ContactName, Address\nFROM Customers\nWHERE Address \n  IS NULL;\n```\n\n## Tutorials\n\nTheIS NOT NULLcommand is used to test for \nnon-empty values (NOT NULL values).\n\nThe following SQL lists all customers with a value in the \"Address\" field:\n\n### Code Examples\n\n```\nSELECT CustomerName, ContactName, Address\nFROM Customers\nWHERE Address \n  IS NOT NULL;\n```\n\n## Tutorials\n\nTheINNER JOINcommand returns rows that have matching values in both tables.\n\nThe following SQL selects all orders with customer information:\n\nNote:The INNER JOIN keyword selects all rows from both \ntables as long as there is a match between the columns. If there are records in the \n\"Orders\" table that do not have matches in \"Customers\", these orders will not \nbe shown!\n\nThe following SQL statement selects all orders with customer and shipper \ninformation:\n\nTheLEFT JOINcommand returns all rows from \nthe left table, and the matching rows from the right table. The result is NULL \nfrom the right side, if there is no match.\n\nThe following SQL will select all customers, and any orders they \nmight have:\n\nNote:TheLEFT JOINkeyword returns all records from the \nleft table (Customers), even if there are no matches in the right table \n(Orders).\n\nTheRIGHT JOINcommand returns all rows from \nthe right table, and the matching records from the left table. The result is \nNULL from the left side, when there is no match.\n\nThe following SQL will return all employees, and any orders they \nmight have placed:\n\nNote:TheRIGHT JOINkeyword returns all records from the \nright table (Employees), even if there are no matches in the left table \n(Orders).\n\nTheFULL OUTER JOINcommand returns all rows \nwhen there is a match in either left table or right table.\n\nThe following SQL statement selects all customers, and all orders:\n\nNote:TheFULL OUTER JOINkeyword returns all the rows from \nthe left table (Customers), and all the rows from the right table (Orders). If \nthere are rows in \"Customers\" that do not have matches in \"Orders\", or if there \nare rows in \"Orders\" that do not have matches in \"Customers\", those rows will be \nlisted as well.\n\n### Code Examples\n\n```\nSELECT Orders.OrderID, Customers.CustomerName\nFROM Orders\nINNER JOIN \n  Customers ON Orders.CustomerID = Customers.CustomerID;\n\n---\n\nSELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName\nFROM \n  ((Orders\nINNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)\nINNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);\n\n---\n\nSELECT Customers.CustomerName, Orders.OrderID\nFROM Customers\nLEFT JOIN Orders\n ON Customers.CustomerID = Orders.CustomerID\nORDER BY Customers.CustomerName;\n\n---\n\nSELECT Orders.OrderID, Employees.LastName, Employees.FirstName\nFROM Orders\nRIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID\nORDER BY Orders.OrderID;\n\n---\n\nSELECT Customers.CustomerName, Orders.OrderID\nFROM Customers\nFULL OUTER JOIN Orders\nON Customers.CustomerID=Orders.CustomerID\nORDER BY Customers.CustomerName;\n```\n\n## Tutorials\n\nTheLEFT JOINcommand returns all rows from \nthe left table, and the matching rows from the right table. The result is NULL \nfrom the right side, if there is no match.\n\nThe following SQL will select all customers, and any orders they \nmight have:\n\nNote:TheLEFT JOINkeyword returns all records from the \nleft table (Customers), even if there are no matches in the right table \n(Orders).\n\n### Code Examples\n\n```\nSELECT Customers.CustomerName, Orders.OrderID\nFROM Customers\nLEFT JOIN Orders\n ON Customers.CustomerID = Orders.CustomerID\nORDER BY Customers.CustomerName;\n```\n\n## Tutorials\n\nTheLIKEcommand is used in a WHERE clause \nto search for a specified pattern in a column.\n\nYou can use two wildcards withLIKE:\n\nThe following SQL selects all customers with a CustomerName starting with \n\"a\":\n\nThe following SQL selects all customers with a CustomerName ending with \"a\":\n\nThe following SQL selects all customers with a CustomerName that \nhave \"or\" in any position:\n\nThe following SQL statement selects all customers with a CustomerName that \nstarts with \"a\" and are at least 3 characters in length:\n\n### Code Examples\n\n```\nSELECT * FROM Customers\nWHERE CustomerName LIKE 'a%';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerName LIKE '%a';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerName LIKE '%or%';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerName LIKE 'a__%';\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_25",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_25",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

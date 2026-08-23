@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 52,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Seethis pagefor a general explanation of what time complexity is.\n\nFor a general explanation of what time complexity is, visitthis page.\n\nFor a more thorough and detailed explanation of Insertion Sort time complexity, visitthis page.\n\nLinear Searchcompares each value with the value it is looking for. If the value is found, the index is returned, and if it is not found -1 is returned.\n\nTo find the time complexity for Linear Search, let's see if we can fins out how many compare operations are needed to find a value in an array with \\(n\\) values.\n\nBest Case Scenariois if the value we are looking for is the first value in the array. In such a case only one compare is needed and the time complexity is \\(O(1)\\).\n\nWorst Case Scenariois if the whole array is looked through without finding the target value. In such a case all values in the array are compared with the target value, and the time complexity is \\(O(n)\\).\n\nAverage Case Scenariois not so easy to pinpoint. What is the possibility to finding the target value? That depends on the values in the array right? But if we assume that exactly one of the values in the array is equal to the target value, and that the position of that value can be anywhere, the average time needed for Linear Search is half of the time time needed in the worst case scenario.\n\nTime complexity for Linear Search is \\(O(n)\\).\n\nIf we draw how much time Linear Search needs to find a value in an array of \\(n\\) values, we get this graph:\n\nRun the simulation for different number of values in an array, and see how many compares are needed for Linear Search to find a value in an array of \\(n\\) values:\n\nAs you can see when running simulations of Linear Search, the search requires few compares if the value is found fast, but if the value we are looking for is not found, the maximum of compares are done.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_51",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

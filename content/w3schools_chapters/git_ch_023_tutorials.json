@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 23,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In the last chapters, we made an account on {{title}} and set up SSH.\n\nThen we made some changes directly on {{title}}.\n\nNow we want to update our local repository with the changes from {{title}}.\n\nWhen working as a team on a project, it is important that everyone stays up to date.\n\nAny time you start working on a project, you should get the most recent \nchanges to your local copy.\n\nWith Git, you can do that withpull.\n\npullis a combination of 2 different commands:\n\nLet's take a closer look into howfetch,merge, andpullworks.\n\ngit fetchdownloads new data from a remote repository, but does not change your working files or branches. It lets you see what others have pushed before you merge or pull.\n\nNow that we have the recentchanges, we can check ourstatus:\n\nWe are behind theorigin/masterby 1commit. That should be the updatedREADME.md, but lets double check by viewing thelog:\n\nThat looks as expected, but we can also verify by showing the differences \nbetween our localmasterandorigin/master:\n\nThat looks precisely as expected! Now we can safelymerge.\n\nmergecombines the current branch, with a specified branch.\n\nWe have confirmed that the updates are as expected, and we can merge our current branch (master) withorigin/master:\n\nCheck ourstatusagain to confirm we are up to date:\n\nThere! Your local git is up to date!\n\nBut what if you just want to update your local repository, without going through all those steps?\n\npullis a combination offetchandmerge.\n\nIt is used to pull all changes from a remote repository into the branch you are working on.\n\nMake another change to the Readme.md file on {{title}}.\n\nUsepullto update our local Git:\n\nThat is how you keep your local Git up to date from a remote repository. In the next chapter, we will look closer at howpushworks on {{title}}.\n\n### Code Snippets\n\n```\nExample\ngit fetch origin\nremote: Enumerating objects: 5, done.\nremote: Counting objects: 100% (5/5), done.\nremote: Compressing objects: 100% (3/3), done.\nremote: Total 3 (delta 2), reused 0 (delta 0), pack-reused 0\nUnpacking objects: 100% (3/3), 733 bytes | 3.00 KiB/s, done.\nFrom https://{{remoteName}}.com/w3schools-test/hello-world\n   e0b6038..d29d69f  master     -> origin/master\n\n---\n\nExample\ngit status\nOn branch master\nYour branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.\n  (use \"git pull\" to update your local branch)\n\nnothing to commit, working tree clean\n\n---\n\nExample\ngit log origin/master\ncommit d29d69ffe2ee9e6df6fa0d313bb0592b50f3b853 (origin/master)\nAuthor: w3schools-test <77673807+w3schools-test@users.noreply.{{remoteName}}.com>\nDate:   Fri Mar 26 14:59:14 2021 +0100\n\n    Updated README.md with a line about {{title}}\n\ncommit e0b6038b1345e50aca8885d8fd322fc0e5765c3b (HEAD -> master)\nMerge: dfa79db 1f1584e\nAuthor: w3schools-test <test@w3schools.com>\nDate:   Fri Mar 26 12:42:56 2021 +0100\n\n    merged with hello-world-images after fixing conflicts\n\n...\n...\n\n---\n\nExample\ngit diff origin/master\ndiff --git a/README.md b/README.md\nindex 23a0122..a980c39 100644\n--- a/README.md\n+++ b/README.md\n@@ -2,6 +2,4 @@\n Hello World repository for Git tutorial\n This is an example repository for the Git tutoial on https://www.w3schools.com\n\n-This repository is built step by step in the tutorial.\n-\n-It now includes steps for {{title}}\n+This repository is built step by step in the tutorial.\n\\ No newline at end of file\n\n---\n\nExample\ngit merge origin/master\nUpdating e0b6038..d29d69f\nFast-forward\n README.md | 4 +++-\n 1 file changed, 3 insertions(+), 1 deletion(-)\n\n---\n\nExample\ngit status\nOn branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n\n---\n\nExample\ngit pull origin\nremote: Enumerating objects: 5, done.\nremote: Counting objects: 100% (5/5), done.\nremote: Compressing objects: 100% (3/3), done.\nremote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0\nUnpacking objects: 100% (3/3), 794 bytes | 1024 bytes/s, done.\nFrom https://{{remoteName}}.com/w3schools-test/hello-world\n    a7cdd4b..ab6b4ed  master       -> origin/master\nUpdating a7cdd4b..ab6b4ed\nFast-forward\n  README.md | 2 ++\n  1 file changed, 2 insertions(+)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_22",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

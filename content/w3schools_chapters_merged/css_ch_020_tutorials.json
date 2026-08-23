@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 20,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nThefloatproperty specifies how an element should float \nwithin its container.\n\nIt places an element on the left or right side of its container, allowing text and inline elements to wrap around it.\n\nThefloatproperty can have one of the following values:\n\nTip:Thefloatproperty is often used to wrap text around images!\n\nThefloat: rightvalue indicates that an \nelement should float to the right within its container.\n\nThe following example specifies that the image should float to theright.\n\nTip:If you make the screen smaller, you will see that the text wraps around the image.\n\nThefloat: leftvalue indicates that an \nelement should float to the left within its container.\n\nThe following example specifies that the image should float to theleft:\n\nThefloat: nonevalue is the default value \nforfloat, and the element is displayed just \nwhere it occurs in its container.\n\nIn the following example the image will be displayed just where it occurs in \nthe container:\n\nHTML <div> elements are block elements, and will start on a new line and \ntake up the full width available. However, if we \nusefloat: leftwe can make the <div> elements \nto float next to each other:\n\n### Code Examples\n\n```\nimg {\nfloat: right;\n}\n\n---\n\nimg {\nfloat: left;\n}\n\n---\n\nimg {\nfloat: none;\n}\n\n---\n\ndiv {\nfloat: left;\npadding: 15px;\n}\n.div1 {\nbackground: red;\n}\n.div2 {\nbackground: yellow;\n}\n.div3 {\nbackground: green;\n}\n```\n\n## Tutorials\n\nTheclearproperty specifies what \nshould happen with the element that is NEXT to a floating element.\n\nTheclearproperty prevents elements from wrapping around or beside the floated content.\n\nThis property can have one of the \nfollowing values:\n\nIf a floated element is taller than the containing element, it will \"overflow\" outside of its container. We can then add a clearfix hack to \nsolve this problem:\n\nThe clearfix hack involves the::afterpseudo-element, and is used \nto ensure that the parent container properly encloses its floated child \nelements:\n\nExample explained:\n\n### Code Examples\n\n```\ndiv1 {\nfloat: left;\n}\ndiv2 {\nclear: left;\n}\n\n---\n\n.clearfix::after {\ncontent: \"\";\nclear: both;\ndisplay: table;\n}\n```\n\n## Tutorials\n\nWith thefloatproperty, it is easy to float boxes of content side by side:\n\nThe grid of boxes can also be used to display images side by side:\n\nIn the previous example, you learned how to float boxes side by side with an equal width. However, it is not easy to create floating boxes with equal heights. A quick fix \nhowever, is to set a fixed height, like in the example below:\n\nHowever, this is not very flexible. It is ok if you can guarantee that the boxes will always have the same amount of content in them. \nBut many times, the content is not the same. If you try the example above on a mobile phone, you will see that the second \nbox's content will be displayed outside of the box. \nThis is where CSS Flexbox comes in handy - as it can automatically stretch \nboxes to be as long as the longest box:\n\nYou can also usefloatwith a list of hyperlinks to create a horizontal menu:\n\n### Code Examples\n\n```\n* {\nbox-sizing: border-box;\n}\n.box {\nfloat: left;\nwidth: 33.33%; /* three \n  boxes (use 25% for four, and 50% for two, etc) */\npadding: \n  50px; /* if you want space between the images */\n}\n\n---\n\n.img-container {\nfloat: left;\nwidth: 33.33%; /* three \n  containers (use 25% for four, and 50% for two, etc) */\npadding: \n  5px; /* if you want space between the images */\n}\n\n---\n\n.box {\nheight: 500px;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_20",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

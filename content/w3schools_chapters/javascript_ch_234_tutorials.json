@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 234,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The most common way to protect an object from being changed\nis by using theconstkeyword.\n\nWithconstyoucannotre-assign the object,\nbut youcanchange the value of a property, delete a property or create a new property.\n\nTheObject.preventExtensions()method prevents adding properties to an object.\n\nSince arrays are objects, arrays can be prevented from extensions too:\n\nYou can useObject.isExtensible()to check if an object is extensible.\n\nTheObject.isExtensible()returns true if an object is extensible.\n\nTheObject.seal()method prevents additions or deletions of new properties.\n\nTheObject.seal()method makes existing properties non-configurable.\n\nTheObject.isSealed()method can be used to check if an object is sealed.\n\nSince arrays are objects, arrays can be sealed too:\n\nTheObject.isSealed()method can be used to check if an object is sealed.\n\nTheObject.isSealed()returns true if an object is sealed.\n\nTheObject.freeze()method prevents any changes to an object.\n\nFrozen objects are read-only.\n\nNo modification, addition or deletion of properties are allowed.\n\nSince arrays are objects, arrays can be frozen too:\n\nTheObject.isFrozen()method can be used to check if an object is frozen.\n\nTheObject.isFrozen()returns true if an object is frozen.\n\n### Code Snippets\n\n```\n// Prevents re-assignment\nconst car = {type:\"Fiat\", model:\"500\", color:\"white\"};\n// Prevents adding object properties\nObject.preventExtensions(object)\n// Returns true if properties can be added to an object\nObject.isExtensible(object)\n// Prevents adding and deleting object properties\nObject.seal(object)\n// Returns true if object is sealed\nObject.isSealed(object)\n// Prevents any changes to an object\nObject.freeze(object)\n// Returns true if object is frozen\nObject.isFrozen(object)\n\n---\n\n// Create Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Prevent Extensions\nObject.preventExtensions(person);\n// This will throw an error\nperson.nationality = \"English\";\n\n---\n\n// Create Array\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nObject.preventExtensions(fruits);\n// This will throw an error:\nfruits.push(\"Kiwi\");\n\n---\n\n// Create Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Prevent Extensions\nObject.preventExtensions(person);\n// This will return false\nlet answer = Object.isExtensible(person);\n\n---\n\n// Create Array\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\n// Prevent Extensions\nObject.preventExtensions(fruits);\n// This will return false\nlet answer = Object.isExtensible(fruits);\n\n---\n\n\"use strict\"\n// Create Object\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n// Seal Object\nObject.seal(person)\n// This will throw an error\ndelete person.age;\n\n---\n\n// Create Array\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nObject.seal(fruits);\n// This will throw an error:\nfruits.push(\"Kiwi\");\n\n---\n\n// Create Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Seal Object\nObject.seal(person);\n// This will return true\nlet answer = Object.isSealed(person);\n\n---\n\n// Create Array\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\n// Seal Array\nObject.seal(fruits);\n// This will return true\nlet answer = Object.isSealed(fruits);\n\n---\n\n\"use strict\"\n// Create Object\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n// Freeze Object\nObject.freeze(person)\n// This will throw an error\nperson.age = 51;\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nObject.freeze(fruits);\n// This will trow an error:\nfruits.push(\"Kiwi\");\n\n---\n\n// Create Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Freeze Object\nObject.freeze(person);\n// This will return true\nlet answer = Object.isFrozen(person);\n\n---\n\n// Create Array\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nObject.freeze(fruits);\n// This will return true:\nlet answer = Object.isFrozen(fruits);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_233",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

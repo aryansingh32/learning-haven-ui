@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 249,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The direct child elements of a flex container automatically becomes flex items.\n\nFlex items can have the following properties:\n\nTheorderproperty specifies the \ndisplay order of \nthe flex items inside the flex container.\n\nThe first flex item in the source code does not have to appear as the first item in the layout.\n\nThe order value must be a number, and the default value is 0.\n\nTheflex-growproperty specifies how much a flex item will grow relative to the rest of the flex items.\n\nThe value must be a number, and the default value is 0.\n\nTheflex-shrinkproperty specifies how much a flex item will shrink relative to the rest of the flex items.\n\nThe value must be a number, and the default value is 1.\n\nTheflex-basisproperty specifies the initial length of a flex item.\n\nTheflexproperty is a shorthand property for theflex-grow,flex-shrink, andflex-basisproperties.\n\nThealign-selfproperty specifies the \nalignment for the selected item inside the flexible container.\n\nThis property overrides the default alignment set by the \ncontainer'salign-itemsproperty.\n\nIn these examples we use a 200 pixels high container, to better demonstrate thealign-selfproperty:\n\nThe following table lists all the CSS Flex Items properties:\n\n### Code Snippets\n\n```\n<div class=\"flex-container\">\n<div style=\"order: 3\">1</div>\n<div style=\"order: 2\">2</div>\n<div style=\"order: 4\">3</div>\n<div style=\"order: 1\">4</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div style=\"flex-grow: 1\">1</div>\n<div style=\"flex-grow: 1\">2</div>\n<div style=\"flex-grow: \n  4\">3</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div>1</div>\n<div>2</div>\n<div style=\"flex-shrink: \n  2\">3</div>\n<div>4</div>\n<div>5</div>\n<div>6</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div>1</div>\n<div>2</div>\n<div style=\"flex-basis: 250px\">3</div>\n<div>4</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div>1</div>\n<div>2</div>\n<div style=\"flex: \n  1 0 150px\">3</div>\n<div>4</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div>1</div>\n<div>2</div>\n<div style=\"align-self: \n  center\">3</div>\n<div>4</div>\n</div>\n\n---\n\n<div class=\"flex-container\">\n<div>1</div>\n<div style=\"align-self: \n  flex-start\">2</div>\n<div style=\"align-self: \n  flex-end\">3</div>\n<div>4</div>\n</div>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_248",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

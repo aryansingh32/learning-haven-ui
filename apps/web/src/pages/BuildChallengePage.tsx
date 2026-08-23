@@ -16,6 +16,7 @@ import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { buildGitHubReturnPath, handleGitHubOAuthReturn, stripGitHubOAuthParams } from '@/lib/githubOAuth';
 import { stageStatus } from '@/features/build-haven/components/utils';
+import { BuildModePicker } from '@/features/build-haven/components/BuildModePicker';
 
 /* ── Language icon button ──────────────────────────────────────────── */
 function LanguageButton({
@@ -233,6 +234,8 @@ export default function BuildChallengePage() {
   const location = useLocation();
   const { user } = useAuth();
   const [language, setLanguage] = useState('');
+  const [buildMode, setBuildMode] = useState<'traditional' | 'vibe'>('traditional');
+  const [showModePicker, setShowModePicker] = useState(false);
 
   const { data, refetch, isLoading } = useQuery({
     queryKey: ['build-challenge', slug],
@@ -270,6 +273,19 @@ export default function BuildChallengePage() {
     }
   }, [languages, language]);
 
+  // Auto-configure build mode based on challenge config
+  useEffect(() => {
+    if (!challenge) return;
+    const modes: string[] = challenge.available_modes || ['traditional'];
+    if (modes.length === 1) {
+      setBuildMode(modes[0] as 'traditional' | 'vibe');
+      setShowModePicker(false);
+    } else {
+      setBuildMode((challenge.default_mode as 'traditional' | 'vibe') || 'traditional');
+      setShowModePicker(true);
+    }
+  }, [challenge]);
+
   useEffect(() => {
     handleGitHubOAuthReturn(location.search, () => {
       void githubStatusQuery.refetch();
@@ -284,11 +300,11 @@ export default function BuildChallengePage() {
   const existingEnrollment = workspaceQuery.data?.workspace?.enrollment;
 
   const startMutation = useMutation({
-    mutationFn: () => buildHavenService.startChallenge(slug, language),
+    mutationFn: () => buildHavenService.startChallenge(slug, language, buildMode),
     onSuccess: () => {
-      toast.success('Repository ready — let\'s build!');
+      toast.success(buildMode === 'vibe' ? 'Ready — start vibe coding!' : 'Repository ready — let\'s build!');
       void refetch();
-      navigate(`/projects/${slug}/workspace?language=${encodeURIComponent(language)}`);
+      navigate(`/projects/${slug}/workspace?language=${encodeURIComponent(language)}&mode=${buildMode}`);
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -374,9 +390,41 @@ export default function BuildChallengePage() {
           </div>
         )}
 
+        {/* Mode Picker (shown when challenge supports both modes) */}
+        {showModePicker && (
+          <div className="mt-6">
+            <BuildModePicker
+              availableModes={(challenge as any).available_modes || ['traditional']}
+              selectedMode={buildMode}
+              onSelect={setBuildMode}
+            />
+          </div>
+        )}
+
         {/* CTA */}
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          {!isGithubConnected ? (
+          {buildMode === 'vibe' ? (
+            <Button
+              size="lg"
+              className="bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-500/20 px-8"
+              disabled={!language || startMutation.isPending}
+              onClick={() => {
+                if (existingEnrollment) {
+                  navigate(`/projects/${slug}/workspace?language=${encodeURIComponent(language)}&mode=vibe`);
+                } else {
+                  startMutation.mutate();
+                }
+              }}
+            >
+              {startMutation.isPending ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Setting up…</>
+              ) : existingEnrollment ? (
+                <>Resume Vibe Build<ChevronRight className="ml-1 h-4 w-4" /></>
+              ) : (
+                <>Start Vibe Coding<ChevronRight className="ml-1 h-4 w-4" /></>
+              )}
+            </Button>
+          ) : !isGithubConnected ? (
             <Button
               size="lg"
               className="bg-[#24292F] text-white hover:bg-[#24292F]/90 shadow-lg"
@@ -399,24 +447,15 @@ export default function BuildChallengePage() {
               }}
             >
               {startMutation.isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Setting up…
-                </>
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Setting up…</>
               ) : existingEnrollment?.repo_url ? (
-                <>
-                  Resume Building
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </>
+                <>Resume Building<ChevronRight className="ml-1 h-4 w-4" /></>
               ) : (
-                <>
-                  Start Building
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </>
+                <>Start Building<ChevronRight className="ml-1 h-4 w-4" /></>
               )}
             </Button>
           )}
-          {isGithubConnected && (
+          {buildMode === 'traditional' && isGithubConnected && (
             <p className="flex items-center gap-1 text-xs text-success">
               <CheckCircle2 className="h-3.5 w-3.5" />
               GitHub connected
@@ -436,31 +475,56 @@ export default function BuildChallengePage() {
                 <Code2 className="w-5 h-5" />
                 How it works
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                <div className="hidden md:block absolute top-5 left-[16%] right-[16%] h-[2px] bg-primary/20" />
-                <div className="flex flex-col items-center text-center relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-background border-2 border-primary flex items-center justify-center text-primary font-bold shadow-sm mb-3">1</div>
-                  <h4 className="font-medium text-sm text-foreground">Connect GitHub</h4>
-                  <p className="text-xs text-muted-foreground mt-1">We'll create a private repository for your challenge.</p>
+              {buildMode === 'vibe' ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                  <div className="hidden md:block absolute top-5 left-[16%] right-[16%] h-[2px] bg-violet-500/20" />
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-violet-500 flex items-center justify-center text-violet-500 font-bold shadow-sm mb-3">1</div>
+                    <h4 className="font-medium text-sm text-foreground">Read the brief</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Study the Product Contract — we tell you WHAT to build, not HOW.</p>
+                  </div>
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-violet-500/40 flex items-center justify-center text-violet-500/70 font-bold shadow-sm mb-3">2</div>
+                    <h4 className="font-medium text-sm text-foreground">Build with AI</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Use Cursor, Claude, Bolt, Lovable — any tool you like.</p>
+                  </div>
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-violet-500/40 flex items-center justify-center text-violet-500/70 font-bold shadow-sm mb-3">3</div>
+                    <h4 className="font-medium text-sm text-foreground">Submit &amp; prove it</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Submit your repo or live URL — we run browser proof gates to verify each milestone.</p>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center text-center relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center text-primary/70 font-bold shadow-sm mb-3">2</div>
-                  <h4 className="font-medium text-sm text-foreground">Clone repo</h4>
-                  <p className="text-xs text-muted-foreground mt-1">Write code in your favorite local environment.</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                  <div className="hidden md:block absolute top-5 left-[16%] right-[16%] h-[2px] bg-primary/20" />
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-primary flex items-center justify-center text-primary font-bold shadow-sm mb-3">1</div>
+                    <h4 className="font-medium text-sm text-foreground">Connect GitHub</h4>
+                    <p className="text-xs text-muted-foreground mt-1">We'll create a private repository for your challenge.</p>
+                  </div>
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center text-primary/70 font-bold shadow-sm mb-3">2</div>
+                    <h4 className="font-medium text-sm text-foreground">Clone repo</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Write code in your favorite local environment.</p>
+                  </div>
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center text-primary/70 font-bold shadow-sm mb-3">3</div>
+                    <h4 className="font-medium text-sm text-foreground">Push code</h4>
+                    <p className="text-xs text-muted-foreground mt-1">We run automated tests and update your progress instantly.</p>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center text-center relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center text-primary/70 font-bold shadow-sm mb-3">3</div>
-                  <h4 className="font-medium text-sm text-foreground">Push code</h4>
-                  <p className="text-xs text-muted-foreground mt-1">We run automated tests and update your progress instantly.</p>
-                </div>
-              </div>
+              )}
             </div>
           )}
 
           <div>
-            <h2 className="font-display text-xl font-semibold text-foreground">Stages</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">
+              {buildMode === 'vibe' ? 'Proof Gates' : 'Stages'}
+            </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Complete each stage in order. Push your code to trigger automated tests.
+              {buildMode === 'vibe'
+                ? 'Each gate verifies a product milestone. Build with any tool, submit when ready.'
+                : 'Complete each stage in order. Push your code to trigger automated tests.'}
             </p>
           </div>
 

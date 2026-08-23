@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 24,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nA URL is another word for a web address.\n\nA URL can be composed of words (e.g. w3schools.com), or an Internet Protocol (IP) address (e.g. 192.68.20.50).\n\nMost people enter the name when surfing, because names are easier to remember than numbers.\n\nWeb browsers request pages from web servers by using a URL.\n\nA Uniform Resource Locator (URL) is used to address a document (or other data) on the web.\n\nA web address likehttps://www.w3schools.com/html/default.aspfollows these syntax rules:\n\nExplanation:\n\nThe table below lists some common schemes:\n\nURLs can only be sent over the Internet using theASCII character-set. If a URL contains characters outside the ASCII set, the URL has to be \nconverted.\n\nURL encoding converts non-ASCII characters into a format that can be transmitted over the Internet.\n\nURL encoding replaces non-ASCII characters with a \"%\" followed by hexadecimal digits.\n\nURLs cannot contain spaces. URL encoding normally replaces a space with a plus (+) sign, or %20.\n\nIf you click \"Submit\", the browser will URL encode the input before it is sent to the server.\n\nA page at the server will display the received input.\n\nTry some other input and click Submit again.\n\nYour browser will encode input, according to the character-set used in your page.\n\nThe default character-set in HTML5 is UTF-8.\n\nFor a complete reference of all URL encodings, visit ourURL Encoding Reference.\n\n### Code Examples\n\n```\nscheme://prefix.domain:port/path/filename\n```\n\n## Tutorials\n\nXHTML is a stricter, more XML-based version of HTML.\n\nXML is a markup language where all documents must be marked up correctly (be \"well-formed\").\n\nXHTML was developed to make HTML more extensible and flexible to work with \nother data formats (such as XML). In addition, browsers ignore errors in HTML \npages, and try to display the website even if it has some errors in the markup. \nSo XHTML comes with a much stricter error handling.\n\nIf you want to study XML, please read ourXML Tutorial.\n\nAn XHTML document must have an XHTML <!DOCTYPE> declaration.\n\nThe <html>, <head>, <title>, and <body> elements must also be present, and the xmlns attribute in <html> \nmust specify the xml namespace for the document.\n\nIn XHTML, elements must always be properly nested within each other, like this:\n\nIn XHTML, elements must always be closed, like this:\n\nIn XHTML, empty elements must always be closed, like this:\n\nIn XHTML, element names must always be in lowercase, like this:\n\nIn XHTML, attribute names must always be in lowercase, like this:\n\nIn XHTML, attribute values must always be quoted, like this:\n\nIn XHTML, attribute minimization is forbidden:\n\n### Code Examples\n\n```\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<title>Title of document</title>\n</head>\n<body>\nsome content here...\n</body>\n</html>\n\n---\n\n<b><i>Some \n  text</i></b>\n\n---\n\n<b><i>Some \n  text</b></i>\n\n---\n\n<p>This is a paragraph</p>\n<p>This is another paragraph</p>\n\n---\n\n<p>This is a paragraph\n<p>This is another paragraph\n\n---\n\nA break: <br />\nA horizontal rule: <hr />\nAn image: <img src=\"happy.gif\" alt=\"Happy face\" />\n\n---\n\nA break: <br>\nA horizontal rule: <hr>\nAn image: <img src=\"happy.gif\" alt=\"Happy face\">\n\n---\n\n<body>\n<p>This is a paragraph</p>\n</body>\n\n---\n\n<BODY>\n<P>This is a paragraph</P>\n</BODY>\n\n---\n\n<a href=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<a HREF=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<a href=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<a href=https://www.w3schools.com/html/>Visit our HTML tutorial</a>\n\n---\n\n<input type=\"checkbox\" name=\"vehicle\" value=\"car\" checked=\"checked\" />\n<input type=\"text\" name=\"lastname\" disabled=\"disabled\" />\n\n---\n\n<input type=\"checkbox\" name=\"vehicle\" value=\"car\" checked />\n<input type=\"text\" name=\"lastname\" disabled />\n```\n\n## Tutorials\n\nAn HTML form is used to collect user input. The user input is \nmost often sent to a server for processing.\n\nThe HTML<form>element is used to \ncreate an HTML form for user input:\n\nThe<form>element is a container for different types of input elements, \nsuch as: text fields, checkboxes, radio \nbuttons, submit buttons, etc.\n\nAll\nthe different form elements are covered in this chapter:HTML Form Elements.\n\nThe HTML<input>element is the most \nused form element.\n\nAn<input>element can be displayed in \nmany ways, depending on thetypeattribute.\n\nHere are some examples:\n\nAll the different input types are covered in this chapter:HTML Input Types.\n\nThe<input type=\"text\">defines a single-line input field for \ntext input.\n\nThis is how the HTML code above will be displayed in a browser:\n\nNotice the use of the<label>element in the \nexample above.\n\nThe<label>tag defines a label for many \nform elements.\n\nThe<label>element is useful for \nscreen-reader users, because the screen-reader will read out loud the label when \nthe user focuses on the input element.\n\nThe<label>element also helps users who have \ndifficulty clicking on very small regions (such as radio buttons or checkboxes) \n- because when the user clicks the text within the<label>element, it toggles \nthe radio button/checkbox.\n\nTheforattribute of the<label>tag should \nbe equal to theidattribute of the<input>element to bind them together.\n\nThe<input type=\"radio\">defines a radio button.\n\nRadio buttons let a user select ONE of a limited number of choices.\n\nThis is how the HTML code above will be displayed in a browser:\n\nChoose your favorite Web language:\n\nThe<input type=\"checkbox\">defines acheckbox.\n\nCheckboxes let a user select ZERO or MORE options of a limited number of choices.\n\nThis is how the HTML code above will be displayed in a browser:\n\nThe<input type=\"submit\">defines a button for submitting the form data to a form-handler.\n\nThe form-handler is typically a file on the server with a script for processing \ninput data.\n\nThe form-handler is specified in the form'sactionattribute.\n\nThis is how the HTML code above will be displayed in a browser:\n\nNotice that each input field must have anameattribute to be submitted.\n\nIf thenameattribute is omitted, the value of the input field will not be sent at all.\n\n### Code Examples\n\n```\n<form>\n.\nform elements\n.\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\"><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\">\n</form>\n\n---\n\n<p>Choose your favorite Web language:</p>\n<form>\n<input type=\"radio\" id=\"html\" name=\"fav_language\" \n  value=\"HTML\">\n<label for=\"html\">HTML</label><br>\n<input \n  type=\"radio\" id=\"css\" name=\"fav_language\" value=\"CSS\">\n<label \n  for=\"css\">CSS</label><br>\n<input type=\"radio\" id=\"javascript\" \n  name=\"fav_language\" value=\"JavaScript\">\n<label for=\"javascript\">JavaScript</label>\n</form>\n\n---\n\n<form>\n<input type=\"checkbox\" id=\"vehicle1\" name=\"vehicle1\" value=\"Bike\">\n<label for=\"vehicle1\"> I have a bike</label><br>\n<input \n  type=\"checkbox\" id=\"vehicle2\" name=\"vehicle2\" value=\"Car\">\n<label for=\"vehicle2\"> \n  I have a car</label><br>\n<input type=\"checkbox\" \n  id=\"vehicle3\" name=\"vehicle3\" \n  value=\"Boat\">\n<label for=\"vehicle3\"> I have a boat</label>\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" value=\"John\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n```\n\n## Tutorials\n\nTest what you have learned about HTML forms.\n\n## Tutorials\n\nTest your understanding of HTML forms by completing this coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_24",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_24",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

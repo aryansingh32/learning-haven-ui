@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 265,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A 12-column grid is a common and flexible method for structuring web page content, particularly for responsive web design.\n\nThe 12-column grid system divides the available horizontal space into 12 equal-width columns, allowing for \nprecise placement and sizing of elements within the layout.\n\nHere is how to create a basic 12-column CSS Grid layout:\n\nApplydisplay: grid;to the grid container.\n\nUse thegrid-template-columnsproperty to define the 12 columns.\n\nThe coderepeat(12, [col-start] 1fr);creates a 12-column grid with equal-width,  \nand names the start line of each column trackcol-start.\n\nGrid items can then be placed and \nsized across these 12 columns usinggrid-column.\n\nAlways design for mobile first:Here we display the \nsections in the source order (from top to bottom) for screens less than 576 pixels wide.\n\nThen, we go to a two-column layout for screens between \n576 and 767 pixels wide.\n\nThen, we go to a three-column layout for screens over 767 \npixels wide.\n\n### Code Snippets\n\n```\n* {\nbox-sizing: border-box;\n}\n.container {\ndisplay: grid;\ngrid-template-columns: repeat(12, [col-start] 1fr);\ngap: 20px;\n}\nnav ul {\nlist-style: none;\nmargin: 0;\npadding: 0;\n}\n/* \n  Mobile first */\n.container > * {\nborder: 1px solid green;\nbackground-color: beige;\npadding: 10px;\ngrid-column: col-start / span \n  12;\n}\n@media (min-width: 576px) {\n.sidebar {\ngrid-column: \n  col-start / span 3;\ngrid-row: 3;\n}\n.ads {\ngrid-column: col-start / \n  span 3;\n}\n.content, .footer {\ngrid-column: col-start \n  4 / span 9;\n}\nnav ul {\ndisplay: flex;\njustify-content: \n  space-between;\n}\n}\n@media (min-width: 768px) {\n.nav {\ngrid-column: col-start / span 2;\ngrid-row: 2 / 4;\n}\n.content {\ngrid-column: col-start 3 / span 8;\ngrid-row: 2 / 4;\n}\n.sidebar {\ngrid-column: col-start 11 / span 2;\n}\n.ads {\ngrid-column: col-start 11 / span 2;\n}\n.footer {\ngrid-column: col-start / span 12;\n}\nnav ul {\nflex-direction: column;\n}\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_264",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

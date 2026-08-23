@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 82,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Scanner Methods\n\nTheclose()method closes the file or input stream that the scanner was reading. After calling theclose()method, the current Scanner object can no longer be used.\n\nJava Tutorial:Create and Write Files.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nUse the\nclose()\nmethod when finished reading from a file:\nimport java.io.File;  // Import the File class\nimport java.io.FileNotFoundException;  // Import this class to handle errors\nimport java.util.Scanner; // Import the Scanner class to read text files\n\npublic class ReadFile {\n  public static void main(String[] args) {\n    try {\n      File myObj = new File(\"filename.txt\");\n      Scanner myReader = new Scanner(myObj);\n      while (myReader.hasNextLine()) {\n        String data = myReader.nextLine();\n        System.out.println(data);\n      }\n      myReader.close();\n    } catch (FileNotFoundException e) {\n      System.out.println(\"An error occurred.\");\n      e.printStackTrace();\n    }\n  }\n}\nRun Example \u00bb\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThedelimiter()method returns aPatternobject describing the sequence of characters which separates tokens in the data being scanned. The default delimiter is a sequence of whitespace characters, but it can be changed with theuseDelimiter()method.\n\nLearn more about thePatternobject in ourJava RegEx tutorial.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nShow the delimiter that is currently being used by the scanner:\n// Create a scanner object\nScanner myObj = new Scanner(\"A string to scan\");\n\n// Find the delimiter\nSystem.out.println(myObj.delimiter());\n\n// Close the scanner\nmyObj.close();\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThefindInLine()method searches up to the next line break in the scanner for the first match of a regular expression provided by aPatternobject or a string. If a match is not found then it returnsnull.\n\nIf a match is found the scanner advances to the first character following the match.\n\nLearn more about the regular expressions in ourJava RegEx tutorial.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nFind an email address in a line of text:\n// Create a scanner object\nScanner myObj = new Scanner(\"Please send an email to info@example.com for more details.\");\n\n// Get the email address with a pattern\nString email = myObj.findInLine(\"[a-zA-Z]+@[a-zA-Z]+.[a-zA-Z]{2,}\");\n\n// Show the email if found\nif (email != null) {\n  System.out.println(email);\n} else {\n  System.out.println(\"No email found\");\n}\n\n// Close the scanner\nmyObj.close();\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThefindWithinHorizon()method searches through a specified number of characters for the first match of a regular expression provided by aPatternobject or a string. If a match is not found then it returnsnull.\n\nThe number of characters to search is specified by thehorizonparameter, if it is set to zero then it continues searching without limit.\n\nIf a match is found the scanner advances to the first character following the match.\n\nLearn more about the regular expressions in ourJava RegEx tutorial.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nFind an email address in a line of text:\n// Create a scanner object\nScanner myObj = new Scanner(\"Please send an email to info@example.com for more details.\");\n\n// Get the email address with a pattern\nString email = myObj.findWithinHorizon(\"[a-zA-Z]+@[a-zA-Z]+.[a-zA-Z]{2,}\", 0);\n\n// Show the email if found\nif (email != null) {\n  System.out.println(email);\n} else {\n  System.out.println(\"No email found\");\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThehasNext()method returnstrueif there is another token available in the scanner.\n\nIf thepatternparameter is used, then it only returns true if the next token matches the regular expression specified by the parameter.\n\nLearn more about the regular expressions in ourJava RegEx tutorial.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nUse hasNext() to read every token in a string:\n// Create a scanner object\nScanner myObj = new Scanner(\"A string to scan\");\n\n// Read every token\nwhile(myObj.hasNext()) {\n  System.out.println(myObj.next());\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_82",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_82",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

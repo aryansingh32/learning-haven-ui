@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 295,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "If you are going to a Front-End interview, there are a few things you can expect:\n\nCoding Questions:\n\nYou will be asked coding questions, and you possibly also get a task to solve.\n\nExamples of technical questions:\n\nTell me about your experience as a Front-End developer.Tell me about a personal project where you worked on implementing the user interface for a website.\n\nExamples of a task:\n\nCreate a webpage that shows a greeting message to the user.Use HTML and CSS to structure and style it. You can add a JavaScript function to change the message based on the time of the day.\n\nIf you don't know how to solve the task or answer the question, do not panic. It happens to everyone, even pro Front-End developers.\n\nShowcase your skills and projects:\n\nThey would like to see projects to understand your work better.You can include current projects in your portfolio even if they are unfinished.\n\nExamples of projects to have in your portfolio:\n\nBefore you go to an interview, you should check out the company.\n\nIt will give you a better understanding of their values and what they do.\n\nCheck out:\n\nMake sure you understand the job description:\n\nRead the description and take notes if you need help understanding something. You can call them before the interview and ask about the things you don't understand.\n\nYou can also ask a friend or a community member to help you.\n\nThere is a big community of Front-End developers on social media.\n\nReflect on why you are the right fit for this role:\n\nCompanies hire people they believe will be the right fit.\n\nThink about what value you can add to the role and the team.\n\nWrite them down.\n\nIt will help you discuss how you are the right candidate for the role.\n\nWe have created an interview tool to help you prepare:\n\nTry it out\n\nFront-End development is an exciting career that allows you to create dynamic and responsive websites and apps. It's a good choice if you're interested in good user engagement and experience.\n\nTypical Languages Used in Front-End Development:\n\nThe demand for Front-End developers is high.\n\nYou can expect:\n\nThe Average Salary is $112,328 in the US.\n\nTypical Job Titles for a Front-End Developer:\n\nTry W3Schools Pathfinder Jobs, where companies post in-demand job roles such as Front-End development, web development, Java development, and more.\n\nOur best tip: Prepare yourself so you can go in with confidence and enjoy the process!\n\nTry W3Schools interview preparation here:Interview Preperation\n\nBest of luck!\n\n### Code Snippets\n\n```\n<head>\n<title>Simple Greeting Page</title>\n<style>\nbody {\nfont-family: Arial, sans-serif;\nbackground-color: #f0f0f0;\ncolor: #333;\npadding: 20px;\n}\n</style>\n</head>\n<body>\n<h1>Hello, welcome to our website!</h1>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_294",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

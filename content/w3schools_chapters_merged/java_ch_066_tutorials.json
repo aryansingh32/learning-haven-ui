@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 66,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Arrays Methods\n\nThefill()method fills an array with a specified value.\n\nNote:The value must be of the samedata typeas the array.\n\nTip:Start and end position can be specified. If not, all elements will be filled.\n\nJava Arrays Tutorial\n\n### Code Examples\n\n```\nExample\nFill all the elements in an array with a \"Kiwi\" value:\nString[] fruits = {\"Banana\", \"Orange\", \"Apple\", \"Mango\"};\nArrays.fill(fruits, \"Kiwi\");\nTry it Yourself \u00bb\n\n---\n\nExample\nFill the last two elements:\nString[] fruits = {\"Banana\", \"Orange\", \"Apple\", \"Mango\"};\nArrays.fill(fruits, 2, 4, \"Kiwi\");\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Arrays Methods\n\nThelengthproperty returns the length of an array.\n\nThis is a built-in Java property, and does not belong to theJava Arrays Class.\n\nNote:Thelengthpropertymust not be mistaken with thelength()methodthat is used for Strings.\n\nJava Arrays Tutorial\n\n### Code Examples\n\n```\nExample\nFind out how many elements an array has:\nString[] cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nSystem.out.println(cars.length);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nA list of allArrayListmethods can be found in the table below.\n\nSome methods use the type of the ArrayList's items as a parameter or return value. This type will be referred to asTin the table.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nTheadd()method adds an item to the list.\n\nIf an index is provided then the new item will be placed at the specified index, pushing all of the following elements in the list ahead by one.\n\nIf an index is not provided then the new item will be placed at the end of the list.\n\nOne of the following:\n\nTrefers to the data type of items in the list.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nAdd an item to a list:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    System.out.println(cars);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nAdd an item at a specified position in the list:\nimport java.util.ArrayList;\n\npublic class Main { \n  public static void main(String[] args) { \n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    cars.add(2, \"Toyota\");\n    \n    System.out.println(cars);\n  } \n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nTheaddAll()method adds all of the items from a collection to the list.\n\nIf an index is provided then the new items will be placed at the specified index, pushing all of the following elements in the list ahead.\n\nIf an index is not provided then the new items will be placed at the end of the list.\n\nOne of the following:\n\nTrefers to the data type of items in the list.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nAdd items from one list into another:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    ArrayList<String> brands = new ArrayList<String>();\n    brands.add(\"Microsoft\");\n    brands.add(\"W3Schools\");\n    brands.add(\"Apple\");\n    \n    brands.addAll(cars);\n    \n    System.out.println(brands);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nAdd items at a specified position in the list:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    ArrayList<String> brands = new ArrayList<String>();\n    brands.add(\"Microsoft\");\n    brands.add(\"W3Schools\");\n    brands.add(\"Apple\");\n    \n    brands.addAll(1, cars);\n    \n    System.out.println(brands);\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_66",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_66",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

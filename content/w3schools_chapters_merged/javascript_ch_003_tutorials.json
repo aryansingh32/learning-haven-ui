@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 3,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nA JavaScript variable can hold 8 types of data:\n\nYou can use the JavaScripttypeofoperator to find the type \nof a JavaScript variable.\n\nThetypeofoperator returns the type of a variable or an expression:\n\nA string (a text string) is a series of characters like \"John Doe\".\n\nStrings are written with quotes. You can use single or double quotes:\n\nYou can use quotes inside a string, as long as they don't match the quotes \nsurrounding the string:\n\nAll JavaScript numbers are stored as decimal numbers (floating point).\n\nNumbers can be written with, or without decimals:\n\nExtra large or extra small numbers can be written with scientific \n(exponential) notation:\n\nJavaScript booleans can only have one of two values:trueorfalse\n\nThe boolean value of an expression is the basis for JavaScript comparisons.\n\nGiven thatx = 5, the table below explains comparison:\n\nIn computer programs, variables are often declared without a value. The value \ncan be something that has to be calculated, or something that will be provided \nlater, like user input.\n\nA variable without a value has the datatypeundefined.\n\nA variable without a value also has the valueundefined.\n\nAn empty value has nothing to do withundefined.\n\nAn empty string has both a legal value and a type.\n\n### Code Examples\n\n```\n// String\nlet color = \"Yellow\";\nlet lastName = \"Johnson\";\n// Number\nlet length = 16;\nlet weight = 7.5;\n// BigInt\nlet x = 1234567890123456789012345n;\nlet y = BigInt(1234567890123456789012345)\n// Boolean\nlet x = true;\nlet y = false;\n// Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Array object\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// Date object\nconst date = new Date(\"2022-03-25\");\n// Undefined\nlet x;\nlet y;\n// Null\nlet x = null;\nlet y = null;\n// Symbol\nconst x = Symbol();\nconst y = Symbol();\n\n---\n\ntypeof \"\"\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\ntypeof \"John\"\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\ntypeof \"John Doe\"\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\n\n---\n\ntypeof 0\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"number\"\ntypeof 314\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof 3.14\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof (3)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof (3 + 4)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\n\n---\n\n// Using double quotes:\nlet carName1 = \"Volvo XC60\";\n// Using single quotes:\nlet carName2 = 'Volvo XC60';\n\n---\n\n// Single quote inside double quotes:\nlet answer1 = \"It's alright\";\n// Single quotes inside double quotes:\nlet answer2 = \"He is called 'Johnny'\";\n// Double quotes inside single quotes:\nlet answer3 = 'He is called \"Johnny\"';\n\n---\n\n// With decimals:\nlet x1 = 34.00;\n// Without decimals:\nlet x2 = 34;\n\n---\n\nlet y = 123e5;\u00a0\u00a0\u00a0\u00a0// 12300000\nlet z = 123e-5;\u00a0\u00a0\u00a0// 0.00123\n\n---\n\nlet x = 5;\n(x == 8); // equals false\n(x != 8); // equals true\n\n---\n\nlet carName;\n\n---\n\nlet car = \"\";\u00a0\u00a0\u00a0 // \n    The value is \n    \"\", the typeof is \"string\"\n```\n\n## Tutorials\n\nTheAssignment Operator(=) assigns a value to a variable:\n\nTheAddition Operator(+) adds numbers:\n\nTheMultiplication Operator(*) multiplies numbers:\n\nThere are different types of JavaScript operators:\n\nArithmetic Operatorsare used to perform arithmetic on numbers:\n\nThe+can also be used to add (concatenate) strings:\n\nThe+=assignment operator can also be used to add (concatenate) strings:\n\nAdding two numbers, will return the sum as a number like 5 + 5 = 10.\n\nAdding a number and a string, will return the sum as a concatenated string like 5 + \"5\" = \"55\".\n\nAssignment operators assign values to JavaScript variables.\n\nTheAddition Assignment Operator(+=) adds a value to a variable.\n\nComparison operators are used tocompare two values.\n\nComparison operators always returntrueorfalse.\n\nAll the comparison operators above can also be used on strings:\n\nNote that strings are compared alphabetically.\n\n### Code Examples\n\n```\nlet x = 10;\n\n---\n\n// Assign the value 5 to x\nlet x = 5;\n// Assign the value 2 to y\nlet y = 2;\n// Assign the value x + y to z:\nlet z = x + y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x + y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x * y;\n\n---\n\nlet a = 3;\nlet x = (100 + 50) * a;\n\n---\n\nlet text1 = \"John\";\nlet text2 = \"Doe\";\nlet text3 = text1 + \" \" + text2;\n\n---\n\nlet text1 = \"What a very \";\ntext1 += \"nice day\";\n\n---\n\nlet x = 5 + 5;\nlet y = \"5\" + 5;\nlet z = \"Hello\" + 5;\n\n---\n\nlet x = 10;\nx += 5;\n\n---\n\nlet x = 5;\nlet result = x > 8;\n\n---\n\nlet text1 = \"A\";\nlet text2 = \"B\";\nlet result = text1 < text2;\n```\n\n## Tutorials\n\nArithmetic operators perform arithmetic on numbers (literals or variables).\n\nA typical arithmetic operation operates on two numbers.\n\nThe two numbers can be literals:\n\nor variables:\n\nor expressions:\n\nThe numbers (in an arithmetic operation) are calledoperands.\n\nThe operation (to be performed between the two operands) is defined by anoperator.\n\nTheadditionoperator (+) adds numbers:\n\nThesubtractionoperator (-) subtracts numbers.\n\nThemultiplicationoperator (*) multiplies numbers.\n\nThedivisionoperator (/) divides numbers.\n\nThemodulusoperator (%) returns the division remainder.\n\nTheincrementoperator (++) increments numbers.\n\nThedecrementoperator (--) decrements numbers.\n\nTheexponentiationoperator (**) raises the first operand to the power of the second operand.\n\nx ** y produces the same result asMath.pow(x,y):\n\nOperator precedence describes the order in which operations are performed in \nan arithmetic expression.\n\nIs the result of example above the same as 150 * 3, or is it the same as 100 \n+ 150?\n\nIs the addition or the multiplication done first?\n\nAs in traditional school mathematics, the multiplication is done first.\n\nMultiplication (*) and division (/) have higherprecedencethan \naddition (+) and subtraction (-).\n\nAnd (as in school mathematics) the precedence can be changed by using \nparentheses.\n\nWhen using parentheses, the operations inside the parentheses are computed \nfirst:\n\nWhen many operations have the same precedence (like addition and \nsubtraction or multiplication and division), they are computed from left to \nright:\n\n### Code Examples\n\n```\nlet x = 100 + 50;\n\n---\n\nlet x = a + b;\n\n---\n\nlet x = (100 + 50) * a;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x + y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x - y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x * y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x / y;\n\n---\n\nlet x = 5;\nlet y = 2;\nlet z = x % y;\n\n---\n\nlet x = 5;\nx++;\nlet z = x;\n\n---\n\nlet x = 5;\nx--;\nlet z = x;\n\n---\n\nlet x = 5;\nlet z =\n x ** 2;\n\n---\n\nlet x = 5;\nlet z =\n  Math.pow(x,2);\n\n---\n\nlet x = 100 + 50 * 3;\n\n---\n\nlet x = (100 + 50) * 3;\n\n---\n\nlet x = 100 + 50 - 3;\n\n---\n\nlet x = 100 / 50 * 3;\n```\n\n## Tutorials\n\nAssignment operators assign values to JavaScript variables.\n\nGiven thatx = 10andy = 5, the table below explains the assignment operators:\n\nTheSimple Assignment Operatorassigns a simple value to a variable.\n\nTheAddition Assignment Operatoradds a value to a variable.\n\nTheSubtraction Assignment Operatorsubtracts a value from a variable.\n\nTheMultiplication Assignment Operatormultiplies a variable.\n\nTheExponentiation Assignment Operatorraises a variable to the power of the operand.\n\nTheDivision Assignment Operatordivides a variable.\n\nTheRemainder Assignment Operatorassigns a remainder to a variable.\n\nTwo assignment operators can assign values to strings:\n\nTheSimple Assignment Operatorassigns a simple value to a string.\n\nTheAddition Assignment Operatoradds a value to a string.\n\nTheAddition Assignment OperatorCan also be used to add strings.\n\nTheLogical AND assignment operatoris used between two values.\n\nIf the first value is true, the second value is assigned.\n\nTheLogical OR assignment operatoris used between two values.\n\nIf the first value is false, the second value is assigned.\n\nTheNullish coalescing assignment operatoris used between two values.\n\nIf the first value is undefined or null, the second value is assigned.\n\nIt is a common mistake to think these are falsy, but they actually evaluate to true:\n\nThe...operator splits iterables into individual elements.\n\n### Code Examples\n\n```\nlet x = 10;\n\n---\n\nlet x = 10 + y;\n\n---\n\nlet x = 10;\nx += 5;\n\n---\n\nlet x = 10;\nx -= 5;\n\n---\n\nlet x = 10;\nx *= 5;\n\n---\n\nlet x = 10;\nx **= 5;\n\n---\n\nlet x = 10;\nx /= 5;\n\n---\n\nlet x = 10;\nx %= 5;\n\n---\n\nlet text = \"Hello\";\n\n---\n\nlet text = \"Hello\";\ntext += \" World\";\n\n---\n\nlet x = true;\nlet y = x &&= 10;\n\n---\n\nlet x = false;\nlet y = x &&= 10;\n\n---\n\nlet x = 1;\nlet y = x &&= 10;\n\n---\n\nlet x = 0;\nlet y = x &&= 10;\n\n---\n\nlet x = undefined;\nlet y = x &&= 10;\n\n---\n\nlet x = null;\nlet y = x &&= 10;\n\n---\n\nlet x = false;\nlet y = x ||= 10;\n\n---\n\nlet x = true;\nlet y = x ||= 10;\n\n---\n\nlet x = null;\nlet y = x ||= 10;\n\n---\n\nlet x = undefined;\nlet y = x ||= 10;\n\n---\n\nlet x;\nx ??= 10;\n\n---\n\nlet x = 0;\nx ??= 10;\n\n---\n\nlet x = null;\nx ??= 10;\n\n---\n\nlet x = undefined;\nx ??= 10;\n\n---\n\nlet x = 10;\nlet y = 5;\nx ??= 10;\n\n---\n\nlet text = \"12345\";\nlet min = Math.min(...text);\nlet max = Math.max(...text);\n```\n\n## Tutorials\n\nGiven thatx = 5, the table below explains the comparison operators:\n\nComparison operators can be used in conditional statements to compare values \nand take action depending on the result:\n\nYou will learn more about the use of conditional statements in theif...elsechapter of this tutorial.\n\nAll the comparison operators above can also be used on strings:\n\nNote that strings are compared alphabetically:\n\nComparing data of different types may give unexpected results.\n\nWhen comparing a string with a number, JavaScript will convert the string to \na number when doing the comparison. An empty string converts to 0. A non-numeric \nstring converts toNaNwhich is alwaysfalse.\n\nWhen comparing two strings, \"2\" will be greater than \"12\".\n\nAlphabetically 1 is less than 21.\n\nTo secure a proper result, variables should be converted to the proper type \nbefore comparison:\n\n### Code Examples\n\n```\nif (age < 18) text = \"Too young to buy alcohol\";\n\n---\n\nlet text1 = \"A\";\nlet text2 = \"B\";\nlet result = text1 < text2;\n\n---\n\nlet text1 = \"20\";\nlet text2 = \"5\";\nlet result = text1 < text2;\n\n---\n\nage = Number(age);\nif (isNaN(age)) {\nvoteable = \"Input is not a number\";\n} else {\nvoteable = (age < 18) ? \"Too young\" : \"Old enough\";\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_3",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

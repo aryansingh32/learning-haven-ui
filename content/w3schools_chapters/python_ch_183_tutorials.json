@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 183,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A scatter plot is a diagram where each value in the data set is represented by a dot.\n\nThe Matplotlib module has a method for drawing scatter plots, it needs two arrays of \nthe same length, one for the values of the x-axis, and one for the values of the \ny-axis:\n\nThexarray represents the age of each car.\n\nTheyarray represents the speed of each car.\n\nThe x-axis represents ages, and the y-axis represents speeds.\n\nWhat we can read from the diagram is that the two fastest cars were both 2 \nyears old, and the slowest car was 12 years old.\n\nIn Machine Learning the data sets can contain thousands-, or even millions, of values.\n\nYou might not have real world data when you are testing an algorithm, you \nmight have to use randomly generated values.\n\nAs we have learned in the previous chapter, the NumPy module can help us with that!\n\nLet us create two arrays that are both filled with 1000 random numbers from a \nnormal data distribution.\n\nThe first array will have the mean set to 5.0 with a standard deviation of \n1.0.\n\nThe second array will have the mean set to 10.0 with a standard \ndeviation of 2.0:\n\nWe can see that the dots are concentrated around the value 5 on the x-axis, \nand 10 on the y-axis.\n\nWe can also see that the spread is wider on the y-axis than on the x-axis.\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nx = \n  [5,7,8,7,2,17,2,9,4,11,12,9,6]\ny = \n  [99,86,87,88,111,86,103,87,94,78,77,85,86]\nplt.scatter(x, y)\nplt.show()\n\n---\n\nimport numpy\nimport matplotlib.pyplot as plt\nx = numpy.random.normal(5.0, \n  1.0, 1000)\ny = numpy.random.normal(10.0, 2.0, 1000)\nplt.scatter(x, y)\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_182",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

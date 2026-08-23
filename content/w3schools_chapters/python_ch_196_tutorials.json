@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 196,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Methods such as Decision Trees, can be prone to overfitting on the training set which can lead to wrong predictions on new data.\n\nBootstrap Aggregation (bagging) is a ensembling method that attempts to resolve overfitting for classification or regression problems. Bagging aims to improve the accuracy and performance of machine learning algorithms. It does this by taking random subsets of an original dataset, with replacement, and fits either a classifier (for classification) or regressor (for regression) to each subset. The predictions for each subset are then aggregated through majority vote for classification or averaging for regression, increasing prediction accuracy.\n\nTo see how bagging can improve model performance, we must start by evaluating how the base classifier performs on the dataset. If you do not know what decision trees are review the lesson on decision trees before moving forward, as bagging is a continuation of the concept.\n\nWe will be looking to identify different classes of wines found in Sklearn's wine dataset.\n\nNext we need to load in the data and store it into X (input features) and y (target). The parameter as_frame is set equal to True so we do not lose the feature names when loading the data. \n(sklearnversion older than 0.23 must skip theas_frameargument as it is not supported)\n\nIn order to properly evaluate our model on unseen data, we need to split X and y into train and test sets. For information on splitting data, see the Train/Test lesson.\n\nWith our data prepared, we can now instantiate a base classifier and fit it to the training data.\n\nResult:\n\nWe can now predict the class of wine the unseen test set and evaluate the model performance.\n\nResult:\n\nThe base classifier performs reasonably well on the dataset achieving 82% accuracy on the test dataset with the current parameters (Different results may occur if you do not have therandom_stateparameter set).\n\nNow that we have a baseline accuracy for the test dataset, we can see how the Bagging Classifier out performs a single Decision Tree Classifier.\n\nFor bagging we need to set the parameter n_estimators, this is the number of base classifiers that our model is going to aggregate together.\n\nFor this sample dataset the number of estimators is relatively low, it is often the case that much larger ranges are explored. Hyperparameter tuning is usually done with agrid search, but for now we will use a select set of values for the number of estimators.\n\nWe start by importing the necessary model.\n\nNow lets create a range of values that represent the number of estimators we want to use in each ensemble.\n\nTo see how the Bagging Classifier performs with differing values of n_estimators we need a way to iterate over the range of values and store the results from each ensemble. To do this we will create a for loop, storing the models and scores in separate lists for later \nvisualizations.\n\nNote: The default parameter for the base classifier inBaggingClassifieris theDecisionTreeClassifiertherefore we do not need to set it when instantiating the bagging model.\n\nWith the models and scores stored, we can now visualize the improvement in model performance.\n\nBy iterating through different values for the number of estimators we can see an increase in model performance from 82.2% to 95.5%. After 14 estimators the accuracy begins to drop, again if you set a differentrandom_statethe values you see will vary.\nThat is why it is best practice to usecross validationto ensure stable results.\n\nIn this case, we see a 13.3% increase in accuracy when it comes to identifying the type of the wine.\n\nAs bootstrapping chooses random subsets of observations to create classifiers, there are observations that are left out in the selection process. These \"out-of-bag\" observations can then be used to evaluate the model, similarly to that of a test set. Keep in mind, that out-of-bag estimation can overestimate error in binary classification problems and should only be used as a compliment to other metrics.\n\nWe saw in the last exercise that 12 estimators yielded the highest accuracy, so we will use that to create our model. This time setting the parameteroob_scoreto true to evaluate the model with out-of-bag score.\n\nSince the samples used in OOB and the test set are different, and the dataset is relatively small, there is a difference in the accuracy. It is rare that they would be exactly the same, again OOB should be used quick means for estimating error, but is not the only evaluation metric.\n\nAs was seen in theDecision Treelesson, it is possible to graph the decision tree the model created. It is also possible to see the individual decision trees that went into the aggregated classifier. This helps us to gain a more intuitive understanding on how the bagging model arrives at its predictions.\n\nNote: This is only functional with smaller datasets, where the trees are relatively shallow and narrow making them easy to visualize.\n\nWe will need to importplot_treefunction fromsklearn.tree. The different trees can be graphed by changing the estimator you wish to visualize.\n\nHere we can see just the first decision tree that was used to vote on the final prediction. Again, by changing the index of the classifier you can see each of the trees that have been aggregated.\n\n### Code Snippets\n\n```\nfrom sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import accuracy_score\nfrom sklearn.tree import DecisionTreeClassifier\ndata = datasets.load_wine(as_frame = True)\nX = data.data\ny = data.target\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 22)\ndtree = DecisionTreeClassifier(random_state = 22)\ndtree.fit(X_train,y_train)\ny_pred = dtree.predict(X_test)\nprint(\"Train data accuracy:\",accuracy_score(y_true = y_train, y_pred = dtree.predict(X_train)))\nprint(\"Test data accuracy:\",accuracy_score(y_true = y_test, y_pred = y_pred))\n\n---\n\nimport matplotlib.pyplot as plt\nfrom sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import accuracy_score\nfrom sklearn.ensemble import BaggingClassifier\ndata = datasets.load_wine(as_frame = True)\nX = data.data\ny = data.target\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 22)\nestimator_range = [2,4,6,8,10,12,14,16]\nmodels = []\nscores = []\nfor n_estimators in estimator_range:\n# Create bagging classifier\nclf = BaggingClassifier(n_estimators = n_estimators, random_state = 22)\n# Fit the model\nclf.fit(X_train, y_train)\n# Append the model and score to their respective list\nmodels.append(clf)\nscores.append(accuracy_score(y_true = y_test, y_pred = clf.predict(X_test)))\n# Generate the plot of scores against number of estimators\nplt.figure(figsize=(9,6))\nplt.plot(estimator_range, scores)\n# Adjust labels and font (to make visable)\nplt.xlabel(\"n_estimators\", fontsize = 18)\nplt.ylabel(\"score\", fontsize = 18)\nplt.tick_params(labelsize = 16)\n# Visualize plot\nplt.show()\n\n---\n\nfrom sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import BaggingClassifier\ndata = datasets.load_wine(as_frame = True)\nX = data.data\ny = data.target\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 22)\noob_model = BaggingClassifier(n_estimators = 12, oob_score = True,random_state = 22)\noob_model.fit(X_train, y_train)\nprint(oob_model.oob_score_)\n\n---\n\nfrom sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import BaggingClassifier\nfrom sklearn.tree import plot_tree\nX = data.data\ny = data.target\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 22)\nclf = BaggingClassifier(n_estimators = 12, oob_score = True,random_state = 22)\nclf.fit(X_train, y_train)\nplt.figure(figsize=(30, 20))\nplot_tree(clf.estimators_[0], feature_names = X.columns)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_195",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

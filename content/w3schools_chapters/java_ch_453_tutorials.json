@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 453,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This page gives simple Java interview questions with short answers. \nThe questions are made for beginners, so you can use them to study for tests and job interviews.\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:Conditional statements let your program choose what to do based ontrueorfalsetests.\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:Generics let you tell a collection what type it should hold. This helps you find type errors at compile time and removes many casts.\n\nAnswer:\n\nAnswer:Afinallyblock is used for code that should run at the end of atryblock, whether there was an exception or not. It is often used to close files or release other resources.\n\nAnswer:\n\nAnswer:\n\nAnswer:A lambda expression is a short way to write a method as an expression. It is often used when you need to pass small pieces of code to methods, for example when working with streams.\n\nAnswer:The Stream API lets you work with collections in a simple way. You can filter, sort, and change data step by step, instead of writing many loops by hand.\n\nAnswer:\n\nAnswer:\n\nAnswer:\n\nAnswer:The recommended way is to use a try-with-resources block. Java will then close the resource for you when the block ends.\n\n### Code Snippets\n\n```\nString a = new String(\"Java\");\nString b = new String(\"Java\");\n\nSystem.out.println(a == b);        // false, different objects\nSystem.out.println(a.equals(b));   // true, same value\n\n---\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello World\");\n  }\n}\n\n---\n\nint age = 35;\ndouble price = 19.99;\nString name = \"Jenny\";\n\n---\n\nint score = 85;\n\nif (score >= 90) {\n  System.out.println(\"Excellent\");\n} else if (score >= 75) {\n  System.out.println(\"Good\");\n} else {\n  System.out.println(\"Needs Improvement\");\n}\n\n---\n\nfor (int i = 1; i <= 5; i++) {\n  System.out.println(\"Count: \" + i);\n}\n\n---\n\ndouble x = 9.7;\nint y = (int) x;   // narrowing cast, y becomes 9\n\n---\n\nfinal int MAX_LIMIT = 100;\n// MAX_LIMIT = 200;  // Error: you cannot change a final variable\n\n---\n\nclass Animal {\n  void speak() {\n    System.out.println(\"Animal sound\");\n  }\n}\n\nclass Dog extends Animal {\n  @Override\n  void speak() {\n    System.out.println(\"Woof\");\n  }\n\n  void speak(String name) {\n    System.out.println(name + \" says Woof\");\n  }\n}\n\n---\n\nclass MyThread extends Thread {\n  public void run() {\n    System.out.println(\"Thread is running\");\n  }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    MyThread t = new MyThread();\n\n    t.start(); // starts a new thread\n    t.run();   // just calls run like a normal method\n  }\n}\n\n---\n\nint total = 50;\nSystem.out.println(\"Debug: total = \" + total);\n\n---\n\n// Syntax error: missing semicolon\nint x = 10\n\n---\n\n// Runtime error: division by zero\nint x = 10 / 0;   // causes ArithmeticException\n\n---\n\ntry (BufferedReader br = new BufferedReader(new FileReader(\"data.txt\"))) {\n  System.out.println(br.readLine());\n} catch (IOException e) {\n  e.printStackTrace();\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_452",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

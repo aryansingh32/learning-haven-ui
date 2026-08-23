@@ -1,0 +1,482 @@
+Video URL: https://www.youtube.com/watch?v=vnnlUCLfn6I
+Video Title: Inline & Block Elements in HTML | Sigma Web Development Course - Tutorial #8
+--------------------------------------------------
+
+00:00:00.000
+No text
+00:00:00.000
+Learning the concept of inline and block elements in HTML is very important.
+00:00:03.760
+Inline elements are those which take only this much width as required.
+00:00:06.560
+And block elements are those which take the full width of the screen.
+00:00:09.960
+This is also called display property which can be set through CSS.
+00:00:13.360
+If you are enjoying this video so far, then do like this video.
+00:00:16.760
+So let's go to the computer screen and see inline and block elements closely
+00:00:20.040
+through some very good examples.
+00:00:21.840
+Let's roll the intro.
+00:00:22.000
+No text
+00:00:34.000
+So guys, now it's time to see inline and block elements.
+00:00:36.000
+If you haven't accessed the playlist yet,
+00:00:38.000
+then do it now.
+00:00:40.000
+Because as the videos are being made,
+00:00:42.000
+the code of the videos and the video
+00:00:44.000
+is being added in the playlist
+00:00:45.300
+now what I will do here quickly
+00:00:46.800
+which I always do
+00:00:48.000
+I will make a folder here
+00:00:49.400
+in the name of video 8
+00:00:50.600
+so I have already put 7 videos here
+00:00:53.600
+by doing new folder
+00:00:54.600
+I will make a video 8 here
+00:00:56.600
+and I will open it in VS code
+00:00:57.800
+and after opening it in VS code
+00:00:59.400
+what I will do
+00:01:00.400
+that I will make you index.html
+00:01:03.200
+and tell you about the index and block element so I hit the exclamation mark and hit enter and I could have typed this too but I will make index.html and tell you about index and block elements.
+00:01:05.000
+I typed the exclamation mark and I could have typed it but I won't because why type when I can do this.
+00:01:10.000
+No text
+00:01:11.000
+I will write inline and block elements here.
+00:01:14.000
+I told you a little bit about this but I will tell you more about it.
+00:01:19.000
+What are inline elements and why I would like to use them.
+00:01:22.000
+Inline elements are those elements that take only as much width as necessary.
+00:01:27.000
+Block elements do not take as much width as necessary.
+00:01:29.000
+No, they say we need full width.
+00:01:31.000
+Some people sit spread out.
+00:01:34.000
+These block elements are like that.
+00:01:36.000
+I will tell you what the difference is.
+00:01:38.000
+And to explain this difference, I will cheat a little.
+00:01:42.000
+I will add CSS.
+00:01:44.000
+You will say that I have not studied css, why are you adding css
+00:01:48.000
+I am adding css only as much as it is necessary
+00:01:52.000
+I will enter my p here
+00:01:56.000
+I will write here let us say hey I am a para
+00:02:00.000
+I will say here give background color to p
+00:02:04.000
+let us say blue, I will say here to give background color to P let us say blue ok, I will give it here
+00:02:06.240
+otherwise you guys should choose a good color
+00:02:08.240
+what is going on here
+00:02:09.360
+ok, now you can see here that I have given a color to paragraph
+00:02:11.960
+and along with that I will put an anchor tag
+00:02:14.360
+href is equal to
+00:02:15.880
+google.com let us say
+00:02:17.600
+and I have to put https
+00:02:19.120
+https colon double slash
+00:02:20.920
+then it will go to google.com
+00:02:22.640
+and I will write google here
+00:02:24.400
+and do you know what I will give i will write google and the anchor tag background color i will give red
+00:02:31.360
+but i will give hover
+00:02:33.360
+and like this i can choose any color in the spectrum
+00:02:36.880
+how did you like ninja tagging tell me in the comment section
+00:02:38.880
+if you already know ninja tagging then comment
+00:02:42.400
+i am already a ninja
+00:02:44.400
+so do comment on this, it is very important.
+00:02:47.240
+Now here you can see the background color I have given this of anchor tag.
+00:02:49.920
+And I have made it very similar, I will change it a little, I will make it reddish.
+00:02:53.320
+I have made this a little red orange.
+00:02:55.920
+And I have made this blue.
+00:02:56.920
+Now you see the difference, I will click here and as soon as I click here, you see
+00:03:01.000
+that the background color that he got, he got the full width.
+00:03:04.320
+But he got only as much as this element. Why did this happen? you can see that the background color is the same as the width but this one has only the same amount of elements
+00:03:07.000
+why is this?
+00:03:08.000
+this is because this paragraph is a block element
+00:03:11.000
+and our anchor tag is inline element
+00:03:13.000
+inline elements only take the amount of space they need
+00:03:16.000
+block elements take the entire width
+00:03:18.000
+and the next content comes below that
+00:03:20.000
+when we take the entire width, the next content will come below that
+00:03:23.000
+along with that, if i talk about div
+00:03:26.000
+that is a block element
+00:03:29.000
+and span is
+00:03:32.000
+like div but it is an inline element
+00:03:35.000
+i am span and i am inline
+00:03:38.000
+and if i put an anchor tag
+00:03:41.000
+and write yes he is inline
+00:03:44.000
+so you can see here
+00:03:45.000
+I'll show you the code by zooming out
+00:03:47.000
+So if I write it in a new line
+00:03:49.000
+By the way, I'll tell you how many spaces I'll give
+00:03:51.000
+This will not be added in my content
+00:03:53.000
+Because HTML has more than one space
+00:03:56.000
+And it doesn't include it anyway
+00:03:58.000
+If you want to give spaces, you can write ampersand nbsp
+00:04:02.000
+I'll tell you about that
+00:04:04.000
+But now I want to show you how it is working
+00:04:06.540
+So what happened, I wrote here Hey I'm a parent
+00:04:09.020
+What is paragraph? A block element
+00:04:10.700
+So it took the whole width
+00:04:11.900
+Next content will come down
+00:04:13.180
+I wrote ahref is equal to this
+00:04:14.620
+So it took only that much width as it is necessary
+00:04:17.339
+And it took only that much width
+00:04:18.779
+But the next content was saying that I want the whole width
+00:04:21.779
+So it will not come here, it will come in the next line
+00:04:24.300
+Because it says that I want the whole width So it will come in the next line It cannot come in this line Because if it comes in this line, then how will I want the full width, so it will not come here, it will come in the next line because he says that I want the full width, so it will come in the next line
+00:04:27.120
+it can't come in this line, because if it comes in this line, how will it take the full width, google is also taking the width
+00:04:30.560
+so it will take the full width, if I give it a background color, then it will be visible in the full width
+00:04:35.640
+I do one thing, I give it a yellow color, a background color
+00:04:38.640
+and I give the background color yellow and you can see here, it has taken the entire width.
+00:04:45.840
+Along with that, I can keep the span and anchor tag in the same line
+00:04:50.680
+because it is an inline element.
+00:04:52.080
+So inline elements only take the width as much as is necessary
+00:04:54.600
+and give the opportunity to other elements to come in their width.
+00:04:58.240
+Like you saw here that this span also gave the opportunity to anchor tag to come.
+00:05:02.640
+Now, will the anchor tag always be inline?
+00:05:04.920
+Will the paragraph tag always be blocked?
+00:05:06.840
+will this thing always be there?
+00:05:08.040
+the answer is no, you can change it
+00:05:10.580
+you can set the display property of any particular element with CSS
+00:05:14.960
+and if you set the display property
+00:05:16.800
+then it is not necessary that the inline element will remain inline
+00:05:20.460
+and the block element will remain blocked
+00:05:22.080
+it can also be inlined
+00:05:23.800
+we will see this in CSS later
+00:05:25.000
+now I want to pin point one thing quickly
+00:05:27.000
+that the video of forms was video 7
+00:05:29.000
+but I have put it in the folder named video 6
+00:05:32.000
+so I will make it video 7
+00:05:34.000
+and now it is video 8
+00:05:36.000
+what we are doing now is video 8
+00:05:38.000
+and there is nothing in video 7
+00:05:40.000
+so I will quickly structure it here
+00:05:43.000
+you don't worry about it at all
+00:05:44.000
+I hope you are getting good learnings.
+00:05:46.000
+Many people have pointed this thing in the comments.
+00:05:48.000
+I will fix it, but I think that doesn't affect us in any way.
+00:05:52.000
+Because you guys are understanding.
+00:05:53.000
+And now the folder you will get, the source code, you will get it right.
+00:05:58.000
+Along with that, go to codewithari.com, click on notes and download notes.
+00:06:02.000
+And it will be a complimentary source for you.
+00:06:04.000
+But I am explaining everything here step by step
+00:06:06.960
+so you don't worry about it at all
+00:06:08.480
+okay, so this is about our inline and block elements
+00:06:11.000
+No text
+00:06:11.040
+now which elements are inline and which are block
+00:06:13.440
+how will you know that
+00:06:14.640
+how will you know div is block and span is inline
+00:06:17.440
+so this comes with practice
+00:06:18.800
+but I have made a comprehensive list for you
+00:06:21.680
+of inline and block elements
+00:06:22.880
+here is the list of block elements
+00:06:24.640
+in which I have written the most commonly used elements first.
+00:06:28.560
+Like div is the most used, then paragraph.
+00:06:30.600
+And if you come to the end, you will find such elements
+00:06:32.720
+which may not be very used.
+00:06:34.040
+Maybe you don't even know about them,
+00:06:35.360
+but you will know later.
+00:06:37.040
+And it is not possible for me to tell all the elements here,
+00:06:39.960
+so you guys do some self-learning too.
+00:06:42.200
+Definitely there are a lot of such elements
+00:06:44.120
+which will come to you in very little use
+00:06:46.920
+But the most commonly used ones will be shown to you
+00:06:49.160
+Then I have made a list of inline elements below
+00:06:51.440
+So you refer this comprehensive list
+00:06:53.560
+Here I have made a file named comprehensive list.txt
+00:06:57.920
+So you refer this file
+00:06:59.920
+Along with that, the code you have should not have any unnecessary space
+00:07:03.400
+As I was telling you that this space is not parsed.
+00:07:05.480
+In fact, if you right-click and do the format document,
+00:07:08.000
+then your document will be formatted.
+00:07:09.680
+Write good code, write such a code that
+00:07:12.080
+when your grandchildren open your Zankila laptop in the future
+00:07:15.720
+and they get this code, they will say that
+00:07:17.880
+Dadaji used to write good code.
+00:07:19.480
+Don't say that Dadaji used to put such a space,
+00:07:22.360
+then Dadaji used to do this, this, this. So you will want to be how to use it, then you can use it.
+00:07:34.000
+No text
+00:07:34.000
+Now I want to give you a quiz through html comments. Write a vertically aligned form asking for name city And here I have added one more thing, I will show you
+00:07:45.000
+I will turn on the word wrap
+00:07:47.000
+So here you see the name city and pin code of a user
+00:07:49.000
+So you have to write a form which we read in the last video
+00:07:51.000
+About the form, you have to write this form
+00:07:54.000
+How you will make it, you should know
+00:07:57.000
+And along with that I want everyone in the comment section
+00:08:00.000
+Give the answer to this quick quiz, everyone
+00:08:02.000
+This is our first quick quiz, so I want a little
+00:08:04.000
+Keep making two-way interaction Write in the comment section, definitely comment your code answer to all those quick quiz. This is our first quick quiz. So I want you to make a two way interaction.
+00:08:06.000
+Do write your code in the comment section.
+00:08:08.000
+And do tell me
+00:08:10.000
+which element you used.
+00:08:12.000
+Inline element, if yes, which inline element?
+00:08:14.000
+Block element, if yes, which block element?
+00:08:16.000
+You can tell me your explanation in the comment section.
+00:08:18.000
+In the coming videos,
+00:08:20.000
+we will also see that
+00:08:21.000
+No text
+00:08:22.000
+how you can use CSS to set inline flex,
+00:08:24.000
+inline block, and display properties. and what is the difference in them.
+00:08:28.480
+So we will see all these things in the coming videos.
+00:08:30.480
+I want to tell you that if you are following this course, then you are going to be a great web developer.
+00:08:36.000
+And you don't think that the videos are long and our hustle is going on for a long time and so on.
+00:08:41.120
+I want courses to be beginner- And along with that I want to tell you
+00:08:46.000
+People will tell you in life that you are doing this
+00:08:49.000
+We are doing fun, you are studying, you are doing this
+00:08:52.000
+Do you know what is the thing that people will never tell you
+00:08:55.000
+That you are blessed, no one will tell you that you got
+00:08:58.000
+Sigma web development course, you are living in such a time
+00:09:01.000
+In which you are getting such a good comprehensive course for free
+00:09:04.000
+No one will tell you that you are blessed
+00:09:06.000
+People will tell you that I am going to watch a movie
+00:09:08.000
+You are studying, what is it, you are so boring
+00:09:12.000
+People will tell you this, but no one will tell you that you are blessed to find this course
+00:09:16.000
+And you are blessed that you are watching
+00:09:18.000
+You are blessed that you are not getting distracted
+00:09:20.000
+And in the coming time when you will look back
+00:09:22.000
+Then you will realize yourself that how blessed I am
+00:09:24.000
+I myself say that I am so blessed that I studied at the time of IIT JEE In the same time, you will realize that you are blessed.
+00:09:25.000
+I myself say that I am blessed that I studied during IIT-JEE, IIT-JEE, so much happened, all things changed.
+00:09:32.000
+No one will tell you that it's worth the sacrifice that you are doing.
+00:09:37.000
+I am telling you that all the people who have got success in life, they have sacrificed.
+00:09:41.000
+Take anyone's name, they have sacrificed somewhere, they have made a big something. And people will never tell you that
+00:09:46.000
+This sacrifice is worth it.
+00:09:49.000
+So keep working hard, you are doing great.
+00:09:52.000
+Don't think that you are missing out.
+00:09:55.000
+I should have got 4-5 hundred rupees worth of notes.
+00:09:58.000
+But no problem, let's move ahead.
+00:10:01.000
+I will add a color to the span.
+00:10:04.000
+I will write span and add background color.
+00:10:07.000
+I will add blue and violet.
+00:10:09.000
+I will reduce it a little.
+00:10:10.000
+I will click and hover it.
+00:10:12.000
+Now you will see that it has highlighted it like this.
+00:10:16.000
+So that's all for this video.
+00:10:18.000
+I hope you understood the difference between inline and block elements.
+00:10:20.000
+Access the playlist.
+00:10:22.000
+Like the video.
+00:10:23.000
+Please access the code.
+00:10:24.000
+Give your village land to me. Thank Also, please like and share this video. Thank you so much for watching this video.
+00:10:26.000
+I will see you next time. Bye!

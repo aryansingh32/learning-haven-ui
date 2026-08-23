@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 21,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of Python while loops by completing a small coding challenge.\n\n## Tutorials\n\nAforloop is used for iterating over a sequence (that is either a list, a tuple, \na dictionary, a set, or a string).\n\nThis is less like theforkeyword in other programming languages, and works more like an iterator method as found in other object-orientated programming languages.\n\nWith theforloop we can execute a set of statements, once for each item in a list, tuple, set etc.\n\nTheforloop does not require an indexing variable to set beforehand.\n\nEven strings are iterable objects, they contain a sequence of characters:\n\nWith thebreakstatement we can stop the \nloop before it has looped through all the items:\n\nWith thecontinuestatement we can stop the \ncurrent iteration of the loop, and continue with the next:\n\nTo loop through a set of code a specified number of times, we can use therange()function,\n\nTherange()function returns a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and ends at a specified number.\n\nTherange()function defaults to 0 as a starting value, however it is possible to specify the starting value by adding a parameter:range(2, 6), which \nmeans values from 2 to 6 (but not including 6):\n\nTherange()function defaults to increment the sequence by 1,\nhowever it is possible to specify the increment value by adding a third parameter:range(2, 30,3):\n\nTheelsekeyword in aforloop specifies a block of code to be \nexecuted when the loop is finished:\n\nA nested loop is a loop inside a loop.\n\nThe \"inner loop\" will be executed one time for each iteration of the \"outer \nloop\":\n\nforloops cannot be empty, but if you for \nsome reason have aforloop with no content, put in thepassstatement to avoid getting an error.\n\n### Code Examples\n\n```\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor \n  x in fruits:\nprint(x)\n\n---\n\nfor x in \"banana\":\nprint(x)\n\n---\n\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in fruits:\nprint(x)\nif x == \n  \"banana\":\nbreak\n\n---\n\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in fruits:\nif x == \n  \"banana\":\nbreak\nprint(x)\n\n---\n\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in fruits:\nif x == \n  \"banana\":\ncontinue\nprint(x)\n\n---\n\nfor x in range(6):\nprint(x)\n\n---\n\nfor x in range(2, 6):\nprint(x)\n\n---\n\nfor x in range(2, 30, 3):\nprint(x)\n\n---\n\nfor x in range(6):\nprint(x)\nelse:\nprint(\"Finally finished!\")\n\n---\n\nfor x in range(6):\nif x == 3: break\nprint(x)\nelse:\nprint(\"Finally finished!\")\n\n---\n\nadj = [\"red\", \"big\", \"tasty\"]\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in adj:\nfor y in fruits:\nprint(x, y)\n\n---\n\nfor x in [0, 1, 2]:\npass\n```\n\n## Tutorials\n\nTest your understanding of Python for loops by completing a small coding challenge.\n\n## Tutorials\n\nA function is a block of code which only runs when it is called.\n\nA function can return data as a result.\n\nA function helps avoiding code repetition.\n\nIn Python, a function is defined using thedefkeyword, followed by a function name and parentheses:\n\nThis creates a function namedmy_functionthat prints \"Hello from a function\" when called.\n\nTo call a function, write its name followed by parentheses:\n\nYou can call the same function multiple times:\n\nFunction names follow the same rules as variable names in Python:\n\nImagine you need to convert temperatures from Fahrenheit to Celsius several times in your program. Without functions, you would have to write the same calculation code repeatedly:\n\nWith functions, you write the code once and reuse it:\n\nFunctions can send data back to the code that called them using thereturnstatement.\n\nWhen a function reaches areturnstatement, it stops executing and sends the result back:\n\nYou can use the returned value directly:\n\nFunction definitions cannot be empty. If you need to create a function placeholder without any code, use thepassstatement:\n\nThepassstatement is often used when developing, allowing you to define the structure first and implement details later.\n\n### Code Examples\n\n```\ndef my_function():\nprint(\"Hello from a function\")\n\n---\n\ndef my_function():\nprint(\"Hello from a function\")\nmy_function()\n\n---\n\ndef my_function():\nprint(\"Hello from a function\")\nmy_function()\nmy_function()\nmy_function()\n\n---\n\ncalculate_sum()\n_private_function()\nmyFunction2()\n\n---\n\ntemp1 = 77\ncelsius1 = (temp1 - 32) * 5 / 9\nprint(celsius1)\ntemp2 = 95\ncelsius2 = (temp2 - 32) * 5 / 9\nprint(celsius2)\ntemp3 = 50\ncelsius3 = (temp3 - 32) * 5 / 9\nprint(celsius3)\n\n---\n\ndef fahrenheit_to_celsius(fahrenheit):\nreturn (fahrenheit - 32) * 5 / 9\nprint(fahrenheit_to_celsius(77))\nprint(fahrenheit_to_celsius(95))\nprint(fahrenheit_to_celsius(50))\n\n---\n\ndef get_greeting():\nreturn \"Hello from a function\"\nmessage = get_greeting()\nprint(message)\n\n---\n\ndef get_greeting():\nreturn \"Hello from a function\"\nprint(get_greeting())\n\n---\n\ndef my_function():\npass\n```\n\n## Tutorials\n\nInformation can be passed into functions as arguments.\n\nArguments are specified after the function name, inside the parentheses.\nYou can add as many arguments as you want, just separate them with a comma.\n\nThe following example has a function with one argument (fname).\nWhen the function is called, we pass along a first name,\nwhich is used inside the function to print the full name:\n\nThe termsparameterandargumentcan be used for the same thing: information that are passed into a function.\n\nBy default, a function must be called with the correct number of arguments.\n\nIf your function expects 2 arguments, you must call it with exactly 2 arguments.\n\nIf you try to call the function with the wrong number of arguments, you will get an error:\n\nYou can assign default values to parameters. If the function is called without an argument, it uses the default value:\n\nYou can send arguments with thekey=valuesyntax.\n\nThis way, with keyword arguments, the order of the arguments does not matter.\n\nWhen you call a function with arguments without using keywords, they are called positional arguments.\n\nPositional arguments must be in the correct order:\n\nThe order matters with positional arguments:\n\nYou can mix positional and keyword arguments in a function call.\n\nHowever, positional arguments must come before keyword arguments:\n\nYou can send any data type as an argument to a function (string, number, list, dictionary, etc.).\n\nThe data type will be preserved inside the function:\n\nFunctions can return values using thereturnstatement:\n\nFunctions can return any data type, including lists, tuples, dictionaries, and more.\n\nYou can specify that a function can have ONLY positional arguments.\n\nTo specify positional-only arguments, add, /after the arguments:\n\nWithout the, /you are actually allowed to use keyword arguments even if the function\n  expects positional arguments:\n\nWith, /, you will get an error if you try to use keyword arguments:\n\nTo specify that a function can have only keyword arguments, add*,beforethe arguments:\n\nWithout*,, you are allowed to use positional arguments even if the function expects keyword arguments:\n\nWith*,, you will get an error if you try to use positional arguments:\n\nYou can combine both argument types in the same function.\n\nArguments before/are positional-only, and arguments after*are keyword-only:\n\n### Code Examples\n\n```\ndef my_function(\nfname\n):\nprint(\nfname\n+ \" Refsnes\")\nmy_function(\"\nEmil\n\")\nmy_function(\"\nTobias\n\")\nmy_function(\"\nLinus\n\")\n\n---\n\ndef my_function(name): # name is a\nparameter\nprint(\"Hello\", name)\nmy_function(\"Emil\") # \"Emil\" is an\nargument\n\n---\n\ndef my_function(fname, lname):\nprint(fname + \" \" + lname)\nmy_function(\"Emil\", \"Refsnes\")\n\n---\n\ndef my_function(fname, lname):\nprint(fname + \" \" + lname)\nmy_function(\"Emil\")\n\n---\n\ndef my_function(name\n= \"friend\"\n):\nprint(\"Hello\", name)\nmy_function(\"Emil\")\nmy_function(\"Tobias\")\nmy_function()\nmy_function(\"Linus\")\n\n---\n\ndef my_function(country\n= \"Norway\"\n):\nprint(\"I am from\", country)\nmy_function(\"Sweden\")\nmy_function(\"India\")\nmy_function()\nmy_function(\"Brazil\")\n\n---\n\ndef my_function(animal, name):\nprint(\"I have a\", animal)\nprint(\"My\", animal + \"'s name is\", name)\nmy_function(animal = \"dog\", name = \"Buddy\")\n\n---\n\ndef my_function(animal, name):\nprint(\"I have a\", animal)\nprint(\"My\", animal + \"'s name is\", name)\nmy_function(name = \"Buddy\", animal = \"dog\")\n\n---\n\ndef my_function(animal, name):\nprint(\"I have a\", animal)\nprint(\"My\", animal + \"'s name is\", name)\nmy_function(\"dog\", \"Buddy\")\n\n---\n\ndef my_function(animal, name):\nprint(\"I have a\", animal)\nprint(\"My\", animal + \"'s name is\", name)\nmy_function(\"Buddy\", \"dog\")\n\n---\n\ndef my_function(animal, name, age):\nprint(\"I have a\", age, \"year old\", animal, \"named\", name)\nmy_function(\"dog\", name = \"Buddy\", age = 5)\n\n---\n\ndef my_function(fruits):\nfor fruit in fruits:\nprint(fruit)\nmy_fruits = [\"apple\", \"banana\", \"cherry\"]\nmy_function(my_fruits)\n\n---\n\ndef my_function(person):\nprint(\"Name:\", person[\"name\"])\nprint(\"Age:\", person[\"age\"])\nmy_person = {\"name\": \"Emil\", \"age\": 25}\nmy_function(my_person)\n\n---\n\ndef my_function(x, y):\nreturn x + y\nresult = my_function(5, 3)\nprint(result)\n\n---\n\ndef my_function():\nreturn [\"apple\", \"banana\", \"cherry\"]\nfruits = my_function()\nprint(fruits[0])\nprint(fruits[1])\nprint(fruits[2])\n\n---\n\ndef my_function():\nreturn (10, 20)\nx, y = my_function()\nprint(\"x:\", x)\nprint(\"y:\", y)\n\n---\n\ndef my_function(name, /):\nprint(\"Hello\", name)\nmy_function(\"Emil\")\n\n---\n\ndef my_function(name):\nprint(\"Hello\", name)\nmy_function(name = \"Emil\")\n\n---\n\ndef my_function(name, /):\nprint(\"Hello\", name)\nmy_function(name = \"Emil\")\n\n---\n\ndef my_function(*, name):\nprint(\"Hello\", name)\nmy_function(name = \"Emil\")\n\n---\n\ndef my_function(name):\nprint(\"Hello\", name)\nmy_function(\"Emil\")\n\n---\n\ndef my_function(*, name):\nprint(\"Hello\", name)\nmy_function(\"Emil\")\n\n---\n\ndef my_function(a, b, /, *, c, d):\nreturn a + b + c + d\nresult = my_function(5, 10, c = 15, d = 20)\nprint(result)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_21",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_21",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

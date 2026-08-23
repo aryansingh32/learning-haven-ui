@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 55,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe BIN() function returns a binary representation of a number, as \na string value.\n\n### Code Examples\n\n```\nSELECT BIN(15);\n\n---\n\nBIN(\nnumber\n)\n\n---\n\nSELECT BIN(111);\n\n---\n\nSELECT BIN(8);\n```\n\n## Tutorials\n\nThe BINARY function converts a value to a binary string.\n\nThis function is equivalent to usingCAST(value AS BINARY).\n\n### Code Examples\n\n```\nSELECT BINARY \"W3Schools.com\";\n\n---\n\nBINARY\nvalue\n\n---\n\nSELECT \"HELLO\" = \"hello\";\n\n---\n\nSELECT BINARY \"HELLO\" = \"hello\";\n```\n\n## Tutorials\n\nThe CASE statement goes through conditions and return a value when the first condition is \nmet (like an IF-THEN-ELSE statement). So, once a condition is true, it will stop \nreading and return the result.\n\nIf no conditions are true, it will return the value in the ELSE clause.\n\nIf there is no ELSE part and no conditions are true, it returns NULL.\n\nThe following SQL will order the customers by City. However, if City is NULL, then order by Country:\n\n### Code Examples\n\n```\nSELECT OrderID, Quantity,\nCASE\nWHEN Quantity > 30 \n  THEN \"The quantity is greater than 30\"\nWHEN Quantity = \n  30 THEN \"The quantity is 30\"\nELSE \"The quantity is \n  under 30\"\nEND\nFROM OrderDetails;\n\n---\n\nCASE\nWHEN\ncondition1\nTHEN\nresult1\nWHEN\ncondition2\nTHEN\nresult2\nWHEN\nconditionN\nTHEN\nresultN\nELSE\nresult\nEND;\n\n---\n\nSELECT CustomerName, City, Country\nFROM Customers\nORDER BY\n(CASE\nWHEN City IS NULL THEN Country\nELSE City\nEND);\n```\n\n## Tutorials\n\nThe CAST() function converts a value (of any type) into the specified datatype.\n\nTip:See also theCONVERT()function.\n\n### Code Examples\n\n```\nSELECT \n  CAST(\"2017-08-29\" AS DATE);\n\n---\n\nCAST(\nvalue\nAS\ndatatype\n)\n\n---\n\nSELECT CAST(150 AS CHAR);\n\n---\n\nSELECT CAST(\"14:06:10\" AS TIME);\n\n---\n\nSELECT CAST(5-10 AS SIGNED);\n```\n\n## Tutorials\n\nThe COALESCE() function returns the first non-null value in a list.\n\n### Code Examples\n\n```\nSELECT \n  COALESCE(NULL, NULL, NULL, 'W3Schools.com', NULL, 'Example.com');\n\n---\n\nCOALESCE(\nval1\n,\nval2\n,\n....\n,\nval_n\n)\n\n---\n\nSELECT \n  COALESCE(NULL, 1, 2, 'W3Schools.com');\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_55",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_55",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

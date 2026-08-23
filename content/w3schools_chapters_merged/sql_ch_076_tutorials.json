@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 76,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe Chr() function returns the character for the specified ASCII number code.\n\n### Code Examples\n\n```\nSELECT Chr(65) AS CodeToCharacter;\n\n---\n\nChr(\ncode\n)\n```\n\n## Tutorials\n\nThe & operator allows you to add two or more strings together.\n\n### Code Examples\n\n```\nSELECT Address & \", \" & PostalCode & \", \" & City AS Address\nFROM Customers;\n\n---\n\nstring1\n&\nstring2\n&\nstring_n\n```\n\n## Tutorials\n\nThe CurDir() function returns the full path for a \nspecified drive.\n\n### Code Examples\n\n```\nCurDir()\nCurDir(\"D\")\n\n---\n\nC:\\Documents and Settings\\user\\My Documents\nD:\\\n\n---\n\nCurDir(\ndrive\n)\n```\n\n## Tutorials\n\nThe Format() function formats a value with the specified format.\n\n### Code Examples\n\n```\nSELECT Format(Price, \"Currency\") AS FormattedPrice\nFROM Products;\n\n---\n\nFormat(\nvalue\n,\nformat\n)\n```\n\n## Tutorials\n\nThe InStr() function gets the position of the first occurrence of a string in another.\n\nThis function performs a case-insensitive search.\n\n### Code Examples\n\n```\nSELECT InStr(\"Customer\", \"t\") AS MatchPosition;\n\n---\n\nInStr(\nstart\n,\nstring1\n,\nstring2\n,\ncompare\n)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_76",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_76",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

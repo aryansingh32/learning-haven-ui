@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 20,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheScannerclass is used to get \nuser input, and it is found in thejava.utilpackage.\n\nTo use theScannerclass, create an object of the class and use any of the available methods found in theScannerclass documentation. \nIn our example, we will use thenextLine()method, which is used to read Strings:\n\nIn the example above, we used thenextLine()method, which is used to read Strings. To read other types, look at the table below:\n\nIn the example below, we use different methods to read data of various types:\n\n### Code Examples\n\n```\nExample\nimport java.util.Scanner;\u00a0 // Import the Scanner class\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Scanner myObj = new Scanner(System.in);\u00a0 // Create a Scanner object\n\u00a0\u00a0\u00a0 System.out.println(\"Enter username\");\n\n\u00a0\u00a0\u00a0 String userName = myObj.nextLine();\u00a0 // Read user input\n\u00a0\u00a0\u00a0 System.out.println(\"Username is: \" + userName);\u00a0 // Output user input\n\u00a0 }\n}\nRun Example \u00bb\n\n---\n\nExample\nimport java.util.Scanner;\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Scanner myObj = new Scanner(System.in);\n\n\u00a0\u00a0\u00a0 System.out.println(\"Enter name, age and salary:\");\n\n\u00a0\u00a0\u00a0 // String input\n\u00a0\u00a0\u00a0 String name = myObj.nextLine();\n\n\u00a0\u00a0\u00a0 // Numerical input\n\u00a0\u00a0\u00a0 int age = myObj.nextInt();\n\u00a0\u00a0\u00a0 double salary = myObj.nextDouble();\n\n\u00a0\u00a0\u00a0 // Output input by user\n\u00a0\u00a0\u00a0 System.out.println(\"Name: \" + name);\n\u00a0\u00a0\u00a0 System.out.println(\"Age: \" + age);\n\u00a0\u00a0\u00a0 System.out.println(\"Salary: \" + salary);\n\u00a0 }\n}\nRun Example \u00bb\n```\n\n## Tutorials\n\nJava does not have a built-in Date class, but we can import thejava.timepackage to work with the date and time API. The package includes many date and time classes. \nFor example:\n\nTo display the current date, import thejava.time.LocalDateclass, and use itsnow()method:\n\nTo display the current time (hour, minute, second, and nanoseconds), import thejava.time.LocalTimeclass, and use itsnow()method:\n\nTo display the current date and time, import thejava.time.LocalDateTimeclass, and use itsnow()method:\n\nThe \"T\" in the example above is used to separate the date from the time. You can use theDateTimeFormatterclass \nwith theofPattern()method in the same package to format or parse date-time objects. \nThe following example will remove both the \"T\" and nanoseconds from the date-time:\n\nTheofPattern()method accepts all sorts of values, if you want to display \nthe date and time in a different format. For example:\n\n### Code Examples\n\n```\nExample\nimport java.time.LocalDate; // import the LocalDate class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDate myObj = LocalDate.now(); // Create a date object\n\u00a0\u00a0\u00a0 System.out.println(myObj); // Display the current date\n\u00a0 }\n}\nThe output will be:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalTime; // import the LocalTime class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalTime myObj = LocalTime.now();\n\u00a0\u00a0\u00a0 System.out.println(myObj);\n\u00a0 }\n}\nThis example displays the server's local time, which may differ from your \nlocal time:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalDateTime; // import the LocalDateTime class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDateTime myObj = LocalDateTime.now();\n\u00a0\u00a0\u00a0 System.out.println(myObj);\n\u00a0 }\n}\nThe output will be something like this:\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.time.LocalDateTime; // Import the LocalDateTime class\nimport java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 LocalDateTime myDateObj = LocalDateTime.now();\n\u00a0\u00a0\u00a0 System.out.println(\"Before formatting: \" + myDateObj);\n\u00a0\u00a0\u00a0 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm:ss\");\n\n\u00a0\u00a0\u00a0 String formattedDate = myDateObj.format(myFormatObj);\n\u00a0\u00a0\u00a0 System.out.println(\"After formatting: \" + formattedDate);\n\u00a0 }\n}\nThe output will be:\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nEven experienced Java developers make mistakes. The key is learning how tospotandfixthem!\n\nThese pages cover common errors and helpful debugging tips to help you understand what's going wrong and how to fix it.\n\nCompile-time errors occur when the program cannot compile due to syntax or type issues.\n\nHere are some examples:\n\n1) Missing Semicolon\n\n2) Undeclared Variables\n\n3) Mismatched Types\n\nRuntime errorsoccur when the program compiles but crashes or behaves unexpectedly.\n\nHere are some examples:\n\n1) Division by Zero\n\n2) Array Index Out of Bounds\n\nLogical errorshappen when the code runs, but the result is not what you thought:\n\nExpected Result:12\n\nLogical Error:The code mistakenly subtracts instead of adds.\n\nIn the next chapter, you will learn how todebug your code- how to find and fix bugs/errors in your program.\n\n### Code Examples\n\n```\nExample\nint x = 5\nSystem.out.println(x);\nResult:\nerror: ';' expected\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(myVar);\nResult:\ncannot find symbol\nsymbol:   variable myVar\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = \"Hello\";\nResult:\nincompatible types: String cannot be converted to int\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 10;\nint y = 0;\nint result = x / y;\nSystem.out.println(result);\nResult:\nException in thread \"main\" java.lang.ArithmeticException: / by zero\nTry it Yourself \u00bb\n\n---\n\nExample\nint[] numbers = {1, 2, 3};\nSystem.out.println(numbers[8]);\nResult:\nException in thread \"main\" java.lang.ArrayIndexOutOfBoundsException: Index 8 out of bounds for length 3\nTry it Yourself \u00bb\n\n---\n\nExample:\nint x = 10;\nint y = 2;\nint sum = x - y;\nSystem.out.println(\"x + y = \" + sum);\nResult:\nx + y = 8\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAfter learning about common errors, the next step is understanding how todebugyour Java code - that is, how to find and fix those errors effectively.\n\nThis page introduces simple debugging techniques that are useful for beginners and helpful even for experienced developers.\n\nDebuggingis the process of identifying and fixing errors or bugs in your code.\n\nIt often involves:\n\nThe most basic (and often most effective) way to debug Java code is to useSystem.out.println()to print values and check the flow of the program.\n\nIn this example, the first line\"Before division\"will print, but the second line is never reached because the program crashes due to division by zero:\n\nIf something unexpected happens, print out the values of your variables:\n\nModern IDEs likeIntelliJ IDEA,Eclipse, andNetBeanscome with built-in debugging tools.\n\nIn the next chapter, you will learn about how to handle errors gracefully in your programs withJava Exceptions.\n\n### Code Examples\n\n```\nExample\nint x = 10;\nint y = 0;\n\nSystem.out.println(\"Before division\");  // Debug output\n\nint result = x / y;  // Crashes\n\nSystem.out.println(\"Result: \" + result);  // Never runs\nResult:\nBefore division\nException in thread \"main\" java.lang.ArithmeticException: / by zero\nTry it Yourself \u00bb\n\n---\n\nExample\nint age = 17;\nSystem.out.println(\"Age: \" + age);\n\nif (age >= 18) {\n  System.out.println(\"Access granted\");\n} else {\n  System.out.println(\"Access denied\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAs mentioned in theErrors chapter, different types of errors can occur while running a program - such as coding mistakes, invalid input, or unexpected situations.\n\nWhen an error occurs, Java will normally stop and generate an error message. The technical term for this is: Java will throw anexception(throw an error).\n\nException handling lets you catch and handle errors during runtime - so your program doesn't crash.\n\nIt uses different keywords:\n\nThetrystatement allows you to define a block of code to be \ntested for errors while it is being executed.\n\nThecatchstatement allows you to define a block of code to \nbe executed, if an error occurs in the try block.\n\nThetryandcatchkeywords \ncome in pairs:\n\nConsider the following example:\n\nIf an error occurs, we can usetry...catchto catch the error and execute some code to handle it:\n\nThefinallystatement lets you execute code, aftertry...catch, regardless of the result:\n\nThethrowstatement allows you to create a custom error.\n\nThethrowstatement is used together with anexception type. There are many exception types available in Java:ArithmeticException,FileNotFoundException,ArrayIndexOutOfBoundsException,SecurityException, etc:\n\nIfagewas 20, you wouldnotget an exception:\n\nThe table below shows some of the most common errors and exceptions in Java, with a short description of each:\n\nTip:For a list of all errors and exception types, go to ourJava Errors and Exception Types Reference.\n\n### Code Examples\n\n```\nSyntax\ntry {\n\u00a0\u00a0//\nBlock of code to try\n}\ncatch(Exception\ne\n) {\n\u00a0\u00a0//\nBlock of code to handle errors\n}\n\n---\n\nThis will generate an error, because\nmyNumbers[10]\ndoes not exist.\npublic class Main {\n\u00a0 public static void main(String[ ] args) {\n\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]); // error!\n\u00a0 }\n}\nThe output will be something like this:\nException in thread \"main\" java.lang.ArrayIndexOutOfBoundsException: 10\nat Main.main(Main.java:4)\nNote:\nArrayIndexOutOfBoundsException\noccurs when you try to access an index number that does not exist.\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[ ] args) {\n\u00a0\u00a0\u00a0 try {\n\u00a0\u00a0\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]);\n\u00a0\u00a0\u00a0 } catch (Exception e) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Something went wrong.\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\nThe output will be:\nSomething went wrong.\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 try {\n\u00a0\u00a0\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]);\n\u00a0\u00a0\u00a0 } catch (Exception e) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Something went wrong.\");\n\u00a0\u00a0\u00a0 } finally {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"The 'try catch' is finished.\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\nThe output will be:\nSomething went wrong.\nThe 'try catch' is finished.\nTry it Yourself \u00bb\n\n---\n\nExample\nThrow an exception if\nage\nis below 18 (print \"Access \ndenied\"). If age is 18 or older, print \"Access granted\":\npublic class Main {\n\u00a0 static void checkAge(int age) {\n\u00a0\u00a0\u00a0 if (age < 18) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 throw new ArithmeticException(\"Access denied - You must be at least 18 years old.\");\n\u00a0\u00a0\u00a0 }\n\u00a0\u00a0\u00a0 else {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Access granted - You are old enough!\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 checkAge(15); // Set age to 15 (which is below 18...)\n\u00a0 }\n}\nThe output will be:\nException in thread \"main\" java.lang.ArithmeticException: Access denied - You must be at least 18 years old.\nat Main.checkAge(Main.java:4)\nat Main.main(Main.java:12)\nTry it Yourself \u00bb\n\n---\n\nExample\ncheckAge(20);\nThe output will be:\nAccess granted - You are old enough!\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_20",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

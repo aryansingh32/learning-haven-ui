@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 36,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThewindow.locationobject can be used to get \nthe current page address (URL) and to redirect the browser to a new page.\n\nThewindow.locationobject can be written without the window prefix.\n\nSome examples:\n\nThewindow.location.hrefproperty returns the URL of the current page.\n\nThewindow.location.hostnameproperty returns the name of the internet host (of the current page).\n\nThewindow.location.pathnameproperty returns the pathname of \nthe current page.\n\nThewindow.location.protocolproperty returns the web protocol of the page.\n\nThewindow.location.portproperty returns the number of the internet host \nport (of the current page).\n\nThewindow.location.assign()method loads a new document.\n\n### Code Examples\n\n```\ndocument.getElementById(\"demo\").innerHTML =\n\"Page location is \" + window.location.href;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Page hostname is \" + window.location.hostname;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Page path is \" + window.location.pathname;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Page protocol is \" + window.location.protocol;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Port \n  number is \" + window.location.port;\n\n---\n\n<html>\n<head>\n<script>\nfunction newDoc()\u00a0{\nwindow.location.assign(\"https://www.w3schools.com\")\n}\n</script>\n</head>\n<body>\n<input type=\"button\" value=\"Load new document\"\nonclick=\"newDoc()\">\n</body>\n</html>\n```\n\n## Tutorials\n\nThe History API is accessed with thewindow.historyobject.\n\nThehistoryobject can be written without the window prefix.\n\nCommon metods are:\n\nThehistory.back()method loads the previous page in the session history.\n\nThis is the same as clicking the browser's Back button.\n\nThehistory.back()method is equivalent tohistory.go(-1).\n\nThehistory.forward()method loads the next page in the session history.\n\nThis is the same as clicking the browser's Forward button.\n\nTheforward()method is equivalent tohistory.go(1).\n\nThehistory.go()method loads a specific page from the session history.\n\nThe argument tells the browser how many steps to move from the current page.\n\nThehistory.lengthproperty returns the number of entries in the session history.\n\nThe current page is included in the number.\n\nThehistory.stateproperty returns the state data associated with the current history entry.\n\nThe History API can also add or replace entries in the browser history.\n\nThis is useful for applications that change page content without loading a completely new document.\n\nThe two methods are:\n\nThehistory.pushState()method adds a new entry to the session history.\n\nThe example changes the URL topage2.htmland adds a new history entry.\n\nIt does not loadpage2.htmlfrom the server.\n\nAstateobject can store any data associated with the history entry.\n\nThe second argument exists for historical reasons and is normally an empty string.\n\nThe optionalurlmust have the same origin as the current page.\n\nhistory.state isnulluntil you call history.pushState() or history.replaceState().\n\nThehistory.replaceState()method changes the current history entry.\n\nUnlikepushState(), it does not create a new history entry.\n\nThis changes the current URL without adding another entry to the browser history.\n\nThepopstateevent occurs when the active history entry changes.\n\nThis normally happens when the user clicks the browser's Back or Forward button.\n\nIf a history entry contains state data, it is available fromevent.state:\n\nThe following example changes the URL without loading a new page.\n\nIt also restores the displayed content when the user clicks Back or Forward.\n\nBrowsers normally restore the scroll position when users move backward or forward.\n\nThehistory.scrollRestorationproperty can control this behavior.\n\nThe possible values are:\n\nUseback(),forward(), andgo()to navigate through the session history.\n\nUsepushState()to create a new history entry without loading a new page.\n\nUsereplaceState()to change the current history entry.\n\nUse thepopstateevent to detect when the user moves to another history entry.\n\n### Code Examples\n\n```\nlet length = window.history.length;\n\n---\n\nlet length = history.length;\n\n---\n\n<button onclick=\"history.back()\">Go Back</button>\n\n---\n\n<button onclick=\"history.forward()\">Go Forward</button>\n\n---\n\n<button onclick=\"history.go(-2)\">Go Back</button>\n\n---\n\n<button onclick=\"history.go(1)\">Go Forward</button>\n\n---\n\nlet length = history.length;\n\n---\n\nlet state = history.state;\n\n---\n\nlet state = {name:\"example\", page: 2};\nlet url = \"page2.html\";\nhistory.pushState(state, \"\", url);\n\n---\n\nhistory.pushState(state, \"\", url)\n\n---\n\nhistory.replaceState(null, \"\", \"newpage.html\");\n\n---\n\nhistory.replaceState(state, \"\", url)\n\n---\n\nwindow.addEventListener(\"popstate\", function(event) {\n  document.getElementById(\"demo\").innerHTML =\n    \"Page changed\";\n});\n\n---\n\nwindow.addEventListener(\"popstate\", function(event) {\n  if (event.state) {\n    document.getElementById(\"demo\").innerHTML =\n      event.state.page;\n  }\n});\n\n---\n\n<button onclick=\"showPage('home')\">Home</button>\n<button onclick=\"showPage('about')\">About</button>\n<p id=\"demo\">Home</p>\n<script>\nfunction showPage(page) {\ndocument.getElementById(\"demo\").innerHTML = page;\nhistory.pushState({page: page}, \"\", \"?page=\" + page);\n}\nwindow.addEventListener(\"popstate\", function(event) {\nif (event.state) {\ndocument.getElementById(\"demo\").innerHTML =\nevent.state.page;\n}\n});\n</script>\n\n---\n\nhistory.scrollRestoration = \"manual\";\n```\n\n## Tutorials\n\nThecookieEnabledproperty returns true if cookies are enabled, otherwise \nfalse:\n\nThelanguageproperty returns the browser's language:\n\nTheonLineproperty returns true if the browser is online:\n\nTheappNameproperty returns the application name \nof the browser:\n\nTheappCodeNameproperty returns the application code name \nof the browser:\n\nTheproductproperty returns \nthe product name of the browser engine:\n\nTheappVersionproperty returns \nversion information about the browser:\n\nTheuserAgentproperty returns the user-agent header sent by the browser to the server:\n\nTheplatformproperty returns the browser platform \n(operating system):\n\nThejavaEnabled()method returns true ifJavais enabled:\n\n### Code Examples\n\n```\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML =\n\"cookiesEnabled is \" + navigator.cookieEnabled;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.language;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.onLine;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML =\n\"navigator.appName is \" + navigator.appName;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML =\n\"navigator.appCodeName is \" + navigator.appCodeName;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML =\n\"navigator.product is \" + navigator.product;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.appVersion;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.userAgent;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.platform;\n</script>\n\n---\n\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = navigator.javaEnabled();\n</script>\n```\n\n## Tutorials\n\nAn alert box is often used if you want to make sure information comes through to the user.\n\nWhen an alert box pops up, the user will have to click \"OK\" to proceed.\n\nThewindow.alert()method can be written without the window \nprefix.\n\nA confirm box is often used if you want the user to verify or accept something.\n\nWhen a confirm box pops up, the user will have to click either \"OK\" or \"Cancel\" to proceed.\n\nIf the user clicks \"OK\", the box returnstrue. If the user clicks \"Cancel\", the box returnsfalse.\n\nThewindow.confirm()method can be written without the window prefix.\n\nA prompt box is often used if you want the user to input a value before entering a page.\n\nWhen a prompt box pops up, the user will have to click either \"OK\" or \"Cancel\" \nto proceed after entering an input value.\n\nIf the user clicks \"OK\" the box returns the input value. If the user clicks \"Cancel\" the box returns null.\n\nThewindow.prompt()method can be written without the window prefix.\n\nTo display line breaks inside a popup box, use a back-slash followed by the character n.\n\n### Code Examples\n\n```\nwindow.alert(\"\nsometext\n\");\n\n---\n\nalert(\"I am an alert box!\");\n\n---\n\nwindow.confirm(\"\nsometext\n\");\n\n---\n\nif (confirm(\"Press a button!\")) {\ntxt = \"You \n  pressed OK!\";\n} else {\ntxt = \"You pressed Cancel!\";\n}\n\n---\n\nwindow.prompt(\"\nsometext\n\",\"\ndefaultText\n\");\n\n---\n\nlet person = prompt(\"Please enter your name\", \"Harry Potter\");\nlet text;\nif \n  (person == null || person == \"\") {\ntext = \"User cancelled \n  the prompt.\";\n} else {\ntext = \"Hello \" + person + \"! \n  How are you today?\";\n}\n\n---\n\nalert(\"Hello\\nHow are you?\");\n```\n\n## Tutorials\n\nCookies let you store user information in web pages.\n\nCookies are data, stored in small text files, on your computer.\n\nWhen a web server has sent a web page to a browser, the connection is \nshut down, and the server forgets everything about the user.\n\nCookies were invented to solve the problem \"how to remember information about \nthe user\":\n\nCookies are saved in name-value pairs like:\n\nWhen a browser requests a web page from a server, cookies belonging to the page are added to the request. This way the server \ngets the necessary data to \"remember\" information about users.\n\nJavaScript can create, read, and delete cookies with thedocument.cookieproperty.\n\nWith JavaScript, a cookie can be created like this:\n\nYou can also add an expiry date (in UTC time).\nBy default, the cookie is deleted when the browser is closed:\n\nWith a path parameter, you can tell the browser what path the cookie belongs to.\nBy default, the cookie belongs to the current page.\n\nWith JavaScript, cookies can be read like this:\n\nWith JavaScript, you can change a cookie the same way as you create it:\n\nThe old cookie is overwritten.\n\nDeleting a cookie is very simple.\n\nYou don't have to specify a cookie value when you delete a cookie.\n\nJust set the expires parameter to a past date:\n\nThedocument.cookieproperty looks like a normal text string. But it is not.\n\nEven if you write a whole cookie string to document.cookie, when you read it out again, you can only see the \nname-value pair of it.\n\nIf you set a new cookie, older cookies are not overwritten.\nThe new cookie is added to document.cookie, so if you read document.cookie \nagain you will get something like:\n\ncookie1 = value; cookie2 = value;\n\nDisplay All CookiesCreate Cookie 1Create Cookie 2Delete Cookie 1Delete Cookie 2\n\nIf you want to find the value of one specified cookie, you must write a JavaScript \nfunction that searches for the cookie value in the cookie string.\n\nIn the example to follow, we will create a cookie that stores the name of a visitor.\n\nThe first time a visitor arrives to the web page, he/she will be asked to fill in his/her name. The name is then stored in a cookie.\n\nThe next time the visitor arrives at the same page, he/she will get a welcome message.\n\nFor the example we will create 3 JavaScript functions:\n\nFirst, we create afunctionthat stores the name of the visitor in a cookie variable:\n\nExample explained:\n\nThe parameters of the function above are the name of the cookie (cname), the value of the cookie \n(cvalue), and the number of days until the cookie should expire (exdays).\n\nThe function sets a cookie by adding together the cookiename, the cookie \nvalue, and the expires string.\n\nThen, we create afunctionthat returns the value of a specified cookie:\n\nFunction explained:\n\nTake the cookiename as parameter (cname).\n\nCreate a variable (name) with the text to search for (cname + \"=\").\n\nDecode the cookie string, to handle cookies with special characters, e.g. '$'\n\nSplit document.cookie on semicolons into an array called ca (ca = \ndecodedCookie.split(';')).\n\nLoop through the ca array (i = 0; i < ca.length; i++), and read out each value \nc = ca[i]).\n\nIf the cookie is found (c.indexOf(name) == 0), return the value of the cookie \n(c.substring(name.length, c.length).\n\nIf the cookie is not found, return \"\".\n\nLast, we create the function that checks if a cookie is set.\n\nIf the cookie is set it will display a greeting.\n\nIf the cookie is not set, it will display a prompt box, asking for the name of the user,\nand stores the username cookie for 365 days, by calling thesetCookiefunction:\n\nThe example above runs thecheckCookie()function when the page loads.\n\n### Code Examples\n\n```\nusername = John Doe\n\n---\n\ndocument.cookie = \"username=John Doe\";\n\n---\n\ndocument.cookie = \"username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC\";\n\n---\n\ndocument.cookie = \"username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/\";\n\n---\n\nlet x = document.cookie;\n\n---\n\ndocument.cookie = \"username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/\";\n\n---\n\ndocument.cookie = \"username=; expires=Thu, 01 \nJan 1970 00:00:00 UTC; path=/;\";\n\n---\n\nfunction setCookie(cname, cvalue, exdays) {\nconst d = new Date();\nd.setTime(d.getTime() + (exdays*24*60*60*1000));\nlet expires = \"expires=\"+ d.toUTCString();\ndocument.cookie = cname + \"=\" + cvalue + \";\" + expires + \";path=/\";\n}\n\n---\n\nfunction getCookie(cname) {\nlet name = cname + \"=\";\nlet decodedCookie = decodeURIComponent(document.cookie);\nlet ca = decodedCookie.split(';');\nfor(let i = 0; i <ca.length; i++) {\nlet c = ca[i];\nwhile (c.charAt(0) == ' ') {\nc = c.substring(1);\n}\nif (c.indexOf(name) == 0) {\nreturn c.substring(name.length, c.length);\n}\n}\nreturn \"\";\n}\n\n---\n\nfunction checkCookie() {\nlet \nusername = getCookie(\"username\");\nif (username != \"\") {\nalert(\"Welcome again \" + username);\n} else {\nusername = prompt(\"Please enter your name:\", \"\");\nif (username != \"\" \n&& username != null) {\nsetCookie(\"username\", username, 365);\n}\n}\n}\n\n---\n\nfunction setCookie(cname, cvalue, exdays) {\nconst d = new Date();\nd.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));\nlet expires = \"expires=\"+d.toUTCString();\ndocument.cookie = cname + \"=\" + cvalue + \n\";\" + expires + \";path=/\";\n}\nfunction getCookie(cname) {\nlet name = cname + \"=\";\nlet ca \n= document.cookie.split(';');\nfor(let i = 0; i < ca.length; i++) \n{\nlet c = ca[i];\nwhile (c.charAt(0) == ' \n') {\nc = c.substring(1);\n}\nif (c.indexOf(name) \n == 0) {\nreturn c.substring(name.length, c.length);\n}\n}\nreturn \"\";\n}\nfunction \ncheckCookie() {\nlet user = getCookie(\"username\");\nif (user != \"\") \n{\nalert(\"Welcome again \" + user);\n} else {\nuser = prompt(\"Please enter your name:\", \"\");\nif (user != \"\" && \nuser != null) {\nsetCookie(\"username\", user, 365);\n}\n}\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_36",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_36",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

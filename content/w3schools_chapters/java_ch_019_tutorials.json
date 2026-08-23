@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 19,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Primitive number types are divided into two groups:\n\nInteger typesstores whole numbers, positive or negative (such as 123 or -456), without decimals. \nValid types arebyte,short,intandlong. Which type you should use, depends on the numeric value.\n\nFloating point typesrepresents numbers with a fractional part, \ncontaining one or more decimals. There are two types:floatanddouble.\n\nThebytedata type can store whole numbers \nfrom -128 to 127. This can be used instead ofintor other integer types to \nsave memory when you are certain that the value will be within -128 and 127:\n\nTheshortdata type can store whole numbers from -32768 to 32767:\n\nTheintdata type can store whole numbers from -2147483648 to 2147483647.In general, and in our tutorial, theintdata type is \nthe preferred data type when we create variables with a numeric value.\n\nThelongdata type can store whole numbers from -9223372036854775808 to 9223372036854775807. This is used when int is not large enough to store the value. Note that you should end the value with an \"L\":\n\nYou should use a floating point type whenever you need a number with a decimal, such as 9.99 or 3.14515.\n\nThefloatanddoubledata types can store fractional numbers. Note that you should end the value with an \"f\" for floats and \"d\" for doubles:\n\nA floating point number can also be a scientific number with an \"e\" to indicate the power of 10:\n\n### Code Snippets\n\n```\nExample\nbyte myNum = 100;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nExample\nshort myNum = 5000;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nExample\nint myNum = 100000;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nExample\nlong myNum = 15000000000L;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nFloat Example\nfloat myNum = 5.75f;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nDouble Example\ndouble myNum = 19.99d;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n\n---\n\nExample\nfloat f1 = 35e3f;\ndouble d1 = 12E4d;\nSystem.out.println(f1);\nSystem.out.println(d1);\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

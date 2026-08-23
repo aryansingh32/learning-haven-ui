@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 82,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe Int() function returns the integer part of a number.\n\nNote:Ifnumberis negative, this function returns \nthe first negative integer less than or equal tonumber.\n\n### Code Examples\n\n```\nSELECT Int(756.43) AS IntNum;\n\n---\n\nInt(\nnumber\n)\n\n---\n\nSELECT Int(Price) AS IntNum FROM Products;\n```\n\n## Tutorials\n\nThe Max() function returns the maximum value in a set of values.\n\nNote:See also theMin()function.\n\n### Code Examples\n\n```\nSELECT Max(Price) AS LargestPrice FROM Products;\n\n---\n\nMax(\nexpression\n)\n```\n\n## Tutorials\n\nThe Min() function returns the minimum value in a set of values.\n\nNote:See also theMax()function.\n\n### Code Examples\n\n```\nSELECT \n  Min(Price) AS \n  SmallestPrice FROM Products;\n\n---\n\nMin(\nexpression\n)\n```\n\n## Tutorials\n\nThe Randomize() function initializes the random number generator (used byRnd()) with a seed.\n\n### Code Examples\n\n```\nRandomize(\nseed\n)\n```\n\n## Tutorials\n\nThe Rnd function returns a random number.\n\nNote:If you do not call theRandomize()function before \ncalling the Rnd function, the Rnd function may return the same random number each time!\n\nTo return a random integer less than 1, but greater than or equal to zero:\n\nTo return a random integer in a given range, use this formula:\n\n### Code Examples\n\n```\nSELECT Int((10 - 1 + 1) * Rnd + 1) AS RandNumBetween1and10,\nInt((499 - 100 \n  + 1) * Rnd + 100) AS RandNumBetween100and499;\n\n---\n\nRnd\n\n---\n\nInt((\nupperbound\n-\nlowerbound\n+ 1) * Rnd +\nlowerbound\n)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_82",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_82",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

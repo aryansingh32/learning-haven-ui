@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 148,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A web worker is an external JavaScript file that runs in the background, without affecting the performance of the page.\n\nWhen executing scripts in an HTML page, the page becomes unresponsive until the script is finished.\n\nA web worker is an external JavaScript file that runs in the background, independently \nof other scripts, without affecting the performance of the page. You can continue to do whatever you want: \nclicking, selecting things, etc., while the web worker runs in the background.\n\nWeb workers are useful for heavy code that can't be run on the main thread, \nwithout causing long tasks that make the page unresponsive.\n\nThe numbers in the table specify the first browser version that fully support \nthe Web Workers API.\n\nThe example below creates a simple web worker that count numbers in the background:\n\nBefore using web worker, we can quickly check browser support:\n\nNow, let's create a web worker in an external JavaScript file.\n\nHere we create a script that counts. The script is stored in the \"demo_workers.js\" file:\n\nNote:The important part of the code above is thepostMessage()method - which is used to post messages back to the HTML page.\n\nOnce we have created the .js web worker file, we can call it from an HTML page.\n\nThe following lines checks if a worker (w) already exists, if not - it creates a new web worker object and \npoints to the .js file: \n\"demo_workers.js\":\n\nThen we can SEND and RETRIEVE messages from the web worker.\n\nData is sent between web workers and the main thread via a system of messages \n- both sides send their messages using thepostMessage()method, and respond to messages via theonmessageevent handler.\n\nAdd anonmessageevent listener to the web worker \nobject.\n\nWhen the web worker in the .js posts a message, the code within the event listener is executed. The data \nfrom the web worker is stored inevent.data.\n\nWhen a web worker object is created, it will continue to listen for messages until it is terminated.\n\nTo terminate a web worker object, and free browser/computer resources, use theterminate()method:\n\nIf you set the web worker variable to undefined, after it has been terminated, \nyou can reuse the worker/code:\n\nWe have already seen the Web Worker code in the .js file.\n\nBelow is the full code for the HTML page:\n\nSince web workers are in external .js files, they do not have access to the following JavaScript objects:\n\n### Code Snippets\n\n```\n<script>\nconst x = document.getElementById(\"result\");\nif(typeof(Worker) !== \"undefined\") {\nx.innerHTML = \"Your browser \n  support Web Workers!\";\n} else {\nx.innerHTML = \"Sorry, your \n  browser does not support Web Workers.\";\n}\n</script>\n\n---\n\nvar i = 0;\nfunction timedCount()\n{\ni = i + 1;\npostMessage(i);\nsetTimeout(\"timedCount()\",500);\n}\ntimedCount();\n\n---\n\nif (typeof(w) == \"undefined\") {\nw = new Worker(\"demo_workers.js\");\n}\n\n---\n\nw.onmessage = function(event){\ndocument.getElementById(\"result\").innerHTML = event.data;\n};\n\n---\n\nw.terminate();\n\n---\n\nw = undefined;\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<p>Count numbers: <output id=\"result\"></output></p>\n<button onclick=\"startWorker()\">Start Worker</button>\n<button onclick=\"stopWorker()\">Stop Worker</button>\n<script>\nlet w;\nfunction startWorker()\n{\nconst x = document.getElementById(\"result\");\nif (typeof(Worker) !== \"undefined\")\n{\nif (typeof(w) == \"undefined\") {\nw = new Worker(\"demo_workers.js\");\n}\nw.onmessage = function(event) {\nx.innerHTML = event.data;\n};\n}\nelse\n{\nx.innerHTML = \"Sorry! No Web Worker support.\";\n}\n}\nfunction stopWorker()\n{\nw.terminate();\nw = undefined;\n}\n</script>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_147",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

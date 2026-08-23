@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 120,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "AHashSetis a collection of elements where every element isunique.\n\nIt is part of thejava.utilpackage and implements theSetinterface.\n\nNow you can use methods likeadd(),contains(), andremove()to manage your collection of unique elements.\n\nTo add elements to aHashSet, use theadd()method:\n\nNote:In the example above, even though\"BMW\"is added twice, it only appears once in the set because sets do not allow duplicate elements.\n\nTo check whether an element exists in aHashSet, use thecontains()method:\n\nTo remove an element, use theremove()method:\n\nTo remove all elements, use theclear()method:\n\nUsesize()to count how many unique elements are in the set:\n\nNote:Duplicate values are not counted - only unique elements are included in the size.\n\nLoop through the elements of anHashSetwith afor-eachloop:\n\nElements in anHashSetare actually objects. In the examples above, we created \nelements \n(objects) of type \"String\". Remember that aStringin Java is an object (not a primitive type). To use other types, such asint, you must specify an equivalentwrapper class:Integer. For other primitive types, \nuse:Booleanfor boolean,Characterfor char,Doublefor double, \netc:\n\nFrom Java 10, you can use thevarkeyword to declare aHashSetvariable without writing the type twice.  \nThe compiler figures out the type from the value you assign.\n\nThis makes code shorter,but many developers still use the full type for clarity.  \nSincevaris valid Java, you may see it in other code, so it's good to know that it exists:\n\nNote:Sometimes you will see bothSetandHashSetin Java code, like this:\n\nThis means the variable (cars) is declared as aSet(the interface), but it stores aHashSetobject (the actual set). SinceHashSetimplements theSetinterface, this is possible.\n\nIt works the same way, but some developers prefer this style because it gives them more flexibility to change the type later.\n\nIn the next chapter, you will learn aboutTreeSet, which stores unique elementsin sorted order.\n\n### Code Snippets\n\n```\nExample\nCreate a\nHashSet\nobject called\ncars\nthat will store strings:\nimport java.util.HashSet; // Import the HashSet class\n\nHashSet<String> cars = new HashSet<String>();\n\n---\n\nExample\n// Import the HashSet class\nimport java.util.HashSet;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashSet<String> cars = new HashSet<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"BMW\");  // Duplicate\n    cars.add(\"Mazda\");\n    System.out.println(cars);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\ncars.contains(\"Mazda\");\nTry it Yourself \u00bb\n\n---\n\nExample\ncars.remove(\"Volvo\");\nTry it Yourself \u00bb\n\n---\n\nExample\ncars.clear();\nTry it Yourself \u00bb\n\n---\n\nExample\ncars.size();\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (String i : cars) {\n  System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nUse a\nHashSet\nthat stores\nInteger\nobjects:\nimport java.util.HashSet;\n\npublic class Main {\n  public static void main(String[] args) {\n\n    // Create a HashSet object called numbers\n    HashSet<Integer> numbers = new HashSet<Integer>();\n\n    // Add values to the set\n    numbers.add(4);\n    numbers.add(7);\n    numbers.add(8);\n\n    // Show which numbers between 1 and 10 are in the set\n    for (int i = 1; i <= 10; i++) {\n      if (numbers.contains(i)) {\n        System.out.println(i + \" was found in the set.\");\n      } else {\n        System.out.println(i + \" was not found in the set.\");\n      }\n    }\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\n// Without var\nHashSet<String> cars = new HashSet<String>();\n\n// With var\nvar cars = new HashSet<String>();\nTry it Yourself \u00bb\n\n---\n\nimport java.util.Set;\nimport java.util.HashSet;\n\nSet<String> cars = new HashSet<>();\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_119",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

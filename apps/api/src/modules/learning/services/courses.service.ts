@@ -228,6 +228,7 @@ export class CoursesService {
      */
     static async deleteCourse(id: string) {
         try {
+            await supabase.from('course_items').delete().eq('course_id', id);
             const { error } = await supabase.from('courses').delete().eq('id', id);
             if (error) throw error;
             await CacheService.delPattern('courses:*');
@@ -235,6 +236,23 @@ export class CoursesService {
         } catch (error) {
             logger.error('Delete course error:', { id, error });
             throw new Error('Failed to delete course');
+        }
+    }
+
+    /**
+     * Bulk delete courses
+     */
+    static async bulkDeleteCourses(ids: string[]) {
+        try {
+            if (!ids || ids.length === 0) return { message: 'No IDs provided', count: 0 };
+            await supabase.from('course_items').delete().in('course_id', ids);
+            const { error } = await supabase.from('courses').delete().in('id', ids);
+            if (error) throw error;
+            await CacheService.delPattern('courses:*');
+            return { message: `${ids.length} course(s) deleted`, count: ids.length };
+        } catch (error) {
+            logger.error('Bulk delete courses error:', { ids, error });
+            throw new Error('Failed to bulk delete courses');
         }
     }
 

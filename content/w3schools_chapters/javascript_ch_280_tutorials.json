@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 280,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The XMLHttpRequest object is used to request data from a server.\n\nTo send a request to a server, we use the open() and send() methods of theXMLHttpRequestobject:\n\nThe url parameter of theopen()method, is an address to a file on a server:\n\nThe file can be any kind of file, like .txt and \n.xml, or server scripting files like .asp and .php (which can perform  \nactions on the server before sending the response back).\n\nServer requests should be sent asynchronously.\n\nThe async parameter of the open() \nmethod should be set to true:\n\nBy sending asynchronously, the \nJavaScript does not have to wait for the server response, but can instead:\n\nGETis simpler and faster thanPOST, and can be used in most cases.\n\nHowever, always use POST requests when:\n\nA simpleGETrequest:\n\nIn the example above, you may get a cached result. To avoid this, add a unique ID to the URL:\n\nIf you want to send information with theGETmethod, add the information to the URL:\n\nHow the server uses the input and how the server responds to a request, is explained in a later chapter.\n\nA simplePOSTrequest:\n\nTo POST data like an HTML form, add an HTTP header withsetRequestHeader(). \nSpecify the data you want to send in thesend()method:\n\nTo execute a synchronous request, change the third parameter in theopen()method tofalse:\n\nSometimes async = false are used for quick testing. You will also find \nsynchronous requests in older JavaScript code.\n\nSince the code will wait for server completion, there is no need for anonreadystatechangefunction:\n\n### Code Snippets\n\n```\nxhttp.open(\"GET\", \"ajax_info.txt\", true);\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"ajax_test.asp\", true);\n\n---\n\nxhttp.open(\"GET\", \"ajax_test.asp\", true);\n\n---\n\nxhttp.open(\"GET\", \"demo_get.asp\");\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"demo_get.asp?t=\" + Math.random());\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"demo_get2.asp?fname=Henry&lname=Ford\");\nxhttp.send();\n\n---\n\nxhttp.open(\"POST\", \"demo_post.asp\");\nxhttp.send();\n\n---\n\nxhttp.open(\"POST\", \"ajax_test.asp\");\nxhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");\nxhttp.send(\"fname=Henry&lname=Ford\");\n\n---\n\nxhttp.open(\"GET\", \"ajax_info.txt\", false);\n\n---\n\nxhttp.open(\"GET\", \"ajax_info.txt\", false);\nxhttp.send();\ndocument.getElementById(\"demo\").innerHTML = xhttp.responseText;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_279",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

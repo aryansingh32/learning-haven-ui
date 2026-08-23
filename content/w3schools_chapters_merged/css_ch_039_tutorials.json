@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 39,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS Transitions by completing a small coding challenge.\n\n## Tutorials\n\nCSS allows animation of HTML elements without using JavaScript!\n\nAn animation lets an element gradually change from one style to another.\n\nYou can change as many CSS properties you want, as many times as you want.\n\nTo use CSS animation, you must specify some keyframes for the \nanimation.\n\nKeyframes hold what styles the element will have at certain times.\n\nTheanimation-nameproperty specifies a name for the animation.\n\nTheanimation-durationproperty defines how long an animation should take to complete. If this property \nis not specified, no animation will occur, because the default value is 0s (0 \nseconds).\n\nWhen you specify CSS styles inside the@keyframesrule, the animation will gradually change from the current style to the new style \nat certain times.\n\nTo get an animation to work, you must bind the animation to an element.\n\nThe following example binds the \"myAnimation\" animation to the <div> element. \nThe animation will last for 4 seconds, and it will gradually change the \nbackground-color of the <div> element from \"red\" to \"yellow\":\n\nIn the example above we have used \nthe keywords \"from\" and \"to\" in the@keyframesrule, which represents 0% (start) and 100% (complete).\n\nIt is also possible to use percent. By using percent, you can add as many \nstyle changes as you like.\n\nThe following example will change the background-color of the <div> \nelement when the animation is 25% complete, 50% complete, and again when the animation is 100% complete:\n\nThe following example will change both the background-color and the position of the <div> \nelement when the animation is 25% complete, 50% complete, and again when the animation is 100% complete:\n\n### Code Examples\n\n```\n/* The animation code */\n@keyframes myAnimation {\nfrom {background-color: red;}\nto {background-color: yellow;}\n}\n/* The element to apply the animation to */\ndiv {\nwidth: 100px;\nheight: 100px;\nbackground-color: red;\nanimation-name: myAnimation;\nanimation-duration: 4s;\n}\n\n---\n\n@keyframes myAnimation\n{\n0%\u00a0\u00a0 {background-color: red;}\n25%\u00a0 {background-color: yellow;}\n50%\u00a0 {background-color: blue;}\n100% {background-color: green;}\n}\ndiv {\nwidth: 100px;\nheight: 100px;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\n}\n\n---\n\n@keyframes myAnimation\n{\n0%\u00a0\u00a0 {background-color:red; left:0px; top:0px;}\n25%\u00a0 {background-color:yellow; left:200px; top:0px;}\n50%\u00a0 {background-color:blue; left:200px; top:200px;}\n75%\u00a0 {background-color:green; left:0px; top:200px;}\n100% {background-color:red; left:0px; top:0px;}\n}\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\n}\n```\n\n## Tutorials\n\nTheanimation-delayproperty specifies a delay for the start of an animation.\n\nThe following example has a 2 seconds delay before starting the animation:\n\nNegative values are also allowed. If using negative values, the animation \nwill start as if it had already been playing forNseconds.\n\nIn the following example, the animation will start as if it had already been \nplaying for 2 seconds:\n\nTheanimation-iteration-countproperty specifies the number of times an animation should run.\n\nThe following example will run the animation 3 times before it stops:\n\nThe following example uses the value \"infinite\" to make the animation \ncontinue for ever:\n\nTheanimation-timing-functionproperty specifies the speed curve of the \nanimation.\n\nThe animation-timing-function property can have the following values:\n\nThe following example shows some of the different speed curves that can be used:\n\n### Code Examples\n\n```\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\nanimation-delay: 2s;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: myAnimation;\nanimation-duration: 4s;\nanimation-delay: -2s;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\nanimation-iteration-count: 3;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\nanimation-iteration-count: \ninfinite;\n}\n\n---\n\n#div1 {animation-timing-function: linear;}\n#div2 \n{animation-timing-function: ease;}\n#div3 {animation-timing-function: \nease-in;}\n#div4 {animation-timing-function: ease-out;}\n#div5 \n{animation-timing-function: ease-in-out;}\n```\n\n## Tutorials\n\nThis page covers the CSS animation direction, fill mode, and the shorthand property.\n\nTheanimation-directionproperty specifies \nwhether an animation should be played forwards, backwards or in alternate \ncycles.\n\nThe animation-direction property can have the following values:\n\nThe following example will run the animation in reverse direction (backwards):\n\nThe following example uses the value \"alternate\" to make the animation \nrun forwards first, then backwards:\n\nThe following example uses the value \"alternate-reverse\" to make the animation \nrun backwards first, then forwards:\n\nCSS animations do not affect an element before the first keyframe is played \nor after the last keyframe is played. The animation-fill-mode property can \noverride this behavior.\n\nTheanimation-fill-modeproperty specifies a \nstyle for the target element when the animation is not playing (before it \nstarts, after it ends, or both).\n\nThe animation-fill-mode property can have the following values:\n\nThe following example lets the <div> element retain the style values from the \nlast keyframe when the animation ends:\n\nThe following example lets the <div> element get the style values set by the \nfirst keyframe before the animation starts (during the animation-delay period):\n\nThe following example lets the <div> element get the style values set \nby the first keyframe before the animation starts, and retain the style values \nfrom the last keyframe when the animation ends:\n\nThe example below uses six of the animation properties:\n\nThe same animation effect as above can be achieved by using the shorthandanimationproperty:\n\nThe following table lists the @keyframes rule and all the CSS animation properties:\n\n### Code Examples\n\n```\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: myAnimation;\nanimation-duration: 4s;\nanimation-direction: \nreverse;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\nanimation-iteration-count: 2;\nanimation-direction: \nalternate;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nposition: relative;\nbackground-color: red;\nanimation-name: \n  myAnimation;\nanimation-duration: 4s;\nanimation-iteration-count: 2;\nanimation-direction: \nalternate-reverse;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nbackground: red;\nposition: relative;\nanimation-name: \n  myAnimation;\nanimation-duration: 3s;\nanimation-fill-mode: forwards;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nbackground: red;\nposition: relative;\nanimation-name: myAnimation;\nanimation-duration: 3s;\nanimation-delay: 2s;\nanimation-fill-mode: backwards;\n}\n\n---\n\ndiv {\nwidth: 100px;\nheight: 100px;\nbackground: red;\nposition: relative;\nanimation-name: myAnimation;\nanimation-duration: 3s;\nanimation-delay: 2s;\nanimation-fill-mode: both;\n}\n\n---\n\ndiv\n{\nanimation-name: myAnimation;\nanimation-duration: 5s;\nanimation-timing-function: linear;\nanimation-delay: 2s;\nanimation-iteration-count: infinite;\nanimation-direction: alternate;\n}\n\n---\n\ndiv\n{\nanimation: myAnimation 5s linear 2s infinite alternate;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS Animations by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_39",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_39",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

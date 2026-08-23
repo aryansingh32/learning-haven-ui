@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 1,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nGit is a free, open source tool that helps you save and manage different versions of your files and code.\n\nWith Git, you can work with others, keep track of changes, and undo mistakes.\n\nGet certified with our Git exam, includes a professionally curated study kit to guide you from beginner to exam-ready.\n\nGit works on your computer, but you also use it with online services likeGitHub,GitLab, orBitbucketto share your work with others. These are calledremote repositories.\n\nIn this tutorial, you'll learn how to use Git for your own projects and how to connect with remote repositories online.\n\nIn this tutorial, we will show you Git commands like this:\n\nFor new users, using the terminal view can seem a bit complicated.\n\nDon't worry! We will keep it really simple, and learning this way gives you a good grasp of how Git works.\n\nIn the code above, you can see commands (input) and output.\n\nLines like this are commands we input:\n\nLines like this are the output/response to our commands:\n\nIn general, lines with$in front of it is input.\n\nThese are the commands you can copy and run in your terminal.\n\nTip for Beginners:Don't worry about making mistakes!\n\nWhen you use Git on your own computer, you can't really break anything important.\n\nExperimenting is a great way to learn, and you can always undo or redo changes as you go.\n\nThe tutorial can show examples for GitHub, GitLab, or Bitbucket.\n\nThe Git commands are mostly the same, but some steps (like connecting to a remote or pushing code) might look a little different depending on the platform you choose.\n\nUse the menu to see examples for each platform.\n\nPracticing with exercises helps you remember the commands and understand how Git works.\n\nTry the exercises and quiz to test your knowledge!\n\nTest your Git skills with a quiz.\n\nStart Git Quiz\n\nSign Up \u00bb\n\nThis is an optional feature. You can study at W3Schools without creating an account.\n\n### Code Examples\n\n```\nExample\ngit --version\ngit version 2.30.2.windows.1\n\n---\n\nExample\ngit --version\n\n---\n\nExample\ngit version 2.30.2.windows.1\n```\n\n## Tutorials\n\nGit is a popular version control system.\n\nIt was created by Linus Torvalds in 2005, and has been maintained by Junio Hamano since then.\n\nIt is used for:\n\nNote:Most Git actions (like staging, committing, and viewing history) happen on your own computer.\n\nOnlyPushandPullinteract with remote servers like GitHub, GitLab, or Bitbucket to upload or download changes.\n\n## Tutorials\n\nYou can download Git for free fromgit-scm.com.\n\nAfter installation, you will be able to use Git from your terminal or command prompt.\n\nTip for Beginners:Installing Git is safe and you can always uninstall it later if you want.\n\nGit Bash is a terminal for Windows that lets you use Git commands.\n\nLook at ourBash Tutorialto learn more about Bash.\n\nAfter installing Git, you can find Git Bash in your Start menu.\n\nYou can use Git Bash just like the Command Prompt, but with extra Unix commands (likelsandpwd).\n\nClick Start, type \"Git Bash\", and open the app.\n\nThis command lists the files in your current folder.\n\nAfter installing, check that Git works by opening your terminal (or Git Bash on Windows) and running:\n\nIf Git is installed, you will see something likegit version X.Y.Z\n\nIf you see an error, try closing and reopening your terminal, or check that Git is in your PATH.\n\nDuring installation, Git asks you to pick a default text editor.\n\nThis is the program that will open when you need to write messages (like for commits).\n\nIf you're not sure, just pick the default (Notepad on Windows). You can always change this later.\n\nChoosing to add Git to your PATH means you can use Git commands in any terminal window.\n\nThis is highly recommended for most users to do this during installation.\n\nIf you skip this, you'll only be able to use Git in Git Bash (on Windows) or Terminal (on macOS and Linux).\n\nIf you see an error, you need to add Git to your PATH.\n\nAfter adding Git to your PATH, open a new terminal window and rungit --versionto check that it works everywhere.\n\nGit can convert line endings in text files.\n\nOn Windows, it's usually best to select \"Checkout Windows-style, commit Unix-style line endings\".\n\nThis helps prevent problems when you share code with people using different operating systems.\n\nIf you run into problems installing or running Git, don't worry!\n\nHere are solutions to some of the most common issues.\n\nTip:If something doesn't work right away, try closing and reopening your terminal, or restarting your computer.\n\n### Code Examples\n\n```\nExample: First Command in Git Bash\nls\nDesktop  Documents  Downloads  Pictures\nThis command lists the files in your current folder.\n\n---\n\nExample: Check Git Version\ngit --version\ngit version 2.43.0.windows.1\n\n---\n\nExample: Set VS Code as Default Editor\ngit config --global core.editor \"code --wait\"\n\n---\n\nExample: Set Notepad as Default Editor\ngit config --global core.editor \"notepad\"\n\n---\n\nExample: Check if Git is in PATH\ngit --version\ngit version 2.43.0.windows.1\n```\n\n## Tutorials\n\nNow let Git know who you are.\n\nThis is important for version control systems, as each Git commit uses this information:\n\nTip for Beginners:Configuring Git is safe.\n\nYou can change these settings at any time, they only affect how your name and email appear in your commits.\n\nYour name will be attached to your commits. Set it with:\n\nNote:If you make a typo or mistake, just run the command again with the correct value.\n\nThe new setting will overwrite the old one.\n\nYour email is also attached to your commits. Set it with:\n\nChange the user name and email to your own.\n\nYou will probably also want to use this when registering to GitHub later on.\n\nNote:If you forget to set your name or email, Git will prompt you the first time you try to commit.\n\nYou can always change these settings later, and previous commits will keep the old info.\n\nUse--globalto set the value forevery repositoryon your computer.\n\nUse--local(the default) to set it only for the current repository.\n\nGit uses your name and email to label your commits.\n\nIf you do not set these, Git will prompt you the first time you try to commit.\n\nNow you have added the minimum of configuration needed to start using Git.\n\nSo feel free to continue with the next chapter.\n\nFor more information about configuration, or if you want to change anything, keep reading this page.\n\nYou can see all your Git settings with:\n\nTo view a specific value, use:\n\nTo change a value, just run thegit configcommand again with the new value.\n\nTo remove a setting, use--unset:\n\nSet the default branch name for new repositories (for example,maininstead ofmaster):\n\nThere are three levels of configuration:\n\nThe order of precedence is:\n\nThe reason to use the different levels is that you can set different values for different users or repositories.\n\nThis can be used for example to set different default branches for different repositories and users.\n\nLocal settings only apply to the current repository.\n\nGlobal settings apply to all repositories for the current user.\n\nSystem settings apply to all repositories for all users.\n\n### Code Examples\n\n```\nExample\ngit config --global user.name \"Your Name\"\n\n---\n\nExample\ngit config --global user.email \"you@example.com\"\n\n---\n\nExample: List All Settings\ngit config --list\nuser.name=Your Name\nuser.email=you@example.com\ncore.editor=code --wait\nalias.st=status\ninit.defaultbranch=main\n...\n\n---\n\nExample: View a Specific Setting\ngit config user.name\nYour Name\n\n---\n\nExample: Unset an Alias\ngit config --global --unset code.editor\n\n---\n\nExample: Set Default Branch Name\ngit config --global init.defaultBranch main\n\n---\n\nExample: Set a Local Config\nLocal settings only apply to the current repository.\ngit config user.name \"Project Name\"\n\n---\n\nExample: Set a Global Config\nGlobal settings apply to all repositories for the current user.\ngit config --global user.name \"Global Name\"\n\n---\n\nExample: Set a System Config\nSystem settings apply to all repositories for all users.\ngit config --system user.name \"System Name\"\n```\n\n## Tutorials\n\nNow that Git is installed, and it knows who you are, you can start using Git.\n\nLets create our first repository\n\nStart by creating a new folder for our project:\n\nmkdircreates a new directory.\n\ncdchanges our working directory.\n\nNow we are in the correct directory and can initialize Git!\n\nNote:Open Git Bash Here (Windows)\n\nIf you're using Windows, you can open Git Bash directly in your project folder:\n\nThis opens a terminal window in the correct location.\n\nNow that we are in the correct folder, we can initialize Git on that folder:\n\nYou just created your first Git Repository!\n\nA Gitrepositoryis a folder that Git tracks for changes.\n\nThe repository stores all your project's history and versions.\n\nGit creates a hidden folder called.gitinside your project.\n\nThis is where Git stores all the information it needs to track your files and history.\n\nOn Windows, you may need to enable \"Show hidden files\" in File Explorer to see the.gitfolder.\n\n### Code Examples\n\n```\nExample\nmkdir myproject\ncd myproject\n\n---\n\nExample\ngit init \nInitialized empty Git repository in /Users/user/myproject/.git/\n\n---\n\nExample: Show Hidden .git Folder (Linux/macOS)\nls -a\n.  ..  .git\nOn Windows, you may need to enable \"Show hidden files\" in File Explorer to see the\n.git\nfolder.\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_1",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_1",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

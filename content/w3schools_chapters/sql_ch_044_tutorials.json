@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 44,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A stored procedure is a precompiled SQL code that can be saved and reused.\n\nIf you have an SQL query that you write over and over again, save \nit as a stored procedure, and then just call it to execute it.\n\nA stored procedure can also have parameters, so it can act based on the parameter value(s) \nthat is passed.\n\nStored procedures are widely used in database management, and have the following benefits:\n\nTo create a stored procedure, use theCREATE PROCEDUREstatement:\n\nTip:To see the syntax for MySQL database, look atMySQL Stored Procedures.\n\nTo run a stored procedure, use theEXECstatement:\n\nTo delete a stored procedure, use theDROP PROCEDUREstatement:\n\nTip:To ensure thatDROP PROCEDUREdoes not \nreturn an error, if the procedure is missing, add theIF EXISTSclause:\n\nBelow is a selection from the \"Customers\" table in the Northwind sample database:\n\nThe following SQL creates a stored procedure named \"GetCustomersByCity\"  \nthat can be used to select Customers from a particular City in the \"Customers\" table:\n\nHere we execute the stored procedure by passing a city ('London') as a parameter, \nand the stored procedure returns the relevant details from the \"Customers\" table:\n\nAdding multiple parameters is easy. Just list each parameter and the \ndata type separated by a comma as shown below.\n\nThe following SQL creates a stored procedure  \nthat selects Customers from a particular City with a particular PostalCode from the \"Customers\" table:\n\nExecute the stored procedure above as follows:\n\n### Code Snippets\n\n```\nCREATE PROCEDURE\nprocedure_name\n@param1 datatype\n,\n@param2 datatype\nAS\nBEGIN\n-- SQL_statements to be executed\nSELECT\ncolumn1\n,\ncolumn2\nFROM\ntable_name\nWHERE\ncolumnN\n=\n@paramN\n;\nEND;\n\n---\n\nEXEC\nprocedure_name @param1\n=\n'value1'\n,\n@param2\n=\n'value2'\n;\n\n---\n\nDROP PROCEDURE\nprocedure_name\n;\n\n---\n\nDROP PROCEDURE IF EXISTS\nprocedure_name\n;\n\n---\n\nCREATE PROCEDURE \n  GetCustomersByCity\n@City nvarchar(50)\nAS\nBEGIN\nSELECT * FROM Customers\nWHERE \n  City = @City;\nEND;\n\n---\n\nEXEC \n  GetCustomersByCity @City = 'London';\n\n---\n\nCREATE PROCEDURE \n  GetCustomersByCity\n@City nvarchar(50),\n@PostalCode nvarchar(10)\nAS\nBEGIN\nSELECT * FROM Customers\nWHERE \n  City = @City AND PostalCode = @PostalCode;\nEND;\n\n---\n\nEXEC \n  GetCustomersByCity @City = 'London', @PostalCode = 'WA1 1DP';\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_43",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

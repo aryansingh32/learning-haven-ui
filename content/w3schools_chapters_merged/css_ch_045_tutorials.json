@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 45,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThis page covers CSS button groups and animated buttons.\n\nTo create a group of buttons, wrap the buttons in a <div> element, and adddisplay: flex;to the <div> element. Also addflex-wrap: wrap;, to let the buttons wrap on a \nnew line on small screens:\n\nUse theborderproperty to create a bordered button \ngroup:\n\nTo create a vertical button group, wrap the buttons in a <div> element, and adddisplay: flex;to the <div> element. Also addflex-direction: column;, to let the buttons be \ndisplayed in a vertical way:\n\n### Code Examples\n\n```\n.btn-group {\ndisplay: flex;\nflex-wrap: wrap;\n}\n.button {\nbackground-color: #04AA6D;\nborder: none;\ncolor: white;\npadding: 15px 32px;\ntext-align: center;\ntext-decoration: \n  none;\nfont-size: 16px;\ncursor: pointer;\n}\n.btn-group .button:hover {\nbackground-color: \n  dodgerblue;\n}\n\n---\n\n.button {\nborder: 1px solid green;\n}\n.btn-group \n  .button:not(:last-child) {\nborder-right: none;\n}\n\n---\n\n.btn-group {\ndisplay: flex;\nflex-direction: column;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS Buttons by completing a small coding challenge.\n\n## Tutorials\n\nLearn how to create a responsive pagination using CSS.\n\nIf you have a website with lots of pages, you may want to add some sort of pagination \non each page.\n\nPagination is typically a series of links, wrapped in an unordered list (<ul>). \nEach link represents an individual page number. In addition there are \"previous\" and \"next\" controls:\n\nStyle the pagination container with:\n\nThe style the<a>elements within the<li>elements for the look of the page numbers, \nwith properties likedisplay,padding,text-decoration,border,background-color,color,font-size, andborder-radius.\n\nHighlight the currently active page with an.activeclass, \nto indicate which page the user is on:\n\nIf the user are currently on the last page, the \"Next\" button should be \ndisabled.\n\nHere, we add a.disabledclass, \nand sets thecolor,cursorandpointer-eventsproperties, to make the \"Next\" button disabled:\n\nContinue learning about CSS pagination:\n\n### Code Examples\n\n```\n.pagination {\ndisplay: flex;\njustify-content: center;\nlist-style: none; /* remove list bullets */\npadding: 0px;\n}\n.pagination li a \n  {\ndisplay: block; /* let links fill the list item */\npadding: 8px 12px;\ntext-decoration: none;\nborder: 1px \n  solid gray;\ncolor: black;\nmargin: 0 4px;\nborder-radius: 5px; /* add \n  rounded borders */\n}\n\n---\n\n.pagination li a.active {\nbackground-color: #4CAF50;\ncolor: white;\n}\n\n---\n\n.pagination li a.disabled {\ncolor: #dddddd;\ncursor: \n  not-allowed;\npointer-events: none;\n}\n```\n\n## Tutorials\n\nThis page covers advanced pagination styling including hover effects, transitions, and breadcrumbs.\n\nUse the:hoverselector to change the background color of each page link when the user hovers over them:\n\nAdd thetransitionproperty to the page links to create a transition effect on hover:\n\nAnother variation of pagination is a so-called \"breadcrumb\":\n\n### Code Examples\n\n```\n.pagination li a:hover:not(.active) {\nbackground-color: lightgray;\n}\n\n---\n\n.pagination li a {\ndisplay: block;\npadding: 8px 12px;\ntext-decoration: none;\nborder: 1px solid gray;\ncolor: \n  black;\nmargin: 0 4px;\nborder-radius: 5px;\ntransition: background-color 1s;\n}\n\n---\n\nul.breadcrumb {\npadding: 8px;\nlist-style: none;\nbackground-color: #eee;\n}\nul.breadcrumb li {display: inline;}\nul.breadcrumb li a {color: green;}\nul.breadcrumb li+li:before {\npadding: 8px;\ncolor: black;\ncontent: \"/\\00a0\";\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS Pagination by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_45",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_45",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

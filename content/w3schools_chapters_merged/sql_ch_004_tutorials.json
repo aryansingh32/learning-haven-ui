@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 4,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAn aggregate function is a function that performs a calculation on a set of \nvalues, and returns a single value.\n\nAggregate functions are often used with theGROUP \nBYclause of theSELECTstatement. TheGROUP BYclause splits the result-set into groups of values and \nthe aggregate function can be used to return a single value for each group.\n\nThe most commonly used SQL aggregate functions are:\n\nAggregate functions ignore null values (except forCOUNT(*)).\n\nWe will go through the aggregate functions above in the next chapters.\n\n## Tutorials\n\nTheMIN()function returns the smallest value of the selected column.\n\nTheMIN()function works with numeric, string, and date data types.\n\nBelow is a selection from theProductstable used in the examples:\n\nWhen usingMIN(), the returned column will not have a \nname.\n\nUse theASkeyword to give the column a descriptive name:\n\nThe following SQL returns the earliest BirthDate in the BirthDate column, in theEmployeestable:\n\nHere we use theMIN()function and theGROUP BYclause, to return the smallest price \nfor each category in the Products table:\n\nYou will learn more about theGROUP BYclause later in this tutorial.\n\n### Code Examples\n\n```\nSELECT MIN(Price)\nFROM Products;\n\n---\n\nSELECT MIN(Price) AS SmallestPrice\nFROM Products;\n\n---\n\nSELECT MIN(BirthDate) AS EarliestBirthdate\nFROM Employees;\n\n---\n\nSELECT MIN(Price) AS SmallestPrice, CategoryID\nFROM Products\nGROUP BY CategoryID;\n```\n\n## Tutorials\n\nTheMAX()function returns the largest value of the selected column.\n\nTheMAX()function works with numeric, string, and date data types.\n\nBelow is a selection from theProductstable used in the examples:\n\nWhen you useMAX(), the returned column will not have a \nname.\n\nUse theASkeyword, to give the column a descriptive \nname:\n\nThe following SQL returns the latest BirthDate in the BirthDate column, in theEmployeestable:\n\nHere we use theMAX()function and theGROUP BYclause, to return the highest price \nfor each category in the Products table:\n\nYou will learn more about theGROUP BYclause later in this tutorial.\n\n### Code Examples\n\n```\nSELECT MAX(Price)\nFROM Products;\n\n---\n\nSELECT MAX(Price) AS HighestPrice\nFROM Products;\n\n---\n\nSELECT MAX(BirthDate) AS LatestBirthdate\nFROM Employees;\n\n---\n\nSELECT MAX(Price) AS HighestPrice, CategoryID\nFROM Products\nGROUP BY CategoryID;\n```\n\n## Tutorials\n\nTheCOUNT()function returns the number of \nrows that matches a specified criterion.\n\nThe behavior ofCOUNT()depends on the argument used within the parentheses:\n\nThe following SQL usesCOUNT(*), and counts the total number of rows in the \"Products\" table (will include NULL values):\n\nBelow is a selection from theProductstable used in the examples:\n\nTheCOUNT(column_name)counts all non-null values in the specified column.\n\nThe following SQL counts all non-null values of the \"ProductName\" column:\n\nYou can ignore duplicates by using theDISTINCTkeyword.\n\nTheCOUNT(DISTINCT column_name)counts only the unique, non-null values in the column.\n\nIfDISTINCTis specified, rows with the same value for the specified column will be counted as one.\n\nThe following SQL counts the unique, non-null values of the \"Price\" column:\n\nYou can add aWHEREclause to specify conditions:\n\nWhen usingCOUNT(), the returned column will not have a name. Use theASkeyword to give the column a descriptive name.\n\nHere we use theCOUNT()function and theGROUP BYclause, to return the number of \nrecords \nfor EACH category in the \"Products\" table:\n\nYou will learn more about theGROUP BYclause later in this tutorial.\n\n### Code Examples\n\n```\nSELECT COUNT(*)\nFROM Products;\n\n---\n\nSELECT COUNT(ProductName)\nFROM Products;\n\n---\n\nSELECT COUNT(DISTINCT Price)\nFROM Products;\n\n---\n\nSELECT COUNT(ProductID)\nFROM Products\nWHERE Price > 20;\n\n---\n\nSELECT COUNT(*) AS [Number of records]\nFROM Products;\n\n---\n\nSELECT COUNT(*) AS [Number of records], CategoryID\nFROM Products\nGROUP \n  BY CategoryID;\n```\n\n## Tutorials\n\nTheSUM()function is used to calculate the total sum of values within a numeric column.\n\nTheSUM()function ignores NULL values in the column.\n\nThe following SQL returns the sum of the Quantity field in the \"OrderDetails\" table:\n\nBelow is a selection from theOrderDetailstable used in the examples:\n\nYou can add aWHEREclause to specify conditions.\n\nThe following SQL returns the sum of the Quantity field for the product with\nProductID = 11, in the \"OrderDetails\" table:\n\nGive the summarized column a name by using theASkeyword.\n\nHere we use theSUM()function and theGROUP BYclause, to return the Quantity\nfor EACH OrderID in the \"OrderDetails\" table:\n\nYou will learn more about theGROUP BYclause later in this tutorial.\n\nThe parameter inside theSUM()function can also be an expression.\n\nIf we assume that each product in the \"OrderDetails\" table costs 10 dollars, we can find the total earnings in dollars by \nmultiply each quantity with 10:\n\nWe can also join the \"OrderDetails\" table with the \"Products\" table to find the actual \nprice, instead of assuming it is 10 dollars:\n\nYou will learn more aboutJoinslater in this tutorial.\n\n### Code Examples\n\n```\nSELECT SUM(Quantity)\nFROM OrderDetails;\n\n---\n\nSELECT SUM(Quantity)\nFROM OrderDetails\nWHERE ProductId = 11;\n\n---\n\nSELECT SUM(Quantity) AS total\nFROM OrderDetails;\n\n---\n\nSELECT OrderID, SUM(Quantity) AS [Total Quantity]\nFROM OrderDetails\nGROUP BY OrderID;\n\n---\n\nSELECT SUM(Quantity * 10)\nFROM OrderDetails;\n\n---\n\nSELECT SUM(Price * Quantity)\nFROM OrderDetails\nLEFT JOIN Products ON OrderDetails.ProductID = Products.ProductID;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_4",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_4",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

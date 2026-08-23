@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 271,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The viewport is the user's visible area of a web page.\n\nThe viewport varies with the device (will be a lot smaller on a mobile phone than on a computer screen).\n\nYou should include the following<meta>element in \nthe<head>section of all your web pages:\n\nThis gives the browser instructions on how \nto control the page's dimensions and scaling.\n\nThewidth=device-widthpart sets the width of the page to follow the screen-width of the device (which will vary depending on the device).\n\nTheinitial-scale=1.0part sets the initial zoom level when the page is first loaded by the browser.\n\nHere is an example of a web pagewithoutthe viewport meta tag, and the same web pagewiththe viewport meta tag:\n\nUsers are used to scroll websites vertically on both desktop and mobile \ndevices - but not horizontally!\n\nSo, if the user is forced to scroll horizontally, or zoom out, to see the \nwhole web page it results in a poor user experience.\n\nSome additional rules to follow:\n\n1. Do NOT use large fixed-width elements -For example, if \nan image has a width wider than the viewport, it causes the \nviewport to scroll horizontally. Remember to adjust this content to fit within \nthe width of the viewport.\n\n2. Do NOT let the content rely on a particular width to \nrender well- Since screen dimensions vary \nwidely between devices, content should not rely on a particular viewport width \nto render well.\n\n3. Use CSS media queries to apply different styling for small and \nlarge screens- Setting large absolute CSS widths for page elements \nwill cause the elements to be too wide for smaller devices. \nInstead, consider using relative width values, such as width: 100%. Also, be \ncareful of using large absolute positioning values. It may cause the element to \nfall outside the viewport on small devices.\n\n### Code Snippets\n\n```\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_270",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

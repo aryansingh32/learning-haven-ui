@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 65,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To demonstrate a practical example of using arrays, let's create a program that calculates the average of different ages:\n\nAnd in this example, we create a program that finds the lowest age among different ages:\n\nCreate a program with a list of numbers where you want to skip negative values, but stop completely if you find a zero:\n\nCreate a program that keeps track of the highest and lowest values in an array:\n\nCreate a program that prints the seat numbers in a theater row, showing both the seat number (the index) and who is sitting there (the value):\n\n### Code Snippets\n\n```\nExample\n// An array storing different ages\nint ages[] = {20, 22, 18, 35, 48, 26, 87, 70};\n\nfloat avg, sum = 0;\n\n// Get the length of the array\nint length = ages.length;\n\n// Loop through the elements of the array\nfor (int age : ages) {\n  sum += age;\n}\n\n// Calculate the average by dividing the sum by the length\navg = sum / length;\n\n// Print the average\nSystem.out.println(\"The average age is: \" + avg);\nTry it Yourself \u00bb\n\n---\n\nExample\n// An array storing different ages\nint ages[] = {20, 22, 18, 35, 48, 26, 87, 70};\n\n// Get the length of the array\nint length = ages.length;\n\n// Create a 'lowest age' variable and assign the first array element of ages to it\nint lowestAge = ages[0];\n\n// Loop through the elements of the ages array to find the lowest age\nfor (int age : ages) {\n  // Check if the current age is smaller than the current 'lowest age'\n  if (lowestAge > age) {\n    // If the smaller age is found, update 'lowest age' with that element\n    lowestAge = age;\n  }\n}\n\n// Output the value of the lowest age\nSystem.out.println(\"The lowest age in the array is: \" + lowestAge);\nTry it Yourself \u00bb\n\n---\n\nExample\nint[] numbers = {3, -1, 7, 0, 9};\n\nfor (int n : numbers) {\n  if (n < 0) {\n    continue; // skip negative numbers\n  }\n  if (n == 0) {\n    break; // stop loop when zero is found\n  }\n  System.out.println(n);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint[] numbers = {45, 12, 98, 33, 27};\n\nint max = numbers[0];\nint min = numbers[0];\n\nfor (int n : numbers) {\n  if (n > max) {\n    max = n;\n  }\n  if (n < min) {\n    min = n;\n  }\n}\n\nSystem.out.println(\"Max: \" + max);\nSystem.out.println(\"Min: \" + min);\nTry it Yourself \u00bb\n\n---\n\nExample\nString[] seats = {\"Jenny\", \"Liam\", \"Angie\", \"Bo\"};\n\nfor (int i = 0; i < seats.length; i++) {\n  System.out.println(\"Seat number \" + i + \" is taken by \" + seats[i]);\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_64",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

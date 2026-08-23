@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 189,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In this chapter we will show you how to make a \"Decision Tree\". A Decision \nTree is a Flow Chart, and can help you make decisions based on previous experience.\n\nIn the example, a person will try to decide if he/she should go to a comedy show or \nnot.\n\nLuckily our example person has registered every time there was a comedy show \nin town, and registered some information about the comedian, and also \nregistered if he/she went or not.\n\nNow, based on this data set, Python can create a decision tree that can be used to decide \nif any new shows are worth attending to.\n\nFirst, read the dataset with pandas:\n\nTo make a decision tree, all data has to be numerical.\n\nWe have to convert the non numerical columns 'Nationality' and 'Go' into numerical values.\n\nPandas has amap()method that takes a dictionary with information on how to \nconvert the values.\n\n{'UK': 0, 'USA': 1, 'N': 2}\n\nMeans convert the values 'UK' to 0, 'USA' to 1, and 'N' to 2.\n\nThen we have to separate thefeaturecolumns from thetargetcolumn.\n\nThe feature columns are the columns that we try to predictfrom, and \nthe target column is the column with the values we try to predict.\n\nNow we can create the actual decision tree, fit it with our details. Start by \nimporting the modules we need:\n\nThe decision tree uses your earlier decisions to calculate the odds for you to wanting to go see \na comedian or not.\n\nLet us read the different aspects of the decision tree:\n\nRank <= 6.5means that every comedian with a rank of 6.5 or \nlower will follow theTruearrow (to the left), and the rest will \nfollow theFalsearrow (to the right).\n\ngini = 0.497refers to the quality of the \nsplit, and is always a number between 0.0 and 0.5, where 0.0 would mean all of \nthe samples got the same result, and 0.5 would mean that the split is done \nexactly in the middle.\n\nsamples = 13means that there are 13 \ncomedians left at this point in the decision, which is all of them since this is \nthe first step.\n\nvalue = [6, 7]means that of these 13 \ncomedians, 6 will get a \"NO\", and 7 will get a \n\"GO\".\n\nThe next step contains two boxes, one box for the comedians with a 'Rank' of \n6.5 or lower, and one box with the rest.\n\ngini = 0.0means all of the samples got the \nsame result.\n\nsamples = 5means that there are 5 comedians \nleft in this branch (5 comedian with a Rank of 6.5 or lower).\n\nvalue = [5, 0]means that 5 will get a \"NO\" \nand 0 will get a \"GO\".\n\nNationality <= 0.5means that the comedians \nwith a nationality value of less than 0.5 will follow the arrow to the left \n(which means everyone from the UK, ), and the rest will follow the arrow to the \nright.\n\ngini = 0.219means that about 22% of the \nsamples would go in one direction.\n\nsamples = 8means that there are 8 comedians \nleft in this branch (8 comedian with a Rank higher than 6.5).\n\nvalue = [1, 7]means that of these 8 \ncomedians, 1 will get a \"NO\" and 7 will get a \"GO\".\n\nAge <= 35.5means that comedians \nat the age of 35.5 or younger will follow the arrow to the left, and the rest will follow the arrow to the \nright.\n\ngini = 0.375means that about 37,5% of the \nsamples would go in one direction.\n\nsamples = 4means that there are 4 comedians \nleft in this branch (4 comedians from the UK).\n\nvalue = [1, 3]means that of these 4 \ncomedians, 1 will get a \"NO\" and 3 will get a \"GO\".\n\ngini = 0.0means all of the samples got the \nsame result.\n\nsamples = 4means that there are 4 comedians \nleft in this branch (4 comedians not from the UK).\n\nvalue = [0, 4]means that of these 4 \ncomedians, 0 will get a \"NO\" and 4 will get a \"GO\".\n\ngini = 0.0means all of the samples got the \nsame result.\n\nsamples = 2means that there are 2 comedians \nleft in this branch (2 comedians at the age 35.5 or younger).\n\nvalue = [0, 2]means that of these 2 \ncomedians, 0 will get a \"NO\" and 2 will get a \"GO\".\n\nExperience <= 9.5means that comedians \nwith 9.5 years of experience, or less, will follow the arrow to the left, and the rest will follow the arrow to the \nright.\n\ngini = 0.5means that 50% of the samples \nwould go in one direction.\n\nsamples = 2means that there are 2 comedians \nleft in this branch (2 comedians older than 35.5).\n\nvalue = [1, 1]means that of these 2 \ncomedians, 1 will get a \"NO\" and 1 will get a \"GO\".\n\ngini = 0.0means all of the samples got the \nsame result.\n\nsamples = 1means that there is 1 comedian \nleft in this branch (1 comedian with 9.5 years of experience or less).\n\nvalue = [0, 1]means that 0 will get a \"NO\" and \n1 will get a \"GO\".\n\ngini = 0.0means all of the samples got the \nsame result.\n\nsamples = 1means that there is 1 comedians \nleft in this branch (1 comedian with more than 9.5 years of experience).\n\nvalue = [1, 0]means that 1 will get a \"NO\" and \n0 will get a \"GO\".\n\nWe can use the Decision Tree to predict new values.\n\nExample: Should I go see a show starring a 40 years old American comedian, with 10 years of experience, \nand a comedy ranking of 7?\n\n### Code Snippets\n\n```\nimport pandas\ndf = pandas.read_csv(\"data.csv\")\nprint(df)\n\n---\n\nd = {'UK': 0, \n  'USA': 1, 'N': 2}\ndf['Nationality'] = df['Nationality'].map(d)\nd = \n  {'YES': 1, 'NO': 0}\ndf['Go'] = df['Go'].map(d)\nprint(df)\n\n---\n\nfeatures = ['Age', 'Experience', 'Rank', 'Nationality']\nX = df[features]\ny = df['Go']\nprint(X)\nprint(y)\n\n---\n\nimport pandas\nfrom sklearn import tree\nfrom sklearn.tree import \n  DecisionTreeClassifier\nimport matplotlib.pyplot as plt\ndf = \n  pandas.read_csv(\"data.csv\")\nd = {'UK': 0, 'USA': 1, 'N': 2}\ndf['Nationality'] \n  = df['Nationality'].map(d)\nd = {'YES': 1, 'NO': 0}\ndf['Go'] = df['Go'].map(d)\nfeatures = ['Age', 'Experience', 'Rank', 'Nationality']\nX = df[features]\ny = df['Go']\ndtree = DecisionTreeClassifier()\ndtree = dtree.fit(X, \n  y)\ntree.plot_tree(dtree, feature_names=features)\n\n---\n\nprint(dtree.predict([[40, 10, 7, 1]]))\n\n---\n\nprint(dtree.predict([[40, 10, 6, 1]]))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_188",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 26,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of Python json by completing a small coding challenge.\n\n## Tutorials\n\nA RegEx, or Regular Expression, is a sequence of characters that forms a search pattern.\n\nRegEx can be used to check if a string contains the specified search pattern.\n\nPython has a built-in package calledre, which can be used to work with \nRegular Expressions.\n\nImport theremodule:\n\nWhen you have imported theremodule, you \ncan start using regular expressions:\n\nTheremodule offers a set of functions that allows \nus to search a string for a match:\n\nMetacharacters are characters with a special meaning:\n\nYou can add flags to the pattern when using regular expressions.\n\nA special sequence is a\\followed by one of the characters in the list below, and has a special meaning:\n\nA set is a set of characters inside a pair of square brackets[]with a special meaning:\n\nThefindall()function returns a list containing all matches.\n\nThe list contains the matches in the order they are found.\n\nIf no matches are found, an empty list is returned:\n\nThesearch()function searches the string \nfor a match, and returns aMatch objectif there is a \nmatch.\n\nIf there is more than one match, \nonly the first occurrence of the match will be returned:\n\nIf no matches are found, the valueNoneis returned:\n\nThesplit()function returns a list where \nthe string has been split at each match:\n\nYou can control the number of occurrences by specifying themaxsplitparameter:\n\nThesub()function replaces the matches with \nthe text of your choice:\n\nYou can control the number of replacements by specifying thecountparameter:\n\nA Match Object is an object containing information \nabout the search and the result.\n\nThe Match object has properties and methods used to retrieve information \nabout the search, and the result:\n\n.span()returns a tuple containing the start-, and end positions of the match..stringreturns the string passed into the function.group()returns the part of the string where there was a match\n\n### Code Examples\n\n```\nimport re\n\n---\n\nimport \n    re\ntxt = \"The rain in Spain\"\nx = re.search(\"^The.*Spain$\", txt)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.findall(\"ai\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.findall(\"Portugal\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"\\s\", \n  txt)\nprint(\"The first white-space character is located in \n  position:\", x.start())\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"Portugal\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.split(\"\\s\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.split(\"\\s\", \n  txt, \n  1)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.sub(\"\\s\", \n  \"9\", txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.sub(\"\\s\", \n  \"9\", txt, 2)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"ai\", \n  txt)\nprint(x) #this will print an object\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.span()\n)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.string\n)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.group()\n)\n```\n\n## Tutorials\n\nTest your understanding of Python regex by completing a small coding challenge.\n\n## Tutorials\n\nPIP is a package manager for Python packages, or modules if you like.\n\nA package contains all the files you need for a module.\n\nModules are Python code libraries you can include in your project.\n\nNavigate your command line to the location of Python's script directory, and type the following:\n\nIf you do not have PIP installed, you can download and install it from this page:https://pypi.org/project/pip/\n\nDownloading a package is very easy.\n\nOpen the command line interface and tell PIP to download the package you \nwant.\n\nNavigate your command line to the location of Python's script directory, and type the following:\n\nNow you have downloaded and installed your first package!\n\nOnce the package is installed, it is ready to use.\n\nImport the \"camelcase\" package into your project.\n\nFind more packages athttps://pypi.org/.\n\nUse theuninstallcommand to remove a package:\n\nThe PIP Package Manager will ask you to confirm that you want to remove the \ncamelcase package:\n\nPressyand the package will be removed.\n\nUse thelistcommand to list all the packages installed on your system:\n\n### Code Examples\n\n```\nC:\\Users\\\nYour Name\n\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip --version\n\n---\n\nC:\\Users\\\nYour Name\n\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip \n  install camelcase\n\n---\n\nimport camelcase\nc = camelcase.CamelCase()\ntxt = \"hello world\"\nprint(c.hump(txt))\n\n---\n\nC:\\Users\\\nYour Name\n\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip \n  uninstall camelcase\n\n---\n\nUninstalling camelcase-02.1:\nWould remove:\nc:\\users\\\nYour Name\n\\appdata\\local\\programs\\python\\python36-32\\lib\\site-packages\\camelcase-0.2-py3.6.egg-info\nc:\\users\\\nYour Name\n\\appdata\\local\\programs\\python\\python36-32\\lib\\site-packages\\camelcase\\*\nProceed (y/n)?\n\n---\n\nC:\\Users\\\nYour Name\n\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip list\n\n---\n\nPackage\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 Version\n-----------------------\ncamelcase\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 0.2\nmysql-connector 2.1.6\npip\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  18.1\npymongo\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 3.6.1\nsetuptools\u00a0\u00a0\u00a0\u00a0\u00a0 39.0.1\n```\n\n## Tutorials\n\nThetryblock lets you test a \nblock of code for errors.\n\nTheexceptblock lets you \nhandle the error.\n\nTheelseblock lets you \nexecute code when there is no error.\n\nThefinallyblock lets you \nexecute code, regardless of the result of the try- and except blocks.\n\nWhen an error occurs, or exception as we call it, Python will normally stop and \ngenerate an error message.\n\nThese exceptions can be handled using thetrystatement:\n\nSince the try block raises an error, the except block will be executed.\n\nWithout the try block, the program will crash and raise an error:\n\nYou can define as many exception blocks as you want, e.g. if you want to execute a \nspecial block of code for a special kind of error:\n\nSee more Error types in ourPython Built-in Exceptions Reference.\n\nYou can use theelsekeyword to define a \nblock of code to be executed if no errors were raised:\n\nThefinallyblock, if specified, will be executed \nregardless if the try block \nraises an error or not.\n\nThis can be useful to close objects and clean up resources:\n\nThe program can continue, without leaving the file object open.\n\nAs a Python developer you can choose to throw an exception if a condition occurs.\n\nTo throw (or raise) an exception, use theraisekeyword.\n\nTheraisekeyword is used to raise an \nexception.\n\nYou can define what kind of error to raise, and the text to print to the user.\n\n### Code Examples\n\n```\ntry:\nprint(x)\nexcept:\nprint(\"An exception occurred\")\n\n---\n\nprint(x)\n\n---\n\ntry:\nprint(x)\nexcept NameError:\nprint(\"Variable x \n  is not defined\")\nexcept:\nprint(\"Something else went \n  wrong\")\n\n---\n\ntry:\nprint(\"Hello\")\nexcept:\nprint(\"Something went \n  wrong\")\nelse:\nprint(\"Nothing went wrong\")\n\n---\n\ntry:\nprint(x)\nexcept:\nprint(\"Something went \n  wrong\")\nfinally:\nprint(\"The 'try except' is finished\")\n\n---\n\ntry:\nf = open(\"demofile.txt\")\ntry:\nf.write(\"Lorum Ipsum\")\nexcept:\nprint(\"Something went wrong when writing to the file\")\nfinally:\nf.close()\nexcept:\nprint(\"Something went wrong when opening the \n  file\")\n\n---\n\nx = -1\nif x < 0:\nraise Exception(\"Sorry, no numbers below \n    zero\")\n\n---\n\nx = \"hello\"\nif not type(x) is int:\nraise TypeError(\"Only \n    integers are allowed\")\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_26",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_26",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

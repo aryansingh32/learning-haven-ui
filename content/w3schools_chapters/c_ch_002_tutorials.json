@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 2,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "C++ is a cross-platform language that can be used to create high-performance applications.\n\nC++ was developed by Bjarne Stroustrup, as an extension to theC language.\n\nC++ gives programmers a high level of control over system resources and memory.\n\nThe language was updated 5 major times in 2011, 2014, 2017, 2020, and 2023 to C++11, C++14, C++17, C++20, and C++23.\n\nC++ is one of the world's most popular programming languages.\n\nC++ can be found in today's operating systems, Graphical User Interfaces, and embedded systems.\n\nC++ is an object-oriented programming language which gives a clear structure to programs and allows code to be reused, lowering development costs.\n\nC++ is portable and can be used to develop applications that can be adapted to multiple platforms.\n\nC++ is fun and easy to learn!\n\nAs C++ is close toC,C#andJava, it makes it easy for programmers to switch to C++ or vice versa.\n\nC++ was developed as an extension ofC, and both languages have almost the same syntax.\n\nThe main difference between C and C++ is that C++ supports classes and objects, while C does not.\n\nWhen you are finished with this tutorial, you will be able to write C++ programs and create real-life examples.\n\nIt is not necessary to have any prior programming experience.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_1",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

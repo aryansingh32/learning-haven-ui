@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 11,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn real life, we can describe subjects as objects (a car, a person, a house)\n\nDifferent cars have the sameproperties, but theproperty valuescan differ from car to car.\n\nDifferent cars have the samemethods, but the methods can be performedat different times.\n\nThis code example assignsmany values(Fiat, 500, white) to anobjectnamed car:\n\nAnobject literal\"literally\"describes an objectusing a concise syntax with zero or morekey:valuepairs insidecurly bracesto describe all theobject properties:\n\nAnobject literalis the simplest and most common way to define a JavaScript object.\n\nAll the examples below, create the same JavaScript object:\n\nSpaces and line breaksare not important. An object literal can span multiple lines:\n\nYou can also create anempty object, and add the properties later:\n\nYou can access object properties in two ways:\n\nObjects can also havemethods.\n\nObject methods areactionsthat can be performed on objects.\n\nObject methods arefunction definitionsstored asproperty values:\n\nIn JavaScript, almost \"everything\" is an object:\n\nAll JavaScript values, exceptprimitives, are objects.\n\nAprimitive data typeis data type that can only store a single primitive value.\n\nJavaScript defines 7 types of primitive data types:\n\n### Code Examples\n\n```\nconst car = {\ntype: \"Fiat\",\nmodel: \"500\",\ncolor: \"white\"\n};\n\n---\n\n{firstName:\"John\", lastName:\"Doe\", age:50, eyeColor:\"blue\"}\n\n---\n\n// Create an Object\nconst person = {firstName:\"John\", lastName:\"Doe\", age:50, eyeColor:\"blue\"};\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n\n---\n\n// Create an Object\nconst person = {};\n// Add Properties\nperson.firstName = \"John\";\nperson.lastName = \"Doe\";\nperson.age = 50;\nperson.eyeColor = \"blue\";\n\n---\n\n// Create an Object\nconst person = new Object({\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n});\n\n---\n\nobjectName.propertyName\n\n---\n\nperson.firstName;\n\n---\n\nobjectName[\"propertyName\"]\n\n---\n\nperson[\"firstName\"];\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nage\u00a0\u00a0\u00a0\u00a0\u00a0 :\u00a050,\nfullName : function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n};\n```\n\n## Tutorials\n\nYou can access object properties in these ways:\n\nBracket notation is useful when the property name is stored in a variable:\n\nYou can change the value of a property:\n\nYou can add a new property by simply giving it a value:\n\nThedeletekeyword deletes a property from an object:\n\nUse theinoperator to check if a property exists in an object:\n\nProperty values in an object can be other objects:\n\nYou can access nested objects using the dot notation or the bracket notation:\n\n### Code Examples\n\n```\n//\nobjectName.property\nlet age = person.age;\n\n---\n\n//\nobjectName\n[\"\nproperty\n\"]\nlet age = person[\"age\"];\n\n---\n\n//\nobjectName\n[\nexpression\n]\nlet age = person[x];\n\n---\n\nobjectName.propertyName\n\n---\n\nperson.firstname + \" is \" + person.age;\n\n---\n\nobjectName[\"propertyName\"]\n\n---\n\nperson[\"firstname\"] + \" is \" + person[\"age\"];\n\n---\n\nlet n1 = \"firstName\";\nlet n2 = \"lastName\";\nlet name = person[n2] + \" \" + person[n2];\n\n---\n\nperson.age = 10;\n\n---\n\nperson.nationality = \"English\";\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\n};\ndelete person.age;\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\n};\ndelete person[\"age\"];\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\"\n};\nlet result = (\"firstName\" in person);\n\n---\n\nmyObj = {\nname:\"John\",\nage:30,\nmyCars: {\ncar1:\"Ford\",\ncar2:\"BMW\",\ncar3:\"Fiat\"\n}\n}\n\n---\n\nmyObj.myCars.car2;\n\n---\n\nmyObj.myCars[\"car2\"];\n\n---\n\nmyObj[\"myCars\"][\"car2\"];\n\n---\n\nlet p1 = \"myCars\";\nlet p2 = \"car2\";\nmyObj[p1][p2];\n```\n\n## Tutorials\n\nIn an object method,thisrefers to the object.\n\nIn the example above,thisrefers to theperson object.\n\nthis.idmeans theid propertyof theperson object.\n\nIn the example above,thisrefers to theperson object.\n\nthis.firstNamemeans thefirstName propertyof theperson object.\n\nthis.lastNamemeans thelastName propertyof theperson object.\n\nTocallan object method, addparentheses ():\n\nWithout parentheses you get the function itself.\n\nIf you call a methodwith parentheses, it willexecute as a function:\n\nIf you call a methodwithout parentheses, it will return thefunction definition:\n\nYou can add a method to an object byassigning a function to a property:\n\nIn the example above,person.nameis a property with a function assigned to it.\n\nThis example uses the JavaScripttoUpperCase()method to convert a text \nto uppercase:\n\n### Code Examples\n\n```\nconst\nperson\n= {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\nfullName: function() {\nreturn\nthis\n.firstName + \" \" +\nthis\n.lastName;\n}\n};\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nid: 5566,\ngetId: function() {\nreturn\nthis\n.id;\n}\n};\nlet number = person.getId();\n\n---\n\nconst\nperson\n= {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\nfullName: function() {\nreturn\nthis\n.firstName + \" \" +\nthis\n.lastName;\n}\n};\n\n---\n\nobjectName.methodName\n()\n\n---\n\nname = person.fullName();\n\n---\n\nname = person.fullName;\n\n---\n\n// Assign person.name to a function\nperson.name = function () {\nreturn this.firstName + \" \" + this.lastName;\n};\n\n---\n\nperson.name = function () {\nreturn (this.firstName + \" \" + this.lastName).toUpperCase();\n};\n```\n\n## Tutorials\n\nWhen used inside an object method,thisrefers to the object.\n\nIn the example above:\n\nThethiskeyword makes it possible to use the same method with different objects.\n\nWhen used alone,thisrefers to the global object.\n\nIn a browser, the global object is thewindowobject.\n\nIn a regular function,thisalso refers to the global object.\n\n### Code Examples\n\n```\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\nfullName: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n};\n\n---\n\nconst person1 = {\nname: \"John\",\nhello: function() {\nreturn \"Hello \" + this.name;\n}\n};\nconst person2 = {\nname: \"Anna\",\nhello: function() {\nreturn \"Hello \" + this.name;\n}\n};\ndocument.getElementById(\"demo\").innerHTML = person1.hello();\n\n---\n\nlet x = this;\ndocument.getElementById(\"demo\").innerHTML = x;\n\n---\n\nfunction myFunction() {\nreturn this;\n}\ndocument.getElementById(\"demo\").innerHTML = myFunction();\n```\n\n## Tutorials\n\nDisplaying a JavaScript object will output[object Object].\n\n[Object Object]appears when you try to put an object (a data structure with properties)\ninto a context wherea string is expected.\n\n[Object Object]how JavaScript deals with this situation.\n\nSome solutions to display JavaScript objects are:Displaying the Object Properties by nameDisplaying the Object Properties in a LoopDisplaying the Object using Object.values()Displaying the Object using JSON.stringify()\n\nThe properties of an object can be added in a string:\n\nThe properties of an object can be collected in a loop:\n\nObject.values()creates an array from the property values:\n\nObject.entries()makes it simple to use objects in loops:\n\nJavaScript objects can be converted to a string with JSON methodJSON.stringify().\n\nJSON.stringify()is included in JavaScript and supported in all browsers.\n\n### Code Examples\n\n```\n// Create an Object\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\nlet text = person;\n\n---\n\n// Create an Object\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\n// Add Properties\nlet text = person.name + \",\" + person.age + \",\" + person.city;\n\n---\n\n// Create an Object\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\n// Build a Text\nlet text = \"\";\nfor (let x in person) {\ntext += person[x] + \" \";\n};\n\n---\n\n// Create an Object\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\n// Create an Array\nconst myArray = Object.values(person);\n// Stringify the Array\nlet text = myArray.toString();\n\n---\n\nconst fruits = {Bananas:300, Oranges:200, Apples:500};\nlet text = \"\";\nfor (let [fruit, value] of Object.entries(fruits)) {\ntext += fruit + \": \" + value + \"<br>\";\n}\n\n---\n\n// Create an Object\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\n// Stringify Object\nlet text = JSON.stringify(person);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_11",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_11",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

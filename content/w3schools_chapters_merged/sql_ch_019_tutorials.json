@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 19,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn MySQL and Oracle, a view can be updated with theCREATE OR REPLACE VIEWcommand.\n\nThe following SQL adds the \"City\" column to the \"Brazil Customers\" view:\n\nWe can query the view above as follows:\n\n### Code Examples\n\n```\nCREATE OR REPLACE VIEW [Brazil Customers] AS\nSELECT CustomerName, ContactName, City\nFROM Customers\nWHERE Country = \"Brazil\";\n\n---\n\nSELECT * FROM [Brazil \n  Customers];\n```\n\n## Tutorials\n\nTheCREATE TABLEcommand creates a new table \nin the database.\n\nThe following SQL creates a table called \"Persons\" that contains five columns: PersonID, LastName, FirstName, \nAddress, and City:\n\nThe following SQL creates a new table called \"TestTables\" (which is \na copy of two columns of the \"Customers\" table):\n\n### Code Examples\n\n```\nCREATE TABLE Persons\n(\nPersonID int,\nLastName varchar(255),\nFirstName varchar(255),\nAddress varchar(255),\nCity varchar(255)\n);\n\n---\n\nCREATE TABLE TestTable AS\nSELECT customername, contactname\nFROM \n  customers;\n```\n\n## Tutorials\n\nTheCREATE PROCEDUREcommand is used to \ncreate a stored procedure.\n\nA stored procedure is a prepared SQL code that you can save, so the \ncode can be reused over and over again.\n\nThe following SQL creates a stored procedure named \"SelectAllCustomers\" \nthat selects all records from the \"Customers\" table:\n\nExecute the stored procedure above as follows:\n\n### Code Examples\n\n```\nCREATE PROCEDURE SelectAllCustomers\nAS\nSELECT * FROM Customers\nGO;\n\n---\n\nEXEC SelectAllCustomers;\n```\n\n## Tutorials\n\nTheCREATE UNIQUE INDEXcommand creates a unique index on a table (no duplicate values \nallowed)\n\nIndexes are used to retrieve data from the database very fast. The users cannot see the indexes, they are just used to speed up searches/queries.\n\nThe following SQL creates an index named \"uidx_pid\" on the \"PersonID\" column in the \"Persons\" table:\n\nNote:The syntax for creating indexes varies among different databases. Therefore: Check the syntax for creating indexes in your database.\n\n### Code Examples\n\n```\nCREATE UNIQUE INDEX uidx_pid\nON Persons (PersonID);\n```\n\n## Tutorials\n\nTheCREATE VIEWcommand creates a view.\n\nA view is a virtual table based on the result set of an SQL statement.\n\nThe following SQL creates a view that selects all customers from Brazil:\n\nWe can query the view above as follows:\n\n### Code Examples\n\n```\nCREATE VIEW [Brazil \n  Customers] AS\nSELECT \n  CustomerName, ContactName\nFROM Customers\nWHERE \n  Country = \"Brazil\";\n\n---\n\nSELECT * FROM [Brazil Customers];\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_19",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

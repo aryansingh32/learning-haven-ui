@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 201,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In Python, lists are the built-in data structure that serves as a dynamic array.\n\nLists are ordered, mutable, and can contain elements of different types.\n\nA list is a built-in data structure in Python, used to store multiple elements.\n\nLists are used by many algorithms.\n\nLists are created using square brackets[]:\n\nPython lists come with several built-in algorithms (called methods), to perform common operations like appending, sorting, and more.\n\nSometimes we want to perform actions that are not built into Python.\n\nThen we can create our own algorithms.\n\nFor example, an algorithm can be used to find the lowest value in a list, like in the example below:\n\nThe algorithm above is very simple, and fast enough for small data sets,\n    but if the data is big enough, any algorithm will take time to run.\n\nThis is where optimization comes in.\n\nOptimization is an important part of algorithm development, and of course, an important part of DSA programming.\n\nWhen exploring algorithms, we often look at how much time an algorithm takes to run relative to the size of the data set.\n\nIn the example above, the time the algorithm needs to run is proportional, or linear, to the size of the data set. This is because the algorithm must visit every array element one time to find the lowest value. The loop must run 5 times since there are 5 values in the array. And if the array had 1000 values, the loop would have to run 1000 times.\n\nTry the simulation below to see this relationship between the number of compare operations needed to find the lowest value, and the size of the array.\n\nSeethis pagefor a more thorough explanation of what time complexity is.\n\nEach algorithm in this tutorial will be presented together with its time complexity.\n\n### Code Snippets\n\n```\n# Empty list\nx = []\n# List with initial values\ny = [1, 2, 3, 4, 5]\n# List with mixed types\nz = [1, \"hello\", 3.14, True]\n\n---\n\nx = [9, 12, 7, 4, 11]\n# Add element:\nx.append(8)\n# Sort list ascending:\nx.sort()\n\n---\n\nmy_array = [7, 12, 9, 4, 11, 8]\nminVal = my_array[0]\nfor i in my_array:\nif i < minVal:\nminVal = i\nprint('Lowest value:', minVal)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_200",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

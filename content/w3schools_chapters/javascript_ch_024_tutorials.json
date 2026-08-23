@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 24,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Theforstatement creates a loop with 3 optional expressions:\n\nexp 1is executed (one time) before the execution of the code block.\n\nexp 2defines the condition for executing the code block.\n\nexp 3is executed (every time) after the code block has been executed.\n\nFrom the example above, you can read:\n\nexp 1sets a variable before the loop starts (let i = 0).\n\nexp 2defines the condition for the loop to run (i must be less than 5).\n\nexp 3increases a value (i++) after the code block has been executed.\n\nexp 1is used to initialize the variable(s) used in the loop (let i = 0).\n\nexp 1is optional.\n\nYou can omitexp 1if the value is set before the loop starts:\n\nexp 2is used to evaluate the condition of the initial variable (i < len).\n\nexp 2is also optional.\n\nIfexp 2returnsfalse, the loop will end.\n\nexp 3increments the value of the initial variable (i++).\n\nexp 3is optional.\n\nexp 3can do anything like negative increment (i--), positive \nincrement (i = i + 15), or anything else.\n\nexp 3can be omitted (if you increment the value inside the loop):\n\nUsingvarin a loop:\n\nUsingletin a loop:\n\nIn the first example, usingvar, the variable declared in \nthe loop redeclares the variable outside the loop.\n\nIn the second example, usinglet, the variable declared in \nthe loop does not redeclare the variable outside the loop.\n\nWhenletis used to declare the i variable in a loop, the i \nvariable will only be visible within the loop.\n\n### Code Snippets\n\n```\nfor (\nexp 1\n;\nexp 2\n;\nexp 3\n) {\n//\ncode block to be executed\n}\n\n---\n\nfor (let i = 0; i < 5; i++) {\ntext += \"The number is \" + i + \"<br>\";\n}\n\n---\n\nconst cars = [\"BMW\", \"Volvo\", \"Saab\", \"Ford\"];\nlet len = cars.length;\nlet text = \"\";\nfor (let i = 0; i < len; i++) {\ntext += cars[i];\n}\n\n---\n\nconst cars = [\"BMW\", \"Volvo\", \"Saab\", \"Ford\"];\nlet len = cars.length;\nlet i = 2;\nlet text = \"\";\nfor (; i < len; i++) {\ntext += cars[i] + \"<br>\";\n}\n\n---\n\nconst cars = [\"BMW\", \"Volvo\", \"Saab\", \"Ford\"];\nlet len = cars.length;\nlet i = 0;\nlet text = \"\";\nfor (; i < len; ) {\ntext += cars[i] + \"<br>\";\ni++;\n}\n\n---\n\nvar i = 5;\nfor (var i = 0; i < 10; i++) {\n// some code\n}\n// Here i is 10\n\n---\n\nlet i = 5;\nfor (let i = 0; i < 10; i++) {\n// some code\n}\n// Here i is 5\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_23",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 59,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe ASCII() function returns the ASCII value for the specific character.\n\n### Code Examples\n\n```\nSELECT ASCII(CustomerName) AS NumCodeOfFirstChar\nFROM Customers;\n\n---\n\nASCII(\ncharacter\n)\n```\n\n## Tutorials\n\nThe CHAR() function returns the character based on the ASCII code.\n\n### Code Examples\n\n```\nSELECT CHAR(65) AS CodeToCharacter;\n\n---\n\nCHAR(\ncode\n)\n```\n\n## Tutorials\n\nThe CHARINDEX() function searches for a substring in a string, and returns \nthe position.\n\nIf the substring is not found, this function returns 0.\n\nNote:This function performs a case-insensitive search.\n\n### Code Examples\n\n```\nSELECT \n  CHARINDEX('t', 'Customer') AS MatchPosition;\n\n---\n\nCHARINDEX(\nsubstring\n,\nstring\n,\nstart\n)\n\n---\n\nSELECT \n  CHARINDEX('OM', 'Customer') AS MatchPosition;\n\n---\n\nSELECT CHARINDEX('mer', 'Customer', 3) AS MatchPosition;\n```\n\n## Tutorials\n\nThe CONCAT() function adds two or more strings together.\n\nNote:See alsoConcat with the + operatorandCONCAT_WS().\n\n### Code Examples\n\n```\nSELECT \n  CONCAT('W3Schools', '.com');\n\n---\n\nCONCAT(\nstring1\n,\nstring2\n,\n....\n,\nstring_n\n)\n\n---\n\nSELECT \n  CONCAT('SQL', ' is', ' fun!');\n\n---\n\nSELECT \n  CONCAT('SQL', ' ', 'is', ' ', 'fun!');\n```\n\n## Tutorials\n\nThe + operator allows you to add two or more strings together.\n\nNote:See also theCONCAT()andCONCAT_WS()functions.\n\n### Code Examples\n\n```\nSELECT \n  'W3Schools' + '.com';\n\n---\n\nstring1 +\n  string2 + string_n\n\n---\n\nSELECT \n  'SQL' + ' is' + ' fun!';\n\n---\n\nSELECT \n  'SQL' + ' ' + 'is' + ' ' + 'fun!';\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_59",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_59",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

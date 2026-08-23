@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 135,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In theList Sorting Chapter, you learned how to sort lists alphabetically and numerically, but what if the list has objects in it?\n\nTo sort objects you need to specify a rule that decides how objects should be sorted. For example, if you have a list of cars you might want to sort them by year, the rule could be that cars with an earlier year go first.\n\nTheComparatorandComparableinterfaces allow you to specify what rule is used to sort objects.\n\nBeing able to specify a sorting rule also allows you to change how strings and numbers are sorted.\n\nAn object that implements theComparatorinterface is called a comparator.\n\nTheComparatorinterface allows you to create a class with acompare()method that compares two objects to decide which one should go first in a list.\n\nThecompare()method should return a number which is:\n\nA class that implements theComparatorinterface might look something like this:\n\nTo use the comparator, pass it as an argument into a sorting method:\n\nHere is a complete example using a comparator to sort a list of cars by year:\n\nTo make the code shorter, the comparator can be replaced with a lambda expression which has the same arguments and return value as thecompare()method:\n\nComparators can also be used to make special sorting rules for strings and numbers. In this example we use a comparator to list all of the even numbers before the odd ones:\n\nTheComparableinterface allows an object to specify its own sorting rule with acompareTo()method.\n\nThecompareTo()method takes an object as an argument and compares the comparable with the argument to decide which one should go first in a list.\n\nLike the comparator, thecompareTo()method returns a number which is:\n\nAn object that implements theComparableinterface might look something like this:\n\nHere is the same example as before but using theComparableinterface instead of a comparator:\n\nA comparator is an object with one method that is used to compare two different objects.\n\nA comparable is an object which can compare itself with other objects.\n\nIt is easier to use theComparableinterface when possible, but theComparatorinterface is more powerful because it allows you to sort any kind of object even if you cannot change its code.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Sort Car objects by year\nclass SortByYear implements Comparator {\n  public int compare(Object obj1, Object obj2) {\n    // Make sure that the objects are Car objects\n    Car a = (Car) obj1;\n    Car b = (Car) obj2;\n    \n    // Compare the objects\n    if (a.year < b.year) return -1; // The first car has a smaller year\n    if (a.year > b.year) return 1;  // The first car has a larger year\n    return 0; // Both cars have the same year\n  }\n}\n\n---\n\n// Use a comparator to sort the cars\nComparator myComparator = new SortByYear();\nCollections.sort(myCars, myComparator);\n\n---\n\nExample\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\n\n// Define a Car class\nclass Car {\n  public String brand;\n  public String model;\n  public int year;\n  \n  public Car(String b, String m, int y) {\n    brand = b;\n    model = m;\n    year = y;\n  }\n}\n\n// Create a comparator\nclass SortByYear implements Comparator {\n  public int compare(Object obj1, Object obj2) {\n    // Make sure that the objects are Car objects\n    Car a = (Car) obj1;\n    Car b = (Car) obj2;\n    \n    // Compare the year of both objects\n    if (a.year < b.year) return -1; // The first car has a smaller year\n    if (a.year > b.year) return 1;  // The first car has a larger year\n    return 0; // Both cars have the same year\n  }\n}\n\npublic class Main { \n  public static void main(String[] args) { \n    // Create a list of cars\n    ArrayList<Car> myCars = new ArrayList<Car>();    \n    myCars.add(new Car(\"BMW\", \"X5\", 1999));\n    myCars.add(new Car(\"Honda\", \"Accord\", 2006));\n    myCars.add(new Car(\"Ford\", \"Mustang\", 1970));\n\n    // Use a comparator to sort the cars\n    Comparator myComparator = new SortByYear();\n    Collections.sort(myCars, myComparator);\n\n    // Display the cars\n    for (Car c : myCars) {\n      System.out.println(c.brand + \" \" + c.model + \" \" + c.year);\n    }\n  } \n}\nTry it Yourself \u00bb\n\n---\n\nExample\nUse a lambda expression as a comparator:\nCollections.sort(myCars, (obj1, obj2) -> {\n  Car a = (Car) obj1;\n  Car b = (Car) obj2;\n  if (a.year < b.year) return -1;\n  if (a.year > b.year) return 1;\n  return 0;\n});\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\n\nclass SortEvenFirst implements Comparator {\n  public int compare(Object obj1, Object obj2) {\n    // Make sure the objects are integers\n    Integer a = (Integer)obj1;\n    Integer b = (Integer)obj2;\n    \n    // Check each number to see if it is even\n    // A number is even if the remainder when dividing by 2 is 0\n    boolean aIsEven = (a % 2) == 0;\n    boolean bIsEven = (b % 2) == 0;\n    \n    if (aIsEven == bIsEven) {\n    \n      // If both numbers are even or both are odd then use normal sorting rules\n      if (a < b) return -1;\n      if (a > b) return 1;\n      return 0;\n      \n    } else {\n    \n      // If a is even then it goes first, otherwise b goes first\n      if (aIsEven) {\n      \treturn -1;\n      } else {\n        return 1;\n      }\n    }\n  }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<Integer> myNumbers = new ArrayList<Integer>();\n    myNumbers.add(33);\n    myNumbers.add(15);\n    myNumbers.add(20);\n    myNumbers.add(34);\n    myNumbers.add(8);\n    myNumbers.add(12);\n\n    Comparator myComparator = new SortEvenFirst();\n    Collections.sort(myNumbers, myComparator);\n\n    for (int i : myNumbers) {\n      System.out.println(i);\n    }\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nclass Car implements Comparable {\n  public String brand;\n  public String model;\n  public int year;\n  \n  // Decide how this object compares to other objects\n  public int compareTo(Object obj) {\n  \tCar other = (Car)obj;\n    if(year < other.year) return -1; // This object is smaller than the other one\n    if(year > other.year) return 1;  // This object is larger than the other one\n    return 0; // Both objects are the same\n  }\n}\n\n---\n\nExample\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\n\n// Define a Car class which is comparable\nclass Car implements Comparable {\n  public String brand;\n  public String model;\n  public int year;\n  \n  public Car(String b, String m, int y) {\n    brand = b;\n    model = m;\n    year = y;\n  }\n  \n  // Decide how this object compares to other objects\n  public int compareTo(Object obj) {\n  \tCar other = (Car)obj;\n    if(year < other.year) return -1; // This object is smaller than the other one\n    if(year > other.year) return 1;  // This object is larger than the other one\n    return 0; // Both objects are the same\n  }\n}\n\npublic class Main { \n  public static void main(String[] args) { \n    // Create a list of cars\n    ArrayList<Car> myCars = new ArrayList<Car>();    \n    myCars.add(new Car(\"BMW\", \"X5\", 1999));\n    myCars.add(new Car(\"Honda\", \"Accord\", 2006));\n    myCars.add(new Car(\"Ford\", \"Mustang\", 1970));\n\n    // Sort the cars\n    Collections.sort(myCars);\n\n    // Display the cars\n    for (Car c : myCars) {\n      System.out.println(c.brand + \" \" + c.model + \" \" + c.year);\n    }\n  } \n}\nTry it Yourself \u00bb\n\n---\n\nif(a.year < b.year) return -1; // a is less than b\nif(a.year > b.year) return 1; // a is greater than b\nreturn 0; // a is equal to b\n\n---\n\nreturn a.year - b.year;\n\n---\n\nreturn b.year - a.year;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_134",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

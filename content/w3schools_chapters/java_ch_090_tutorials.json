@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 90,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In Java, it is also possible to nest classes (a class within a class). The purpose \nof nested classes is to group classes that belong together, which makes your code more readable and maintainable.\n\nTo access the inner class, create an object of the outer class, and then create an object of the inner class:\n\nUnlike a \"regular\" class, an inner class can beprivateorprotected. \nIf you don't want outside objects to access the inner class, declare \nthe class asprivate:\n\nAn inner class can also bestatic, which means that you can access it without \ncreating an object of the outer class:\n\nOne advantage of inner classes, is that they can access attributes and methods of the outer class:\n\n### Code Snippets\n\n```\nExample\nclass OuterClass {\n\u00a0 int x = 10;\n\n\u00a0 class InnerClass {\n\u00a0\u00a0\u00a0 int y = 5;\n\u00a0 }\n}\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 OuterClass myOuter = new OuterClass();\n\u00a0\u00a0\u00a0 OuterClass.InnerClass myInner = myOuter.new InnerClass();\n\u00a0\u00a0\u00a0 System.out.println(myInner.y + myOuter.x);\n\u00a0 }\n}\n\n// Outputs 15 (5 + 10)\nTry it Yourself \u00bb\n\n---\n\nExample\nclass OuterClass {\n\u00a0 int x = 10;\nprivate\nclass InnerClass {\n\u00a0\u00a0\u00a0 int y = 5;\n\u00a0 }\n}\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 OuterClass myOuter = new OuterClass();\n\u00a0\u00a0\u00a0 OuterClass.InnerClass myInner = myOuter.new InnerClass();\n\u00a0\u00a0\u00a0 System.out.println(myInner.y + myOuter.x);\n\u00a0 }\n}\nIf you try to access a private inner class from an outside class, an error occurs:\nMain.java:13: error: OuterClass.InnerClass has private access in OuterClass\nOuterClass.InnerClass myInner = myOuter.new InnerClass();\n^\nTry it Yourself \u00bb\n\n---\n\nExample\nclass OuterClass {\n\u00a0 int x = 10;\n\n\u00a0 static class InnerClass {\n\u00a0\u00a0\u00a0 int y = 5;\n\u00a0 }\n}\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 OuterClass.InnerClass myInner = new OuterClass.InnerClass();\n\u00a0\u00a0\u00a0 System.out.println(myInner.y);\n\u00a0 }\n}\n\n// Outputs 5\nTry it Yourself \u00bb\n\n---\n\nExample\nclass OuterClass {\n\u00a0 int x = 10;\n\n\u00a0 class InnerClass {\n\u00a0\u00a0\u00a0 public int myInnerMethod() {\n\u00a0\u00a0\u00a0\u00a0\u00a0 return x;\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\n\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 OuterClass myOuter = new OuterClass();\n\u00a0\u00a0\u00a0 OuterClass.InnerClass myInner = myOuter.new InnerClass();\n\u00a0\u00a0\u00a0 System.out.println(myInner.myInnerMethod());\n\u00a0 }\n}\n\n// Outputs 10\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_89",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

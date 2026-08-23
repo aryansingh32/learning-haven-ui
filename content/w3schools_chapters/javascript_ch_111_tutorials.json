@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 111,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript variables can be converted to a new variable and another data type:\n\nThe global methodNumber()converts a variable (or a value) into a number.\n\nA numeric string (like \"3.14\") converts to a number (like 3.14).\n\nAn empty string (like \"\") converts to 0.\n\nA non numeric string (like \"John\") converts toNaN(Not a Number).\n\nIn the chapterNumber Methods, you \nwill find more methods that can be used to convert strings to \nnumbers:\n\nTheunary + operatorcan be used to \nconvert a variable to a number:\n\nIf the \nvariable cannot be converted, it will still become a number, but with the valueNaN(Not a Number):\n\nThe global methodString()can convert numbers to strings.\n\nIt can be used on any type of numbers, literals, variables, or expressions:\n\nThe Number methodtoString()does the same.\n\nIn the chapterNumber Methods, you \nwill find more methods that can be used to convert numbers to \nstrings:\n\nThe global methodNumber()can be used to convert dates to \nnumbers.\n\nThe date methodgetTime()does the same.\n\nThe global methodString()can convert dates to \nstrings.\n\nThe Date methodtoString()does the same.\n\nManyDate Methodsreturns aDate partas a number.\n\nYou can use thetoString()method to convert the return values to strings:\n\nBy default,getMonth()returns an integer between 0 (January) and 11 (December).\n\nTo get a standard 1 to 12 range, you must add 1 to the result.\n\nUse thetoLocaleString()method for easy formatting:\n\nThe global methodNumber()can also convert booleans to numbers.\n\nThe global methodString()can convert booleans to \nstrings.\n\nThe Boolean methodtoString()does the same.\n\nWhen JavaScript tries to operate on a \"wrong\" data type, it will try to \nconvert the value to a \"right\" type.\n\nThe result is not always what you expect:\n\nJavaScript automatically calls the variable'stoString()function when you try \nto \"output\" an object or a variable:\n\nNumbers and booleans are also converted, but this is not very visible:\n\nThis table shows the result of converting different JavaScript values to Number, String, and Boolean:\n\nValues in quotes indicate string values.\n\nRed valuesindicate values (some) programmers might not expect.\n\n### Code Snippets\n\n```\nNumber(\"3.14\")\nNumber(Math.PI)\nNumber(\" \")\nNumber(\"\")\n\n---\n\nNumber(\"99 88\")\nNumber(\"John\")\n\n---\n\nlet y = \"5\";\u00a0\u00a0\u00a0\u00a0\u00a0\n// y is a string\nlet x = + y;\u00a0\u00a0\u00a0\u00a0\u00a0 \n// x is a number\n\n---\n\nlet y = \"John\";\u00a0\u00a0\n// y is a string\nlet x = + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// x is a number (NaN)\n\n---\n\nString(x)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// returns a string from a number variable x\nString(123)\u00a0\u00a0 \u00a0\u00a0\u00a0 // returns a string from a number literal 123\nString(100 + 23)\u00a0 // returns a string from a number from an expression\n\n---\n\nx.toString()\n(123).toString()\n(100 + 23).toString()\n\n---\n\nd = new Date();\nNumber(d)\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0 // returns 1404568027739\n\n---\n\nd = new Date();\nd.getTime()\u00a0\u00a0\u00a0 \u00a0 \u00a0 // returns 1404568027739\n\n---\n\nString(Date())\n\n---\n\nDate().toString()\n\n---\n\n(date.getMonth()+1).toString();\n\n---\n\ndate.toLocaleString('default', { month: 'long' });\n\n---\n\nNumber(false)\u00a0\u00a0\u00a0\u00a0 // returns 0\nNumber(true)\u00a0 \u00a0\u00a0\u00a0 // returns 1\n\n---\n\nString(false)\u00a0\u00a0\u00a0 \u00a0\u00a0// returns \"false\"\nString(true)\u00a0\u00a0\u00a0\u00a0 \u00a0 // returns \"true\"\n\n---\n\nfalse.toString()\u00a0\u00a0\u00a0// returns \"false\"\ntrue.toString()\u00a0 \u00a0 // returns \"true\"\n\n---\n\n5 + null\u00a0\u00a0\u00a0 // returns 5\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 because null is converted to 0\n\"5\" + null\u00a0 // returns \"5null\"\u00a0\u00a0 because null is converted to \"null\"\n\"5\" + 2\u00a0\u00a0\u00a0\u00a0 // returns \n    \"52\"\u00a0\u00a0\u00a0\u00a0\u00a0 because 2 is converted to \"2\"\n\"5\" - 2\u00a0\u00a0\u00a0\u00a0 // returns 3\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 because \"5\" is converted to 5\n\"5\" * \"2\"\u00a0\u00a0 // returns \n    10\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 because \"5\" and \"2\" are \n    converted to 5 and 2\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = myVar;\n// if myVar = {name:\"Fjohn\"}\u00a0 // toString converts to \"[object Object]\"\n// if myVar = [1,2,3,4]\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // toString converts to \"1,2,3,4\"\n// if myVar = new Date()\u00a0\u00a0\u00a0\u00a0\u00a0 // toString converts to \"Fri Jul 18 2014 09:08:55 GMT+0200\"\n\n---\n\n// if myVar = 123\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // toString converts to \"123\"\n// if myVar = true \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // toString converts to \"true\"\n// if myVar = false\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // toString converts to \"false\"\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_110",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

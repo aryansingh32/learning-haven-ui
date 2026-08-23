@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 223,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To fill a table in MySQL, use the \"INSERT INTO\" statement.\n\nTo insert multiple rows into a table, use theexecutemany()method.\n\nThe second parameter of theexecutemany()method \nis a list of tuples, containing the data you want to insert:\n\nYou can get the id of the row you \njust inserted by asking the cursor object.\n\n### Code Snippets\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"INSERT INTO customers (name, \n  address) VALUES (%s, %s)\"\nval = (\"John\", \"Highway 21\")\nmycursor.execute(sql, \n  val)\nmydb.commit()\nprint(mycursor.rowcount, \"record inserted.\")\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"INSERT INTO customers (name, \n  address) VALUES (%s, %s)\"\nval = [\n('Peter', 'Lowstreet 4'),\n('Amy', 'Apple st 652'),\n('Hannah', 'Mountain 21'),\n('Michael', 'Valley 345'),\n('Sandy', 'Ocean blvd 2'),\n('Betty', 'Green Grass 1'),\n('Richard', 'Sky st 331'),\n('Susan', 'One way 98'),\n('Vicky', 'Yellow Garden 2'),\n('Ben', 'Park Lane 38'),\n('William', 'Central st 954'),\n('Chuck', 'Main Road 989'),\n('Viola', 'Sideway 1633')\n]\nmycursor.executemany(sql, val)\nmydb.commit()\nprint(mycursor.rowcount, \"was inserted.\")\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"INSERT INTO customers (name, \n  address) VALUES (%s, %s)\"\nval = (\"Michelle\", \"Blue Village\")\nmycursor.execute(sql, val)\nmydb.commit()\nprint(\"1 record \n  inserted, ID:\", mycursor.lastrowid)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_222",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

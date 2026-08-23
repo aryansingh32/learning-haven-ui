@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 40,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Java Keywords\n\nTheextendskeyword extends a class (indicates that a class is inherited from another class).\n\nIn Java, it is possible to inherit attributes and methods from one class to another. We group the \"inheritance concept\" into two categories:\n\nTo inherit from a class, use theextendskeyword.\n\nRead more about inheritance in ourJava Inheritance Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nThe\nCar\nclass \n(subclass) inherits the attributes and methods from the\nVehicle\nclass \n(superclass):\nclass Vehicle {\n\u00a0 protected String brand = \"Ford\";\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0\u00a0 // Vehicle attribute\n\u00a0 public void honk() {\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Vehicle method\n\u00a0\u00a0\u00a0 System.out.println(\"Tuut, tuut!\");\n\u00a0 }\n}\n\nclass Car extends Vehicle {\n\u00a0 private String modelName = \"Mustang\";\u00a0\u00a0\u00a0 // Car attribute\n\u00a0 public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0 // Create a myCar object\n\u00a0\u00a0\u00a0 Car myCar = new Car();\n\n\u00a0\u00a0\u00a0 // Call the honk() method (from the Vehicle class) on the myCar object\n\u00a0\u00a0\u00a0 myCar.honk();\n\n\u00a0\u00a0\u00a0 // Display the value of the brand attribute (from the Vehicle class) and the value of the modelName from the Car class\n\u00a0\u00a0\u00a0 System.out.println(myCar.brand + \" \" + myCar.modelName);\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThefinalkeyword is a non-access modifier used for classes, attributes and methods, which makes them non-changeable (impossible to inherit or override).\n\nThefinalkeyword is useful when you want a variable to always store the same value, like PI (3.14159...).\n\nThefinalkeyword is called a \"modifier\". You will learn more about these in theJava Modifiers Chapter.\n\nRead more about attributes ourJava Class Attributes Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nSet a variable to\nfinal\n, to prevent it from being overridden/modified:\npublic class Main {\nfinal\nint x = 10;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 myObj.x = 25; // will generate an error: cannot assign a value to a\nfinal\nvariable\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThefinallykeyword is used to execute code (used with exceptions \n- try..catch statements) no matter if there is an exception or not.\n\nRead more about exceptions in ourJava Try..Catch Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nExecute code, after try...catch, regardless of the result:\ntry {\n\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0System.out.println(myNumbers[10]);\n} catch (Exception e) {\n\u00a0\u00a0System.out.println(\"Something went wrong.\");\n} finally {\n\u00a0\u00a0System.out.println(\"The 'try catch' is finished.\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThefloatkeyword is a data type that can store fractional numbers from 3.4e\u2212038 to 3.4e+038.\n\nNote that you should end the value with an \"f\":\n\nRead more about data types in ourJava Data Types Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nfloat myNum = 5.75f;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nTheforloop loops through a block of code a number of times.\n\nFrom the example above:\n\nThere is also a \"for-each\" loop, which is used exclusively to loop through elements in anarray:\n\nThe following example outputs all elements in thecarsarray, using a \"for-each\" loop:\n\nRead more about for loops in ourJava For Loop Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nPrint the numbers 0 to 4:\nfor (int i = 0; i < 5; i++) {\n\u00a0\u00a0System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nString[] cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (String i : cars) {\n\u00a0 System.out.println(i);\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_40",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_40",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

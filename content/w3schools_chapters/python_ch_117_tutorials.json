@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 117,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An iterator is an object that contains a countable number of values.\n\nAn iterator is an object that can be iterated upon, meaning that you can \ntraverse through all the values.\n\nTechnically, in Python, an iterator is an object which implements the \niterator protocol, which consist of the methods__iter__()and__next__().\n\nLists, tuples, dictionaries, and sets are all iterable objects. They are iterablecontainerswhich you can get an iterator from.\n\nAll these objects have aiter()method which is used to get an iterator:\n\nEven strings are iterable objects, and can return an iterator:\n\nWe can also use aforloop to iterate through an iterable object:\n\nTheforloop actually creates an iterator object and executes thenext()method for each loop.\n\nTo create an object/class as an iterator you have to implement the methods__iter__()and__next__()to your object.\n\nAs you will learn in thePython \nClasses/Objectschapter, all classes have a function called__init__(), which allows you to do some \ninitializing when the object is being created.\n\nThe__iter__()method acts similar, you can \ndo operations (initializing etc.), but must always return the iterator object \nitself.\n\nThe__next__()method also allows you to do \noperations, and must return the next item in the sequence.\n\nThe example above would continue forever if you had enough next() statements, or if it was used in aforloop.\n\nTo prevent the iteration from going on forever, we can use theStopIterationstatement.\n\nIn the__next__()method, we can add a terminating condition to raise an error if the iteration is done a specified number of times:\n\n### Code Snippets\n\n```\nmytuple = (\"apple\", \"banana\", \"cherry\")\nmyit = iter(mytuple)\nprint(next(myit))\nprint(next(myit))\nprint(next(myit))\n\n---\n\nmystr = \"banana\"\nmyit = iter(mystr)\nprint(next(myit))\nprint(next(myit))\nprint(next(myit))\nprint(next(myit))\nprint(next(myit))\nprint(next(myit))\n\n---\n\nmytuple = (\"apple\", \"banana\", \"cherry\")\nfor x in mytuple:\nprint(x)\n\n---\n\nmystr = \"banana\"\nfor x in mystr:\nprint(x)\n\n---\n\nclass MyNumbers:\ndef __iter__(self):\nself.a = \n  1\nreturn self\ndef __next__(self):\nx = self.a\nself.a += 1\nreturn x\nmyclass = MyNumbers()\nmyiter =\n   iter(myclass)\nprint(next(myiter))\nprint(next(myiter))\nprint(next(myiter))\nprint(next(myiter))\nprint(next(myiter))\n\n---\n\nclass MyNumbers:\ndef __iter__(self):\nself.a = \n  1\nreturn self\ndef __next__(self):\nif self.a <= 20:\nx = self.a\nself.a += 1\nreturn x\nelse:\nraise StopIteration\nmyclass = \n  MyNumbers()\nmyiter =\n   iter(myclass)\nfor x in myiter:\nprint(x)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_116",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

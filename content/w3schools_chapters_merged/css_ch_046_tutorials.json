@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 46,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSS Multi-column Layout Module allows easy definition of multiple columns of text - just like in newspapers:\n\nIn this chapter you will learn about the following multi-column properties:\n\nThe CSScolumn-countproperty specifies the number of columns an element should \nbe divided into.\n\nThe CSScolumn-gapproperty specifies the \nspace between the columns.\n\nContinue learning about CSS multiple columns:\n\nThe following table lists all the multi-columns properties:\n\n### Code Examples\n\n```\ndiv\n{\ncolumn-count: 3;\n}\n\n---\n\ndiv\n{\ncolumn-gap: 40px;\n}\n```\n\n## Tutorials\n\nThis page covers CSS column rules, span, and width properties.\n\nThe CSScolumn-rule-styleproperty specifies the style of the \nvertical rule between \ncolumns:\n\nThe CSScolumn-rule-widthproperty specifies the width of the \nvertical rule between columns:\n\nThe CSScolumn-rule-colorproperty specifies the color of the \nvertical rule between columns:\n\nThe CSScolumn-ruleproperty is a shorthand property for setting all the column-rule-* properties above.\n\nThe CSScolumn-spanproperty specifies how many columns an element \n(typically a heading) should span across.\n\nThe CSScolumn-widthproperty specifies a suggested, optimal width for \neach column.\n\nHere, the browser will determine the number of columns based on this width and the available space.\n\nThe following table lists all the multi-columns properties:\n\n### Code Examples\n\n```\ndiv\n{\ncolumn-rule-style: solid;\n}\n\n---\n\ndiv\n{\ncolumn-rule-width: 1px;\n}\n\n---\n\ndiv\n{\ncolumn-rule-color: lightblue;\n}\n\n---\n\ndiv\n{\ncolumn-rule: 1px solid lightblue;\n}\n\n---\n\nh2 {\ncolumn-span: all;\ntext-align: center;\n}\n\n---\n\ndiv {\ncolumn-width: 100px;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS Multiple Columns by completing a small coding challenge.\n\n## Tutorials\n\nIn this chapter you will learn about the following CSS user interface properties:\n\nTheresizeproperty specifies if (and how) an element \ncan be resized by a user.\n\nThis property can have one of the following values:\n\nThe following example lets the user resize only the width of a <div> element:\n\nThe following example lets the user resize only the height of a <div> element:\n\nThe following example lets the user resize both the width and height of a <div> element:\n\nA <textarea> is often resizable by default.\n\nHere, we have used theresizeproperty to disable the resizability \nin <textarea>:\n\nTheoutline-offsetproperty adds \na space between an outline and the edge/border of an element. The space between an \nelement and its outline is transparent.\n\nThe following example specifies an outline 15px outside the border edge:\n\nThis paragraph has a black border and a red outline 15px outside the border edge.\n\nThe following example uses theoutline-offsetproperty to add space \nbetween the border and the outline:\n\nThe following table lists all the user interface properties:\n\n### Code Examples\n\n```\ndiv\n{\nresize: horizontal;\noverflow: auto;\n}\n\n---\n\ndiv\n{\nresize: vertical;\noverflow: auto;\n}\n\n---\n\ndiv\n{\nresize: both;\noverflow: auto;\n}\n\n---\n\ntextarea {\nresize: none;\n}\n\n---\n\ndiv.ex1 {\nmargin: 20px;\nborder: \n  1px solid black;\noutline: 4px solid red;\noutline-offset: 15px;\n}\ndiv.ex2 {\nmargin: 10px;\nborder: 1px solid black;\noutline: 5px dashed blue;\noutline-offset: 5px;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS User Interface properties by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_46",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

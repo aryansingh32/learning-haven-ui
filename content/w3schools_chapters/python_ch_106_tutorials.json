@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 106,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "By default, a function must be called with the correct number of arguments.\n\nHowever, sometimes you may not know how many arguments that will be passed into your function.\n\n*args and **kwargs allow functions to accept a unknown number of arguments.\n\nIf you do not know how many arguments will be passed into your function, add a*before the parameter name.\n\nThis way, the function will receive atupleof arguments and can access the items accordingly:\n\nThe*argsparameter allows a function to accept any number of positional arguments.\n\nInside the function,argsbecomes a tuple containing all the passed arguments:\n\nYou can combine regular parameters with *args.\n\nRegular parameters must come before *args:\n\nIn this example,\"Hello\"is assigned togreeting, and the rest are collected innames.\n\n*args is useful when you want to create flexible functions:\n\nIf you do not know how many keyword arguments will be passed into your function, add two asterisks**before the parameter name.\n\nThis way, the function will receive adictionaryof arguments and can access the items accordingly:\n\nThe**kwargsparameter allows a function to accept any number of keyword arguments.\n\nInside the function,kwargsbecomes a dictionary containing all the keyword arguments:\n\nYou can combine regular parameters with **kwargs.\n\nRegular parameters must come before **kwargs:\n\nYou can use both *args and **kwargs in the same function.\n\nThe order must be:regular parameters*args**kwargs\n\nThe*and**operators can also be used whencallingfunctions to unpack (expand) a list or dictionary into separate arguments.\n\nIf you have values stored in a list, you can use*to unpack them into individual arguments:\n\nIf you have keyword arguments stored in a dictionary, you can use**to unpack them:\n\n### Code Snippets\n\n```\ndef my_function(\n*kids\n):\nprint(\"The youngest child is \" + kids[2])\nmy_function(\"Emil\", \"Tobias\", \"Linus\")\n\n---\n\ndef my_function(*args):\nprint(\"Type:\", type(args))\nprint(\"First argument:\", args[0])\nprint(\"Second argument:\", args[1])\nprint(\"All arguments:\", args)\nmy_function(\"Emil\", \"Tobias\", \"Linus\")\n\n---\n\ndef my_function(greeting, *names):\nfor name in names:\nprint(greeting, name)\nmy_function(\"Hello\", \"Emil\", \"Tobias\", \"Linus\")\n\n---\n\ndef my_function(*numbers):\ntotal = 0\nfor num in numbers:\ntotal += num\nreturn total\nprint(my_function(1, 2, 3))\nprint(my_function(10, 20, 30, 40))\nprint(my_function(5))\n\n---\n\ndef my_function(*numbers):\nif len(numbers) == 0:\nreturn None\nmax_num = numbers[0]\nfor num in numbers:\nif num > max_num:\nmax_num = num\nreturn max_num\nprint(my_function(3, 7, 2, 9, 1))\n\n---\n\ndef my_function(\n**kid\n):\nprint(\"His last name is \" + kid[\"lname\"])\nmy_function(fname = \"Tobias\", lname = \"Refsnes\")\n\n---\n\ndef my_function(**myvar):\nprint(\"Type:\", type(myvar))\nprint(\"Name:\", myvar[\"name\"])\nprint(\"Age:\", myvar[\"age\"])\nprint(\"All data:\", myvar)\nmy_function(name = \"Tobias\", age = 30, city = \"Bergen\")\n\n---\n\ndef my_function(username, **details):\nprint(\"Username:\", username)\nprint(\"Additional details:\")\nfor key, value in details.items():\nprint(\" \", key + \":\", value)\nmy_function(\"emil123\", age = 25, city = \"Oslo\", hobby = \"coding\")\n\n---\n\ndef my_function(title, *args, **kwargs):\nprint(\"Title:\", title)\nprint(\"Positional arguments:\", args)\nprint(\"Keyword arguments:\", kwargs)\nmy_function(\"User Info\", \"Emil\", \"Tobias\", age = 25, city = \"Oslo\")\n\n---\n\ndef my_function(a, b, c):\nreturn a + b + c\nnumbers = [1, 2, 3]\nresult = my_function(*numbers)  # Same as: my_function(1, 2, 3)\nprint(result)\n\n---\n\ndef my_function(fname, lname):\nprint(\"Hello\", fname, lname)\nperson = {\"fname\": \"Emil\", \"lname\": \"Refsnes\"}\nmy_function(**person)  # Same as: my_function(fname=\"Emil\", lname=\"Refsnes\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_105",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

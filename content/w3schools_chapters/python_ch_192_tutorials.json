@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 192,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Logistic regression aims to solve classification problems. It does this by predicting categorical outcomes, unlike linear regression that predicts a continuous outcome.\n\nIn the simplest case there are two outcomes, which is called binomial, an example of which is predicting if a tumor is malignant or benign. Other cases have more than two outcomes to classify, in this case it is called multinomial. A common example for multinomial logistic regression would be predicting the class of an iris flower between 3 different species.\n\nHere we will be using basic logistic regression to predict a binomial variable. This means it has only two possible outcomes.\n\nIn Python we have modules that will do the work for us. Start by importing the NumPy module.\n\nStore the independent variables in X.\n\nStore the dependent variable in y.\n\nBelow is a sample dataset:\n\nWe will use a method from the sklearn module, so we will have to import that module as well:\n\nFrom the sklearn module we will use the LogisticRegression() method to create a logistic regression object.\n\nThis object has a method calledfit()that takes the independent and dependent values as parameters and fills the regression object with data that describes the relationship:\n\nNow we have a logistic regression object that is ready to whether a tumor is cancerous based on the tumor size:\n\nWe have predicted that a tumor with a size of 3.46mm will not be cancerous.\n\nIn logistic regression the coefficient is the expected change in log-odds of having the outcome per unit change in X.\n\nThis does not have the most intuitive understanding so let's use it to create something that makes more sense, odds.\n\nThis tells us that as the size of a tumor increases by 1mm the odds of it being a \ncancerous tumor increases by 4x.\n\nThe coefficient and intercept values can be used to find the probability that each tumor is cancerous.\n\nCreate a function that uses the model's coefficient and intercept values to return a new value. This new value represents probability that the given observation is a tumor:\n\nTo find the log-odds for each observation, we must first create a formula that looks similar to the one from linear regression, extracting the coefficient and the intercept.\n\nTo then convert the log-odds to odds we must exponentiate the log-odds.\n\nNow that we have the odds, we can convert it to probability by dividing it by 1 plus the odds.\n\nLet us now use the function with what we have learned to find out the probability that each tumor is cancerous.\n\n3.78 0.61 The probability that a tumor with the size 3.78cm is cancerous is 61%.\n\n2.44 0.19 The probability that a tumor with the size 2.44cm is cancerous is 19%.\n\n2.09 0.13 The probability that a tumor with the size 2.09cm is cancerous is 13%.\n\n### Code Snippets\n\n```\nimport numpy\nfrom sklearn import linear_model\n#Reshaped for Logistic function.\nX = numpy.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)\ny = numpy.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])\nlogr = linear_model.LogisticRegression()\nlogr.fit(X,y)\n#predict if tumor is cancerous where the size is 3.46mm:\npredicted = logr.predict(numpy.array([3.46]).reshape(-1,1))\nprint(predicted)\n\n---\n\nimport numpy\nfrom sklearn import linear_model\n#Reshaped for Logistic function.\nX = numpy.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)\ny = numpy.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])\nlogr = linear_model.LogisticRegression()\nlogr.fit(X,y)\nlog_odds = logr.coef_\nodds = numpy.exp(log_odds)\nprint(odds)\n\n---\n\nimport numpy\nfrom sklearn import linear_model\nX = numpy.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)\ny = numpy.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])\nlogr = linear_model.LogisticRegression()\nlogr.fit(X,y)\ndef logit2prob(logr, X):\nlog_odds = logr.coef_ * X + logr.intercept_\nodds = numpy.exp(log_odds)\nprobability = odds / (1 + odds)\nreturn(probability)\nprint(logit2prob(logr, X))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_191",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

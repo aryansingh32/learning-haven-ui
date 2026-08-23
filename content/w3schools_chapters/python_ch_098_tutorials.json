@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 98,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thematchstatement is used to perform different actions based on different conditions.\n\nInstead of writingmanyif..elsestatements, you can use thematchstatement.\n\nThematchstatement selects one of many code blocks to be executed.\n\nThis is how it works:\n\nThe example below uses the weekday number to print the weekday name:\n\nUse the underscore character_as the last \ncase value if you want a code block to execute when there are not other matches:\n\nThe value_will always match, so it is important to place it as thelastcaseto make it \nbehave as a defaultcase.\n\nUse the pipe character|as an or operator in thecaseevaluation to check \nfor more than one value match in onecase:\n\nYou can addifstatements in the case evaluation as an extra condition-check:\n\n### Code Snippets\n\n```\nmatch\nexpression\n:\ncase x:\ncode block\ncase y:\ncode block\ncase z:\ncode block\n\n---\n\nday = 4\nmatch day:\ncase 1:\nprint(\"Monday\")\ncase 2:\nprint(\"Tuesday\")\ncase 3:\nprint(\"Wednesday\")\ncase 4:\nprint(\"Thursday\")\ncase 5:\nprint(\"Friday\")\ncase 6:\nprint(\"Saturday\")\ncase 7:\nprint(\"Sunday\")\n\n---\n\nday = 4\nmatch day:\ncase 6:\nprint(\"Today is Saturday\")\ncase 7:\nprint(\"Today is Sunday\")\ncase _:\nprint(\"Looking forward to the Weekend\")\n\n---\n\nday = 4\nmatch day:\ncase 1 | 2 | 3 | 4 | 5:\nprint(\"Today is a weekday\")\ncase 6 | 7:\nprint(\"I love \n  weekends!\")\n\n---\n\nmonth = 5\nday = 4\nmatch day:\ncase 1 | 2 | 3 | 4 | 5 if month == 4:\nprint(\"A weekday in April\")\ncase 1 | 2 | 3 | 4 | 5 if month == 5:\nprint(\"A weekday in May\")\ncase _:\nprint(\"No match\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_97",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

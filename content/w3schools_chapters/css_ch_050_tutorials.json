@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 50,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In this chapter you will learn about the following properties:\n\nThetext-alignproperty is used to set the horizontal alignment of a text.\n\nThis property can have one of the following values:\n\nThe following example shows left, right and center aligned text \n(left is default if text direction is left-to-right, and right \nis default if text direction is right-to-left):\n\nWhen thetext-alignproperty is set to \"justify\", each line is \nstretched so that every line has equal width, and the left and right margins are \nstraight (like in magazines and newspapers):\n\nThetext-align-lastproperty specifies how to align the last line of a text.\n\nThis property can have one of the following values:\n\nThevertical-alignproperty sets the vertical alignment of an element.\n\nThis property can have one of the following values:\n\nThedirectionproperty specifies the text direction/writing direction within a block-level element.\n\nTip: Use this property together with theunicode-bidiproperty to \nset or return whether the text should be overridden to support multiple \nlanguages in the same document.\n\n### Code Snippets\n\n```\nh1 {\ntext-align: center;\n}\nh2 {\ntext-align: left;\n}\nh3 {\ntext-align: right;\n}\n\n---\n\ndiv {\ntext-align: justify;\n}\n\n---\n\np.a\n{\ntext-align-last: right;\n}\np.b\n{\ntext-align-last: center;\n}\np.c\n{\ntext-align-last: justify;\n}\n\n---\n\nimg.a {\nvertical-align: baseline;\n}\nimg.b {\nvertical-align: text-top;\n}\nimg.c {\nvertical-align: \n  text-bottom;\n}\nimg.d {\nvertical-align: sub;\n}\nimg.e {\nvertical-align: super;\n}\n\n---\n\np {\ndirection: rtl;\nunicode-bidi: bidi-override;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_49",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

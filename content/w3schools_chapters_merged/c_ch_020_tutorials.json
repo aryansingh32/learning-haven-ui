@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 20,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nRecursion is the technique of making a function call itself.\n\nThis technique provides a way\nto break complicated problems down into simple problems which are easier to solve.\n\nRecursion may be a bit difficult to understand. The\nbest way to figure out how it works is to experiment with it.\n\nAdding two numbers together is easy to do, but adding a range of numbers is more\ncomplicated.\n\nIn the following example, recursion is used to add a range of numbers\ntogether by breaking it down into the simple task of adding two numbers:\n\nWhen thesum()function is called, it adds parameterkto the sum of all numbers smaller\nthankand returns the result. When k becomes 0, the function just returns 0. When\nrunning, the program follows these steps:\n\nSince the function does not call itself whenkis 0, the program stops there and returns the\nresult.\n\nThis example demonstrates how to use recursion to create a countdown function:\n\nThe function calls itself withn - 1untilnbecomes0.\n\nThis example uses a recursive function to calculate the factorial of 5:\n\n### Code Examples\n\n```\nint sum(int k) {\nif (k > 0) {\nreturn k + sum(k - 1);\n} else {\nreturn 0;\n}\n}\nint main() {\nint result = sum(10);\ncout << \n  result;\nreturn 0;\n}\n\n---\n\nvoid countdown(int n) {\nif (n > 0) {\ncout << n \n  << \" \";\ncountdown(n - 1);\n}\n}\nint main() {\ncountdown(5);\n}\n\n---\n\nint factorial(int n) {\nif (n > 1) {\nreturn n * factorial(n - 1);\n} else {\nreturn 1;\n}\n}\nint main() {\ncout << \"Factorial of 5 is \" << factorial(5);\nreturn 0;\n}\n```\n\n## Tutorials\n\nAlambda functionis a small, anonymous function you can write directly in your code. It's useful when you need a quick function without naming it or declaring it separately.\n\nThink of it as a \"mini function on the fly.\"\n\nDon't worry:We'll explain what [capture] means later. For now, let's just use an empty pair of brackets.\n\nHere,messageholds a lambda function that prints a message to the screen:\n\nYou can pass values into a lambda just like a regular function:\n\nYou can alsopass a lambda function as an argumentto another function.\n\nThis is useful when you want to tell a functionwhat to do, not just what data to use.\n\nIn the example below, we send a small lambda function to another function, which then runs it twice:\n\nNote that you must include the<functional>library for this example to work.\n\nYou can define and use a lambda function inside a loop, which are great for \nquick actions:\n\nYou can use the[ ]brackets to give a lambda access to variables outside of it.\n\nThis is called thecapture clause.\n\nIn this example, the lambda captures the variablexby value (a copy):\n\nNote:The lambda uses acopyofx. If you changexafter defining the lambda, it won't affect the value inside the lambda.\n\nNote:You can also use[&]to capture by reference.\n\nIf you want the lambda to use thelatest valueof a variable (not just a copy), you can use[&]to capture it by reference.\n\nThis means the lambda will work with the original variable, not a separate copy:\n\nWhy?The lambda sees the originalxvariable, so when you changex, the lambda uses the updated value.\n\nBoth regular functions and lambda functions let you group code and run it later, but they are used in slightly different situations.\n\nBoth of these examples do the same thing. They return the sum of two numbers:\n\nNote:The lambda version is great when you don't need to reuse the function later. It's quick and works well inside blocks or as arguments to other functions.\n\n### Code Examples\n\n```\n[\ncapture\n] (\nparameters\n) {\ncode\n};\n\n---\n\nint main() {\nauto message = []() {\ncout << \"Hello \n  World!\\n\";\n};\nmessage();\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\nauto add = [](int a, int b) {\nreturn a + b;\n};\ncout << add(3, 4);\nreturn 0;\n}\n\n---\n\n#include <iostream>\n#include <functional> // Needed for std::function\nusing namespace std;\n// A function that takes another function as \n  parameter\nvoid myFunction(function<void()> func) {\nfunc();\nfunc();\n}\nint main() {\nauto message = []() {\ncout << \n  \"Hello World!\\n\";\n};\nmyFunction(message);\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\nfor (int i = 1; i <= 3; i++) {\nauto show = [i]() {\ncout << \"Number: \" << i << \"\\n\";\n};\nshow();\n}\nreturn 0;\n}\n\n---\n\nint main() {\nint x = 10;\nauto show = [x]() {\ncout << x;\n};\nshow();\nreturn 0;\n}\n\n---\n\nint main() {\nint x = 10;\nauto show = [&x]() {\ncout << x;\n};\nx = 20;\u00a0  // Change x after the lambda is created\nshow();\nreturn 0;\n}\n\n---\n\nint add(int a, int b) {\nreturn a + b;\n}\n\n---\n\nauto add = [](int a, int b) {\nreturn a + b;\n};\n```\n\n## Tutorials\n\nOOP stands for Object-Oriented Programming.\n\nObject-oriented programming is about \ncreating \"objects\", which can holddataandfunctionsthat work on that data.\n\nTip:TheDRYprinciple means you should avoid writing the same code more than once. Move repeated code into functions or classes andreuse it.\n\nClasses and objects are the two main aspects of object-oriented programming.\n\nA class defines what an object should look like, and an object is created based on that class. For example:\n\nWhen you create an object from a class, it inherits all thevariablesandfunctionsdefined inside that class.\n\nIn the next chapters, you will learn how to:\n\nProcedural programmingis about writing functions that operate on data.\n\nObject-oriented programming (OOP)is about creating objects that contain both the data and the functions.\n\nIn procedural programming, the code is organized around functions.\nIn object-oriented programming, the code is organized around objects.\n\n## Tutorials\n\nC++ is an object-oriented programming language.\n\nEverything in C++ is associated with classes and objects, along with its attributes and \nmethods. For example: in real life, a car is anobject. The car hasattributes, such as weight and color, andmethods, such as drive and brake.\n\nAttributes and methods are basicallyvariablesandfunctionsthat belongs to the class. These are often referred to as \n\"class members\".\n\nA class is a user-defined data type that we can use in our program, and it \nworks as an object constructor, or a \"blueprint\" for creating objects.\n\nTo create a class, use theclasskeyword:\n\nIn C++, an object is created from a class. We have already created the class namedMyClass, \nso now we can use this to create objects.\n\nTo create an object ofMyClass, specify the \nclass name, followed by the object name.\n\nTo access the class attributes (myNumandmyString), use the dot syntax (.) \non the object:\n\nYou can create multiple objects of one class:\n\nCreate a class calledBookwith the following attributes:\n\nThen create two objects of the class and print their attribute values.\n\n### Code Examples\n\n```\nclass MyClass {\u00a0 \u00a0\u00a0\u00a0\u00a0 \n  // The class\npublic:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Access specifier\nint myNum;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // \n  Attribute (int variable)\nstring myString;\u00a0 // \n  Attribute (string variable)\n};\n\n---\n\nclass MyClass {\u00a0 \u00a0\u00a0\u00a0\u00a0 // The class\npublic:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Access specifier\nint myNum;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // \n  Attribute (int variable)\nstring myString;\u00a0 // \n  Attribute (string variable)\n};\nint main() {\nMyClass\nmyObj\n;\u00a0 \n  // Create an object of MyClass\n// Access attributes and set values\nmyObj.myNum\n= 15;\nmyObj.myString\n= \"Some text\";\n// Print attribute values\ncout << myObj.myNum\u00a0<< \"\\n\";\ncout << myObj.myString;\nreturn 0;\n}\n\n---\n\n// Create a Car class with some attributes\nclass Car {\npublic:\nstring brand;\nstring model;\nint \n  year;\n};\nint main() {\n// Create an object of Car\nCar carObj1;\ncarObj1.brand = \"BMW\";\ncarObj1.model = \"X5\";\ncarObj1.year = 1999;\n// Create another object of Car\nCar \n  carObj2;\ncarObj2.brand = \"Ford\";\ncarObj2.model = \n  \"Mustang\";\ncarObj2.year = 1969;\n// Print \n  attribute values\ncout << carObj1.brand \n  << \" \" << carObj1.model << \" \" << carObj1.year << \"\\n\";\ncout << \n  carObj2.brand << \" \" << carObj2.model << \" \" << carObj2.year << \"\\n\";\nreturn 0;\n}\n\n---\n\nMatilda, Roald Dahl, 1988\nThe Giving Tree, Shel Silverstein, 1964\n\n---\n\n#include <iostream>\n#include <string>\nusing namespace std;\nclass Book {\npublic:\nstring title;\nstring author;\nint year;\n};\nint main() {\nBook book1;\nbook1.title = \"Matilda\";\nbook1.author = \"Roald Dahl\";\nbook1.year = 1988;\nBook book2;\nbook2.title = \"The Giving Tree\";\nbook2.author = \"Shel \n      Silverstein\";\nbook2.year = 1964;\ncout << book1.title << \", \" << book1.author << \", \" << book1.year << \"\\n\";\ncout << book2.title << \", \" << book2.author << \", \" << book2.year;\nreturn 0;\n}\n```\n\n## Tutorials\n\nMethods arefunctionsthat belongs to the class.\n\nThere are two ways to define functions that belongs to a class:\n\nIn the following example, we define a function inside the class, and we name \nit \"myMethod\".\n\nNote:You access methods just like you access attributes; by creating an object of \nthe class and using the dot syntax (.):\n\nSometimes it is better to declare the method in the class and define it later (especially in large programs).\n\nThis is done by specifiying the \nname of the class, followed the scope resolution::operator, \nfollowed by the name of the function:\n\nYou can also pass values to methods just like regular functions:\n\nCreate a classDogwith a methodbark()that prints\"Woof!\".\n\nThen call that method frommain()using an object of the class.\n\n### Code Examples\n\n```\nclass MyClass {\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // The class\npublic:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Access specifier\nvoid myMethod()\n{\u00a0 // Method/function \n  defined inside the \n  class\ncout << \"Hello World!\";\n}\n};\nint main() {\nMyClass \n  myObj;\u00a0\u00a0\u00a0\u00a0 // Create an object of MyClass\nmyObj.myMethod();\u00a0 // Call the method\nreturn 0;\n}\n\n---\n\nclass MyClass {\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // The class\npublic:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Access specifier\nvoid myMethod();\u00a0\u00a0 // Method/function \n  declaration\n};\n// Method/function definition outside the class\nvoid\nMyClass::myMethod()\n{\ncout << \"Hello World!\";\n}\nint main() {\nMyClass \n  myObj;\u00a0\u00a0\u00a0\u00a0 // Create an object of MyClass\nmyObj.myMethod();\u00a0 // Call the method\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nclass Car {\npublic:\nint speed(int maxSpeed);\n};\nint Car::speed(int maxSpeed) {\nreturn maxSpeed;\n}\nint main() {\nCar myObj; // Create an object of Car\ncout << myObj.speed(200); // \n  Call the method with an argument\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nclass Dog {\npublic:\nvoid bark() {\ncout << \"Woof!\";\n}\n};\nint main() {\nDog myDog;\nmyDog.bark();\nreturn 0;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_20",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

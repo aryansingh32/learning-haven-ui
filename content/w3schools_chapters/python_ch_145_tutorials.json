@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 145,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Properties are variables that belong to a class. They store data for each object created from the class.\n\nYou can access object properties using dot notation:\n\nYou can modify the value of properties on objects:\n\nYou can delete properties from objects using thedelkeyword:\n\nProperties defined inside__init__()belong to each object (instance properties).\n\nProperties defined outside methods belong to the class itself (class properties) and are shared by all objects:\n\nWhen you modify a class property, it affects all objects:\n\nYou can add new properties to existing objects:\n\n### Code Snippets\n\n```\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Emil\", 36)\nprint(p1.name)\nprint(p1.age)\n\n---\n\nclass Car:\ndef __init__(self, brand, model):\nself.brand = brand\nself.model = model\ncar1 = Car(\"Toyota\", \"Corolla\")\nprint(car1.brand)\nprint(car1.model)\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Tobias\", 25)\nprint(p1.age)\np1.age = 26\nprint(p1.age)\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Linus\", 30)\ndel p1.age\nprint(p1.name)  # This works\n# print(p1.age)  # This would cause an error\n\n---\n\nclass Person:\nspecies = \"Human\"  # Class property\ndef __init__(self, name):\nself.name = name  # Instance property\np1 = Person(\"Emil\")\np2 = Person(\"Tobias\")\nprint(p1.name)\nprint(p2.name)\nprint(p1.species)\nprint(p2.species)\n\n---\n\nclass Person:\nlastname = \"\"\ndef __init__(self, name):\nself.name = name\np1 = Person(\"Linus\")\np2 = Person(\"Emil\")\nPerson.lastname = \"Refsnes\"\nprint(p1.lastname)\nprint(p2.lastname)\n\n---\n\nclass Person:\ndef __init__(self, name):\nself.name = name\np1 = Person(\"Tobias\")\np1.age = 25\np1.city = \"Oslo\"\nprint(p1.name)\nprint(p1.age)\nprint(p1.city)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_144",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

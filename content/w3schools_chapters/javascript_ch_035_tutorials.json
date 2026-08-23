@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 35,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ThetoString()method returns a number as a string.\n\nAll number methods can be used on any type of numbers (literals, variables, or expressions):\n\nThetoString()method can take an optional radix argument to convert\nthe number to a different base:\n\ntoExponential()returns a string, with a number rounded and written using exponential notation.\n\nA parameter defines the number of characters behind the decimal point:\n\nThe parameter is optional. If you don't specify it, JavaScript will not round the number.\n\ntoFixed()returns a string, with the number \nwritten with a specified number of \ndecimals:\n\ntoPrecision()returns a string, with a number written with a \nspecified length:\n\nvalueOf()returns a number as a number.\n\nIn JavaScript, a number can be a primitive value (typeof = number) or an \nobject (typeof = object).\n\nThevalueOf()method is used internally in JavaScript to convert Number \nobjects to primitive values.\n\nThere is no reason to use it in your code.\n\nThere are 3 JavaScript methods that can be used \nto convert a variable to a number:\n\nTheNumber()method can be used to convert JavaScript variables to numbers:\n\nNumber()can also convert a date to a number.\n\nThe number of milliseconds between 1970-01-02 and 1970-01-01 is 86400000:\n\nparseInt()parses a string and returns a whole number. Spaces are \nallowed. Only the first number is returned:\n\nIf the number cannot be converted,NaN(Not a Number) is returned.\n\nparseFloat()parses a string and returns a number. Spaces are \nallowed. Only the first number is returned:\n\nIf the number cannot be converted,NaN(Not a Number) is returned.\n\nTheseobject methodsbelong to theNumberobject:\n\nTheNumber.isInteger()method returnstrueif the argument is an integer.\n\nTheNumber.isFinite()method returnstrueif the argument is not Infinity, -iInfinity, nor Nan.\n\nTheNumber.isNaN()method returnstrueif the argument is NaN (Not a Number).\n\nA safe integer is an integer that can be exactly represented as a double precision number.\n\nTheNumber.isSafeInteger()method returnstrueif the argument is a safe integer.\n\nNumber.parseFloat()parses a string and returns a number.\n\nSpaces are allowed. Only the first number is returned:\n\nIf the number cannot be converted,NaN(Not a Number) is returned.\n\nNumber.parseInt()parses a string and returns a whole number.\n\nSpaces are allowed. Only the first number is returned:\n\nIf the number cannot be converted,NaN(Not a Number) is returned.\n\nTheNumber.isInteger()method returnstrueif the argument is an integer.\n\nA safe integer is an integer that can be exactly represented as a double precision number.\n\nTheNumber.isSafeInteger()method returnstrueif the argument is a safe integer.\n\n### Code Snippets\n\n```\nlet x = 123;\nx.toString();\n(123).toString();\n(100 + 23).toString();\n\n---\n\nlet x = 123;\nlet text = x.toString(2);\n\n---\n\nlet x = 9.656;\nx.toExponential(2);\nx.toExponential(4);\nx.toExponential(6);\n\n---\n\nlet x = 9.656;\nx.toFixed(0);\nx.toFixed(2);\nx.toFixed(4);\nx.toFixed(6);\n\n---\n\nlet x = 9.656;\nx.toPrecision();\nx.toPrecision(2);\nx.toPrecision(4);\nx.toPrecision(6);\n\n---\n\nlet x = 123;\nx.valueOf();\n(123).valueOf();\n(100 + 23).valueOf();\n\n---\n\nNumber(true);\nNumber(false);\nNumber(\"10\");\nNumber(\"\u00a0 10\");\nNumber(\"10\u00a0 \");\nNumber(\" 10\u00a0 \");\nNumber(\"10.33\");\nNumber(\"10,33\");\nNumber(\"10 33\");\nNumber(\"John\");\n\n---\n\nNumber(new Date(\"1970-01-01\"))\n\n---\n\nNumber(new Date(\"1970-01-02\"))\n\n---\n\nNumber(new Date(\"2017-09-30\"))\n\n---\n\nparseInt(\"-10\");\nparseInt(\"-10.33\");\nparseInt(\"10\");\nparseInt(\"10.33\");\nparseInt(\"10 20 30\");\nparseInt(\"10 years\");\nparseInt(\"years 10\");\n\n---\n\nparseFloat(\"10\");\nparseFloat(\"10.33\");\nparseFloat(\"10 20 30\");\nparseFloat(\"10 years\");\nparseFloat(\"years 10\");\n\n---\n\nNumber.isInteger(10);\nNumber.isInteger(10.5);\n\n---\n\nNumber.isFinite(123);\n\n---\n\nNumber.isNaN(123);\n\n---\n\nNumber.isSafeInteger(10);\nNumber.isSafeInteger(12345678901234567890);\n\n---\n\nNumber.parseFloat(\"10\");\nNumber.parseFloat(\"10.33\");\nNumber.parseFloat(\"10 20 30\");\nNumber.parseFloat(\"10 years\");\nNumber.parseFloat(\"years 10\");\n\n---\n\nNumber.parseInt(\"-10\");\nNumber.parseInt(\"-10.33\");\nNumber.parseInt(\"10\");\nNumber.parseInt(\"10.33\");\nNumber.parseInt(\"10 20 30\");\nNumber.parseInt(\"10 years\");\nNumber.parseInt(\"years 10\");\n\n---\n\nNumber.isInteger(10);\nNumber.isInteger(10.5);\n\n---\n\nNumber.isSafeInteger(10);\nNumber.isSafeInteger(12345678901234567890);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_34",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

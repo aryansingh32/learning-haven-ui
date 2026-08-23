@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 28,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To avoid the cost of all the shifts in memory that we get from using Arrays, it is useful to implement Binary Trees with pointers from one element to the next, just like Binary Trees are implemented before this point, especially when the Binary Tree is modified often.\n\nBut in case we read from the Binary Tree a lot more than we modify it, an Array implementation of a Binary Tree can make sense as it needs less memory, it can be easier to implement, and it can be faster for certain operations due to cache locality.\n\nConsider this Binary Tree:\n\nThis Binary Tree can be stored in an Array starting with the root node R on index 0. The rest of the tree can be built by taking a node stored on index \\(i\\), and storing its left child node on index \\(2\\cdot i+1\\), and its right child node on index \\(2\\cdot i+2\\).\n\nBelow is an Array implementation of the Binary Tree.\n\nIn this Array implementation, since the Binary Tree nodes are placed in an array, much of the code is about accessing nodes using indexes, and about how to find the correct indexes.\n\nLet's say we want to find the left and right child nodes of node B. Because B is on index 2, B's left child is on index \\(2\\cdot 2+1=5\\), which is node E, right? And B's right child is on index \\(2\\cdot 2+2=6\\), which is node F, and that also fits with the drawing above, right?\n\nAs you can see on line 1, this implementation requires empty array elements where nodes have no child nodes. So to avoid wasting space on empty Array elements, Binary Trees stored using Array implementation should be a \"perfect\" Binary Tree, or a nearly perfect one.\n\nA perfect Binary Tree is when every internal node have exactly two child nodes, and all leaf nodes are on the same level.\n\nIf we remove the G node in the Binary Tree above, it looks like this:\n\nAnd the first line in the code above can be written without wasting space on empty Array elements:\n\nThis is how the three different DFS traversals can be done on an Array implementation of a Binary Tree.\n\nBy comparing how these traversals are done in an array implementation to how the pointer implementation was traversed, you can see that thepre-order,in-order, andpost-ordertraversals works in the same recursive way.\n\n### Code Snippets\n\n```\nExample\nPython:\nbinary_tree_array = ['R', 'A', 'B', 'C', 'D', 'E', 'F', None, None, None, None, None, None, 'G']\n\ndef left_child_index(index):\n    return 2 * index + 1\n\ndef right_child_index(index):\n    return 2 * index + 2\n\ndef get_data(index):\n    if 0 <= index < len(binary_tree_array):\n        return binary_tree_array[index]\n    return None\n\nright_child = right_child_index(0)\nleft_child_of_right_child = left_child_index(right_child)\ndata = get_data(left_child_of_right_child)\n\nprint(\"root.right.left.data:\", data)\nTry it Yourself \u00bb\n\n---\n\nbinary_tree_array = ['R', 'A', 'B', 'C', 'D', 'E', 'F']\n\n---\n\nExample\nPython:\nbinary_tree_array = ['R', 'A', 'B', 'C', 'D', 'E', 'F', None, None, None, None, None, None, 'G']\n\ndef left_child_index(index):\n    return 2 * index + 1\n\ndef right_child_index(index):\n    return 2 * index + 2\n\ndef pre_order(index):\n    if index >= len(binary_tree_array) or binary_tree_array[index] is None:\n        return []\n    return [binary_tree_array[index]] + pre_order(left_child_index(index)) + pre_order(right_child_index(index))\n\ndef in_order(index):\n    if index >= len(binary_tree_array) or binary_tree_array[index] is None:\n        return []\n    return in_order(left_child_index(index)) + [binary_tree_array[index]] + in_order(right_child_index(index))\n\ndef post_order(index):\n    if index >= len(binary_tree_array) or binary_tree_array[index] is None:\n        return []\n    return post_order(left_child_index(index)) + post_order(right_child_index(index)) + [binary_tree_array[index]]\n\nprint(\"Pre-order Traversal:\", pre_order(0))\nprint(\"In-order Traversal:\", in_order(0))\nprint(\"Post-order Traversal:\", post_order(0))\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_27",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

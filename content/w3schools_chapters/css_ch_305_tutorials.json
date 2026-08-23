@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 305,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The following fonts are the best web safe fonts for HTML and CSS:\n\nArial is the most widely used font for both online and printed media. Arial \nis also the default font in Google Docs.\n\nArial is one of the safest web fonts, and it is available on all major operating systems.\n\nVerdana is a very popular font. Verdana is easily readable even for small font sizes.\n\nThe Tahoma font has less space between the characters.\n\nTrebuchet MS was designed by Microsoft in 1996. Use this font carefully. Not \nsupported by all mobile operating systems.\n\nTimes New Roman is one of the most recognizable fonts in the world. It looks \nprofessional and is used in many newspapers and \"news\" websites. It is also the \nprimary font for Windows devices and applications.\n\nGeorgia is an elegant serif font. It is very readable at different font sizes, so it is a good candidate for mobile-responsive design.\n\nGaramond is a classical font used for many printed books. It has a timeless \nlook and good readability.\n\nCourier New is the most widely used monospace serif font. \nCourier New is often used with coding displays, and many email providers \nuse it as their default font. Courier New is also the standard font for movie \nscreenplays.\n\nThe Brush Script MT font was designed to mimic handwriting.\nIt is elegant and sophisticated, but can be hard to read. Use it carefully.\n\n### Code Snippets\n\n```\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n\n---\n\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet.\n0 1 2 3 4 5 6 7 8 9\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_304",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

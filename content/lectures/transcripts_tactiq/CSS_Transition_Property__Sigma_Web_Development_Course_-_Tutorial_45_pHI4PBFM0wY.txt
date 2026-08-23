@@ -1,0 +1,584 @@
+Video URL: https://www.youtube.com/watch?v=pHI4PBFM0wY
+Video Title: CSS Transition Property | Sigma Web Development Course - Tutorial #45
+--------------------------------------------------
+
+00:00:00.000
+Let's say I have a website and there is a sidebar on it.
+00:00:02.400
+Let's say I click on a button and the sidebar comes out from the left side.
+00:00:06.360
+You tell me yourself that the sidebar will look good coming from this side or from this side.
+00:00:11.680
+The smooth transition you just saw on your screen is made with the help of transition property in CSS.
+00:00:17.360
+That is, we say that there should be a very smooth transition from one property to another transition so that it looks appealing to the eyes.
+00:00:26.000
+In today's video, we will learn to make
+00:00:28.000
+transitions like this.
+00:00:30.000
+Like this video and write
+00:00:32.000
+Sigma Batchop in the comment section.
+00:00:34.000
+Let's go to the computer screen.
+00:00:36.000
+Let's roll the intro.
+00:00:44.000
+So guys, I have come back to the computer screen and I will make a new folder named video45
+00:00:49.000
+Now what is this transition?
+00:00:52.000
+First of all, I will tell you this because if you don't know what transition is, then you will not be able to understand this property so well
+00:00:57.000
+Transition means going from one state to another state very smoothly
+00:01:02.000
+So what happens in CSS transition? It is exactly the same thing that going from one state to it will go smoothly so what happens in CSS transition?
+00:01:06.000
+it goes smoothly from one state to another
+00:01:09.000
+now suppose i have a container
+00:01:12.220
+and after this i have a box
+00:01:15.220
+and suppose i write some styles
+00:01:18.220
+so i will put a style here, now after this i will put some styles
+00:01:21.220
+i will write .container and after this i will write .box
+00:01:24.220
+what will i write in .container and then I will write .box here What will I write inside the .container?
+00:01:26.000
+I will write in the .container
+00:01:28.000
+Let's write the background color red
+00:01:30.000
+Now don't say why are you choosing red, it's my choice
+00:01:32.000
+Now I will write the background color here
+00:01:34.000
+Let's say aquamarine, let's do it
+00:01:36.000
+There is no such thing as bad
+00:01:38.000
+Okay, I did this, I did antique white
+00:01:40.000
+Now I will show you its preview
+00:01:42.000
+You will say that I have seen the preview
+00:01:44.000
+I know but I have not put the width and height
+00:01:46.000
+so we don't have to do it so soon
+00:01:48.000
+so i will make the width let us say
+00:01:50.000
+50vw
+00:01:52.000
+and i will make the height
+00:01:54.000
+say 40vh
+00:01:56.000
+ok and
+00:01:58.000
+here i will make it 10 times less
+00:02:00.000
+basically it was a very simple box
+00:02:02.000
+i am showing you so this is our structure
+00:02:04.000
+it is standing now ok now i want that it will be translated to the front it was a simple box i am showing you now our structure is ready
+00:02:06.000
+now i want it to translate
+00:02:08.000
+so if i put a class in it
+00:02:10.000
+i write class.tr
+00:02:12.000
+which will translate
+00:02:14.000
+i will put the name
+00:02:16.000
+and what i am doing in this
+00:02:18.000
+i am saying that
+00:02:20.000
+transform
+00:02:22.000
+translate x
+00:02:24.000
+and let us say we do it 10%
+00:02:27.680
+and along with that I want to translate it to y 10%
+00:02:31.920
+so if I translate x to y
+00:02:34.320
+and as soon as I put a class called translate
+00:02:36.800
+what will happen, let's say I put a class called translate
+00:02:40.560
+so as soon as I put a class called translate, it will be translated to 10%
+00:02:44.400
+10% will be translated to x, 10% and y and the percentage will be the width of this
+00:02:49.000
+so if I make it a little more or I do one thing
+00:02:54.000
+why not make it vwe or vhe so that it looks a little moving
+00:02:59.000
+so it came down, now if I remove this class from it
+00:03:02.000
+I will show you by inspecting, we do this with javascript but now I will show you if I remove this class from here I will show you by inspecting we do this with javascript
+00:03:05.000
+but now I will show you
+00:03:06.000
+if I do this
+00:03:08.000
+and I put it
+00:03:09.000
+so see it is coming suddenly
+00:03:10.000
+it is coming with a shock
+00:03:11.000
+so what is the meaning of a sudden
+00:03:13.000
+coming with a shock
+00:03:14.000
+it means that this is not smooth
+00:03:16.000
+transition
+00:03:17.000
+it is not coming easily
+00:03:18.000
+no it is not doing this
+00:03:20.000
+now because it is not coming easily
+00:03:21.000
+that's why we have to make it smooth
+00:03:23.000
+and that's what transition property does
+00:03:25.000
+so what I'll do is, I'll say that wherever dot translate is applied
+00:03:30.400
+or what I'll do in this element, I'll say transition
+00:03:33.400
+apply transition property
+00:03:35.400
+now the transition property is made up of 4 properties
+00:03:39.000
+never learn transition property directly, learn 4 properties
+00:03:42.000
+first of all, transition property
+00:03:44.000
+what is transition property what is transition property
+00:03:46.000
+then
+00:03:48.000
+transition
+00:03:50.000
+timing function
+00:03:52.000
+transition duration
+00:03:54.000
+transition timing function
+00:03:56.000
+transition timing function
+00:03:58.000
+and then
+00:04:00.000
+transition delay
+00:04:02.000
+so these 4 functions
+00:04:04.000
+you can learn, which property
+00:04:06.000
+i want to transition, transform property
+00:04:09.000
+how much duration, 3 seconds
+00:04:12.000
+what will be the function, ease in
+00:04:15.000
+and ease out, there are many options
+00:04:18.000
+if you do like this, you will get many functions
+00:04:21.000
+i will tell you what is the meaning of this, but for now we will do ease in
+00:04:24.000
+ease in out, ease in
+00:04:26.000
+and what is the difference of ease out
+00:04:28.000
+I will tell you and transition delay
+00:04:30.000
+I say that I want it after 4 seconds
+00:04:32.000
+I want it after at least 1 second
+00:04:34.000
+I will explain all the four properties
+00:04:36.000
+in which property transition should be applied
+00:04:38.000
+first of all I will show you its output
+00:04:40.000
+see I will reload it
+00:04:42.000
+as soon as I reload it, you will see here
+00:04:44.000
+as soon as I will remove this from here, see it went up
+00:04:48.000
+and how many seconds will it take to go from here to there, it will take 4 seconds
+00:04:52.000
+all the time I have put there, how many seconds I have put, 3 seconds
+00:04:56.000
+means for how much duration you want to make the transition, that is your transition duration
+00:05:00.000
+so what did I keep, I kept 3 seconds, what will happen with transition delay
+00:05:04.000
+as soon as the class is put, how long it will take to get seconds What will happen with transition delay?
+00:05:06.000
+As soon as the class is set, how long it will take to get effected
+00:05:09.000
+As soon as I tick, it will start working after 1 second
+00:05:12.000
+I ticked it, after 1 second it came down
+00:05:15.000
+And it will work for 3 seconds
+00:05:18.000
+So this is the difference between transition duration and transition delay
+00:05:21.000
+Transition duration means how long this animation will work
+00:05:24.000
+Transition delay means how long this animation will run
+00:05:25.440
+Now I am using the word animation here, it does not mean that you get confused with animation property
+00:05:29.920
+I will tell you that in the coming videos
+00:05:31.520
+But this is an animation, but the name of the property is not animation, it is transition
+00:05:36.080
+So we are doing this transition to transform property
+00:05:39.840
+The transform property that is applied in this will be the transition
+00:05:42.880
+That is, instead of going from 1 to 100
+00:05:46.000
+You will go from 1 to 100 easily
+00:05:49.000
+Like you have seen that petrol is not from 1 to 500
+00:05:52.000
+It is a transition
+00:05:55.000
+It is 2.33
+00:05:58.000
+Then 3.88 and then your petrol is added
+00:06:01.000
+Some people add 20 rupees but it is added
+00:06:04.000
+How much do you add? tell me in the comment section below
+00:06:07.000
+now what we will do is, we will move forward and learn to combine these four properties in one property
+00:06:14.000
+now what happens is, you can combine these four properties in one property
+00:06:17.500
+because who will write this long, who has this much time
+00:06:19.500
+we don't write lorem 59 here, we write lorem 23, lorem 34 and lorem 45
+00:06:26.560
+where do we have so much time to write so many properties
+00:06:28.840
+so there is a shorthand for this
+00:06:30.320
+before telling you the shorthand, let me tell you that you can also do transition all
+00:06:34.200
+by doing transition all, it will be applied to all the properties
+00:06:36.760
+like suppose I put translate and change its background color to blue
+00:06:41.360
+so now see that as soon as i remove this property
+00:06:46.000
+i will remove
+00:06:48.000
+translate class from here
+00:06:50.000
+i removed translate class
+00:06:52.000
+and as soon as i will put the translate class
+00:06:54.000
+i will hide my face
+00:06:56.000
+so i removed the translate class
+00:06:58.000
+i removed it and hit enter
+00:07:00.000
+as soon as i will remove the translate class
+00:07:02.000
+see it went up and its color also changed
+00:07:04.000
+and as soon as i will remove the translate class, it will go up and its color has also changed and as soon as I put the translate class
+00:07:08.000
+I will hit enter, so see after one second
+00:07:10.000
+it will come down and its color will change
+00:07:12.000
+and transition will happen
+00:07:14.000
+because I am also transitioning the color property
+00:07:16.000
+now suppose I want to transition two properties
+00:07:18.000
+so I can use comma separated values
+00:07:20.000
+so instead of saying all
+00:07:22.000
+I can say, do the color transition
+00:07:24.000
+and with that transform
+00:07:26.000
+so doing this will also do my work, so I had to do color and background color
+00:07:31.000
+I will say, do background color and transform
+00:07:36.000
+so if you come here and do this work again, remove the translate class from here
+00:07:41.000
+so as you remove it, see after 1 second it went up
+00:07:46.000
+so you can make transition of only 2 properties
+00:07:48.000
+but you can use all
+00:07:50.000
+if you want to make transition of all properties
+00:07:52.000
+you can also use transformer multiple
+00:07:54.000
+as I have already told you
+00:07:56.000
+if you want to scale it
+00:07:58.000
+so if I say here scale
+00:08:00.000
+and I say 2
+00:08:02.000
+so it will also increase
+00:08:04.000
+so you see it has become big
+00:08:08.480
+and if I remove this class from this, the translate one
+00:08:13.280
+let's say I translate it, so this class is not there, so it will go up again, it has become small
+00:08:16.960
+then it will become big, it will come down, so if I translate the translate
+00:08:21.200
+so this class is applied after a second, it will come down like this, okay
+00:08:26.000
+now I will tell you about the timing function, so see the timing function function is like this your dev tool is a good friend of mine
+00:08:29.000
+so transition timing function is linear
+00:08:32.000
+what does linear mean? it goes from here to here
+00:08:34.000
+it grows
+00:08:37.000
+then you have ease in out
+00:08:40.000
+what is ease in out?
+00:08:43.000
+and if you see below it is written this is ease in out and if you see here
+00:08:46.000
+it is easy in out, it works like this
+00:08:49.000
+you can make your own function by the way
+00:08:52.000
+and how will the animation work, it looks like this
+00:08:55.000
+this animation will run like this, the speed will increase
+00:08:58.000
+then it will become constant, so see
+00:09:01.000
+this animation will run like this, if you want it to run like this
+00:09:04.000
+then it will run like this, if you want it to run like this then it will run like this if you want it to run like this
+00:09:05.440
+then it will grow and slow down
+00:09:07.440
+first the speed will increase suddenly
+00:09:09.280
+then it will saturate
+00:09:10.320
+and stop
+00:09:11.440
+so if you do like this
+00:09:12.960
+then it will become like this
+00:09:14.000
+it will become like this
+00:09:14.720
+it will come very fast
+00:09:15.360
+then it will stop slowly
+00:09:16.800
+so you can see its traces
+00:09:18.560
+and you can make your own
+00:09:19.840
+if you want to use this function
+00:09:21.360
+after making
+00:09:22.080
+copy this
+00:09:23.360
+copy and bring it here.
+00:09:25.600
+Where I wrote ease in out, bring it there.
+00:09:29.600
+So this is cubic bezier function.
+00:09:32.000
+Don't remember this function, don't remember 0.2, 2, 4, 3.
+00:09:35.600
+Make it yourself, there are other tools to make it,
+00:09:38.600
+but according to me, if you are doing web development, then this is the best tool.
+00:09:42.000
+If someone does editing, then you know that this is also available in Premiere Pro.
+00:09:46.000
+When you use scale or when you try to make smooth animations,
+00:09:51.000
+then you can do this by right-clicking in your keyframes.
+00:09:55.000
+You can select Temporal Interpolation, Ease In Out, all these options are there.
+00:09:59.000
+But we will see Premiere Pro some other time.
+00:10:01.000
+Now we are looking at CSS.
+00:10:03.000
+So here, see, Ease Out is such a function. This is how Ease Out will work. See, this is how it will work, so here EaseOut function is there,
+00:10:05.000
+this is how EaseOut will work, I have ruined it, but this is how it will work,
+00:10:09.000
+this is our FastOut, LinearIn, and here this is EaseIn,
+00:10:12.000
+see there are many other functions, this is EaseIn, this is Sine,
+00:10:16.000
+this is InQuadratic, see there are many functions,
+00:10:20.000
+which one do you want, you can take that, copy and paste it, use it,
+00:10:24.000
+as simple as that
+00:10:26.000
+so in total this is the transition, nothing more than this
+00:10:30.000
+but let me tell you one more thing, shorthand property
+00:10:32.000
+which makes all these four equal, as I told you that we are lazy people
+00:10:36.000
+we don't have that much time, so you write transition here
+00:10:40.000
+and after this write all these four properties
+00:10:42.000
+that I want to do all the properties for 3 seconds
+00:10:45.840
+I want to do ease in out
+00:10:46.960
+or I want to do ease in
+00:10:48.480
+let's do ease in out
+00:10:49.840
+and delay of 1 second
+00:10:51.040
+so these 4 properties are set
+00:10:52.560
+after that if you want help
+00:10:54.240
+then click on MDN reference
+00:10:55.920
+and you will go to its MDN reference
+00:10:58.080
+and here in MDN reference
+00:11:00.480
+you will get to see all this
+00:11:02.080
+with comment
+00:11:02.960
+you will get to see syntax
+00:11:04.480
+so syntax is never my priority
+00:11:06.900
+I understand the concept and coming here directly from VS code makes me feel good
+00:11:11.500
+because you come to official documentation and see things
+00:11:15.400
+so here you can see that it is working
+00:11:18.900
+if I show you my page
+00:11:20.900
+so if I translate it then after one second
+00:11:24.400
+it will go up and if I translate it then after 1 second it will go up
+00:11:26.000
+and if I translate it again then it will go up for 1 second
+00:11:30.000
+and it will work for 3 seconds, everything is working
+00:11:32.000
+easy note is also working, let's change this function
+00:11:36.000
+let's make it a little aggressive, it will go very fast and then slow
+00:11:42.000
+I will make it like this, it will go very fast and then slow it will go very fast and then it will slow down I make it like this it will go fast and then it will slow down
+00:11:46.000
+it will go fast and then it will slow down
+00:11:48.000
+so I take this function and copy it
+00:11:50.000
+so the cubic bezier function
+00:11:52.000
+I made it, I keep it in the place of ease in out
+00:11:54.000
+and I reload the page
+00:11:56.000
+and I translate it again
+00:11:58.000
+and you see
+00:12:00.000
+how aggressive it started and then it slowed down
+00:12:02.000
+and if I translate it again
+00:12:04.000
+it will take an aggressive start and then it will slow down
+00:12:06.560
+so you can make such functions
+00:12:08.360
+so make any function you like from here and take its cubic bezier equivalent and bring it here
+00:12:12.840
+your work will be done
+00:12:14.320
+that was all about transition property
+00:12:16.040
+I don't want to take this course too long
+00:12:18.160
+I want to keep things short and to the point
+00:12:20.720
+if you have not solved the exercise of the last video, then solve it
+00:12:23.680
+because its solution is coming soon
+00:12:25.000
+and people are going to get shoutout, so there is still time, I will not record it now, you have time, you design this grid and you will get shoutout
+00:12:32.000
+and many people were saying that the views have decreased, so don't get demotivated, but I am making videos by watching the views, to be very honest
+00:12:39.000
+I am making a best course of web development
+00:12:45.000
+I have to make it 100% from my side, I should get 100% from my side
+00:12:49.000
+I can do this much, I can't do anything more than this
+00:12:51.000
+This much is in my hand and I am doing it, okay
+00:12:54.000
+I am doing it very well and I will keep doing it in the coming videos
+00:12:57.000
+You guys access the GitHub code
+00:12:59.000
+You guys access this playlist, click here and bookmark
+00:13:02.000
+Click here and save
+00:13:04.000
+And keep like the video
+00:13:05.300
+it motivates me, thank you so much guys for watching this video

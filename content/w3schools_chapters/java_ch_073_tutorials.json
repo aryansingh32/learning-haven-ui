@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 73,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Withmethod overloading, multiple methods can have the same name with different\nparameters:\n\nConsider the following example, which has two methods that add numbers of different type:\n\nInstead of defining two methods that should do the same thing, it is better to overload one.\n\nIn the example below, we overload theplusMethodmethod to work for bothintanddouble:\n\n### Code Snippets\n\n```\nExample\nint myMethod(int x)\nfloat myMethod(float x)\ndouble myMethod(double x, double y)\n\n---\n\nExample\nstatic int plusMethodInt(int x, int y) {\n  return x + y;\n}\n\nstatic double plusMethodDouble(double x, double y) {\n  return x + y;\n}\n\npublic static void main(String[] args) {\n  int myNum1 = plusMethodInt(8, 5);\n  double myNum2 = plusMethodDouble(4.3, 6.26);\n  System.out.println(\"int: \" + myNum1);\n  System.out.println(\"double: \" + myNum2);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nstatic int plusMethod(int x, int y) {\n  return x + y;\n}\n\nstatic double plusMethod(double x, double y) {\n  return x + y;\n}\n\npublic static void main(String[] args) {\n  int myNum1 = plusMethod(8, 5);\n  double myNum2 = plusMethod(4.3, 6.26);\n  System.out.println(\"int: \" + myNum1);\n  System.out.println(\"double: \" + myNum2);\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_72",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

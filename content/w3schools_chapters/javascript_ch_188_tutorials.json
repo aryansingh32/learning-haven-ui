@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 188,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A parsed JSON object becomes a JavaScript object.\n\nObject properties can be displayed with normal JavaScript syntax.\n\nMultiple properties can be combined into one text value.\n\nDisplaying an object directly does not show all its properties.\n\nUseJSON.stringify()to display the complete object as JSON text.\n\nThe third parameterof JSON.stringify() can format the JSON with indentation.\n\nUse an HTML<pre>element to preserve spaces and line breaks.\n\nA parsed JSON array becomes a JavaScript array.\n\nArray values can be accessed by their index numbers.\n\nAfor...ofloop can read every value in an array.\n\nJavaScript can create HTML elements for the values in a JSON array.\n\nJSON often contains an array of objects.\n\nUse a loop to display a property from each object.\n\nAn array of objects can be displayed as an HTML table.\n\nThe example creates one table row for each product.\n\nJSON objects and arrays can contain nested values.\n\nThefetch()method can load JSON from a file or server.\n\nThe parsed data can then be displayed in HTML.\n\nThetextContentproperty displays values as plain text.\n\nTheinnerHTMLproperty interprets its value as HTML.\n\nA JSON object might not contain every expected property.\n\nThe nullish coalescing operator can provide a default value.\n\n### Code Snippets\n\n```\nconst text = '{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}';\nconst person = JSON.parse(text);\ndocument.getElementById(\"demo\").textContent = person.name;\n\n---\n\nconst text = '{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}';\nconst person = JSON.parse(text);\ndocument.getElementById(\"demo\").textContent =\nperson.name + \", \" + person.age + \", \" + person.city;\n\n---\n\nconst person = {name: \"John\", age: 30};\nmyDisplayer(person);\n\n---\n\n[object Object]\n\n---\n\nconst person = {name: \"John\", age: 30};\nlet text = JSON.stringify(person)\nmyDisplayer(text);\n\n---\n\n<pre id=\"demo\"></pre>\n<script>\nconst person = {\nname: \"John\",\nage: 30,\ncity: \"New York\"\n};\ndocument.getElementById(\"demo\").textContent =\nJSON.stringify(person, null, 2);\n</script>\n\n---\n\nconst text = '[\"Ford\",\"Volvo\",\"BMW\"]';\nconst cars = JSON.parse(text);\ndocument.getElementById(\"demo\").textContent = cars[0];\n\n---\n\nconst text = '[\"Ford\",\"Volvo\",\"BMW\"]';\nconst cars = JSON.parse(text);\nlet output = \"\";\nfor (const car of cars) {\noutput += car + \"\\n\";\n}\ndocument.getElementById(\"demo\").textContent = output;\n\n---\n\n<ul id=\"demo\"></ul>\n<script>\nconst text = '[\"Ford\",\"Volvo\",\"BMW\"]';\nconst cars = JSON.parse(text);\nconst list = document.getElementById(\"demo\");\nfor (const car of cars) {\nconst item = document.createElement(\"li\");\nitem.textContent = car;\nlist.appendChild(item);\n}\n</script>\n\n---\n\n[\n{\"name\":\"Laptop\",\"price\":899},\n{\"name\":\"Mouse\",\"price\":29},\n{\"name\":\"Keyboard\",\"price\":79}\n]\n\n---\n\n<ul id=\"demo\"></ul>\n<script>\nconst text = `[\n{\"name\":\"Laptop\",\"price\":899},\n{\"name\":\"Mouse\",\"price\":29},\n{\"name\":\"Keyboard\",\"price\":79}\n]`;\nconst products = JSON.parse(text);\nconst list = document.getElementById(\"demo\");\nfor (const product of products) {\nconst item = document.createElement(\"li\");\nitem.textContent = product.name + \": $\" + product.price;\nlist.appendChild(item);\n}\n</script>\n\n---\n\n<table id=\"demo\" class=\"ws-table-all\">\n<tr>\n<th>Product</th>\n<th>Price</th>\n</tr>\n</table>\n<script>\nconst products = [\n{name: \"Laptop\", price: 899},\n{name: \"Mouse\", price: 29},\n{name: \"Keyboard\", price: 79}\n];\nconst table = document.getElementById(\"demo\");\nfor (const product of products) {\nconst row = table.insertRow();\nconst nameCell = row.insertCell();\nconst priceCell = row.insertCell();\nnameCell.textContent = product.name;\npriceCell.textContent = \"$\" + product.price;\n}\n</script>\n\n---\n\nconst text = `{\n\"name\": \"John\",\n\"address\": {\n\"city\": \"New York\",\n\"country\": \"USA\"\n}\n}`;\nconst person = JSON.parse(text);\ndocument.getElementById(\"demo\").textContent =\nperson.address.city;\n\n---\n\n<p id=\"demo\"></p>\n<script>\nasync function loadCustomer() {\ntry {\nconst response = await fetch(\"customer.json\");\nif (!response.ok) {\nthrow new Error(\"HTTP error \" + response.status);\n}\nconst customer = await response.json();\ndocument.getElementById(\"demo\").textContent =\ncustomer.name + \", \" + customer.city;\n}\ncatch(err) {\ndocument.getElementById(\"demo\").textContent = err.message;\n}\n}\nloadCustomer();\n</script>\n\n---\n\nelement.textContent = customer.name;\n\n---\n\nelement.innerHTML = customer.name;\n\n---\n\nconst person = {name: \"John\"};\ndocument.getElementById(\"demo\").textContent =\nperson.city ?? \"Unknown city\";\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_187",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 134,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Lambda Expressions were added in Java 8.\n\nAlambda expressionis a short block of code that takes in parameters and returns a value. \nLambdas look similar to methods, but they do not need a name, and they can be written right inside a method body.\n\nThe simplest lambda expression contains a single parameter and an expression:\n\nTo use more than one parameter, wrap them in parentheses:\n\nSimple expressions must return a value immediately. They cannot contain multiple statements, such as loops orifconditions. \nTo do more complex work, use a code block with curly braces. If the lambda should return a value, use thereturnkeyword:\n\nLambdas are often passed as arguments to methods. For example, you can use a lambda in theforEach()method of anArrayList:\n\nA lambda expression can be stored in a variable. The variable's type must be an interface with exactly one method \n(afunctional interface). The lambda must match that method's parameters and return type.\n\nJava includes many built-in functional interfaces, such asConsumer(from thejava.utilpackage) used with lists.\n\nYou can also pass a lambda expression to a method. The method's parameter must be a functional interface. \nCalling the interface's method will then run the lambda expression:\n\nIn Java 8+, you can often replace ananonymous classwith alambda expression- \nbut only if the interface is afunctional interface(one abstract method).\n\n### Code Snippets\n\n```\nparameter\n->\nexpression\n\n---\n\n(\nparameter1\n,\nparameter2\n) ->\nexpression\n\n---\n\n(\nparameter1\n,\nparameter2\n) -> {\n  // code block\n  return\nresult\n;\n}\n\n---\n\nExample\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<Integer> numbers = new ArrayList<Integer>();\n    numbers.add(5);\n    numbers.add(9);\n    numbers.add(8);\n    numbers.add(1);\n    numbers.forEach((n) -> { System.out.println(n); });\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.util.ArrayList;\nimport java.util.function.Consumer;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<Integer> numbers = new ArrayList<Integer>();\n    numbers.add(5);\n    numbers.add(9);\n    numbers.add(8);\n    numbers.add(1);\n    \n    Consumer<Integer> method = (n) -> { System.out.println(n); };\n    numbers.forEach(method);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\ninterface StringFunction {\n  String run(String str);\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    StringFunction exclaim = (s) -> s + \"!\";\n    StringFunction ask = (s) -> s + \"?\";\n    printFormatted(\"Hello\", exclaim);\n    printFormatted(\"Hello\", ask);\n  }\n\n  public static void printFormatted(String str, StringFunction format) {\n    String result = format.run(str);\n    System.out.println(result);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nAnonymous Class\n// Functional interface (one abstract method)\ninterface Greeting {\n  void sayHello();\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Greeting g = new Greeting() {\n      public void sayHello() {\n        System.out.println(\"Hello from anonymous class\");\n      }\n    }; \n    g.sayHello();\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nLambda Expression\n// Same functional interface\ninterface Greeting {\n  void sayHello();\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Greeting g = () -> System.out.println(\"Hello from lambda\");\n    g.sayHello();\n  }\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_133",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

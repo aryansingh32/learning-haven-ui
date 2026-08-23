@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 128,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In the previous chapters, you learned that data structures (likevectors,lists, etc) are used to store and organize data.\n\nAlgorithmsare used to solve problems by sorting, searching, and manipulating data structures.\n\nThe<algorithm>library provides many \nuseful functions to perform these tasks \nwithiterators.\n\nTo use these functions, you must include the<algorithm>header file:\n\nTo sort elements in a data structure, you can use thesort()function.\n\nThesort()function takesiterators(typically astart iteratorreturned bybegin()and anend iteratorreturned byend()) as \nparameters:\n\nBy default, the elements are sorted in ascending order. In the example above, \nthe elements are sorted alphabetically since they are strings.\n\nIf we had a vector of integers, they would be sorted numerically:\n\nTo reverse the order, you can userbegin()andrend()instead ofbegin()andend():\n\nTo only sort specific elements, you could write:\n\nTo search for specific elements in a vector, you can use thefind()function.\n\nIt takes three parameters:start_iterator,end_iterator,value, wherevalueis the value to search for:\n\nTo search for the first element that isgreater thana specific value, you can use theupper_bound()function:\n\nTo find the smallest element in a vector, use themin_element()function:\n\nTo find the largest element, use themax_element()function:\n\nTo copy elements from one vector to another, you can use thecopy()function:\n\nTo fill all elements in a vector with a value, you can use thefill()function:\n\nFor a complete reference of algorithm functions, go to ourC++ Algorithm Reference.\n\n### Code Snippets\n\n```\n// Include the algorithm library\n#include <algorithm>\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Sort cars alphabetically\nsort(cars.begin(), cars.end());\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> numbers = {1, 7, 3, 5, 9, 2};\n// Sort numbers numerically\nsort(numbers.begin(), numbers.end());\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> numbers = {1, 7, 3, 5, 9, 2};\n// Sort numbers \n  numerically in reverse order\nsort(numbers\n.rbegin()\n, numbers\n.rend()\n);\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Sort numbers numerically, starting \n  from the fourth element (only sort 5, 9, and 2)\nsort(numbers.\nbegin() \n  + 3\n, numbers.end());\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Search for the number 3\nauto it = find(numbers.begin(), numbers.end(), 3);\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Sort the vector in ascending order\nsort(numbers.begin(), numbers.end());\n// Find the first value that is greater \n  than 5 in the sorted vector\nauto it = upper_bound(numbers.begin(), \n  numbers.end(), 5);\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Find the smallest number\nauto it = \n  min_element(numbers.begin(), numbers.end());\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Find the largest number\nauto it = \n  max_element(numbers.begin(), numbers.end());\n\n---\n\n// Create a vector called numbers that will store integers\nvector<int> \n  numbers = {1, 7, 3, 5, 9, 2};\n// Create a vector called copiedNumbers \n  that should store 6 integers\nvector<int> copiedNumbers(6);\n// \n  Copy elements from numbers to copiedNumbers\ncopy(numbers.begin(), \n  numbers.end(), copiedNumbers.begin());\n\n---\n\n// Create a vector called numbers that will store 6 integers\nvector<int> \n  numbers(6);\n// Fill all elements in the numbers vector with the value \n  35\nfill(numbers.begin(), numbers.end(), 35);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_127",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

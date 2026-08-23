@@ -38,6 +38,10 @@ export const coursesService = {
     delete: async (id: string) => {
         await api.delete(`/admin/courses/${id}`);
     },
+    bulkDelete: async (ids: string[]) => {
+        const res = await api.post('/admin/courses/bulk-delete', { ids });
+        return res.data;
+    },
     addItem: async (id: string, data: { problem_id: string; order_index?: number }) => {
         const res = await api.post(`/admin/courses/${id}/items`, data);
         return res.data;

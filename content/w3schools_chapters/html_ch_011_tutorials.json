@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 11,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "HTML attributes provide additional information about HTML elements.\n\nThe<a>tag defines a hyperlink. Thehrefattribute specifies the URL of the page \nthe link goes to:\n\nYou will learn more about links in ourHTML Links\nchapter.\n\nThe<img>tag is used to embed an \nimage in an HTML page. Thesrcattribute \nspecifies the path to the image to be displayed:\n\nThere are two ways to specify the URL in thesrcattribute:\n\n1. Absolute URL- Links to an external image that is hosted \non another website. Example:src=\"https://www.w3schools.com/images/img_girl.jpg\".\n\nNotes:External images might be under copyright. If you do \nnot get permission to use it, you may be in violation of copyright laws. In \naddition, you cannot control external images; it can suddenly be removed or \nchanged.\n\n2. Relative URL- Links to an image that is hosted within \nthe website. Here, the URL does not include the domain name. If the URL begins \nwithout a slash, it will be relative to the current page. Example: src=\"img_girl.jpg\". \nIf the URL begins with a slash, it will be relative to the domain. Example: src=\"/images/img_girl.jpg\".\n\nTip:It is almost always best to use relative URLs. They \nwill not break if you change domain.\n\nThe<img>tag should also contain thewidthandheightattributes, which specify the width and \nheight of the image (in pixels):\n\nThe requiredaltattribute for the<img>tag specifies an \nalternate text for an image, if the image for some reason cannot be displayed. \nThis can be due to \na slow connection, or an error in thesrcattribute, or if the user uses a screen \nreader.\n\nYou will learn more about images in ourHTML Images chapter.\n\nThestyleattribute is used to add styles to \nan element, such as color, font, size, and more.\n\nYou will learn more about styles in ourHTML Styles chapter.\n\nYou should always include thelangattribute \ninside the<html>tag, to declare the \nlanguage of the Web page. This is meant to assist search engines and browsers.\n\nThe following example specifies English as the language:\n\nCountry codes can also be added to the language code in thelangattribute. So, the first two characters define the language of the HTML page, \nand the last two characters define the country.\n\nThe following example specifies English as the language and United States as \nthe country:\n\nYou can see all the language codes in ourHTML Language Code Reference.\n\nThetitleattribute defines some extra \ninformation about an \nelement.\n\nThe value of the title attribute will be displayed as a tooltip when \nyou mouse over the element:\n\nThe HTML standard does not require lowercase attribute names.\n\nThe title attribute (and all other attributes) can be written with uppercase or lowercase \nliketitleorTITLE.\n\nHowever, W3Crecommendslowercase attributes in HTML, anddemandslowercase attributes for stricter document types like XHTML.\n\nThe HTML standard does not require quotes around attribute values.\n\nHowever, W3Crecommendsquotes in HTML, anddemandsquotes for \nstricter document types like XHTML.\n\nSometimes you have to use quotes. This example will not display \nthe title attribute correctly, because it contains a space:\n\nDouble quotes around attribute values are the most common in HTML, but single \nquotes can also be used.\n\nIn some situations, when the attribute value itself contains double quotes, it is necessary to use single quotes:\n\nOr vice versa:\n\n### Code Snippets\n\n```\n<a href=\"https://www.w3schools.com\">Visit W3Schools</a>\n\n---\n\n<img src=\"img_girl.jpg\">\n\n---\n\n<img src=\"img_girl.jpg\" width=\"500\" height=\"600\">\n\n---\n\n<img src=\"img_girl.jpg\" alt=\"Girl \n  with a jacket\">\n\n---\n\n<img src=\"img_typo.jpg\" alt=\"Girl \n  with a jacket\">\n\n---\n\n<p style=\"color:red;\">This is a red paragraph.</p>\n\n---\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n...\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html lang=\"en-US\">\n<body>\n...\n</body>\n</html>\n\n---\n\n<p title=\"I'm a tooltip\">This is a paragraph.</p>\n\n---\n\n<a href=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<a href=https://www.w3schools.com/html/>Visit our HTML tutorial</a>\n\n---\n\n<p\n title=Description of W3Schools>\n\n---\n\n<p title='John \"ShotGun\" Nelson'>\n\n---\n\n<p title=\"John 'ShotGun' Nelson\">\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

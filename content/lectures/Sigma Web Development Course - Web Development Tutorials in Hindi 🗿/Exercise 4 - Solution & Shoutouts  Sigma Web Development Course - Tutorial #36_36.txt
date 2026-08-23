@@ -1,0 +1,532 @@
+Video URL: https://www.youtube.com/watch?v=n1T6Ve00j24
+Video Title: Exercise 4 - Solution & Shoutouts | Sigma Web Development Course - Tutorial #36
+--------------------------------------------------
+
+00:00:00.000
+Many of you solved exercise 4
+00:00:02.000
+In today's video, I will shoutout all of you
+00:00:04.000
+who solved exercise 4
+00:00:06.000
+and we will also see the solution of exercise 4
+00:00:08.000
+Keep liking the video
+00:00:10.000
+and write sigma batch op in the comment section
+00:00:12.000
+Let's go to the computer screen
+00:00:14.000
+Let's roll the intro
+00:00:24.000
+So guys this is my folder of Sigma web development course, I will shift right click and open it in VS code
+00:00:30.000
+Actually someone suggested me that why don't you open it directly like this, so that's a matter of preference, you can approach it from here, it's totally same according to me
+00:00:45.200
+so I will make a folder named video 36 and I made it in video 34
+00:00:49.200
+we will take it out, we will take it out and if we take it out, it will come out
+00:00:53.700
+come out bro, yes it came out, move
+00:00:56.200
+and after doing this, our video 36 is empty here, it has an index.html
+00:01:02.200
+and as always, I will solve this
+00:01:06.000
+question and then we will
+00:01:08.000
+take things from there, so let's
+00:01:10.000
+get started, I guess our video was 34th
+00:01:12.000
+no it was not 34th
+00:01:14.000
+I guess it was 33rd video
+00:01:16.000
+in which we had to make a multicolor website
+00:01:18.000
+which can change color using
+00:01:20.000
+CSS variables, according to me
+00:01:22.000
+it was a very basic and
+00:01:24.000
+simple exercise
+00:01:25.600
+so let's go, css multicolor website
+00:01:30.400
+I will write it like this
+00:01:32.000
+and here I will put a style tag
+00:01:35.400
+I have to write style in small
+00:01:39.200
+and after this what I will do here
+00:01:41.200
+first of all I will make a header tag here
+00:01:44.600
+then I will make a nav tag, then I will make a ul then I will create a header tag then a nav tag, ul and li
+00:01:49.020
+after that i will write home and then i will replicate it
+00:01:54.100
+and how i replicated it i will show you in screencast mode
+00:01:59.300
+i used alt shift and down arrow
+00:02:02.100
+however you can change it in VS Code settings
+00:02:06.000
+you can also change it
+00:02:08.000
+by using keyboard shortcuts, if you can't see
+00:02:10.000
+let me show you, here you can use keyboard shortcuts
+00:02:12.000
+and now you can see
+00:02:14.000
+I hope, so here is home
+00:02:16.000
+here is about
+00:02:18.000
+and here I write about
+00:02:20.000
+and here I write services
+00:02:22.000
+and here contact us, ok
+00:02:24.000
+here I can write contact us contact us here I can write contact us
+00:02:26.840
+and after doing this you can see that our website
+00:02:30.320
+looks like this, I can do the preview here and there
+00:02:33.920
+so I can say that the li in ul
+00:02:37.440
+the list style of that, make it none
+00:02:41.440
+and then after that I can say that the ul
+00:02:44.400
+which is our UL
+00:02:46.000
+if I want all of them to come horizontally
+00:02:50.000
+and I don't want to use the flexbox
+00:02:52.000
+then how will I do this, you tell me in the comment section
+00:02:54.000
+then I will show you
+00:02:56.000
+so if you have guessed correctly
+00:02:58.000
+then I will make UL and LI display inline
+00:03:00.000
+will I display inline
+00:03:02.000
+and see it came like this
+00:03:04.000
+although it is not a good approach
+00:03:06.000
+but again if you
+00:03:08.000
+display inline
+00:03:10.000
+then you will get this
+00:03:12.000
+and if you give padding
+00:03:14.000
+23px padding
+00:03:16.000
+see this
+00:03:18.000
+so we can
+00:03:20.000
+put this navbar
+00:03:22.000
+and i can say that my nav
+00:03:24.000
+color it's background
+00:03:26.000
+let's say I take a nice background color
+00:03:29.000
+and I will put a star
+00:03:32.000
+M0 and P0
+00:03:35.000
+I will write P0 as well
+00:03:38.000
+and I will open it in browser
+00:03:41.000
+if you have not accessed the sigma web development playlist
+00:03:44.000
+then do it, what are you doing, I mean, do it like this
+00:03:47.500
+so I will open it in the browser so that it is visible here, now it looks like this, okay
+00:03:54.500
+I can change its font and many other things, but now I will focus on making it multicolored
+00:04:01.500
+so I will give padding from top to bottom 12 pixels, from left to right 0 pixels and I will do it multi-color, so I will give padding from top bottom 12 pixels I will give 0 from left right and I will do it like this, okay
+00:04:07.000
+and obviously I will not put media query in it
+00:04:10.000
+I will make it a very simple navbar
+00:04:12.000
+as you can see here, a very simple navbar is here
+00:04:15.000
+now here I will search on google, google font popins
+00:04:19.000
+and I will take a style of popins
+00:04:21.000
+and I just want to tell you that
+00:04:23.000
+how will you do it, now I will remove one style and I just want to tell you that how you will do it,
+00:04:25.280
+now I will remove the ballo brother, I don't want ballo brother,
+00:04:28.000
+so I will minus ballo brother, I will keep only popins and I will copy this and put it here,
+00:04:33.000
+I will say that I have to do the whole site from popins and I will copy this import statement
+00:04:38.000
+and put it in my style tag or I will copy the whole style tag, a new style tag,
+00:04:43.000
+you can put more than one style tag by the way if you don't know
+00:04:46.000
+I hope you know, I will right click and do format document
+00:04:48.000
+it will look like this
+00:04:50.000
+and now see it is
+00:04:52.000
+appearing like this
+00:04:54.000
+if you want you can reduce the font size of the ally
+00:04:56.000
+but I will tell you one thing, if I reset
+00:04:58.000
+it will look like this, you can
+00:05:00.000
+change the font weight
+00:05:02.000
+I know what I do, I
+00:05:04.000
+change the font weight I know what I do I change font weight
+00:05:06.000
+here and here
+00:05:08.000
+right click and inspect
+00:05:10.000
+and here I
+00:05:12.000
+font weight
+00:05:14.000
+let's say I want to make it bolder
+00:05:16.000
+so I make it bolder
+00:05:18.000
+I want to make color white
+00:05:20.000
+so this is a very basic
+00:05:22.000
+navbar, ok, this is a very basic
+00:05:24.000
+navbar and these two properties I will copy and paste these properties here
+00:05:28.000
+I don't have any figma file
+00:05:29.700
+I have not made anything here that I can refer
+00:05:35.060
+but I will show you one thing here
+00:05:37.540
+oops, did I do something wrong here
+00:05:39.140
+what did I do wrong here
+00:05:42.480
+ok, so I removed the padding and font width
+00:05:46.000
+I removed the padding
+00:05:48.000
+now if I format it, it will be fine
+00:05:50.000
+yes, so now our website is looking
+00:05:52.000
+like this, our navbar is looking like this
+00:05:54.000
+but if you want to
+00:05:56.000
+change its color, then how will you do it
+00:05:58.000
+you know how you will change
+00:06:00.000
+this is on navbar
+00:06:02.000
+so by not doing blue violet
+00:06:04.000
+let's say you want to keep this color
+00:06:06.000
+or blue color, you can keep any color
+00:06:08.000
+you want, ok
+00:06:10.000
+so you can keep any color you like
+00:06:12.000
+so if you like this
+00:06:14.000
+color or this color
+00:06:16.000
+then you can keep anything
+00:06:18.000
+but you know what i will do, i will store this in css variable
+00:06:20.000
+so what i will say here
+00:06:22.000
+that brother,
+00:06:24.000
+in the root i will say here is the root
+00:06:26.000
+in that i will
+00:06:27.680
+primary color
+00:06:30.920
+and i want to make primary color
+00:06:34.760
+this color
+00:06:37.760
+not blue violet, this color
+00:06:40.760
+i have changed it by mistake
+00:06:44.120
+little less this is good, this is good actually,
+00:06:50.300
+hmm, yes, ok, I will copy this color, I will do it now, I have done it, ok, so I told you the syntax already,
+00:06:58.900
+where did I tell you, in the video of CSS variables, where is the video of CSS variables? The video of CSS variables was our video number 30
+00:07:07.280
+so I will show you here in video number 30
+00:07:09.840
+that how we made variables in CSS variables
+00:07:13.040
+so the way we learned to make variables in video number 30
+00:07:16.160
+in the same way we will make it
+00:07:17.920
+now after this I will do a secondary or I will do one thing
+00:07:20.960
+I will put text color, text color
+00:07:23.280
+and my text color will be white and what I will do one thing, I will put text color, text color and my text color will be white
+00:07:27.000
+and what I will do here is
+00:07:30.000
+secondary color
+00:07:34.440
+I will put
+00:07:35.800
+not primary color, I will put this color
+00:07:38.800
+but I will change it a little, I will show you how I will change it
+00:07:42.880
+so we will change it in such a way that
+00:07:46.000
+it will be light, it will be my background
+00:07:48.000
+color, so I will say that
+00:07:50.000
+the body
+00:07:52.000
+the body
+00:07:54.000
+the background color of that
+00:07:56.000
+use variable
+00:07:58.000
+secondary color
+00:08:00.000
+and the one I have used
+00:08:02.000
+here use variable
+00:08:04.000
+and what should I do used here is use primary color
+00:08:06.440
+and the text color here is use that
+00:08:10.920
+so the color I was using in the nav I will also bring it from the variable
+00:08:14.960
+and here I will say that use the text color
+00:08:18.720
+will it make any difference to the site?
+00:08:20.520
+it will not make any difference to the site
+00:08:22.320
+the site will will be like this, but if i want i can change the color by changing only one variable
+00:08:31.000
+and changing one variable will change my whole website, now see i will build this website more when i will make it in reality second thing is, if you think this is looking weird then I want to show you one more thing
+00:08:45.240
+that you can put anchor tag in li
+00:08:48.240
+like this, ok
+00:08:49.240
+you can put anchor tag like this
+00:08:51.240
+now see what I am doing here
+00:08:52.240
+I did this, then pressed end, then ctrl v
+00:08:54.740
+here it is written which key to press
+00:08:56.740
+I did all this by pressing
+00:08:58.740
+I wrote a here actually
+00:09:01.240
+and I will do ctrl z
+00:09:03.240
+I have to bring all these things to this A
+00:09:06.000
+So you can do this
+00:09:09.000
+You can also use multi cursor functionality in VS Code
+00:09:12.000
+As you like it, you can do it
+00:09:15.000
+I have put A in LI
+00:09:18.000
+I will home it
+00:09:19.000
+I will home it like this
+00:09:22.000
+Then you see here that I have put a in li
+00:09:26.000
+so here I have
+00:09:28.000
+put an anchor tag and here
+00:09:30.000
+I will put href is equal to slash
+00:09:32.000
+href is equal to slash
+00:09:34.000
+and you can see that these links are made
+00:09:36.000
+now obviously the thing
+00:09:38.000
+I have done for li
+00:09:40.000
+I have to do for a also because
+00:09:42.000
+for a there are some
+00:09:44.000
+by default styles
+00:09:45.700
+so I will write here ULIA and the color I will take from here
+00:09:52.900
+and I will do text decoration none, what happens by doing text decoration none
+00:09:56.400
+this is our anchor tag, the underline below it goes away
+00:09:59.900
+if I remove it, then you see the underline has come, you are seeing I am toggling
+00:10:02.900
+and you know the color, why do I have to change the color
+00:10:06.000
+so this thing is done, now let's see
+00:10:09.000
+how can we make different variants of our website
+00:10:12.000
+so see, if I change these colors
+00:10:15.000
+let's say, make it greenish, I say
+00:10:18.000
+we need green, so one is darker green
+00:10:21.000
+and one is white
+00:10:24.000
+and this is lighter green and comment it out
+00:10:27.000
+something like this and you see our same website is made in green theme
+00:10:33.000
+I will make it more dark so that it will be dark because it has white text
+00:10:38.000
+so see our green theme is made now suppose you want to make blue theme from this
+00:10:42.000
+make blue theme from this and change it to make blue theme from this make blue theme from this change it here make blue theme, dark blue theme
+00:10:46.500
+no problem
+00:10:48.000
+you have made blue theme here
+00:10:50.000
+you take it
+00:10:52.000
+to whiteish
+00:10:54.000
+and here it is your blue theme
+00:10:56.000
+if you see it purple
+00:10:58.000
+and you want it to be blue
+00:11:00.000
+then you can make it blue
+00:11:02.000
+ok, so you
+00:11:04.000
+can do sky is the limit, you can hover here
+00:11:07.000
+so this hand is going here and as soon as I click here
+00:11:10.000
+see it's bringing me to index, ok
+00:11:12.000
+so we have made a very good website
+00:11:14.000
+if I put logo in navbar then it will look better
+00:11:17.000
+and putting that is not a big thing
+00:11:19.000
+I will put a div here and image and logo
+00:11:22.000
+so in this way we can make a website of multiple colors now what I will put the image and the logo will be there. So in this way, we can make a website of multiple colors.
+00:11:25.000
+Now what I will do here is that I will give a shoutout to those who have solved this exercise.
+00:11:30.000
+So I will quickly load all the comments.
+00:11:33.000
+And a lot of people have commented.
+00:11:35.000
+And let me tell you that all of you who have commented, your hard work will not go in vain.
+00:11:41.000
+Solving the exercise for you and for your web prove to be very useful for your web development career.
+00:11:46.000
+So what I will do now is give a shoutout from below
+00:11:49.000
+Vishnu, Ankit, Heli, Alok, Amit,
+00:11:52.000
+Developer, Shubh, Enchanted Gamer,
+00:11:55.000
+The Great Navid Khan, Rajesh, Ankit,
+00:11:58.000
+Yuk, Local, Sahil Rehman, Aishwarya Tech,
+00:12:01.000
+Developer Foundation, Amit Mohli,
+00:12:04.000
+Itsmeedilip, Awais Mughal Fan, Rohit, I will give some random shoutouts to developer foundation, Saurabh, then after you will come here, Tharan Ansari, MD Athar Ansari,
+00:12:28.400
+then to use nothing, swastik, shiv mahapuriya,
+00:12:31.800
+Mahapuran, Manas, python krish,
+00:12:35.400
+Manas Agarwal, python krishna,
+00:12:37.900
+then I will give a shoutout to Amit Mally, Vansh, python krishna,
+00:12:42.900
+and here shoutout to Ankit Sahuio, Gaming, Bhupendra Jogi, Enchanted Gamer, Ankit Kumar, Kaman, Haldar, Web Development, Code with Rohhit, use nothing and zubair khan has solved it he has put the right approach
+00:13:06.000
+and i hope that
+00:13:08.000
+you guys will also be able to
+00:13:10.000
+work with this approach
+00:13:12.000
+the code will be updated very soon
+00:13:14.000
+and i hope that you guys have accessed this playlist
+00:13:16.000
+that's it for now guys
+00:13:18.000
+thank you so much guys for watching this video
+00:13:20.000
+and i will see you
+00:13:22.000
+next time.

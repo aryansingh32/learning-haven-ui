@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 21,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThedisplay: inline-blockproperty combines the features of both inline and block elements.\n\nAn element withdisplay: inline-blockwill \nappear on the same line as other inline or inline-block elements. In addition, \nyou can set thewidth,height,margin-top, andmargin-bottomproperties for \nthe element (like block elements).\n\nThe following example shows the different behavior ofdisplay: inline,display: inline-blockanddisplay: block:\n\nA common use fordisplay: inline-blockis to display list items horizontally instead of vertically. The following \nexample creates a horizontal navigation menu:\n\n### Code Examples\n\n```\nspan.a {\ndisplay: inline; /* the default for span */\npadding: 5px;\nborder: 2px solid red;\n}\nspan.b {\ndisplay: \n  inline-block;\nwidth: 100px;\nheight: \n  35px;\npadding: 5px;\nborder: 2px \n  solid red;\n}\nspan.c {\ndisplay: block;\nwidth: \n  100px;\nheight: 35px;\npadding: 5px;\nborder: 2px solid red;\n}\n\n---\n\n.nav {\nbackground-color: lightgray;\nlist-style-type: none;\npadding: 0;\nmargin: 0;\n}\n.nav li {\ndisplay: inline-block;\nfont-size: 18px;\npadding: \n  15px;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nWith CSS, you can center elements (horizontally, vertically, or both) with several methods, depending on the type of element.\n\nThere are several ways to horizontally align elements:\n\nVertical centering can be achieved using modern layout techniques:\n\n### Code Examples\n\n```\n.center {\ndisplay: flex;\njustify-content: center;\nalign-items: center;\n}\n```\n\n## Tutorials\n\nThere are several ways to horizontally center elements in CSS, depending on the type of element.\n\nUsemargin: auto;, \nto horizontally center a block-level element (like <div>).\n\nAlso specify awidthfor the element, to prevent it from stretching out to the edges of its container.\n\nNote:Center aligning has no effect on block-level elements if thewidthproperty is not set \n(or set to 100%).\n\nBelow, the <div> element is centered and has a width of 50% (and the remaining space \nwill be split equally between the left and right margins):\n\nTo center the text inside a block-level element, usetext-align: center;.\n\nTip:For more examples on how to align text, see theCSS Textchapter.\n\nTo center an image, setmargin-leftandmargin-righttoauto, and \nalso turn the image into ablockelement:\n\nAnother method for aligning elements is to useposition: absolute;:\n\nNote:Absolute positioned elements are removed from the normal flow, and can overlap \nother elements.\n\nAnother method for aligning an element to the left or right, is to use thefloatproperty:\n\n### Code Examples\n\n```\n.center\n{\nmargin: auto;\nwidth: 50%;\nborder: 3px solid green;\npadding: 10px;\n}\n\n---\n\np {\ntext-align: center;\n}\n\n---\n\nimg\n{\ndisplay: block;\nmargin-left: auto;\nmargin-right: auto;\nwidth: 40%;\n}\n\n---\n\n.right\n{\nposition: absolute;\nright: 0px;\nwidth: 300px;\nborder: 3px solid green;\npadding: 10px;\n}\n\n---\n\n.right\n{\nfloat: right;\nwidth: 300px;\nborder: 3px solid green;\npadding: 10px;\n}\n```\n\n## Tutorials\n\nVertical centering in CSS can be achieved using modern layout techniques like Flexbox and Grid, or using positioning with transforms.\n\nWithCSS flexboxyou can center elements, both horizontally and vertically, within a flex container.\n\nA flex container with both thejustify-contentand thealign-itemsproperties set tocenterwill align the item(s) in the center (in both axis):\n\nWithCSS gridyou can center elements, both horizontally and vertically, within a grid container.\n\nA grid container with theplace-itemsproperty set to center, will align the item(s) in the center (in both axis).\n\nIf you deal with elements of unknown or dynamic dimensions, it is a common \ntechnique to useposition: \nabsolute;combined withtransform: translate();to center an element:\n\nTip:You will learn more about the transform property in our2D Transforms \nChapter.\n\n### Code Examples\n\n```\n.center {\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nheight: 200px;\nborder: 3px solid \n  green;\n}\n\n---\n\n.center {\ndisplay: grid;\nplace-items: center;\nheight: 200px;\nborder: 3px solid \n  green;\n}\n\n---\n\n.container p {\nmargin: 0;\nposition: absolute;\ntop: 50%;\nleft: 50%;\ntransform: translate(-50%, -50%);\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_21",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_21",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

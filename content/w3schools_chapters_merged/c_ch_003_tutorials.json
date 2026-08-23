@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 3,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nComments can be used to explain C++ code, and to make it more readable. It can also be used to \nprevent execution when testing alternative code. Comments can be singled-lined or multi-lined.\n\nSingle-line comments start with two forward slashes (//).\n\nAny text between//and the end of the line \nis ignored by the compiler (will not be executed).\n\nThis example uses a single-line comment before a line of code:\n\nThis example uses a single-line comment at the end of a line of code:\n\nMulti-line comments start with/*and ends with*/.\n\nAny text between/*and*/will be ignored by \nthe compiler:\n\n### Code Examples\n\n```\n// This is a comment\ncout << \"Hello World!\";\n\n---\n\ncout << \"Hello World!\"; // This is a comment\n\n---\n\n/* The code below will print the words Hello World!\nto the screen, and it is \n  amazing */\ncout << \"Hello World!\";\n```\n\n## Tutorials\n\nVariables are containers for storing data values.\n\nIn C++, there are differenttypesof variables (defined with different keywords), for example:\n\nTo create a variable, specify the type and assign it a value:\n\nWheretypeis one of C++ types (such asint), andvariableNameis the name of the variable (such asxormyName). Theequal signis used to assign values to the variable.\n\nTo create a variable that should store a number, look at the following example:\n\nYou can also declare a variable without assigning the value, and assign the value later:\n\nNote that if you assign a new value to an existing variable, it will overwrite the previous value:\n\nA demonstration of other data types:\n\nThecoutobject is used together with the<<operator to display variables.\n\nTo combine both text and a variable, separate them with the<<operator:\n\nYou can also combine different types, which you will learn more about in a \nlater chapter.\n\nTo add a variable to another variable, you can use the+operator:\n\n### Code Examples\n\n```\ntype\nvariableName\n=\nvalue\n;\n\n---\n\nint myNum = 15;\ncout << myNum;\n\n---\n\nint myNum;\nmyNum = 15;\ncout << myNum;\n\n---\n\nint myNum = 15;\u00a0\u00a0// myNum is 15\nmyNum = 10;\u00a0 // Now myNum is 10\ncout << myNum;\u00a0 // Outputs 10\n\n---\n\nint myNum = 5;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Integer (whole number without decimals)\ndouble myFloatNum = 5.99;\u00a0\u00a0\u00a0 \n  // Floating point number (with decimals)\nchar myLetter = 'D';\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Character\nstring myText = \"Hello\";\u00a0\u00a0\u00a0\u00a0 \n  // String (text)\nbool \n  myBoolean = true;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Boolean (true or \n  false)\n\n---\n\nint myAge = 35;\ncout << \"I am \" << myAge << \" years old.\";\n\n---\n\nstring name = \"John\";\nint age = 35;\ndouble height = 6.1;\ncout << \n  name << \" is \" << age << \" years old and \" << height << \" feet tall.\";\n\n---\n\nint x = 5;\nint y = 6;\nint sum = x + y;\ncout << sum;\n```\n\n## Tutorials\n\nTo declare more than one variable of thesame type, \nuse a comma-separated list:\n\nYou can also assign thesame valueto multiple variables in one line:\n\n### Code Examples\n\n```\nint x = 5, y = 6, z = 50;\ncout << \n  x + y + z;\n\n---\n\nint x, y, z;\nx = y = z = 50;\ncout << x + y + z;\n```\n\n## Tutorials\n\nAll C++variablesmust beidentifiedwithunique names.\n\nThese unique names are calledidentifiers.\n\nIdentifiers can be short names (like x and y) or more descriptive names (age, sum, totalVolume).\n\nNote:It is recommended to use descriptive names in order to \ncreate understandable and maintainable code:\n\nThe general rules for naming variables are:\n\n### Code Examples\n\n```\n// Good\nint minutesPerHour = 60;\n// OK, but not so easy to \n  understand what\nm\nactually is\nint  \n  m = 60;\n```\n\n## Tutorials\n\nWhen you do not want others (or yourself) to change existing variable values, use theconstkeyword (this will declare the \nvariable as \"constant\", which meansunchangeable and read-only):\n\nYou should always declare the variable as constant when you have values that are unlikely to change:\n\nWhen you declare a constant variable, it must be assigned with a value:\n\n### Code Examples\n\n```\nconst\nint myNum = 15;\u00a0 // myNum will always be 15\nmyNum = 10;\u00a0 // error: \n  assignment of read-only variable 'myNum'\n\n---\n\nconst\nint minutesPerHour = 60;\n\n---\n\nconst int minutesPerHour = 60;\n\n---\n\nconst int minutesPerHour;\nminutesPerHour = 60; // error\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_3",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 19,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A queue is a data structure that can hold many elements.\n\nThink of a queue as people standing in line in a supermarket.\n\nThe first person to stand in line is also the first who can pay and leave the supermarket. This way of organizing elements is called FIFO: First In First Out.\n\nBasic operations we can do on a queue are:\n\nExperiment with these basic operations in the queue animation above.\n\nQueues can be implemented by using arrays or linked lists.\n\nQueues can be used to implement job scheduling for an office printer, order processing for e-tickets, or to create algorithms for breadth-first search in graphs.\n\nQueues are often mentioned together with Stacks, which is a similar data structure described on theprevious page.\n\nTo better understand the benefits with using arrays or linked lists to implement queues, you should check outthis pagethat explains how arrays and linked lists are stored in memory.\n\nThis is how it looks like when we use an array as a queue:\n\nReasons to implement queues using arrays:\n\nReasons fornotusing arrays to implement queues:\n\nSince Python lists has good support for functionality needed to implement queues, we start with creating a queue and do queue operations with just a few lines:\n\nBut to explicitly create a data structure for queues, with basic operations, we should create a queue class instead. This way of creating queues in Python is also more similar to how queues can be created in other programming languages like C and Java.\n\nReasons for using linked lists to implement queues:\n\nReasons fornotusing linked lists to implement queues:\n\nThis is how a queue can be implemented using a linked list.\n\n### Code Snippets\n\n```\nExample\nPython:\nqueue = []\n\n# Enqueue\nqueue.append('A')\nqueue.append('B')\nqueue.append('C')\nprint(\"Queue: \", queue)\n\n# Dequeue\nelement = queue.pop(0)\nprint(\"Dequeue: \", element)\n\n# Peek\nfrontElement = queue[0]\nprint(\"Peek: \", frontElement)\n\n# isEmpty\nisEmpty = not bool(queue)\nprint(\"isEmpty: \", isEmpty)\n\n# Size\nprint(\"Size: \", len(queue))\nTry it Yourself \u00bb\n\n---\n\nExample\nPython:\nclass Queue:\n    def __init__(self):\n        self.queue = []\n    \n    def enqueue(self, element):\n        self.queue.append(element)\n    \n    def dequeue(self):\n        if self.isEmpty():\n            return \"Queue is empty\"\n        return self.queue.pop(0)\n    \n    def peek(self):\n        if self.isEmpty():\n            return \"Queue is empty\"\n        return self.queue[0]\n    \n    def isEmpty(self):\n        return len(self.queue) == 0\n    \n    def size(self):\n        return len(self.queue)\n\n# Create a queue\nmyQueue = Queue()\n\nmyQueue.enqueue('A')\nmyQueue.enqueue('B')\nmyQueue.enqueue('C')\nprint(\"Queue: \", myQueue.queue)\n\nprint(\"Dequeue: \", myQueue.dequeue())\n\nprint(\"Peek: \", myQueue.peek())\n\nprint(\"isEmpty: \", myQueue.isEmpty())\n\nprint(\"Size: \", myQueue.size())\nTry it Yourself \u00bb\n\n---\n\nExample\nPython:\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\nclass Queue:\n    def __init__(self):\n        self.front = None\n        self.rear = None\n        self.length = 0\n    \n    def enqueue(self, element):\n        new_node = Node(element)\n        if self.rear is None:\n            self.front = self.rear = new_node\n            self.length += 1\n            return\n        self.rear.next = new_node\n        self.rear = new_node\n        self.length += 1\n    \n    def dequeue(self):\n        if self.isEmpty():\n            return \"Queue is empty\"\n        temp = self.front\n        self.front = temp.next\n        self.length -= 1\n        if self.front is None:\n            self.rear = None\n        return temp.data\n    \n    def peek(self):\n        if self.isEmpty():\n            return \"Queue is empty\"\n        return self.front.data\n    \n    def isEmpty(self):\n        return self.length == 0\n    \n    def size(self):\n        return self.length\n\n    def printQueue(self):\n        temp = self.front\n        while temp:\n            print(temp.data, end=\" \")\n            temp = temp.next\n        print()\n\n# Create a queue\nmyQueue = Queue()\n\nmyQueue.enqueue('A')\nmyQueue.enqueue('B')\nmyQueue.enqueue('C')\nprint(\"Queue: \", end=\"\")\nmyQueue.printQueue()\n\nprint(\"Dequeue: \", myQueue.dequeue())\n\nprint(\"Peek: \", myQueue.peek())\n\nprint(\"isEmpty: \", myQueue.isEmpty())\n\nprint(\"Size: \", myQueue.size())\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

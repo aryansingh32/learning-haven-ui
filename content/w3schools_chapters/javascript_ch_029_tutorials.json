@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 29,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A JavaScript string is zero or more characters written inside quotes.\n\nYou can use single or double quotes:\n\nYou can use quotes inside a string, as long as they don't match the quotes \nsurrounding the string:\n\nTemplates were introduced with ES6 (JavaScript 2016).\n\nTemplates are strings enclosed in backticks (`This is a template string`).\n\nTemplates allow single and double quotes inside a string:\n\nTo find the length of a string, use the built-inlengthproperty:\n\nBecause strings must be written within quotes, JavaScript will misunderstand this string:\n\nThe string will be chopped to \"We are the so-called \".\n\nTo solve this problem, you can use anbackslash escape character.\n\nThe backslash escape character (\\) turns special characters into string characters:\n\nSix other escape sequences are valid in JavaScript:\n\nFor readability, programmers often like to avoid long code lines.\n\nA safe way to break up astatementis after an operator:\n\nA safe way to break up astringis by using string addition:\n\nTemplates were introduced with ES6 (JavaScript 2015).\n\nTemplates are strings enclosed in backticks (`This is a template string`).\n\nTemplates allow multiline strings:\n\nNormally, JavaScript strings are primitive values, created from literals:\n\nBut strings can also be defined as objects with the keywordnew:\n\n### Code Snippets\n\n```\nlet text = \"John Doe\";\n\n---\n\nlet carName1 = \"Volvo XC60\";\u00a0 \n  // Double quotes\nlet carName2 = 'Volvo XC60';\u00a0 // Single quotes\n\n---\n\nlet answer1 = \"It's alright\";\nlet answer2 = \"He is called 'Johnny'\";\nlet answer3 = 'He is called \"Johnny\"';\n\n---\n\nlet text = `He's often called \"Johnny\"`;\n\n---\n\nlet text = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\nlet length = text.length;\n\n---\n\nlet text = \"We are the so-called \"Vikings\" from the north.\";\n\n---\n\nlet text = \"We are the so-called \\\"Vikings\\\" from the north.\";\n\n---\n\nlet text= 'It\\'s alright.';\n\n---\n\nlet text = \"The character \\\\ is called backslash.\";\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Hello Dolly!\";\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello \" +\n\"Dolly!\";\n\n---\n\nlet text =\n`The quick\nbrown fox\njumps over\nthe lazy dog`;\n\n---\n\nlet x = \"John\";\n\n---\n\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = new String(\"John\");\nlet y = new String(\"John\");\n\n---\n\nlet x = new String(\"John\");\nlet y = new String(\"John\");\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_28",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

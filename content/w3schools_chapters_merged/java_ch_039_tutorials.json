@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 39,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Java Keywords\n\nThedokeyword is used together withwhileto create a do-while loop.\n\nThewhileloop loops through a block of code as long as a specified condition istrue:\n\nThedo/whileloop is a variant of thewhileloop. This loop will \nexecute the code block once, before checking if the condition is true, then it will\nrepeat the loop as long as the condition is true.\n\nNote:Do not forget to increase the variable used in the condition, otherwise \nthe loop will never end!\n\nRead more about while loops in ourJava While Loop Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nThe following loop will always be executed at least once, even if the condition is false, because the code block is executed before the condition is tested:\nint i = 0;\ndo {\n\u00a0\u00a0System.out.println(i);\n\u00a0\u00a0i++;\n}\nwhile (i < 5);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThedoublekeyword is a data type that can store fractional numbers from 1.7e\u2212308 to 1.7e+308.\n\nNote that you should end the value with a \"d\":\n\nRead more about data types in ourJava Data Types Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\ndouble myNum = 19.99d;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nTheelsestatement specifies a block of Java code to be executed if a condition isfalsein anifstatement.\n\nJava has the following conditional statements:\n\nRead more about conditions in ourJava If...Else Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nUse the\nelse\nstatement to specify a block of code to be executed if the condition is\nfalse\n.\nint time = 20;\nif (time < 18) {\n\u00a0 System.out.println(\"Good day.\");\n} else {\n\u00a0 System.out.println(\"Good evening.\");\n}\n// Outputs \"Good evening.\"\nTry it Yourself \u00bb\n\n---\n\nExample\nUse the\nelse if\nstatement to specify a new condition if the first condition is\nfalse\n.\nint time = 22;\nif (time < 10) {\n\u00a0 System.out.println(\"Good morning.\");\n} else if (time < 20) {\n\u00a0 System.out.println(\"Good day.\");\n} else {\n\u00a0 System.out.println(\"Good evening.\");\n}\n// Outputs \"Good evening.\"\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nTheenumkeyword declares an enumerated (unchangeable) type.\n\nAn enum is a special \"class\" that represents a group of constants (unchangeable variables, like final variables).\n\nTo create an enum, use theenumkeyword (instead of class or interface), and separate the constants with a comma. Note that they should be in uppercase letters.\n\nRead more about enums in ourJava Enum Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nLevel myVar = Level.MEDIUM;\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nTheexportskeyword allows a package from a module to be used by other modules.\n\nIf thetokeyword is added, the exported package is only allowed to be used by the modules that are listed.\n\nNote:Theexportskeyword is a module directive meant to be used in themodule-info.javafile of a module.\n\nTheexportskeyword was new in Java 9.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nUse\nexports\nin a module's\nmodule-info.java\nfile:\nmodule mymodule {\n  exports com.w3schools.package1;\n  exports com.w3Schools.package2 to module1, module2;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_39",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_39",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

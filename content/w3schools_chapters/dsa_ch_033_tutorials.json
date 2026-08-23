@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 33,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To traverse a Graph means to start in one vertex, and go along the edges to visit other vertices until all vertices, or as many as possible, have been visited.\n\nUnderstanding how a Graph can be traversed is important for understanding how algorithms that run on Graphs work.\n\nThe two most common ways a Graph can be traversed are:\n\nDFS is usually implemented using aStackor by the use of recursion (which utilizes the call stack), while BFS is usually implemented using aQueue.\n\nDepth First Search is said to go \"deep\" because it visits a vertex, then an adjacent vertex, and then that vertex' adjacent vertex, and so on, and in this way the distance from the starting vertex increases for each recursive iteration.\n\nRun the animation below to see how Depth First Search (DFS) traversal runs on a specific Graph, starting in vertex D (it is the same as the previous animation).\n\nThe DFS traversal starts in vertex D, marks vertex D as visited. Then, for every new vertex visited, the traversal method is called recursively on all adjacent vertices that have not been visited yet. So when vertex A is visited in the animation above, vertex C or vertex E (depending on the implementation) is the next vertex where the traversal continues.\n\nLine 60:The DFS traversal starts when thedfs()method is called.\n\nLine 33:Thevisitedarray is first set tofalsefor all vertices, because no vertices are visited yet at this point.\n\nLine 35:Thevisitedarray is sent as an argument to thedfs_util()method. When thevisitedarray is sent as an argument like this, it is actually just a reference to thevisitedarray that is sent to thedfs_util()method, and not the actual array with the values inside. So there is always just onevisitedarray in our program, and thedfs_util()method can make changes to it as nodes are visited (line 25).\n\nLine 28-30:For the current vertexv, all adjacent nodes are called recursively if they are not already visited.\n\nBreadth First Search visits all adjacent vertices of a vertex before visiting neighboring vertices to the adjacent vertices. This means that vertices with the same distance from the starting vertex are visited before vertices further away from the starting vertex are visited.\n\nRun the animation below to see how Breadth First Search (BFS) traversal runs on a specific Graph, starting in vertex D.\n\nAs you can see in the animation above, BFS traversal visits vertices the same distance from the starting vertex, before visiting vertices further away. So for example, after visiting vertex A, vertex E and C are visited before visiting B, F and G because those vertices are further away.\n\nBreadth First Search traversal works this way by putting all adjacent vertices in a queue (if they are not already visited), and then using the queue to visit the next vertex.\n\nThis code example for Breadth First Search traversal is the same as for the Depth First Search code example above, except for thebfs()method:\n\nLine 2-4:Thebfs()method starts by creating a queue with the start vertex inside, creating avisitedarray, and setting the start vertex as visited.\n\nLine 6-13:The BFS traversal works by taking a vertex from the queue, printing it, and adding adjacent vertices to the queue if they are not visited yet, and then continue to take vertices from the queue in this way. The traversal finishes when the last element in the queue has no unvisited adjacent vertices.\n\nDepth first and breadth first traversals can actually be implemented to work on directed Graphs (instead of undirected) with just very few changes.\n\nRun the animation below to see how a directed Graph can be traversed using DFS or BFS.\n\nTo go from traversing a directed Graph instead of an undirected Graph, we just need to remove the last line in theadd_edge()method:\n\nWe must also take care when we build our Graph because the edges are now directed.\n\nThe code example below contains both BFS and DFS traversal of the directed Graph from the animation above:\n\nNow that we have looked at two basic algorithms for how to traverse Graphs, we will use the next pages to see how other algorithms can run on the Graph data structure.\n\n### Code Snippets\n\n```\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size  \n\n    def add_edge(self, u, v):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = 1\n            self.adj_matrix[v][u] = 1\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def print_graph(self):\n        print(\"Adjacency Matrix:\")\n        for row in self.adj_matrix:\n            print(' '.join(map(str, row)))\n        print(\"\\nVertex Data:\")\n        for vertex, data in enumerate(self.vertex_data):\n            print(f\"Vertex {vertex}: {data}\")\n            \n    def dfs_util(self, v, visited):\n        visited[v] = True\n        print(self.vertex_data[v], end=' ')\n\n        for i in range(self.size):\n            if self.adj_matrix[v][i] == 1 and not visited[i]:\n                self.dfs_util(i, visited)\n\n    def dfs(self, start_vertex_data):\n        visited = [False] * self.size\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        self.dfs_util(start_vertex, visited)\n\ng = Graph(7)\n\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\ng.add_vertex_data(5, 'F')\ng.add_vertex_data(6, 'G')\n\ng.add_edge(3, 0)  # D - A\ng.add_edge(0, 2)  # A - C\ng.add_edge(0, 3)  # A - D\ng.add_edge(0, 4)  # A - E\ng.add_edge(4, 2)  # E - C\ng.add_edge(2, 5)  # C - F\ng.add_edge(2, 1)  # C - B\ng.add_edge(2, 6)  # C - G\ng.add_edge(1, 5)  # B - F\n\ng.print_graph()\n\nprint(\"\\nDepth First Search starting from vertex D:\")\ng.dfs('D')\nTry it Yourself \u00bb\n\n---\n\nExample\nPython:\ndef bfs(self, start_vertex_data):\n    queue = [self.vertex_data.index(start_vertex_data)]\n    visited = [False] * self.size\n    visited[queue[0]] = True\n          \n    while queue:\n        current_vertex = queue.pop(0)\n        print(self.vertex_data[current_vertex], end=' ')\n      \n        for i in range(self.size):\n            if self.adj_matrix[current_vertex][i] == 1 and not visited[i]:\n                queue.append(i)\n                visited[i] = True\nTry it Yourself \u00bb\n\n---\n\ndef add_edge(self, u, v):\n    if 0 <= u < self.size and 0 <= v < self.size:\n        self.adj_matrix[u][v] = 1\nself.adj_matrix[v][u] = 1\n\n---\n\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size  \n\n    def add_edge(self, u, v):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = 1\n            #self.adj_matrix[v][u] = 1\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def print_graph(self):\n        print(\"Adjacency Matrix:\")\n        for row in self.adj_matrix:\n            print(' '.join(map(str, row)))\n        print(\"\\nVertex Data:\")\n        for vertex, data in enumerate(self.vertex_data):\n            print(f\"Vertex {vertex}: {data}\")\n            \n    def dfs_util(self, v, visited):\n        visited[v] = True\n        print(self.vertex_data[v], end=' ')\n\n        for i in range(self.size):\n            if self.adj_matrix[v][i] == 1 and not visited[i]:\n                self.dfs_util(i, visited)\n\n    def dfs(self, start_vertex_data):\n        visited = [False] * self.size\n\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        self.dfs_util(start_vertex, visited)\n        \n    def bfs(self, start_vertex_data):\n        queue = [self.vertex_data.index(start_vertex_data)]\n        visited = [False] * self.size\n        visited[queue[0]] = True\n        \n        while queue:\n            current_vertex = queue.pop(0)\n            print(self.vertex_data[current_vertex], end=' ')\n            \n            for i in range(self.size):\n                if self.adj_matrix[current_vertex][i] == 1 and not visited[i]:\n                    queue.append(i)\n                    visited[i] = True\n\ng = Graph(7)\n\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\ng.add_vertex_data(5, 'F')\ng.add_vertex_data(6, 'G')\n\ng.add_edge(3, 0)  # D -> A\ng.add_edge(3, 4)  # D -> E\ng.add_edge(4, 0)  # E -> A\ng.add_edge(0, 2)  # A -> C\ng.add_edge(2, 5)  # C -> F\ng.add_edge(2, 6)  # C -> G\ng.add_edge(5, 1)  # F -> B\ng.add_edge(1, 2)  # B -> C\n\ng.print_graph()\n\nprint(\"\\nDepth First Search starting from vertex D:\")\ng.dfs('D')\n\nprint(\"\\n\\nBreadth First Search starting from vertex D:\")\ng.bfs('D')\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_32",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

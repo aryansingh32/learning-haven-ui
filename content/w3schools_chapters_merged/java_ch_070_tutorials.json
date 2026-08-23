@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 70,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e ArrayList Methods\n\nTheretainAll()method removes all items from a list whichdo notbelong to a specified collection.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nRemove items from a list which do not belong to a specified collection:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    cars.add(\"Toyota\");\n    \n    ArrayList<String> valid = new ArrayList<String>();\n    valid.add(\"Volvo\");\n    valid.add(\"Ford\");\n    valid.add(\"Mazda\");\n    \n    cars.retainAll(valid);\n    \n    System.out.println(cars);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nTheset()method replaces an item at a specified position in the list and returns the item that was previously at that position.\n\nTrefers to the data type of items in the list.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nReplace an item in a list:\nimport java.util.ArrayList;\n\npublic class Main { \n  public static void main(String[] args) { \n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    cars.set(0, \"Opel\");\n    System.out.println(cars);\n  } \n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nThesize()method indicates how many elements are in the list.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nFind out the size of a list:\nimport java.util.ArrayList;\n\npublic class Main { \n  public static void main(String[] args) { \n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    System.out.println(cars.size());\n  } \n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nThesort()method sorts items in the list. AComparatorcan be used to compare pairs of elements. The comparator can be defined by a lambda expression which is compatible with thecompare()method of Java'sComparatorinterface.\n\nIfnullis passed into the method then items will be sorted naturally based on their data type (e.g. alphabetically for strings, numerically for numbers). Non-primitive types must implement Java'sComparableinterface in order to be sorted without a comparator.\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\n### Code Examples\n\n```\nExample\nSort a list in alphabetical order:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    cars.sort(null);\n    System.out.println(cars);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nUse a lambda expression to sort a list in reverse alphabetical order:\nimport java.util.ArrayList;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    cars.sort( (a, b) -> { return -1 * a.compareTo(b); } );\n    System.out.println(cars);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e ArrayList Methods\n\nThespliterator()method returns aSpliteratorfor the list.\n\nA spliterator is a special type of iterator. To learn how to use iterators, see ourJava Iterator tutorial.\n\nTheSpliteratoris considerably different from an ordinary iterator. The purpose of a spliterator is to separate a collection into smaller pieces so that each piece can be processed by a separate thread. TheSpliteratorinterface has two important methods:\n\nJava Arrays Tutorial\n\nJava ArrayList Tutorial\n\nJava Iterator Tutorial\n\n### Code Examples\n\n```\nExample\nUse a\nSpliterator\nto loop through items in a list:\nimport java.util.ArrayList;\nimport java.util.Spliterator;\n\npublic class Main {\n  public static void main(String[] args) {\n  \n    // Make a collection\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n  \n    // Get the spliterator and split it\n    Spliterator<String> it1 = cars.spliterator();\n    Spliterator<String> it2 = it1.trySplit();\n    \n    // Loop through the first spliterator\n    System.out.println(\"First spliterator\");\n    while( it1.tryAdvance( (n) -> { System.out.println(n); } ) );\n    \n    // Loop through the second spliterator\n    System.out.println(\"\\nSecond spliterator\");\n    while( it2.tryAdvance( (n) -> { System.out.println(n); } ) );\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_70",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_70",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 260,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A typical Proxy example is logging of object changes.\n\nBelow is a demo that:\n\nBelow is a demo that:\n\nThe flow below is the essence of JavaScript metaprogramming with Proxy + Reflect.\n\nFlow Explanation:\n\nProxies allow you to:\n\nA trap is a function inside a Proxy handler.\n\nIt runs whenever a specific operation is performed on the Proxy.\n\nBelow is a complete and accurate explanation of every JavaScript Proxy trap, what triggers them,\ntheir parameters, and what they are expected to return.\n\nTriggered when aproperty is read:\n\nParameters\n\nMust Return\n\nTriggered when aproperty is changed:\n\nParameters\n\nMust Return\n\n(Throwing is also allowed.)\n\nIntercepts theinoperator.\n\nParameters\n\nMust Return\n\nIntercepts thedeleteoperator.\n\nParameters\n\nMust Return\n\nTriggered when afunction is called:\n\nParameters\n\nMust Return\n\nIntercepts thenewoperator.\n\nParameters\n\nMust Return\n\nIntercepts property descriptor retrieval.\n\nParameters\n\nMust Return\n\nIntercepts Object.defineProperty().\n\nParameters\n\nMust Return\n\nIntercepts prototype lookup.\n\nParameters\n\nMust Return\n\nIntercepts setting the prototype.\n\nParameters\n\nMust Return\n\nIntercepts checking if an object is extensible.\n\nParameters\n\nMust Return\n\nIntercepts making an object non-extensible.\n\nParameters\n\nMust Return\n\nIntercepts operations listing keys (property names or symbols).\n\nParameters\n\nMust Return\n\nA Proxy trap represents one of JavaScript's internal operations:\n\nThese internal operations are what JavaScript uses (inside the engine) when you access or modify objects.\n\nWhen a Proxy intercepts one of these operations, they should be forwarded correctly:\n\nReflect is used because Reflect methods are 1-to-1 mirrors of the internal operations.\n\nBeforeES6 (2015), many fundamental operations did not exist as functions:OperationBefore E6Problemget propertyobj[prop]Not callable as a functionset propertyobj[prop] = valueNot callable as a functiondelete propertydelete obj[prop]Operator, not a functioncheck property\"prop\" in objOperator, not a functionconstruct (new)new Foo()Not callable genericallyget prototypesObject.getPrototypeOf(obj)Throws on non-objectsdefine propertyObject.defineProperty()Returns object instead of booleanown keysObject.keys()Not complete (misses symbols)These were incomplete and inconsistent for Proxy forwarding.SoES6 (2015)added Reflect:Internal OperationReflect Method[[Construct]]Reflect.construct()[[Call]]Reflect.apply()[[Get]]Reflect.get()[[Set]]Reflect.set()[[HasProperty]]Reflect.has()[[Delete]]Reflect.deleteProperty()[[DefineProperty]]Reflect.defineProperty()[[GetOwnProperty]]Reflect.getOwnProperty()[[OwnPropertyKeys]]Reflect.ownPropertyKeys()[[IsExstensible]]Reflect.isExtensible()[[PreventExstensions]]Reflect.preventExtensions()[[GetPrototypeOf]]Reflect.getPrototypeOf()[[SetPrototypeOf]]Reflect.setPrototypeOf()Learn MoreJavaScript MetaprogrammingJavaScript Reflect TutorialJavaScript Meta Reference\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nconst proxy = new Proxy(target, handler);\n\n---\n\nconst myObject = {name: \"Jan\"};\nconst proxy = new Proxy(myObject, {\nget(target, prop) {\nreturn target[prop];\n}\n});\n\n---\n\n// Create an Object\nconst user = { name: \"Jan\", age: 40 };\n//Create a Proxy\nconst proxy = new Proxy(user, {\nget(target, property) {\nlog(\"Getting: \" + property);\nreturn target[property];\n},\nset(target, property, value) {\nlog(\"Setting: \" + property);\nreturn target[property];\n}\n});\nproxy.name = \"John\";\nproxy.age = 42;\nlet text1 = proxy.name;\nlet text2 = proxy.age\n\n---\n\n// Create an Object\nconst user = { name: \"Jan\", age: 40 };\n// Create a Proxy\nconst proxy = new Proxy(user, {\nget(target, property) {\nlog(\"Getting: \" + property);\n\u00a0\u00a0\u00a0\u00a0// safe forwarding\nreturn Reflect.get(target, property);\n},\nset(target, property, value) {\nlog(\"Setting: \" + property);\n\u00a0\u00a0\u00a0\u00a0// safe forwarding\nreturn Reflect.set(target, property, value);\n}\n});\nproxy.name = \"John\";\nproxy.age = 42;\nlet text1 = proxy.name;\nlet text2 = proxy.age\n\n---\n\n// Create an Object\nconst user = { name: \"Jan\", age: 40 };\n// Create a Proxy\nconst proxy = new Proxy(user, {\nset(target, prop, value) {\nif (prop === \"age\" && value < 0) {\ntext = \"Age cannot be negative!\";\ndocument.getElementById(\"demo\").innerHTML = text;\n}\nreturn Reflect.set(target, prop, value);\n}\n});\nproxy.age = 45;  // OK\nproxy.age = -5;  // Error\n\n---\n\n// Create an Object\nconst person = {\nfirst: \"John\",\nlast:  \"Doe\"\n};\n// Create a Proxy\nconst virtual = new Proxy(person, {\nget(target, prop) {\nif (prop === \"fullName\") {\nreturn target.first + \" \" + target.last;\n}\nreturn Reflect.get(target, prop);\n}\n});\nlet text = virtual.fullName; // \"John Doe\"\n\n---\n\nconst fn = new Function(\"a\", \"b\", \"return a + b\");\nlet result = fn(3, 2);\n\n---\n\nget(obj, prop, receiver) {\nreturn Reflect.get(obj, prop, receiver);\n}\n\n---\n\nproxy.property\nproxy[\"property\"]\nobject.property()\n\n---\n\nset(obj, prop, value, receiver) {\nreturn Reflect.set(obj, prop, value, receiver);\n}\n\n---\n\nproxy.property = value\nproxy[\"property\"] = value\n\n---\n\nhas(obj, prop) {\nreturn Reflect.has(obj, prop);\n}\n\n---\n\n\"property\" in proxy\n\n---\n\ndeleteProperty(obj, prop) {\nreturn Reflect.deleteProperty(obj, prop);\n}\n\n---\n\ndelete proxy.property\n\n---\n\napply(func, thisArg, args) {\nreturn Reflect.apply(func, this, args);\n}\n\n---\n\nproxy()\nproxy.call()\nproxy.apply()\n\n---\n\nconstruct(obj, args, newTarget) {\nreturn Reflect.construct(obj, args, newTarget);\n}\n\n---\n\nnex proxy()\n\n---\n\nconst obj = {}\u00a0\u00a0// No trap\nObject.create()\u00a0// No trap\nclass User {};\nnew User();\u00a0\u00a0\u00a0\u00a0\u00a0// No trap\n\n---\n\ngetOwnPropertyDescriptor(obj, prop) {\nreturn Reflect.getOwnPropertyDescriptor(obj, prop);\n}\n\n---\n\nObject.getOwnPropertyDescriptor(obj, prop)\n\n---\n\ndefineProperty(obj, prop, descriptor) {\nreturn Reflect.defineProperty(obj, prop, descriptor);\n}\n\n---\n\nObject.defineProperty()\n\n---\n\ngetPrototypeOf(obj) {\nreturn Reflect.getPrototypeOf(obj);\n}\n\n---\n\nObject.getPrototypeOf()\n\n---\n\nsetPrototypeOf(obj, prototype) {\nreturn Reflect.setPrototypeOf(obj, prototype);\n}\n\n---\n\nObject.settPrototypeOf()\n\n---\n\nisExtensible(obj) {\nreturn Reflect.isExtensible(obj);\n}\n\n---\n\nObject.isExtensible()\n\n---\n\npreventExtensions(obj) {\nreturn Reflect.preventExtensions(obj);\n}\n\n---\n\nObject.preventExtensions()\n\n---\n\nownKeys(obj) {\nreturn Reflect.ownKeys(obj);\n}\n\n---\n\nObject.keys()\nObject.getOwnPropertyNames()\nObject.getOwnPropertySymbols()\n\n---\n\nget(target, property, receiver) {\nreturn Reflect.get(target, property, receiver);\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_259",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

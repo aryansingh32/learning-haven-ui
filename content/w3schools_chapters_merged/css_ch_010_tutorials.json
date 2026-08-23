@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheoutlineproperty is a shorthand property for \nsetting the following individual outline properties:\n\nYou can specify one, two, or three values from the list above. The order of the values does not matter.\n\nHere are some different outlines specified with the shorthandoutlineproperty:\n\nA dashed outline.\n\nA dotted red outline.\n\nA 7px solid yellow outline.\n\nA thick ridge pink outline.\n\nOutlines can also have rounded corners.\n\nTheborder-radiusproperty is \nused to add rounded borders to an element.\n\nHere are some different outlines with rounded corners:\n\nA dashed outline.\n\nA dotted red outline.\n\nA 7px solid yellow outline.\n\nA thick ridge pink outline.\n\n### Code Examples\n\n```\np.ex1\n{outline: dashed;}\np.ex2\n{outline: dotted red;}\np.ex3\n{outline: 7px solid yellow;}\np.ex4\n{outline: thick ridge pink;}\n\n---\n\np.ex1 {\noutline: dashed;\nborder-radius: 8px;\n}\np.ex2 {\noutline: dotted red;\nborder-radius: 5px;\n}\np.ex3 {\noutline: 7px solid yellow;\nborder-radius: 5px;\n}\np.ex4 {\noutline: thick ridge pink;\nborder-radius: 8px;\n}\np.ex5 {\noutline: \n  thick solid green;\nborder-radius: 10px;\n}\n```\n\n## Tutorials\n\nTheoutline-offsetproperty adds \na space between an outline and the edge/border of an element. The space between an \nelement and its outline is transparent.\n\nThe following example specifies an outline 15px outside the border edge:\n\nThis paragraph has a black border and a red outline 15px outside the border edge.\n\nThe following example shows that the space between an element's border and its outline is transparent:\n\nThis paragraph has an outline of 15px outside the border edge.\n\nThe following example shows the use of an outline-offset with a negative value, now the outline will be placed inside the border edge:\n\nThis paragraph has a black border and a red outline -5px inside the border edge.\n\n### Code Examples\n\n```\np {\nmargin: 30px;\npadding: 5px;\nborder: 1px solid black;\noutline: \n  3px solid red;\noutline-offset: 15px;\n}\n\n---\n\np {\nmargin: 30px;\npadding: 5px;\nbackground: \n  yellow;\nborder: 1px solid black;\noutline: \n  3px solid red;\noutline-offset: 15px;\n}\n\n---\n\np {\nmargin: 30px;\npadding: 5px;\nbackground: \n  yellow;\nborder: 1px solid black;\noutline: \n  3px solid red;\noutline-offset: -5px;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nCSS has a lot of properties for styling and formatting text.\n\nThecolorproperty is used to set the color of the text. \nThe color is specified by:\n\nLook atCSS Color Valuesfor a complete list of possible color values.\n\nThe default text color for a page is defined in the body selector.\n\nIn this example, we define both thebackground-colorproperty and thecolorproperty:\n\n### Code Examples\n\n```\nbody {\ncolor: blue;\n}\nh1 {\ncolor: green;\n}\nh2 {\ncolor: red;\n}\n\n---\n\nbody {\nbackground-color: lightgrey;\ncolor: blue;\n}\nh1 {\nbackground-color: black;\ncolor: white;\n}\ndiv {\nbackground-color: blue;\ncolor: white;\n}\n```\n\n## Tutorials\n\nIn this chapter you will learn about the following properties:\n\nThetext-alignproperty is used to set the horizontal alignment of a text.\n\nThis property can have one of the following values:\n\nThe following example shows left, right and center aligned text \n(left is default if text direction is left-to-right, and right \nis default if text direction is right-to-left):\n\nWhen thetext-alignproperty is set to \"justify\", each line is \nstretched so that every line has equal width, and the left and right margins are \nstraight (like in magazines and newspapers):\n\nThetext-align-lastproperty specifies how to align the last line of a text.\n\nThis property can have one of the following values:\n\nThevertical-alignproperty sets the vertical alignment of an element.\n\nThis property can have one of the following values:\n\nThedirectionproperty specifies the text direction/writing direction within a block-level element.\n\nTip: Use this property together with theunicode-bidiproperty to \nset or return whether the text should be overridden to support multiple \nlanguages in the same document.\n\n### Code Examples\n\n```\nh1 {\ntext-align: center;\n}\nh2 {\ntext-align: left;\n}\nh3 {\ntext-align: right;\n}\n\n---\n\ndiv {\ntext-align: justify;\n}\n\n---\n\np.a\n{\ntext-align-last: right;\n}\np.b\n{\ntext-align-last: center;\n}\np.c\n{\ntext-align-last: justify;\n}\n\n---\n\nimg.a {\nvertical-align: baseline;\n}\nimg.b {\nvertical-align: text-top;\n}\nimg.c {\nvertical-align: \n  text-bottom;\n}\nimg.d {\nvertical-align: sub;\n}\nimg.e {\nvertical-align: super;\n}\n\n---\n\np {\ndirection: rtl;\nunicode-bidi: bidi-override;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 125,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ATreeMapis a collection that stores key/value pairsin sorted order by key.\n\nIt is part of thejava.utilpackage and implements theMapinterface.\n\nCreate aTreeMapthat storesStringkeys andStringvalues:\n\nNow you can use methods likeput(),get(), \n  andremove()to manage sorted key/value pairs.\n\nUse theput()method to add key/value pairs:\n\nUseget()with the key to access its value:\n\nUseremove()to delete a key/value pair by key:\n\nUseclear()to remove all items:\n\nUsesize()to count the number of key/value pairs:\n\nNote:The size only counts unique keys. If a key is added more than once, only the latest value is kept.\n\nLoop through the items of aTreeMapwith a for-each loop.\n\nNote:Use thekeySet()method if you only want the keys, and use thevalues()method if you only want the values:\n\nFrom Java 10, you can use thevarkeyword to declare aTreeMapvariable without writing the type twice.  \nThe compiler figures out the type from the value you assign.\n\nThis makes code shorter,but many developers still use the full type for clarity.  \nSincevaris valid Java, you may see it in other code, so it's good to know that it exists:\n\nNote:Sometimes you will see bothMapandTreeMapin Java code, like this:\n\nThis means the variable (capitalCities) is declared as aMap(the interface), but it stores aTreeMapobject (the actual map). SinceTreeMapimplements theMapinterface, this is possible.\n\nIt works the same way, but some developers prefer this style because it gives them more flexibility to change the type later.\n\n### Code Snippets\n\n```\nExample\nimport java.util.TreeMap; // Import the TreeMap class\n\nTreeMap<String, String> capitalCities = new TreeMap<>();\n\n---\n\nExample\nimport java.util.TreeMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    TreeMap<String, String> capitalCities = new TreeMap<>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"India\", \"New Dehli\");\n    capitalCities.put(\"Austria\", \"Wien\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"Norway\", \"Oslo\"); // Duplicate\n    capitalCities.put(\"USA\", \"Washington DC\");\n\n    System.out.println(capitalCities);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\ncapitalCities.get(\"England\");\nTry it Yourself \u00bb\n\n---\n\nExample\ncapitalCities.remove(\"England\");\nTry it Yourself \u00bb\n\n---\n\nExample\ncapitalCities.clear();\nTry it Yourself \u00bb\n\n---\n\nExample\ncapitalCities.size();\nTry it Yourself \u00bb\n\n---\n\nExample\n// Print keys\nfor (String i : capitalCities.keySet()) {\n  System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\n// Print values\nfor (String i : capitalCities.values()) {\n  System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\n// Print keys and values\nfor (String i : capitalCities.keySet()) {\n  System.out.println(\"key: \" + i + \" value: \" + capitalCities.get(i));\n}\nTry it Yourself \u00bb\n\n---\n\nExample\n// Without var\nTreeMap<String, String> capitalCities = new TreeMap<String, String>();\n\n// With var\nvar capitalCities = new TreeMap<String, String>();\nTry it Yourself \u00bb\n\n---\n\nimport java.util.Map;\nimport java.util.TreeMap;\n\nMap<String, String> capitalCities = new TreeMap<>();\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_124",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

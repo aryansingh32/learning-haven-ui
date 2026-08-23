@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 22,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nInheritanceallows one class to reuse attributes and methods from another class. It helps you write cleaner, more efficient code by avoiding duplication.\n\nWe group the \"inheritance concept\" into two categories:\n\nTo inherit from a class, use the:symbol.\n\nIn the example below, theCarclass \n(child) inherits the attributes and methods from theVehicleclass \n(parent):\n\n### Code Examples\n\n```\n// Base class\nclass Vehicle {\npublic:\nstring brand = \"Ford\";\nvoid honk() {\ncout << \"Tuut, tuut! \\n\" ;\n}\n};\n// Derived \n    class\nclass Car: public Vehicle\n{\npublic:\nstring model = \"Mustang\";\n};\nint main() {\nCar myCar;\nmyCar.honk();\ncout << myCar.brand + \" \" + myCar.model;\nreturn 0;\n}\n```\n\n## Tutorials\n\nA class can also be derived from one class, which is already derived from \nanother class.\n\nIn the following example,MyGrandChildis derived from classMyChild(which is derived \nfromMyClass).\n\n### Code Examples\n\n```\n// Base class (parent)\nclass MyClass {\npublic:\nvoid \n    myFunction() {\ncout << \"Some content in parent class.\" ;\n}\n};\n// \n    Derived \n    class (child)\nclass MyChild: public MyClass {\n};\n// Derived class \n    (grandchild)\nclass MyGrandChild: public MyChild {\n};\nint main() {\nMyGrandChild myObj;\nmyObj.myFunction();\nreturn 0;\n}\n```\n\n## Tutorials\n\nA class can also be derived from more than one base class, using acomma-separated list:\n\n### Code Examples\n\n```\n// Base class\nclass MyClass {\npublic:\nvoid \n    myFunction() {\ncout << \"Some content in parent class.\" ;\n}\n};\n// \n    Another base class\nclass MyOtherClass {\npublic:\nvoid \n    myOtherFunction() {\ncout << \"Some content in another class.\" ;\n}\n};\n// \n    Derived \n    class\nclass MyChildClass: public MyClass, public MyOtherClass\n{\n};\nint main() {\nMyChildClass myObj;\nmyObj.myFunction();\nmyObj.myOtherFunction();\nreturn 0;\n}\n```\n\n## Tutorials\n\nYou learned from theAccess Specifierschapter that there are three \nspecifiers available in C++.\n\nUntil now, we have only usedpublic(members of a \nclass are accessible from outside the class) andprivate(members can only be \naccessed within the class).\n\nThe third specifier,protected, is similar toprivate, but it can also be accessed in theinheritedclass:\n\n### Code Examples\n\n```\n// Base class\nclass \n    Employee {\nprotected: // Protected access specifier\nint salary;\n};\n// Derived class\nclass Programmer: public Employee {\npublic:\nint bonus;\nvoid \n    setSalary(int s) {\nsalary = s;\n}\nint getSalary() {\nreturn salary;\n}\n};\nint main() {\nProgrammer myObj;\nmyObj.setSalary(50000);\nmyObj.bonus = \n    15000;\ncout << \n    \"Salary: \" << myObj.getSalary() << \"\\n\";\ncout << \"Bonus: \" << \n    myObj.bonus << \"\\n\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nPolymorphism means \"many forms\", and it occurs when we have many classes that are related to each other by inheritance.\n\nLike we specified in the previous chapter;Inheritancelets us \ninherit attributes and methods from another class.Polymorphismuses those methods to perform different tasks. This allows us to perform a single \naction in different ways.\n\nFor example, imagine a base classAnimalwith a method calledmakeSound(). Derived classes of Animals could be Pigs, Cats, Dogs, Birds, etc. Every animal can \"make a sound\", but each one sounds different:\n\nThis is polymorphism - the same action (making a sound) behaves differently \nfor each animal:\n\nNow we can createPigandDogobjects and override theanimalSound()method:\n\n### Code Examples\n\n```\n// Base class\nclass Animal {\npublic:\nvoid \n    animalSound() {\ncout << \"The animal makes a sound \\n\";\n}\n};\n// Derived class\nclass Pig : public Animal {\npublic:\nvoid \n    animalSound() {\ncout << \"The pig says: wee wee \\n\";\n}\n};\n// Derived class\nclass Dog \n    : public Animal {\npublic:\nvoid animalSound() \n    {\ncout << \"The dog says: bow wow \\n\";\n}\n};\n\n---\n\n// Base class\nclass Animal {\npublic:\nvoid \n    animalSound() {\ncout << \"The animal makes a sound \\n\";\n}\n};\n// Derived class\nclass Pig : public Animal {\npublic:\nvoid \n    animalSound() {\ncout << \"The pig says: wee wee \\n\";\n}\n};\n// Derived class\nclass Dog \n    : public Animal {\npublic:\nvoid animalSound() \n    {\ncout << \"The dog says: bow wow \\n\";\n}\n};\nint main() {\nAnimal \n    myAnimal;\nPig myPig;\nDog myDog;\nmyAnimal.animalSound();\nmyPig.animalSound();\nmyDog.animalSound();\nreturn 0;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_22",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_22",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

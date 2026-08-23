@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 84,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thenewkeyword lets you manage memory yourself.\n\nIn the example below, we create memory space for an integer usingnew, store the value35in it, and print it using apointer:\n\nExplanation:\n\nSo we usednewto create memory, andptrto access it.\n\nWhen you create something withnew, it's your job to remove it when you're done.\n\nTo do that, usedelete:\n\nThis tells C++: \"I'm done with this memory, you can clean it up now.\"\n\nYou can also use thenewkeyword to create dynamic arrays.\n\nNote:For arrays, usenew[]anddelete[].\nFor single variables, usenewanddelete.\n\nDynamic arrays are useful when you don't know the size of the array in advance - like when the size depends on user input or other values that are not \nknown at the start of the program.\n\nFor example, imagine you run a hotel. Since you don't know how many guests \nwill arrive, you ask the user for the number and create that many rooms - one to \nstore each guest's name:\n\nIn most cases, you don't need to usenew. C++ will automatically handle memory for normal variables like:\n\nButsometimes, you have to manage memory yourself - especially when:\n\nIn those cases,newhelps you create memory, anddeletehelps you clean it up when you're done.\n\nTip:If you usenew, always remember to usedelete(ordelete[]for arrays) to avoid memory leaks.\n\n### Code Snippets\n\n```\nint* ptr = new int;\n*ptr = 35;\ncout << *ptr;\n\n---\n\ndelete ptr;\n\n---\n\n#include <iostream>\n#include <string>\nusing namespace std;\nint \n  main() {\nint numGuests;\ncout << \"How many guests? \";\ncin >> numGuests;\n// Check for invalid input\nif \n  (numGuests <= 0) {\ncout << \"Number of guests must be at \n  least 1.\\n\";\nreturn 0;\n}\n// Create memory space for\nx\nguests (an array of strings)\nstring* guests = new string[numGuests];\n// Ignore the leftover newline character after reading numGuests\ncin.ignore();\n// Enter guest names\nfor (int i = 0; i < numGuests; i++) \n  {\ncout << \"Enter name for guest \" << (i + 1) << \": \";\ngetline(cin, guests[i]); // Read the full name (including spaces)\n}\n// Show all guests\ncout \n  << \"\\nGuests checked in:\\n\";\nfor (int i = 0; i < numGuests; i++) {\ncout << guests[i] << \"\\n\";\n}\ndelete[] guests; // Clean \n  up memory\nreturn 0;\n}\n\n---\n\nint age = 35;\nstring name = \"John\";\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_83",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

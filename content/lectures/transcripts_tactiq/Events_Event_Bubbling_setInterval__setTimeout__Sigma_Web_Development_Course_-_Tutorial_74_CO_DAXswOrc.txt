@@ -1,0 +1,1250 @@
+Video URL: https://www.youtube.com/watch?v=CO_DAXswOrc
+Video Title: Events, Event Bubbling, setInterval & setTimeout | Sigma Web Development Course - Tutorial #74
+--------------------------------------------------
+
+00:00:00.000
+In today's video, I will tell you about the events of JavaScript.
+00:00:03.680
+There are many events in JavaScript.
+00:00:05.920
+Like you want to take the mouse inside an element.
+00:00:09.280
+Or you want to take the mouse out of an element.
+00:00:11.600
+You can click on any element.
+00:00:13.600
+You can double click on it.
+00:00:14.800
+We will see about all these events in this video.
+00:00:17.120
+Like this video and write JavaScript in the comment section.
+00:00:20.800
+If you are enjoying JavaScript.
+00:00:22.960
+Let's go to the computer screen.
+00:00:24.480
+Let's roll the intro
+00:00:34.000
+alright guys
+00:00:35.000
+I have come to my computer screen
+00:00:37.000
+I will make video 74 here
+00:00:39.000
+and today we will talk about events
+00:00:41.000
+and why events are very important
+00:00:43.000
+and why you will want to use it so much
+00:00:46.000
+by making an index.html and putting boilerplate
+00:00:49.000
+and adding script colon src
+00:00:51.000
+I will waste some time
+00:00:53.000
+and by making script.js
+00:00:55.000
+I will tell you that
+00:00:57.000
+we have some events
+00:00:59.000
+which we need
+00:01:01.000
+I have told this very clearly in notes
+00:01:03.000
+that browser event is a signal
+00:01:06.000
+that something has happened. You can also make custom events
+00:01:09.000
+but there are many events which you can see in JavaScript
+00:01:12.000
+you can listen for events
+00:01:15.000
+and there are different types of events which you can see
+00:01:18.000
+from MDN. I will take a very fast start here
+00:01:21.000
+and I will make a button here. I will make a container
+00:01:24.000
+div.container I will start from here and I will make a button here I will make a container
+00:01:26.000
+and inside the container I will make a box
+00:01:29.000
+I will write here
+00:01:32.000
+then I will write a button
+00:01:35.000
+and here I will write
+00:01:38.000
+click me to change content or I will just write change content
+00:01:41.000
+change content and here
+00:01:44.000
+I will give an id to this button
+00:01:46.000
+with the name btn
+00:01:49.000
+now what I can do is, I can say let btn is equal to
+00:01:52.000
+document.getElementsById
+00:01:54.000
+and I'll say btn
+00:01:57.000
+that take the button with the id btn
+00:02:00.000
+and I can name it anything, I can name it button, I can name it btn, it's my choice
+00:02:03.000
+and I can say button.addEventListener
+00:02:06.000
+and first argument is
+00:02:09.000
+for which event you want to listen
+00:02:12.000
+and second argument is function which will run
+00:02:15.000
+once you listen for the event
+00:02:18.000
+if you find this a little overwhelming, then i'll explain
+00:02:21.000
+first element i took here, i want button
+00:02:24.000
+now when i click on the button
+00:02:26.000
+So here I have written the name of this event as click
+00:02:29.000
+This event could have been something else, it could have been double click, it could have been mouse over
+00:02:32.000
+Meaning I can take the mouse to the button
+00:02:35.000
+And after that what I will do is
+00:02:38.000
+As soon as someone clicks on this, what you do is
+00:02:41.000
+Change this content
+00:02:44.000
+So I will content document.
+00:02:45.920
+i can do anything on this click
+00:02:49.380
+i can put an alert
+00:02:54.320
+i was clicked
+00:02:57.060
+and when i run it
+00:03:00.060
+and click on it
+00:03:03.120
+it means that this click
+00:03:05.900
+is working
+00:03:07.600
+and it is working properly
+00:03:10.760
+alright, now i want to show you
+00:03:14.200
+if i want, i can do anything
+00:03:17.160
+i can say document.getElementByClassName
+00:03:20.060
+and i will say
+00:03:22.000
+or i will use query selector
+00:03:24.460
+whenever i want to select an element
+00:03:26.600
+and I will say dot box here because it has class box so this element will be selected
+00:03:31.300
+and I will say its inner html, do that
+00:03:35.500
+yay you were clicked
+00:03:38.900
+ok, enjoy your click, ok
+00:03:44.900
+I have written this, so what will happen ok, enjoy your click, ok
+00:03:45.000
+I wrote this, so what will happen
+00:03:48.000
+as soon as I click on this button, its content will change
+00:03:52.000
+I will show you, I clicked, this is you are clicked, enjoy your click clicked
+00:03:57.000
+I will reload, things will be normal
+00:03:59.000
+I will click on change content again, now see this
+00:04:03.000
+you are clicked, enjoy your click is clicked
+00:04:06.000
+so in this way we can listen for the events
+00:04:09.000
+if I write here browser events
+00:04:12.000
+mdn
+00:04:14.000
+so I will get the reference of the event
+00:04:16.000
+and
+00:04:17.000
+the reference of the event will tell me
+00:04:20.000
+what are the events, now here
+00:04:23.000
+many types of events are related to mouse, if I want to see all the events so are many events related to mouse
+00:04:26.000
+if i want to see all the events, i will open mouse events
+00:04:29.000
+and here i got this page
+00:04:32.000
+i will copy and paste this page for you
+00:04:35.000
+so that you can easily see all the events
+00:04:38.000
+and i will comment out and i will write
+00:04:41.000
+list of all mouse events
+00:04:44.000
+this will give you list of All mouse events With this you will get a list of all mouse events
+00:04:47.160
+And it will be easy for you
+00:04:49.160
+Now suppose i want to double click
+00:04:51.160
+You can read all these methods
+00:04:53.160
+There is an event called DBL click
+00:04:55.160
+Whenever you want to do anything
+00:04:57.160
+If you want to double click
+00:04:59.160
+You can search on internet
+00:05:01.160
+Is there any event
+00:05:03.160
+With which i can listen to double click If there is, then you internet. If there is an event, you can listen to it.
+00:05:06.000
+If there is, you will know.
+00:05:09.000
+I will do one thing.
+00:05:12.000
+Index.html is already running.
+00:05:15.000
+If i click on it.
+00:05:18.000
+I clicked again.
+00:05:21.000
+Double click.
+00:05:24.000
+I can listen to the double click
+00:05:26.000
+I can also make a windows clone
+00:05:29.000
+I can listen to the double click
+00:05:32.000
+Then mouse down means
+00:05:35.000
+when you press the mouse button
+00:05:38.000
+Then mouse leave
+00:05:39.600
+fired when the pointer of a pointing device is moved out of an element
+00:05:42.600
+that has a listener attached to it means you took the mouse up arrow
+00:05:47.240
+ok
+00:05:48.240
+mouse down means you pressed the button, it will be done as you press it
+00:05:52.000
+mouse enter, mouse leave means you took it and removed it
+00:05:55.800
+mouse out means when you
+00:05:59.360
+off the element to which the listener is attached
+00:06:02.840
+or off one of its children
+00:06:06.000
+so these events don't need to be
+00:06:09.000
+kept, to be honest, I don't care about it
+00:06:12.580
+I don't want to lie, I don't care
+00:06:15.580
+you should keep it or not, while working it will come
+00:06:19.380
+while doing trial and error things will come
+00:06:21.840
+some things are definitely kept, like context menu
+00:06:24.800
+which opens with right click
+00:06:26.000
+so this event
+00:06:28.000
+will open, means it will fire
+00:06:30.000
+when you will right click, so if i want
+00:06:32.000
+that the context menu
+00:06:34.000
+i will show you
+00:06:36.000
+i will make
+00:06:38.000
+one more copy of it
+00:06:40.000
+and i will say
+00:06:42.000
+when context menu opens
+00:06:44.000
+then do an alert and say I will say when the context menu opens, then alert
+00:06:46.060
+and say
+00:06:47.620
+right click please
+00:06:50.880
+or I will write don't right click
+00:06:54.980
+don't hack us by right click please
+00:06:57.300
+ok, suppose I did this
+00:06:59.160
+so I will right click as soon as I reload it
+00:07:02.160
+I right clicked, I don't know why it didn't work
+00:07:04.360
+let me see why it didn't work, I will right it as soon as I reload it. I right clicked it. I don't know why it didn't work. Let me see why it didn't work.
+00:07:06.000
+If I right click on it, then see don't hack us by right click please.
+00:07:09.000
+Okay, fine. So I will right click.
+00:07:12.000
+See don't hack us by right click please. Okay.
+00:07:15.000
+So what will happen if it is listening to right click?
+00:07:18.000
+So there are many events like this which you can use.
+00:07:21.000
+There are keyboard events, key down, key up. And if you want to see keyboard events, then you go to keyboard events. See there are keyboard events, key down, key up and if you want to see keyboard events
+00:07:26.000
+then you can go to keyboard events, there are many events in javascript
+00:07:29.000
+not only mouse events, keyboard events
+00:07:32.000
+if you want to see, then you can see key down, key press
+00:07:35.000
+ok, fire when
+00:07:38.000
+a key that produces a character value is pressed down, ok, key up
+00:07:41.000
+ok, then there are mouse events, keyboard events
+00:07:44.000
+all events are enumerated on this page
+00:07:46.000
+So you can see
+00:07:48.000
+this, ok
+00:07:50.000
+So key down, key press, key up
+00:07:52.000
+You can see all this, ok
+00:07:54.000
+So I will do one thing, I will tell you a key down
+00:07:56.000
+I will show you a key down
+00:07:58.000
+So if I say here key down
+00:08:00.000
+ok, key down
+00:08:02.000
+So what happens is, one minute
+00:08:04.000
+I will double click this, what happens is, let me double click this
+00:08:06.000
+so the second argument takes the event object
+00:08:08.000
+this is called event object
+00:08:10.000
+and if I lock this console
+00:08:14.000
+so you can see the event
+00:08:16.000
+which is printed here, let me inspect
+00:08:18.000
+and as soon as
+00:08:20.000
+I press any button on keyboard
+00:08:22.000
+I pressed G
+00:08:24.000
+I pressed G, nothing happened
+00:08:26.320
+Key down
+00:08:27.720
+So here I have to take my mouse here because I have put this event on it
+00:08:31.160
+So if I press D or suppose I
+00:08:33.760
+I clicked on it, after that I will press any key
+00:08:36.679
+So see it is working, okay
+00:08:38.360
+So I reload
+00:08:39.559
+And I click on it and then I press something, then here
+00:08:43.000
+This is showing me all this
+00:08:46.000
+so what I have to do if I want this event to work forever
+00:08:50.000
+so I will put it on document
+00:08:52.000
+so whenever I press key, see whatever key I am pressing, I pressed H, I pressed A, R, R, Y
+00:08:58.000
+so it is showing here and here this key and this key code is showing me
+00:09:02.000
+so I can say that print e.key or print e.keycode
+00:09:06.000
+so i can print e.key
+00:09:08.000
+or e.keycode
+00:09:10.000
+and you can see that i am pressing
+00:09:12.000
+anything in the document
+00:09:14.000
+so this is key and this is key code
+00:09:16.000
+so sometimes what happens with key code
+00:09:18.000
+if we have to take a key as a number
+00:09:20.000
+so we can take it, like i want to make a game
+00:09:22.000
+and i want that mario
+00:09:24.000
+come here and jump
+00:09:26.000
+when i press up arrow key
+00:09:28.000
+so i pressed up arrow key
+00:09:30.000
+so what is arrow up
+00:09:32.000
+it is a key and what is its key code
+00:09:34.000
+key code is this
+00:09:36.000
+now see this key code is cut
+00:09:38.000
+and this property is deprecated
+00:09:40.000
+which means we don't want to use it
+00:09:42.000
+we want to use key only
+00:09:44.000
+we don't want to use key, we have to use the key only, we don't have to use the key code,
+00:09:45.000
+so I will check which key is it, if I press the arrow up, and the code becomes intuitive to see,
+00:09:50.000
+so you can use all these things, and now you can see here that you can use keyboard events,
+00:09:57.000
+document events, all these things, then there are some events of the form,
+00:10:01.000
+like what to do when the form is submitted submitted what to do when the form is focused what to do
+00:10:05.340
+when the input is focused what to do
+00:10:07.340
+so you can check out all these events
+00:10:09.340
+so if I search
+00:10:11.340
+the events of the form
+00:10:13.340
+so I hope I will get the form event
+00:10:15.340
+I search focus
+00:10:17.340
+focus, focus in
+00:10:19.340
+focus out
+00:10:21.340
+so whenever an element comes in focus
+00:10:23.340
+like there is an input then you will see this event getting fired
+00:10:26.000
+now the concept which I am going to teach you
+00:10:29.000
+that is very important and for that
+00:10:32.000
+I will make a whole file
+00:10:34.440
+and its name is event bubbling
+00:10:37.440
+what is event bubbling, it is asked a lot in interviews
+00:10:40.440
+listen carefully, so I will do one thing
+00:10:43.440
+here I will write event bubbling
+00:10:47.520
+and I want you to see what I am doing here so that
+00:10:52.080
+you can see it clearly, so what I will do is
+00:10:55.600
+here div
+00:10:57.600
+dot
+00:10:59.600
+container, ok
+00:11:01.600
+I will make it and I will write container one, I will make it in this and I will write container
+00:11:05.800
+one, I will do one thing div.
+00:11:10.400
+container, ok
+00:11:12.000
+and div.
+00:11:14.200
+child container, ok
+00:11:16.000
+after this I will write div.
+00:11:18.000
+and I will span it
+00:11:19.600
+ok, I will span it and I will tell you why I am doing it, to explain things
+00:11:23.000
+I have spanned it, ok
+00:11:25.000
+and after this I will put a div in it
+00:11:28.000
+div.child
+00:11:30.000
+and I will write I am a child in it
+00:11:33.000
+and that's it
+00:11:36.000
+I have done this here
+00:11:37.000
+now what will happen you understand this
+00:11:39.000
+it is a very important concept I am saying it again and again
+00:11:41.000
+I know but it is a very important concept
+00:11:43.000
+I will put a script here.
+00:11:48.700
+Script, src, not src, just script.
+00:11:52.700
+Script, and what I will do here, I will say whenever someone clicks on child,
+00:11:55.700
+then what should happen,
+00:11:57.700
+you will put an alert that child is clicked,
+00:12:02.200
+put something like this, ok.
+00:12:03.700
+So it is not a big deal
+00:12:06.000
+I will say document.getElementBy
+00:12:11.000
+or query selector
+00:12:15.000
+and I will say.child
+00:12:17.000
+.adEventListener
+00:12:19.000
+I will copy the whole code, I will not waste much time
+00:12:21.000
+I will copy it directly
+00:12:23.000
+and I will say click on it
+00:12:26.000
+as soon as it is
+00:12:28.000
+.add event listener, I am directly
+00:12:30.000
+writing single liner, I know
+00:12:32.000
+I will say as soon as it is clicked
+00:12:34.000
+then what to do
+00:12:36.000
+I will write child was clicked
+00:12:38.000
+child was clicked
+00:12:40.000
+ok, I will do format document so that
+00:12:42.000
+it looks good, so child was clicked
+00:12:44.000
+I have written here, after this what I will do I document so that it looks good so I have written child was clicked
+00:12:45.000
+after this what I will do, I will put one more event listener
+00:12:48.000
+and this time I am going to put this event listener on child container
+00:12:52.000
+I will say put this event listener on child container
+00:12:55.000
+and I will write child container was clicked
+00:12:57.000
+same thing I am going to do
+00:13:00.000
+on what? on container
+00:13:03.000
+and I will say container was clicked on what? on container and
+00:13:06.000
+I will say container was clicked, ok, it's a simple thing
+00:13:09.000
+and I will click here
+00:13:12.000
+I will not put the context menu, I will click
+00:13:15.000
+so the first argument is click
+00:13:17.000
+of add event listener, if I turn off word wrap then you will see
+00:13:20.000
+what I have done, I have put an event listener
+00:13:23.000
+one on child, one on child container and one on container now see, in On child, child container and container
+00:13:26.080
+Now see, in container there is child container
+00:13:29.080
+And in child container there is child
+00:13:32.080
+When i click on child
+00:13:33.380
+Then automatically this event
+00:13:36.120
+Will get bubble. This means
+00:13:39.120
+JavaScript says, you clicked on child
+00:13:42.120
+Now if you are saying
+00:13:43.700
+You live in UP, If you are in UP
+00:13:45.360
+Then you live in India automatically
+00:13:48.160
+In Asia also, and if you live in this world
+00:13:51.200
+The answer is yes
+00:13:54.200
+So javascript says that if you click on this child
+00:13:57.160
+Then technically you clicked on child container
+00:14:00.160
+Because child is inside the container
+00:14:03.120
+And you clicked on container because container is complete
+00:14:06.000
+this is complete container
+00:14:08.000
+so technically you clicked on the container
+00:14:10.000
+so that's why
+00:14:12.000
+event bubble up
+00:14:14.000
+means
+00:14:16.000
+it seems like
+00:14:18.000
+click event was on this
+00:14:20.000
+but it was on this, then on this
+00:14:22.000
+then you clicked on body, then on html
+00:14:24.000
+so i will show you i will give some styling on this child then you can click on the body or you can click on the html
+00:14:26.000
+so i will show you, i will give some styling to this child
+00:14:29.000
+it is not necessary to do this but i will give some styling
+00:14:32.000
+i will say that make the background of dot child
+00:14:35.140
+alice blue and i will make the border
+00:14:38.080
+2 pixels solid black
+00:14:41.240
+i will give padding 34 pixels
+00:14:44.720
+margin 34px
+00:14:46.180
+and if I run the page
+00:14:49.160
+I am a child is here, so I clicked on child and child was clicked
+00:14:52.340
+I will say ok
+00:14:53.880
+child container was clicked, ok
+00:14:56.880
+container was also clicked, ok
+00:14:59.880
+I clicked on child, I will put cursor pointer on child
+00:15:02.880
+so that you can see how far is child
+00:15:04.080
+cursor pointer on child so that you can see how far is the child cursor pointer
+00:15:07.660
+so I clicked on child
+00:15:10.660
+so child container was clicked
+00:15:13.660
+container was clicked, everything clicked
+00:15:16.660
+if I work outside this
+00:15:19.660
+I will give padding everywhere, I will give child container also
+00:15:22.600
+child.childcontainer
+00:15:26.740
+and I will give it a background
+00:15:29.280
+I'll give it a beach
+00:15:30.900
+and I'll also put this margin padding in it
+00:15:33.200
+and I'm going to do the same thing
+00:15:35.840
+in the container, so I'll say that do it in the container
+00:15:39.260
+and this time I'll change the color a little
+00:15:42.280
+I'll make it yellow
+00:15:44.280
+and I'll make it 1414, I think change the color a little bit I will make it yellow and I will make it 14x14
+00:15:46.320
+I think I have given a little more
+00:15:48.320
+margin padding so 14x14
+00:15:50.320
+and we will also make it 14
+00:15:52.320
+ok
+00:15:54.320
+so this I have done
+00:15:56.320
+and now you see one thing
+00:15:58.320
+here
+00:16:00.320
+this is our child container
+00:16:02.320
+there is a container inside the child container
+00:16:04.320
+and I have put a span here
+00:16:05.700
+let me do one thing, let me divvy it up
+00:16:07.300
+because span is an inline element
+00:16:09.300
+or I can section it
+00:16:10.800
+so it will be a little easier
+00:16:12.300
+see this is child
+00:16:13.800
+this is our parent of this
+00:16:15.800
+and this is parent of this
+00:16:16.500
+so if I click here
+00:16:17.500
+you saw all three events were fired on imchild
+00:16:19.500
+if I click here then child container was clicked
+00:16:22.000
+and container was also clicked
+00:16:23.800
+but if I click here then only container was clicked and container was also clicked. But if I click here, then only container was clicked.
+00:16:26.100
+Okay.
+00:16:28.100
+I have put these 3 events.
+00:16:30.100
+By the way, if you are thinking why body was not clicked,
+00:16:32.100
+because 3 event listeners are there.
+00:16:34.100
+I am answering all your questions.
+00:16:36.100
+Okay.
+00:16:38.100
+Now you will say that I don't want this.
+00:16:40.100
+If I click on child container, then I only want child container.
+00:16:42.100
+Why is it happening? I don't want bubbling.
+00:16:44.100
+JavaScript says that we will do bubbling by default because If i click on child container, i need only child container. Why is it bubbling?
+00:16:46.000
+JavaScript says we will do bubbling by default.
+00:16:49.000
+Because technically things are sitting.
+00:16:52.000
+You clicked on this and this.
+00:16:55.000
+You said it's same but i don't want it.
+00:16:58.000
+JavaScript says if you don't want it, stop propagation.
+00:17:01.000
+You said what do you mean?
+00:17:04.000
+I will tell you what it means. stop the propagation what does it mean?
+00:17:06.000
+I told you that if you are using any event listener
+00:17:09.000
+then you can take an event object
+00:17:12.000
+and with that event, you can play with the fire
+00:17:15.000
+so you say e.stoppropagation
+00:17:18.000
+e.stoppropagation
+00:17:21.000
+and what will this method do?
+00:17:24.000
+it will stop the propagation
+00:17:25.000
+means there will be no bubbling
+00:17:27.000
+this behavior will not be shown
+00:17:29.000
+so you see when i click on this child
+00:17:34.000
+so only child will show
+00:17:36.000
+let me comment this
+00:17:38.000
+i have stopped the propagation on child
+00:17:40.000
+when i click on child, child was clicked
+00:17:42.000
+that's it, the propagation stopped
+00:17:44.000
+event didn't propagate.
+00:17:46.000
+It didn't happen that it happened to child, parent,
+00:17:49.000
+parent's parent,
+00:17:52.000
+No.
+00:17:53.300
+It didn't happen. It happened to child only.
+00:17:56.480
+Because i stopped the propagation.
+00:17:59.480
+I told them to handle the event on child.
+00:18:02.480
+I don't want propagation beyond this.
+00:18:05.000
+Okay? Good. handle it, that's it I don't want any more propagation
+00:18:06.380
+okay?
+00:18:07.580
+good
+00:18:10.820
+so this is it, I am a child it's here, good, very good
+00:18:13.560
+but if I click outside it, child container was clicked
+00:18:16.520
+yes I clicked, container was also clicked
+00:18:19.520
+so I will stop propagation here also
+00:18:22.520
+so above this event
+00:18:26.000
+there will be no event fire
+00:18:29.000
+this is called stop event bubbling
+00:18:32.000
+so the question is asked in interviews, what is event bubbling
+00:18:35.000
+you will say that you will listen to an event on any element
+00:18:38.000
+so its listener will be activated
+00:18:41.000
+but its parent will also be activated
+00:18:44.000
+because you are clicking on an element
+00:18:46.000
+so technically you are clicking on it's parent
+00:18:49.000
+if you are dancing in your room number 4
+00:18:52.000
+then you are dancing in your house, in your city
+00:18:55.000
+and you are dancing in your state
+00:18:58.000
+in this country, in this world
+00:19:01.000
+in solar system
+00:19:04.000
+so technically your you are doing is
+00:19:05.420
+your event is propagated
+00:19:07.420
+someone will ask you from above
+00:19:09.420
+he will say he is dancing on earth
+00:19:11.420
+he will not say he is dancing in room no.4
+00:19:13.420
+he will say he is dancing on earth
+00:19:15.420
+so this is called
+00:19:17.420
+event bubbling
+00:19:19.420
+and if you want to be told
+00:19:21.420
+that you are dancing in this room
+00:19:23.420
+you don't want people to say you are dancing in this room you don't want people to say that you are dancing in this world, in this planet
+00:19:27.280
+you stop the propagation
+00:19:28.480
+you say that I am dancing here
+00:19:29.760
+neither I am dancing in this house nor in this state
+00:19:32.240
+ok
+00:19:33.040
+so this is your way to stop event propagation
+00:19:36.720
+I hope you understood
+00:19:38.560
+and I hope you enjoyed
+00:19:40.880
+understanding this concept
+00:19:42.240
+ok
+00:19:42.880
+in notes I have written everything very well
+00:19:45.540
+the way we add an event listener
+00:19:48.500
+we can also remove an event listener
+00:19:51.500
+like add event listener is used to assign multiple handler to an event
+00:19:54.240
+along with that, remove event listener
+00:19:57.260
+you can see the same function
+00:20:00.580
+same function object
+00:20:02.580
+you can also remove an event listener so you can make a variable object you can remove event listener
+00:20:06.000
+so you can make a variable
+00:20:09.000
+and by giving handler
+00:20:12.000
+you can add event listener and if you want to remove
+00:20:15.000
+you can use the same variable and remove it
+00:20:18.000
+so that event listener will be removed
+00:20:21.000
+I have already told you about event object
+00:20:24.000
+event.type, event.currentTarget
+00:20:25.960
+Event.clientX, clientY
+00:20:28.960
+In case of your cursor, mouse event
+00:20:31.960
+So all these are the properties of the event
+00:20:34.960
+By the way, why don't you do one thing
+00:20:37.960
+If I press any key, then see here eventX, event
+00:20:40.960
+Key and event key code I have printed
+00:20:43.960
+So why don't you print the event and see the object
+00:20:46.240
+inspect it yourself, so if I
+00:20:49.120
+pressed a key, see what happened, this event is printed
+00:20:52.120
+and if you want to know what all is there in this event
+00:20:55.160
+then you can see, it has key, key code, location
+00:20:58.120
+meta key, repeat, return value, shift key
+00:21:00.800
+don't know what all is there, you can see
+00:21:03.720
+bubbles are true or false
+00:21:06.000
+alt key is false
+00:21:08.000
+if you press alt key
+00:21:10.000
+then alt key is false
+00:21:12.000
+if you press alt key
+00:21:14.000
+then it will be true
+00:21:16.000
+if you want to control c
+00:21:18.000
+then you can see alt and c
+00:21:20.000
+are not pressed
+00:21:22.000
+you can do all these things
+00:21:24.000
+it is very simple and straight forward thing
+00:21:26.000
+and I have written it in notes with more beauty
+00:21:29.000
+there are practice sets in it which you can solve
+00:21:32.000
+but I have covered everything here
+00:21:35.000
+now you can handle events through html attribute
+00:21:38.000
+like you can write onclick is equal to
+00:21:41.000
+and run a javascript function like this
+00:21:44.000
+or you can do it like this
+00:21:45.500
+that element.onclick is equal to this function invoke
+00:21:48.500
+so you saw this in notes and you can do it
+00:21:51.500
+but traditional method is this, mostly used method is this
+00:21:54.500
+that what you will do
+00:21:57.500
+you will use an element.addEventListener
+00:22:00.500
+you will write the name of the event and put a function
+00:22:03.500
+that run this function if
+00:22:06.000
+this event is fire
+00:22:08.000
+ok
+00:22:10.000
+so here we have talked about all these things
+00:22:12.000
+now one thing is left
+00:22:14.000
+which i want to tell you and that is set timeout
+00:22:16.000
+and set interval
+00:22:18.000
+i want to cover that in this video
+00:22:20.000
+i don't want to make more videos about this
+00:22:22.000
+because this is very straight forward thing
+00:22:24.000
+if i want something to happen
+00:22:26.000
+ok, it should happen again and again
+00:22:28.000
+so what I will do
+00:22:30.000
+I will do it on this page
+00:22:32.000
+suppose I want something to happen repetitively
+00:22:34.000
+every 2 seconds
+00:22:36.000
+so I can use set interval
+00:22:38.000
+set interval is a function
+00:22:40.000
+which takes a function
+00:22:42.000
+a function takes a function and takes time
+00:22:44.000
+how much time it takes in milliseconds
+00:22:45.940
+so if I write 3000 here
+00:22:47.940
+so it means
+00:22:49.200
+every 3000
+00:22:50.700
+sorry every 3 seconds
+00:22:52.700
+you will get to see
+00:22:55.100
+that whatever is happening inside it
+00:22:57.500
+like I say that
+00:22:59.100
+every 3 seconds what you do is
+00:23:01.100
+that change the color of the child container
+00:23:03.900
+ok, child container's dot style dot background is equal to
+00:23:10.000
+you do, let's say red, ok
+00:23:13.000
+every 3 seconds I want to generate a random color here
+00:23:18.000
+ok, so what I can do is
+00:23:20.000
+I will pick up a random color generator from the previous video
+00:23:26.160
+because I don't want to repeat the same thing
+00:23:28.660
+in 72 we made a random color generator
+00:23:31.660
+so I will open with code here
+00:23:33.660
+and this was our random color generator
+00:23:36.660
+I will delete this because I did the solution of you guys
+00:23:42.160
+I will copy get random color function from here
+00:23:45.200
+ok, and I will bring it in my script
+00:23:48.200
+ok, because I don't want to spend much time
+00:23:51.200
+I will do format document and I will do
+00:23:54.200
+get random color, ok, simple
+00:23:56.200
+I will get a random color every 3 seconds
+00:23:59.200
+so if I show you a page, where is the page, see
+00:24:02.200
+every 3 seconds its color is changing, you can see if you want to start doing this disco and change the color is changing every 3 seconds if you want to change the color of the disc
+00:24:08.000
+so what you can do is
+00:24:10.000
+you can change the color every 1 second
+00:24:14.000
+see here, the color is changing every 1 second
+00:24:18.000
+so what will set interval do?
+00:24:22.000
+it will make you repeat the same thing again and again
+00:24:27.500
+if you want to run some set of code in every second
+00:24:30.800
+then you can do it through set interval, ok
+00:24:33.500
+then there is clear interval, if I say let a is equal to this and console.log a
+00:24:41.000
+then what will it give me, if I reload it again, then what will it give me
+00:24:45.000
+oops, I want to inspect, I want to open console, so it gave me 1 here
+00:24:50.000
+so what I can do, I can say clear interval and I will say 1, so what will happen, it will stop happening
+00:24:57.000
+so I will hit enter, so this interval is cleared, means whatever number it returned you can use it with clear interval
+00:25:05.440
+and with that the set interval
+00:25:08.400
+will stop running
+00:25:10.620
+its a very simple thing
+00:25:12.280
+now i will tell you the same thing
+00:25:15.420
+by making a copy of it and you will say why are you making a copy
+00:25:18.280
+i am making a copy because syntax is same
+00:25:21.220
+i will say exactly same, this is setTimeout
+00:25:24.220
+setTimeout runs only once after a certain period of time I will say exactly the same Set timeout
+00:25:26.000
+Set timeout is only run once after a certain period of time
+00:25:29.000
+So you see here I said that after 5 seconds
+00:25:32.000
+Or after 1 second change the color, so I will reload it
+00:25:35.000
+So after 1 second the color changed only once
+00:25:38.000
+So if I want to work after a few seconds
+00:25:41.000
+Then I can use set timeout
+00:25:44.000
+So I have set timeout so I have set timeout
+00:25:46.000
+and you can see
+00:25:49.000
+after 1 second color changed
+00:25:52.000
+and I can clear set timeout
+00:25:55.000
+I want to change color after 5 seconds
+00:25:58.000
+ok
+00:26:00.100
+I will reload it, count 5 seconds
+00:26:03.420
+color is going to change after 5 seconds count 5 seconds color will change after 5 seconds
+00:26:05.800
+after 5 seconds color will change
+00:26:07.760
+I will reload it and suppose I don't want to change the color
+00:26:13.160
+so I will write clear timeout
+00:26:15.160
+I will keep it as a copy
+00:26:17.160
+so before it starts, if I write clear timeout, now see the color is this
+00:26:20.760
+if I run clear timeout
+00:26:22.760
+so it is clear timeout
+00:26:24.960
+means what I was going to do, I changed my mind, now I don't want color to change after 5 seconds if I run clear timeout then it is clear
+00:26:26.220
+I changed my mind
+00:26:29.160
+so after 5 seconds
+00:26:32.160
+this function will not run
+00:26:35.040
+so to cancel set interval we use clear interval
+00:26:38.000
+to cancel set timeout we use clear timeout
+00:26:41.120
+very simple thing
+00:26:44.080
+with that set we have covered a lot ok, its a very simple thing i hope you understood
+00:26:45.560
+we have covered a lot with that set
+00:26:48.560
+and it is very important to access the notes
+00:26:51.560
+because it will remind you of all the things you have done in the sigma course
+00:26:54.320
+then there is mdn reference, internet is there
+00:26:57.320
+you are giving 400 rupees per month
+00:27:00.080
+whatever you are giving, tell me in the comment section
+00:27:03.080
+i hope you are understanding how important it is to download notes
+00:27:06.000
+and you are understanding all the concepts
+00:27:08.000
+one thing you have to do is go and review this course in the first video
+00:27:11.000
+give me 5 stars out of 5
+00:27:13.000
+I am not giving any compulsion for this
+00:27:15.000
+but if you do it, it will feel good from the heart
+00:27:17.000
+new people who are joining this course, it will be very helpful for them
+00:27:20.000
+they will be able to know whether they want to do this course or not
+00:27:22.000
+that's all for now guys
+00:27:24.000
+Thank you so much much for watching this video

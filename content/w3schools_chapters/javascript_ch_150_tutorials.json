@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 150,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript 2009is supported in all modern browsers sinceJuly 2013:\n\n\"use strict\"defines that the JavaScript code should be executed in \"strict mode\".\n\nWith strict mode you can, for example, not use undeclared variables.\n\nThecharAt()method returns the character at a specified \nindex (position) in a string:\n\nES5 allows property access on strings:\n\nA safer way to break up a string literal, is to use string \naddition:\n\nES5 allows reserved words as property names:\n\nThetrim()method removes whitespace from both sides of a string.\n\nLearn more inJS String Methods.\n\nTheisArray()method checks whether an object is an array.\n\nLearn more inJS Array Methods.\n\nTheforEach()method calls a function once for each array element.\n\nLearn more inJS Array Iteration Methods.\n\nThemap()method creates a new array by performing a function on each array element.\n\nLearn more inJS Array Iteration Methods.\n\nThefilter()method creates a new array from array elements that passes a test.\n\nLearn more inJS Array Iteration Methods.\n\nThereduce()method reduces an array to a single value.\n\nLearn more inJS Array Iteration Methods.\n\nThereduceRight()method reduces an array to a single value (from right to left).\n\nLearn more inJS Array Iteration Methods.\n\nTheevery()method checks if all array values pass a test.\n\nLearn more inJS Array Iteration Methods.\n\nThesome()method checks if some array values pass a test.\n\nLearn more inJS Array Iteration Methods.\n\nTheindexOf()method searches for an element value and returns its position.\n\nLearn more inJS Array Search Methods.\n\nlastIndexOf()is the same asindexOf(), but searches from the end of the array.\n\nLearn more inJS Array Search Methods.\n\nA common use of JSON is to receive data from a web server.\n\nImagine you received this text string from a web server:\n\nThe JavaScript functionJSON.parse()is used to convert the text into a JavaScript object:\n\nRead more in ourJSON Tutorial.\n\nA common use of JSON is to send data to a web server.\n\nWhen sending data to a web server, the data has to be \na string.\n\nImagine we have this object in JavaScript:\n\nUse the JavaScript functionJSON.stringify()to convert it into a string.\n\nmyJSON is now a string, and ready to be sent to a server:\n\nRead more in ourJSON Tutorial.\n\nDate.now()returns the number of milliseconds since zero date (January 1. \n1970 00:00:00 UTC).\n\nDate.now()returns the same as getTime() performed on aDateobject.\n\nLearn more inJS Date Methods.\n\nThetoISOString()method converts a Date object to a string, using the ISO standard format:\n\nLearn more inJS Date Methods.\n\ntoJSON()converts a Date object into a string, formatted as a JSON date.\n\nJSON dates have the same format as the ISO-8601 standard: YYYY-MM-DDTHH:mm:ss.sssZ:\n\nLearn more inJS Date Methods.\n\nA property getter is a method that allows you to define how a property value is retrieved when it is accessed.\n\nThis example creates agetterfor a property called fullName:\n\nLearn more about Gettes and Setters inJS Object Accessors\n\nA property setter is a method that allows you to define how a property value is set.\n\nThis example uses asetterto secure upper case updates of language:\n\nThis example creates asetterand agetterfor the language property:\n\nLearn more about Getters and Setters inJS Object Accessors\n\nObject.defineProperty()is a new Object method in ES5.\n\nIt lets you define an object property and/or change a property's value and/or \nmetadata.\n\nNext example is the same code, except it hides the language property from enumeration:\n\nThis example creates a setter and a getter to secure upper case updates of language:\n\nTheObject.create()method creates an object from an existing object.\n\nLearn more inJS Object Definition\n\nTheObject.keys()method returns an array with the keys of an object.\n\nES5 added new Object management methods to JavaScript:\n\nES5 added Object protection methods to JavaScript:\n\nWith thebind()method, an object can borrow a method from another object.\n\nThis example creates 2 objects (person and member).\n\nThe member object borrows the fullname method from the person object:\n\nLearn more inFunction bind().\n\nES5 allows trailing commas in object and array definitions:\n\n### Code Snippets\n\n```\nlet str = \"HELLO WORLD\";\nstr.charAt(0);\u00a0\u00a0\u00a0\u00a0 // returns H\n\n---\n\nlet str = \"HELLO WORLD\";\nstr[0];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // returns H\n\n---\n\n\"Hello \\\nDolly!\";\n\n---\n\n\"Hello \" +\n\"Dolly!\";\n\n---\n\nvar obj = {name: \"John\", new: \"yes\"}\n\n---\n\nvar str = \"\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \";\nalert(str.trim());\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nresult = Array.isArray(fruits);\n\n---\n\nconst numbers = [45, 4, 9, 16, 25];\nnumbers.forEach(myFunction);\n\n---\n\nconst numbers1 = [45, 4, 9, 16, 25];\nconst numbers2 = numbers1.map(myFunction);\nfunction myFunction(value) {\nreturn value * 2;\n}\n\n---\n\nconst numbers = [45, 4, 9, 16, 25];\nconst over18 = numbers.filter(myFunction);\nfunction myFunction(value) {\nreturn value > 18;\n}\n\n---\n\nconst numbers = [45, 4, 9, 16, 25];\nlet sum = numbers.reduce(myFunction);\nfunction myFunction(total, value) {\nreturn total + value;\n}\n\n---\n\nconst numbers1 = [45, 4, 9, 16, 25];\nlet sum = numbers1.reduceRight(myFunction);\nfunction myFunction(total, value) {\nreturn total + value;\n}\n\n---\n\nconst numbers = [45, 4, 9, 16, 25];\nlet allOver18 = numbers.every(myFunction);\nfunction myFunction(value) {\nreturn value > 18;\n}\n\n---\n\nconst numbers = [45, 4, 9, 16, 25];\nlet allOver18 = numbers.some(myFunction);\nfunction myFunction(value) {\nreturn value > 18;\n}\n\n---\n\nconst fruits = [\"Apple\", \"Orange\", \"Apple\", \"Mango\"];\nlet position = fruits.indexOf(\"Apple\") + 1;\n\n---\n\nconst fruits = [\"Apple\", \"Orange\", \"Apple\", \"Mango\"];\nlet position = fruits.lastIndexOf(\"Apple\") + 1;\n\n---\n\n'{\"name\":\"John\", \"age\":30, \"city\":\"New York\"}'\n\n---\n\nconst txt = '{\"name\":\"John\", \"age\":30, \"city\":\"New York\"}'\nconst myObj = JSON.parse(txt);\n\n---\n\nconst myObj = {name:\"John\", age:30, city:\"New York\"};\n\n---\n\nconst myJSON = JSON.stringify(myObj);\n\n---\n\nconst myObj = {name:\"John\", age:30, city:\"New York\"};\nconst myJSON = JSON.stringify(myObj);\n\n---\n\nvar timInMSs = Date.now();\n\n---\n\nconst d = new Date();\ndocument.getElementById(\"demo\").innerHTML = d.toISOString();\n\n---\n\nd = new Date();\ndocument.getElementById(\"demo\").innerHTML = d.toJSON();\n\n---\n\n// Create an object:\nconst Person = {\nfirstName: \n  \"John\",\nlastName : \"Doe\",\nget \n  fullName() {\nreturn this.firstName + \" \" + this.lastName;\n}\n};\n// Display data from the \n  object using a getter:\ndocument.getElementById(\"demo\").innerHTML = \n  Person.fullName;\n\n---\n\nconst Person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"NO\",\nset lang(value) {\nthis.language = value.toUpperCase();\n}\n};\n// Set an object \n  property using a setter:\nperson.lang = \"en\";\n// Display data from the \n  object:\ndocument.getElementById(\"demo\").innerHTML = \n  Person.language;\n\n---\n\nconst Person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"NO\",\nget lang() {\nreturn this.language;\n},\nset lang(value) {\nthis.language = value;\n}\n};\n// Set an object \n  property using a setter:\nperson.lang = \"en\";\n// Display data from the \n  object using a getter:\ndocument.getElementById(\"demo\").innerHTML = \n  Person.lang;\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \n  \"John\",\nlastName : \"Doe\",\nlanguage : \"NO\",\n};\n// Change a Property:\nObject.defineProperty\n(person, \"language\", {\nvalue: \"EN\",\nwritable : true,\nenumerable : true,\nconfigurable : true\n});\n// \n  Enumerate Properties\nlet txt = \"\";\nfor (let x in person) {\ntxt += person[x] + \"<br>\";\n}\n// Display Properties\ndocument.getElementById(\"demo\").innerHTML = \n  txt;\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \n  \"John\",\nlastName : \"Doe\",\nlanguage : \"NO\",\n};\n// Change a Property:\nObject.defineProperty\n(person, \"language\", {\nvalue: \"EN\",\nwritable : true,\nenumerable : false,\nconfigurable : true\n});\n// \n  Enumerate Properties\nlet txt = \"\";\nfor (let x in person) {\ntxt += person[x] + \"<br>\";\n}\ndocument.getElementById(\"demo\").innerHTML = \n  txt;\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \"John\",\nlastName : \n  \"Doe\",\nlanguage : \"NO\"\n};\n// Change a Property:\nObject.defineProperty\n(person, \"language\", {\nget : function() { return \n  language },\nset : function(value) { language = value.toUpperCase()}\n});\n// Change Language\nperson.language = \"en\";\n// Display Language\ndocument.getElementById(\"demo\").innerHTML = person.language;\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\"\n};\n// Create new Object\nconst man = Object.create(person);\nman.firstName = \"Peter\";\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n// Get the Keys\nconst keys = Object.keys(person);\n\n---\n\n// Adding or changing an object property\nObject.defineProperty(object, property, descriptor)\n// Adding or changing object properties\nObject.defineProperties(object, descriptors)\n// Accessing a Property\nObject.getOwnPropertyDescriptor(object, property)\n// Accessing Properties\nObject.getOwnPropertyDescriptors(object)\n// Returns all properties as an array\nObject.getOwnPropertyNames(object)\n// Accessing the prototype\nObject.getPrototypeOf(object)\n\n---\n\n// Prevents adding properties to an object\nObject.preventExtensions(object)\n// Returns true if properties can be added to an object\nObject.isExtensible(object)\n// Prevents changes of object properties (not values)\nObject.seal(object)\n// Returns true if object is sealed\nObject.isSealed(object)\n// Prevents any changes to an object\nObject.freeze(object)\n// Returns true if object is frozen\nObject.isFrozen(object)\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\nfullName: function () {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\nconst member = {\nfirstName:\"Hege\",\nlastName: \"Nilsen\",\n}\nlet fullName = person.fullName.bind(member);\n\n---\n\nperson = {\nfirstName: \"John\",\nlastName: \"\nDoe\",\nage: 46,\n}\n\n---\n\npoints = [\n1,\n5,\n10,\n25,\n40,\n100,\n];\n\n---\n\n//\n  Allowed:\nvar person = '{\"firstName\":\"John\", \"lastName\":\"Doe\", \n  \"age\":46}'\nJSON.parse(person)\n// Not allowed:\nvar person = '{\"firstName\":\"John\", \n  \"lastName\":\"Doe\", \"age\":46,}'\nJSON.parse(person)\n\n---\n\n//\n    Allowed:\npoints = [40, 100, 1, 5, 25, 10]\n// Not allowed:\npoints = \n    [40, 100, 1, 5, 25, 10,]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_149",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

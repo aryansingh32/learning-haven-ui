@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 49,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ThesetTimeout()function schedules a function to run once after a delay.\n\nThe first argument is the function to run.\n\nThe second argument is the delay in milliseconds.\n\nOne second is 1000 milliseconds.\n\nPassonly the function nameto setTimeout().\n\nThe incorrect example callsmyFunction()immediately.\n\nIts return value is then passed tosetTimeout().\n\nYou can pass ananonymous functionto setTimeout().\n\nCallingsetTimeout()does not pause JavaScript.\n\nJavaScript immediately continues with the next statement.\n\nA delay ofzero millisecondsdoes not mean that the callback function will run immediately.\n\nIt means that the callback will run as soon as the current JavaScript task has finished.\n\nThe specified delay is the earliest time the callback can run.\n\nThe callback may run later if JavaScript is busy.\n\nThe timer delay is one second.\n\nHowever, the callback cannot run until the loop has finished.\n\nThe setTimeout() function returns atimer identifier.\n\nPass the identifier toclearTimeout()to cancel the timer.\n\nThesetInterval()function runs a callback function repeatedly.\n\nThe callback function is called repeatedly with (at least) the specified delay in between.\n\nThe setInterval() function returns aninterval identifier.\n\nPass the identifier toclearInterval()to stop the interval.\n\nArguments passed to setTimeout() or setInterval() are passed to the callback function.\n\nYou can create a repeating timer by calling setTimeout() again after each task finishes.\n\nWithrepeated setTimeout(), the next delay begins after the current callback has finished.\n\nWithsetInterval(), the interval continues to schedule callbacks at regular intervals.\n\nTimer functions can accept strings, but strings should not be used as JavaScript code.\n\nPassing a function is safer, clearer, and easier to debug.\n\nThe browser manages the waiting period outside the current JavaScript task.\n\nHowever, the timer callback still runs on the main JavaScript thread.\n\nA long-running timer callback can therefore freeze the page.\n\nThe timer delays when the callback starts.\n\nIt does not prevent the callback from blocking the page after it starts.\n\nRemove the parentheses when passing the function:\n\nSave the returned identifier if the timer must be canceled later.\n\nStarting an interval more than once creates multiple repeating timers.\n\nTimer delays are not exact schedules.\n\nCallbacks run only when JavaScript is ready.\n\nAn interval continues until it is stopped or the page is closed.\n\nTimers can be used to change images automatically.\n\nThis example displays a new image every three seconds.\n\nThe remainder operator%returns the index to zero after the last image.\n\nTimers are browser APIs that schedule callback functions to run later.\n\nThey are often used as simple examples of asynchronous JavaScript.\n\nThe callback itself is not asynchronous.\n\nThe browser timer only causes the callback to be scheduled for later execution.\n\n### Code Snippets\n\n```\nsetTimeout(function, milliseconds);\n\n---\n\n// Call a Timeout\nsetTimeout(myFunction, 3000);\n// The callback function\nfunction myFunction() {\nmyDisplayer(\"Hello!\");\n}\n\n---\n\nsetTimeout(myFunction, 3000);\n\n---\n\nsetTimeout(myFunction(), 3000);\n\n---\n\nsetTimeout(function() {\nmyDisplayer(\"Hello!\");\n}, 3000);\n\n---\n\nmyDisplayer(\"Start\");\nsetTimeout(function() {myDisplayer(\"Timer\")}, 3000);\nmyDisplayer(\"End\");\n\n---\n\nStart\nEnd\nTimer\n\n---\n\nmyDisplayer(\"Start\");\nsetTimeout(function() {myDisplayer(\"Timer\")}, 0);\nmyDisplayer(\"End\");\n\n---\n\nStart\nEnd\nTimer\n\n---\n\nsetTimeout(function() {\nmyDisplayer(\"Timer finished\");\n}, 1000);\nlet i = 4e9;\nwhile (--i > 0);\n\n---\n\nclearTimeout(timerId);\n\n---\n\n<button onclick=\"startTimer()\">Start Timer</button>\n<button onclick=\"stopTimer()\">Stop Timer</button>\n<p id=\"demo\"></p>\n\n---\n\nlet timer;\nfunction startTimer() {\ntimer = setTimeout(function() {\ndocument.getElementById(\"demo\").innerHTML = \"Finished\";\n}, 5000);\n}\nfunction stopTimer() {\nclearTimeout(timer);\ndocument.getElementById(\"demo\").innerHTML = \"Timer stopped\";\n}\n\n---\n\nsetInterval(function, milliseconds);\n\n---\n\nsetInterval(showTime, 1000);\nfunction showTime() {\nconst date = new Date();\nmyDisplayer(date.toLocaleTimeString());\n}\n\n---\n\nclearInterval(intervalId);\n\n---\n\n<button onclick=\"startClock()\">Start Clock</button>\n<button onclick=\"stopClock()\">Stop Clock</button>\n<p id=\"demo\"></p>\n\n---\n\nlet timer;\nfunction startClock() {\nif (!timer) {\ntimer = setInterval(showTime, 1000);\n}\n}\nfunction showTime() {\nconst date = new Date();\ndocument.getElementById(\"demo\").innerHTML = date.toLocaleTimeString();\n}\nfunction stopClock() {\nclearInterval(timer);\ntimer = undefined;\n}\n\n---\n\nsetTimeout(showMessage, 2000, \"Hello\", \"John\");\nfunction showMessage(greeting, name) {\ndocument.getElementById(\"demo\").innerHTML = greeting + \" \" + name;\n}\n\n---\n\nfunction repeat() {\nmyDisplayer(\"Hello\");\nsetTimeout(repeat, 1000);\n}\nrepeat();\n\n---\n\n<button onclick=\"startCountdown()\">Start Countdown</button>\n<p id=\"demo\"></p>\n\n---\n\nlet timer;\nfunction startCountdown() {\nclearInterval(timer);\nlet count = 10;\nmyDisplayer(count);\ntimer = setInterval(function() {\ncount--;\nmyDisplayer(count);\nif (count === 0) {\nclearInterval(timer);\nmyDisplayer(\"Finished!\");\n}\n}, 1000);\n}\n\n---\n\nsetTimeout(\"myFunction()\", 1000);\n\n---\n\nsetTimeout(myFunction, 1000);\n\n---\n\nsetTimeout(function() {\nlet i = 4e9;\nwhile (--i > 0);\ndocument.getElementById(\"demo\").innerHTML = \"Finished\";\n}, 1000);\n\n---\n\nsetTimeout(myFunction(), 1000);\n\n---\n\nsetTimeout(myFunction, 1000);\n\n---\n\nconst timer = setTimeout(myFunction, 1000);\nclearTimeout(timer);\n\n---\n\nif (!timer) {\ntimer = setInterval(myFunction, 1000);\n}\n\n---\n\nclearInterval(timer);\n\n---\n\n<img id=\"slide\" src=\"img_nature.jpg\" style=\"width:100%;max-width:600px\">\n<button onclick=\"startSlides()\">Start</button>\n<button onclick=\"stopSlides()\">Stop</button>\n\n---\n\nconst images = [\n\"img_nature.jpg\",\n\"img_snowtops.jpg\",\n\"img_mountains.jpg\"\n];\nlet index = 0;\nlet timer;\nfunction showNextSlide() {\nindex = (index + 1) % images.length;\ndocument.getElementById(\"slide\").src = images[index];\n}\nfunction startSlides() {\nif (!timer) {\ntimer = setInterval(showNextSlide, 3000);\n}\n}\nfunction stopSlides() {\nclearInterval(timer);\ntimer = undefined;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_48",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

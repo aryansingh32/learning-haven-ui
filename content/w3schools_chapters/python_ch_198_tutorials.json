@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 198,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In classification, there are many different evaluation metrics. The most popular isaccuracy, which measures how often the model is correct. This is a great metric because it is easy to understand and getting the most correct guesses is often desired. There are some cases where you might consider using another evaluation metric.\n\nAnother common metric isAUC, area under the receiver operating characteristic (ROC) curve.\nThe Reciever operating characteristic curve plots the true positive (TP) rate versus the false positive (FP) rate at different classification thresholds. The thresholds are different probability cutoffs that separate the two classes in binary classification. It uses probability to tell us how well a model separates the classes.\n\nSuppose we have an imbalanced data set where the majority of our data is of one value. We can obtain high accuracy for the model by predicting the majority class.\n\nAlthough we obtain a very high accuracy, the model provided no information about the data so it's not useful. We accurately predict class 1 100% of the time while inaccurately predict class 0 0% of the time. At the expense of accuracy, it might be better to have a model that can somewhat separate the two classes.\n\nFor the second set of predictions, we do not have as high of an accuracy score as the first but the accuracy for each class is more balanced. Using accuracy as an evaluation metric we would rate the first model higher than the second even though it doesn't tell us anything about the data.\n\nIn cases like this, using another evaluation metric like AUC would be preferred.\n\nAn AUC score of around .5 would mean that the model is unable to make a distinction between the two classes and the curve would look like a line with a slope of 1. An AUC score closer to 1 means that the model has the ability to separate the two classes and the curve would come closer to the top left corner of the graph.\n\nBecause AUC is a metric that utilizes probabilities of the class predictions, we can be more confident in a model that has a higher AUC score than one with a lower score even if they have similar accuracies.\n\nIn the data below, we have two sets of probabilites from hypothetical models. The first has probabilities that are not as \"confident\" when predicting the two classes (the probabilities are close to .5). The second has probabilities that are more \"confident\" when predicting the two classes (the probabilities are close to the extremes of 0 or 1).\n\nEven though the accuracies for the two models are similar, the model with the higher AUC score will be more reliable because it takes into account the predicted probability. It is more likely to give you higher accuracy when predicting future data.\n\n### Code Snippets\n\n```\nimport numpy as np\nfrom sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score, roc_curve\nn = 10000\nratio = .95\nn_0 = int((1-ratio) * n)\nn_1 = int(ratio * n)\ny = np.array([0] * n_0 + [1] * n_1)\n# below are the probabilities obtained from a hypothetical model that always predicts the majority class\n# probability of predicting class 1 is going to be 100%\ny_proba = np.array([1]*n)\ny_pred = y_proba > .5\nprint(f'accuracy score: {accuracy_score(y, y_pred)}')\ncf_mat = confusion_matrix(y, y_pred)\nprint('Confusion matrix')\nprint(cf_mat)\nprint(f'class 0 accuracy: {cf_mat[0][0]/n_0}')\nprint(f'class 1 accuracy: {cf_mat[1][1]/n_1}')\n\n---\n\n# below are the probabilities obtained from a hypothetical model that doesn't always predict the mode\ny_proba_2 = np.array(\nnp.random.uniform(0, .7, n_0).tolist() +\nnp.random.uniform(.3, 1,  n_1).tolist()\n)\ny_pred_2 = y_proba_2 > .5\nprint(f'accuracy score: {accuracy_score(y, y_pred_2)}')\ncf_mat = confusion_matrix(y, y_pred_2)\nprint('Confusion matrix')\nprint(cf_mat)\nprint(f'class 0 accuracy: {cf_mat[0][0]/n_0}')\nprint(f'class 1 accuracy: {cf_mat[1][1]/n_1}')\n\n---\n\nplot_roc_curve(y, y_proba)\nprint(f'model 1 AUC score: {roc_auc_score(y, y_proba)}')\n\n---\n\nplot_roc_curve(y, y_proba_2)\nprint(f'model 2 AUC score: {roc_auc_score(y, y_proba_2)}')\n\n---\n\nimport numpy as np\nn = 10000\ny = np.array([0] * n + [1] * n)\n#\ny_prob_1 = np.array(\nnp.random.uniform(.25, .5, n//2).tolist() +\nnp.random.uniform(.3, .7, n).tolist() +\nnp.random.uniform(.5, .75, n//2).tolist()\n)\ny_prob_2 = np.array(\nnp.random.uniform(0, .4, n//2).tolist() +\nnp.random.uniform(.3, .7, n).tolist() +\nnp.random.uniform(.6, 1, n//2).tolist()\n)\nprint(f'model 1 accuracy score: {accuracy_score(y, y_prob_1>.5)}')\nprint(f'model 2 accuracy score: {accuracy_score(y, y_prob_2>.5)}')\nprint(f'model 1 AUC score: {roc_auc_score(y, y_prob_1)}')\nprint(f'model 2 AUC score: {roc_auc_score(y, y_prob_2)}')\n\n---\n\nplot_roc_curve(y, y_prob_1)\n\n---\n\nfpr, tpr, thresholds = roc_curve(y, y_prob_2)\nplt.plot(fpr, tpr)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_197",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

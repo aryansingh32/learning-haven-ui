@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 50,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e String Methods\n\nThegetBytes()method converts a string into an array of bytes.\n\nThe encoding of the bytes depends on the charset argument.\n\nIf the charset argument is not provided then the bytes will be encoded using the system's default character set.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nConvert a string into a byte array:\nString myStr = \"Hello\";\nbyte[] result = myStr.getBytes();\nSystem.out.println(result[0]);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThegetChars()method copies characters from a string to achararray.\n\n### Code Examples\n\n```\nExample\nCopy part of a string into a\nchar\narray:\nchar[] myArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};\nSystem.out.println(myArray);\n\nString myStr = \"Hello, World!\";\nmyStr.getChars(7, 12, myArray, 4);\nSystem.out.println(myArray);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThehashCode()method returns the hash code of a string.\n\nThe hash code for a String object is computed like this:\n\nwhere s[i] is the ith character of the string, n is the length of the string, and ^ indicates exponentiation.\n\nNone.\n\n### Code Examples\n\n```\nExample\nReturn the hash code of a string:\nString myStr = \"Hello\";\nSystem.out.println(myStr.hashCode());\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nTheindexOf()method returns the position of the first occurrence of specified character(s) in a string.\n\nTip:Use thelastIndexOfmethod to return the position of thelastoccurrence of specified character(s) in a string.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nSearch a string for the first occurrence of \"planet\":\nString myStr = \"Hello planet earth, you are a great planet.\";\nSystem.out.println(myStr.indexOf(\"planet\"));\nTry it Yourself \u00bb\n\n---\n\nExample\nFind the first occurrence of the letter \"e\" in a string, starting the search at position 5:\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 String myStr = \"Hello planet earth, you are a great planet.\";\n\u00a0\u00a0\u00a0 System.out.println(myStr.indexOf(\"e\", 5));\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nTheisEmpty()method checks whether a string \nis empty or not.\n\nThis method returns true if the string is empty (length()is 0), and false if not.\n\nNone.\n\n### Code Examples\n\n```\nExample\nFind out if a string is empty or not:\nString myStr1 = \"Hello\";\nString myStr2 = \"\";\nSystem.out.println(myStr1.isEmpty());\nSystem.out.println(myStr2.isEmpty());\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_50",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_50",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -73,6 +73,7 @@ router.post('/patterns/unlink', AdminController.unlinkProblemPattern);
 // ══════════════════════════════════════════════════════════
 router.get('/courses', AdminController.listCourses);
 router.post('/courses', AdminController.createCourse);
+router.post('/courses/bulk-delete', AdminController.bulkDeleteCourses);
 router.put('/courses/reorder', AdminController.reorderCourses);
 router.put('/courses/:id', AdminController.updateCourse);
 router.delete('/courses/:id', AdminController.deleteCourse);

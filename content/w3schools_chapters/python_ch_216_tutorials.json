@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 216,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "As the name suggests, Quicksort is one of the fastest sorting algorithms.\n\nThe Quicksort algorithm takes an array of values, chooses one of the values as the 'pivot' element, and moves the other values so that lower values are on the left of the pivot element, and higher values are on the right of it.\n\nIn this tutorial the last element of the array is chosen to be the pivot element, but we could also have chosen the first element of the array, or any element in the array really.\n\nThen, the Quicksort algorithm does the same operation recursively on the sub-arrays to the left and right side of the pivot element. This continues until the array is sorted.\n\nThe algorithm can be described like this:\n\nBefore we implement the Quicksort algorithm in a programming language, let's manually run through a short array, just to get the idea.\n\nStep 1:We start with an unsorted array.\n\nStep 2:We choose the last value 3 as the pivot element.\n\nStep 3:The rest of the values in the array are all greater than 3, and must be on the right side of 3. Swap 3 with 11.\n\nStep 4:Value 3 is now in the correct position. We need to sort the values to the right of 3. We choose the last value 11 as the new pivot element.\n\nStep 5:The value 7 must be to the left of pivot value 11, and 12 must be to the right of it. Move 7 and 12.\n\nStep 6:Swap 11 with 12 so that lower values 9 and 7 are on the left side of 11, and 12 is on the right side.\n\nStep 7:11 and 12 are in the correct positions. We choose 7 as the pivot element in sub-array [ 9, 7], to the left of 11.\n\nStep 8:We must swap 9 with 7.\n\nAnd now, the array is sorted.\n\nRun the simulation below to see the steps above animated:\n\nTo write a 'quickSort' method that splits the array into shorter and shorter sub-arrays we use recursion. This means that the 'quickSort' method must call itself with the new sub-arrays to the left and right of the pivot element. Read more about recursionhere.\n\nTo implement the Quicksort algorithm in a Python program, we need:\n\nThe resulting code looks like this:\n\nThe worst case scenario for Quicksort is \\(O(n^2) \\). This is when the pivot element is either the highest or lowest value in every sub-array, which leads to a lot of recursive calls. With our implementation above, this happens when the array is already sorted.\n\nBut on average, the time complexity for Quicksort is actually just \\(O(n \\log n) \\), which is a lot better than for the previous sorting algorithms we have looked at. That is why Quicksort is so popular.\n\nBelow you can see the significant improvement in time complexity for Quicksort in an average scenario \\(O(n \\log n) \\), compared to the previous sorting algorithms Bubble, Selection and Insertion Sort with time complexity \\(O(n^2) \\):\n\nThe recursion part of the Quicksort algorithm is actually a reason why the average sorting scenario is so fast, because for good picks of the pivot element, the array will be split in half somewhat evenly each time the algorithm calls itself. So the number of recursive calls do not double, even if the number of values \\(n \\) double.\n\n### Code Snippets\n\n```\n[ 11, 9, 12, 7, 3]\n\n---\n\n[ 11, 9, 12, 7,\n3\n]\n\n---\n\n[\n3\n, 9, 12, 7,\n11\n]\n\n---\n\n[ 3, 9, 12, 7,\n11\n]\n\n---\n\n[ 3, 9,\n7, 12\n, 11]\n\n---\n\n[ 3, 9, 7,\n11, 12\n]\n\n---\n\n[ 3, 9,\n7\n, 11, 12]\n\n---\n\n[ 3,\n7, 9\n, 11, 12]\n\n---\n\ndef partition(array, low, high):\npivot = array[high]\ni = low - 1\nfor j in range(low, high):\nif array[j] <= pivot:\ni += 1\narray[i], array[j] = array[j], array[i]\narray[i+1], array[high] = array[high], array[i+1]\nreturn i+1\ndef quicksort(array, low=0, high=None):\nif high is None:\nhigh = len(array) - 1\nif low < high:\npivot_index = partition(array, low, high)\nquicksort(array, low, pivot_index-1)\nquicksort(array, pivot_index+1, high)\nmylist = [64, 34, 25, 5, 22, 11, 90, 12]\nquicksort(mylist)\nprint(mylist)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_215",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

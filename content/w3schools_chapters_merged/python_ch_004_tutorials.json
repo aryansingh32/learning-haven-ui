@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 4,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nVariables that are created outside of a function (as in all of the examples \nin the previous pages) are known as global variables.\n\nGlobal variables can be used by everyone, both inside of \nfunctions and outside.\n\nIf you create a variable with the same name inside a function, this variable \nwill be local, and can only be used inside the function. The global variable \nwith the same name will remain as it was, global and with the original value.\n\nNormally, when you create a variable inside a function, that variable is \nlocal, and can only be used inside that function.\n\nTo create a global variable inside a function, you can use theglobalkeyword.\n\nAlso, use theglobalkeyword if you want to change a global variable inside a function.\n\n### Code Examples\n\n```\nx = \"awesome\"\ndef myfunc():\nprint(\"Python is \" + x)\nmyfunc()\n\n---\n\nx = \"awesome\"\ndef myfunc():\nx = \"fantastic\"\nprint(\"Python is \" + x)\nmyfunc()\nprint(\"Python is \" + x)\n\n---\n\ndef myfunc():\nglobal x\nx = \"fantastic\"\nmyfunc()\nprint(\"Python is \" + x)\n\n---\n\nx = \"awesome\"\ndef myfunc():\nglobal x\nx = \"fantastic\"\nmyfunc()\nprint(\"Python is \" + x)\n```\n\n## Tutorials\n\nNow you have learned a lot about variables, and how to use them in Python.\n\nAre you ready for a test?\n\nTest your Python Variables skills with exercises from all categories:\n\nThe exercises are a mix of \"multiple choice\" and \"fill in the blanks\" questions.\n\nThere are between 3 and 9 questions in each category.\n\nThe answer can be found in the corresponding tutorial chapter.\n\nIf you're stuck, or answer wrong, you can try again or hit the \"Show Answer\" button to see the correct answer.\n\nFind a complete collection of Python Exercises for each chapter in this tutorial in ourPython Exercisespage.\n\n## Tutorials\n\nTest your understanding of Python variables by completing a small coding challenge.\n\n## Tutorials\n\nIn programming, data type is an important concept.\n\nVariables can store data of different types, and different types can do \ndifferent things.\n\nPython has the following data types built-in by default, in these categories:\n\nYou can get the data type of any object by using thetype()function:\n\nIn Python, the data type is set when you assign a value to a variable:\n\nIf you want to specify the data type, you can use the following \nconstructor functions:\n\n### Code Examples\n\n```\nx = 5\nprint(type(x))\n```\n\n## Tutorials\n\nTest your understanding of Python data types by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_4",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_4",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 1,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nWith ourTry it Yourselfeditor, you can edit the source code and view \nthe result.\n\nWe recommend reading this tutorial,in the sequence listed in the menu.\n\nIf you have a large screen, the menu will always be present on the left.\n\nIf you have a small screen, open the menu by clicking the top menu sign\u2630.\n\nExamples are better than 1000 words.\n\nExamples are often easier to understand than text explanations.\n\nThis tutorial supplements all explanations with clarifyingTry it Yourselfexamples.\n\nJavaScript is one of the3 languagesall web developersmustlearn:\n\nIn this tutorial, the learning speed is your choice.\n\nEverything is up to you.\n\nIf you are struggling, take a break, or re-read the material.\n\nAlwaysmake sure you understandallthe \"Try-it-Yourself\" \nexamples.\n\nThe only way to become a clever programmer is to:\n\nPractice coding! Practice coding! Practice coding!\n\nMany chapters in this tutorial end with an exercise where you can check your level of knowledge.\n\nSee all JavaScript Exercises\n\nTest your JavaScript skills at W3Schools!\n\nStart JavaScript Quiz!\n\nW3Schools maintains a complete JavaScript reference, including all HTML and browser objects.\n\nThe reference contains examples for all properties, methods and events, and \nis continuously updated according to the latest web standards.\n\n### Code Examples\n\n```\nExample\nMy First JavaScript\nClick me to display Date and Time\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nOne of many JavaScript HTML methods isgetElementById().\n\nThe example below \"finds\" an HTML element (with id=\"demo\"), \nand changes the element content (innerHTML) to \"Hello JavaScript\":\n\nIn this example JavaScript changes the value of thesrc(source) attribute of an<img>tag:\n\nChanging the style of an HTML element, is a variant of changing an HTML \nattribute:\n\nHiding HTML elements can be done by changing thedisplaystyle:\n\nShowing hidden HTML elements can also be done by changing thedisplaystyle:\n\n### Code Examples\n\n```\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript\";\n\n---\n\ndocument.getElementById('demo').innerHTML = 'Hello JavaScript';\n\n---\n\ndocument.getElementById(\"demo\").style.fontSize = \"35px\";\n\n---\n\ndocument.getElementById(\"demo\").style.display = \"none\";\n\n---\n\ndocument.getElementById(\"demo\").style.display = \"block\";\n```\n\n## Tutorials\n\nIn HTML, JavaScript code is inserted between<script>and</script>tags.\n\nA JavaScriptfunctionis a block of JavaScript code, that can be executed when \"called\" for.\n\nFor example, a function can be called when aneventoccurs, like when the user clicks a button.\n\nYou can place any number of scripts in an HTML document.\n\nScripts can be placed in the<body>, or in the<head>section of an HTML page, or in both.\n\nIn this example, a JavaScriptfunctionis placed in the<head>section \nof an HTML page.\n\nThe function is invoked (called) when a button is clicked:\n\nIn this example, a JavaScriptfunctionis placed in the<body>section of an HTML page.\n\nThe function is invoked (called) when a button is clicked:\n\nScripts can also be placed in external files:\n\nExternal scripts are practical when the same code is used in many different web pages.\n\nJavaScript files have the file extension.js.\n\nTo use an external script, put the name of the script file in thesrc(source) attribute of \na<script>tag:\n\nYou can place an external script reference in<head>or<body>as you like.\n\nThe script will behave as if it was located exactly where the<script>tag is located.\n\nPlacing scripts in external files has some advantages:\n\nTo add several script files to one page\u00a0 - use several script tags:\n\nAn external script can be referenced in 3 different ways:\n\nThis example uses afull URLto link to myScript.js:\n\nThis example uses afile pathto link to myScript.js:\n\nThis example uses no path to link to myScript.js:\n\n### Code Examples\n\n```\n<script>\ndocument.getElementById(\"demo\").innerHTML = \"My First JavaScript\";\n</script>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<script>\nfunction myFunction() {\ndocument.getElementById(\"demo\").innerHTML = \"Paragraph changed.\";\n}\n</script>\n</head>\n<body>\n<h2>Demo JavaScript in Head</h2>\n<p id=\"demo\">A Paragraph</p>\n<button type=\"button\" onclick=\"myFunction()\">Try \nit</button>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h2>Demo JavaScript in Body</h2>\n<p id=\"demo\">A Paragraph</p>\n<button type=\"button\" onclick=\"myFunction()\">Try \nit</button>\n<script>\nfunction myFunction() {\ndocument.getElementById(\"demo\").innerHTML = \"Paragraph changed.\";\n}\n</script>\n</body>\n</html>\n\n---\n\nfunction myFunction() {\ndocument.getElementById(\"demo\").innerHTML = \"Paragraph changed.\";\n}\n\n---\n\n<script src=\"myScript.js\"></script>\n\n---\n\n<script src=\"myScript1.js\"></script>\n<script src=\"myScript2.js\"></script>\n\n---\n\n<script src=\"https://www.w3schools.com/js/myScript.js\"></script>\n\n---\n\n<script src=\"/js/myScript.js\"></script>\n\n---\n\n<script src=\"myScript.js\"></script>\n```\n\n## Tutorials\n\nJavaScript can \"display\" data in different ways:\n\nTo access an HTML element, you can use thedocument.getElementById(id)method.\n\nUse theidattribute to identify the HTML element.\n\nThen use theinnerHTMLproperty to change the HTML content\nof the HTML element:\n\nTo access an HTML element, use thedocument.getElementById(id)method.\n\nThen use theinnerTextproperty to change the inner text\nof the HTML element:\n\nFor testing purposes, it is convenient to usedocument.write():\n\nYou can use an alert box to display data:\n\nYou can skip thewindowkeyword.\n\nIn JavaScript, the window object is the global scope object. This means that variables, properties, and methods by default belong to the window object.\nThis also means that specifying thewindowkeyword is optional:\n\nFor debugging purposes, you can call theconsole.log()method\nin the browser to display data.\n\nJavaScript does not have any print object or print methods.\n\nYou cannot access output devices from JavaScript.\n\nThe only exception is that you can call thewindow.print()method in\nthe browser to print the content of the current window.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My First Paragraph</p>\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerHTML = \"<h2>Hello World</h2>\";\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My First Paragraph</p>\n<p id=\"demo\"></p>\n<script>\ndocument.getElementById(\"demo\").innerText = \"Hello World\";\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My first paragraph.</p>\n<script>\ndocument.write(5 + 6);\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My first paragraph.</p>\n<button type=\"button\" onclick=\"document.write(5 + 6)\">Try it</button>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My first paragraph.</p>\n<script>\nwindow.alert(5 + 6);\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<p>My first paragraph.</p>\n<script>\nalert(5 + 6);\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<script>\nconsole.log(5 + 6);\n</script>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<button onclick=\"window.print()\">Print this page</button>\n</body>\n</html>\n```\n\n## Tutorials\n\nThe JavaScript syntax defines two types of values:\n\nThe most important syntax rules forliterals(fixed values) are:\n\nNumbersare written with or without decimals:\n\nStringsare text, written within double or single quotes:\n\nJavaScriptkeywordsare used to definesactionsto be performed.\n\nTheletandconstkeywords create variables:\n\nVariablesare containers forstoring data values.\n\nVariables must beidentifiedwithunique names.\n\nAnidentifieris thenameyou give to a variable.\n\nRules for identifiers:\n\nJavaScriptassignment operators(=) assign values to variables:\n\nJavaScript usesarithmetic operators(+-*/) tocomputevalues:\n\nAn expression is a combination of values, variables, and operators, \nwhich computes to a value.\n\nJavaScript identifiers arecase sensitive.\n\nThe variableslastNameandlastname, \nare different variables:\n\nHistorically, programmers have used different ways of joining multiple words into one variable name:\n\nHyphens:\n\nfirst-name, last-name, master-card, inter-city.\n\nUnderscore:\n\nfirst_name, last_name, master_card, inter_city.\n\nUpper Camel Case (Pascal Case):\n\nFirstName, LastName, MasterCard, InterCity.\n\nLower Camel Case:firstName, lastName, masterCard, interCity.JavaScript programmers tend to use lower camel case.Video: JavaScript Syntax\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\n// How to Declare variables:\nlet x = 5;\nlet y = 6;\n// How to Compute values:\nlet z = x + y;\n// I am a Comment. I do Nothing\n\n---\n\n10.50\n1001\n\n---\n\n\"John Doe\"\n'John Doe'\n\n---\n\nlet x = 5;\nconst fname = \"John\";\n\n---\n\n// Define x as a variable\nlet x;\n// Assign the value 6 to x\nx = 6;\n\n---\n\nlet x = 5;\nlet y = 6;\nlet sum = x + y;\n\n---\n\n5 * 10\n\n---\n\n(5 + 6) * 10\n\n---\n\nx * 10\n\n---\n\n\"John\" + \" \" + \"Doe\"\n\n---\n\nlet lastName = \"Doe\";\nlet lastname = \"Peterson\";\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_1",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_1",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

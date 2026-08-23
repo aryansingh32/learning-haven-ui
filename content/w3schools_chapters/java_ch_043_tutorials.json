@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 43,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Conditions and if statements let you control the flow of your program - deciding which code runs, and which code is skipped.\n\nThink of it like real life:If it rains, take an umbrella. Otherwise, do nothing.\n\nEveryifstatement needs a condition that results intrueorfalse.\n\nThis meansifstatements work hand-in-hand withbooleanvalues:\n\nMost often, conditions are created using comparison operators, like the ones below:\n\nYou can use these conditions to perform different actions for different decisions.\n\nJava has the following conditional statements:\n\nTheifstatement specifies a block of code to be executed if a condition istrue:\n\nIn the example below, we test two values to find out if 20 is greater than 18. If the condition istrue, print some text:\n\nYou can also compare variables:\n\nIn the example above we use two variables,xandy, \nto test whether x is greater than y \n(using the>operator). As x is 20, and y is 18, and we know that 20 is greater than 18, we print to the screen that \"x is greater than y\".\n\nComparison is also often used to check if two values areequal, using the==operator:\n\nHere the conditionx == yis true, because bothxandyare 20, so the message \"x is equal to y\" is printed.\n\nYou can also test boolean variables directly in anifstatement:\n\nNote:Writingif (isLightOn)is the same as writingif (isLightOn == true), but shorter and easier to read.\n\nHere is the same example with the valuefalseto see that the program continues even when the code block does not run:\n\nIf anifstatement has only one line of code, \nyou can write it without curly braces{ }:\n\nWithout braces, only thefirst lineafter theifbelongs to it. \nAny other lines will run no matter what, which can lead to unexpected results:\n\nTo avoid mistakes, always use curly braces{ }. \nThis makes it clear which lines belong to theifstatement:\n\nIn the next chapters, you will also learn how to handleelse(when the condition is false),else if(to test multiple conditions), andswitch(to handle many possible values).\n\n### Code Snippets\n\n```\nExample\nboolean isRaining = true;\n\nif (isRaining) {\n  System.out.println(\"Bring an umbrella!\");\n}\nTry it Yourself \u00bb\n\n---\n\nSyntax\nif (condition) {\n  // block of code to be executed if the condition is true\n}\n\n---\n\nExample\nif (20 > 18) {\n  System.out.println(\"20 is greater than 18\");\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 20;\nint y = 18;\nif (x > y) {\n  System.out.println(\"x is greater than y\");\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 20;\nint y = 20;\nif (x == y) {\n  System.out.println(\"x is equal to y\");\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nboolean isLightOn = true;\n\nif (isLightOn) {\n  System.out.println(\"The light is on.\");\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nboolean isLightOn = false;\n\nif (isLightOn) {\n  System.out.println(\"The light is on.\");  // This will not be printed\n}\n\nSystem.out.println(\"This line runs no matter what, because it is outside the if statement.\");\nTry it Yourself \u00bb\n\n---\n\nExample\nif (20 > 18)\n  System.out.println(\"20 is greater than 18\");\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 20;\nint y = 18;\n\nif (x > y)\n  System.out.println(\"x is greater than y\");  // Belongs to if\n  System.out.println(\"This line runs no matter what (not part of the if statement)\");\n\n// Output:\n// x is greater than y\n// This line runs no matter what (not part of the if statement)\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 20;\nint y = 18;\n\nif (x > y) {\n  System.out.println(\"x is greater than y\");\n  System.out.println(\"Both lines are part of the if\");\n}\n\n// Some code outside if\nSystem.out.println(\"I am outside if, not part of if!\");\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_42",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

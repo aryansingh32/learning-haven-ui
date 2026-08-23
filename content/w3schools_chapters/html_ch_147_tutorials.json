@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 147,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "HTML Web Storage API; better than cookies.\n\nWith web storage, applications can store data locally within the user's browser.\n\nBefore HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data \ncan be stored locally, without affecting website performance.\n\nUnlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.\n\nWeb storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.\n\nWeb storage provides two objects for storing data in the browser:\n\nThe numbers in the table specify the first browser version that fully supports \nWeb Storage.\n\nBefore using web storage, we can quickly check browser support for localStorage and sessionStorage:\n\nThelocalStorageobject stores the data with no expiration date. The data \nwill not be lost when the browser is closed, and will be available the next day, week, or year.\n\nExample explained:\n\nThe syntax for removing the \"lastname\" localStorage item is as follows:\n\nNote:Name/value pairs are always stored as strings. \nRemember to convert them to another format when needed!\n\nThe following example counts the number of times a user has clicked a button. \nIn this code the value string is converted to a number to be able to increase the counter:\n\nThesessionStorageobject is equal to thelocalStorageobject,exceptthat it stores the data for only one session! The data is deleted when the user closes the \nspecific browser tab.\n\nThe following example counts the number of times a user has clicked a button, in the current session:\n\n### Code Snippets\n\n```\n<script>\nconst x = document.getElementById(\"result\");\nif (typeof(Storage) \n  !== \"undefined\") {\nx.innerHTML = \"Your browser supports Web \n  storage!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage \n  support!\";\n}\n</script>\n\n---\n\n<script>\nconst x = document.getElementById(\"result\");\nif (typeof(Storage) \n  !== \"undefined\") {\n// Store\nlocalStorage.setItem(\"lastname\", \n  \"Smith\");\nlocalStorage.setItem(\"bgcolor\", \"yellow\");\n// \n  Retrieve\nx.innerHTML = localStorage.getItem(\"lastname\");\nx.style.backgroundColor = localStorage.getItem(\"bgcolor\");\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n</script>\n\n---\n\nlocalStorage.removeItem(\"lastname\");\n\n---\n\n<script>\nfunction clickCounter() {\nconst x = \n  document.getElementById(\"result\");\nif (typeof(Storage) !== \n  \"undefined\") {\nif (localStorage.clickcount) {\nlocalStorage.clickcount = Number(localStorage.clickcount)+1;\n} else {\nlocalStorage.clickcount = 1;\n}\nx.innerHTML = \"You have clicked the button \" + \n  localStorage.clickcount + \" time(s)!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n}\n</script>\n\n---\n\n<script>\nfunction clickCounter() {\nconst x = \n  document.getElementById(\"result\");\nif (typeof(Storage) !== \n  \"undefined\") {\nif (sessionStorage.clickcount) {\nsessionStorage.clickcount = Number(sessionStorage.clickcount)+1;\n} else {\nsessionStorage.clickcount = 1;\n}\nx.innerHTML = \"You have clicked the button \" + \n  sessionStorage.clickcount + \" time(s) in this session!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n}\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_146",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 143,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The easiest way to play videos in HTML, is to use YouTube.\n\nConverting videos to different formats can be difficult and time-consuming.\n\nAn easier solution is to let YouTube play the videos in your web page.\n\nYouTube will display an id (like tgbNymZ7vqY), when you save (or play) a video.\n\nYou can use this id, and refer to your video in the HTML code.\n\nTo play your video on a web page, do the following:\n\nYou can let your video start playing automatically when a user visits the \npage, by addingautoplay=1to the YouTube URL. \nHowever, automatically starting a video is annoying for your visitors!\n\nAddmute=1afterautoplay=1to let your video start playing automatically (but muted).\n\nA comma separated list of videos to play (in addition to the original URL).\n\nAddplaylist=videoIDandloop=1to let your video loop forever.\n\nloop=0(default) - The video will play only once.\n\nloop=1- The video will loop (forever).\n\nAddcontrols=0to NOT display controls in the \nvideo player.\n\ncontrols=0- Player controls does not display.\n\ncontrols=1(default) - Player controls is displayed.\n\n### Code Snippets\n\n```\n<iframe width=\"420\" height=\"315\"\nsrc=\"https://www.youtube.com/embed/tgbNymZ7vqY\">\n</iframe>\n\n---\n\n<iframe width=\"420\" height=\"315\"\nsrc=\"https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1\">\n</iframe>\n\n---\n\n<iframe width=\"420\" height=\"315\"\nsrc=\"https://www.youtube.com/embed/tgbNymZ7vqY?playlist=tgbNymZ7vqY&loop=1\">\n</iframe>\n\n---\n\n<iframe width=\"420\" height=\"315\"\nsrc=\"https://www.youtube.com/embed/tgbNymZ7vqY?controls=0\">\n</iframe>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_142",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

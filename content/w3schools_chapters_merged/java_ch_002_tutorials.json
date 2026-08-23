@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 2,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding ofJava Syntaxby completing a small coding challenge.\n\n## Tutorials\n\nYou learned from the previous chapter that you can use theprintln()method to output values or print text in Java:\n\nYou can add as manyprintln()methods as you want. Note that it will add a new line for each method:\n\nText must be wrapped inside double quotations marks\"\".\n\nIf you forget the double quotes, an error occurs:\n\nThere is also aprint()method, which is similar toprintln().\n\nThe only difference is that it does not insert a new line at the end of the output:\n\nNote that we add an extra space (after \"Hello World!\" in the example above) \nfor better readability.\n\n### Code Examples\n\n```\nExample\nSystem.out.println(\"Hello World!\");\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(\"Hello World!\");\nSystem.out.println(\"I am learning Java.\");\nSystem.out.println(\"It is awesome!\");\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(\"This sentence will work!\");\nSystem.out.println(This sentence will produce an error);\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.print(\"Hello World! \");\nSystem.out.print(\"I will print on the same line.\");\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nYou can also use theprintln()method to \nprint numbers.\n\nHowever, unlike text, we don't put numbers inside double \nquotes:\n\nYou can also perform mathematical calculations inside theprintln()method:\n\n### Code Examples\n\n```\nExample\nSystem.out.println(3);\nSystem.out.println(358);\nSystem.out.println(50000);\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(3 + 3);\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(2 * 5);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTest your understanding ofJava Outputby completing a small coding challenge.\n\n## Tutorials\n\nComments can be used to explain Java code, and to make it more readable. It can also be used to \nprevent execution when testing alternative code.\n\nSingle-line comments start with two forward slashes (//).\n\nAny text between//and the end of the line \nis ignored by Java (will not be executed).\n\nThis example uses a single-line comment before a line of code:\n\nThis example uses a single-line comment at the end of a line of code:\n\nMulti-line comments start with/*and ends with*/.\n\nAny text between/*and*/will be ignored by Java.\n\nThis example uses a multi-line comment (a comment block) to explain the code:\n\n### Code Examples\n\n```\nExample\n// This is a comment\nSystem.out.println(\"Hello World\");\nTry it Yourself \u00bb\n\n---\n\nExample\nSystem.out.println(\"Hello World\"); // This is a comment\nTry it Yourself \u00bb\n\n---\n\nExample\n/* The code below will print the words Hello World\nto the screen, and it is amazing */\nSystem.out.println(\"Hello World\");\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_2",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

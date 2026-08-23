@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 142,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Plug-ins are computer programs that extend the standard functionality of the browser.\n\nPlug-ins were designed to be used for many different purposes:To run Java appletsTo run Microsoft ActiveX controlsTo display Flash moviesTo display mapsTo scan for virusesTo verify a bank idWarning !Most browsers no longer support Java Applets and Plug-ins.ActiveX controls are no longer supported in any browsers.The support for Shockwave Flash has also been turned off in modern browsers.The <object> ElementThe<object>element is supported by all browsers.The<object>element defines an embedded object within an HTML document.It was designed to embed plug-ins (like Java applets, PDF readers, and Flash Players) in web pages,\nbut can also be used to include HTML in HTML:Example<object width=\"100%\" height=\"500px\" data=\"snippet.html\"></object>Try it Yourself \u00bbOr images if you like:Example<object data=\"audi.jpeg\"></object>Try it Yourself \u00bbThe <embed> ElementThe<embed>element is supported in all major browsers.The<embed>element also defines an embedded object within an HTML document.Web browsers have supported the <embed> element for a \nlong time. However, it has not been a part of the HTML  \nspecification before HTML5.Example<embed src=\"audi.jpeg\">Try it Yourself \u00bbNote that the <embed> element does not have a closing tag. It can not \ncontain alternative text.The<embed>element can also be used to include HTML in HTML:Example<embed width=\"100%\" height=\"500px\" src=\"snippet.html\">Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n<object width=\"100%\" height=\"500px\" data=\"snippet.html\"></object>\n\n---\n\n<object data=\"audi.jpeg\"></object>\n\n---\n\n<embed src=\"audi.jpeg\">\n\n---\n\n<embed width=\"100%\" height=\"500px\" src=\"snippet.html\">\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_141",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

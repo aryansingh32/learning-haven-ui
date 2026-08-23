@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 68,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The short answer is: there is no functional difference between new Array() and Array().\n\nBoth commands do the exact same thing and create an array.\n\nJavaScript has a built-in array constructornew Array().\n\nBut you can most often use[]instead.\n\nThese two different statements both create a new empty array named points:\n\nThese two different statements both create a new array containing 6 numbers:\n\nThenewkeyword can produce some unexpected results:\n\nThe recommended way to create an array is with an array literal:\n\n### Code Snippets\n\n```\nnew Array()\nnew Array(number)\nnew Array(element1, element2, ..., elementN)\nArray()\nArray(number)\nArray(element1, element2, ..., elementN)\n\n---\n\nnew Array()\nnew Array(3)\nnew Array(\"3\")\nnew Array(\"Saab\", \"Volvo\", \"BMW\")\n\n---\n\nArray()\nArray(3)\nArray(\"3\")\nArray(\"Saab\", \"Volvo\", \"BMW\")\n\n---\n\nconst points = new Array();\nconst points = [];\n\n---\n\nconst points = new Array(40, 100, 1, 5, 25, 10);\nconst points = [40, 100, 1, 5, 25, 10];\n\n---\n\n// Create an array with three elements:\nconst points = new Array(40, 100, 1);\n\n---\n\n// Create an array with two elements:\nconst points = new Array(40, 100);\n\n---\n\n// Create an array with one element ???\nconst points = new Array(40);\n\n---\n\nconst points = [40];\n\n---\n\nconst points = new Array(40);\n\n---\n\n// Create an array with one element:\nconst points = [40];\n\n---\n\n// Create an array with 40 undefined elements:\nconst points = new Array(40);\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_67",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

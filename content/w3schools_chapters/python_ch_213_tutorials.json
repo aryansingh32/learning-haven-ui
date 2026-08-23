@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 213,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Bubble Sort is an algorithm that sorts an array from the lowest value to the highest value.\n\nRun the simulation to see how it looks like when the Bubble Sort algorithm sorts an array of values. Each value in the array is represented by a column.\n\nThe word 'Bubble' comes from how this algorithm works, it makes the highest values 'bubble up'.\n\nBefore we implement the Bubble Sort algorithm in a programming language, let's manually run through a short array only one time, just to get the idea.\n\nStep 1:We start with an unsorted array.\n\nStep 2:We look at the two first values. Does the lowest value come first? Yes, so we don't need to swap them.\n\nStep 3:Take one step forward and look at values 12 and 9. Does the lowest value come first? No.\n\nStep 4:So we need to swap them so that 9 comes first.\n\nStep 5:Taking one step forward, looking at 12 and 11.\n\nStep 6:We must swap so that 11 comes before 12.\n\nStep 7:Looking at 12 and 3, do we need to swap them? Yes.\n\nStep 8:Swapping 12 and 3 so that 3 comes first.\n\nRepeat until no more swaps are needed and you will get a sorted array:\n\nTo implement the Bubble Sort algorithm in Python, we need:\n\nThe resulting code looks like this:\n\nThe Bubble Sort algorithm can be improved a little bit more.\n\nImagine that the array is almost sorted already, with the lowest numbers at the start, like this for example:\n\nIn this case, the array will be sorted after the first run, but the Bubble Sort algorithm will continue to run, without swapping elements, and that is not necessary.\n\nIf the algorithm goes through the array one time without swapping any values, the array must be finished sorted, and we can stop the algorithm, like this:\n\nThe Bubble Sort algorithm loops through every value in the array, comparing it to the value next to it. So for an array of \\(n\\) values, there must be \\(n\\) such comparisons in one loop.\n\nAnd after one loop, the array is looped through again and again \\(n\\) times.\n\nThis means there are \\(n \\cdot n\\) comparisons done in total, so the time complexity for Bubble Sort is: \\( O(n^2) \\)\n\nThe graph describing the Bubble Sort time complexity looks like this:\n\nAs you can see, the run time increases really fast when the size of the array is increased.\n\nLuckily there are sorting algorithms that are faster than this, likeQuicksort, that we will look at later.\n\n### Code Snippets\n\n```\n[7, 12, 9, 11, 3]\n\n---\n\n[\n7, 12,\n9, 11, 3]\n\n---\n\n[7,\n12, 9,\n11, 3]\n\n---\n\n[7,\n9, 12,\n11, 3]\n\n---\n\n[7, 9,\n12, 11,\n3]\n\n---\n\n[7, 9,\n11, 12,\n3]\n\n---\n\n[7, 9, 11,\n12, 3\n]\n\n---\n\n[7, 9, 11,\n3, 12\n]\n\n---\n\nmylist = [64, 34, 25, 12, 22, 11, 90, 5]\nn = len(mylist)\nfor i in range(n-1):\nfor j in range(n-i-1):\nif mylist[j] > mylist[j+1]:\nmylist[j], mylist[j+1] = mylist[j+1], mylist[j]\nprint(mylist)\n\n---\n\nmylist = [7, 3, 9, 12, 11]\n\n---\n\nmylist = [7, 3, 9, 12, 11]\nn = len(mylist)\nfor i in range(n-1):\nswapped = False\nfor j in range(n-i-1):\nif mylist[j] > mylist[j+1]:\nmylist[j], mylist[j+1] = mylist[j+1], mylist[j]\nswapped = True\nif not swapped:\nbreak\nprint(mylist)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_212",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

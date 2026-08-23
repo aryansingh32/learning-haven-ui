@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 2,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nWhen a browser reads a style sheet, it will format the HTML document according to the information in the style sheet.\n\nThere are three ways of inserting a style sheet:\n\nWith an\nexternal style sheet, you can change the look of an entire website by changing \njust one file!\n\nEach HTML page must include a reference to the external style sheet file inside \nthe <link> element, inside the head section.\n\nAn external style sheet can be written in any text editor, and must be saved with a .css extension.\n\nThe external .css file should not contain any HTML tags.\n\nHere is how the \"mystyle.css\" file looks:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<link rel=\"stylesheet\" href=\"mystyle.css\">\n</head>\n<body>\n<h1>This is a heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n\n---\n\nbody {\nbackground-color: lightblue;\n}\nh1 {\ncolor: navy;\nmargin-left: 20px;\n}\n```\n\n## Tutorials\n\nAn internal style sheet may be used if one single HTML page has a unique style.\n\nThe internal style is defined inside the <style> element, inside the head \nsection.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<style>\nbody {\nbackground-color: linen;\n}\nh1 {\ncolor: maroon;\nmargin-left: 40px;\n}\n</style>\n</head>\n<body>\n<h1>This is a \n  heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nAn inline style may be used to apply a unique style for a single element.\n\nTo use inline styles, add the style attribute to the relevant element. The\nstyle attribute can contain any CSS property.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1 style=\"color:blue;text-align:center;\">This \n  is a heading</h1>\n<p style=\"color:red;\">This is a paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nIf some properties have been defined for the same selector (element) in different style sheets,\n the value from the last read style sheet will be used.\n\nWhat style will be used when there is more than one style specified for an HTML element?\n\nAll the styles in a page will \"cascade\" into a new \"virtual\" style\nsheet by the following rules, where number one has the highest priority:\n\nSo, an inline style has the highest priority, and will override external and \ninternal styles and browser defaults.\n\nTry it Yourself \u00bb\n\n### Code Examples\n\n```\nh1\n{\ncolor: navy;\n}\n\n---\n\nh1\n{\ncolor: orange;\n}\n\n---\n\n<head>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\">\n<style>\nh1 {\ncolor: orange;\n}\n</style>\n</head>\n\n---\n\n<head>\n<style>\nh1 {\ncolor: orange;\n}\n</style>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\">\n</head>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_2",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

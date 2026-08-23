@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 22,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSemantic elements = elements with a meaning.\n\nA semantic element clearly describes its meaning to both the browser and the developer.\n\nExamples ofnon-semanticelements:<div>and<span>- Tells nothing about its content.\n\nExamples ofsemanticelements:<img>,<table>, and<article>- Clearly defines its content.\n\nMany web sites contain HTML code like:\n<div id=\"nav\"> <div class=\"header\"> <div id=\"footer\">\nto indicate navigation, header, and footer.\n\nIn HTML there are several semantic elements that can be used to define different parts of a web page:\n\nThe<section>element defines a section in a document.\n\nAccording to W3C's HTML documentation: \"A section is a thematic grouping of content, typically with a heading.\"\n\nExamples of where a<section>element can be used:\n\nA web page could normally be split into sections for introduction, \ncontent, and contact information.\n\nThe<article>element specifies independent, self-contained content.\n\nAn article should make sense on its own, and it should be possible to \ndistribute it independently from the rest of the web site.\n\nExamples of where the<article>element can be used:\n\nThe<article>element specifies independent, self-contained content.\n\nThe<section>element defines a section in a document.\n\nCan we use the definitions to decide how to nest those elements? No, we cannot!\n\nSo, you will find HTML pages with<section>elements \ncontaining<article>elements, and<article>elements containing<section>elements.\n\nThe<header>element represents a container for introductory content or \na set of navigational links.\n\nA<header>element typically contains:\n\nNote:You can have several<header>elements in one \nHTML document. However,<header>cannot be placed within a<footer>,<address>or another<header>element.\n\nThe<footer>element defines a footer for a document or section.\n\nA<footer>element typically contains:\n\nYou can have several<footer>elements in one document.\n\nThe<nav>element defines a set of navigation links.\n\nThe<aside>element defines some content aside from the content it is \nplaced in (like a sidebar).\n\nThe<aside>content should be \nindirectly related to the surrounding content.\n\nThe<figure>tag specifies self-contained content, like illustrations, diagrams, photos, code listings, etc.\n\nThe<figcaption>tag defines a caption for a<figure>element. The<figcaption>element can be placed as the first or \nas the last child of a<figure>element.\n\nThe<img>element defines the actual image/illustration.\n\nAccording to the W3C: \"A semantic Web allows data to be shared and reused across applications, \nenterprises, and communities.\"\n\nBelow is a list of some of the semantic elements in HTML.\n\n### Code Examples\n\n```\n<section>\n<h1>WWF</h1>\n<p>The World Wide Fund for Nature (WWF) is an \n    international organization working on issues regarding the conservation, \n    research and restoration of the environment, formerly named the World \n    Wildlife Fund. WWF was founded in 1961.</p>\n</section>\n<section>\n<h1>WWF's Panda symbol</h1>\n<p>The Panda has become the symbol of WWF. \n    The well-known panda logo of WWF originated from a panda named Chi Chi that \n    was transferred from the Beijing Zoo to the London Zoo in the same year of \n    the establishment of WWF.</p>\n</section>\n\n---\n\n<article>\n<h2>Google Chrome</h2>\n<p>Google Chrome is a web browser \n    developed by Google, released in 2008. Chrome is the world's most popular \n    web browser today!</p>\n</article>\n<article>\n<h2>Mozilla \n    Firefox</h2>\n<p>Mozilla Firefox is an open-source web browser developed \n    by Mozilla. Firefox has been the second most popular web browser since \n    January, 2018.</p>\n</article>\n<article>\n<h2>Microsoft Edge</h2>\n<p>Microsoft Edge is a web browser developed by Microsoft, released in 2015. \n    Microsoft Edge replaced Internet Explorer.</p>\n</article>\n\n---\n\n<html>\n<head>\n<style>\n.all-browsers {\nmargin: 0;\npadding: 5px;\nbackground-color: lightgray;\n}\n.all-browsers \n  > h1, .browser {\nmargin: 10px;\npadding: 5px;\n}\n.browser {\nbackground: white;\n}\n.browser > h2,  \n  p {\nmargin: 4px;\nfont-size: 90%;\n}\n</style>\n</head>\n<body>\n<article class=\"all-browsers\">\n<h1>Most \n  Popular Browsers</h1>\n<article class=\"browser\">\n<h2>Google Chrome</h2>\n<p>Google Chrome is a web browser \n  developed by Google, released in 2008. Chrome is the world's most popular web \n  browser today!</p>\n</article>\n<article class=\"browser\">\n<h2>Mozilla Firefox</h2>\n<p>Mozilla Firefox is an \n  open-source web browser developed by Mozilla. Firefox has been the second most \n  popular web browser since January, 2018.</p>\n</article>\n<article class=\"browser\">\n<h2>Microsoft Edge</h2>\n<p>Microsoft Edge is a web browser developed by Microsoft, released in 2015. \n  Microsoft Edge replaced Internet Explorer.</p>\n</article>\n</article>\n</body>\n</html>\n\n---\n\n<article>\n<header>\n<h1>What Does WWF Do?</h1>\n<p>WWF's mission:</p>\n</header>\n<p>WWF's mission is to stop the degradation of our planet's natural environment,\nand build a future in which humans live in harmony with nature.</p>\n</article>\n\n---\n\n<footer>\n<p>Author: Hege Refsnes</p>\n<p><a href=\"mailto:hege@example.com\">hege@example.com</a></p>\n</footer>\n\n---\n\n<nav>\n<a href=\"/html/\">HTML</a> |\n<a href=\"/css/\">CSS</a> |\n<a href=\"/js/\">JavaScript</a> |\n<a href=\"/jquery/\">jQuery</a>\n</nav>\n\n---\n\n<p>My family and I visited The Epcot center this summer. The weather was \n    nice, and Epcot was amazing! I had a great summer together with my \n    family!</p>\n<aside>\n<h4>Epcot Center</h4>\n<p>Epcot is a theme \n    park at Walt Disney World Resort featuring exciting attractions, \n    international pavilions, award-winning fireworks and seasonal special \n    events.</p>\n</aside>\n\n---\n\n<html>\n<head>\n<style>\naside {\nwidth: 30%;\npadding-left: 15px;\nmargin-left: 15px;\nfloat: right;\nfont-style: italic;\nbackground-color: lightgray;\n}\n</style>\n</head>\n<body>\n<p>My family and I visited The Epcot \n  center this summer. The weather was nice, and Epcot was amazing! I had a great \n  summer together with my family!</p>\n<aside>\n<p>The Epcot center is a \n  theme park at Walt Disney World Resort featuring exciting attractions, \n  international pavilions, award-winning fireworks and seasonal special \n  events.</p>\n</aside>\n<p>My family and I visited The Epcot center \n  this summer. The weather was nice, and Epcot was amazing! I had a great summer \n  together with my family!</p>\n<p>My family and I visited The Epcot center \n  this summer. The weather was nice, and Epcot was amazing! I had a great summer \n  together with my family!</p>\n</body>\n</html>\n\n---\n\n<figure>\n<img src=\"pic_trulli.jpg\" alt=\"Trulli\">\n<figcaption>Fig1. - Trulli, Puglia, Italy.</figcaption>\n</figure>\n```\n\n## Tutorials\n\nTest what you have learned about HTML semantic elements.\n\n## Tutorials\n\nTest your understanding of HTML semantic elements by completing this coding challenge.\n\n## Tutorials\n\nConsistent, clean, and tidy HTML code makes it easier for others to read and understand your code.\n\nHere are some guidelines and tips for creating good HTML code.\n\nAlways declare the document type as the first line in your document.\n\nThe correct document type for HTML is:\n\nHTML allows mixing uppercase and lowercase letters in element names.\n\nHowever, we recommend using lowercase element names, because:\n\nIn HTML, you do not have to close all elements (for example the<p>element).\n\nHowever, we strongly recommend closing all HTML elements, like this:\n\nHTML allows mixing uppercase and lowercase letters in attribute names.\n\nHowever, we recommend using lowercase attribute names, because:\n\nHTML allows attribute values without quotes.\n\nHowever, we recommend quoting attribute values, because:\n\nAlways specify thealtattribute for images. This attribute is important if the image \nfor some reason cannot be displayed.\n\nAlso, always define thewidthandheightof images. This reduces flickering, because the browser can reserve space for \nthe image before loading.\n\nHTML allows spaces around equal signs. But space-less is easier to read and \ngroups entities better together.\n\nWhen using an HTML editor, it is NOT convenient to scroll right and left to read the HTML code.\n\nTry to avoid too long code lines.\n\nDo not add blank lines, spaces, or indentations without a reason.\n\nFor readability, add blank lines to separate large or logical code blocks.\n\nFor readability, add two spaces of indentation. Do not use the tab key.\n\nThe<title>element is required in HTML.\n\nThe contents of a page title is very important for search engine optimization \n(SEO)! The page title is used by search engine algorithms to decide the order \nwhen listing pages in search results.\n\nThe<title>element:\n\nSo, try to make the title as accurate and meaningful as possible:\n\nAn HTML page will validate without the<html>and<body>tags:\n\nHowever, we strongly recommend to always add the<html>and<body>tags!\n\nOmitting<body>can produce errors in older browsers.\n\nOmitting<html>and<body>can also crash DOM and XML software.\n\nThe HTML <head> tag can also \nbe omitted.\n\nBrowsers will add all elements before<body>, to a default<head>element.\n\nHowever, we recommend using the<head>tag.\n\nIn HTML, it is optional to close empty elements.\n\nIf you expect XML/XHTML software to access your page, keep the \nclosing slash (/), because it is required in XML and XHTML.\n\nYou should always include thelangattribute \ninside the<html>tag, to declare the \nlanguage of the Web page. This is meant to assist search engines and browsers.\n\nTo ensure proper interpretation and correct search engine indexing, both the language and \nthe character encoding<meta charset=\"charset\">should be defined as early as possible in an HTML document:\n\nThe viewport is the user's visible area of a web page. It varies with the device \n- it will be smaller on a mobile phone than on a computer screen.\n\nYou should include the following<meta>element in all your web pages:\n\nThis gives the browser instructions on how \nto control the page's dimensions and scaling.\n\nThewidth=device-widthpart sets the width of the page to follow the screen-width of the device (which will vary depending on the device).\n\nTheinitial-scale=1.0part sets the initial zoom level when the page is first loaded by the browser.\n\nHere is an example of a web pagewithoutthe viewport meta tag, and the same web pagewiththe viewport meta tag:\n\nShort comments should be written on one line, like this:\n\nComments that span more than one line, should be written like this:\n\nLong comments are easier to observe if they are indented with two spaces.\n\nUse simple syntax for linking to style sheets (thetypeattribute is not necessary):\n\nShort CSS rules can be written compressed, like this:\n\nLong CSS rules should be written over multiple lines:\n\nUse simple syntax for loading external scripts (thetypeattribute is not necessary):\n\nUsing \"untidy\" HTML code can result in JavaScript errors.\n\nThese two JavaScript statements will produce different results:\n\nVisit the JavaScript Style Guide.\n\nSome web servers (Apache, Unix) are case sensitive about file names: \"london.jpg\" cannot be accessed as \n\"London.jpg\".\n\nOther web servers (Microsoft, IIS) are not case sensitive: \"london.jpg\" can be accessed as \n\"London.jpg\".\n\nIf you use a mix of uppercase and lowercase, you have to be aware of this.\n\nIf you move from a case-insensitive to a case-sensitive server, even small \nerrors will break your website!\n\nTo avoid these problems, always use lowercase file names!\n\nHTML files should have a.htmlextension (.htmis allowed).\n\nCSS files should have a.cssextension.\n\nJavaScript files should have a.jsextension.\n\nThere is no difference between the .htm and .html file extensions!\n\nBoth will be \ntreated as HTML by any web browser and web server.\n\nWhen a URL does not specify a filename at the end (like \"https://www.w3schools.com/\"), \nthe server just adds a default filename, such as \"index.html\", \n\"index.htm\", \"default.html\", or \"default.htm\".\n\nIf your server is configured only with \"index.html\" as the default filename, your \nfile must be named \"index.html\", and not \"default.html\".\n\nHowever, servers can be configured with more than one default filename; \nusually you can set up as many default filenames as you want.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n\n---\n\n<body>\n<p>This is a paragraph.</p>\n</body>\n\n---\n\n<BODY>\n<P>This is a paragraph.</P>\n</BODY>\n\n---\n\n<section>\n<p>This is a paragraph.</p>\n<p>This is a paragraph.</p>\n</section>\n\n---\n\n<section>\n<p>This is a paragraph.\n<p>This is a paragraph.\n</section>\n\n---\n\n<a href=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<a HREF=\"https://www.w3schools.com/html/\">Visit our HTML tutorial</a>\n\n---\n\n<table \n    class=\"striped\">\n\n---\n\n<table class=striped>\n\n---\n\n<table class=table striped>\n\n---\n\n<img \n    src=\"html5.gif\" alt=\"HTML5\" style=\"width:128px;height:128px\">\n\n---\n\n<img \n    src=\"html5.gif\">\n\n---\n\n<link rel=\"stylesheet\" href=\"styles.css\">\n\n---\n\n<link \n    rel = \"stylesheet\" href = \"styles.css\">\n\n---\n\n<body>\n<h1>Famous Cities</h1>\n<h2>Tokyo</h2>\n<p>Tokyo is the capital of Japan, the \n    center of the Greater Tokyo Area, and the most \n    populous metropolitan area in the world.</p>\n<h2>London</h2>\n<p>London is the capital city of England. It is the most populous city \n  in the United Kingdom.</p>\n<h2>Paris</h2>\n<p>Paris is the capital of France. The Paris area is one of the \n  largest population centers in Europe.</p>\n</body>\n\n---\n\n<body>\n<h1>Famous Cities</h1>\n<h2>Tokyo</h2><p>Tokyo is the capital of Japan, the \n    center of the Greater Tokyo Area, and the most \n    populous metropolitan area in the world.</p>\n<h2>London</h2><p>London \n  is the capital city of England. It is the most populous city in the United \n  Kingdom.</p>\n<h2>Paris</h2><p>Paris is the capital \n  of France. The Paris area is one of the largest population centers in Europe.</p>\n</body>\n\n---\n\n<table>\n<tr>\n<th>Name</th>\n<th>Description</th>\n</tr>\n<tr>\n<td>A</td>\n<td>Description of A</td>\n</tr>\n<tr>\n<td>B</td>\n<td>Description of B</td>\n</tr>\n</table>\n\n---\n\n<ul>\n<li>London</li>\n<li>Paris</li>\n<li>Tokyo</li>\n</ul>\n\n---\n\n<title>HTML \n    Style Guide and Coding Conventions</title>\n\n---\n\n<!DOCTYPE html>\n<head>\n<title>Page Title</title>\n</head>\n<h1>This is a heading</h1>\n<p>This is a paragraph.</p>\n\n---\n\n<!DOCTYPE html>\n<html>\n<title>Page Title</title>\n<body>\n<h1>This is a heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n\n---\n\n<meta \n    charset=\"utf-8\">\n\n---\n\n<meta charset=\"utf-8\" />\n\n---\n\n<!DOCTYPE html>\n<html lang=\"en-us\">\n<head>\n<title>Page Title</title>\n</head>\n<body>\n<h1>This is a \n    heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html \n    lang=\"en-us\">\n<head>\n<meta charset=\"UTF-8\">\n<title>Page Title</title>\n</head>\n\n---\n\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\n---\n\n<!-- This is a comment -->\n\n---\n\n<!--\nThis is a long comment example. This is \n  a long comment example.\nThis is a \n  long comment example. This is a long comment example.\n-->\n\n---\n\n<link rel=\"stylesheet\" href=\"styles.css\">\n\n---\n\np.intro {font-family:Verdana;font-size:16em;}\n\n---\n\nbody {\nbackground-color: lightgrey;\nfont-family: \"Arial \nBlack\", Helvetica, sans-serif;\nfont-size: 16em;\ncolor: \nblack;\n}\n\n---\n\n<script src=\"myscript.js\">\n\n---\n\ngetElementById(\"Demo\").innerHTML = \"Hello\";\ngetElementById(\"demo\").innerHTML \n  = \"Hello\";\n```\n\n## Tutorials\n\nReserved characters in HTML must be replaced with entities:\n\nSome characters are reserved in HTML.\n\nIf you use the less than (<) or greater than (>) signs in your HTML text, the browser might mix them with tags.\n\nEntity names or entity numbers can be used to display reserved HTML characters.\n\nEntity names look like this:\n\nEntity numbers look like this:\n\nTo display a less than sign (<) we must write:&lt;or&#60;\n\nA commonly used HTML entity is the non-breaking space:&nbsp;\n\nA non-breaking space is a space that will not break into a new line.\n\nTwo words \nseparated by a non-breaking space will stick together (not break into a new \nline). This \nis handy when breaking the words might be disruptive.\n\nExamples:\n\nAnother common use of the non-breaking space is to prevent browsers from truncating spaces in HTML pages.\n\nIf you write 10 spaces in your text, the browser will remove 9 of them. To add real spaces to your text, \nyou can use the&nbsp;character entity.\n\nA diacritical mark is a \"glyph\" added to a letter.\n\nSome diacritical marks, like grave (\u00a0 \u0300) and acute (\u00a0 \u0301) are called accents.\n\nDiacritical marks can be used in combination with alphanumeric characters to produce a character that is not present in \nthe character set (encoding) used in the page.\n\nHere are some examples:\n\n### Code Examples\n\n```\n&\nentity_name\n;\n\n---\n\n&#\nentity_number\n;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_22",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_22",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

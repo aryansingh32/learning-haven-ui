@@ -63,8 +63,9 @@ export class BuildHavenController {
       if (!userId) return res.status(401).json(fail('Unauthorized', 'E_AUTH_401'));
       const language = String(req.body.language || '');
       if (!language) return res.status(400).json(fail('language is required', 'E_BUILD_400'));
+      const buildMode = (req.body.build_mode === 'vibe' ? 'vibe' : 'traditional') as 'traditional' | 'vibe';
 
-      const data = await BuildHavenService.startChallenge(userId, p(req.params.slug), language);
+      const data = await BuildHavenService.startChallenge(userId, p(req.params.slug), language, buildMode);
       res.json(ok(data));
     } catch (error: any) {
       logger.error('Error:', error);
@@ -237,6 +238,30 @@ export class BuildHavenController {
     }
   }
 
+  static async adminHardDeleteChallenge(req: Request, res: Response) {
+    try {
+      const result = await BuildHavenService.hardDeleteChallenge(p(req.params.id));
+      res.json(ok(result));
+    } catch (error: any) {
+      logger.error('Error:', error);
+      res.status(400).json(fail(error.message || 'Failed to permanently delete challenge', 'E_ADMIN_BUILD_531'));
+    }
+  }
+
+  static async adminBulkDeleteChallenges(req: Request, res: Response) {
+    try {
+      const { ids, permanent } = req.body;
+      if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json(fail('ids array is required', 'E_ADMIN_BUILD_400'));
+      }
+      const result = await BuildHavenService.bulkDeleteChallenges(ids, Boolean(permanent));
+      res.json(ok(result));
+    } catch (error: any) {
+      logger.error('Error:', error);
+      res.status(400).json(fail(error.message || 'Failed to bulk delete challenges', 'E_ADMIN_BUILD_532'));
+    }
+  }
+
   static async adminGetAnalytics(req: Request, res: Response) {
     try {
       const analytics = await BuildHavenService.getAnalytics(p(req.params.id));
@@ -275,6 +300,35 @@ export class BuildHavenController {
     } catch (error: any) {
       logger.error('adminListEnrollments error:', error);
       res.status(500).json(fail('Failed to fetch enrollments', 'E_ADMIN_BUILD_550'));
+    }
+  }
+
+  static async vibeSubmitStage(req: Request, res: Response) {
+    try {
+      const userId = (req as AuthRequest).user?.id;
+      if (!userId) return res.status(401).json(fail('Unauthorized', 'E_AUTH_401'));
+
+      const enrollmentId = p(req.params.enrollmentId);
+      const stageId = p(req.params.stageId);
+      const { submission_source, submission_ref } = req.body;
+
+      if (!submission_ref) return res.status(400).json(fail('submission_ref is required', 'E_BUILD_400'));
+
+      const source: 'github_push' | 'live_url' =
+        submission_source === 'live_url' ? 'live_url' : 'github_push';
+
+      const result = await BuildHavenService.submitVibeStage({
+        enrollmentId,
+        stageId,
+        userId,
+        submissionSource: source,
+        submissionRef: submission_ref,
+      });
+
+      res.json(ok({ result }));
+    } catch (error: any) {
+      logger.error('vibeSubmitStage error:', error);
+      res.status(400).json(fail(error.message || 'Failed to submit vibe stage', 'E_BUILD_560'));
     }
   }
 

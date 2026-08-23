@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 35,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nUse a loop to calculate the factorial of a given number:\n\n### Code Examples\n\n```\nExample\nint n = 5;\nint fact = 1;\n\nfor (int i = 1; i <= n; i++) {\n  fact *= i;\n}\n\nSystem.out.println(\"Factorial of \" + n + \" is \" + fact);\n// Output: Factorial of 5 is 120\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nPrint the first 10 numbers of the Fibonacci sequence:\n\n### Code Examples\n\n```\nExample\nint n1 = 0, n2 = 1, count = 10;\n\nSystem.out.print(\"Fibonacci: \" + n1 + \" \" + n2);\n\nfor (int i = 2; i < count; i++) {\n  int n3 = n1 + n2;\n  System.out.print(\" \" + n3);\n  n1 = n2;\n  n2 = n3;\n}\n// Output: Fibonacci: 0 1 1 2 3 5 8 13 21 34\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThe GCD (Greatest Common Divisor) is the largest number that divides two numbers without leaving a remainder.\n\nExplanation:\n\nWe want the largest number that divides both36and60without a remainder.\n\nFor example:\n\nSo the program printsGCD: 12.\n\n### Code Examples\n\n```\nExample\nint a = 36;\nint b = 60;\nint gcd = 1;\n\nfor (int i = 1; i <= a && i <= b; i++) {\n  if (a % i == 0 && b % i == 0) {\n    gcd = i;\n  }\n}\n\nSystem.out.println(\"GCD: \" + gcd);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nA prime number is only divisible by 1 and itself.\n\nTo test if a number is prime, we try dividing it by every number from 2 up to its square root:\n\nExplanation:We start with the number29. Since 29 is greater than 1, the loop checks if it can be divided evenly by any number from 2 up to the square root of 29 (about 5.38). The numbers 2, 3, 4, and 5 do not divide 29 without a remainder, so the program concludes that29is prime.\n\n### Code Examples\n\n```\nExample\nint n = 29;  // Number used to check\nboolean isPrime = n > 1;\n\nfor (int i = 2; i * i <= n; i++) {\n  if (n % i == 0) {\n    isPrime = false;\n    break;\n  }\n}\n\nSystem.out.println(n + (isPrime ? \" is prime\" : \" is not prime\"));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nLoop through the elements of anArrayList:\n\nJava ArrayList Tutorial\n\nJava ArrayList Methods\n\n### Code Examples\n\n```\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 ArrayList<String> cars = new ArrayList<String>();\n\u00a0\u00a0\u00a0 cars.add(\"Volvo\");\n\u00a0\u00a0\u00a0 cars.add(\"BMW\");\n\u00a0\u00a0\u00a0 cars.add(\"Ford\");\n\u00a0\u00a0\u00a0 cars.add(\"Mazda\");\n\u00a0\u00a0\u00a0 for (String i : cars) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(i);\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_35",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_35",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

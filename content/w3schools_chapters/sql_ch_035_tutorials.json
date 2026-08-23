@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 35,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheGROUP BYstatement is used to group rows that have the same values into summary rows, like \"Find the number of customers in each country\".\n\nTheGROUP BYstatement is almost always used in conjunction with aggregate functions, likeCOUNT(),MAX(),MIN(),SUM(),AVG(),\nto perform calculations on each group.\n\nBelow is a selection from the \"Customers\" table in the Northwind sample \ndatabase:\n\nThe following SQL returns the number of customers in each country:\n\nThe following SQL returns the number of customers in each country, sorted from high to low:\n\nBelow is a selection from the \"Orders\" table in the Northwind sample database:\n\nAnd a selection from the \"Shippers\" table:\n\nThe following SQL returns the number of orders sent by each shipper:\n\n### Code Snippets\n\n```\nSELECT\ncolumn1, aggregate_function(column2), column3, ...\nFROM\ntable_name\nWHERE\ncondition\nGROUP BY\ncolumn1\n,\ncolumn3\nORDER BY\ncolumn_name\n;\n\n---\n\nSELECT Country, COUNT(CustomerID) AS [Number of Customers]\nFROM Customers\nGROUP BY Country;\n\n---\n\nSELECT Country, COUNT(CustomerID) AS [Number of Customers]\nFROM Customers\nGROUP BY Country\nORDER BY COUNT(CustomerID) DESC;\n\n---\n\nSELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders\nFROM \n  Orders\nLEFT JOIN Shippers\nON Orders.ShipperID = Shippers.ShipperID\nGROUP BY ShipperName;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_34",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

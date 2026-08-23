@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 73,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e LinkedList Methods\n\nTheget()method returns the item at a specified position in the list.\n\nTrefers to the data type of items in the list.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nOutput the value of an item in a list:\nimport java.util.LinkedList;\n\npublic class Main { \n  public static void main(String[] args) { \n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    System.out.println(cars.get(0));\n  } \n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nThegetFirst()method returns the first item in a list.\n\nTip:Use thegetLast()method to get the last item \nin a list.\n\nTrefers to the data type of items in the list.\n\nNone.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nGet the first item in the list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n\n    // Use getFirst() to get the first item in the list\n    System.out.println(cars.getFirst());\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nThegetLast()method returns the last item in a list.\n\nTip:Use thegetFirst()method to get the first item \nin a list.\n\nTrefers to the data type of items in the list.\n\nNone.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nGet the last item in the list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n\n    // Use getLast() to get the last item in the list\n    System.out.println(cars.getLast());\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nTheindexOf()method returns the position of the first occurrence of a value in the list. If the item is not found in the list then it returns -1.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nFind the position of an item in a list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    System.out.println(cars.indexOf(\"Ford\"));\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nTheisEmpty()method returnstrueif a list has no items andfalseotherwise.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nCheck if a list is empty:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    \n    System.out.println(cars.isEmpty());\n    \n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    System.out.println(cars.isEmpty());\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_73",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_73",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

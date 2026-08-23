@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 249,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The easiest way to debug asynchronous code is tolog when things happen.\n\nWhy can't JavaScript do the same?\n\nThere is no standard properties like:\n\nThey simply do not exist.\n\nThe state part of the Promise is not in its public API.\n\nAsync code often fails after your function has already returned.\n\nThis makes it feel like nothing happened.\n\nUnhandled promise rejections confuse beginners.\n\nHandle errors early and clearly.\n\nUsetry...catchto handle Promises.\n\nFetch does not reject on HTTP errors like 404.\n\nYou must checkresponse.ok.\n\nLogging a promise is not the same as logging the data.\n\nLog the response and status first.\n\nTheNetwork tabis a panel in yourBrowser's Developer Tools.\n\nIt shows all network request made by your web page.\n\nHow to Use the Developer Tools:\n\nThe Network tab shows every request made by your application:\n\nModern browsers allow you to pause JavaScript execution.\n\nWhile execution is paused, you can inspect variables, Promises, and the Call Stack.\n\nYou can set breakpoints onawaitlines.\n\nThis lets you inspect values before and after async steps.\n\nSet a breakpoint on the firstawaitline.\n\nStep over and inspectresponse.\n\nThis logs a promise, not the JSON.\n\nPromises can fail anywhere in the chain.\n\nAdd logs between steps to find where it fails.\n\nThis shows which step is failing.\n\nMany beginners forget this.\n\nExplain the difference between:\n\n### Code Snippets\n\n```\nconsole.log(\"Before fetch\");\nconst promise = fetch(\"fetch.txt\");\nconsole.log(\"After fetch\");\n\n---\n\nmyDisplayer(\"Before fetch\");\nconst promise = fetch(\"fetch.txt\");\nmyDisplayer(\"After fetch\");\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response);\n}\nmyDisplayer(\"Start\");\n// Try to load a missing file\nloadText(\"missing.txt\");\nmyDisplayer(\"Done\");\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\ntry {\nlet response = await fetch(file);\nlet data = await response.json()\nmyDisplayer(JSON.stringify(data));\n} catch (error) {\nmyDisplayer(error);\n}\n}\n// Call async function\nloadData(\"customer.json\")\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\ntry {\nlet response = await fetch(file);\nif (!response.ok) {\nconsole.log(\"HTTP Error:\", response.status);\nreturn;\n}\nlet data = await response.json()\nmyDisplayer(JSON.stringify(data));\n} catch (error) {\nmyDisplayer(error);\n}\n}\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\nlet response = await fetch(file);\nmyDisplayer(response.status);\nmyDisplayer(response.headers.get(\"content-type\"));\n}\n\n---\n\nconst response = await fetch(\"customer.json\");\n\n---\n\nExample\nconst response = await fetch(\"demo.txt\");\ndebugger;\nconst text = await response.text();\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = await response.json();\nconsole.log(data);\n}\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = response.json();\nconsole.log(data);\n}\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = await response.json();\nconsole.log(data);\n}\n\n---\n\nfetch(\"data.json\")\n.then(function(response) {\nconsole.log(\"Got response\");\nreturn response.json();\n})\n.then(function(data) {\nconsole.log(\"Got data\");\nconsole.log(data);\n})\n.catch(function(error) {\nconsole.log(\"Failed\");\nconsole.log(error);\n});\n\n---\n\nmyDisplayer(\"Start\");\nsetTimeout(function() {myDisplayer(\"Timer\")},1000);\nmyDisplayer(\"End\");\n\n---\n\nStart\nEnd\nTimer\n\n---\n\nconst customer = fetch(\"customer.json\");\nconst products = fetch(\"products.json\");\nconst news = fetch(\"news.json\");\n\n---\n\nconst response = await fetch(\"missing.txt\");\nconst text = await response.text();\n\n---\n\nif (!response.ok) {\nconsole.log(response.status);\n}\n\n---\n\nfetch(\"missing.txt\")\n.then(function(response){\nreturn response.text();\n})\n.catch(function(err){\nconsole.log(err);\n});\n\n---\n\nshowSpinner();\ntry {\n...\n}\nfinally {\nhideSpinner();\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_248",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

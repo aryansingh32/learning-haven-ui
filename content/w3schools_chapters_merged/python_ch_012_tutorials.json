@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 12,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThere are several ways to join, or concatenate, two or more lists in Python.\n\nOne of the easiest ways are by using the+operator.\n\nAnother way to join two lists is by appending all the items from list2 into \nlist1, one by one:\n\nOr you can use theextend()method, \nwhere the purpose is to add elements from one list to another \nlist:\n\n### Code Examples\n\n```\nlist1 = [\"a\", \"b\", \"c\"]\nlist2 = [1, 2, 3]\nlist3 = list1 + list2\nprint(list3)\n\n---\n\nlist1 = [\"a\", \"b\" , \"c\"]\nlist2 = [1, 2, 3]\nfor x in list2:\nlist1.append(x)\nprint(list1)\n\n---\n\nlist1 = [\"a\", \"b\" , \"c\"]\nlist2 = [1, 2, 3]\nlist1.extend(list2)\nprint(list1)\n```\n\n## Tutorials\n\nPython has a set of built-in methods that you can use on lists.\n\n## Tutorials\n\nNow you have learned a lot about lists, and how to use them in Python.\n\nAre you ready for a test?\n\nTest your Python List skills with exercises from all categories:\n\nThe exercises are a mix of \"multiple choice\" and \"fill in the blanks\" questions.\n\nThere are between 3 and 9 questions in each category.\n\nThe answer can be found in the corresponding tutorial chapter.\n\nIf you're stuck, or answer wrong, you can try again or hit the \"Show Answer\" button to see the correct answer.\n\nFind a complete collection of Python Exercises for each chapter in this tutorial in ourPython Exercisespage.\n\n## Tutorials\n\nTest your understanding of creating, accessing, changing, adding, and removing list items.\n\n## Tutorials\n\nTuples are used to store multiple items in a single variable.\n\nTuple is one of 4 built-in data types in Python used to store collections of \ndata, the other 3 areList,Set, andDictionary, all with different qualities and usage.\n\nA tuple is a collection which is ordered andunchangeable.\n\nTuples are written with round brackets*.\n\nTuple items are ordered, unchangeable, and allow duplicate values.\n\nTuple items are indexed, the first item has index[0], the second item has index[1]etc.\n\nWhen we say that tuples are ordered, it means that the items have a defined order, and that order will not change.\n\nTuples are unchangeable, meaning that we cannot change, add or remove items after the tuple has been created.\n\nSince tuples are indexed, they can have items with the same value:\n\nTo determine how many items a tuple has, use thelen()function:\n\nTo create a tuple with only one item, you have to add a comma after the item, \notherwise Python will not recognize it as a tuple.\n\nTo create an empty tuple, use round brackets with no content.\n\nTuple items can be of any data type:\n\nA tuple can contain different data types:\n\nFrom Python's perspective, tuples are defined as objects with the data type 'tuple':\n\nIt is also possible to use thetuple()constructor to make a tuple.\n\nThere are four collection data types in the Python programming language:\n\nWhen choosing a collection type, it is useful to understand the properties of that type. Choosing the right type for a particular data set could mean retention of meaning, and, it could mean an increase in efficiency or security.\n\n### Code Examples\n\n```\nthistuple = (\"apple\", \"banana\", \"cherry\")\nprint(thistuple)\n\n---\n\nthistuple = \"apple\", \"banana\", \"cherry\"\nprint(thistuple)\n\n---\n\nthistuple = (\"apple\", \"banana\", \"cherry\", \"apple\", \"cherry\")\nprint(thistuple)\n\n---\n\nthistuple = (\"apple\", \"banana\", \"cherry\")\nprint(len(thistuple))\n\n---\n\nthistuple = (\"apple\",)\nprint(type(thistuple))\n#NOT a tuple\nthistuple = (\"apple\")\nprint(type(thistuple))\n\n---\n\nthistuple = ()\nprint(type(thistuple))\n\n---\n\ntuple1 = (\"apple\", \"banana\", \"cherry\")\ntuple2 = (1, 5, 7, 9, 3)\ntuple3 = (True, False, False)\n\n---\n\ntuple1 = (\"abc\", 34, True, 40, \"male\")\n\n---\n\nmytuple = (\"apple\", \"banana\", \"cherry\")\nprint(type(mytuple))\n\n---\n\nthistuple = tuple((\"apple\", \"banana\", \"cherry\")) # note the double round-brackets\nprint(thistuple)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_12",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_12",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

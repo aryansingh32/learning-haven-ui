@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 185,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "If your data points clearly will not fit a linear regression (a straight line \nthrough all data points), it might be ideal for polynomial regression.\n\nPolynomial regression, like linear regression, uses the relationship between the \nvariables x and y to find the best way to draw a line through the data points.\n\nPython has methods for finding a relationship between data-points and to draw \na line of polynomial regression. We will show you how to use these methods \ninstead of going through the mathematic formula.\n\nIn the example below, we have registered 18 cars as they were passing a \ncertain tollbooth.\n\nWe have registered the car's speed, and the time of day (hour) the passing \noccurred.\n\nThe x-axis represents the hours of the day and the y-axis represents the \nspeed:\n\nImport the modules you need.\n\nYou can learn about the NumPy module in ourNumPy Tutorial.\n\nYou can learn about the SciPy module in ourSciPy Tutorial.\n\nCreate the arrays that represent the values of the x and y axis:\n\nNumPy has a method that lets us make a polynomial model:\n\nThen specify how the line will display, we start at position 1, and end at \nposition 22:\n\nDraw the original scatter plot:\n\nDraw the line of polynomial regression:\n\nDisplay the diagram:\n\nIt is important to know how well the relationship between the values of the \nx- and y-axis is, if there are no relationship the \npolynomial \nregression can not be used to predict anything.\n\nThe relationship is measured with a value called the r-squared.\n\nThe r-squared value ranges from 0 to 1, where 0 means no relationship, and 1 \nmeans 100% related.\n\nPython and the Sklearn module will compute this value for you, all you have to \ndo is feed it with the x and y arrays:\n\nNow we can use the information we have gathered to predict future values.\n\nExample: Let us try to predict the speed of a car that passes the tollbooth \nat around the time 17:00:\n\nTo do so, we need the samemymodelarray \nfrom the example above:\n\nThe example predicted a speed to be 88.87, which we also could read from the diagram:\n\nLet us create an example where polynomial regression would not be the best method \nto predict future values.\n\nAnd the r-squared value?\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nx = [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]\ny = [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]\nplt.scatter(x, y)\nplt.show()\n\n---\n\nimport numpy\nimport matplotlib.pyplot as plt\nx = [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]\ny = \n  [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]\nmymodel = \n  numpy.poly1d(numpy.polyfit(x, y, 3))\nmyline = numpy.linspace(1, 22, 100)\nplt.scatter(x, y)\nplt.plot(myline, mymodel(myline))\nplt.show()\n\n---\n\nimport numpy\nfrom sklearn.metrics import r2_score\nx = \n  [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]\ny = \n  [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]\nmymodel = \n  numpy.poly1d(numpy.polyfit(x, y, 3))\nprint(r2_score(y, mymodel(x)))\n\n---\n\nimport numpy\nfrom sklearn.metrics import r2_score\nx = \n  [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]\ny = \n  [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]\nmymodel = \n  numpy.poly1d(numpy.polyfit(x, y, 3))\nspeed = mymodel(17)\nprint(speed)\n\n---\n\nimport numpy\nimport matplotlib.pyplot as plt\nx = \n  [89,43,36,36,95,10,66,34,38,20,26,29,48,64,6,5,36,66,72,40]\ny = \n  [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]\nmymodel = \n  numpy.poly1d(numpy.polyfit(x, y, 3))\nmyline = numpy.linspace(2, 95, 100)\nplt.scatter(x, y)\nplt.plot(myline, mymodel(myline))\nplt.show()\n\n---\n\nimport numpy\nfrom sklearn.metrics import r2_score\nx = \n  [89,43,36,36,95,10,66,34,38,20,26,29,48,64,6,5,36,66,72,40]\ny = \n  [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]\nmymodel = \n  numpy.poly1d(numpy.polyfit(x, y, 3))\nprint(r2_score(y, mymodel(x)))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_184",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

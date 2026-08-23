@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 60,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Variables declared withvarare hoisted but initialized withundefined.\n\nVariables declared withletandconstare also hoisted,\nbut not initialized.\n\nUsing aletorconstvariable before it is declared will\nresult in aReferenceError.\n\nThe time between the start of the block and the declaration is called the Temporal Dead Zone.\n\nvardoes not have to be declared.\n\nvaris hoisted.\n\nvarbinds to this.\n\nvaris function-scoped:If you declare avarvariable inside a loop or an if block,\nit \"leaks out\" and is accessible anywhere outside the block.\n\nletandconstare block-scoped:They are confined strictly to the nearest pair ofcurly braces {}(such as loops, functions, or conditional blocks).\n\nletandconsthaveblock scope.\n\nletandconstcan not beredeclared.\n\nletandconstmust bedeclaredbefore use.\n\nletandconstdoesnot bindtothis.\n\nletandconstarenot hoisted.\n\nvar allows you to accidentally re-declare the exact same variable name in the same scope, silently overwriting earlier values.\n\nlet can be updated/reassigned, but it throws an error if you attempt to re-declare it within the same scope.\n\nconst is strictly read-only. It requires an initial value immediately upon declaration and cannot be reassigned later.\n\nAll variables are hoisted to the top of their scope by the JavaScript engine, but they are treated differently:\n\nvar variables are hoisted and automatically assigned a default value of undefined. You can reference them before they are declared in the code without breaking the application.\n\nlet and const are hoisted but remain completely uninitialized. The region of code from the start of the block until the line they are declared is called the Temporal Dead Zone. Accessing them here instantly crashes with a ReferenceError.\n\nDevelopers should follow these guidelines for modern JavaScript (ES6 - 2015+):\n\nAlways use const by default.It prevents accidental reassignments and makes your code more predictable.\n\nOnly use let when:You know its value needs to change later (inside a loop or a mathematical counter).\n\nNever use var.Its unpredictable scoping and the redeclaration rules are known to cause bugs.\n\n### Code Snippets\n\n```\nif (true) {\nvar firstName = \"John\";\nlet lastName = \"Doe\";\n}\nlet text1 = text2 = \"unknown\";\nif (typeof firstName !== \"undefined\") text1 = firstName;\nif (typeof lastName !== \"undefined\") text2 = lastName;\n\n---\n\n// Create user object\nconst user = { name: \"Alice\" };\n// This will work\nuser.name = \"Bob\";\nlet text = user.name + \" \";\n// This will not work\ntry {\nuser = { name: \"Charlie\" };\ntext += user.name;\n} catch(err) {\ntext += err;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_59",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

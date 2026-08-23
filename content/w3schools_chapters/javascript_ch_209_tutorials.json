@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 209,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "All temporal date objectshave their ownsince() method:\n\nAll temporal objectshave their ownuntil() method:\n\nThesince()method calculates the duration between two temporal dates.\n\nTheuntil()method calculates the duration between two temporal dates.\n\nTheuntil()method is effectively the inverse of thesince()method.Syntaxt1.until(t2, options)MeaningAt time t1, how much time is ituntil t2?Exampleconst start = Temporal.PlainDate.from(\"2026-05-01\");const end = Temporal.PlainDate.from(\"2026-05-17\");const duration = start.until(end);Try it Yourself \u00bbTemporal since() vs until()The methods are opposites.MethodMeaninga.since(b)time from b \u2192 aa.until(b)time from a \u2192 bExampleconst start = Temporal.PlainDate.from(\"2026-05-01\");const end = Temporal.PlainDate.from(\"2026-05-17\");const duration1 = start.since(end);const duration2 = start.until(end);Try it Yourself \u00bbThink:since = past (since yesterday)until = future (until tomorrow)The Options ParametersExampleconst wedding = Temporal.PlainDate.from(\"2000-05-17\");const today = Temporal.Now.plainDateISO();const duration = today.since(wedding);Try it Yourself \u00bbThesince()method returns the total number of days,\nbut you can use the largestUnit option to break it down into years and months:Exampleconst wedding = Temporal.PlainDate.from(\"2000-05-17\");const today = Temporal.Now.plainDateISO();const duration = today.since(wedding, {largestUnit:'years'});Try it Yourself \u00bbPlainTime since()Example: Plain Timeconst start = Temporal.PlainTime.from(\"09:00\");const end = Temporal.PlainTime.from(\"17:30\");const duration = end.since(start);Try it Yourself \u00bbZonedDateTime since()Thesince()method calculates the duration between two temporal dates.Syntaxt1.since(t2, options)Example: ZonedDateTimeconst start = Temporal.ZonedDateTime.from(\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");const end = Temporal.ZonedDateTime.from(\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");const duration = end.since(start);Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nt1\n.since(\nt2, options\n)\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration = start.since(end);\n\n---\n\nt1\n.until(\nt2, options\n)\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration = start.until(end);\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration1 = start.since(end);\nconst duration2 = start.until(end);\n\n---\n\nconst wedding = Temporal.PlainDate.from(\"2000-05-17\");\nconst today = Temporal.Now.plainDateISO();\nconst duration = today.since(wedding);\n\n---\n\nconst wedding = Temporal.PlainDate.from(\"2000-05-17\");\nconst today = Temporal.Now.plainDateISO();\nconst duration = today.since(wedding, {largestUnit:'years'});\n\n---\n\nconst start = Temporal.PlainTime.from(\"09:00\");\nconst end = Temporal.PlainTime.from(\"17:30\");\nconst duration = end.since(start);\n\n---\n\nt1\n.since(\nt2, options\n)\n\n---\n\nconst start = Temporal.ZonedDateTime.from(\n\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");\nconst end = Temporal.ZonedDateTime.from(\n\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");\nconst duration = end.since(start);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_208",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

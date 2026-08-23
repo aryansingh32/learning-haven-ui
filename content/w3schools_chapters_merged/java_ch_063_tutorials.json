@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 63,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Math Methods\n\nThesubtractExact()method subtracts two integers and throws an exception if the subtraction causes an overflow. This prevents incorrect results that can occur from subtracting really large negative numbers.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nSubtract integers using\nsubtractExact()\n:\nSystem.out.println(Math.subtractExact(12, 16));\nSystem.out.println(Math.subtractExact(24060, 10000));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThetan()method returns the tangent of an angle.\n\nNote:Angles are measured in radians.\n\nTip:You can use the constantMath.PIto make fractions of PI for angles.\n\n### Code Examples\n\n```\nExample\nReturn the tangent of different angles:\nSystem.out.println(Math.tan(0.5));\nSystem.out.println(Math.tan(-0.5));\nSystem.out.println(Math.tan(1));\nSystem.out.println(Math.tan(-3));\nSystem.out.println(Math.tan(Math.PI/4));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThetanh()method returns the hyperbolic tangent of a number.\n\nThe hyperbolic tangent is equivalent toMath.sinh(number) / Math.cosh(number).\n\n### Code Examples\n\n```\nExample\nReturn the hyperbolic tangent of different numbers:\nSystem.out.println(Math.tanh(3));\nSystem.out.println(Math.tanh(-3));\nSystem.out.println(Math.tanh(0));\nSystem.out.println(Math.tanh(1));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThetoDegrees()method converts an angle from radians to degrees.\n\nTip:To convert from degrees to radians, look at thetoRadians()method.\n\n### Code Examples\n\n```\nExample\nConvert radians to degrees for different angles:\nSystem.out.println(Math.toDegrees(1));\nSystem.out.println(Math.toDegrees(Math.PI));\nSystem.out.println(Math.toDegrees(Math.PI / 4));\nSystem.out.println(Math.toDegrees(-0.5236));\nSystem.out.println(Math.toDegrees(6));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThetoIntExact()method Converts alongvalue to anintand throws an exception if the conversion results in an overflow. This prevents incorrect results that can occur from the overflow.\n\n### Code Examples\n\n```\nExample\nConvert\nlong\nvalues to\nint\n:\nSystem.out.println(Math.toIntExact(1500000L));\nSystem.out.println(Math.toIntExact(-32L));\nSystem.out.println(Math.toIntExact(-86345L));\nSystem.out.println(Math.toIntExact(25L));\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_63",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_63",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 22,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nA combinator is something that defines the relationship between two or more selectors.\n\nA CSS selector can contain more than one selector. Between the selectors, we can include a combinator, to create a more specific selection.\n\nThere are four different combinators in CSS:\n\nThedescendant combinatormatches all elements that are descendants \n(children, grandchildren, etc.) of a specified \nelement.\n\nThe following example selects all <p> elements inside <div> elements:\n\nThechild combinatorselects all elements that are \ndirect children of a \nspecified element.\n\nThe following example selects all <p> elements that are  \ndirect children of <div>:\n\nThenext sibling combinatoris used to select an element that is directly \nafter a specific element.\n\nSibling elements must have the same parent element.\n\nThe following example selects the first <p> element that immediately \nfollows a <div>, and share the same parent:\n\nThesubsequent-sibling combinatorselects \nall elements that are next siblings of a specified element.\n\nThe following example selects all <p> elements that are next siblings of <div>, \nand share the same parent:\n\n### Code Examples\n\n```\ndiv p {\nbackground-color: yellow;\n}\n\n---\n\ndiv > p {\nbackground-color: yellow;\n}\n\n---\n\ndiv + p {\nbackground-color: yellow;\n}\n\n---\n\ndiv ~ p {\nbackground-color: yellow;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nA CSS pseudo-class is a keyword that can be added to a selector, to define a style for a special state of an element.\n\nSome common use for pseudo-classes:\n\nPseudo-classes are always denoted by a single colon (:) followed by the pseudo-class name:\n\nInteractive pseudo-classes apply styles based onuser interaction:\n\nStructural pseudo-classes select elements based ontheir position in the document tree:\n\n### Code Examples\n\n```\nselector:pseudo-class-name {\nCSS properties\n}\n```\n\n## Tutorials\n\nInteractive pseudo-classes apply styles based on user interaction with elements.\n\nHere we use the:hoverpseudo-class and the:focuspseudo-class:\n\nFor HTML links, it is common to use the following pseudo-classes:\n\nHere is an example of using the:hoverpseudo-class on a <div> element:\n\nHere is an example of using the:focuspseudo-class to style an input field when it gets focus:\n\nPseudo-classes can easily be combined with HTML classes:\n\nHover over a <div> element to show a <p> element (like a tooltip):\n\n### Code Examples\n\n```\n/* unvisited link */\na:link {\ncolor: #FF0000;\n}\n/* visited \nlink */\na:visited {\ncolor: #00FF00;\n}\n/* mouse over link */\na:hover {\ncolor: #FF00FF;\n}\n/* selected link */\na:active {\ncolor: #0000FF;\n}\n\n---\n\ndiv:hover {\nbackground-color: blue;\n}\n\n---\n\ninput:focus {\nbackground-color: yellow;\n}\n\n---\n\na.highlight:hover {\ncolor: #ff0000;\n}\n\n---\n\np {\ndisplay: none;\nbackground-color: yellow;\npadding: 20px;\n}\ndiv:hover p {\ndisplay: block;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_22",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_22",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

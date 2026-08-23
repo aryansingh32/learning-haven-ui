@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 3,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of Python comments by completing a small coding challenge.\n\n## Tutorials\n\nVariables are containers for storing data values.\n\nPython has no command for declaring a variable.\n\nA variable is created the moment you first assign a value to it.\n\nVariables do not need to be declared with any particulartype, and can even change type after they have been set.\n\nIf you want to specify the data type of a variable, this can be done with casting.\n\nYou can get the data type of a variable with thetype()function.\n\nString variables can be declared either by using single or double quotes:\n\nVariable names are case-sensitive.\n\n### Code Examples\n\n```\nx = 5\ny = \"John\"\nprint(x)\nprint(y)\n\n---\n\nx = 4\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 # x is of type int\nx = \"Sally\" # x is now of type str\nprint(x)\n\n---\n\nx = \n  str(3)\u00a0\u00a0\u00a0 # x will be '3'\ny = int(3)\u00a0\u00a0\u00a0 # y \n  will be 3\nz = float(3)\u00a0 # z will be 3.0\n\n---\n\nx = 5\ny = \"John\"\nprint(type(x))\nprint(type(y))\n\n---\n\nx = \"John\"\n# is the same as\nx = \n  'John'\n\n---\n\na = 4\nA = \n  \"Sally\"\n#A will not overwrite a\n```\n\n## Tutorials\n\nA variable can have a short name (like x and y) or a more descriptive name (age, carname, total_volume).\n\nRules for Python variables:\n\nVariable names with more than one word can be difficult to read.\n\nThere are several techniques you can use to make them more readable:\n\nEach word, except the first, starts with a capital letter:\n\nEach word starts with a capital letter:\n\nEach word is separated by an underscore character:\n\n### Code Examples\n\n```\nmyvar = \"John\"\nmy_var = \"John\"\n_my_var = \"John\"\nmyVar = \"John\"\nMYVAR = \"John\"\nmyvar2 = \"John\"\n\n---\n\n2myvar = \"John\"\nmy-var = \"John\"\nmy var = \"John\"\n```\n\n## Tutorials\n\nPython allows you to assign values to multiple variables in one line:\n\nAnd you can assign thesamevalue to multiple variables in one line:\n\nIf you have a collection of values in alist,tupleetc.\nPython allows you to extract the values into variables. This is calledunpacking.\n\nLearn more about unpacking in ourUnpack TuplesChapter.\n\n### Code Examples\n\n```\nx, y, z = \"Orange\", \"Banana\", \"Cherry\"\nprint(x)\nprint(y)\nprint(z)\n\n---\n\nx = y = z = \"Orange\"\nprint(x)\nprint(y)\nprint(z)\n\n---\n\nfruits = [\"apple\", \"banana\", \"cherry\"]\nx, y, z = fruits\nprint(x)\nprint(y)\nprint(z)\n```\n\n## Tutorials\n\nTheprint()function is often used to output variables.\n\nIn theprint()function, you output multiple \nvariables, separated by a comma:\n\nYou can also use the+operator to output \nmultiple variables:\n\nFor numbers, the+character works as a mathematical operator:\n\nIn theprint()function, when you try to \ncombine a string and a number with the+operator, Python will give you an error:\n\nThe best way to output multiple variables in theprint()function is to separate them with commas,\nwhich even support different data types:\n\n### Code Examples\n\n```\nx = \"Python is awesome\"\nprint(x)\n\n---\n\nx = \"Python\"\ny = \"is\"\nz = \"awesome\"\nprint(x, y, z)\n\n---\n\nx = \"Python \"\ny = \"is \"\nz = \"awesome\"\nprint(x \n  + y + z)\n\n---\n\nx = 5\ny = 10\nprint(x + y)\n\n---\n\nx = 5\ny = \"John\"\nprint(x + y)\n\n---\n\nx = 5\ny = \"John\"\nprint(x, y)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_3",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

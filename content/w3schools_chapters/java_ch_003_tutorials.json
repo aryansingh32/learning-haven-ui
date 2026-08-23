@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 3,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "At W3Schools, you can try Java without installing anything.\n\nOur Online Java Editor runs directly in your browser, and shows both the code and the result:\n\nThis editor will be used in the entire tutorial to demonstrate the different aspects of Java.\n\nHowever, if you want to run Java on your own computer, follow the instructions below.\n\nSome PCs might have Java already installed.\n\nTo check if you have Java installed on a Windows PC, search in the start bar for Java or type the following in Command Prompt (cmd.exe):\n\nIf Java is installed, you will see something like this (depending on version):\n\nIf you do not have Java installed on your computer, you can download it atoracle.com.\n\nNote:In this tutorial, we will write Java code in a text editor. However, it is possible to write Java in an Integrated Development Environment, such as IntelliJ IDEA, Netbeans or Eclipse, which are particularly useful when managing larger collections of Java files.\n\nIn Java, every application begins with a class name, and that class must match the filename.\n\nLet's create our first Java file, calledMain.java, which can be done in any text editor \n(like Notepad).\n\nThe file should contain a \"Hello World\" message, which is written with the \nfollowing code:\n\nDon't worry if you don't understand the code above - we will discuss it in detail in later chapters. \nFor now, focus onhowto run the code above.\n\nSave the code in Notepad as \"Main.java\". Open Command Prompt (cmd.exe), navigate to the directory where you saved your file, and type \"javac \nMain.java\":\n\nThis will compile your code. If there are no errors in the code, the command prompt will take you to the next line. \nNow, type \"java Main\" to run the file:\n\nThe output should read:\n\nCongratulations!You have written and executed your first Java program.\n\n### Code Snippets\n\n```\nC:\\Users\\\nYour Name\n>java -version\n\n---\n\nC:\\Users\\\nYour Name\n>javac Main.java\n\n---\n\nC:\\Users\\\nYour Name\n>java Main\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

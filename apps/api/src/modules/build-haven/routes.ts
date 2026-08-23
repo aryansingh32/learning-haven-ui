@@ -25,14 +25,23 @@ router.get('/enrollments', authenticateUser, BuildHavenController.getMyEnrollmen
 router.post('/challenges/:slug/stages/:stageNumber/celebrate', authenticateUser, BuildHavenController.celebrateStage);
 router.get('/progress/:username/:slug/badge.svg', BuildHavenController.getProgressBadge);
 router.post('/webhooks/github', optionalAuth, webhookRateLimit, requireIdempotencyKey, GitHubController.webhookReceiver);
+// Vibe mode: authenticated user submits their build for gate verification
+router.post(
+  '/enrollments/:enrollmentId/stages/:stageId/vibe-submit',
+  authenticateUser,
+  writeRateLimit,
+  BuildHavenController.vibeSubmitStage
+);
 
 const adminRouter = Router();
 adminRouter.use(authenticateUser, requireAdmin);
 adminRouter.get('/challenges', BuildHavenController.adminListChallenges);
 adminRouter.post('/challenges', BuildHavenController.adminCreateChallenge);
+adminRouter.post('/challenges/bulk-delete', BuildHavenController.adminBulkDeleteChallenges);
 adminRouter.get('/challenges/:id', BuildHavenController.adminGetChallenge);
 adminRouter.put('/challenges/:id', BuildHavenController.adminUpdateChallenge);
 adminRouter.delete('/challenges/:id', BuildHavenController.adminArchiveChallenge);
+adminRouter.delete('/challenges/:id/permanent', BuildHavenController.adminHardDeleteChallenge);
 adminRouter.get('/challenges/:id/analytics', BuildHavenController.adminGetAnalytics);
 
 adminRouter.get('/challenges/:programId/stages', BuildHavenController.adminListStages);

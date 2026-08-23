@@ -1,0 +1,544 @@
+Video URL: https://www.youtube.com/watch?v=eHye3PxH4jU
+Video Title: CSS Media Queries | Sigma Web Development Course - Tutorial #31
+--------------------------------------------------
+
+00:00:00.000
+There was a time when you were making a website for a client,
+00:00:03.000
+then you had to specifically tell that client that I have to make my website responsive.
+00:00:08.000
+But today, by default, if anyone makes a website from you,
+00:00:11.000
+then you have to make it responsive. This is the default setting.
+00:00:14.000
+The most important thing for responsiveness is media query
+00:00:18.000
+for which you have to write some additional code
+00:00:21.000
+and your website that looks good and your desktop will look good
+00:00:26.000
+To make your website look good on mobile
+00:00:29.000
+you have to use media queries
+00:00:32.000
+which are very simple and have a straight forward syntax
+00:00:35.000
+Like the video in the comment section below
+00:00:38.000
+and write sigma batch too
+00:00:41.000
+I am very excited as always
+00:00:44.000
+Let's go to the computer stream. Let's go guys.
+00:00:54.000
+So guys, to save time, I have opened my VS code here.
+00:00:56.000
+And I have already made a file
+00:00:58.000
+with the name index.html. I have given a title
+00:01:00.000
+to this page with the name css media query.
+00:01:02.000
+And now I will tell you
+00:01:04.000
+what is media query. I will put a title to this page with the name of media query and here I will tell you what is media query
+00:01:06.000
+I will put a very strange style here
+00:01:08.000
+and I will say that the background color of the body should be red
+00:01:11.000
+and you will say that the background color of the body is red, I do it
+00:01:14.000
+and inside the div I will write
+00:01:16.000
+Hey I am a red body guy
+00:01:19.000
+who am I? Red body guy means
+00:01:21.000
+not the one with the red body, the one without the body tag is red
+00:01:24.000
+so this means that if you have not, the one without the body tag is red so this is the meaning of this thing
+00:01:25.000
+if you have not accessed the playlist of sigma web development
+00:01:27.000
+then access the playlist, click here and save it
+00:01:30.000
+and also access the GitHub code
+00:01:33.000
+now see what we have to do
+00:01:35.000
+obviously preview it
+00:01:37.000
+and after previewing it you will say yes
+00:01:39.000
+what is this time pass, the body has become red, it is a very good thing, applause
+00:01:42.000
+but what I have come to tell you tell you that you can change your styles
+00:01:46.000
+on the basis of
+00:01:48.000
+which device you are using
+00:01:50.000
+I will tell you a story
+00:01:52.000
+I will tell you a story like
+00:01:54.000
+grandfathers tell their grandchildren
+00:01:56.000
+I don't know about my time but
+00:01:58.000
+when CSS2 came
+00:02:00.000
+then a query named media
+00:02:02.000
+was introduced
+00:02:04.000
+and its purpose was only that
+00:02:05.600
+the media query used to tell
+00:02:07.600
+that if any person is accessing
+00:02:09.600
+the website in any other device
+00:02:11.600
+then the styles can be changed
+00:02:13.600
+that was the only purpose
+00:02:15.600
+it was called media rule which was introduced in CSS2
+00:02:17.600
+and in CSS3
+00:02:19.600
+the name of this media rule was changed to media query
+00:02:21.600
+so how did media rule work in CSS2
+00:02:23.600
+forget that I will tell you how media query so in CSS 2, how the media rule worked, forget that, in CSS 3
+00:02:26.000
+I will tell you how the media query works
+00:02:28.000
+so in CSS 3
+00:02:30.000
+what is the syntax of media query
+00:02:32.000
+that first of all you do
+00:02:34.000
+that you write at the rate media
+00:02:36.000
+it means that
+00:02:38.000
+you are writing a media query
+00:02:40.000
+after this, in which device you want to write
+00:02:42.000
+media query, you tell this
+00:02:44.000
+and before that, a not or only comes
+00:02:45.480
+that is, I can write here
+00:02:46.880
+media only screen
+00:02:48.840
+that is, it will be applied only when it is on the screen
+00:02:52.680
+so a typical syntax of media query looks like this
+00:02:55.160
+media not or only we write
+00:02:57.360
+that either don't show it on this media type
+00:02:59.240
+or only if it is of this media type, then show
+00:03:01.640
+and after that we write some expressions here
+00:03:03.640
+about which I will tell you
+00:03:04.960
+and write CSS code in it which will be applied
+00:03:07.200
+when this thing will be satisfied, okay, now I will tell you how you can use it
+00:03:13.600
+so here I will write media, in most of the cases we write only because we want
+00:03:18.000
+that only this media is a match when we are on the screen when the media type is screen
+00:03:23.000
+and what are the other media types, you can put all
+00:03:26.000
+means all media types, then you can put print
+00:03:29.000
+if the website is being viewed on the printer, then you will see it
+00:03:32.000
+there is another media type, screen, which is the most common
+00:03:35.000
+in the phone, laptop or in your iPad
+00:03:38.000
+if you are showing, then it is screen, there is another
+00:03:41.000
+speech devices, which are used for those people who cannot see
+00:03:44.000
+so here speech is added
+00:03:46.000
+if you want this CSS style to be applied only when
+00:03:48.000
+there is a speech device
+00:03:50.000
+then you will write speech here, but in most of the cases
+00:03:52.000
+you will write screen here
+00:03:54.000
+and after that you will write end here
+00:03:56.000
+and you will write a condition like this
+00:03:58.000
+let's say I write max width should be
+00:04:00.000
+455 pixels
+00:04:02.000
+and let's say I want
+00:04:04.000
+to make the background color red
+00:04:06.240
+so I will do one thing, I will write body
+00:04:09.000
+and inside body I will write background color blue
+00:04:11.360
+ok, here I will make background color blue
+00:04:14.320
+so if max width is 45 pixels
+00:04:16.560
+then background color will be blue
+00:04:17.760
+so I will show you what it means
+00:04:19.360
+I will make it smaller and smaller
+00:04:21.360
+here you can see the width
+00:04:22.560
+I will make it smaller and smaller
+00:04:24.320
+now you see if its max width is I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will make it smaller, I will% media query as I told you till now, this is it, this is the syntax you will find yourself
+00:04:48.000
+applying this syntax in 90 to 95% of the cases
+00:04:52.000
+media only screen and max width 455
+00:04:56.000
+or whatever max width, I can also give min width here, if I make it min width
+00:05:00.000
+then what will happen, if I made it min width then it will apply after
+00:05:04.000
+how many pixels I gave
+00:05:06.000
+I gave 455 pixels
+00:05:09.000
+now you can see here that media query is enabled
+00:05:12.280
+because the width is more than 455 pixels
+00:05:15.280
+if I reduce it, so the media query is gone
+00:05:18.280
+it is gone from here, it means that the media query is not present
+00:05:21.280
+all these CSS styles will not be applied, so this media query is not visible
+00:05:24.280
+as soon as I increase it, it says of media query these css styles will not be used so this media query is not visible as soon as I will increase it
+00:05:25.800
+it is saying that media query is activated
+00:05:27.800
+so these styles will not work
+00:05:29.600
+that's all about media query
+00:05:31.600
+so to summarize
+00:05:32.600
+media query is used
+00:05:35.000
+to make responsive designs
+00:05:37.200
+for example
+00:05:38.000
+let us say I have two boxes
+00:05:39.600
+I make two boxes here
+00:05:41.600
+and I will do div.boxes
+00:05:44.000
+and here I will do div.box and I will do div.boxes and here I will do div.box
+00:05:46.000
+and I will put some more boxes
+00:05:48.000
+here in dot box
+00:05:50.000
+I will say that the dot box
+00:05:52.000
+I want to keep its width
+00:05:54.000
+let us say 344 pixels
+00:05:56.000
+and I want to keep its height
+00:05:58.000
+let us say 344 pixels
+00:06:00.000
+by the way why I have chosen 344 pixels only for this example
+00:06:02.000
+if you have any idea
+00:06:04.000
+then tell me which Isaac Newton brain of I have that I used 344 pixels only
+00:06:09.100
+Why didn't I do 392, you must tell me
+00:06:12.200
+in the comment section below if you know
+00:06:14.400
+and you see here that I have only given the width of the box so far
+00:06:18.300
+I also give its background color
+00:06:20.400
+and I give its background color
+00:06:22.600
+let us say steel blue
+00:06:24.100
+okay, I gave's background color steel blue
+00:06:26.040
+you'll get to see these boxes
+00:06:27.400
+I'll also give padding and margin
+00:06:29.240
+so if I give padding 3 pixels
+00:06:31.640
+and margin 3 pixels
+00:06:34.120
+so you can see
+00:06:35.120
+that after giving padding and margin
+00:06:36.720
+it looks like this
+00:06:37.720
+now suppose I want
+00:06:39.120
+that these boxes
+00:06:40.480
+as they are visible
+00:06:41.880
+I want these boxes to look like this
+00:06:43.960
+on small screens that they start wrapping themselves or let's say I want to see these boxes on small screens to make it look like it is wrapping itself
+00:06:48.000
+Let's say I want this to be a flex box
+00:06:52.000
+I know I haven't told you about flex box yet
+00:06:56.000
+I am just giving you an example
+00:07:00.000
+Don't worry, I will tell you about flex box in detail
+00:07:04.000
+But just understand that by putting display flex it will come in this kind of container
+00:07:06.000
+now if I make it small, you see
+00:07:08.000
+it is getting small like this, so I can say
+00:07:10.000
+that when I am making it small
+00:07:12.000
+let us say when this red break point
+00:07:14.000
+is coming, 388 pixels is coming
+00:07:16.000
+so I will say that
+00:07:18.000
+the flex direction of this should be column
+00:07:20.000
+this is just an example that I am giving you
+00:07:22.000
+this is not the best way to do this
+00:07:24.000
+I will tell you, I will say that I am giving you this is not the best way to do this I will tell you I will say about boxes
+00:07:26.720
+that what should I do about flex direction
+00:07:28.720
+flex direction column
+00:07:31.280
+so what will happen by doing this
+00:07:32.280
+as soon as I will make it small
+00:07:33.280
+now see I did this
+00:07:35.280
+I will make it
+00:07:36.280
+oops I have actually made a mistake here
+00:07:38.280
+I will make it max width
+00:07:40.280
+not min width, I will make it max width
+00:07:42.280
+I will not make it min width
+00:07:43.800
+now see you guys
+00:07:44.800
+it is looking like this now as soon as width Now you can see, it looks like this
+00:07:46.000
+Now as it will be small
+00:07:48.000
+You can see it came like this
+00:07:50.000
+So what can I say
+00:07:52.000
+This phone, that is, the devices smaller than this
+00:07:54.000
+Whichever number I gave here
+00:07:56.000
+400 something, smaller than 455 pixels
+00:07:58.000
+Apply this CSS in them
+00:08:00.000
+Now what happens is when you are doing responsive design
+00:08:02.000
+So you guys understand the concept of break points
+00:08:05.120
+we break our website in 2-3 break points
+00:08:08.000
+we say that the phone devices should be below 455 pixels
+00:08:11.680
+this is an arbitrary number
+00:08:13.120
+you can take a good approximation of this number
+00:08:16.240
+but I am telling you an example
+00:08:17.840
+devices bigger than 455 pixels
+00:08:20.480
+let us say from 455 to 750
+00:08:23.120
+we consider them as tablets
+00:08:24.480
+that they will be like tablets somewhere and we will apply some more styles in them,
+00:08:29.000
+then the devices above that, let's say up to 1080 pixels,
+00:08:33.000
+we will say that 1920 or whatever pixels are our widescreen,
+00:08:38.000
+up to that, a particular style will be applied, then there are some ultra wide monitors,
+00:08:42.000
+whose width is very high, in those also we want to
+00:08:46.000
+show our website in a different way
+00:08:48.000
+so in those ultra wide monitors
+00:08:50.000
+we can decorate our website with some more media queries
+00:08:52.000
+we can style it
+00:08:54.000
+so i hope you understood media query
+00:08:56.000
+now i will use media query
+00:08:58.000
+when we will make projects
+00:09:00.000
+and i will use media query a lot
+00:09:02.000
+whenever you are writing raw css
+00:09:04.000
+you will use media query a lot, whenever you are writing raw CSS you will use media query
+00:09:05.280
+if you are using frameworks, then
+00:09:07.280
+while using frameworks, you will not use media query
+00:09:09.280
+because
+00:09:11.280
+frameworks is behind the hood, like tailwind CSS
+00:09:13.280
+behind the hood uses media queries
+00:09:15.280
+bootstrap is behind the hood
+00:09:17.280
+uses media query, but raw CSS
+00:09:19.280
+we will write, we will make projects in raw CSS
+00:09:21.280
+you will see there
+00:09:23.280
+how I will use media query
+00:09:25.880
+before going i want to show you one more thing
+00:09:28.080
+that there is a media query
+00:09:29.880
+which you guys use
+00:09:31.880
+i will write here and
+00:09:33.400
+and i will write orientation
+00:09:35.800
+orientation
+00:09:37.520
+let's say i will say landscape
+00:09:39.320
+ok
+00:09:39.840
+when our orientation is landscape
+00:09:41.840
+then let's say i want to color background
+00:09:44.560
+purple ok whose background color I want to color background purple
+00:09:46.000
+whose background color I want to make purple
+00:09:48.000
+body, let's say I want to do something like this
+00:09:50.000
+let's say I want to color
+00:09:52.000
+body purple, not background
+00:09:54.000
+I will make color purple
+00:09:56.000
+so I made body color purple
+00:09:58.000
+when I made purple, I didn't
+00:10:00.000
+write anything here
+00:10:02.000
+in fact let's do one thing, let's put border
+00:10:04.000
+in body 2 pixels solid purple I have not written anything here, in fact I will do one thing, I will put a border in the body,
+00:10:05.000
+2 pixels solid purple, ok, I have done this, now see here you are getting to see 2 pixels solid purple,
+00:10:13.000
+you are getting to see this when my orientation is landscape, but if my orientation is portrait from landscape,
+00:10:18.000
+now see it will disappear, what is the meaning of portrait? portrait means that the height, this height is portrait
+00:10:26.920
+this height is more than width
+00:10:29.520
+and if width is more than height then it is landscape
+00:10:31.720
+so if it is landscape then this border is visible
+00:10:33.520
+so you can also do orientation landscape or portrait here
+00:10:36.960
+so if I have made portrait here
+00:10:39.120
+then this line will be visible in portrait
+00:10:40.440
+you can see that this border is visible only in portrait
+00:10:42.720
+so if you want your styles to be enabled in landscape or portrait
+00:10:46.720
+then you can use this, this media query is also very popular
+00:10:49.400
+but I am telling you again, most of the cases
+00:10:52.440
+you will find yourself using this type of media query
+00:10:56.040
+with that said, if you have not done playlist access yet
+00:10:59.720
+then I am coming to your house, it's enough now
+00:11:01.720
+so I will update the source code, you can access it
+00:11:04.360
+like the video, share the playlist, share the video I am not going to do it again. I will update the source code. You can access it.
+00:11:06.000
+Like the video, share the playlist, share the video.
+00:11:08.000
+And give your village and uncle's land in my name.
+00:11:10.000
+Thank you so much guys for watching this video.

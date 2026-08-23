@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 25,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Strings in python are surrounded by either single quotation marks, or double quotation marks.\n\n'hello'is the same as\"hello\".\n\nYou can display a string literal with theprint()function:\n\nYou can use quotes inside a string, as long as they don't match the quotes surrounding the string:\n\nAssigning a string to a variable is done with the variable name followed by \nan equal sign and the string:\n\nYou can assign a multiline string to a variable by using three quotes:\n\nOr three single quotes:\n\nLike many other popular programming languages, strings in Python are arrays of unicode characters.\n\nHowever, Python does not have a character data type, a single character is simply a string with a length of 1.\n\nSquare brackets can be used to access elements of the string.\n\nSince strings are arrays, we can loop through the characters in a string, with aforloop.\n\nLearn more about For Loops in ourPython For Loopschapter.\n\nTo get the length of a string, use thelen()function.\n\nTo check if a certain phrase or character is present in a string, we can use \nthe keywordin.\n\nUse it in anifstatement:\n\nLearn more about If statements in ourPython \nIf...Elsechapter.\n\nTo check if a certain phrase or character is NOT present in a string, we can use \nthe keywordnot in.\n\nUse it in anifstatement:\n\n### Code Snippets\n\n```\nprint(\"Hello\")\nprint('Hello')\n\n---\n\nprint(\"It's alright\")\nprint(\"He is called 'Johnny'\")\nprint('He is called \"Johnny\"')\n\n---\n\na = \"Hello\"\nprint(a)\n\n---\n\na = \"\"\"Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do \n  eiusmod tempor incididunt\nut labore et dolore magna aliqua.\"\"\"\nprint(a)\n\n---\n\na = '''Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do \n  eiusmod tempor incididunt\nut labore et dolore magna aliqua.'''\nprint(a)\n\n---\n\na = \"Hello, World!\"\nprint(a[1])\n\n---\n\nfor x in \"banana\":\nprint(x)\n\n---\n\na = \"Hello, World!\"\nprint(len(a))\n\n---\n\ntxt = \"The best things in life are free!\"\nprint(\"free\" in txt)\n\n---\n\ntxt = \"The best things in life are free!\"\nif \"free\" in txt:\nprint(\"Yes, 'free' is present.\")\n\n---\n\ntxt = \"The best things in life are free!\"\nprint(\"expensive\" not in txt)\n\n---\n\ntxt = \"The best things in life are free!\"\nif \"expensive\" not in txt:\nprint(\"No, 'expensive' is NOT present.\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_24",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

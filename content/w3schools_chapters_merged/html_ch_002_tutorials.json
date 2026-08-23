@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 2,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest what you have learned about HTML basic.\n\n## Tutorials\n\nTest your understanding of basic HTML by completing these coding challenges.\n\n## Tutorials\n\nAn HTML element is defined by a start tag, some content, and an \nend tag.\n\nThe HTMLelementis everything from the start tag to the end tag:\n\nExamples of some HTML elements:\n\nHTML elements can be nested (this means that elements can contain other elements).\n\nAll HTML documents consist of nested HTML elements.\n\nThe following example contains four HTML elements (<html>,<body>,<h1>and<p>):\n\nThe<html>element is the root element \nand it defines the whole HTML document.\n\nIt has a start tag<html>and an end tag</html>.\n\nThen, inside the<html>element there is \na<body>element:\n\nThe<body>element defines the \ndocument's body.\n\nIt has a start tag<body>and an end tag</body>.\n\nThen, inside the<body>element there \nare two other elements:<h1>and<p>:\n\nThe<h1>element defines a heading.\n\nIt has a start tag<h1>and an end tag</h1>:\n\nThe<p>element defines a paragraph.\n\nIt has a start tag<p>and an end tag</p>:\n\nSome HTML elements will display correctly, even if you forget the end tag:\n\nHowever, never rely on this! Unexpected results and errors may occur if you forget the end tag!\n\nHTML elements with no content are called empty elements.\n\nThe<br>tag defines a line break, and \nis an empty element without a closing tag:\n\nHTML tags are not case sensitive:<P>means the same as<p>.\n\nThe HTML standard does not require lowercase tags, but W3Crecommendslowercase in HTML, anddemandslowercase for stricter document types like XHTML.\n\nW3Schools' tag reference contains additional information about these tags and their attributes.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n</body>\n</html>\n\n---\n\n<body>\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n</body>\n\n---\n\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n\n---\n\n<h1>My First Heading</h1>\n\n---\n\n<p>My first paragraph.</p>\n\n---\n\n<html>\n<body>\n<p>This is a paragraph\n<p>This is a paragraph\n</body>\n</html>\n\n---\n\n<p>This is a <br> paragraph with a line break.</p>\n```\n\n## Tutorials\n\nTest what you have learned about HTML elements.\n\n## Tutorials\n\nTest your understanding of HTML elements by completing this coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_2",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 24,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheINoperator is used in theWHEREclause to check if a specified column's value matches\nany value within a provided list.\n\nTheINoperator functions as a shorthand for multipleORconditions, making queries shorter and more readable.\n\nThe following SQL uses theINoperator to select all customers from \nGermany, France, or UK:\n\nThe following SQL selects all customers that are NOT located in \"Germany\", \"France\" or \"UK\":\n\nThe following SQL selects all customers that are from the same \ncountries as the suppliers:\n\n### Code Examples\n\n```\nSELECT * FROM Customers\nWHERE Country IN ('Germany', 'France', 'UK');\n\n---\n\nSELECT * FROM Customers\nWHERE Country NOT IN ('Germany', 'France', 'UK');\n\n---\n\nSELECT * FROM Customers\nWHERE Country IN (SELECT Country FROM Suppliers);\n```\n\n## Tutorials\n\nTheCREATE INDEXcommand is used to \ncreate indexes in tables (allows duplicate values).\n\nIndexes are used to retrieve data from the database very fast. The users cannot see the indexes, they are just used to speed up searches/queries.\n\nThe following SQL creates an index named \"idx_lastname\" on the \"LastName\" column in the \"Persons\" table:\n\nIf you want to create an index on a combination of columns, you can list the column names within the parentheses, separated by commas:\n\nNote:The syntax for creating indexes varies among different databases. Therefore: Check the syntax for creating indexes in your database.\n\nTheDROP INDEXcommand is used to delete an \nindex in a table.\n\nMS Access:\n\nSQL Server:\n\nDB2/Oracle:\n\nMySQL:\n\n### Code Examples\n\n```\nCREATE INDEX idx_lastname\nON Persons (LastName);\n\n---\n\nCREATE INDEX idx_pname\nON Persons (LastName, FirstName);\n\n---\n\nDROP INDEX\nindex_name\nON\ntable_name\n;\n\n---\n\nDROP INDEX\ntable_name\n.\nindex_name\n;\n\n---\n\nDROP INDEX\nindex_name\n;\n\n---\n\nALTER TABLE\ntable_name\nDROP INDEX\nindex_name\n;\n```\n\n## Tutorials\n\nTheINNER JOINcommand returns rows that have matching values in both tables.\n\nThe following SQL selects all orders with customer information:\n\nNote:The INNER JOIN keyword selects all rows from both \ntables as long as there is a match between the columns. If there are records in the \n\"Orders\" table that do not have matches in \"Customers\", these orders will not \nbe shown!\n\nThe following SQL statement selects all orders with customer and shipper \ninformation:\n\n### Code Examples\n\n```\nSELECT Orders.OrderID, Customers.CustomerName\nFROM Orders\nINNER JOIN \n  Customers ON Orders.CustomerID = Customers.CustomerID;\n\n---\n\nSELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName\nFROM \n  ((Orders\nINNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)\nINNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);\n```\n\n## Tutorials\n\nTheINSERT INTOcommand is used to insert new rows in a table.\n\nThe following SQL inserts a new record in the \"Customers\" table:\n\nThe following SQL will insert a new record, but only insert data in the \"CustomerName\", \n\"City\", and \"Country\" columns (CustomerID will \nbe updated automatically):\n\n### Code Examples\n\n```\nINSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)\nVALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');\n\n---\n\nINSERT INTO Customers (CustomerName, City, Country)\nVALUES ('Cardinal', 'Stavanger', 'Norway');\n```\n\n## Tutorials\n\nTheINSERT INTO SELECTcommand copies data \nfrom one table and inserts it into another table.\n\nThe following SQL copies \"Suppliers\" into \"Customers\" (the columns \nthat are not filled with data, will contain NULL):\n\nThe following SQL copies \"Suppliers\" into \"Customers\" (fill all \ncolumns):\n\nThe following SQL copies only the German suppliers into \"Customers\":\n\n### Code Examples\n\n```\nINSERT INTO Customers (CustomerName, \n  City, Country)\nSELECT SupplierName, City, Country FROM Suppliers;\n\n---\n\nINSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, \n  Country)\nSELECT SupplierName, ContactName, Address, City, PostalCode, \n  Country FROM Suppliers;\n\n---\n\nINSERT INTO Customers (CustomerName, \n  City, Country)\nSELECT SupplierName, City, Country FROM Suppliers\nWHERE Country='Germany';\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_24",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_24",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

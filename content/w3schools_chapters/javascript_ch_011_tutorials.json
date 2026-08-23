@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 11,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A JavaScript variable can hold 8 types of data:\n\nYou can use the JavaScripttypeofoperator to find the type \nof a JavaScript variable.\n\nThetypeofoperator returns the type of a variable or an expression:\n\nA string (a text string) is a series of characters like \"John Doe\".\n\nStrings are written with quotes. You can use single or double quotes:\n\nYou can use quotes inside a string, as long as they don't match the quotes \nsurrounding the string:\n\nAll JavaScript numbers are stored as decimal numbers (floating point).\n\nNumbers can be written with, or without decimals:\n\nExtra large or extra small numbers can be written with scientific \n(exponential) notation:\n\nJavaScript booleans can only have one of two values:trueorfalse\n\nThe boolean value of an expression is the basis for JavaScript comparisons.\n\nGiven thatx = 5, the table below explains comparison:\n\nIn computer programs, variables are often declared without a value. The value \ncan be something that has to be calculated, or something that will be provided \nlater, like user input.\n\nA variable without a value has the datatypeundefined.\n\nA variable without a value also has the valueundefined.\n\nAn empty value has nothing to do withundefined.\n\nAn empty string has both a legal value and a type.\n\n### Code Snippets\n\n```\n// String\nlet color = \"Yellow\";\nlet lastName = \"Johnson\";\n// Number\nlet length = 16;\nlet weight = 7.5;\n// BigInt\nlet x = 1234567890123456789012345n;\nlet y = BigInt(1234567890123456789012345)\n// Boolean\nlet x = true;\nlet y = false;\n// Object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Array object\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// Date object\nconst date = new Date(\"2022-03-25\");\n// Undefined\nlet x;\nlet y;\n// Null\nlet x = null;\nlet y = null;\n// Symbol\nconst x = Symbol();\nconst y = Symbol();\n\n---\n\ntypeof \"\"\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\ntypeof \"John\"\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\ntypeof \"John Doe\"\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"string\"\n\n---\n\ntypeof 0\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Returns \n \"number\"\ntypeof 314\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof 3.14\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof (3)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\ntypeof (3 + 4)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Returns \n \"number\"\n\n---\n\n// Using double quotes:\nlet carName1 = \"Volvo XC60\";\n// Using single quotes:\nlet carName2 = 'Volvo XC60';\n\n---\n\n// Single quote inside double quotes:\nlet answer1 = \"It's alright\";\n// Single quotes inside double quotes:\nlet answer2 = \"He is called 'Johnny'\";\n// Double quotes inside single quotes:\nlet answer3 = 'He is called \"Johnny\"';\n\n---\n\n// With decimals:\nlet x1 = 34.00;\n// Without decimals:\nlet x2 = 34;\n\n---\n\nlet y = 123e5;\u00a0\u00a0\u00a0\u00a0// 12300000\nlet z = 123e-5;\u00a0\u00a0\u00a0// 0.00123\n\n---\n\nlet x = 5;\n(x == 8); // equals false\n(x != 8); // equals true\n\n---\n\nlet carName;\n\n---\n\nlet car = \"\";\u00a0\u00a0\u00a0 // \n    The value is \n    \"\", the typeof is \"string\"\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

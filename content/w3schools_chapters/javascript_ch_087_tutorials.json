@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 87,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Generator Function is defined using thefunction*syntax:\n\nWhen called, a generator function returns aGenerator Object, not a direct value:\n\nAGenerator Objectis returned by the generator function.\n\nIt conforms to both the iterable and iterator protocols,\nmeaning it can be iterated over usingfor...of loops.\n\nTheyieldkeyword pauses execution andyield a valueback to the caller.\n\nThe generator's state is preserved, and can beresumedfrom the point of the yield\nwhennext()is called.\n\nGenerators maintain their internal state between yield calls,\nallowing them to continue execution from where they left off.\n\nA Generator Object conforms to theiterable and iterator protocols.\n\nIt can be iterated over withfor...of loops.\n\nIt also hasmethods:\n\nWhen called on the Generator object itresumesexecution of the generator function.\n\nIt returns an object with and value and a boolean, indicating if the generator has finished:\n\n{value:value,done:true|false}\n\nGenerators simplify the creation ofcustom iteratorsfor complex data structures or sequences.\n\nThey can efficiently generate values on demand, making them suitable for potentiallyinfinite data streams.\n\nThey canpause and resumeexecution, which can be useful for fine-grained control over program flow.\n\nBefore async/await, generators were used with Promises to manage asynchronous\noperations in a more sequential-looking manner.\n\n### Code Snippets\n\n```\nfunction* myGenerator() {}\n\n---\n\n{value:1, done:false}\n\n---\n\nfunction* myStream() {\n// return {value:1, done:false}\nyield 1;\n// return {value:2, done:false}\nyield 2;\n// return {value:3, done:true}\nreturn 3;\n}\n// Create a Generator\nlet myGenerator = myStream();\n// Iterate over the Generator\nfor (let value of myGenerator) { // code }\n\n---\n\nfunction* myStream() {\n// return {value:1, done:false}\nyield 1;\n// return {value:2, done:false}\nyield 2;\n// return {value:3, done:false}\nyeald 3;\n}\n// Create a Generator\nlet myGenerator = myStream();\n// Iterate over the Generator\nfor (let value of myGenerator) { // code }\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_86",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

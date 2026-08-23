@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 210,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Graph is a non-linear data structure that consists of vertices (nodes) and edges.\n\nA vertex, also called a node, is a point or an object in the Graph, and an edge is used to connect two vertices with each other.\n\nGraphs are non-linear because the data structure allows us to have different paths to get from one vertex to another, unlike with linear data structures like Arrays or Linked Lists.\n\nGraphs are used to represent and solve problems where the data consists of objects and relationships between them, such as:\n\nA Graph representation tells us how a Graph is stored in memory.\n\nDifferent Graph representations can:\n\nBelow are short introductions of the different Graph representations, but Adjacency Matrix is the representation we will use for Graphs moving forward in this tutorial, as it is easy to understand and implement, and works in all cases relevant for this tutorial.\n\nGraph representations store information about which vertices are adjacent, and how the edges between the vertices are. Graph representations are slightly different if the edges are directed or weighted.\n\nTwo vertices are adjacent, or neighbors, if there is an edge between them.\n\nAdjacency Matrix is the Graph representation (structure) we will use for this tutorial.\n\nHow to implement an Adjacency Matrix is shown on the next page.\n\nThe Adjacency Matrix is a 2D array (matrix) where each cell on index(i,j)stores information about the edge from vertexito vertexj.\n\nBelow is a Graph with the Adjacency Matrix representation next to it.\n\nThe adjacency matrix above represents an undirected Graph, so the values '1' only tells us where the edges are. Also, the values in the adjacency matrix is symmetrical because the edges go both ways (undirected Graph).\n\nTo create a directed Graph with an adjacency matrix, we must decide which vertices the edges go from and to, by inserting the value at the correct indexes(i,j). To represent a weighted Graph we can put other values than '1' inside the adjacency matrix.\n\nBelow is a directed and weighted Graph with the Adjacency Matrix representation next to it.\n\nIn the adjacency matrix above, the value3on index(0,1)tells us there is an edge from vertex A to vertex B, and the weight for that edge is3.\n\nAs you can see, the weights are placed directly into the adjacency matrix for the correct edge, and for a directed Graph, the adjacency matrix does not have to be symmetric.\n\nIn case we have a 'sparse' Graph with many vertices, we can save space by using an Adjacency List compared to using an Adjacency Matrix, because an Adjacency Matrix would reserve a lot of memory on empty Array elements for edges that don't exist.\n\nA 'sparse' Graph is a Graph where each vertex only has edges to a small portion of the other vertices in the Graph.\n\nAn Adjacency List has an array that contains all the vertices in the Graph, and each vertex has a Linked List (or Array) with the vertex's edges.\n\nIn the adjacency list above, the vertices A to D are placed in an Array, and each vertex in the array has its index written right next to it.\n\nEach vertex in the Array has a pointer to a Linked List that represents that vertex's edges. More specifically, the Linked List contains the indexes to the adjacent (neighbor) vertices.\n\nSo for example, vertex A has a link to a Linked List with values 3, 1, and 2. These values are the indexes to A's adjacent vertices D, B, and C.\n\nAn Adjacency List can also represent a directed and weighted Graph, like this:\n\nIn the Adjacency List above, vertices are stored in an Array. Each vertex has a pointer to a Linked List with edges stored asi,w, whereiis the index of the vertex the edge goes to, andwis the weight of that edge.\n\nNode D for example, has a pointer to a Linked List with an edge to vertex A. The values0,4means that vertex D has an edge to vertex on index0(vertex A), and the weight of that edge is4.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_209",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

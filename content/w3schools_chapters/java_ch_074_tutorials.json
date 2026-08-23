@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 74,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In Java, variables are only accessible inside the region where they are created. This is calledscope.\n\nVariables declared directly inside a method are available anywhere in the method following the line of code in which they were declared:\n\nA block of code refers to all of the code between curly braces{ }.\n\nVariables declared inside a block of code are only accessible by the code between the curly braces, and only after the line in which the variable was declared:\n\nVariables declared inside aforloop only exist inside the loop:\n\nLoop variables are not available outside the loop.\n\nYou can safely reuse the same variable name (i,j, etc.) in different loops in the same method:\n\n### Code Snippets\n\n```\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0int x = 100;\n\n\u00a0\u00a0\u00a0\u00a0// Code here CAN use x\n\u00a0\u00a0\u00a0\u00a0System.out.println(x);\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0{ // This is a block\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0int x = 100;\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Code here CAN use x\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(x);\n\n\u00a0\u00a0\u00a0\u00a0} // The block ends here\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 5; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(i); // i is accessible here\n\u00a0\u00a0\u00a0\u00a0}\n\n\u00a0\u00a0\u00a0\u00a0// i is NOT accessible here\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 3; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(\"Loop 1: \" + i);\n\u00a0\u00a0\u00a0\u00a0}\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 2; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(\"Loop 2: \" + i);\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_73",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

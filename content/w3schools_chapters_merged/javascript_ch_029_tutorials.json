@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 29,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nECMAScript 2023is supported in all modern browsers sinceJuly 2023:\n\nES2023 added the findLast() method that will start from the end of an array and return\nthe value of the first element that satisfies a condition.\n\nThe findLastIndex() method finds the index of the last element that satisfies a condition.\n\nES2023 added the Array toReversed() method as a safe way to reverse an array without altering the original array.\n\nThe difference between the newtoReversed()method and the oldreverse()method is that the new method\ncreates a new array, keeping the original array unchanged, while the old method altered the original array.\n\nES2023 added the Array toSorted() method as a safe way to sort an array without altering the original array.\n\nThe difference between the newtoSorted()method and the oldsort()method is that the new method\ncreates a new array, keeping the original array unchanged, while the old method altered the original array.\n\nES2023 added the Array toSpliced() method as a safe way to splice an array without altering the original array.\n\nThe difference between the newtoSpliced()method and the oldsplice()method is that the new method\ncreates a new array, keeping the original array unchanged, while the old method altered the original array.\n\nES2023 added the Array with() method as a safe way to update elements in an array without altering the original array.\n\nIn operating systems, a shebang (also known as hashbang, pound-bang, sharp-exclamation or hash-pling)\nis a sequence of two characters: a number sign (#) and an exclamation mark (!).\n\n#!at the beginning of a script tells the operating system what interpreter should be used to execute the script:\n\nThe example above tells the operating system to use the node program to run the script.\n\nNow, you can run JavaScript code with./fileName.jsinstead \nofnode fileName.js.\n\n### Code Examples\n\n```\nconst temp = [27, 28, 30, 40, 42, 35, 30];\nlet high = temp.findLast(x => x > 40);\n\n---\n\nconst temp = [27, 28, 30, 40, 42, 35, 30];\nlet pos = temp.findLastIndex(x => x > 40);\n\n---\n\nconst months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\"];\nconst reversed = months.toReversed();\n\n---\n\nconst months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\"];\nconst sorted = months.toSorted();\n\n---\n\nconst months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\"];\nconst spliced = months.toSpliced(0, 1);\n\n---\n\nconst months = [\"Januar\", \"Februar\", \"Mar\", \"April\"];\nconst new = months.with(2, \"March\");\n\n---\n\n#!\n/usr/bin/env node\n```\n\n## Tutorials\n\nSupported in all modern browsers sinceMarch 2023.\n\nECMAScript 2022is supported in all modern browsers sinceMarch 2023:\n\nES2022 intoduced the array methodat():\n\nTheat()method returns an indexed element from an array.\n\nTheat()method returns the same as[].\n\nTheat()method is supported in all modern browsers since March 2022:\n\nES2022 intoduced the string methodat():\n\nTheat()method returns an indexed element from an string.\n\nTheat()method returns the same as[].\n\nES2022 added the /d modifier to express the start and end of the match.\n\nRegExp Modifiers are used to spescfy case-insensitive, and other global searches:\n\nES2022 provides a safe way to check if a property is the own property of an object.\n\nObject.hasOwn()is similar toObject.hasOwnProperty()but supports all object types.\n\nStarting from ECMAScript 2022, the Error constructor\n(and its subclasses like TypeError, SyntaxError, etc.)\nsupports an optional{cause}property.\n\nThis allows you to create chained errors - where one error includes another as its cause.\n\nJavasSript modules can now wait for resources that require import before running:\n\n### Code Examples\n\n```\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits.at(2);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits[2];\n\n---\n\nconst name = \"W3Schools\";\nlet letter = name.at(2);\n\n---\n\nconst name = \"W3Schools\";\nlet letter = name[2];\n\n---\n\nlet text = \"aaaabb\";\nlet result = text.match(/(aa)(bb)/d);\n\n---\n\nObject.hasOwn(myObject, age)\n\n---\n\ntry {\n// Create a JSON parse failure\nJSON.parse(\"blablablabla\");\n} catch(err) {\nlet text = err.name + \" \" + err.message;\n}\n\n---\n\ntry {\ntry {\n// Create a JSON parse failure\nJSON.parse(\"\nblablablabla\n\");\n} catch(err) {\n// Create a new error and include the original one as the cause\nthrow new Error(\"Failed to load JSON\", {cause:err});\n}\n} catch(err){\nlet text = err.name + \" \" + err.message;\ndocument.getElementById(\"demo\").innerHTML = text;\n}\n\n---\n\nimport {myData} from './myData.js';\nconst data = await myData();\n\n---\n\nclass Hello {\ncounter = 0; // Class field\n}\nconst myClass = new Hello();\nlet x = myClass.counter;\n\n---\n\nclass Hello {\n#counter = 0; \u00a0// Private field\n#myMethod() {} // Private method\n}\nconst myClass = new Hello();\nlet x = myClass.#counter;  // Error\nmyClass.#myMethod(); \u00a0\u00a0\u00a0\u00a0\u00a0// Error\n```\n\n## Tutorials\n\nECMAScript 2021is supported in all modern browsers sinceApril 2021:\n\nPromise.any() is a static method in JavaScript that takes an iterable of Promises as input and returns\na single Promise.\n\nES2021 introduced the string methodreplaceAll():\n\nThereplaceAll()method allows you to specify a\nregular expression instead of a string to be replaced.\n\nIf the parameter is a regular expression, the global flag (g) must be set, otherwise\na TypeError is thrown.\n\nES2021 intoduced the numeric separator (_) to make numbers more readable:\n\nThe numeric separator is only for visual use.\n\nThe numeric separator can be placed anywhere in a number:\n\n### Code Examples\n\n```\n// Create a Promise\nconst myPromise1 = new Promise((resolve, reject) => {\nsetTimeout(resolve, 200, \"King\");\n});\n// Create another Promise\nconst myPromise2 = new Promise((resolve, reject) => {\nsetTimeout(resolve, 100, \"Queen\");\n});\n// Run when any promise fulfill\nPromise.any([myPromise1, myPromise2]).then((x) => {\nmyDisplay(x);\n});\n\n---\n\ntext = text.replaceAll(\"Cats\",\"Dogs\");\ntext = text.replaceAll(\"cats\",\"dogs\");\n\n---\n\ntext = text.replaceAll(/Cats/g,\"Dogs\");\ntext = text.replaceAll(/cats/g,\"dogs\");\n\n---\n\nconst num = 1_000_000_000;\n\n---\n\nconst num1 = 1_000_000_000;\nconst num2 = 1000000000;\n(num1 === num2);\n\n---\n\nconst num1 = 1_2_3_4_5;\n```\n\n## Tutorials\n\nECMAScript 2020is supported in all modern browsers sinceApril 2021.\n\nJavaScriptBigIntvariables are used to store big integer values\nthat are too big to be represented by a a normal JavaScriptNumber.\n\nJavaScript integers are only accurate up to about 15 digits.\n\nTo create aBigInt, append n to the end of an integer or callBigInt():\n\nThe JavaScripttypeofaBigIntis \"bigint\":\n\nBefore ES2020 there was no string method that could be used to search for all occurrences\nof a string in a string.\n\nIf the parameter is a regular expression, the global flag (g) must be set set, otherwise\na TypeError is thrown.\n\nIf you want to search case insensitive, the insensitive flag (i) must be set:\n\nThe??operator returns thefirst operandif it is notnullish.\nOtherwise it returns thesecond.\n\nThe??operator returns thesecond operandif the first operand isnullish.\n\nNullish is a word for describingnullorundefined.\n\nThe??operator is used to provide default values and is distinct from the logical OR operator||because it only treatsnullandundefinedas \"nullish\" and ignores other \"falsy\" values\nlike 0 or an empty string.\n\nTheOptional Chaining Operatorreturnsundefinedif an object property isundefinedornull(instead of throwing an error).\n\nOptional chaining not only works on object properties,\nbut also on function calls and arrays.\n\nTheLogical AND Assignment Operatoris used between two values.\n\nIf the first value istrue, the second value is assigned.\n\nTheLogical OR Assignment Operatoris used between two values.\n\nIf the first value isfalse, the second value is assigned.\n\nTheNullish Coalescing Assignment Operatoris used between two values.\n\nIf the first value isundefinedornull, the second value is assigned.\n\nThePromise.allSettled()method returns a single Promise from a list of promises.\n\nDynamic Importis a way toload JavaScript modules at runtime,\nrather than at the start of your program.\n\nUnlike static imports (which must appear at the top of a file), dynamic imports can be used anywhere \n- inside functions, conditionals, event handlers, etc.\n\nglobalThisprovides a standard way to access the global object,\nregardless of the environment your the code runs in: In the browser, Node.js, in a Web Worker, or another JS runtime.\n\nThe global object is the top-level object in a JavaScript environment:In browsers, it iswindow.In Node.js, it isglobal.In Web Workers, it isself.Many environments have their own name for thethis object.\nThis caused compatibility issues for code meant to run everywhere.globalThiswas introduced inECMAScript 2020(ES11) to solve that problem. It is a unified reference to the global object, no matter the environment.ExamplesglobalThis === window); // true in browsersglobalThis === global); // true in Node.jsTry it Yourself \u00bbExampleDefining a truly global variable:globalThis.appName = \"W3Schools Demo\";Try it Yourself \u00bbPreviously, developers had to use workarounds like:Exampleconst getGlobal = function() {if (typeof self !== 'undefined') return self;if (typeof window !== 'undefined') return window;if (typeof global !== 'undefined') return global;throw new Error('Cannot find global object');};WithglobalThis, that is no longer needed.JavaScript import.metaimport.metareturns an object containing the base URL of a module.Exampleconst myObject = import.meta;Try it Yourself \u00bbModule Namespace ExportsWith module namespace exports, you can re-export an entire namespace from your own module, without having to import it first.ExampleBefore:// re-export all named exports directlyexport * from \"./utils.js\";// consumers can use:import { add } from \"./math.js\";Now:// re-export all as a namespaceexport * as utils from \"./utils.js\";// consumers can use:import { utils } from \"./math.js\";\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nlet x = 999999999999999;\nlet y = 9999999999999999; // too big\n\n---\n\nlet x = 9999999999999999;\nlet y = 9999999999999999n;\n\n---\n\nlet x = 1234567890123456789012345n;\nlet y = BigInt(1234567890123456789012345)\n\n---\n\nlet x = BigInt(999999999999999);\nlet type = typeof x;\n\n---\n\nconst iterator = text.matchAll(\"Cats\");\n\n---\n\nconst iterator = text.matchAll(/Cats/g);\n\n---\n\nconst iterator = text.matchAll(/Cats/gi);\n\n---\n\nlet name = null;\nlet text = \"missing\";\nlet result = name ?? text;\n\n---\n\nconst car = {type:\"Fiat\", model:\"500\", color:\"white\"};\nlet name = car?.name;\n\n---\n\nlet x = 10;\nx &&= 5;\n\n---\n\nlet x = 10;\nx ||= 5;\n\n---\n\nlet x;\nx ??= 10;\n\n---\n\n// Create a Promise\nconst myPromise1 = new Promise((resolve, reject) => {\nsetTimeout(resolve, 200, \"King\");\n});\n// Create another Promise\nconst myPromise2 = new Promise((resolve, reject) => {\nsetTimeout(resolve, 100, \"Queen\");\n});\n// Settle All\nPromise.allSettled([myPromise1, myPromise2]).then((results) =>\nresults.forEach((x) => myDisplay(x.status)),\n);\n\n---\n\nimport(\"./module.js\")\n\n---\n\nglobalThis === window); // true in browsers\nglobalThis === global); // true in Node.js\n\n---\n\nglobalThis.appName = \"W3Schools Demo\";\n\n---\n\nconst getGlobal = function() {\nif (typeof self !== 'undefined') return self;\nif (typeof window !== 'undefined') return window;\nif (typeof global !== 'undefined') return global;\nthrow new Error('Cannot find global object');\n};\n\n---\n\nconst myObject = import.meta;\n\n---\n\n// re-export all named exports directly\nexport * from \"./utils.js\";\n// consumers can use:\nimport { add } from \"./math.js\";\n\n---\n\n// re-export all as a namespace\nexport * as utils from \"./utils.js\";\n// consumers can use:\nimport { utils } from \"./math.js\";\n```\n\n## Tutorials\n\nECMAScript 2019is supported in all modern browsers sinceJanuary 2020:\n\nES2019 added the String methodtrimStart()to JavaScript.ThetrimStart()method works liketrim(), but removes whitespace only from the start of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimStart();Try it Yourself \u00bbJavaScript String trimEnd()ES2019 added the String methodtrimEnd()to JavaScript.ThetrimEnd()method works liketrim(), but removes whitespace only from the end of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimEnd();Try it Yourself \u00bbJavaScript Object fromEntries()ES2019 added the Object methodfromEntries()to JavaScript.ThefromEntries()method creates an object from iterable key / value pairs.Exampleconst fruits = [[\"apples\", 300],[\"pears\", 900],[\"bananas\", 500]];const myObj = Object.fromEntries(fruits);Try it Yourself \u00bbOptional catch BindingFrom ES2019 you can omit the catch parameter if you don't need it:ExampleBefore 2019:try {// code} catch (err) {// code}After 2019:try {// code} catch {// code}JavaScript Array flat()ES2019 added the Arrayflat()method to JavaScript.Theflat()method creates a new array by flattening a nested array.Exampleconst myArr = [[1,2],[3,4],[5,6]];const newArr = myArr.flat();Try it Yourself \u00bbJavaScript Array flatMap()ES2019 added the ArrayflatMap()method to JavaScript.TheflatMap()method first maps all elements of an array\nand then creates a new array by flattening the array.Exampleconst myArr = [1, 2, 3, 4, 5, 6];const newArr = myArr.flatMap(x => [x, x * 10]);Try it Yourself \u00bbStable Array sort()ES2019revisedthe Arraysort()method.Before 2019, the specification allowed unstable sorting algorithms such as QuickSort.After ES2019, browsers must use a stable sorting algorithm:When sorting elements on a value, the elements must keep their relative position to other elements with the same value.Exampleconst myArr = [{name:\"X00\",price:100 },{name:\"X01\",price:100 },{name:\"X02\",price:100 },{name:\"X03\",price:100 },{name:\"X04\",price:110 },{name:\"X05\",price:110 },{name:\"X06\",price:110 },{name:\"X07\",price:110 }];Try it Yourself \u00bbIn the example above, when sorting on price, the result should not have names in a different relative position, such as this:X01 100X03 100X00 100X03 100X05 110X04 110X06 110X07 110Revised JSON.stringify()ES2019revisedthe JSONstringify()method.Before 2019, JSON could not stringify character encoded with \\.Examplelet text = JSON.stringify(\"\\u26D4\");Try it Yourself \u00bbBefore ES2019, usingJSON.stringify()JSON on UTF-8 code points (U+D800 to U+DFFF)\nreturned broken Unicode characters like \ufffd\ufffd\ufffd.After this revision, strings with UTF-8 code points convert safely withJSON.stringify(),\nand back to the original usingJSON.parse().Separator SymbolsLine separators and paragraph separator symbols (\\u2028 and \\u2029) are now allowed in string literals.Before 2019, these were treated as line terminators and resulted in error exceptions:Example// This is valid in ES2019:let text = \"\\u2028\";Try it Yourself \u00bbNow, JavaScript and JSON have equal rules.Before ES2019:text = JSON.parse('\"\\u2028\"') would parse to ''.text = '\"\\u2028\"' would givesyntax error.Revised Function toString()ES2019revisedthe FunctiontoString()method.ThetoString()method returns a string representing the source code of a function.From 2019, toString() must return the source code of the function including comments,\nspaces, and syntax details.Before 2019, different browsers returned different variants of the function (like without comments and spaces).\nFrom 2019 the function should be returned exactly as it is written.Examplefunction myFunction(p1, p2) {return p1 * p2;}let text = myFunction.toString();Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimStart();\n\n---\n\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimEnd();\n\n---\n\nconst fruits = [\n[\"apples\", 300],\n[\"pears\", 900],\n[\"bananas\", 500]\n];\nconst myObj = Object.fromEntries(fruits);\n\n---\n\ntry {\n// code\n} catch (err) {\n// code\n}\n\n---\n\ntry {\n// code\n} catch {\n// code\n}\n\n---\n\nconst myArr = [[1,2],[3,4],[5,6]];\nconst newArr = myArr.flat();\n\n---\n\nconst myArr = [1, 2, 3, 4, 5, 6];\nconst newArr = myArr.flatMap(x => [x, x * 10]);\n\n---\n\nconst myArr = [\n{name:\"X00\",price:100 },\n{name:\"X01\",price:100 },\n{name:\"X02\",price:100 },\n{name:\"X03\",price:100 },\n{name:\"X04\",price:110 },\n{name:\"X05\",price:110 },\n{name:\"X06\",price:110 },\n{name:\"X07\",price:110 }\n];\n\n---\n\nX01 100\nX03 100\nX00 100\nX03 100\nX05 110\nX04 110\nX06 110\nX07 110\n\n---\n\nlet text = JSON.stringify(\"\\u26D4\");\n\n---\n\n// This is valid in ES2019:\nlet text = \"\\u2028\";\n\n---\n\nfunction myFunction(p1, p2) {\nreturn p1 * p2;\n}\nlet text = myFunction.toString();\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_29",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_29",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 51,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Instead of writingmanyif..elsestatements, you can use theswitchstatement.\n\nThink of it like ordering food in a restaurant:If you choose number 1, you get Pizza. If you choose 2, you get a Burger. If you choose 3, you get Pasta. Otherwise, you get nothing.\n\nTheswitchstatement selects one of many code blocks to be executed:\n\nThis is how it works:\n\nThe example below uses the weekday number to calculate the weekday name:\n\nWhen Java reaches abreakkeyword, it breaks out of the switch block.\n\nThis will stop the execution of more code and case testing inside \nthe block.\n\nWhen a match is found, and the job is done, it's time for a break. There is no need for more testing.\n\nThedefaultkeyword specifies some code to run if there is no \ncase match:\n\n### Code Snippets\n\n```\nSyntax\nswitch(\nexpression\n) {\n\u00a0 case x:\n// code block\nbreak;\n\u00a0 case y:\n// code block\nbreak;\n\u00a0 default:\n// code block\n}\n\n---\n\nExample\nint day = 4;\nswitch (day) {\n\u00a0 case 1:\n\u00a0\u00a0\u00a0 System.out.println(\"Monday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 2:\n\u00a0\u00a0\u00a0 System.out.println(\"Tuesday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 3:\n\u00a0\u00a0\u00a0 System.out.println(\"Wednesday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 4:\n\u00a0\u00a0\u00a0 System.out.println(\"Thursday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 5:\n\u00a0\u00a0\u00a0 System.out.println(\"Friday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 6:\n\u00a0\u00a0\u00a0 System.out.println(\"Saturday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 7:\n\u00a0\u00a0\u00a0 System.out.println(\"Sunday\");\n\u00a0\u00a0\u00a0 break;\n}\n// Outputs \"Thursday\" (day 4)\nTry it Yourself \u00bb\n\n---\n\nExample\nint day = 4;\nswitch (day) {\n\u00a0 case 6:\n\u00a0\u00a0\u00a0 System.out.println(\"Today is Saturday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 7:\n\u00a0\u00a0\u00a0 System.out.println(\"Today is Sunday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 default:\n\u00a0\u00a0\u00a0 System.out.println(\"Looking forward to the Weekend\");\n}\n// Outputs \"Looking forward to the Weekend\"\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_50",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

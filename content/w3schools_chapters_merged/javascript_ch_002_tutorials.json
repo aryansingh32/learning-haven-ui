@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 2,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAcomputer programis a list of \"instructions\" to be \n\"executed\" by a computer.\n\nThese programming instructions are calledstatements.\n\nMost JavaScript programs contain many statements.\n\nThe statements are executed, one by one, in the same order as they are written.\n\nJavaScript statements are composed of:\n\nValues, Operators, Expressions,\u00a0Keywords, \nand Comments.\n\nThis statement tells the browser to write \"Hello Dolly.\" \ninside an HTML element with id=\"demo\":\n\nSemicolons separate JavaScript statements.\n\nAdd a semicolon at the end of each executable statement:\n\nWhen separated by semicolons, multiple statements on one line are allowed:\n\nJavaScript ignores multiple spaces. You can add white space to your script to make it more readable.\n\nThe following lines are equivalent:\n\nA good practice is to put spaces around operators ( = + - * / ):\n\nFor best readability, programmers often like to avoid code lines longer than 80 \ncharacters.\n\nIf a JavaScript statement does not fit on one line, the best place to break \nit is after an operator:\n\nJavaScript statements can be grouped together in code blocks, inside curly \nbrackets {...}.\n\nThe purpose of code blocks is to define statements to be executed together.\n\nOne place you will find statements grouped together in blocks, is in \nJavaScript functions:\n\nJavaScript statements often start with akeywordto identify the JavaScript action to be performed.\n\nOurReserved Words Referencelists all JavaScript keywords.\n\nHere is a list of some of the keywords you will learn about in \nthis tutorial:\n\n### Code Examples\n\n```\nlet x, y, z;\u00a0\u00a0\u00a0 // Statement 1\nx = 5;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Statement 2\ny = 6;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Statement 3\nz = x + y;\u00a0\u00a0\u00a0\u00a0\u00a0 //  Statement 4\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello Dolly.\";\n\n---\n\nlet a, b, c;\u00a0 // Declare 3 variables\na = 5;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Assign the value 5 to a\nb = 6;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Assign the \n  value 6 to b\nc = a + b;\u00a0\u00a0\u00a0 // Assign the sum of a and b to c\n\n---\n\na = 5; b = 6; c = a + b;\n\n---\n\nlet person = \"Hege\";\nlet person=\"Hege\";\n\n---\n\nlet x = y + z;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Hello Dolly!\";\n\n---\n\nfunction myFunction() {\ndocument.getElementById(\"demo1\").innerHTML = \"Hello Dolly!\";\ndocument.getElementById(\"demo2\").innerHTML = \"How are you?\";\n}\n```\n\n## Tutorials\n\nJavaScript comments can be used to explain JavaScript code, and \nto make it more readable.\n\nJavaScript comments can also be used to prevent execution, when \ntesting alternative code.\n\nSingle line comments start with//.\n\nAny text between//and the end of the line will be ignored by JavaScript \n(will not be executed).\n\nThis example uses a single-line comment before each code line:\n\nThis example uses a single line comment at the end of each line \nto explain the code:\n\nMulti-line comments start with/*and end with*/.\n\nAny text between/*and*/will be ignored by JavaScript.\n\nThis example uses a multi-line comment (a comment block) to explain the code:\n\nUsing comments to prevent execution of code is suitable for \ncode testing.\n\nAdding//in front of a code line changes the code lines from an executable line to \na comment.\n\nThis example uses // to prevent execution of one of the code lines:\n\nThis example uses a comment block to prevent execution of \nmultiple lines:\n\n### Code Examples\n\n```\n// Change heading:\ndocument.getElementById(\"myH\").innerHTML = \"My First Page\";\n// Change paragraph:\ndocument.getElementById(\"myP\").innerHTML = \"My first paragraph.\";\n\n---\n\nlet x = 5;\u00a0\u00a0\u00a0\u00a0\u00a0 // Declare x, give it the value of 5\nlet y = x + 2;\u00a0 // Declare y, give it the value of x + 2\n\n---\n\n/*\nThe code below will change\nthe heading with id = \"myH\"\nand the paragraph with id = \"myP\"\nin my web page:\n*/\ndocument.getElementById(\"myH\").innerHTML = \"My First Page\";\ndocument.getElementById(\"myP\").innerHTML = \"My first paragraph.\";\n\n---\n\n//document.getElementById(\"myH\").innerHTML = \"My First Page\";\ndocument.getElementById(\"myP\").innerHTML = \"My first paragraph.\";\n\n---\n\n/*\ndocument.getElementById(\"myH\").innerHTML = \"My First Page\";\ndocument.getElementById(\"myP\").innerHTML = \"My first paragraph.\";\n*/\n```\n\n## Tutorials\n\nFrom the examples you can guess:\n\nVariables are identified withnamescalledidentifiers.\n\nNames can be short like x, y, z.\n\nNames can be descriptive like age, sum, carName.\n\nThe rules for constructing names (identifiers) are:\n\nJavaScript treats underscore as a letter.\n\nIdentifiers containing _ are valid variable names:\n\nA convention among professional programmers is to start a name with underscore for \"private\" variables.\n\nJavaScript also treats a dollar sign as a letter.\n\nIdentifiers containing $ are valid variable names:\n\nUsing the $ is not very common in JavaScript, but professional programmers often use it as an alias\nfor the main function in JavaScript libraries.\n\nCreating a variablein JavaScript is calleddeclaringa variable.\n\nYou declare a JavaScript variable with theletkeyword or\ntheconstkeyword.\n\nAfter the declaration, the variable has no value (technically it isundefined).\n\nToassigna value to the variable, use the equal sign:\n\nMost often you will assign a value to the variable when you declare it:\n\nAlways useconstif the value should not be changed\n\nThe two variablesprice1andprice2are declared with theconstkeyword.\n\nThe values of price1 and price2 cannot be changed.\n\nThe variabletotalis declared with theletkeyword.\n\nThe value of total can be changed.\n\nUndeclared variables areautomatically declaredwhen first used:\n\nThevarkeyword was used in all JavaScript code before 2015.\n\nTheletandconstkeywords were new to JavaScript in 2015.\n\nJavaScript variables can hold8 datatypes, but for now, just think ofnumbersandstrings.\n\nStringsare text writteninside quotes.\n\nNumbersare writtenwithout quotes.\n\nIf you put a number in quotes, it will be treated as a text string.\n\nYou can declare many variables in one statement.\n\nStart the statement withletorconstand separate the variables bycomma:\n\nA declaration can span multiple lines:\n\nIn JavaScript, the equal sign (=) is anassignmentoperator, not anequal tooperator.\n\nThis is different from algebra. The following does not make sense in algebra:\n\nIn JavaScript, however, it makes perfect sense: it assigns the value of x + 5 to \nx.\n\n(It calculates the value of x + 5 and puts the result into x. The value of x \nis incremented by 5.)\n\nAs with algebra, you can do arithmetic with JavaScript variables, using \noperators like=and+:\n\nYou can also add strings, but strings will be concatenated:\n\n### Code Examples\n\n```\nlet x = 5;\nlet y = 6;\nlet z = x + y;\n\n---\n\nconst x = 5;\nconst y = 6;\nconst z = x + y;\n\n---\n\nlet _lastName = \"Johnson\";\nlet _x = 2;\nlet _100 = 5;\n\n---\n\nlet $ = \"Hello World\";\nlet $$$ = 2;\nlet $myMoney = 5;\n\n---\n\nlet carName;\n\n---\n\ncarName = \"Volvo\";\n\n---\n\nlet carName = \"Volvo\";\n\n---\n\nconst carName = \"Volvo\";\n\n---\n\nconst price1 = 5;\nconst price2 = 6;\nlet total = price1 + price2;\n\n---\n\nx = 5;\ny = 6;\nz = x + y;\n\n---\n\nvar x = 5;\nvar y = 6;\nvar z = x + y;\n\n---\n\nconst pi = 3.14;\nlet person = \"John Doe\";\nlet answer = 'Yes I am!';\n\n---\n\nlet person = \"John Doe\", carName = \"Volvo\", price = 200;\n\n---\n\nlet person = \"John Doe\",\ncarName = \"Volvo\",\nprice = 200;\n\n---\n\nx = x + 5\n\n---\n\nlet x = 5 + 2 + 3;\n\n---\n\nlet x = \"John\" + \" \" + \"Doe\";\n\n---\n\nlet x = \"5\" + 2 + 3;\n\n---\n\nlet x = 2 + 3 + \"5\";\n```\n\n## Tutorials\n\nBefore ES6 (2015), JavaScript did not haveBlock Scope.\n\nJavaScript hadGlobal ScopeandFunction Scope.\n\nES6 introduced the two new JavaScript keywords:letandconst.\n\nThese two keywords providedBlock Scopein JavaScript:\n\nInside a function all variables declared withvar,letorconsthaveFunction Scope:\n\nVariables declared with thevaralways haveGlobal Scope.\n\nVariables declared with thevarkeyword can NOT have block scope:\n\nVariables defined withletcan notbe redeclared.\n\nYou can not accidentally redeclare a variable declared withlet.\n\nVariables defined withvarcanbe redeclared.\n\nRedeclaring a variable using thevarkeyword can impose problems.\n\nRedeclaring a variable inside a block will also redeclare the variable \noutside the block:\n\nRedeclaring a variable using theletkeyword can solve this problem.\n\nRedeclaring a variable inside a block will not redeclare the variable outside \nthe block:\n\nThe difference betweenvar,let,\nandconstlies inscopingmechanisms,reassignmentrules, and JavaScripthoisting.\n\nRedeclaring a JavaScript variable withvaris allowed \nanywhere in a program:\n\nWithlet, redeclaring a variable in the same block is NOT allowed:\n\nRedeclaring a variable withlet, in another block, IS allowed:\n\nVariables defined withvararehoistedto the top \nand can be initialized at any time.Meaning: You can use the variable before it is declared:ExampleThis is OK:carName = \"Volvo\";var carName;Try it Yourself \u00bbIf you want to learn more about hoisting, study the chapterJavaScript Hoisting.Variables defined withletare also hoisted to the top \nof the block, but not initialized.Meaning: Using aletvariable before it is declared will result in aReferenceError:ExamplecarName = \"Saab\";let carName = \"Volvo\";Try it Yourself \u00bbVideo: JavaScript let\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\n{\nlet x = 2;\n}\n// x can NOT be used here\n\n---\n\nfunction myfunction() {\nvar x = 1;\nlet y = 2;\nconst z = 3;\n}\n//x can NOT be used here\n//y can NOT be used here\n//z can NOT be used here\n\n---\n\n{\nvar x = 2;\n}\n// x CAN be used here\n\n---\n\nlet x = \"John Doe\";\nlet x = 0;\n\n---\n\nvar x = \"John Doe\";\nvar x = 0;\n\n---\n\nvar x = 10;\n// Here x is 10\n{\nvar x = 2;\n// Here x is 2\n}\n// Here x is 2\n\n---\n\nlet x = 10;\n// Here x is 10\n{\nlet x = 2;\n// Here x is 2\n}\n// Here x is 10\n\n---\n\nvar x = 2;\n// Now x is 2\nvar x = 3;\n// Now x is 3\n\n---\n\nvar x = 2;\u00a0\u00a0\u00a0// Allowed\nlet x = 3;\u00a0\u00a0\u00a0// Not allowed\n{\nlet x = 2;\u00a0\u00a0\u00a0// Allowed\nlet x = 3;\u00a0\u00a0\u00a0// Not allowed\n}\n{\nlet x = 2;\u00a0\u00a0\u00a0// Allowed\nvar x = 3;\u00a0\u00a0\u00a0// Not allowed\n}\n\n---\n\nlet x = 2;\u00a0\u00a0\u00a0// Allowed\n{\nlet x = 3;\u00a0\u00a0\u00a0// Allowed\n}\n{\nlet x = 4;\u00a0\u00a0\u00a0\u00a0// Allowed\n}\n\n---\n\ncarName = \"Volvo\";\nvar carName;\n\n---\n\ncarName = \"Saab\";\nlet carName = \"Volvo\";\n```\n\n## Tutorials\n\nA variable defined with theconstkeyword cannot be reassigned:\n\nJavaScriptconstvariables must be assigned a value when they are declared:\n\nThe keywordconstis a little misleading.\n\nIt does not define a constant value. It defines a constant reference to a value.\n\nBecause of this you can NOT:\n\nYou can change the elements of a constant array:\n\nBut you can NOT reassign the array:\n\nYou can change the properties of a constant object:\n\nBut you can NOT reassign the object:\n\nThe difference betweenvar,let,\nandconstlies inscopingmechanisms,reassignmentrules, and JavaScripthoisting.\n\nDeclaring a variable withconstis similar toletwhen it comes toBlock Scope.\n\nThe x declared in the block, in this example, is not the same as the x declared outside the block:\n\nYou can learn more about block scope in the chapterJavaScript Scope.\n\nRedeclaring a JavaScriptvarvariable is allowed \nanywhere in a program:\n\nRedeclaring an existingvarorletvariable toconst, in the same scope, is not allowed:\n\nReassigning an existingconstvariable, in the same scope, is not allowed:\n\nRedeclaring a variable withconst, in another scope, or in another block, is allowed:\n\nVariables defined withvararehoistedto the top \nand can be initialized at any time.\n\nMeaning: You can use the variable before it is declared:\n\nIf you want to learn more about hoisting, study the chapterJavaScript Hoisting.Variables defined withconstare also hoisted to the top,\nbut not initialized.Meaning: Using aconstvariable before it is declared will result in aReferenceError:Examplealert (carName);const carName = \"Volvo\";Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nconst PI = 3.141592653589793;\nPI = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0 // This will give an error\nPI = PI + 10;\u00a0\u00a0 // This will also give an error\n\n---\n\nconst PI = 3.14159265359;\n\n---\n\nconst PI;\nPI = 3.14159265359;\n\n---\n\n// You can create a constant array:\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// You can change an element:\ncars[0] = \"Toyota\";\n// You can add an element:\ncars.push(\"Audi\");\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\ncars = [\"Toyota\", \"Volvo\", \"Audi\"];\u00a0\u00a0\u00a0 // ERROR\n\n---\n\n// You can create a const object:\nconst car = {type:\"Fiat\", model:\"500\", color:\"white\"};\n// You can change a property:\ncar.color = \"red\";\n// You can add a property:\ncar.owner = \"Johnson\";\n\n---\n\nconst car = {type:\"Fiat\", model:\"500\", color:\"white\"};\ncar = {type:\"Volvo\", model:\"EX60\", color:\"red\"}\u00a0\u00a0\u00a0 // \n  ERROR\n\n---\n\nconst x = 10;\n// Here x is 10\n{\nconst x = 2;\n// Here x is 2\n}\n// Here x is 10\n\n---\n\nvar x = 2;\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\nvar x = 3;\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\nx = 4;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\n\n---\n\nvar x = 2;\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\nconst x = 2;\u00a0\u00a0\u00a0// Not allowed\n{\nlet x = 2;\u00a0 \u00a0\u00a0 // Allowed\nconst x = 2;\u00a0\u00a0\u00a0// Not allowed\n}\n{\nconst x = 2;\u00a0\u00a0 // Allowed\nconst x = 2;\u00a0\u00a0\u00a0// Not allowed\n}\n\n---\n\nconst x = 2;\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\nx = 2;\u00a0\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\nvar x = 2;\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\nlet x = 2;\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\nconst x = 2;\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\n{\nconst x = 2;\u00a0\u00a0 // Allowed\nx = 2;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n  // Not allowed\nvar x = 2;\u00a0\u00a0\u00a0\u00a0 \n  // Not allowed\nlet x = 2;\u00a0\u00a0\u00a0\u00a0 \n  // Not allowed\nconst x = 2;\u00a0\u00a0\u00a0// Not allowed\n}\n\n---\n\nconst x = 2;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Allowed\n{\nconst x = 3;\u00a0\u00a0 // Allowed\n}\n{\nconst x = 4;\u00a0\u00a0\u00a0// Allowed\n}\n\n---\n\ncarName = \"Volvo\";\nvar carName;\n\n---\n\nalert (carName);\nconst carName = \"Volvo\";\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_2",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

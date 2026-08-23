@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 96,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "RegExp Capturing Groupsare the most common groups. They group patterns together and \"remember\"\nthe matched text for later use.\n\nCapturing groups are created by wrapping a part of a regexp pattern in parentheses (x).\n\nYou can access the found patterns in the result array ofpattern.exec(text)ortext.match(pattern).\n\nWhen you use a method like text.match(regex) in JavaScript, it returns an array of results.\n\nIn JavaScript arrays, items are ordered by numerical positions called indices, starting at 0.\nJavaScript automatically organizes the array so that the whole matched text sits at the very first position ([0]),\nand the text from your parenthesis groups follows right after ([1], [2], [3]).\n\nNamed capturing groups was introduced inES2018).\n\nNamed capturing groups allow you to assign a name to a group instead of indexes.\n\nWhen using capturing groups, the String method match()\nand the RegExp method exec(), return a match object with a groups property.\nThis property holds the names and the values of the groups.\n\nNon-capturing groups are patterns for logical operations (like applying a quantifier to multiple characters)\nbut do not store the matched text.\n\nThe benefits are: They are more performant and keep the capturing group indices clean if you only need\nthe grouping behavior, not the extracted data.\n\nExample: /(?:ha)+/ matches \"haha\" but won't create a separate capture for \"ha\".\n\nThe (?flag) syntax is a group modifier (inline flag modifier).\n\nIt allows for modifying flags in a part of a pattern, rather than to the entire pattern.\n\n(?flags:pattern) enables the flags only for the pattern in the group.\n\nOnly the i, m, and s flags can be used in a group modifier.\n\nRegular ExpressionSearchandReplacecan be done with different methods.\n\nThese are the most common:\n\n### Code Snippets\n\n```\nlet text = \"Alice loves Bob-\";\nconst pattern = /(\\w+) loves (\\w+)/;\nlet result = text.match(pattern);\n\n---\n\nlet text = \"Alice loves Bob-\";\nconst pattern = /(\\w+) loves (\\w+)/;\nlet result = pattern.exec(text);\n\n---\n\nconst regex = /(\\d{4})-(\\d{2})-(\\d{2})/;\nconst text = \"2026-05-21\";\nconst match = text.match(regex);\n// This is what the 'match' array actually contains:\n[\n\"2026-05-21\", // Index 0: The entire string that matched the whole regex\n\"2026\",       // Index 1: The text caught by the 1st set of parentheses\n\"05\",         // Index 2: The text caught by the 2nd set of parentheses\n\"21\"          // Index 3: The text caught by the 3rd set of parentheses\n]\n\n---\n\nconst text = \"Name: John Doe\";\n// Using named capturing groups\nconst regex = /(?<firstName>\\w+) (?<lastName>\\w+)/;\nconst match = text.match(regex);\nlet fName = match.groups.firstName;\nlet lName = match.groups.lastName;\n\n---\n\nlet text = \"W3Schools tutorials.\";\nconst pattern = /(?i:W3Schools) tutorials/;\n// Returns true:\nlet result = pattern.test(text);\n\n---\n\nlet text = \"W3Schools Tutorials.\";\nconst pattern = /(?i:W3Schools) tutorials/;\n// Returns false:\nlet result = pattern.test(text);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_95",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

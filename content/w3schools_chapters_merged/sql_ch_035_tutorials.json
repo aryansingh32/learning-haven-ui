@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 35,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe REPEAT() function repeats a string as many times as specified.\n\n### Code Examples\n\n```\nSELECT REPEAT(\"SQL Tutorial\", 3);\n\n---\n\nREPEAT(\nstring\n,\nnumber\n)\n\n---\n\nSELECT REPEAT(CustomerName, \n  2)\nFROM Customers;\n\n---\n\nSELECT REPEAT(\"SQL Tutorial\", 0);\n```\n\n## Tutorials\n\nThe REPLACE() function replaces all occurrences of a substring within a \nstring, with a new substring.\n\nNote:This function performs a case-sensitive \nreplacement.\n\n### Code Examples\n\n```\nSELECT REPLACE(\"SQL Tutorial\", \"SQL\", \"HTML\");\n\n---\n\nREPLACE(\nstring\n,\nfrom_string\n,\nnew_string\n)\n\n---\n\nSELECT REPLACE(\"XYZ FGH XYZ\", \"X\", \"M\");\n\n---\n\nSELECT REPLACE(\"XYZ FGH XYZ\", \"X\", \"m\");\n\n---\n\nSELECT REPLACE(\"XYZ FGH XYZ\", \"x\", \"m\");\n```\n\n## Tutorials\n\nThe REVERSE() function reverses a string and returns the result.\n\n### Code Examples\n\n```\nSELECT REVERSE(\"SQL Tutorial\");\n\n---\n\nREVERSE(\nstring\n)\n\n---\n\nSELECT REVERSE(CustomerName)\nFROM Customers;\n```\n\n## Tutorials\n\nThe RIGHT() function extracts a number of characters from a string (starting \nfrom right).\n\nTip:Also look at theLEFT()function.\n\n### Code Examples\n\n```\nSELECT RIGHT(\"SQL Tutorial is cool\", 4) AS ExtractString;\n\n---\n\nRIGHT(\nstring\n,\nnumber_of_chars\n)\n\n---\n\nSELECT RIGHT(CustomerName, 5) AS ExtractString\nFROM Customers;\n```\n\n## Tutorials\n\nThe RPAD() function right-pads a string with another string, to a certain \nlength.\n\nNote:Also look at theLPAD()function.\n\n### Code Examples\n\n```\nSELECT RPAD(\"SQL Tutorial\", \n  20, \"ABC\");\n\n---\n\nRPAD(\nstring\n,\nlength\n,\nrpad_string\n)\n\n---\n\nSELECT \n  RPAD(CustomerName, 30, \"ABC\") AS RightPadCustomerName\nFROM Customers;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_35",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_35",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

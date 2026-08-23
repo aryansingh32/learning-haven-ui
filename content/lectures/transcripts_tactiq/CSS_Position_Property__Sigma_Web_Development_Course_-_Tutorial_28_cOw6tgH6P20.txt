@@ -1,0 +1,1010 @@
+Video URL: https://www.youtube.com/watch?v=cOw6tgH6P20
+Video Title: CSS Position Property | Sigma Web Development Course - Tutorial #28
+--------------------------------------------------
+
+00:00:00.000
+In CSS, there is a very important property called Position.
+00:00:03.000
+Suppose you want to move an element from its previous position,
+00:00:07.000
+then you can use position relative to create a top 3 pixel and that 3 pixel will come down.
+00:00:12.000
+Similarly, by using position property and z-index, you can keep the elements on top of each other.
+00:00:18.000
+How all these things are done in CSS, we will understand in this video.
+00:00:23.000
+Do write Sigma Batch OP understand in the comment section below
+00:00:25.000
+write sigma batch op
+00:00:26.000
+and keep this high energy
+00:00:28.000
+let's go to the computer screen
+00:00:30.000
+let's roll the intro
+00:00:40.000
+in CSS position property is very important
+00:00:42.000
+so I will make a folder
+00:00:44.000
+named video28
+00:00:46.000
+Let's name it video28
+00:00:49.000
+And after that you will know how important position property is and what can be done with it
+00:00:55.000
+So as always I will make a boilerplate template here
+00:01:00.000
+And after making a boilerplate template template I will simply write CSS
+00:01:06.020
+position
+00:01:07.680
+I will put style tag here so that I can do the styling of the elements
+00:01:11.240
+and I will put 3 boxes here
+00:01:14.500
+I will put 4, box1
+00:01:17.000
+I have given one class, I will give one box2 class, one box3 class
+00:01:20.000
+and one box4 class
+00:01:22.860
+and I will give a box class to everyone
+00:01:25.000
+so that if I want to do something with all the boxes
+00:01:27.000
+then I can do it by dot box
+00:01:29.000
+so here by dot box I will simply say
+00:01:32.000
+make a border, border
+00:01:34.000
+2 pixels solid black
+00:01:36.000
+and on universal selector
+00:01:39.000
+by putting margin 0 padding 0
+00:01:41.000
+I reset CSS, you must know this
+00:01:43.000
+if you know me a little bit This is my habit
+00:01:46.000
+I select the universal selector
+00:01:48.000
+and set the margin 0 and padding 0
+00:01:50.000
+So if I see this now
+00:01:52.000
+I didn't see it and I want to know the reason
+00:01:54.000
+what can it be
+00:01:56.000
+The reason is that we didn't give height and width to every box
+00:01:58.000
+So let's give it height and width
+00:02:00.000
+Let's give it a height of 133 pixels
+00:02:02.000
+And let's give it a width
+00:02:04.000
+And I'm going to give it a width of 133 pixels and width of 80bw
+00:02:06.560
+Now that we know how our sizing units work
+00:02:10.800
+Along with that, I would like to give padding to all the boxes
+00:02:14.080
+And I will give padding 3 pixels from all sides
+00:02:16.640
+And I will also give margin 3 pixels from all sides
+00:02:19.680
+So what will happen with this, the boxes will look like this
+00:02:21.840
+Now I will be able to target box 1, box 2, box 3, box 4 individually
+00:02:26.500
+But let's do one thing, first of all I will make you access a playlist
+00:02:30.000
+Or click and ask for a book or click and save
+00:02:32.000
+Which you will do right now
+00:02:34.000
+And along with that I want you to open it in the browser
+00:02:37.500
+So as you have seen here, our browser has prepared all our boxes by doing margin, padding and all
+00:02:43.000
+If you want, you can also write box1 and box2
+00:02:46.320
+but i think that's fine
+00:02:47.680
+let's leave it like this for now
+00:02:49.680
+now i will write .box1
+00:02:52.560
+and add some css
+00:02:54.560
+and i will say this work for box2, box3, box4
+00:02:59.600
+i will put background color in box1 with letter
+00:03:03.040
+similarly, i will put background color in box 1 with letters Similarly, we will put a background color in box 2
+00:03:05.760
+Any random color
+00:03:06.760
+And background color of box 3
+00:03:08.760
+Background color
+00:03:11.480
+We put this with letters
+00:03:13.040
+And I will make the background color of this purple
+00:03:17.360
+Okay
+00:03:17.860
+So you have seen that we have got 4 boxes like this
+00:03:21.560
+Now what is by default
+00:03:23.280
+That the position of all the boxes is static Position is a property in CSS boxes now by default what happens is position of all 4 boxes is static
+00:03:26.000
+position is a property in CSS
+00:03:28.000
+which is by default static
+00:03:30.000
+and static position means
+00:03:32.000
+that on this top, bottom
+00:03:34.000
+left, right, z-index all these can't be written
+00:03:36.000
+now you will ask what is this top, bottom
+00:03:38.000
+left, right, now see
+00:03:40.000
+if I put top 2 pixels on it
+00:03:42.000
+ok, so here chrome is
+00:03:44.000
+saying to me, see position static property prevents top from having an effect let's say I put 2 pixels on top, ok so chrome is telling me that
+00:03:45.000
+position static property prevents top from having an effect
+00:03:48.000
+if you keep any position other than static
+00:03:51.000
+then you can enjoy this property
+00:03:53.000
+so how to enjoy this property
+00:03:55.000
+this is what I want to tell you
+00:03:57.000
+so see, if I don't use position property in this
+00:04:02.000
+means by default its position should be static
+00:04:04.000
+so what will be the behavior of the position static?
+00:04:05.000
+First the top box will come, then the bottom box, then the top box, then the bottom box, and then the last box
+00:04:12.000
+Typical CSS behavior which I will expect
+00:04:15.000
+Let's say I put the absolute position in the bottom box So this is position static, I hope you understood what it is Position static means that it will stay where it was
+00:04:28.000
+No effect will be there, now after this there is an absolute position
+00:04:32.000
+There is a relative, before absolute I will tell you relative
+00:04:36.000
+What is relative positioning, now assume that I say box 2
+00:04:40.000
+Make the position relative, relative means
+00:04:44.000
+Relative means that the one who had his own place relative relative means relative relative means relative
+00:04:46.000
+relative means relative
+00:04:48.000
+relative means relative
+00:04:50.000
+relative means relative
+00:04:52.000
+relative means relative
+00:04:54.000
+relative means relative
+00:04:56.000
+relative means relative
+00:04:58.000
+relative means relative
+00:05:00.000
+relative means relative
+00:05:02.000
+relative means relative
+00:05:04.000
+relative means relative relative means relative other elements will not matter I can move this element from its place so if I want it to go up
+00:05:06.000
+and if I want it to go to the left
+00:05:08.000
+I say left 34px
+00:05:10.000
+so from left to here 34px
+00:05:12.000
+distance will come and I will
+00:05:14.000
+increase it as much as I want
+00:05:16.000
+so what happened is it got stack up
+00:05:18.000
+on this box
+00:05:20.000
+which is our cn box
+00:05:22.000
+it got stack up on this
+00:05:24.000
+its color is not cn it, its color is not CN, its color is Aqua,
+00:05:28.000
+so it is on the Aqua box, now suppose for some reason you want that
+00:05:32.000
+my Aqua box should not be on the bottom, my Aqua box should be on the top
+00:05:36.000
+and this box should be on the back, so we can set the value of Z-index,
+00:05:41.000
+if I set the value of Z-index here I do anything here, it will not make any difference
+00:05:47.000
+so what I have to do is
+00:05:48.000
+I have to put position relative here
+00:05:50.000
+then z index will work
+00:05:51.000
+I will come back to this later
+00:05:53.000
+why did we put position relative here
+00:05:55.000
+but as soon as I give it position relative
+00:05:57.000
+I can set its z index
+00:05:59.000
+if I give it 1
+00:06:01.000
+it should not be 0, it should be 1
+00:06:02.000
+if it has more than this z index
+00:06:04.000
+then it will come up now position relative
+00:06:06.000
+we have put it because whenever you
+00:06:08.000
+want to use z index, then you have to
+00:06:10.000
+remove the static from position property
+00:06:12.000
+and give some position, ok
+00:06:14.000
+this is the rule to set z index
+00:06:16.000
+here we have not used top bottom
+00:06:18.000
+so it will not make any difference
+00:06:20.000
+just its position will be set
+00:06:22.000
+and its position is set
+00:06:24.000
+means there is another position a new position is added
+00:06:26.800
+because of which I can put z-index on it, if I remove z-index then it will go back
+00:06:30.600
+so static position is by default property, you know this
+00:06:34.600
+position static will be seen in your css, yes sometimes we use it
+00:06:39.600
+suppose I want to reset its position, I want it to be relative
+00:06:43.200
+so reset it when a media query comes
+00:06:46.000
+that is, whenever we resize, I will tell you in the coming videos
+00:06:49.000
+but just I want to tell you that position static
+00:06:52.000
+we sometimes write javascript and set it
+00:06:55.000
+but forgetting all those things, we come to the point
+00:06:57.000
+we saw position static, we saw position relative
+00:07:00.000
+you can use top, bottom, left, right
+00:07:03.000
+if you have set position relative so if I reload it, nothing will happen because all these CSS we were writing here
+00:07:08.300
+which goes away after refreshing
+00:07:10.400
+so here I will quickly write top 34 pixels and bottom let us say 56 pixels
+00:07:18.300
+and you see from top and in fact not bottom, I have to write left here
+00:07:24.200
+left or right, either I will set top or bottom, I will do one of these.
+00:07:27.440
+So here you see top 34 pixels, left 56 pixels, you see I have given from top and left.
+00:07:32.320
+So I hope you understood this thing.
+00:07:35.040
+If I want to set the z-index of other boxes, then I have to put position in it.
+00:07:39.520
+But now I let it be like this, so it came on top of it, you can see the box.
+00:07:42.880
+So this was the position.
+00:07:44.080
+Now I want to tell you what happens by doing position absolute
+00:07:48.000
+so first of all i will give a parent to all the boxes
+00:07:52.000
+so all these will come under a parent div
+00:07:56.000
+so here i have given a class parent div
+00:08:00.000
+let us say i want to write some styles in this parent div
+00:08:04.000
+and i want to give some styles here dot parent and I want to give some padding here
+00:08:06.720
+let us say 3 pixels
+00:08:08.720
+and margin let us say 34 pixels
+00:08:12.600
+and I will make it 43 pixels
+00:08:14.600
+and here I will give border
+00:08:16.600
+2 pixels solid purple
+00:08:18.600
+ok, let us keep this much for now
+00:08:20.600
+and you can see
+00:08:22.600
+that there is a parent box
+00:08:24.600
+in which all the other boxes are kept
+00:08:28.200
+so now what I will do is
+00:08:29.560
+I will give position to this box 1
+00:08:32.360
+I will give it position absolute
+00:08:34.720
+what will happen by giving position absolute
+00:08:36.880
+by giving position absolute
+00:08:38.480
+it will seem that this element
+00:08:41.280
+see I gave it position absolute
+00:08:43.440
+it has become that this element is not there in normal document flow
+00:08:48.120
+ok, so see this was my box 2, to which I had given relative position
+00:08:53.160
+and I have given relative position to it, I would like to end its relative position for once
+00:08:57.280
+just to explain to you what happens with absolute position
+00:08:59.760
+so now you have to understand this thing that when I will absolute position of anything
+00:09:03.800
+then what will happen, when I will absolute the position of anything then what will happen When I will absolute the position of this then what will it do, I have absolute the position of this
+00:09:09.040
+Then it will not do anything, but as soon as I said absolute position top 0 pixels
+00:09:13.440
+Now see what it will do, it has gone to the top in viewport
+00:09:17.200
+You can see what it will do, it will find its parent and say parent are you a positioned element
+00:09:24.640
+Understand this carefully
+00:09:26.160
+what did I say
+00:09:26.960
+what did I do
+00:09:28.160
+listen to me carefully
+00:09:29.160
+forget everything
+00:09:29.960
+whatever you were thinking
+00:09:30.760
+look carefully at the screen
+00:09:31.960
+ok
+00:09:32.440
+div
+00:09:33.640
+which is box 1
+00:09:35.160
+in that I gave position
+00:09:36.960
+absolute
+00:09:37.800
+as soon as absolute position is given
+00:09:39.680
+and top 0 pixel is given
+00:09:41.120
+now he will try to find out
+00:09:42.680
+who do I have to be related to 0 pixel
+00:09:44.680
+so what will he do he will search his parent he will try to find out who is the relative of 0 pixel so what he will do, he will ask his parent, dad are you a positioned element
+00:09:50.400
+his dad will say wait I will see, he will see that there is no such position in my class
+00:09:55.600
+my position is static, so he will say bye dad, then he will say, who is his grandfather?
+00:10:00.800
+body, he will say grandfather are you positioned, he will say no, then he will go to his father
+00:10:06.200
+he will say but grandfather are you a positioned element?
+00:10:10.500
+he will say that I am not positioned but I have no one above me
+00:10:15.000
+so you can be my relative here, he will say ok
+00:10:18.000
+so his relative will be 0 pixel from top
+00:10:20.800
+so whose relative is this? nearest positioned ancestor
+00:10:26.000
+nearest positioned ancestor
+00:10:29.000
+so what is the meaning of position?
+00:10:31.000
+that position should not be static, it should be something else
+00:10:33.000
+now you see here, if you don't understand what is the parent of this
+00:10:36.000
+then listen again
+00:10:37.000
+here I have made position absolute, top 0px
+00:10:39.000
+if I will increase top, then it will come like this
+00:10:41.000
+if I add left 0px here
+00:10:43.000
+and I say left should also be 0px i add left 0 and i want left to be 0
+00:10:46.000
+so here left html relative is 0
+00:10:48.000
+so here you can see
+00:10:50.000
+left is 0
+00:10:52.000
+now what i will do
+00:10:54.000
+if i increase left
+00:10:56.000
+like this
+00:10:58.000
+so you can see
+00:11:00.000
+it is going here because
+00:11:02.000
+this is 144px
+00:11:04.000
+and top 8px means this is 8 pixels from here
+00:11:06.320
+so top 8 pixels and left 144 pixels
+00:11:10.120
+I hope you understood what I am saying
+00:11:13.120
+when I did position absolute, I will do 8 pixels from top
+00:11:16.120
+because it has decided that it will move relative to html
+00:11:18.640
+so top 8 pixels relative to html
+00:11:20.640
+and here 144 pixels relative to html
+00:11:24.240
+but what if
+00:11:26.000
+if i would have positioned
+00:11:28.000
+the parent
+00:11:30.000
+i mean the parent
+00:11:32.000
+let me document the format
+00:11:34.000
+in the dot parent class
+00:11:36.000
+if i put position
+00:11:38.000
+let us say absolute
+00:11:40.000
+i have not set the top and bottom
+00:11:42.000
+so parent will not be pulled from anywhere
+00:11:44.000
+but position is absolute
+00:11:46.000
+that means the parent's position is set
+00:11:48.000
+that's all the change has come
+00:11:49.000
+now when he will ask
+00:11:51.000
+papa papa are you positioned
+00:11:53.000
+so his papa will say yes bro
+00:11:55.000
+I am positioned so you can be my relative
+00:11:57.000
+so now the box 1 is
+00:11:59.000
+so now the box 1 is
+00:12:01.000
+that top 0 pixel will be whose relative
+00:12:03.000
+it will be the relative of our parent see now top 0 pixel is be relative to my parent see
+00:12:05.000
+top 0 pixel is relative to my parent
+00:12:07.000
+means if I increase it
+00:12:09.000
+then it will be relative to my parent
+00:12:11.000
+not relative to html
+00:12:12.000
+you have seen this thing
+00:12:13.000
+and if I put left here
+00:12:15.000
+in this way
+00:12:16.000
+that left becomes 3 pixels
+00:12:18.000
+then you can see here
+00:12:20.000
+that by doing left 3 pixels
+00:12:21.000
+and if I increase left 3 pixels
+00:12:23.000
+then you can see here that
+00:12:25.640
+this is how the relative of the parent is running
+00:12:29.800
+so the position absolute
+00:12:31.800
+what it does is it finds its nearest parent
+00:12:33.800
+which is positioned
+00:12:35.800
+and once it finds its nearest positioned element
+00:12:38.440
+its relative, that top, left
+00:12:40.440
+or bottom, right, bottom, left
+00:12:43.080
+whatever the set is, that it will set its position
+00:12:46.400
+I hope everyone understood this thing
+00:12:49.000
+write in the comment, I understood this thing
+00:12:51.000
+now one more property is fixed
+00:12:53.200
+ok, I will do one thing, I will reset it again
+00:12:56.000
+and like our 4 boxes were
+00:12:58.400
+they will come as they are, ok
+00:13:00.000
+the position I have given in parent, I will remove that too
+00:13:02.400
+and you guys see here
+00:13:03.600
+that our 4 boxes came as they were now if you will also, I will remove that also and you can see here that all the boxes are same as they were
+00:13:06.520
+now if I fix the position of this third box
+00:13:11.240
+I mean I want to fix the position of box 3
+00:13:14.840
+so if I write position here and I write fixed
+00:13:18.200
+so you can see position fixed and top or bottom
+00:13:22.680
+bottom 0 pixels
+00:13:24.680
+and left let us left 25 bw
+00:13:28.520
+if i do something like this
+00:13:30.520
+so what will happen, 25 bw is shifted
+00:13:33.560
+now i want to show you one thing
+00:13:35.560
+and you know what is that
+00:13:36.760
+that thing is that it will be fixed here
+00:13:38.760
+no matter if i scroll this page
+00:13:40.760
+now there is not much content on this page
+00:13:42.760
+that i can scroll it
+00:13:43.760
+but i can always fix that by increasing the height of the box, so where the height was 133
+00:13:49.000
+there I will make it 433, so you see that now I am scrolling it
+00:13:54.000
+so the box is set here, you are seeing, so I will do anything, if I want to keep
+00:13:58.000
+such a thing here, you must have seen many such sites where if you scroll once
+00:14:03.000
+then the ad or something else is static
+00:14:06.600
+now I will fix it a little, I will bring it to the center
+00:14:09.600
+so the 25bw that I had given here on the left
+00:14:13.200
+I will reduce it a little to bring it to the center
+00:14:15.800
+I will do something like this and I will do 8bw on the left
+00:14:19.400
+and here I will do 8bw on the left
+00:14:22.200
+where did you go left of box 3, here is 8bw as soon as I do 8bw where did you go left box3, here is 8bw
+00:14:26.000
+as soon as I will make it 8bw, you can see here
+00:14:29.000
+and if I refresh it, then it will be here
+00:14:31.000
+irrespective of how my other website is scrolling
+00:14:34.000
+and if I want to set its height
+00:14:36.000
+means if I make its height 111 pixels
+00:14:40.000
+so you can see here
+00:14:42.000
+I have to make it important because I have written the box below
+00:14:45.000
+so let me do one thing, I will put the definition of box above
+00:14:49.500
+and now see its height has changed
+00:14:52.000
+you can see here that my box on which I have put position fixed
+00:14:56.500
+it is fixed, so my box 3 is fixed
+00:14:59.000
+and it is fixed according to this
+00:15:01.000
+and I am scrolling the page
+00:15:03.000
+so nothing is happening, I hope you understood
+00:15:06.000
+now I will tell you about position sticky
+00:15:09.000
+and for this I want to take a better example
+00:15:12.000
+so I will show you one thing here, the position I put here
+00:15:15.000
+in box 3, I will comment it out
+00:15:18.000
+and I will make box 1 sticky
+00:15:21.000
+and I will say that its position is sticky
+00:15:22.800
+as soon as I will make its position sticky you will see here, I will make the position of this stick ok as soon as I make the position of this stick
+00:15:26.000
+you can see here I will make the top 0
+00:15:28.000
+I will make the top 0
+00:15:30.000
+I have made the top 0 pixels
+00:15:32.000
+I will make the top 0 pixels
+00:15:34.000
+as soon as I do this, you can see it is stuck
+00:15:36.000
+and when it comes in use, I will tell you
+00:15:38.000
+suppose our box is a nav bar
+00:15:40.000
+ok and its height
+00:15:42.000
+let us say 111 pixels
+00:15:44.000
+and its width is 111 pixels and its width is 100% and its margin is 0 and padding is 0
+00:15:55.000
+I will also make padding 0 and you will see that by making padding 0 and margin 0
+00:16:00.000
+it looks like this, it is in my parent obviously but as soon as I scroll it,
+00:16:04.000
+see everything is scrolling above it, so let's say this is my navbar of this website,
+00:16:08.000
+I know this is not a very good navbar and we are going to make a better website than this,
+00:16:12.000
+this is just a start, let me tell you that many people were saying in the comment that
+00:16:15.000
+when will we make good websites, let's finish all the property,
+00:16:19.000
+then we will make, it is such a website that you will also say that this will go up a little,
+00:16:24.000
+we have raised it a lot
+00:16:25.800
+and this is the target that I have taught you to make dangerous websites
+00:16:28.800
+but I want to tell you some basics first, you see here
+00:16:31.800
+this box, we have given a position here, sticky,
+00:16:34.800
+sticky means something that sticks,
+00:16:37.800
+the thing that sticks will stick on the wall,
+00:16:41.800
+you see as soon as I scroll it sticks,
+00:16:43.800
+and if I come here it will stay to the wall now see, as soon as I scroll it will stick ok and if I come here, it will stay like this
+00:16:46.800
+until you scroll till here, it will not stick
+00:16:50.300
+so until you scroll till here, it will behave like a static position
+00:16:53.800
+but as soon as you scroll beyond it
+00:16:56.800
+as soon as you scroll beyond it
+00:16:59.800
+you can see here
+00:17:00.800
+position
+00:17:01.800
+by doing sticky here, it stuck to the wall
+00:17:03.800
+ok
+00:17:04.300
+so this is position sticky,
+00:17:06.000
+there is a lot of difference between fixed and sticky, I don't know why people say that we have confusion between fixed and sticky,
+00:17:12.000
+according to me fixed is different, sticky is different, this is a very frequently asked question,
+00:17:17.000
+if you go to stackoverflow, you will see that I am confused between fixed and sticky,
+00:17:21.000
+but I don't think there is going to be a lot of confusion between fixed and sticky but I don't think that I will be too confused between fixed and sticky
+00:17:26.160
+fixed means, it is telling the name, fix it at one place
+00:17:29.360
+means you have taken 4 pages
+00:17:31.360
+and pasted the box here
+00:17:33.040
+in your screen, it is not moving from here
+00:17:35.040
+it is stuck here
+00:17:36.320
+fix means, fix it on the wall by screwing it
+00:17:39.200
+remember it like this
+00:17:40.240
+and sticky means
+00:17:41.520
+that until you scroll above it
+00:17:44.000
+it will remain static and as you scroll above it, it will remain static
+00:17:45.600
+and as soon as you scroll above it, it will stick to the wall like this
+00:17:48.800
+as you can see
+00:17:50.800
+this is our sticky, now the position we have given is sticky
+00:17:54.800
+I hope you understood all four properties
+00:17:57.800
+now I want to make a comment about position absolute
+00:18:00.800
+and before making that comment, I will remove the position sticky and top
+00:18:06.000
+and after removing all this, I will revert it to position absolute
+00:18:10.000
+so when you will see box 1, then its position is absolute
+00:18:14.000
+and this is relative to our html
+00:18:17.000
+and as I told you that box 1 will check its parent first
+00:18:21.000
+if it has position on it, then it will be relative to its parent
+00:18:24.000
+as you can see, html or body is not set here, it will check the parent first if it has position on it then it will set the relative of the parent
+00:18:26.000
+as you can see, it will not set the relative of the body
+00:18:28.000
+it will set here
+00:18:30.000
+now if i fixed the position of it
+00:18:32.000
+then also it will be considered as having position
+00:18:34.000
+and you can see here
+00:18:36.000
+it will set the relative of it
+00:18:38.000
+if i made the position of parent sticky
+00:18:40.000
+and the position of the child
+00:18:42.000
+what i did
+00:18:44.000
+i made it absolute so that child will position himself relative to his parent
+00:18:50.000
+like in case of box 1 we have put top 0 left 3
+00:18:54.500
+so top 0 left 3 will be relative to the parent
+00:18:57.500
+because the parent is positioned
+00:18:59.000
+now whether it is positioned with position fixed
+00:19:01.000
+whether it is positioned with position sticky
+00:19:02.500
+whether it is positioned with position absolute or if it is positioned by sticky, absolute or relative
+00:19:10.400
+but there is one exception in this
+00:19:12.400
+and it can introduce some weird bugs in your code
+00:19:17.400
+transform, filter or perspective properties can also make an element appear as positioned
+00:19:28.800
+ok, if I set perspective property on transform filter
+00:19:32.800
+then it will also be considered as positioned
+00:19:36.800
+what is the meaning of this and what is this weird thing
+00:19:39.800
+let me tell you, suppose I have not positioned it
+00:19:41.800
+suppose I have not put position relative in it
+00:19:43.800
+in its child, position is absolute listen carefully, if you are not careful then you will not understand I will give you position relative in this, suppose I have not put position relative in this there is absolute position in its child, listen carefully, if you are not paying attention then you will not understand
+00:19:47.600
+I give the guarantee of this thing myself, before you say that you are not understanding
+00:19:51.280
+because these things are very listenable, watch the video again if you want
+00:19:54.320
+here I said that I have not used any kind of positioning in this
+00:19:58.160
+so it will set itself as body relative or you can say html relative, the thing is the same
+00:20:03.680
+so it will go to the top of the document according to the body relative or you can say html relative so it will automatically go to the top of the document
+00:20:07.760
+and it will follow top 0 and left 3 pixels
+00:20:11.640
+but if I put position relative here then what will happen
+00:20:14.240
+then it will be parent relative
+00:20:16.240
+but there is one more exception
+00:20:18.880
+when it will be parent relative
+00:20:20.880
+if I put transform property on it
+00:20:22.880
+about which I have not told you
+00:20:24.880
+I know that I have not told you put transform property on it About which I have not told you
+00:20:26.000
+I know that I have not told you about transform property
+00:20:29.000
+So what I will do is I will make it translate 0
+00:20:32.000
+I will tell you about translate transform property
+00:20:35.000
+In the coming videos, but for now you assume that this is a property
+00:20:38.000
+If this property is there, then also see what happened
+00:20:41.000
+This is the relative position of my parent
+00:20:44.000
+So here are these three properties
+00:20:47.500
+which very few people tell and I have not seen this thing anywhere
+00:20:51.000
+I have felt it myself, a bug came in my code
+00:20:53.500
+after that I saw here and there, so I did not get the answer of stack overflow
+00:20:56.500
+I got a comment, I got to know this thing in that
+00:20:58.500
+I am telling you a long time ago
+00:21:00.000
+and if the filter property is also applied
+00:21:02.000
+like a filter property, filter and invert
+00:21:06.480
+ok, let's say I put invert filter
+00:21:08.480
+and you see here, by putting filter invert, basically color is inverted
+00:21:12.080
+but by putting filter invert, it also, and if I put invert 0 here
+00:21:17.040
+then I guess nothing happens, so here you see, as I put filter invert 0
+00:21:20.960
+so this box is related positioned as relative to its parent
+00:21:25.000
+but if we didn't know that these three properties can also be represented as a position element
+00:21:32.000
+then we would have been cheated
+00:21:34.000
+and interviewers also ask this question that
+00:21:36.000
+will you put an invert filter on your parent or any other filter
+00:21:39.000
+and will ask you that tell me whose who will this box position itself top most HTML or this parent
+00:21:49.200
+and if you don't know all this then it is possible that
+00:21:52.200
+it will do HTML because it doesn't have position
+00:21:55.600
+but it has filter so it will position itself
+00:21:58.200
+relative to this parent
+00:22:01.400
+I hope it is clear, you are understanding
+00:22:04.000
+same goes for perspective property also
+00:22:08.000
+if I set perspective property here
+00:22:10.000
+so I have set perspective 0m
+00:22:12.000
+and you can see here
+00:22:14.000
+this is relative position of parent
+00:22:16.000
+which means these three properties can also
+00:22:18.000
+make it appear as a positioned element
+00:22:20.000
+I hope that makes sense
+00:22:22.000
+for now I will remove it but these three properties
+00:22:24.000
+you have to keep in mind
+00:22:25.000
+I will put it up and this is an exception here, I would like to write it as an exception here, it is a very important exception
+00:22:33.000
+and with this our position property is over, I hope you guys enjoyed it and you guys must have have said that it's fun to hear all these properties Because by using position and z-index
+00:22:47.000
+You can make your element appear anywhere
+00:22:50.000
+If you want one particular element to come at the top
+00:22:53.000
+Increase its z-index
+00:22:54.000
+If you want one particular element to be below one and above another
+00:22:59.000
+So you set the values of z-index accordingly
+00:23:02.000
+That the one who has the most value in z-index It will come at the top And the one who has the most value in z index will come up
+00:23:06.000
+and the one who has the least value
+00:23:08.000
+will be at the bottom
+00:23:10.000
+so play around with z index
+00:23:12.000
+and i hope you enjoyed this course
+00:23:14.000
+if you haven't accessed it yet
+00:23:16.000
+then do the playlist and source code wise
+00:23:18.000
+i am updating daily to daily
+00:23:20.000
+and here by doing 01
+00:23:22.000
+you can see how beautiful it is
+00:23:24.000
+do you agree with me, tell me in the comment section below
+00:23:25.360
+that's it for now guys
+00:23:27.360
+access the playlist
+00:23:29.360
+and like the video
+00:23:31.360
+you must have subscribed to the channel
+00:23:33.360
+you must have accessed the github code
+00:23:35.360
+and if you haven't named your village and uncle's land yet
+00:23:37.360
+then send it in his papers
+00:23:39.360
+thank you so much guys for watching this video

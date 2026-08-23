@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 46,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nUse the ORDER BY statement to sort the result in ascending or descending \norder.\n\nThe ORDER BY keyword sorts the result ascending by default. To sort the \nresult in descending order, use the DESC keyword.\n\nUse the DESC keyword to sort the result in a descending order.\n\n### Code Examples\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nsql = \"SELECT * FROM customers ORDER BY name\"\nmycursor.execute(sql)\nmyresult = mycursor.fetchall()\nfor x in myresult:\nprint(x)\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"SELECT * FROM customers ORDER BY \n  name DESC\"\nmycursor.execute(sql)\nmyresult = mycursor.fetchall()\nfor x in myresult:\nprint(x)\n```\n\n## Tutorials\n\nYou can delete records from an existing table by using the \"DELETE FROM\" statement:\n\nIt is considered a good practice to escape the values of any query, also in delete statements.\n\nThis is to prevent SQL injections, which is a common web hacking technique to  \ndestroy or misuse your database.\n\nThe mysql.connector module uses the placeholder%sto escape values in the delete statement:\n\n### Code Examples\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nsql = \"DELETE FROM customers WHERE address = \n  'Mountain 21'\"\nmycursor.execute(sql)\nmydb.commit()\nprint(mycursor.rowcount, \"record(s) deleted\")\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"DELETE FROM customers WHERE address = \n  %s\"\nadr = (\"Yellow Garden 2\", )\nmycursor.execute(sql, adr)\nmydb.commit()\nprint(mycursor.rowcount, \"record(s) deleted\")\n```\n\n## Tutorials\n\nYou can delete an existing table by using \nthe \"DROP TABLE\" statement:\n\nIf the table you want to delete is already deleted, or for any other \nreason does not exist, you can use the IF EXISTS keyword to avoid getting an \nerror.\n\n### Code Examples\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nsql = \"DROP TABLE customers\"\nmycursor.execute(sql)\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nsql = \"DROP TABLE IF EXISTS customers\"\nmycursor.execute(sql)\n```\n\n## Tutorials\n\nYou can update existing records in a table by using \nthe \"UPDATE\" statement:\n\nIt is considered a good practice to escape the values of any query, also in \nupdate statements.\n\nThis is to prevent SQL injections, which is a common web hacking technique to  \ndestroy or misuse your database.\n\nThe mysql.connector module uses the placeholder%sto escape values in the \nupdate statement:\n\n### Code Examples\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nsql = \"UPDATE customers SET address = 'Canyon 123' \n  WHERE address = 'Valley 345'\"\nmycursor.execute(sql)\nmydb.commit()\nprint(mycursor.rowcount, \"record(s) affected\")\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = mydb.cursor()\nsql = \"UPDATE customers SET address = %s \n  WHERE address = %s\"\nval = (\"Valley 345\", \"Canyon 123\")\nmycursor.execute(sql, \n  val)\nmydb.commit()\nprint(mycursor.rowcount, \"record(s) \n  affected\")\n```\n\n## Tutorials\n\nYou can limit the number of records returned from the query, by using the \"LIMIT\" statement:\n\nIf you want to return five records, starting from the third record, you \ncan use the \"OFFSET\" keyword:\n\n### Code Examples\n\n```\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nmycursor.execute(\"SELECT * FROM customers LIMIT 5\")\nmyresult = mycursor.fetchall()\nfor x in \n  myresult:\nprint(x)\n\n---\n\nimport mysql.connector\nmydb = mysql.connector.connect(\nhost=\"localhost\",\nuser=\"\nyourusername\n\",\npassword=\"\nyourpassword\n\",\ndatabase=\"mydatabase\"\n)\nmycursor = \n  mydb.cursor()\nmycursor.execute(\"SELECT * FROM customers LIMIT 5 \n  OFFSET 2\")\nmyresult = mycursor.fetchall()\nfor x in \n  myresult:\nprint(x)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_46",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

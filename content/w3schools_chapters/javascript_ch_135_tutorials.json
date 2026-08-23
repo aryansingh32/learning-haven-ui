@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 135,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "First create the HTML page\n\nConnect the open button to theopenModal() function, with addEventListener().\n\nConnect the close button to thecloseModal() function, with addEventListener().\n\nCheck if the click happened on the overlay. Connect it tocloseModal():\n\nListen for \"Escape\" key presses. Connect it tocloseModal():\n\n### Code Snippets\n\n```\n<!DOCTYPE html>\n<html>\n<style>\n/* CSS will go here */\n</style>\n<body>\n<h2>Modal Popup</h2>\n<button id=\"openBtn\">Open Modal</button>\n<div id=\"modal\" class=\"modal-overlay\">\n<div class=\"modal-box\">\n<button id=\"closeBtn\" class=\"modal-close\">\u00d7</button>\n<h3>Hello!</h3>\n<p>This is a modal popup.</p>\n</div>\n</div>\n<script>\n// JavaScript will go here\n</script>\n</body>\n</html>\n\n---\n\n<style>\n/* The overlay (background) */\n.modal-overlay {\ndisplay: none;\nposition: fixed;\nleft: 0;\ntop: 0;\nwidth: 100%;\nheight: 100%;\nbackground: rgba(0, 0, 0, 0.5);\n}\n/* Show the modal */\n.modal-overlay.show {\ndisplay: block;\n}\n/* The modal box */\n.modal-box {\nbackground: white;\nwidth: 90%;\nmax-width: 400px;\nmargin: 100px auto;\npadding: 20px;\nborder-radius: 10px;\nposition: relative;\n}\n/* Close button */\n.modal-close {\nposition: absolute;\nright: 12px;\ntop: 8px;\nfont-size: 24px;\nborder: none;\nbackground: none;\ncursor: pointer;\n}\n</style>\n\n---\n\n.modal-overlay {\n  display: none;\n}\n\n---\n\n.modal-overlay.show {\n  display: block;\n}\n\n---\n\nfunction openModal() {\nmodal.classList.add(\"show\");\n}\nfunction closeModal() {\nmodal.classList.remove(\"show\");\n}\n\n---\n\nconst modal = document.getElementById(\"modal\");\nconst openBtn = document.getElementById(\"openBtn\");\nconst closeBtn = document.getElementById(\"closeBtn\");\nfunction openModal() {\nmodal.classList.add(\"show\");\n}\nfunction closeModal() {\nmodal.classList.remove(\"show\");\n}\nopenBtn.addEventListener(\"click\", openModal);\ncloseBtn.addEventListener(\"click\", closeModal);\n/* Close when clicking outside the modal box */\nmodal.addEventListener(\"click\", function (event) {\nif (event.target === modal) {\ncloseModal();\n}\n});\n/* Close when pressing Escape */\ndocument.addEventListener(\"keydown\", function (event) {\nif (event.key === \"Escape\") {\ncloseModal();\n}\n});\n\n---\n\nopenBtn.addEventListener(\"click\", openModal);\ncloseBtn.addEventListener(\"click\", closeModal);\n\n---\n\nmodal.addEventListener(\"click\", function (event) {\nif (event.target === modal) {\ncloseModal();\n}\n});\n\n---\n\ndocument.addEventListener(\"keydown\", function (event) {\nif (event.key === \"Escape\") {\ncloseModal();\n}\n});\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_134",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

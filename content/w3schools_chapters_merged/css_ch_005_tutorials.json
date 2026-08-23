@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 5,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThebackground-repeatproperty sets if/how a background image will be \nrepeated.\n\nBy default, a background-image is repeated both vertically and horizontally.\n\nSome images should be repeated only horizontally or vertically, or they will look strange, like this:\n\nIf the image above is repeated only horizontally (background-repeat: repeat-x;), the background will look \nbetter:\n\nShowing the background image only once is also specified by thebackground-repeatproperty:\n\nIn the example above, the background image is placed in the same place as the text. We want to change the position of the image, so that it does not \ndisturb the text too much.\n\nThebackground-positionproperty is used to \nset the starting position of the background image.\n\nBy default, a background-image is placed at the top-left corner of an \nelement.\n\n### Code Examples\n\n```\nbody\n{\nbackground-image: url(\"gradient_bg.png\");\n}\n\n---\n\nbody\n{\nbackground-image: url(\"gradient_bg.png\");\nbackground-repeat: repeat-x;\n}\n\n---\n\nbody\n{\nbackground-image: url(\"img_tree.png\");\nbackground-repeat: no-repeat;\n}\n\n---\n\nbody\n{\nbackground-image: url(\"img_tree.png\");\nbackground-repeat: no-repeat;\nbackground-position: right top;\n}\n```\n\n## Tutorials\n\nThebackground-attachmentproperty specifies \nwhether the background image should scroll or be fixed (will not scroll with the \nrest of the page):\n\n### Code Examples\n\n```\nbody\n{\nbackground-image: url(\"img_tree.png\");\nbackground-repeat: no-repeat;\nbackground-position: right top;\nbackground-attachment: fixed;\n}\n\n---\n\nbody\n{\nbackground-image: url(\"img_tree.png\");\nbackground-repeat: no-repeat;\nbackground-position: right top;\nbackground-attachment: scroll;\n}\n```\n\n## Tutorials\n\nTo shorten the code, it is possible to specify all the background properties in one \nsingle property. This is called a shorthand property.\n\nInstead of writing:\n\nYou can use the shorthand propertybackground:\n\nThebackgroundproperty is a shorthand property for the following properties:\n\nIf some of the property values are missing, they will be set to their initial \n(default) values.\n\n### Code Examples\n\n```\nbody {\nbackground-color: #ffffff;\nbackground-image: \n  url(\"img_tree.png\");\nbackground-repeat: no-repeat;\nbackground-position: right top;\n}\n\n---\n\nbody {\nbackground: #ffffff url(\"img_tree.png\") no-repeat right top;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nThe CSS border properties allow you to specify the style, width, and color of an element's border.\n\nTheborder-styleproperty specifies what kind of border to display.\n\nThe following values are allowed:\n\nTheborder-styleproperty can have from one to four values (for \nthe top border, right border, bottom border, and the left border).\n\n### Code Examples\n\n```\np.dotted {border-style: dotted;}\np.dashed \n{border-style: dashed;}\np.solid {border-style: solid;}\np.double \n{border-style: double;}\np.groove {border-style: groove;}\np.ridge \n{border-style: ridge;}\np.inset {border-style: inset;}\np.outset \n{border-style: outset;}\np.none {border-style: none;}\np.hidden {border-style: hidden;}\np.mix {border-style: dotted dashed solid double;}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_5",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_5",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

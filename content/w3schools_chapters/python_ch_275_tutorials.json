@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 275,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "W3Schools has been training millions of learners since 1998.\n\nGovernments, schools, and organizations worldwide trust W3Schools to train employees and students.\n\nW3Schools training materials and content have been well-proven over the years and are updated regularly.\n\nWith the W3Schools Academy pricing model, it is now one of the worlds most affordable quality Python training options there is.\n\nThe Certificate Course includes all the training materials to pass theCertified Python Developercertification exam.\n\nNo prerequisites are required to take the course.\n\nThe learners will be able to:\n\nAfter completing the training modules the learner will take the end of pathway exam.\n\nWhen the learner passes the exam, the learner will get theCertified Python Developercertification.\n\nThe exam is a multiple choice exam with 60 questions and a duration of 60 minutes.\n\nImage of a Python Certificate:\n\nThe certificate does not expire and is valid for lifetime.\n\nIt is shareable and can be added to your CV or LinkedInprofile.\n\nYou can read more about the certificate here:Python Certificate\n\nAs an employer or a school you can track learner progress and results.\n\nAssign courses to learners with ease and get them started in no time.\n\nWith W3Schools Academy you can manage everything from licenses to certificates.\n\nIt will give you everything you need to train your employees or students in different technologies.\n\nImage of class overview in Academy:\n\nYou can read more about the Academy here:W3Schools Academy\n\nThe course is designed to be interactive and fun to learn.\n\nThe learner will engage with different learning activities to keep them engaged.\n\nThis includes quizzes, code exercises, challenges, and a final exam.\n\nStay engaged with hands-on coding challenges that help you practice and test what you've learned.\n\nImage of one of the activity types in the course, a Python Challenge:\n\nPython is best learned by doing, and this is why we have included a lot of challenges in the course.\n\nYou can read more about the different types of activities here:Coding Exercises\n\nAre you ready to start training your employees today?\n\nBuy Access to Academy Now \u00bb\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_274",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

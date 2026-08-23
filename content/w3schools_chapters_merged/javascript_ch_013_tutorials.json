@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 13,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe purpose of\"use strict\"is to indicate that the code should be executed in \"strict mode\".\n\nWith strict mode, you can not, for example, use undeclared variables.\n\nStrict mode is declared by adding\"use strict\";to the beginning of a \nscript or a function.\n\nDeclared at the beginning of a script, it has global scope (all code \nin the script will execute in strict mode):\n\nDeclared inside a function, it has local scope (only the code inside the function is \nin strict mode):\n\nThe syntax, for declaring strict mode, was designed to be compatible with \nolder versions of JavaScript.\n\nCompiling a numeric literal (4 + 5;) or a string literal (\"John Doe\";) in a \nJavaScript program has no side effects. It simply compiles to a non existing \nvariable and dies.\n\nSo\"use strict\";only matters to new compilers that \"understand\" the meaning \nof it.\n\nStrict mode makes it easier to write \"secure\" JavaScript.\n\nStrict mode changes previously accepted \"bad syntax\" into real errors.\n\nAs an example, in normal JavaScript, mistyping a variable name creates a new \nglobal variable. In strict mode, this will throw an error, making it impossible \nto accidentally create a global variable.\n\nIn normal JavaScript, a developer will not receive any error feedback \nassigning values to non-writable properties.\n\nIn strict mode, any assignment to a non-writable property, a getter-only \nproperty, a non-existing property, a non-existing variable, or a non-existing \nobject, will throw an error.\n\nUsing a variable, without declaring it, is not allowed:\n\nUsing an object, without declaring it, is not allowed:\n\nDeleting a variable (or object) is not allowed.\n\nDeleting a function is not allowed.\n\nDuplicating a parameter name is not allowed:\n\nOctal numeric literals are not allowed:\n\nOctal escape characters are not allowed:\n\nWriting to a read-only property is not allowed:\n\nWriting to a get-only property is not allowed:\n\nDeleting an undeletable property is not allowed:\n\nThe wordevalcannot be used as a variable:\n\nThe wordargumentscannot be used as a variable:\n\nThewithstatement is not allowed:\n\nFor security reasons,eval()is not allowed to create  \nvariables in the scope from which it was called.\n\nThethiskeyword in functions behaves \ndifferently in strict mode.\n\nThethiskeyword refers to the object that \ncalled the function.\n\nIf the object is not specified, functions in strict mode \nwill returnundefinedand functions in normal \nmode will return the global object (window):\n\n### Code Examples\n\n```\n\"use strict\";\nx = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This will cause an error \n because x is not declared\n\n---\n\n\"use strict\";\nmyFunction();\nfunction myFunction() {\ny = 3.14;\u00a0\u00a0 // This will also cause an error \n because y is not declared\n}\n\n---\n\nx = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This will not cause an error.\nmyFunction();\nfunction \n myFunction() {\n\"use strict\";\ny = 3.14;\u00a0\u00a0 // This will cause an error\n}\n\n---\n\n\"use strict\";\nx = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nx = {p1:10, p2:20};\u00a0\u00a0\u00a0\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nlet x = 3.14;\ndelete x;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This \nwill cause an error\n\n---\n\n\"use strict\";\nfunction x(p1, p2) {};\ndelete x;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n // This will cause an error\n\n---\n\n\"use strict\";\nfunction x(p1, p1) {};\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nlet x = 010;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This \nwill cause an error\n\n---\n\n\"use strict\";\nlet x = \"\\010\";\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nconst obj = {};\nObject.defineProperty(obj, \"x\", {value:0, writable:false});\nobj.x = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0\u00a0 // This \nwill cause an error\n\n---\n\n\"use strict\";\nconst obj = {get x() \n{return 0} };\nobj.x = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This \nwill cause an error\n\n---\n\n\"use strict\";\ndelete Object.prototype; // This will cause an error\n\n---\n\n\"use strict\";\nlet eval = 3.14;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nlet arguments = 3.14;\u00a0\u00a0\u00a0 // This will cause an error\n\n---\n\n\"use strict\";\nwith (Math){x = cos(2)}; // This will cause an error\n\n---\n\n\"use strict\";\neval (\"x = 2\");\nalert (x);\u00a0\u00a0\u00a0\u00a0 \u00a0// This \nwill cause an error\n\n---\n\n\"use strict\";\neval (\"var x = 2\");\nalert (x);\u00a0\u00a0\u00a0\u00a0// This \nwill cause an error\n\n---\n\neval (\"let x = 2\");\nalert (x);\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0// This \nwill cause an error\n\n---\n\n\"use strict\";\nfunction myFunction() {\nalert(this); // will alert \"undefined\"\n}\nmyFunction();\n```\n\n## Tutorials\n\nJavaScriptDate Objectslet us work with dates:\n\nBy default, JavaScript will use the browser's time zone and display a date as a full text string:\n\nDate objects are created with thenew Date()constructor.\n\nThere are9 waysto create a new date object:\n\nnew Date()creates a date object with thecurrent date and time:\n\nnew Date(date string)creates a date object from adate string:\n\nnew Date(year, month, ...)creates a date object with aspecified date and time.\n\n7 numbers specify year, month, day, hour, minute, second, and millisecond (in that order):\n\nSpecifying a month higher than 11, will not result in an error but add the overflow to the next year:\n\nSpecifying a day higher than max, will not result in an error but add the overflow to the next month:\n\n6 numbers specify year, month, day, hour, minute, second:\n\n5 numbers specify year, month, day, hour, and minute:\n\n4 numbers specify year, month, day, and hour:\n\n3 numbers specify year, month, and day:\n\n2 numbers specify year and month:\n\nOne and two digit years will be interpreted as 19xx:\n\nnew Date(milliseconds)creates a new date object asmillisecondsplus zero time:\n\nWhen a date object is created, a number ofmethodsallow you to operate on \nit.\n\nDate methods allow you to get and set the year, month, day, hour, \nminute, second, and millisecond of date objects, using either local time or UTC \n(universal, or GMT) time.\n\nJavaScript will (by default) output dates using thetoString()method.\nThis is a string representation of the date, including the time zone.\nThe format is specified in the ECMAScript specification:\n\nWhen you display a date object in HTML, it is automatically converted to a \nstring, with thetoString()method.\n\nThetoDateString()method converts a date to a more readable \nformat:\n\nThetoUTCString()method converts a date to a string using the UTC standard:\n\nThetoISOString()method converts a date to a string using the ISO standard:\n\n### Code Examples\n\n```\nconst d = new Date();\n\n---\n\nconst d = new Date(\"2022-03-25\");\n\n---\n\nnew Date()\nnew Date(\ndate string\n)\nnew Date(\nyear,month\n)\nnew Date(\nyear,month,day\n)\nnew Date(\nyear,month,day,hours\n)\nnew Date(\nyear,month,day,hours,minutes\n)\nnew Date(\nyear,month,day,hours,minutes,seconds\n)\nnew Date(\nyear,month,day,hours,minutes,seconds,ms\n)\nnew Date(\nmilliseconds\n)\n\n---\n\nconst d = new Date();\n\n---\n\nconst d = new Date(\"October 13, 2014 11:13:00\");\n\n---\n\nconst d = new Date(\"2022-03-25\");\n\n---\n\nconst d = new Date(2018, 11, 24, 10, 33, 30, 0);\n\n---\n\nconst d = new Date(2018, 15, 24, 10, 33, 30);\n\n---\n\nconst d = new Date(2019, 3, 24, 10, 33, 30);\n\n---\n\nconst d = new Date(2018, 5, 35, 10, 33, 30);\n\n---\n\nconst d = new Date(2018, 6, 5, 10, 33, 30);\n\n---\n\nconst d = new Date(2018, 11, 24, 10, 33, 30);\n\n---\n\nconst d = new Date(2018, 11, 24, 10, 33);\n\n---\n\nconst d = new Date(2018, 11, 24, 10);\n\n---\n\nconst d = new Date(2018, 11, 24);\n\n---\n\nconst d = new Date(2018, 11);\n\n---\n\nconst d = new Date(2018);\n\n---\n\nconst d = new Date(99, 11, 24);\n\n---\n\nconst d = new Date(9, 11, 24);\n\n---\n\nconst d = new Date(100000000000);\n\n---\n\nconst d = new Date(-100000000000);\n\n---\n\nconst d = new Date(24 * 60 * 60 * 1000);\n// or\nconst d = new Date(86400000);\n\n---\n\nconst d = new Date(0);\n\n---\n\nconst d = new Date();\nd.toString();\n\n---\n\nconst d = new Date();\nd.toDateString();\n\n---\n\nconst d = new Date();\nd.toUTCString();\n\n---\n\nconst d = new Date();\nd.toISOString();\n```\n\n## Tutorials\n\nThere are generally 3 types of JavaScript date input formats:\n\nIndependent of input format, JavaScript will (by default) output dates in full \ntext string format:\n\nISO 8601 is the international standard for the representation of dates and \ntimes.\n\nThe ISO 8601 syntax (YYYY-MM-DD) is also the preferred JavaScript date format:\n\nISO dates can be written without specifying the day (YYYY-MM):\n\nISO dates can be written without month and day (YYYY):\n\nISO dates can be written with added hours, minutes, and seconds \n(YYYY-MM-DDTHH:MM:SSZ):\n\nDate and time are separated with a capital T.\n\nUTC time is defined with a capital letter Z.\n\nIf you want to modify the time relative to UTC, remove the Z and add +HH:MM or -HH:MM \ninstead:\n\nWhen setting a date, without specifying the time zone, JavaScript will use \nthe browser's time zone.\n\nWhen getting a date, without specifying the time zone, the result is \nconverted to the browser's time zone.\n\nIn other words: If a date/time is created in GMT (Greenwich Mean Time), the \ndate/time will be converted to CDT (Central US Daylight Time) if a user browses \nfrom central US.\n\nShort dates are written with an \"MM/DD/YYYY\" syntax like this:\n\nLong dates are most often written with a \"MMM DD YYYY\" syntax like this:\n\nMonth and day can be in any order:\n\nAnd, month can be written in full (January), or abbreviated (Jan):\n\nCommas are ignored. Names are case insensitive:\n\nIf you have a valid date string, you can use theDate.parse()method to convert it to milliseconds.\n\nDate.parse()returns the number of milliseconds between the date and January \n1, 1970:\n\nYou can then use the number of milliseconds toconvert it to a dateobject:\n\n### Code Examples\n\n```\nconst d = new Date(\"2015-03-25\");\n\n---\n\nconst d = new Date(\"2015-03\");\n\n---\n\nconst d = new Date(\"2015\");\n\n---\n\nconst d = new Date(\"2015-03-25T12:00:00Z\");\n\n---\n\nconst d = new Date(\"2015-03-25T12:00:00-06:30\");\n\n---\n\nconst d = new Date(\"03/25/2015\");\n\n---\n\nconst d = new Date(\"2015-3-25\");\n\n---\n\nconst d = new Date(\"2015/03/25\");\n\n---\n\nconst d = new Date(\"25-03-2015\");\n\n---\n\nconst d = new Date(\"Mar 25 2015\");\n\n---\n\nconst d = new Date(\"25 Mar 2015\");\n\n---\n\nconst d = new Date(\"January 25 2015\");\n\n---\n\nconst d = new Date(\"Jan 25 2015\");\n\n---\n\nconst d = new Date(\"JANUARY, 25, 2015\");\n\n---\n\nlet msec = Date.parse(\"March 21, 2012\");\n\n---\n\nlet msec = Date.parse(\"March 21, 2012\");\nconst d = new Date(msec);\n```\n\n## Tutorials\n\nIn JavaScript, date objects are created withnew Date().\n\nnew Date()returns a date object with the current date and time.\n\nThegetFullYear()method returns the year of a date as a four digit number:\n\nThegetMonth()method returns the month of a date as a number (0-11).\n\nThegetDate()method returns the day of a date as a number (1-31):\n\nThegetHours()method returns the hours of a date as a number (0-23):\n\nThegetMinutes()method returns the minutes of a date as a number (0-59):\n\nThegetSeconds()method returns the seconds of a date as a number (0-59):\n\nThegetMilliseconds()method returns the milliseconds of a date as a number (0-999):\n\nThegetDay()method returns the weekday of a date as a number (0-6).\n\nThegetTime()method returns the number of milliseconds since January 1, 1970:\n\nDate.now()returns the number of milliseconds since January 1, 1970.\n\nDate.now()is a static method of the Date object.\n\nYou cannot use it on a date object likemyDate.now().\n\nThe syntax is alwaysDate.now().\n\nUTC methods use UTC time (Coordinated Universal Time).\n\nUTC time is the same as GMT (Greenwich Mean Time).\n\nThe difference between Local time and UTC time can be up to 24 hours.\n\nThegetTimezoneOffset()method returns the difference (in minutes)\nbetween local time an UTC time:\n\n### Code Examples\n\n```\nconst date = new Date();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getFullYear();\n\n---\n\nconst d = new Date();\nd.getFullYear();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getMonth();\n\n---\n\nconst d = new Date();\nd.getMonth();\n\n---\n\nconst months = [\"January\", \"February\", \"March\", \"April\", \"May\",\n\"June\", \"July\", \"August\", \"September\", \"October\",\n\"November\", \"December\"];\nconst d = new Date(\"2021-03-25\");\nlet month = months[d.getMonth()];\n\n---\n\nconst months = [\"January\", \"February\", \"March\", \"April\", \"May\",\n\"June\", \"July\", \"August\", \"September\", \"October\",\n\"November\", \"December\"];\nconst d = new Date();\nlet month = months[d.getMonth()];\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getDate();\n\n---\n\nconst d = new Date();\nd.getDate();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getHours();\n\n---\n\nconst d = new Date();\nd.getHours();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getMinutes();\n\n---\n\nconst d = new Date();\nd.getMinutes();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getSeconds();\n\n---\n\nconst d = new Date();\nd.getSeconds();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getMilliseconds();\n\n---\n\nconst d = new Date();\nd.getMilliseconds();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getDay();\n\n---\n\nconst d = new Date();\nd.getDay();\n\n---\n\nconst days = [\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\",\n\"Thursday\", \"Friday\", \"Saturday\"];\nconst d = new Date(\"2021-03-25\");\nlet day = days[d.getDay()];\n\n---\n\nconst days = [\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\",\n\"Thursday\", \"Friday\", \"Saturday\"];\nconst d = new Date();\nlet day = days[d.getDay()];\n\n---\n\nconst d = new Date(\"1970-01-01\");\nd.getTime();\n\n---\n\nconst d = new Date(\"2021-03-25\");\nd.getTime();\n\n---\n\nconst d = new Date();\nd.getTime();\n\n---\n\nlet ms = Date.now();\n\n---\n\nconst minute = 1000 * 60;\nconst hour = minute * 60;\nconst day = hour * 24;\nconst year = day * 365;\nlet years = Math.round(Date.now() / year);\n\n---\n\nlet diff = d.getTimezoneOffset();\n```\n\n## Tutorials\n\nSet Date methods let you set date values (years, \nmonths, days, hours, minutes, seconds, milliseconds) for a Date Object.\n\nSet Date methods are used for setting a part of a date:\n\nThesetFullYear()method sets the year of a date object. In this example to 2020:\n\nThesetFullYear()method canoptionallyset month and day:\n\nThesetMonth()method sets the month of a date object (0-11):\n\nThesetDate()method sets the day of a date object (1-31):\n\nThesetDate()method can also be used toadd daysto a date:\n\nThesetHours()method sets the hours of a date object (0-23):\n\nThesetHours()method can also be used to set minutes and\nseconds.\n\nThesetMinutes()method sets the minutes of a date object (0-59):\n\nThesetSeconds()method sets the seconds of a date object (0-59):\n\nDates can easily be compared.\n\nThe following example compares today's date with January 14, 2100:\n\n### Code Examples\n\n```\nconst d = new Date(\"January 01, 2025\");\nd.setFullYear(2020);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setFullYear(2020, 11, 3);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setMonth(11);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setDate(15);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setDate(d.getDate() + 50);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setHours(22);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setHours(22, 10, 20);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setMinutes(30);\n\n---\n\nconst d = new Date(\"January 01, 2025\");\nd.setSeconds(30);\n\n---\n\nlet text = \"\";\nconst today = new Date();\nconst someday = new Date();\nsomeday.setFullYear(2100, 0, 14);\nif (someday > today) {\ntext = \"Today is before January 14, 2100.\";\n} else {\ntext = \"Today is after January 14, 2100.\";\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_13",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_13",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

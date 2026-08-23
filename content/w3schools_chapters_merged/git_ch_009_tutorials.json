@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 9,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe.gitattributesfile is a special file that tells Git how to handle specific files in your repository.\n\nIt controls things like line endings, file types, merge behavior, custom diff tools, and more.\n\nEveryone on your team gets the same settingsbecause this file is versioned with your project.\n\nFor more about Git LFS, see thededicated page.\n\nStandardize line endings to avoid merge conflicts and broken files across different OSes.\n\nTell Git which files are binary (not text).\n\nThis prevents Git from trying to merge or change line endings for these files.\n\nUse Git LFS for large files like images or datasets.\n\nThis tells Git to use LFS for these files:\n\nTell Git to use a special tool to compare certain file types (like Markdown or Jupyter notebooks):\n\nSee what attributes are set for a file:\n\nNote:.gitattributesis versioned with your project, so everyone on your team gets the same settings.\n\n### Code Examples\n\n```\nExample: Force Unix Line Endings for All Text Files\n*.txt text eol=lf\n\n---\n\nExample: Set LF for Shell Scripts\n*.sh text eol=lf\n\n---\n\nExample: Mark PNG Files as Binary\n*.png binary\n\n---\n\nExample: Track PSD Files with LFS\n*.psd filter=lfs diff=lfs merge=lfs -text\n\n---\n\nExample: Custom Diff for Markdown\n*.md diff=markdown\n\n---\n\nExample: Check Attributes of a File\ngit check-attr --all README.md\n\n---\n\nExample: Ignore Files on Export\ndocs/* export-ignore\n```\n\n## Tutorials\n\nGit LFS (Large File Storage)is an extension for Git that helps you manage large files (like videos, images, or datasets) efficiently.\n\nInstead of storing big files directly in your repository, LFS stores a small pointer file in your repo and keeps the real content on a separate LFS server.\n\nThis keeps your repository fast and small, even if you work with huge files.\n\nEveryone who clones the repo gets the pointer, and Git LFS fetches the real file content as needed.\n\nYou can track any file type. Here are more examples:\n\nWhen you track a file type with LFS, Git adds a rule to the.gitattributesfile. This tells Git to use LFS for those files.\n\nWhen you add and commit a tracked file, Git stores a small \"pointer\" file in your repo. The real content is uploaded to the LFS server.\n\nIf you clone or pull a repo with LFS files, Git will download the real content from the LFS server (if you have LFS installed).\n\nThe actual file data is stored on the LFS server, while your repo contains a pointer file.\n\nSee which files are managed by LFS in your repo:\n\nCommit the change. The file will no longer be managed by LFS (but existing versions are still stored in LFS).\n\n### Code Examples\n\n```\n*.psd filter=lfs diff=lfs merge=lfs -text\n```\n\n## Tutorials\n\nSigning a commit is like putting your personal signature on your work.\n\nIt proves that you really made the change, and helps others trust your code.\n\nOn platforms like GitHub or GitLab, signed commits often get aVerifiedbadge.\n\nGPG (GNU Privacy Guard) is a tool that lets you create a digital key, kind of like a secret password, to sign things.\n\nGit uses GPG keys to sign commits and tags.\n\nThis helps prove your identity and ensures your code hasn't been tampered with.\n\nCreate a GPG key(if you don't have one):\n\nFollow the prompts to create your key.\n\nFind your key ID:\n\nLook for a line likesec   rsa4096/1234ABCD5678EFGH. The part after the slash is your key ID.\n\nTell Git to use your key:\n\nTo sign a commit, use:\n\nTo sign a tag, use:\n\nIf you want Git to sign every commit by default, run:\n\nTo check in Git, run:\n\nOn GitHub or GitLab, look for aVerifiedbadge next to your commit or tag.\n\nNote:Signed commits and tags help ensure your code hasn't been tampered with and confirm your identity as the author.\n\nSome platforms may require additional setup to recognize your signature (for example, uploading your public key to GitHub or GitLab).\n\n### Code Examples\n\n```\nExample: Generate a New GPG Key\ngpg --full-generate-key\n\n---\n\nExample: List GPG Keys\ngpg --list-secret-keys --keyid-format=long\n\n---\n\nExample: Set Signing Key\ngit config --global user.signingkey <your-key-id>\n\n---\n\nExample: Signed Commit in Git Log\ncommit 1234abcd5678efgh\ngpg: Signature made ...\ngpg: Good signature from \"Your Name <you@email.com>\"\nAuthor: Your Name <you@email.com>\nDate:   ...\n```\n\n## Tutorials\n\nCherry-picklets you copy a single commit from one branch to another. It's useful when you want just one (or a few) changes, not everything from another branch.\n\nApatchis a file with changes from one or more commits. You can share a patch or apply it to another repository, even if it's unrelated to your own.\n\nCopy a specific commit from another branch to your current branch:\n\nThis creates a new commit on your branch with the same changes.\n\nUse--editto change the commit message while cherry-picking:\n\nUse--no-commit(or-n) to apply the changes, but not create a commit yet. This lets you make more changes before committing:\n\nUse-xto add a line to the commit message showing where the commit came from:\n\nIf there are conflicts, Git will pause and ask you to fix them. After fixing, run:\n\nTo cancel the cherry-pick, use:\n\nMake a patch file from a commit:\n\nFor multiple commits:\n\nApply a patch file to your current branch:\n\nUsegit amto apply a patch and keep the original author and message:\n\nUndo the changes in a patch file:\n\nTip:Usecherry-pickfor copying a single commit in the same repository.\n\nUsepatchesto share changes as files or work across repositories.\n\nIf you want to keep commit history and authors, usegit aminstead ofgit apply.\n\n### Code Examples\n\n```\nExample: Cherry-pick a Commit\ngit cherry-pick abc1234\n\n---\n\nExample: Edit Commit Message\ngit cherry-pick abc1234 --edit\n\n---\n\nExample: Cherry-pick Without Commit\ngit cherry-pick abc1234 --no-commit\n\n---\n\nExample: Cherry-pick With Origin\ngit cherry-pick abc1234 -x\n\n---\n\nExample: Continue After Conflict\ngit add .\ngit cherry-pick --continue\n\n---\n\nExample: Abort Cherry-pick\ngit cherry-pick --abort\n\n---\n\nExample: Create Patch\ngit format-patch -1 abc1234\n\n---\n\nExample: Multiple Commits\ngit format-patch HEAD~3\n\n---\n\nExample: Apply Patch\ngit apply 0001-some-change.patch\n\n---\n\nExample: Apply Patch with Metadata\ngit am 0001-some-change.patch\n\n---\n\nExample: Reverse Patch\ngit apply -R 0001-some-change.patch\n```\n\n## Tutorials\n\nAmerge conflicthappens when two branches change the same part of a file.\n\nGit can't decide which change to keep, so you have to choose.\n\nYou must resolve the conflict before you can finish the merge.\n\nMerge conflicts usually happen when you merge branches that changed the same lines in a file.\n\nThis is common in collaborative projects or when working on long-lived branches.\n\nWhen you merge a branch and there are conflicting changes, Git will pause and mark the files with conflicts.\n\nIf there are conflicts, Git will tell you which files are affected.\n\nUsegit statusto see which files need your attention:\n\nUsegit diffto see what changed and help you decide how to resolve the conflict:\n\nOpen the conflicted file. You'll see sections like this:\n\nEdit the file to keep what you want, then remove the conflict markers (<<<<<<<,=======,>>>>>>>).\n\nAfter fixing the file, mark it as resolved:\n\nFinish the merge with a commit (if Git doesn't do it automatically):\n\nIf you want to stop and undo the merge:\n\nIf you prefer, you can use a visual tool to resolve conflicts:\n\nIf you want to keep only your changes or only the other branch's changes:\n\n### Code Examples\n\n```\n<<<<<<< HEAD\nYour changes here\n=======\nOther branch's changes\n>>>>>>> feature-branch\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_9",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

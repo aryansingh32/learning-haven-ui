@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 145,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ECMAScript 2019is supported in all modern browsers sinceJanuary 2020:\n\nES2019 added the String methodtrimStart()to JavaScript.ThetrimStart()method works liketrim(), but removes whitespace only from the start of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimStart();Try it Yourself \u00bbJavaScript String trimEnd()ES2019 added the String methodtrimEnd()to JavaScript.ThetrimEnd()method works liketrim(), but removes whitespace only from the end of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimEnd();Try it Yourself \u00bbJavaScript Object fromEntries()ES2019 added the Object methodfromEntries()to JavaScript.ThefromEntries()method creates an object from iterable key / value pairs.Exampleconst fruits = [[\"apples\", 300],[\"pears\", 900],[\"bananas\", 500]];const myObj = Object.fromEntries(fruits);Try it Yourself \u00bbOptional catch BindingFrom ES2019 you can omit the catch parameter if you don't need it:ExampleBefore 2019:try {// code} catch (err) {// code}After 2019:try {// code} catch {// code}JavaScript Array flat()ES2019 added the Arrayflat()method to JavaScript.Theflat()method creates a new array by flattening a nested array.Exampleconst myArr = [[1,2],[3,4],[5,6]];const newArr = myArr.flat();Try it Yourself \u00bbJavaScript Array flatMap()ES2019 added the ArrayflatMap()method to JavaScript.TheflatMap()method first maps all elements of an array\nand then creates a new array by flattening the array.Exampleconst myArr = [1, 2, 3, 4, 5, 6];const newArr = myArr.flatMap(x => [x, x * 10]);Try it Yourself \u00bbStable Array sort()ES2019revisedthe Arraysort()method.Before 2019, the specification allowed unstable sorting algorithms such as QuickSort.After ES2019, browsers must use a stable sorting algorithm:When sorting elements on a value, the elements must keep their relative position to other elements with the same value.Exampleconst myArr = [{name:\"X00\",price:100 },{name:\"X01\",price:100 },{name:\"X02\",price:100 },{name:\"X03\",price:100 },{name:\"X04\",price:110 },{name:\"X05\",price:110 },{name:\"X06\",price:110 },{name:\"X07\",price:110 }];Try it Yourself \u00bbIn the example above, when sorting on price, the result should not have names in a different relative position, such as this:X01 100X03 100X00 100X03 100X05 110X04 110X06 110X07 110Revised JSON.stringify()ES2019revisedthe JSONstringify()method.Before 2019, JSON could not stringify character encoded with \\.Examplelet text = JSON.stringify(\"\\u26D4\");Try it Yourself \u00bbBefore ES2019, usingJSON.stringify()JSON on UTF-8 code points (U+D800 to U+DFFF)\nreturned broken Unicode characters like \ufffd\ufffd\ufffd.After this revision, strings with UTF-8 code points convert safely withJSON.stringify(),\nand back to the original usingJSON.parse().Separator SymbolsLine separators and paragraph separator symbols (\\u2028 and \\u2029) are now allowed in string literals.Before 2019, these were treated as line terminators and resulted in error exceptions:Example// This is valid in ES2019:let text = \"\\u2028\";Try it Yourself \u00bbNow, JavaScript and JSON have equal rules.Before ES2019:text = JSON.parse('\"\\u2028\"') would parse to ''.text = '\"\\u2028\"' would givesyntax error.Revised Function toString()ES2019revisedthe FunctiontoString()method.ThetoString()method returns a string representing the source code of a function.From 2019, toString() must return the source code of the function including comments,\nspaces, and syntax details.Before 2019, different browsers returned different variants of the function (like without comments and spaces).\nFrom 2019 the function should be returned exactly as it is written.Examplefunction myFunction(p1, p2) {return p1 * p2;}let text = myFunction.toString();Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimStart();\n\n---\n\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimEnd();\n\n---\n\nconst fruits = [\n[\"apples\", 300],\n[\"pears\", 900],\n[\"bananas\", 500]\n];\nconst myObj = Object.fromEntries(fruits);\n\n---\n\ntry {\n// code\n} catch (err) {\n// code\n}\n\n---\n\ntry {\n// code\n} catch {\n// code\n}\n\n---\n\nconst myArr = [[1,2],[3,4],[5,6]];\nconst newArr = myArr.flat();\n\n---\n\nconst myArr = [1, 2, 3, 4, 5, 6];\nconst newArr = myArr.flatMap(x => [x, x * 10]);\n\n---\n\nconst myArr = [\n{name:\"X00\",price:100 },\n{name:\"X01\",price:100 },\n{name:\"X02\",price:100 },\n{name:\"X03\",price:100 },\n{name:\"X04\",price:110 },\n{name:\"X05\",price:110 },\n{name:\"X06\",price:110 },\n{name:\"X07\",price:110 }\n];\n\n---\n\nX01 100\nX03 100\nX00 100\nX03 100\nX05 110\nX04 110\nX06 110\nX07 110\n\n---\n\nlet text = JSON.stringify(\"\\u26D4\");\n\n---\n\n// This is valid in ES2019:\nlet text = \"\\u2028\";\n\n---\n\nfunction myFunction(p1, p2) {\nreturn p1 * p2;\n}\nlet text = myFunction.toString();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_144",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

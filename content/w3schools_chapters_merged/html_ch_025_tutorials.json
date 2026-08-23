@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 25,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThis chapter describes the different attributes for the HTML<form>element.\n\nTheactionattribute defines the action to be performed when the form is submitted.\n\nUsually, the form data is sent to a file on the server when the user clicks on the submit button.\n\nIn the example below, the form data is sent to a file called \"action_page.php\". \nThis file contains a server-side script that handles the form data:\n\nTip:If theactionattribute is omitted, the action is set to the current page.\n\nThetargetattribute specifies where to \ndisplay the response that is received after submitting the form.\n\nThetargetattribute can have one of the \nfollowing values:\n\nThe default value is_selfwhich means that \nthe response will open in the current window.\n\nThemethodattribute specifies the HTTP \nmethod to be used when submitting the form data.\n\nThe form-data can be sent as URL variables (withmethod=\"get\") \nor as HTTP post transaction (withmethod=\"post\").\n\nThe default HTTP method when submitting form data is GET.\n\nNotes on GET:\n\nNotes on POST:\n\nTheautocompleteattribute specifies whether \na form should have autocomplete on or off.\n\nWhen autocomplete is on, the browser automatically complete values based on values that the user has entered before.\n\nThenovalidateattribute is a boolean attribute.\n\nWhen present, it specifies that the form-data (input) should not be validated when submitted.\n\n### Code Examples\n\n```\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" target=\"_blank\">\n\n---\n\n<form action=\"/action_page.php\" method=\"get\">\n\n---\n\n<form action=\"/action_page.php\" method=\"post\">\n\n---\n\n<form action=\"/action_page.php\" autocomplete=\"on\">\n\n---\n\n<form action=\"/action_page.php\" novalidate>\n```\n\n## Tutorials\n\nTest what you have learned about HTML form attributes.\n\n## Tutorials\n\nThis chapter describes all the different HTML form elements.\n\nThe HTML<form>element can contain one or more of the following form elements:\n\nOne of the most used form elements is the<input>element.\n\nThe<input>element can be displayed in several ways, depending on thetypeattribute.\n\nAll the different values of thetypeattribute are covered in the next chapter:HTML Input Types.\n\nThe<label>element defines a label for \nseveral \nform elements.\n\nThe<label>element is useful for \nscreen-reader users, because the screen-reader will read out loud the label when \nthe user focus on the input element.\n\nThe<label>element also help users who have \ndifficulty clicking on very small regions (such as radio buttons or checkboxes) \n- because when the user clicks the text within the<label>element, it toggles \nthe radio button/checkbox.\n\nTheforattribute of the<label>tag should \nbe equal to theidattribute of the<input>element to bind them together.\n\nThe<select>element defines a drop-down list:\n\nThe<option>element defines an option that can be \nselected.\n\nBy default, the first item in the drop-down list is selected.\n\nTo define a pre-selected option, add theselectedattribute \nto the option:\n\nUse thesizeattribute to specify the number of visible values:\n\nUse themultipleattribute to allow the user to select more than one value:\n\nThe<textarea>element defines a multi-line input field (a text area):\n\nTherowsattribute specifies the visible number of lines in \na text area.\n\nThecolsattribute specifies the visible width of a text \narea.\n\nThis is how the HTML code above will be displayed in a browser:\n\nYou can also define the size of the text area by using CSS:\n\nThe<button>element defines a clickable \nbutton:\n\nThis is how the HTML code above will be displayed in a browser:\n\nThe<fieldset>element is used to group related data in a form.\n\nThe<legend>element defines a caption for the<fieldset>element.\n\nThis is how the HTML code above will be displayed in a browser:\n\nThe<datalist>element specifies a list of pre-defined options for an<input>element.\n\nUsers will see a drop-down list of the pre-defined options as they input data.\n\nThelistattribute of the<input>element, must refer to theidattribute of the<datalist>element.\n\nThe<output>element represents the result of a calculation (like one \nperformed by a script).\n\n### Code Examples\n\n```\n<label for=\"fname\">First name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\">\n\n---\n\n<label for=\"cars\">Choose a car:</label>\n<select id=\"cars\" name=\"cars\">\n<option value=\"volvo\">Volvo</option>\n<option value=\"saab\">Saab</option>\n<option value=\"fiat\">Fiat</option>\n<option value=\"audi\">Audi</option>\n</select>\n\n---\n\n<option value=\"fiat\" selected>Fiat</option>\n\n---\n\n<label for=\"cars\">Choose a car:</label>\n<select id=\"cars\" name=\"cars\" size=\"3\">\n<option value=\"volvo\">Volvo</option>\n<option value=\"saab\">Saab</option>\n<option value=\"fiat\">Fiat</option>\n<option value=\"audi\">Audi</option>\n</select>\n\n---\n\n<label for=\"cars\">Choose a car:</label>\n<select id=\"cars\" name=\"cars\" size=\"4\"\nmultiple>\n<option value=\"volvo\">Volvo</option>\n<option value=\"saab\">Saab</option>\n<option value=\"fiat\">Fiat</option>\n<option value=\"audi\">Audi</option>\n</select>\n\n---\n\n<textarea name=\"message\" rows=\"10\" cols=\"30\">\nThe cat was playing in the garden.\n</textarea>\n\n---\n\n<textarea name=\"message\" \n  style=\"width:200px; height:600px;\">\nThe cat was playing in the garden.\n</textarea>\n\n---\n\n<button type=\"button\" \n onclick=\"alert('Hello World!')\">Click Me!</button>\n\n---\n\n<form action=\"/action_page.php\">\n<fieldset>\n<legend>Personalia:</legend>\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</fieldset>\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<input list=\"browsers\">\n<datalist id=\"browsers\">\n<option value=\"Edge\">\n<option value=\"Firefox\">\n<option value=\"Chrome\">\n<option value=\"Opera\">\n<option value=\"Safari\">\n</datalist>\n</form>\n\n---\n\n<form action=\"/action_page.php\"\noninput=\"x.value=parseInt(a.value)+parseInt(b.value)\">\n0\n<input type=\"range\"\u00a0 id=\"a\" name=\"a\" value=\"50\">\n100 +\n<input type=\"number\" id=\"b\" name=\"b\" value=\"50\">\n=\n<output name=\"x\" for=\"a b\"></output>\n<br><br>\n<input type=\"submit\">\n</form>\n```\n\n## Tutorials\n\nTest what you have learned about HTML form elements.\n\n## Tutorials\n\nTest your understanding of HTML form elements by completing this coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_25",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_25",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

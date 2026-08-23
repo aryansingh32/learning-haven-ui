@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 74,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe IIF() function returns a value if a condition is TRUE, or another value if \na condition is FALSE.\n\n### Code Examples\n\n```\nSELECT \n  IIF(500<1000, 'YES', 'NO');\n\n---\n\nIIF(\ncondition\n,\nvalue_if_true\n,\nvalue_if_false\n)\n\n---\n\nSELECT IIF(500<1000, 5, 10);\n\n---\n\nSELECT IIF('hello' = 'bye', 'YES', 'NO');\n\n---\n\nSELECT OrderID, Quantity, IIF(Quantity>10, \n  'MORE', 'LESS')\nFROM \n  OrderDetails;\n```\n\n## Tutorials\n\nThe ISNULL() function returns a specified value if the expression is NULL.\n\nIf the expression is NOT NULL, this function returns the expression.\n\n### Code Examples\n\n```\nSELECT ISNULL(NULL, 'W3Schools.com');\n\n---\n\nISNULL(\nexpression\n,\nvalue\n)\n\n---\n\nSELECT ISNULL('Hello', 'W3Schools.com');\n\n---\n\nSELECT ISNULL(NULL, 500);\n```\n\n## Tutorials\n\nThe ISNUMERIC() function tests whether an expression is numeric.\n\nThis function returns 1 if the expression is numeric, otherwise it returns 0.\n\n### Code Examples\n\n```\nSELECT ISNUMERIC(4567);\n\n---\n\nISNUMERIC(\nexpression\n)\n\n---\n\nSELECT ISNUMERIC('4567');\n\n---\n\nSELECT ISNUMERIC('Hello world!');\n\n---\n\nSELECT ISNUMERIC(20*3);\n\n---\n\nSELECT ISNUMERIC('2017-08-25');\n```\n\n## Tutorials\n\nThe NULLIF() function returns NULL if two expressions are equal, otherwise it \nreturns the first expression.\n\n### Code Examples\n\n```\nSELECT NULLIF(25, 25);\n\n---\n\nNULLIF(\nexpr1\n,\nexpr2\n)\n\n---\n\nSELECT NULLIF('Hello', 'Hello');\n\n---\n\nSELECT NULLIF('Hello', 'world');\n\n---\n\nSELECT NULLIF('2017-08-25', '2017-08-25');\n```\n\n## Tutorials\n\nThe SESSION_USER function returns the name of the current user in the SQL Server database.\n\n### Code Examples\n\n```\nSELECT SESSION_USER;\n\n---\n\nSESSION_USER\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_74",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_74",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

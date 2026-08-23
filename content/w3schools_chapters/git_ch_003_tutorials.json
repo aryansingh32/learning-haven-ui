@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 3,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "You can download Git for free fromgit-scm.com.\n\nAfter installation, you will be able to use Git from your terminal or command prompt.\n\nTip for Beginners:Installing Git is safe and you can always uninstall it later if you want.\n\nGit Bash is a terminal for Windows that lets you use Git commands.\n\nLook at ourBash Tutorialto learn more about Bash.\n\nAfter installing Git, you can find Git Bash in your Start menu.\n\nYou can use Git Bash just like the Command Prompt, but with extra Unix commands (likelsandpwd).\n\nClick Start, type \"Git Bash\", and open the app.\n\nThis command lists the files in your current folder.\n\nAfter installing, check that Git works by opening your terminal (or Git Bash on Windows) and running:\n\nIf Git is installed, you will see something likegit version X.Y.Z\n\nIf you see an error, try closing and reopening your terminal, or check that Git is in your PATH.\n\nDuring installation, Git asks you to pick a default text editor.\n\nThis is the program that will open when you need to write messages (like for commits).\n\nIf you're not sure, just pick the default (Notepad on Windows). You can always change this later.\n\nChoosing to add Git to your PATH means you can use Git commands in any terminal window.\n\nThis is highly recommended for most users to do this during installation.\n\nIf you skip this, you'll only be able to use Git in Git Bash (on Windows) or Terminal (on macOS and Linux).\n\nIf you see an error, you need to add Git to your PATH.\n\nAfter adding Git to your PATH, open a new terminal window and rungit --versionto check that it works everywhere.\n\nGit can convert line endings in text files.\n\nOn Windows, it's usually best to select \"Checkout Windows-style, commit Unix-style line endings\".\n\nThis helps prevent problems when you share code with people using different operating systems.\n\nIf you run into problems installing or running Git, don't worry!\n\nHere are solutions to some of the most common issues.\n\nTip:If something doesn't work right away, try closing and reopening your terminal, or restarting your computer.\n\n### Code Snippets\n\n```\nExample: First Command in Git Bash\nls\nDesktop  Documents  Downloads  Pictures\nThis command lists the files in your current folder.\n\n---\n\nExample: Check Git Version\ngit --version\ngit version 2.43.0.windows.1\n\n---\n\nExample: Set VS Code as Default Editor\ngit config --global core.editor \"code --wait\"\n\n---\n\nExample: Set Notepad as Default Editor\ngit config --global core.editor \"notepad\"\n\n---\n\nExample: Check if Git is in PATH\ngit --version\ngit version 2.43.0.windows.1\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

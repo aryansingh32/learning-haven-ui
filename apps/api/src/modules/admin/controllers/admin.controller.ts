@@ -296,6 +296,20 @@ export class AdminController {
         }
     }
 
+    static async bulkDeleteCourses(req: Request, res: Response) {
+        try {
+            const { ids } = req.body;
+            if (!Array.isArray(ids) || ids.length === 0) {
+                return res.status(400).json({ error: 'ids array is required' });
+            }
+            const result = await CoursesService.bulkDeleteCourses(ids);
+            res.json(result);
+        } catch (error) {
+            logger.error('Bulk delete courses error:', error);
+            res.status(500).json({ error: 'Failed to bulk delete courses' });
+        }
+    }
+
     static async addCourseItem(req: Request, res: Response) {
         try {
             const result = await CoursesService.addCourseItem(req.params.id as string, req.body);

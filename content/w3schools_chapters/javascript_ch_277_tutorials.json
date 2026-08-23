@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 277,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To use D3.js in your web page,add a linkto the library:\n\nThis script selects the body element and appends a paragraph with the text \"Hello World!\":\n\n### Code Snippets\n\n```\n<script src=\"//d3js.org/d3.v3.min.js\"></script>\n\n---\n\nd3.select(\"body\").append(\"p\").text(\"Hello World!\");\n\n---\n\n// Set Dimensions\nconst xSize = 500;\nconst ySize = 500;\nconst margin = 40;\nconst xMax = xSize - margin*2;\nconst yMax = ySize - margin*2;\n// Create Random Points\nconst numPoints = 100;\nconst data = [];\nfor (let i = 0; i < numPoints; i++) {\ndata.push([Math.random() * xMax, Math.random() * yMax]);\n}\n// Append SVG Object to the Page\nconst svg = d3.select(\"#myPlot\")\n.append(\"svg\")\n.append(\"g\")\n.attr(\"transform\",\"translate(\" + margin + \",\" + margin + \")\");\n// X Axis\nconst x = d3.scaleLinear()\n.domain([0, 500])\n.range([0, xMax]);\nsvg.append(\"g\")\n.attr(\"transform\", \"translate(0,\" + yMax + \")\")\n.call(d3.axisBottom(x));\n// Y Axis\nconst y = d3.scaleLinear()\n.domain([0, 500])\n.range([ yMax, 0]);\nsvg.append(\"g\")\n.call(d3.axisLeft(y));\n// Dots\nsvg.append('g')\n.selectAll(\"dot\")\n.data(data).enter()\n.append(\"circle\")\n.attr(\"cx\", function (d) { return d[0] } )\n.attr(\"cy\", function (d) { return d[1] } )\n.attr(\"r\", 3)\n.style(\"fill\", \"Red\");\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_276",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

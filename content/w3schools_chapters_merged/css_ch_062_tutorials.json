@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 62,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSome CSS properties areanimatable, meaning that they can be used in animations and transitions.\n\nAnimatable properties can change gradually from one value to another, like size, numbers, percentage and color.\n\nThe animation properties are supported in all modern browsers.\n\nThe numbers in the table specifies the first browser version that fully support CSS animations.\n\nThese properties areanimatablein CSS:\n\n### Code Examples\n\n```\n@keyframes mymove\n{\nfrom {background-color: red;}\nto {background-color: blue;}\n}\n```\n\n## Tutorials\n\nCSS has several different units for expressing a length.\n\nMany CSS properties take \"length\" values, such aswidth,margin,padding,font-size, etc.\n\nLengthis a number followed by a length unit, such as10px,2em, etc.\n\nNote:A whitespace cannot appear between the number and the unit. However, if the value is0, the unit can be omitted.\n\nFor some CSS properties, negative lengths are allowed.\n\nThere are two types of length units:absoluteandrelative.\n\nThe absolute length units are fixed and a length expressed in any of these will appear as exactly that size.\n\nAbsolute length units are not recommended for use on screen, because screen sizes vary so much. \nHowever, they can be used if the output medium is known, such \nas for print layout.\n\n* Pixels (px) are relative to the viewing device. For low-dpi devices, 1px is one device pixel (dot) of the display. For printers and high resolution \nscreens 1px implies multiple device pixels.\n\nRelative length units specify a length relative to another length property. \nRelative length units scale better between different rendering medium.\n\nThe numbers in the table specify the first browser version that fully supports the \nlength unit.\n\n### Code Examples\n\n```\nh1 {\nfont-size: 60px;\n}\np {\nfont-size: 25px;\nline-height: 50px;\n}\n```\n\n## Tutorials\n\nIn the table below, select a body font size in pixels (px) to display a \ncomplete \"px to em and percent\" conversion table.\n\nTip:The default font size is usually 16px.\n\n## Tutorials\n\nAll modern browsers support the following 140 color names (click on a color name, or a hex value, to view the color as the background-color along with different text colors):\n\nFor a full overview of CSS colors, visit our \ncolors tutorial.\n\n## Tutorials\n\nColors in CSS can be specified by the following methods:\n\nA hexadecimal color is specified with: #RRGGBB, where the RR (red), GG (green) and BB (blue) hexadecimal integers specify the components of the color. \nAll values must be between 00 and FF.\n\nFor example, the #0000ff value is rendered as blue, because the blue component is set to its highest value (ff) and the others are set to \n00.\n\nA hexadecimal color is specified with: #RRGGBB. To add transparency, add two \nadditional digits between 00 and FF.\n\nAn RGB color value is specified with thergb() function, which has the following syntax:\n\nrgb(red, green, blue)\n\nEach parameter (red, green, and \nblue) defines the intensity of the color and can be an integer between 0 and 255 or a percentage value (from 0% to 100%).\n\nFor example, the rgb(0,0,255) value is rendered as blue, \nbecause the blue parameter is set to its highest value (255) and the others are \nset to 0.\n\nAlso, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).\n\nRGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity of the object.\n\nAn RGBA color is specified with thergba() function, which has the following syntax:\n\nrgba(red, green, blue, alpha)\n\nThe alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\nHSL stands for hue, saturation, and lightness - and represents a cylindrical-coordinate representation of colors.\n\nAn HSL color value is specified with thehsl() \nfunction, which has the following syntax:\n\nhsl(hue, saturation, lightness)\n\nHue is a degree on the color wheel (from 0 to 360) - 0 (or 360) is red, 120 \nis green, 240 is blue. Saturation is a percentage value; 0% means a shade of \ngray and 100% is the full color. Lightness is also a percentage; 0% is black, \n100% is white.\n\nHSLA color values are an extension of HSL color values with an alpha channel - which specifies the opacity of the object.\n\nAn HSLA color value is specified with thehsla() \nfunction, which has the following syntax:\n\nhsla(hue, saturation, lightness, alpha)\n\nThe alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\n140 color names are predefined in the HTML and CSS color specification.\n\nFor example:blue,red,coral,brown, etc:\n\nThecurrentcolorkeyword refers to the value of the color property of an element.\n\n### Code Examples\n\n```\n#p1 {background-color: #ff0000;}\u00a0\u00a0 /* red */\n#p2 {background-color: #00ff00;}\u00a0\u00a0 /* green */\n#p3 {background-color: #0000ff;}\u00a0\u00a0 /* blue */\n\n---\n\n#p1a {background-color: #ff000080;}\u00a0\u00a0 /* red transparency */\n#p2a {background-color: #00ff0080;}\u00a0\u00a0 /* green \n  transparency */\n#p3a {background-color: #0000ff80;}\u00a0\u00a0 /* blue \n  transparency */\n\n---\n\n#p1 {background-color: rgb(255, 0, 0);}\u00a0\u00a0 /* red */\n#p2 {background-color: rgb(0, 255, 0);}\u00a0\u00a0 /* green */\n#p3 {background-color: rgb(0, 0, 255);}\u00a0\u00a0 /* blue */\n\n---\n\n#p1 {background-color: rgba(255, 0, 0, 0.3);}\u00a0\u00a0 /* red with opacity */\n#p2 {background-color: rgba(0, 255, 0, 0.3);}\u00a0\u00a0 /* green with opacity */\n#p3 {background-color: rgba(0, 0, 255, 0.3);}\u00a0\u00a0 /* blue with opacity */\n\n---\n\n#p1 {background-color: hsl(120, 100%, 50%);}\u00a0\u00a0 /* green */\n#p2 {background-color: hsl(120, 100%, 75%);}\u00a0\u00a0 /* light green */\n#p3 {background-color: hsl(120, 100%, 25%);}\u00a0\u00a0 /* dark green */\n#p4 {background-color: hsl(120, 60%, 70%);}\u00a0\u00a0\u00a0 /* pastel green */\n\n---\n\n#p1 {background-color: hsla(120, 100%, 50%, 0.3);}\u00a0\u00a0 /* green with opacity */\n#p2 {background-color: hsla(120, 100%, 75%, 0.3);}\u00a0\u00a0 /* light green with opacity */\n#p3 {background-color: hsla(120, 100%, 25%, 0.3);}\u00a0\u00a0 /* dark green with opacity */\n#p4 {background-color: hsla(120, 60%, 70%, 0.3);}\u00a0\u00a0\u00a0 /* pastel green with opacity */\n\n---\n\n#p1 {background-color: blue;}\n#p2 {background-color: red;}\n#p3 {background-color: coral;}\n#p4 {background-color: brown;}\n\n---\n\n#myDIV {\ncolor: blue; /* Blue text color */\nborder: 10px solid currentcolor; \n  /* Blue border color */\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_62",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_62",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

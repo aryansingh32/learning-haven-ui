@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 57,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThere are many free CSS Frameworks that offer Responsive Design.\n\nA great way to create a responsive design, is to use a \nresponsive \nstyle sheet, likeW3.CSS\n\nW3.CSS makes it easy to develop sites that look nice at any size!\n\nTo learn more about W3.CSS, read ourW3.CSS Tutorial.\n\nAnother popular framework is Bootstrap. It uses HTML and CSS to make \nresponsive web pages:\n\nTo learn more about Bootstrap, go to ourBootstrap Tutorial.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<meta name=\"viewport\" \n content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" \n href=\"https://www.w3schools.com/w3css/4/w3.css\">\n<body>\n<div \n class=\"w3-container w3-blue\">\n<h1>W3Schools Demo</h1>\n<p>Resize this responsive page!</p>\n</div>\n<div \n class=\"w3-row-padding\">\n<div class=\"w3-third\">\n<h2>London</h2>\n<p>London is the capital city of England.</p>\n<p>It is the most populous city in the United Kingdom,\nwith a \n metropolitan area of over 13 million inhabitants.</p>\n</div>\n<div \n class=\"w3-third\">\n<h2>Paris</h2>\n<p>Paris is \n the capital of France.</p>\n<p>The Paris area is one of the largest \n population centers in Europe,\nwith more than 12 million \n inhabitants.</p>\n</div>\n<div class=\"w3-third\">\n<h2>Tokyo</h2>\n<p>Tokyo is the capital of Japan.</p>\n<p>It \n is the center of the Greater Tokyo Area,\nand the most populous \n metropolitan area in the world.</p>\n</div>\n</div>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<title>Bootstrap 5 Example</title>\n<meta charset=\"utf-8\">\n<meta \n  name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link \n  href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" \n  rel=\"stylesheet\">\n<script \n  src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"></script>\n</head>\n<body>\n<div class=\"container-fluid p-5 bg-primary text-white \n  text-center\">\n<h1>My First Bootstrap Page</h1>\n<p>Resize \n  this responsive page to see the effect!</p>\n</div>\n<div class=\"container mt-5\">\n<div class=\"row\">\n<div class=\"col-sm-4\">\n<h3>Column 1</h3>\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>\n</div>\n<div class=\"col-sm-4\">\n<h3>Column 2</h3>\n<p>Lorem ipsum dolor sit \n  amet, consectetur adipisicing elit...</p>\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>\n</div>\n<div class=\"col-sm-4\">\n<h3>Column 3</h3>\n<p>Lorem ipsum dolor sit \n  amet, consectetur adipisicing elit...</p>\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>\n</div>\n</div>\n</div>\n</body>\n</html>\n```\n\n## Tutorials\n\nWe have created some responsive templates with theW3.CSS framework.\n\nYou are free to modify, save, share, and use them in all your projects.\n\nTip:All templates below can behostedwithW3Schools Spaces.\n\n## Tutorials\n\nPrepare online at your own pace, take the exam when you are ready, and add a verified credential to your CV, LinkedIn profile, and portfolio.\n\nDesigned for students, developers, and professionals who want a practical way to document their knowledge.\n\nAny student or professional working in digital fields can benefit from documenting their skills with a certificate.\n\nCertifications help demonstrate knowledge to current or future employers, clients, and collaborators in an increasingly competitive market.\n\nW3Schools has more than two decades of experience teaching coding online.\n\nOur certificates provide a practical and professional way to show your skills in a format that is easy to verify and share.\n\nThe price is a small fraction of the cost of traditional education.\n\nYou can prepare on your own schedule and take the exam when you are ready.\n\nEach certificate includes a unique verification link that can be shared with employers, clients, and your network.\n\nDownload your certificate to showcase it, and validate it using the unique link or QR code.\n\nSee how it looks in thisexample.\n\nHave any questions? Send us an e-mail:sales@w3schools.com\n\nGetting a certificate shows your commitment to improving your skills.\n\nYou can add the certificate to your CV, resume, LinkedIn profile, and other professional platforms.\n\nIt can help support career growth by making it easier to show your knowledge when applying for jobs, freelance work, or larger projects.\n\nGetting a certificate shows initiative, helps you build credibility, and gives you a professional way to present yourHTMLknowledge.\n\nAre you an educator, manager, or business owner looking for courses or certifications for a group?\n\nWe work with schools, companies, and organizations around the world.\n\nSend us an e-mail:sales@w3schools.com\n\n## Tutorials\n\nOur \"Show Sass\" tool makes it easy to learn Sass, it shows both the code and the result.\n\nAt W3Schools you will find complete references of all Sass functions with syntax and examples.\n\n### Code Examples\n\n```\n/* Define standard variables and values for website */\n$bgcolor: lightblue;\n$textcolor: darkblue;\n$fontsize: 18px;\n/* Use the variables */\nbody\n{\nbackground-color: $bgcolor;\ncolor: \n  $textcolor;\nfont-size: $fontsize;\n}\n```\n\n## Tutorials\n\nWe have created some responsive starter templates with CSS.\n\nYou are free to modify, save, share, and use them in all your projects.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_57",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_57",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

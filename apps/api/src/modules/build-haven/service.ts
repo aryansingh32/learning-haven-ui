@@ -5,7 +5,7 @@ import { supabase, pool } from '../../config/database';
 import logger from '../../config/logger';
 import { GitHubService } from '../github/github.service';
 import { validateBuildLanguageConfig } from './validation';
-import { CreateBuildChallengeInput, CreateBuildStageInput, UpsertLanguageInput, UpdateBuildChallengeInput, UpdateBuildStageInput } from './types';
+import { CreateBuildChallengeInput, CreateBuildStageInput, UpsertLanguageInput, UpdateBuildChallengeInput, UpdateBuildStageInput, VibeVerificationResult } from './types';
 
 /**
  * Generate a 3-character alphanumeric short ID for stages.
@@ -164,6 +164,11 @@ export class BuildHavenService {
         learning_paths: ['build'],
         tech_stack: input.supported_languages || [],
         testimonials_config: input.testimonials_config || { auto_slide: false, items: [] },
+        // Dual-mode
+        available_modes: input.available_modes || ['traditional'],
+        default_mode: input.default_mode || 'traditional',
+        reference_demo_url: input.reference_demo_url || null,
+        product_contract: input.product_contract || null,
       })
       .select()
       .single();
@@ -212,6 +217,8 @@ export class BuildHavenService {
       sortOrder = existing?.[0] ? existing[0].sort_order + 1 : 1;
     }
 
+    const verificationType = input.verification_type || 'docker_test';
+
     const { data, error } = await supabase
       .from('build_stages')
       .insert({
@@ -235,6 +242,9 @@ export class BuildHavenService {
         concepts_content: input.concepts_content || null,
         image_url: input.image_url || null,
         sort_order: sortOrder,
+        // Dual-mode
+        verification_type: verificationType,
+        acceptance_contract: input.acceptance_contract || {},
       })
       .select()
       .single();
@@ -413,21 +423,21 @@ export class BuildHavenService {
     return { challenge, enrollment, attempts };
   }
 
-  static async startChallenge(userId: string, slug: string, language: string) {
+  static async startChallenge(userId: string, slug: string, language: string, buildMode: 'traditional' | 'vibe' = 'traditional') {
     const challenge = await this.getChallengeBySlug(slug);
     if (!challenge) throw new Error('Challenge not found');
+
+    // Validate that the requested mode is available
+    const availableModes: string[] = challenge.available_modes || ['traditional'];
+    if (!availableModes.includes(buildMode)) {
+      throw new Error(`Mode '${buildMode}' is not available for this challenge`);
+    }
 
     const languageConfig = (challenge.languages || []).find((l: any) => l.language === language);
     if (!languageConfig) throw new Error('Language is not configured for this challenge');
 
-    const configError = validateBuildLanguageConfig({
-      language: languageConfig.language,
-      starter_repo_url: languageConfig.starter_repo_url,
-      docker_test_image: languageConfig.docker_test_image,
-    });
-    if (configError) throw new Error(configError);
-
-    const { data: enrollment } = await supabase
+    // Check for existing enrollment of same user+program+language (any mode)
+    const { data: existingEnrollment } = await supabase
       .from('build_enrollments')
       .select('*')
       .eq('user_id', userId)
@@ -435,9 +445,39 @@ export class BuildHavenService {
       .eq('language', language)
       .maybeSingle();
 
-    if (enrollment?.repo_url) {
-      return { enrollment, repository: null, clone_command: `git clone ${enrollment.repo_url}` };
+    if (existingEnrollment?.repo_url && buildMode === 'traditional') {
+      return { enrollment: existingEnrollment, repository: null, clone_command: `git clone ${existingEnrollment.repo_url}` };
     }
+    if (existingEnrollment && buildMode === 'vibe') {
+      return { enrollment: existingEnrollment, repository: null, clone_command: null };
+    }
+
+    const totalStages = challenge.stages.length;
+
+    // ── VIBE MODE: no GitHub required ─────────────────────────────────
+    if (buildMode === 'vibe') {
+      const { rows } = await pool.query(
+        `
+        INSERT INTO build_enrollments (
+          user_id, program_id, language, build_mode, current_stage, completed_stages, total_stages,
+          progress_percentage, repo_full_name, repo_url, webhook_secret, status, updated_at
+        ) VALUES ($1, $2, $3, 'vibe', $4, '{}', $5, 0, NULL, NULL, NULL, 'in_progress', now())
+        ON CONFLICT (user_id, program_id, language)
+        DO UPDATE SET build_mode = 'vibe', updated_at = now()
+        RETURNING *;
+        `,
+        [userId, challenge.id, language, 1, totalStages]
+      );
+      return { enrollment: rows[0], repository: null, clone_command: null };
+    }
+
+    // ── TRADITIONAL MODE: GitHub provisioning ─────────────────────────
+    const configError = validateBuildLanguageConfig({
+      language: languageConfig.language,
+      starter_repo_url: languageConfig.starter_repo_url,
+      docker_test_image: languageConfig.docker_test_image,
+    });
+    if (configError) throw new Error(configError);
 
     const repo = await GitHubService.provisionRepository(
       userId,
@@ -446,13 +486,12 @@ export class BuildHavenService {
       languageConfig.starter_repo_url
     );
 
-    const totalStages = challenge.stages.length;
     const { rows } = await pool.query(
       `
       INSERT INTO build_enrollments (
-        user_id, program_id, language, current_stage, completed_stages, total_stages, 
+        user_id, program_id, language, build_mode, current_stage, completed_stages, total_stages, 
         progress_percentage, repo_full_name, repo_url, webhook_secret, status, updated_at
-      ) VALUES ($1, $2, $3, $4, '{}', $5, $6, $7, $8, $9, $10, now())
+      ) VALUES ($1, $2, $3, 'traditional', $4, '{}', $5, $6, $7, $8, $9, $10, now())
       ON CONFLICT (user_id, program_id, language)
       DO UPDATE SET
         repo_full_name = EXCLUDED.repo_full_name,
@@ -937,6 +976,92 @@ export class BuildHavenService {
     if (updateError) throw updateError;
   }
 
+  /**
+   * Submit a vibe-mode stage for Playwright-based gate verification.
+   * For Phase 1 this only supports 'github_push' (paste a public repo URL).
+   * The actual Playwright run is delegated to sandbox.service.ts via BullMQ.
+   */
+  static async submitVibeStage(params: {
+    enrollmentId: string;
+    stageId: string;
+    userId: string;
+    submissionSource: 'github_push' | 'live_url';
+    submissionRef: string; // GitHub repo URL or live deployment URL
+    onLogLine?: (line: string) => void;
+  }): Promise<VibeVerificationResult> {
+    const { data: stage } = await supabase
+      .from('build_stages')
+      .select('*')
+      .eq('id', params.stageId)
+      .single();
+
+    if (!stage) throw new Error('Stage not found');
+    if (stage.verification_type !== 'contract') {
+      throw new Error('Stage is not a vibe/contract stage');
+    }
+
+    const contract = (stage.acceptance_contract || {}) as any;
+    const journeys: any[] = contract.journeys || [];
+    const startedAt = Date.now();
+
+    // ── Phase 1: Structural validation only (no live Playwright) ──────
+    // In Phase 2, this will call sandbox.service.ts to spin up two-container
+    // build+serve+playwright flow. For now, we produce a "pending" result
+    // so the enrollment UX works end-to-end while sandbox is being built.
+    const gateResults = journeys.map((j: any) => ({
+      journeyId: j.id,
+      label: j.label,
+      passed: false,
+      steps_passed: 0,
+      steps_total: (j.steps || []).length,
+      failure_step: 'Vibe verification engine coming soon',
+      failure_reason: 'Sandbox infrastructure is being provisioned for this challenge.',
+      screenshot_url: null,
+    }));
+
+    const result: VibeVerificationResult = {
+      verdict: 'failed',
+      gates_passed: 0,
+      gates_total: journeys.length,
+      score_pct: 0,
+      gate_results: gateResults,
+      logs_tail: '[vibe] Submission received. Verification pipeline initializing.',
+      duration_ms: Date.now() - startedAt,
+      submission_source: params.submissionSource,
+      submission_ref: params.submissionRef,
+    };
+
+    // Record the attempt
+    const { count } = await supabase
+      .from('build_stage_results')
+      .select('id', { count: 'exact', head: true })
+      .eq('enrollment_id', params.enrollmentId)
+      .eq('stage_id', params.stageId);
+
+    await supabase.from('build_stage_results').insert({
+      enrollment_id: params.enrollmentId,
+      stage_id: params.stageId,
+      user_id: params.userId,
+      commit_hash: null,
+      status: 'failed',
+      test_output: result.logs_tail,
+      exit_code: null,
+      execution_time_ms: result.duration_ms,
+      attempt_number: (count || 0) + 1,
+      structured_feedback: result as unknown as Record<string, unknown>,
+      submission_source: params.submissionSource,
+      submission_ref: params.submissionRef,
+      completed_at: new Date().toISOString(),
+    });
+
+    await supabase
+      .from('build_enrollments')
+      .update({ last_push_at: new Date().toISOString() })
+      .eq('id', params.enrollmentId);
+
+    return result;
+  }
+
   private static async syncStageCount(programId: string) {
     const { count } = await supabase
       .from('build_stages')
@@ -962,6 +1087,45 @@ export class BuildHavenService {
       .single();
     if (error) throw error;
     return data;
+  }
+
+  static async hardDeleteChallenge(id: string) {
+    // Delete stage results for all stages belonging to this program
+    const { data: stages } = await supabase.from('build_stages').select('id').eq('program_id', id);
+    const stageIds = (stages || []).map((s: any) => s.id);
+    if (stageIds.length > 0) {
+      await supabase.from('build_stage_results').delete().in('stage_id', stageIds);
+    }
+    await supabase.from('build_enrollments').delete().eq('program_id', id);
+    await supabase.from('build_stages').delete().eq('program_id', id);
+    await supabase.from('build_challenge_languages').delete().eq('program_id', id);
+
+    const { error } = await supabase
+      .from('apprenticeship_programs')
+      .delete()
+      .eq('id', id)
+      .eq('program_type', 'build_challenge');
+
+    if (error) throw error;
+    return { message: 'Challenge permanently deleted' };
+  }
+
+  static async bulkDeleteChallenges(ids: string[], permanent: boolean = false) {
+    if (!ids || ids.length === 0) return { message: 'No IDs provided', count: 0 };
+    if (permanent) {
+      for (const id of ids) {
+        await this.hardDeleteChallenge(id);
+      }
+      return { message: `${ids.length} challenge(s) permanently deleted`, count: ids.length };
+    } else {
+      const { error } = await supabase
+        .from('apprenticeship_programs')
+        .update({ status: 'archived' })
+        .in('id', ids)
+        .eq('program_type', 'build_challenge');
+      if (error) throw error;
+      return { message: `${ids.length} challenge(s) archived`, count: ids.length };
+    }
   }
 
   // ---- Phase 2: Admin analytics ----

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 4,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In the previous chapter, we created a Java file calledMain.java, and we used the following code to print \"Hello World\" to the screen:\n\nEvery line of code that runs in Java must be inside aclass.  \nThe class name should always start with an uppercase first letter. In our example, we named the classMain.\n\nNote:Java is case-sensitive.MyClassandmyclasswould be treated as two completely different names.\n\nThe name of the Java filemust matchthe class name.  \nSo if your class is calledMain, the file must be saved asMain.java.  \nThis is because Java uses the class name to find and run your code. If the names don't match, Java will give an error and the program will not run.\n\nWhen saving the file, save it using the class name and add.javato the end of the filename.  \nTo run the example above on your computer, make sure that Java is properly installed:  \nGo to theGet Started Chapterfor how to install Java. The output should be:\n\nThemain()method is required in every Java program. It is where the program starts running:\n\nAny code placed inside themain()method will be executed.\n\nFor now, you don't need to understand the keywordspublic,static, andvoid.  \nYou will learn about them later in this tutorial.  \nJust remember:main()is the starting point of every Java program.\n\nInside themain()method, we can use theprintln()method to print a line of text to the screen:\n\n### Code Snippets\n\n```\nExample\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello World\");\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nHello World\n\n---\n\npublic static void\nmain\n(String[] args)\n\n---\n\nExample\npublic static void main(String[] args) {\n  System.out.println(\"Hello World\");\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

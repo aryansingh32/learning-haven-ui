@@ -1,0 +1,742 @@
+Video URL: https://www.youtube.com/watch?v=mCx5aSEK8YE
+Video Title: JavaScript Exercise 12 - Solution & Shoutouts | Sigma Web Development Course - Tutorial #72
+--------------------------------------------------
+
+00:00:00.000
+I gave you the exercise
+00:00:02.000
+Many of you solved it
+00:00:04.000
+In today's video, I will give you the solution
+00:00:06.000
+And then we will give shoutout
+00:00:08.000
+To those who solved it
+00:00:10.000
+Like this video and write
+00:00:12.000
+JavaScript cap in the comment section
+00:00:14.000
+Let's go to the computer screen
+00:00:16.000
+Let's roll the intro
+00:00:30.500
+Alright guys, the the time has come to give you the solution to the question I gave you. It was very straight forward, yet some people wrote that this question was difficult.
+00:00:35.500
+But I say that the level is everyone's own and it will take a little time for you to build your level.
+00:00:41.000
+Not a problem at all.
+00:00:43.000
+So what did I say in in exercise 12, what I said
+00:00:46.000
+that you have to do
+00:00:48.000
+color boxes, so here you see
+00:00:50.000
+that we have to generate random colors
+00:00:53.000
+so this question was given 5 boxes
+00:00:55.000
+assign a random color and a random background
+00:00:58.000
+to each box using DOM concepts
+00:01:01.000
+now there are many ways of this
+00:01:03.000
+I will show you how to generate random numbers
+00:01:06.000
+Now see how to generate random colors
+00:01:09.000
+There are many ways to generate random colors
+00:01:12.000
+But what will be a very layman way
+00:01:15.000
+What will be a layman way
+00:01:18.000
+I will see how many boxes are there
+00:01:21.000
+In fact it would be better if I bring the file of video no. 70
+00:01:24.000
+So if I copy the file of video no. 70 I have brought the file of video no. 70
+00:01:26.000
+so if I copy this index.html
+00:01:28.000
+by the way you can drag and drop it
+00:01:30.000
+in VS code if you don't know
+00:01:32.000
+so if I bring this file it will be better
+00:01:34.000
+ctrl a, ctrl v
+00:01:36.000
+so I did this
+00:01:38.000
+now what I am doing here, I am saying that
+00:01:40.000
+I have to assign these boxes
+00:01:42.000
+randomly in color
+00:01:44.000
+so I will write a function first
+00:01:45.600
+First of all, I will put a script here
+00:01:47.600
+See, it is very important to organize things
+00:01:50.000
+Because we are not going to make these small projects always
+00:01:53.000
+We will make big projects
+00:01:55.000
+So when we make big projects
+00:01:57.000
+Then we have to make a lot of files like script.js
+00:02:01.000
+And have to assemble things
+00:02:03.000
+Otherwise, what will happen otherwise things will get lost
+00:02:06.000
+we don't want that
+00:02:08.000
+so it's important to organize things
+00:02:10.000
+and i always
+00:02:12.000
+write my script
+00:02:14.000
+like this
+00:02:16.000
+when you are a beginner
+00:02:18.000
+then atleast write it
+00:02:20.000
+so that you will know that your script is working
+00:02:22.000
+first of all i will
+00:02:24.000
+take all the boxes, there are many ways
+00:02:26.000
+either I take all the elements of the container
+00:02:29.000
+or I target from this class
+00:02:32.000
+there are many ways, I will target from this class or I will tell you
+00:02:35.000
+the counter intuitive method, see
+00:02:38.000
+document.getElementsByClassName, I will say let boxes
+00:02:41.000
+is equal to document.getElementByCN
+00:02:44.000
+and enter, do it like this let boxes is equal to document.getElementByCN
+00:02:45.000
+and enter, like this, and box
+00:02:48.000
+and hit ctrl enter and I will write
+00:02:51.000
+console.log boxes, like this
+00:02:55.000
+and if I show you by running
+00:02:57.000
+index.html, then you will see
+00:02:59.000
+that when you do inspect element
+00:03:02.000
+then you will see here
+00:03:04.000
+you have got all the 5 boxes 0, 1, 2, 3, 4 and you can see you have got all the boxes
+00:03:06.080
+0,1,2,3,4 and you can iterate them
+00:03:08.080
+you can say
+00:03:10.080
+by array.from
+00:03:12.080
+boxes
+00:03:14.080
+array.from boxes means make an array from boxes
+00:03:16.080
+because by default this is html collection
+00:03:18.080
+and in html collection
+00:03:20.080
+there is no for each method
+00:03:22.080
+so you have to understand this thing and I will write
+00:03:24.080
+an arrow function like this and i will write an arrow function like this
+00:03:26.000
+and i will write console.log
+00:03:28.000
+now i am just
+00:03:30.000
+printing e here
+00:03:32.000
+and another way to do this
+00:03:34.000
+is my work, i will tell you
+00:03:36.000
+so i will tell you all the ways
+00:03:38.000
+so i will say
+00:03:40.000
+document.getElementBy
+00:03:42.000
+or querySelector
+00:03:44.000
+i will say querySelector.container
+00:03:46.000
+so I've taken container here, so it will be my container
+00:03:48.000
+then I'll write
+00:03:50.000
+dot and I'll write
+00:03:52.000
+children
+00:03:54.000
+what will happen if I'll write children
+00:03:56.000
+it will be the same
+00:03:58.000
+5 of 5 will come, reload
+00:04:00.000
+why? because all the
+00:04:02.000
+children of container, i.e. child elements
+00:04:04.000
+or all the children of the container means child elements or
+00:04:06.000
+all the box class elements are the same
+00:04:09.000
+now if class is equal to box is not there in all of them
+00:04:12.000
+then this method would have been useful for you, so you should know this
+00:04:15.000
+let me do word wrap
+00:04:18.000
+so that you can see it clearly, so here i will not do console.log
+00:04:21.000
+but i will make a function, and what will that function be?
+00:04:24.000
+i will make a function And what will that function be?
+00:04:28.700
+I will make a function here and I will name it
+00:04:31.720
+Either I can make it like this or I can make an arrow function RandomColor
+00:04:33.220
+And it would be better if I say getRandomColor
+00:04:36.440
+So getRandomColor is a function
+00:04:38.440
+Which generates a random color for me
+00:04:41.560
+If I put a CSS in the box
+00:04:45.220
+ColorRed, let's if i put a css in the box color red
+00:04:48.220
+i put color red
+00:04:50.980
+so what i can do
+00:04:53.980
+if i want to convert it to number, i can take the values of rgb
+00:04:56.980
+so this is a color
+00:04:59.980
+and this value goes from 0 to
+00:05:02.980
+255 from 0 to 255
+00:05:06.000
+all three values
+00:05:09.000
+so let's do this
+00:05:12.000
+val1 is equal to
+00:05:15.000
+the first value
+00:05:18.000
+let it be 244
+00:05:21.000
+233
+00:05:24.000
+val2?
+00:05:26.000
+124
+00:05:28.000
+and
+00:05:30.000
+what is my val3?
+00:05:32.000
+111
+00:05:34.000
+so i can say
+00:05:36.000
+return
+00:05:38.000
+this, but not this
+00:05:40.000
+return exactly, put it here
+00:05:42.000
+put val1
+00:05:44.000
+put val2
+00:05:46.100
+i have told you template laterals, don't say what are you doing
+00:05:49.100
+otherwise i will show you again in playlist
+00:05:52.100
+ok
+00:05:55.100
+i will come to your home and i will show you all the videos
+00:05:58.100
+of this sigma, ok, of this playlist
+00:06:01.100
+and here you see this random color will be returned
+00:06:04.100
+now i will do a simple thing
+00:06:06.000
+i will say e.style.
+00:06:08.000
+and i will say
+00:06:10.000
+background color
+00:06:12.000
+is equal to
+00:06:14.000
+a random color
+00:06:16.000
+so how i will get a random color
+00:06:18.000
+i will call getRandomColor function
+00:06:20.000
+and i will see if it is working or not
+00:06:22.000
+yes it is working
+00:06:24.000
+and i will remove the color I have put red
+00:06:25.500
+I have put it just like this
+00:06:27.500
+so I have generated a random color
+00:06:31.500
+and what is that random color
+00:06:33.500
+this value, color is coming with it
+00:06:35.500
+I have not generated a random color yet
+00:06:37.500
+but my function is working, I have found out
+00:06:39.500
+and I will do the same thing for color
+00:06:41.500
+ok, and whenever this function will run
+00:06:44.500
+it will bring a random color that's why what I will do the same for color and whenever this function will run
+00:06:46.000
+it will bring a random color
+00:06:49.000
+so I will do math.random
+00:06:52.000
+and I want to show you what math.random does
+00:06:55.000
+now see I don't want to be mathematical
+00:06:58.000
+and I don't want to bore you
+00:07:01.000
+but I will tell you a simple concept
+00:07:04.000
+if you want to generate a random number between a and b
+00:07:06.000
+Then you write a plus
+00:07:09.000
+And from 0 i'll say r
+00:07:12.000
+And then b minus a
+00:07:15.000
+Here you'll write r, it's a random number between 0 and 1
+00:07:18.000
+If r value is 0 then you'll get a
+00:07:21.000
+If r value is 1 then you'll get b
+00:07:24.000
+And if r value is between 0 and 1 then you will get a if r is 1 then you will get b
+00:07:26.000
+and if r is between 0 and 1 then you will get a random number
+00:07:29.000
+which will lie between a and b
+00:07:32.000
+including a and b, if the random number is between 0 and 1
+00:07:35.000
+with that said, what we will do
+00:07:38.000
+we will use this formula and in this formula
+00:07:41.000
+it is like this
+00:07:44.000
+and here a is 0 and B is 255
+00:07:47.000
+255-0 will be 255
+00:07:50.000
+So it will always generate random numbers from 0 to 255
+00:07:55.000
+But I want it to give me an integer
+00:08:00.000
+So I will say math.seal and it will give me an integer
+00:08:04.000
+Now see what does math.seal and it will give me an integer Now see what does math.seal mean, if I change it to 4.22
+00:08:09.000
+So it will give me a big integer
+00:08:12.000
+The next integer of this, so I am doing the same here
+00:08:15.000
+So I am using math.seal
+00:08:17.000
+So my color is random, is it equal or not, tell me in the comment
+00:08:21.000
+Everyone write that it is equal in the comment
+00:08:23.000
+And if someone got more maths
+00:08:26.000
+then do some hard work and learn it
+00:08:28.000
+this much maths is required in programming
+00:08:30.000
+and i told you very soon
+00:08:32.000
+let me see if anyone told me on google
+00:08:34.000
+random
+00:08:36.000
+number between
+00:08:38.000
+two numbers
+00:08:40.000
+did anyone explain this thing
+00:08:42.000
+yes people have explained
+00:08:44.000
+see here in stack overflow
+00:08:46.000
+see this, they have also used this, what I have done
+00:08:48.000
+max-min plus 1 plus min, ok
+00:08:51.000
+so these formulas are exactly
+00:08:54.000
+as I have explained to you, you can watch that video again
+00:08:57.000
+see what they have done here, min plus max-min
+00:09:00.000
+into mat.random, they have done exactly what I have told you
+00:09:03.000
+so all these things should come to you, and if they don't come,
+00:09:06.000
+and I will say that yes, it is not simple, see it has come in random colors,
+00:09:09.000
+and I had to do the same thing with e.style.color,
+00:09:12.000
+so that is also done, okay, so see here you are getting
+00:09:15.000
+different colors, now if I reload,
+00:09:18.000
+then the colors will change, see, so every time
+00:09:21.000
+this will reload, then this color will keep changing, okay,
+00:09:24.000
+so here it is changing like disco light
+00:09:26.000
+So that's it
+00:09:28.000
+So I hope you guys
+00:09:30.000
+Liked this method
+00:09:32.000
+There is one more method
+00:09:34.000
+You can generate hexadecimal number
+00:09:36.000
+With the help of hex color generator
+00:09:38.000
+But I want to see what you guys have done
+00:09:40.000
+And your solution
+00:09:42.000
+How and on what basis
+00:09:44.000
+I want to see this So first of all shoutout to Amish Iqbal
+00:09:47.280
+then after this
+00:09:48.280
+shoutout to S.Prince
+00:09:50.040
+and then shoutout to Mr.KaloraOfficial
+00:09:53.040
+shoutout to Coding Ninja
+00:09:54.320
+shoutout to MJD Gaming
+00:09:55.600
+shoutout to Code with Ayush
+00:09:56.880
+then shoutout to MJD Gaming again
+00:09:59.120
+shoutout to DRP
+00:10:00.240
+shoutout to Priya
+00:10:01.800
+shoutout to Patel Manan
+00:10:03.400
+now
+00:10:04.960
+shoutout to Amne shoutout to Priya, Patel Manan, Abhi Amne, RKS Bhatt, Virus Baba Technica
+00:10:11.000
+Comment below, like the video, share it
+00:10:14.000
+Shoutout to Wahid Dost Aman, Lakshraj Das, Use Nothing, Vyvan Yadav, Ashish, Krivan, Awais Mughal, Dilip, Shivam, Rishabh, Teerth, Rohan
+00:10:30.000
+and here the first solution of Rohan Das has come, what a thing, this name is sounding familiar but I would like to see this solution too
+00:10:37.000
+and let's see if this solution can create some fun or not, okay? So what I do is, I comment out my solution for once and check it.
+00:10:47.620
+That it is working or not.
+00:10:49.940
+Hmm.
+00:10:52.380
+So this is not working, let me see what is the problem.
+00:10:56.220
+So here boxes is equal to, okay, so I have written boxes here.
+00:11:01.180
+Yes, it is working and the color is also coming, x color.
+00:11:04.820
+They have created chaos on a different level
+00:11:06.000
+so let me tell you the background of this solution
+00:11:09.000
+that this value from 0
+00:11:12.000
+to here if you generate a value
+00:11:15.000
+and after this you use the two string method and convert it
+00:11:18.000
+in hexadecimal, if you guys
+00:11:21.000
+take your mouse here then you will know that in the two string method
+00:11:24.000
+you can give an argument radix which if you take your mouse here, you will find that in the two string method, you can give an argument
+00:11:26.000
+which if you give 16, it will convert into hexadecimal
+00:11:29.280
+and you can generate random color
+00:11:32.160
+so this is a good way to generate random color
+00:11:35.160
+and 1677215 is white in decimal
+00:11:38.660
+and there are different colors from 0 to here
+00:11:41.360
+and you can convert them into hexadecimal, which is great
+00:11:44.160
+there are many colors
+00:11:46.020
+and these are colors with different values
+00:11:49.020
+and they have shown the code of these colors
+00:11:52.020
+great, awesome, I liked the solution, it was fun
+00:11:55.020
+now I will look at the next solution
+00:11:58.020
+I will shoutout Shorray, William, Dev Jyoti, LearnCB
+00:12:01.020
+Shoutout to coding wala jadu
+00:12:04.020
+and here comes Naveen Gupta, he could have given only javascript but no problem
+00:12:07.200
+I am not happy with this
+00:12:09.440
+when I see too much code
+00:12:12.320
+I by default get
+00:12:14.560
+angry or not, unhappy
+00:12:16.880
+because there is no point in writing too much code
+00:12:19.520
+or what was the need to write so much
+00:12:21.440
+what are you doing, you are doing A1
+00:12:24.080
+you are generating numbers from 0 to 20
+00:12:26.000
+and dividing it by 5
+00:12:28.000
+and putting the remainder
+00:12:30.000
+no, this is not a good solution
+00:12:32.000
+I have seen what you did there
+00:12:34.000
+but you have used red, blue, green, yellow, aqua
+00:12:36.000
+only this color
+00:12:38.000
+what about the rest of the colors?
+00:12:40.000
+I have to generate random colors
+00:12:42.000
+from all the colors
+00:12:44.000
+so nice try by the way
+00:12:46.000
+nice try, their solution should work and it is working
+00:12:49.000
+just generating with limited colors, I really appreciate your solution
+00:12:52.000
+first of all, it is better than doing nothing
+00:12:55.000
+but still you see my solution
+00:12:58.000
+maybe you didn't understand the question properly, Navneet Gupta
+00:13:01.000
+but a big shoutout to you because you solved it, wrote such a big code
+00:13:04.000
+and accepted the challenge,
+00:13:06.000
+you also wrote sigma batch op, big shoutout, then coding magic and Prateek Sharma and Kasim Ali official,
+00:13:14.000
+we will also see the solution of itsmihir, so what is happening in itsmihir solution,
+00:13:19.000
+what Rohan has done and why is code is looking same line by line but it is possible that both of their thoughts are matching
+00:13:28.000
+that exactly the same thing has been solved, great, awesome
+00:13:32.000
+I love your solution, it is the same solution, I will run this solution
+00:13:38.000
+and this is looking very similar to Rohan's solution
+00:13:42.000
+but nice, okay, great, great, you have done it.
+00:13:46.800
+So I will keep bringing such unique questions and will keep giving you fun.
+00:13:51.200
+And here is another one, Abdul Shamat Khan, Abu Shah Khan, okay.
+00:13:58.800
+So what have they done here, 1, 2, 3, 4, A, B, C, D, E,
+00:14:02.800
+what have they done, I want to understand this
+00:14:06.000
+I think I am not able to understand this
+00:14:08.000
+but I will try to understand this
+00:14:10.000
+and I will tell you what they have done
+00:14:12.000
+first let's see if it is working or not
+00:14:14.000
+because if it is not working then what is the use
+00:14:16.000
+see it is generating some colors
+00:14:18.000
+and not some and it is doing this in 3 boxes
+00:14:20.000
+why?
+00:14:22.000
+so they have made a function with name
+00:14:24.000
+and from 1 to so they have made a function with name and from 1 to
+00:14:26.000
+f, they have given letters
+00:14:28.000
+and they have
+00:14:30.000
+tried to make a random color with these letters
+00:14:32.000
+and do you know what is the problem?
+00:14:34.000
+what is the problem? the problem is
+00:14:36.000
+that you
+00:14:38.000
+have given style to some boxes
+00:14:40.000
+why? why all boxes
+00:14:42.000
+didn't get style?
+00:14:44.000
+why all boxes didn't get style why all the boxes are not given style
+00:14:46.000
+you did i is equal to 0, i less than 6
+00:14:49.000
+and color is equal to this, return color
+00:14:52.000
+a1, a0 should not be taken, a0 is also taken
+00:14:55.000
+dot style dot background color c
+00:14:58.000
+you made it small, you had to capitalize
+00:15:01.000
+and a1, a2, a3, but according to me
+00:15:04.000
+the colors you are generating randomly
+00:15:05.400
+these are not valid colors
+00:15:07.400
+because of which what is happening
+00:15:09.400
+that because of your colors not being valid
+00:15:11.400
+they are not getting set
+00:15:13.400
+see this is white, so yeah
+00:15:15.400
+not a good solution but nice try
+00:15:17.400
+sometimes a color is getting made
+00:15:19.400
+but not always
+00:15:21.400
+which is fine, you need to understand a little more
+00:15:23.400
+you understand a little more
+00:15:25.100
+and you'll be great, big shoutout to
+00:15:28.100
+Abu Shahid Khan
+00:15:30.100
+then shoutout to Anuja, Kunal, Mishri, Kodvidy developer, Shoutout to Yadish, Shoutout to Jai, Shoutout to Lakshay, Shoutout to Android Kingdom, Shoutout to Webdev, Shoutout to YouTubeAI, Shoutout to Devilraj,
+00:15:52.000
+And here he is saying that after becoming a millionaire, he will give 1 million dollars, brother, send it, what did you say, I will not sayubair Khan, shoutout to Cody Anderson,
+00:16:05.000
+Raza Ranjesh Aftab, challenge accepted, Hari bhai,
+00:16:09.000
+we have to solve it, we have to solve it, let's see the solution of Cody Anderson,
+00:16:12.000
+he is saying that currently this guy has 50 lakh plus subs,
+00:16:15.000
+yes, I know this calculation, many people, the corporates,
+00:16:19.000
+they think that I don't calculate this, so they tell me that
+00:16:22.000
+if you had sold this much, you would have got this much money.
+00:16:25.120
+Initially, I had planned to keep it paid, but a lot of DMs came, people said that I will not be able to learn web development from you.
+00:16:31.920
+So instead of teaching some people, teach as many people as possible.
+00:16:34.720
+So with this motive, I kept it free. I hope everyone is enjoying it and everyone accessed this course.
+00:16:40.320
+Around 2 million people are going to access it, so 20 lakh people have already accessed the playlist
+00:16:47.000
+so 17 lakh people have already accessed it
+00:16:49.000
+and very soon I hope that many more people will access it
+00:16:51.000
+when it will be completed then you will get to know about its other powers
+00:16:54.000
+that what all things are there in the course
+00:16:56.000
+so I hope you are enjoying this course
+00:16:58.000
+that's all for now in this video guys
+00:16:59.000
+thank you so much guys for watching this video
+00:17:01.000
+and I will see you next time.
+00:17:21.109
+you

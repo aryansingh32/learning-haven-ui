@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 149,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Inheritance allows us to define a class that inherits all the methods and properties from another class.\n\nParent classis the class being inherited from, also called \nbase class.\n\nChild classis the class that inherits from another class, \nalso called derived class.\n\nAny class can be a parent class, so the syntax is the same as creating any \nother class:\n\nTo create a class that inherits the functionality from another class, send the parent class as a parameter when creating the child \nclass:\n\nNow the Student class has the same properties and methods as the Person \nclass.\n\nSo far we have created a child class that inherits the properties and methods \nfrom its parent.\n\nWe want to add the__init__()function to the child class (instead of thepasskeyword).\n\nWhen you add the__init__()function, the child class will no longer inherit \nthe parent's__init__()function.\n\nTo keep the inheritance of the parent's__init__()function, add a call to the \nparent's__init__()function:\n\nNow we have successfully added the__init__()function, and kept the \ninheritance of the parent class, and we are ready to add functionality in the__init__()function.\n\nPython also has asuper()function that \nwill make the child class inherit all the methods and properties from its \nparent:\n\nBy using thesuper()function, you do not \nhave to use the name of the parent element, it will automatically inherit the \nmethods and properties from its parent.\n\nIn the example below, the year2019should be a variable, and passed into theStudentclass when creating student objects.\nTo do so, add another parameter in the__init__()function:\n\nIf you add a method in the child class with the same name as a function in \nthe parent class, the inheritance of the parent method will be overridden.\n\n### Code Snippets\n\n```\nclass Person:\ndef __init__(self, fname, lname):\nself.firstname = fname\nself.lastname = lname\ndef printname(self):\nprint(self.firstname, \n  self.lastname)\n#Use the Person class to create an object, and then \n  execute the printname method:\nx = Person(\"John\", \"Doe\")\nx.printname()\n\n---\n\nclass Student(Person):\npass\n\n---\n\nx = Student(\"Mike\", \"Olsen\")\nx.printname()\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\n#add properties etc.\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nPerson.__init__(self, fname, lname)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nsuper().__init__(fname, lname)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = 2019\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname, year):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = year\nx = Student(\"Mike\", \"Olsen\", 2019)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname, year):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = year\ndef welcome(self):\nprint(\"Welcome\", \n  self.firstname, self.lastname, \"to the class of\", self.graduationyear)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_148",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

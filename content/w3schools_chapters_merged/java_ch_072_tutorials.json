@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 72,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e LinkedList Methods\n\nTheaddAll()method adds all of the items from a collection to the list.\n\nIf an index is provided then the new items will be placed at the specified index, pushing all of the following elements in the list ahead.\n\nIf an index is not provided then the new items will be placed at the end of the list.\n\nOne of the following:\n\nTrefers to the data type of items in the list.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nAdd items from one list into another:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    LinkedList<String> brands = new LinkedList<String>();\n    brands.add(\"Microsoft\");\n    brands.add(\"W3Schools\");\n    brands.add(\"Apple\");\n    \n    brands.addAll(cars);\n    \n    System.out.println(brands);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nAdd items at a specified position in the list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    LinkedList<String> brands = new LinkedList<String>();\n    brands.add(\"Microsoft\");\n    brands.add(\"W3Schools\");\n    brands.add(\"Apple\");\n    \n    brands.addAll(1, cars);\n    \n    System.out.println(brands);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nTheclear()removes all items from the list.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nRemove all items from a list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    cars.clear();\n    System.out.println(cars);\n  } \n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nTheclone()method returns a copy of theLinkedListas anObject.\n\nThis creates a \"shallow\" copy, which means that copies of objects in the list are not created, instead the list has references to the same objects that are in the original list.\n\nNote:Since the return type isObject, it must betype castedin order to use it as anLinkedListas shown in the example above.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nCreate a copy of a list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    \n    LinkedList cars2 = (LinkedList)cars.clone();\n    cars2.set(0, \"Toyota\");\n    \n    System.out.println(cars);\n    System.out.println(cars2);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nThecontains()method returnstrueif an item exists in a list andfalseotherwise.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\n### Code Examples\n\n```\nExample\nCheck if an item exists in a list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<String> cars = new LinkedList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n    System.out.println(cars.contains(\"BMW\"));\n    System.out.println(cars.contains(\"Toyota\"));\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e LinkedList Methods\n\nTheforEach()method performs an action on every item in a list. The action can be defined by a lambda expression that is compatible with theaccept()method of Java'sConsumerinterface.\n\nTo learn about lambda expressions, see ourJava Lambda Expression tutorial.\n\nJava Arrays Tutorial\n\nJava LinkedList Tutorial\n\nJava Lambda Expressions Tutorial\n\n### Code Examples\n\n```\nExample\nUse a lambda expression in the\nLinkedList\n's\nforEach()\nmethod to print every item in the list:\nimport java.util.LinkedList;\n\npublic class Main {\n  public static void main(String[] args) {\n    LinkedList<Integer> numbers = new LinkedList<Integer>();\n    numbers.add(5);\n    numbers.add(9);\n    numbers.add(8);\n    numbers.add(1);\n    numbers.forEach( (n) -> { System.out.println(n); } );\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_72",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_72",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

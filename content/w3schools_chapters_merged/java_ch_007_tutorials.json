@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 7,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAs withcomparison operators, you can also test fortrueorfalsevalues with logical operators.\n\nLogical operators are used to determine the logic between variables or \nvalues, by combining multiple conditions::\n\nThe example below shows how logical operators can be used in a real situation, e.g. when checking login status and access rights:\n\n### Code Examples\n\n```\nExample\nboolean isLoggedIn = true;\nboolean isAdmin = false;\n\nSystem.out.println(\"Regular user: \" + (isLoggedIn && !isAdmin));\nSystem.out.println(\"Has access: \" + (isLoggedIn || isAdmin));\nSystem.out.println(\"Not logged in: \" + (!isLoggedIn));\nResult:\nIs regular user: true\nHas access: true\nNot logged in: false\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nWhen a calculation contains more than one operator, Java followsorder of operationsrules to decide which part to calculate first.\n\nFor example, multiplication happens before addition:\n\nIn2 + 3 * 4, the multiplication is done first, so the answer is14.\n\nIf you want the addition to happen first, you must use parentheses:(2 + 3) * 4, which gives20.\n\nHere are some common operators, from highest to lowest priority:\n\nSubtraction and addition are done from left to right, unless you add parentheses:\n\n### Code Examples\n\n```\nExample\nint result1 = 2 + 3 * 4;     // 2 + 12 = 14\nint result2 = (2 + 3) * 4;   // 5 * 4 = 20\n\nSystem.out.println(result1);\nSystem.out.println(result2);\nTry it Yourself \u00bb\n\n---\n\nExample\nint result1 = 10 - 2 + 5;    // (10 - 2) + 5 = 13\nint result2 = 10 - (2 + 5);  // 10 - 7 = 3\n\nSystem.out.println(result1);\nSystem.out.println(result2);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTest your understanding ofJava Operatorsby completing a small coding challenge.\n\n## Tutorials\n\nStrings are used for storing text.\n\nAStringvariable contains a collection of characters surrounded by double quotes (\"\"):\n\nA String in Java is actually an object, which means it containsmethodsthat can perform certain operations on strings.\n\nFor example, you can find the length of a string with thelength()method:\n\nThere are many string methods available in Java.\n\nFor example:\n\nTheindexOf()method returns theindex(the position) \nof the first occurrence of a specified text in a string \n(including whitespace):\n\nYou can use thecharAt()method to access a character at a specific position in a string:\n\nTo compare two strings, you can use theequals()method:\n\nThetrim()method removes whitespace from the beginning and the end of a string:\n\nFor a complete reference of String methods, go to ourJava String Methods Reference.\n\nThe reference contains descriptions and examples of all string methods.\n\n### Code Examples\n\n```\nExample\nCreate a variable of type\nString\nand assign it a value:\nString greeting = \"Hello\";\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\nSystem.out.println(\"The length of the txt string is: \" + txt.length());\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"Hello World\";\nSystem.out.println(txt.toUpperCase());\u00a0\u00a0 // Outputs \"HELLO WORLD\"\nSystem.out.println(txt.toLowerCase());\u00a0\u00a0 // Outputs \"hello world\"\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"Please locate where 'locate' occurs!\";\nSystem.out.println(txt.indexOf(\"locate\")); // Outputs 7\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"Hello\";\nSystem.out.println(txt.charAt(0));  // H\nSystem.out.println(txt.charAt(4));  // o\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt1 = \"Hello\";\nString txt2 = \"Hello\";\n\nString txt3 = \"Greetings\";\nString txt4 = \"Great things\";\n\nSystem.out.println(txt1.equals(txt2));  // true\nSystem.out.println(txt3.equals(txt4));  // false\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"   Hello World   \";\nSystem.out.println(\"Before: [\" + txt + \"]\");\nSystem.out.println(\"After:  [\" + txt.trim() + \"]\");\nResult:\nBefore: [\u00a0\u00a0\u00a0Hello World\u00a0\u00a0\u00a0]\nAfter:  [Hello World]\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThe+operator can be used between strings to \ncombine them. This is calledconcatenation:\n\nYou can use string concatenation to build sentences with both text and variables:\n\nYou can also use theconcat()method to concatenate strings:\n\nYou can also join more than two strings by chainingconcat()calls:\n\n### Code Examples\n\n```\nExample\nString firstName = \"John\";\nString lastName = \"Doe\";\nSystem.out.println(firstName + \" \" + lastName);\nTry it Yourself \u00bb\n\n---\n\nExample\nString name = \"John\";\nint age = 25;\nSystem.out.println(\"My name is \" + name + \" and I am \" + age + \" years old.\");\nResult:\nMy name is John and I am 25 years old.\nTry it Yourself \u00bb\n\n---\n\nExample\nString firstName = \"John \";\nString lastName = \"Doe\";\nSystem.out.println(firstName.concat(lastName));\nTry it Yourself \u00bb\n\n---\n\nExample\nString a = \"Java \";\nString b = \"is \";\nString c = \"fun!\";\nString result = a.concat(b).concat(c);\nSystem.out.println(result);\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_7",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

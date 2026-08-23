@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 13,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Binary Search algorithm searches through an array and returns the index of the value it searches for.\n\nRun the simulation to see how the Binary Search algorithm works.\n\nToo see what happens when a value is not found, try to find value 5.\n\nBinary Search is much faster than Linear Search, but requires a sorted array to work.\n\nThe Binary Search algorithm works by checking the value in the center of the array. If the target value is lower, the next value to check is in the center of the left half of the array. This way of searching means that the search area is always half of the previous search area, and this is why the Binary Search algorithm is so fast.\n\nThis process of halving the search area happens until the target value is found, or until the search area of the array is empty.\n\nLet's try to do the searching manually, just to get an even better understanding of how Binary Search works before actually implementing it in a programming language. We will search for value 11.\n\nStep 1:We start with an array.\n\nStep 2:The value in the middle of the array at index 3, is it equal to 11?\n\nStep 3:7 is less than 11, so we must search for 11 to the right of index 3. The values to the right of index 3 are [ 11, 15, 25]. The next value to check is the middle value 15, at index 5.\n\nStep 4:15 is higher than 11, so we must search to the left of index 5. We have already checked index 0-3, so index 4 is only value left to check.\n\nWe have found it!\n\nValue 11 is found at index 4.\n\nReturning index position 4.\n\nBinary Search is finished.\n\nRun the simulation below to see the steps above animated:\n\nTo start with, the algorithm has two variables \"left\" and \"right\".\n\n\"left\" is 0 and represents the index of the first value in the array, and \"right\" is 6 and represents the index of the last value in the array.\n\n\\((left+right)/2=(0+6)/2=3\\) is the first index used to check if the middle value (7) is equal to the target value (11).\n\n7 is lower than the target value 11, so in the next loop the search area must be limited to the right side of the middle value: [ 11, 15, 25], on index 4-6.\n\nTo limit the search area and find a new middle value, \"left\" is updated to index 4, \"right\" is still 6. 4 and 6 are the indexes for the first and last values in the new search area, the right side of the previous middle value. The new middle value index is \\((left+right)/2=(4+6)/2=10/2=5\\).\n\nThe new middle value on index 5 is checked: 15 is higher than 11, so if the target value 11 exists in the array it must be on the left side of index 5. The new search area is created by updating \"right\" from 6 to 4. Now both \"left\" and \"right\" is 4, \\((left+right)/2=(4+4)/2=4\\), so there is only index 4 left to check. The target value 11 is found at index 4, so index 4 is returned.\n\nIn general, this is the way the Binary Search algorithm continues to halve the array search area until the target value is found.\n\nWhen the target value is found, the index of the target value is returned. If the target value is not found, -1 is returned.\n\nTo implement the Binary Search algorithm we need:\n\nThe resulting code for Binary Search looks like this:\n\nFor a general explanation of what time complexity is, visitthis page.\n\nFor a more thorough and detailed explanation of Insertion Sort time complexity, visitthis page.\n\nEach time Binary Search checks a new value to see if it is the target value, the search area is halved.\n\nThis means that even in the worst case scenario where Binary Search cannot find the target value, it still only needs \\( \\log_{2}n \\) comparisons to look through a sorted array of \\(n\\) values.\n\nTime complexity for Binary Search is\n\n\\[ O( \\log_{2} n ) \\]\n\nIf we draw how much time Binary Search needs to find a value in an array of \\(n\\) values, compared to Linear Search, we get this graph:\n\nRun the Binary Search simulation below for different number of values \\(n\\) in an array, and see how many compares are needed for Binary Search to find the target value:\n\nAs you can see when running simulations of Binary Search, the search requires very few compares, even if the the array is big and the value we are looking for is not found.\n\n### Code Snippets\n\n```\n[ 2, 3, 7, 7, 11, 15, 25]\n\n---\n\n[ 2, 3, 7,\n7\n, 11, 15, 25]\n\n---\n\n[ 2, 3, 7, 7, 11,\n15\n, 25]\n\n---\n\n[ 2, 3, 7, 7,\n11\n, 15, 25]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_12",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 80,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe Trim() function removes both leading and trailing spaces from a string.\n\n### Code Examples\n\n```\nSELECT Trim(\"\u00a0\u00a0\u00a0 SQL Tutorial\u00a0\u00a0\u00a0 \") AS TrimmedString;\n\n---\n\nTrim(\nstring\n)\n```\n\n## Tutorials\n\nThe UCase() function converts a string to upper-case.\n\nTip:Also look at theLCase()function.\n\n### Code Examples\n\n```\nSELECT UCASE(CustomerName) AS UppercaseCustomerName\nFROM Customers;\n\n---\n\nUCase(\ntext\n)\n```\n\n## Tutorials\n\nThe Abs() function returns the absolute (positive) value of a number.\n\n### Code Examples\n\n```\nSELECT Abs(-243.5) AS AbsNum;\n\n---\n\nAbs(\nnumber\n)\n```\n\n## Tutorials\n\nThe Atn() function returns the arc tangent of a number.\n\n### Code Examples\n\n```\nSELECT Atn(5) AS AtnNum;\n\n---\n\nAtn(\nnumber\n)\n```\n\n## Tutorials\n\nThe Avg() function returns the average value of an expression.\n\nNote:NULL values are ignored.\n\n### Code Examples\n\n```\nSELECT Avg(Price) AS \n  AveragePrice FROM Products;\n\n---\n\nAvg(\nexpression\n)\n\n---\n\nSELECT * FROM Products\nWHERE Price > (SELECT Avg(Price) FROM Products);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_80",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_80",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

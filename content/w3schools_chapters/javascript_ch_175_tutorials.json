@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 175,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The window.screen object contains information \nabout the user's screen.\n\nThewindow.screenobject can be written without the window prefix.\n\nProperties:\n\nThescreen.widthproperty returns the width of the visitor's screen in \npixels.\n\nThescreen.heightproperty returns the height of the visitor's screen in pixels.\n\nThescreen.availWidthproperty returns the width of the visitor's screen, in \npixels, \nminus interface features like the Windows Taskbar.\n\nThescreen.availHeightproperty returns the height of the visitor's screen, \nin pixels, minus interface features like the Windows Taskbar.\n\nThescreen.colorDepthproperty returns the number of bits used to display one color.\n\nAll modern computers use 24 bit or 32 bit hardware for color resolution:\n\nOlder computers used 16 bits: 65,536 different \"High Colors\" resolution.\n\nVery old computers, and old cell phones used 8 bits: 256 different \"VGA colors\".\n\nThescreen.pixelDepthproperty returns the pixel depth of the screen.\n\n### Code Snippets\n\n```\ndocument.getElementById(\"demo\").innerHTML =\n\"Screen Width: \" + screen.width;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Screen Height: \" + screen.height;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Available Screen Width: \" + screen.availWidth;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Available Screen Height: \" + screen.availHeight;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Screen Color Depth: \" + screen.colorDepth;\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Screen Pixel Depth: \" + screen.pixelDepth;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_174",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

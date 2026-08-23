@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 21,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSometimes, different errors (exceptions) can happen in the sametryblock. \nYou can handle them withmultiple catch blocks.\n\nYou can add more than onecatchblock, and Java will run the first one that matches the thrown exception type:\n\nExplanation:Only the first exception (ArrayIndexOutOfBoundsException) is thrown, so only the first matchingcatchruns.\n\nYou should always putmore specific exceptions first, andgeneral ones later. \nOtherwise, the general catch will grab the error and the specific ones will never run:\n\nSince Java 7, you can catchmultiple exceptions in one catch blockusing the|symbol. \nThis is useful when different exceptions should be handled in thesame way, so you don't have to repeat code:\n\n### Code Examples\n\n```\nExample\npublic class Main {\n  public static void main(String[] args) {\n    try {\n      int[] numbers = {1, 2, 3};\n      System.out.println(numbers[10]);  // ArrayIndexOutOfBoundsException\n      int result = 10 / 0;              // ArithmeticException\n    } \n    catch (ArrayIndexOutOfBoundsException e) {\n      System.out.println(\"Array index does not exist.\");\n    } \n    catch (ArithmeticException e) {\n      System.out.println(\"Cannot divide by zero.\");\n    } \n    catch (Exception e) {\n      System.out.println(\"Something else went wrong.\");\n    }\n  }\n}\nResult:\nArray index does not exist.\nTry it Yourself \u00bb\n\n---\n\nExample (bad order)\ntry {\n  int result = 10 / 0;\n} \ncatch (Exception e) {\n  System.out.println(\"General error.\");\n} \ncatch (ArithmeticException e) {\n  // This will never be reached\n  System.out.println(\"Divide by zero.\");\n}\n\n---\n\nExample\ntry {\n  int result = 10 / 0;\n  int[] numbers = {1, 2, 3};\n  System.out.println(numbers[10]);\n} \ncatch (ArithmeticException | ArrayIndexOutOfBoundsException e) {\n  System.out.println(\"Math error or array error occurred.\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nWhen working with files, streams, or other resources, it is important toclosethem after use. \nIf you forget to close a resource, it may keep using memory or even prevent you from opening the file again until the program ends.\n\nNote:You have not yet learned aboutfilesandstreamsin detail.  \nThese topics will come in the next chapters. For now, just focus on howtry-with-resourcesworks.\n\nIn older code, you had to close \"resources\" manually by calling theirclose()method:\n\nSince Java 7, you can usetry-with-resources.  \nIt is a special form oftrythat works with resources (likefilesandstreams).  \nThe resource is declared inside parenthesestry(...), and Java will close it automatically when the block finishes - even if an error occurs.\n\nNext:Learn about how tohandle files in Java.\n\n### Code Examples\n\n```\nExample\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    try {\n      FileOutputStream output = new FileOutputStream(\"filename.txt\");\n      output.write(\"Hello\".getBytes());\n      output.close();  // must close manually\n      System.out.println(\"Successfully wrote to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n    }\n  }\n}\nRun Example \u00bb\n\n---\n\nExample (try-with-resources)\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    // resource is opened inside try()\n    try (FileOutputStream output = new FileOutputStream(\"filename.txt\")) {\n      output.write(\"Hello\".getBytes());\n      // no need to call close() here\n      System.out.println(\"Successfully wrote to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n    }\n  }\n}\nRun Example \u00bb\n```\n\n## Tutorials\n\nFile handling is an important part of any application.\n\nJava has several methods for creating, reading, updating, and \ndeleting files.\n\nTheFileclass from thejava.iopackage, allows \nus to work with files.\n\nTo use theFileclass, create an object of \nthe class, and specify the filename or directory name:Exampleimport java.io.File;\u00a0 // Import the File class\n\nFile myObj = new File(\"filename.txt\");\u00a0// Specify the filenameIf you don't know what a package is, read ourJava Packages Tutorial.TheFileclass has many useful methods for creating and getting information \nabout files. \nFor example:MethodTypeDescriptioncanRead()BooleanTests whether the file is readable or notcanWrite()BooleanTests whether the file is writable or notcreateNewFile()BooleanCreates an empty filedelete()BooleanDeletes a fileexists()BooleanTests whether the file existsgetName()StringReturns the name of the filegetAbsolutePath()StringReturns the absolute pathname of the filelength()LongReturns the size of the file in byteslist()String[]Returns an array of the files in the directorymkdir()BooleanCreates a directoryYou will learn how to create, write, read and delete files in the next chapters:Create Files \u00bbWrite to Files \u00bbRead Files \u00bbDelete Files \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nExample\nimport java.io.File;\u00a0 // Import the File class\n\nFile myObj = new File(\"filename.txt\");\u00a0// Specify the filename\n```\n\n## Tutorials\n\nIn Java, you can create a new file with thecreateNewFile()method from theFileclass.\n\nThis method returns:\n\nNote that the method is enclosed in atry...catchblock. This is necessary because it throws anIOExceptionif an error occurs (if the \nfile cannot be created for some reason):\n\nExplanation:The program tries to create a file calledfilename.txt.  \nIf the file does not exist, it will be created and a success message is printed.  \nIf the file already exists, you will see the message\"File already exists.\"instead.\n\nTo create a file in a specific directory (requires permission), specify the path of the file and use double backslashes to escape the \"\\\" character (for Windows). On Mac and Linux you can just write the path, like: /Users/name/filename.txt\n\n### Code Examples\n\n```\nExample\nimport java.io.File;       // Import the File class\nimport java.io.IOException; // Import IOException to handle errors\n\npublic class CreateFile {\n  public static void main(String[] args) {\n    try {\n      File myObj = new File(\"filename.txt\"); // Create File object\n      if (myObj.createNewFile()) {           // Try to create the file\n        System.out.println(\"File created: \" + myObj.getName());\n      } else {\n        System.out.println(\"File already exists.\");\n      }\n    } catch (IOException e) {\n      System.out.println(\"An error occurred.\");\n      e.printStackTrace(); // Print error details\n    }\n  }\n}\nThe output will be:\nFile created: filename.txt\nRun Example \u00bb\n\n---\n\nExample\nFile myObj = new File(\"C:\\\\Users\\\\MyName\\\\filename.txt\");\nRun Example \u00bb\n```\n\n## Tutorials\n\nIf you are just starting with Java, the easiest way to write text to a file is by using theFileWriterclass.\n\nIn the example below, we useFileWritertogether with itswrite()method to create and write some text into a file.\n\nNote:When you are done, you should close the writer with theclose()method:\n\nExplanation:This program tries to write some text \ninto a file namedfilename.txt.  \nIf everything works, the program will print\"Successfully wrote to the file.\"in the console.  \nIf something goes wrong (for example, the file cannot be opened), it will print\"An error occurred.\"instead.\n\nSince Java 7, you can usetry-with-resources. \nThis makes sure the writer is closed automatically, even if an error occurs:\n\nNormally,FileWriterwilloverwritea file if it already exists.  \nIf you want toadd new contentat the end of the file (without deleting what's already there),  \nyou can use the two-argument constructor and passtrueas the second parameter.  \nThis puts the writer intoappend mode:\n\nExplanation:This program adds the text\"Appended text!\"to the end offilename.txtinstead of replacing the file's content.\n\nNote:If the file does not already exist, Java will create it before appending.\n\nTip:To see what's inside the file, go to theJava Read Fileschapter.\n\nThere are several classes you can use to write files in Java:\n\nYou will learn more aboutFileOutputStreamandBufferedWriterin a later chapter.\n\n### Code Examples\n\n```\nExample\nimport java.io.FileWriter;   // Import the FileWriter class\nimport java.io.IOException;  // Import the IOException class\n\npublic class WriteToFile {\n  public static void main(String[] args) {\n    try {\n      FileWriter myWriter = new FileWriter(\"filename.txt\");\n      myWriter.write(\"Files in Java might be tricky, but it is fun enough!\");\n      myWriter.close();  // must close manually\n      System.out.println(\"Successfully wrote to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"An error occurred.\");\n      e.printStackTrace();\n    }\n  }\n}\nThe output will be:\nSuccessfully wrote to the file.\nRun Example \u00bb\n\n---\n\nExample\nimport java.io.FileWriter;\nimport java.io.IOException;\n\npublic class WriteToFile {\n  public static void main(String[] args) {\n    // FileWriter will be closed automatically here\n    try (FileWriter myWriter = new FileWriter(\"filename.txt\")) {\n      myWriter.write(\"Files in Java might be tricky, but it is fun enough!\");\n      System.out.println(\"Successfully wrote to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"An error occurred.\");\n      e.printStackTrace();\n    }\n  }\n}\nThe output will be:\nSuccessfully wrote to the file.\nRun Example \u00bb\n\n---\n\nExample\nimport java.io.FileWriter;\nimport java.io.IOException;\n\npublic class AppendToFile {\n  public static void main(String[] args) {\n    // true = append mode\n    try (FileWriter myWriter = new FileWriter(\"filename.txt\", true)) {\n      myWriter.write(\"\\nAppended text!\");\n      System.out.println(\"Successfully appended to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"An error occurred.\");\n      e.printStackTrace();\n    }\n  }\n}\nThe output will be:\nSuccessfully appended to the file.\nRun Example \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_21",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_21",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

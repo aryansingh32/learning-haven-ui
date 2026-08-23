@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 28,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The GitHub Flow is a simple, effective workflow for collaborating on code using Git and GitHub.\n\nIt helps teams work together smoothly, experiment safely, and deliver new features or fixes quickly.\n\nHere's how the GitHub Flow works, step by step:\n\nThis workflow is designed to be easy for beginners and powerful for teams of any size.\n\nBranching is the key concept in Git. And it works around the rule that the master branch is ALWAYS deployable.\n\nThat means, if you want to try something new or experiment, you create a new branch!\n\nBranching gives you an environment where you can make changes without affecting the main branch.\n\nWhen your new branch is ready, it can be reviewed, discussed, and merged with the main branch when ready.\n\nWhen you make a new branch, you will (almost always) want to make it from the master branch.\n\nNote:Keep in mind that you are working with others.\n\nUsing descriptive names for new branches, so everyone can understand what is happening.\n\nAfter the new branch is created, it is time to get to work.\n\nMake changes by adding, editing and deleting files.\n\nWhenever you reach a small milestone, add the changes to your branch by commit.\n\nAdding commits keeps track of your work.\n\nEach commit should have a message explaining what has changed and why.\n\nEach commit becomes a part of the history of the branch, and a point you can revert back to if you need to.\n\nNote:commit messages are very important! Let everyone know what has changed and why.\n\nMessages and comments make it so much easier for yourself and other people to keep track of changes.\n\nPull requests are a key part of GitHub.\n\nA Pull Request notifies people you have changes ready for them to consider or review.\n\nYou can ask others to review your changes or pull your contribution and merge it into their branch.\n\nWhen a Pull Request is made, it can be reviewed by whoever has the proper access to the branch.\n\nThis is where good discussions and review of the changes happen.\n\nPull Requests are designed to allow people to work together easily and produce better results together!\n\nIf you receive feedback and continue to improve your changes, you can push your changes with new commits, making further reviews possible.\n\nNote:GitHub shows new commit and feedback in the \"unified Pull Request view\".\n\nWhen the pull request has been reviewed and everything looks good, it is time for the final testing.\n\nGitHub allows you to deploy from a branch for final testing in production before merging with the master branch.\n\nIf any issues arise, you can undo the changes by deploying the master branch into production again!\n\nNote:Teams often have dedicated testing environments used for deploying branches.\n\nAfter exhaustive testing, you can merge the code into the master branch!\n\nPull Requests keep records of changes to your code, and if you commented and named changes well, you can go back and understand why changes and decisions were made.\n\nNote:You can add keywords to your pull request for easier searching!\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_27",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

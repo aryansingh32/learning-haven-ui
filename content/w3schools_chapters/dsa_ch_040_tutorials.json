@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 40,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Kruskal's algorithm finds the Minimum Spanning Tree (MST), or Minimum Spanning Forest, in an undirected graph.\n\nThe MST (or MSTs) found by Kruskal's algorithm is the collection of edges that connect all vertices (or as many as possible) with the minimum total edge weight.\n\nKruskal's algorithm adds edges to the MST (or Minimum Spanning Forest), starting with the edges with the lowest edge weights.\n\nEdges that would create a cycle are not added to the MST. These are the red blinking lines in the animation above.\n\nKruskal's algorithm checks all edges in the graph, but the animation above is made to stop when the MST or Minimum Spanning forest is completed, so that you don't have to wait for the longest edges to be checked.\n\nTo find out if an edge will create a cycle, we will useUnion-Find cycle detectioninside Kruskal's algorithm.\n\nLet's run through Kruskal's algorithm manually on the graph below, so that we understand the detailed step-by-step operations before we try to program it.\n\nThe first three edges are added to the MST. These three edges have the lowest edge weights and do not create any cycles:\n\nAfter that, edge C-D (indicated in red) cannot be added as it would lead to a cycle.\n\nThe next four edges Kruskal's algorithm tries to add to the MST are:\n\nEdge C-G (indicated in red) cannot be added to the MST because it would create a cycle.\n\nAs you can see, the MST is already created at this point, but Kruskal's algorithm will continue to run until all edges are tested to see if they can be added to the MST.\n\nThe last three edges Kruskal's algorithm tries to add to the MST are the ones with the highest edge weights:\n\nEach of these edges would create a cycle in the MST, so they cannot be added.\n\nKruskal's algorithm is now finished.\n\nRun the simulation below to see Kruskal's algorithm doing the manual steps that we have just done.\n\nFor Kruskal's algorithm to find a Minimum Spanning Tree (MST), or a Minimum Spanning Forest, we create aGraphclass. We will use the methods inside thisGraphclass later to create the graph from the example above, and to run Kruskal's algorithm on it.\n\nLine 8 and 12:Checks if the input argumentsu,v, andvertex, are within the possible range of index values.\n\nTo do Union-Find cycle detection in Kruskal's algorithm, these two methodsfindandunionare also defined inside theGraphclass:\n\nLine 15-18:Thefindmethod uses theparentarray to recursively find the root of a vertex. For each vertex, theparentarray holds a pointer (index) to the parent of that vertex. The root vertex is found when thefindmethod comes to a vertex in theparentarray that points to itself. Keep reading to see how thefindmethod and theparentarray are used inside thekruskals_algorithmmethod.\n\nLine 20-29:When an edge is added to the MST, theunionmethod uses theparentarray to merge (union) two trees. Therankarray holds a rough estimate of the tree height for every root vertex. When merging two trees, the root with a lesser rank becomes a child of the other tree's root vertex.\n\nHere is how Kruskal's algorithm is implemented as a method inside theGraphclass:\n\nLine 35:The edges must be sorted before Kruskal's algorithm starts trying to add the edges to the MST.\n\nLine 40-41:Theparentandrankarrays are initialized. To start with, every vertex is its own root (every element in theparentarray points to itself), and every vertex has no height (0values in therankarray).\n\nLine 44-45:Pick the smallest edge, and incrementiso that the correct edge is picked in the next iteration.\n\nLine 47-51:If the verticesuandvat each end of the current edge have different rootsxandy, it means there will be no cycle for the new edge and the trees are merged. To merge the trees, the current edge is added to theresultarray, and we run theunionmethod to make sure the trees are merged correctly, so that there is only one root vertex in the resulting merged tree.\n\nNow let's create the graph from the \"Manual Run Through\" above and run Kruskal's algorithm on it:\n\nFor a general explanation of what time complexity is, visitthis page.\n\nWith \\(E\\) as the number of edges in our graph, the time complexity for Kruskal's algorithm is\n\n\\[ O( E \\cdot log{E} ) \\]\n\nWe get this time complexity because the edges must be sorted before Kruskal's can start adding edges to the MST. Using a fast algorithm likeQuick SortorMerge Sortgives us a time complexity of \\( O( E \\cdot log{E} ) \\) for this sorting alone.\n\nAfter the edges are sorted, they are all checked one by one, to see if they will create a cycle, and if not, they are added to the MST.\n\nAlthough it looks like a lot of work to check if a cycle will be created using thefindmethod, and then to include an edge to the MST using theunionmethod, this can still be viewed as one operation. The reason we can see this as just one operation is that it takes approximately constant time. That means that the time this operation takes grows very little as the graph grows, and so it does actually not contribute to the overall time complexity.\n\nSince the time complexity for Kruskal's algorithm only varies with the number of edges \\(E\\), it is especially fast for sparse graphs where the ratio between the number of edges \\(E\\) and the number of vertices \\(V\\) is relatively low.\n\n### Code Snippets\n\n```\nclass Graph:\n    def __init__(self, size):\n        self.size = size\n        self.edges = []  # For storing edges as (weight, u, v)\n        self.vertex_data = [''] * size  # Store vertex names\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.edges.append((weight, u, v))  # Add edge with weight\n            \n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n---\n\ndef find(self, parent, i):\n        if parent[i] == i:\n            return i\n        return self.find(parent, parent[i])\n\n    def union(self, parent, rank, x, y):\n        xroot = self.find(parent, x)\n        yroot = self.find(parent, y)\n        if rank[xroot] < rank[yroot]:\n            parent[xroot] = yroot\n        elif rank[xroot] > rank[yroot]:\n            parent[yroot] = xroot\n        else:\n            parent[yroot] = xroot\n            rank[xroot] += 1\n\n---\n\ndef kruskals_algorithm(self):\n        result = []  # MST\n        i = 0 # edge counter\n\n        self.edges = sorted(self.edges, key=lambda item: item[2])\n\n        parent, rank = [], []\n\n        for node in range(self.size):\n            parent.append(node)\n            rank.append(0)\n\n        while i < len(self.edges):\n            u, v, weight = self.edges[i]\n            i += 1\n\n            x = self.find(parent, u)\n            y = self.find(parent, v)\n            if x != y:\n                result.append((u, v, weight))\n                self.union(parent, rank, x, y)\n\n        print(\"Edge \\tWeight\")\n        for u, v, weight in result:\n            print(f\"{self.vertex_data[u]}-{self.vertex_data[v]} \\t{weight}\")\n\n---\n\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.size = size\n        self.edges = []  # For storing edges as (weight, u, v)\n        self.vertex_data = [''] * size  # Store vertex names\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.edges.append((u, v, weight))  # Add edge with weight\n            \n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def find(self, parent, i):\n        if parent[i] == i:\n            return i\n        return self.find(parent, parent[i])\n\n    def union(self, parent, rank, x, y):\n        xroot = self.find(parent, x)\n        yroot = self.find(parent, y)\n        if rank[xroot] < rank[yroot]:\n            parent[xroot] = yroot\n        elif rank[xroot] > rank[yroot]:\n            parent[yroot] = xroot\n        else:\n            parent[yroot] = xroot\n            rank[xroot] += 1\n\n    def kruskals_algorithm(self):\n        result = []  # MST\n        i = 0  # edge counter\n\n        self.edges = sorted(self.edges, key=lambda item: item[2])\n\n        parent, rank = [], []\n\n        for node in range(self.size):\n            parent.append(node)\n            rank.append(0)\n\n        while i < len(self.edges):\n            u, v, weight = self.edges[i]\n            i += 1\n            \n            x = self.find(parent, u)\n            y = self.find(parent, v)\n            if x != y:\n                result.append((u, v, weight))\n                self.union(parent, rank, x, y)\n\n        print(\"Edge \\tWeight\")\n        for u, v, weight in result:\n            print(f\"{self.vertex_data[u]}-{self.vertex_data[v]} \\t{weight}\")\n\ng = Graph(7)\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\ng.add_vertex_data(5, 'F')\ng.add_vertex_data(6, 'G')\n\ng.add_edge(0, 1, 4)  #A-B,  4\ng.add_edge(0, 6, 10) #A-G, 10\ng.add_edge(0, 2, 9)  #A-C,  9\ng.add_edge(1, 2, 8)  #B-C,  8\ng.add_edge(2, 3, 5)  #C-D,  5\ng.add_edge(2, 4, 2)  #C-E,  2\ng.add_edge(2, 6, 7)  #C-G,  7\ng.add_edge(3, 4, 3)  #D-E,  3\ng.add_edge(3, 5, 7)  #D-F,  7\ng.add_edge(4, 6, 6)  #E-G,  6\ng.add_edge(5, 6, 11) #F-G, 11\n\nprint(\"Kruskal's Algorithm MST:\")\ng.kruskals_algorithm()\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_39",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

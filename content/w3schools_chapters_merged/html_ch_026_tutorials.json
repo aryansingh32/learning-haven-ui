@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 26,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThis chapter describes the different types for the HTML<input>element.\n\nHere are the different input types you can use in HTML:\n\n<input type=\"text\">defines asingle-line text input field:\n\nThis is how the HTML code above will be displayed in a browser:\n\n<input type=\"password\">defines apassword field:\n\nThis is how the HTML code above will be displayed in a browser:\n\n<input type=\"submit\">defines a button forsubmittingform data to aform-handler.\n\nThe form-handler is typically a server page with a script for processing \ninput data.\n\nThe form-handler is specified in the form'sactionattribute:\n\nThis is how the HTML code above will be displayed in a browser:\n\nIf you omit the submit button's value attribute, the button will get a default text:\n\n<input type=\"reset\">defines areset buttonthat will reset all form values to their default values:\n\nThis is how the HTML code above will be displayed in a browser:\n\n<input type=\"radio\">defines aradio button.\n\nRadio buttons let a user select ONLY ONE of a limited number of choices:\n\nThis is how the HTML code above will be displayed in a browser:\n\n<input type=\"checkbox\">defines acheckbox.\n\nCheckboxes let a user select ZERO or MORE options of a limited number of choices.\n\nThis is how the HTML code above will be displayed in a browser:\n\n<input type=\"button\">defines abutton:\n\nThis is how the HTML code above will be displayed in a browser:\n\nThe<input type=\"color\">is used for input fields that should contain a color.\n\nDepending on browser support, a color picker can show up in the input field.\n\nThe<input type=\"date\">is used for input fields that should contain a date.\n\nDepending on browser support, a date picker can show up in the input field.\n\nYou can also use theminandmaxattributes to add restrictions to dates:\n\nThe<input type=\"datetime-local\">specifies \na date and time input field, with no time zone.\n\nDepending on browser support, a date picker can show up in the input field.\n\nThe<input type=\"email\">is used for input fields that should contain an e-mail address.\n\nDepending on browser support, the e-mail address can be automatically validated when submitted.\n\nSome smartphones recognize the email type, and add \".com\" to the keyboard to match email input.\n\nThe<input type=\"image\">defines an image as a submit button.\n\nThe path to the image is specified in thesrcattribute.\n\nThe<input type=\"file\">defines a file-select field and a \"Browse\" button for file uploads.\n\nThe<input type=\"hidden\">defines a hidden input field (not visible to a user).\n\nA hidden field lets web developers include data that cannot be seen or \nmodified by users when a form is submitted.\n\nA hidden field often stores what database record that needs to be updated \nwhen the form is submitted.\n\nNote:While the value is not displayed to the user in the \npage's content, it is visible (and can be edited) using any browser's developer \ntools or \"View Source\" functionality. Do not use hidden inputs as a form of \nsecurity!\n\nThe<input type=\"month\">allows the user to select a month and year.\n\nDepending on browser support, a date picker can show up in the input field.\n\nThe<input type=\"number\">defines anumericinput field.\n\nYou can also set restrictions on what numbers are accepted.\n\nThe following example displays a numeric input field, where you can enter a value from 1 to 5:\n\nHere is a list of some common input restrictions:\n\nYou will learn more about input restrictions in the next chapter.\n\nThe following example displays a numeric input field, where you can enter a \nvalue from 0 to 100, in steps of 10. The default value is 30:\n\nThe<input type=\"range\">defines a control for entering a number whose exact value is not important (like a slider control). Default \nrange is 0 to 100. However, you can set restrictions on what \nnumbers are accepted with themin,max, andstepattributes:\n\nThe<input type=\"search\">is used for search fields (a search field behaves like a regular text field).\n\nThe<input type=\"tel\">is used for input fields that should contain a telephone number.\n\nThe<input type=\"time\">allows the user to select a time (no time zone).\n\nDepending on browser support, a time picker can show up in the input field.\n\nThe<input type=\"url\">is used for input fields that should contain a URL address.\n\nDepending on browser support, the url field can be automatically validated \nwhen submitted.\n\nSome smartphones recognize the url type, and adds \".com\" to the keyboard to match \nurl input.\n\nThe<input type=\"week\">allows the user to select a week and year.\n\nDepending on browser support, a date picker can show up in the input field.\n\n### Code Examples\n\n```\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\"><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\">\n</form>\n\n---\n\n<form>\n<label for=\"username\">Username:</label><br>\n<input type=\"text\" \n  id=\"username\" name=\"username\"><br>\n<label for=\"pwd\">Password:</label><br>\n<input type=\"password\" id=\"pwd\" name=\"pwd\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n  name:</label><br>\n<input type=\"text\" id=\"fname\" name=\"fname\" \n  value=\"John\"><br>\n<label for=\"lname\">Last name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" value=\"Doe\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"reset\" \n  value=\"Reset\">\n</form>\n\n---\n\n<p>Choose your favorite Web language:</p>\n<form>\n<input type=\"radio\" id=\"html\" name=\"fav_language\" \n  value=\"HTML\">\n<label for=\"html\">HTML</label><br>\n<input \n  type=\"radio\" id=\"css\" name=\"fav_language\" value=\"CSS\">\n<label \n  for=\"css\">CSS</label><br>\n<input type=\"radio\" id=\"javascript\" \n  name=\"fav_language\" value=\"JavaScript\">\n<label for=\"javascript\">JavaScript</label>\n</form>\n\n---\n\n<form>\n<input type=\"checkbox\" id=\"vehicle1\" name=\"vehicle1\" value=\"Bike\">\n<label for=\"vehicle1\"> I have a bike</label><br>\n<input \n  type=\"checkbox\" id=\"vehicle2\" name=\"vehicle2\" value=\"Car\">\n<label for=\"vehicle2\"> \n  I have a car</label><br>\n<input type=\"checkbox\" \n  id=\"vehicle3\" name=\"vehicle3\" \n  value=\"Boat\">\n<label for=\"vehicle3\"> I have a boat</label>\n</form>\n\n---\n\n<input type=\"button\" onclick=\"alert('Hello World!')\" value=\"Click Me!\">\n\n---\n\n<form>\n<label for=\"favcolor\">Select your favorite \n  color:</label>\n<input type=\"color\" id=\"favcolor\" name=\"favcolor\">\n</form>\n\n---\n\n<form>\n<label for=\"birthday\">Birthday:</label>\n<input \n  type=\"date\" id=\"birthday\" name=\"birthday\">\n</form>\n\n---\n\n<form>\n<label for=\"datemax\">Enter a date before \n  1980-01-01:</label>\n<input type=\"date\" id=\"datemax\" name=\"datemax\" \n  max=\"1979-12-31\"><br><br>\n<label for=\"datemin\">Enter a date after \n  2000-01-01:</label>\n<input type=\"date\" id=\"datemin\" name=\"datemin\" \n  min=\"2000-01-02\">\n</form>\n\n---\n\n<form>\n<label for=\"birthdaytime\">Birthday (date and \n  time):</label>\n<input type=\"datetime-local\" id=\"birthdaytime\" name=\"birthdaytime\">\n</form>\n\n---\n\n<form>\n<label for=\"email\">Enter your email:</label>\n<input type=\"email\" id=\"email\" name=\"email\">\n</form>\n\n---\n\n<form>\n<input type=\"image\" src=\"img_submit.gif\" alt=\"Submit\" \n  width=\"48\" height=\"48\">\n</form>\n\n---\n\n<form>\n<label for=\"myfile\">Select a file:</label>\n<input type=\"file\" id=\"myfile\" name=\"myfile\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<input \n  type=\"hidden\" id=\"custId\" name=\"custId\" value=\"3487\">\n<input \n  type=\"submit\" value=\"Submit\">\n</form>\n\n---\n\n<form>\n<label for=\"bdaymonth\">Birthday (month and \n  year):</label>\n<input type=\"month\" id=\"bdaymonth\" name=\"bdaymonth\">\n</form>\n\n---\n\n<form>\n<label for=\"quantity\">Quantity (between 1 and \n  5):</label>\n<input type=\"number\" id=\"quantity\" name=\"quantity\" \n  min=\"1\" max=\"5\">\n</form>\n\n---\n\n<form>\n<label for=\"quantity\">Quantity:</label>\n<input \n  type=\"number\" id=\"quantity\" name=\"quantity\" min=\"0\" max=\"100\" step=\"10\" \n  value=\"30\">\n</form>\n\n---\n\n<form>\n<label for=\"vol\">Volume (between 0 and 50):</label>\n<input type=\"range\" id=\"vol\" name=\"vol\" min=\"0\" max=\"50\">\n</form>\n\n---\n\n<form>\n<label for=\"gsearch\">Search Google:</label>\n<input type=\"search\" id=\"gsearch\" name=\"gsearch\">\n</form>\n\n---\n\n<form>\n<label for=\"phone\">Enter your phone number:</label>\n<input type=\"tel\" id=\"phone\" name=\"phone\" \n    pattern=\"[0-9]{3}-[0-9]{2}-[0-9]{3}\">\n</form>\n\n---\n\n<form>\n<label for=\"appt\">Select a time:</label>\n<input type=\"time\" id=\"appt\" name=\"appt\">\n</form>\n\n---\n\n<form>\n<label for=\"homepage\">Add your homepage:</label>\n<input type=\"url\" id=\"homepage\" name=\"homepage\">\n</form>\n\n---\n\n<form>\n<label for=\"week\">Select a week:</label>\n<input type=\"week\" id=\"week\" name=\"week\">\n</form>\n```\n\n## Tutorials\n\nTest what you have learned about HTML input types.\n\n## Tutorials\n\nTest your understanding of HTML input types by completing this coding challenge.\n\n## Tutorials\n\nThis chapter describes the different attributes for the HTML<input>element.\n\nThe inputvalueattribute specifies an initial value for an input field:\n\nThe inputreadonlyattribute specifies that an input field is read-only.\n\nA read-only input field cannot be modified (however, a user can tab to it, highlight it, and copy the text from it).\n\nThe value of a read-only input field will be sent when submitting the form!\n\nThe inputdisabledattribute specifies that an input field should be disabled.\n\nA disabled input field is unusable and un-clickable.\n\nThe value of a disabled input field will not be sent when submitting the form!\n\nThe inputsizeattribute specifies the \nvisible width, in characters, of an input field.\n\nThe default value forsizeis 20.\n\nNote:Thesizeattribute \nworks with the following input types: text, search, tel, url, email, and \npassword.\n\nThe inputmaxlengthattribute specifies the maximum number of characters allowed in an input field.\n\nNote:When amaxlengthis set, the input field will not accept more than the \nspecified number of characters. However, this attribute does not provide any feedback. \nSo, if you want to alert the user, \nyou must write JavaScript code.\n\nThe inputminandmaxattributes specify the minimum and maximum values for an \ninput field.\n\nTheminandmaxattributes work with the following input types: number, range, date, datetime-local, month, time and week.\n\nTip:Use the max and min attributes together to create a \nrange of legal values.\n\nThe inputmultipleattribute specifies that the user is allowed to enter more than one value in \nan input field.\n\nThemultipleattribute works with the following input types: email, and file.\n\nThe inputpatternattribute specifies a regular expression that the \ninput field's value is checked against, when the form is submitted.\n\nThepatternattribute works with the following input types: text, \ndate, search, url, tel, email, and password.\n\nTip:Use the globaltitleattribute to describe the pattern to help the user.\n\nTip:Learn more aboutregular expressionsin our JavaScript tutorial.\n\nThe inputplaceholderattribute specifies \na short hint that describes the expected value of an input field (a sample value or a short description of the \nexpected format).\n\nThe short hint is displayed in the input field before the user enters a \nvalue.\n\nTheplaceholderattribute works with the following input types: text, search, url, \nnumber, tel, email, and password.\n\nThe inputrequiredattribute specifies that an input field must be filled out before submitting the form.\n\nTherequiredattribute works with the following input types: text, search, url, tel, email, password, date pickers, number, checkbox, radio, and file.\n\nThe inputstepattribute specifies the legal number intervals for an \ninput field.\n\nExample: if step=\"3\", legal numbers could be -3, 0, 3, 6, etc.\n\nTip:This attribute can be used together with the max and min attributes to create a range of legal values.\n\nThestepattribute works with the following input types: number, range, date, datetime-local, month, time and week.\n\nThe inputautofocusattribute specifies that \nan input field should automatically get focus when the page loads.\n\nThe inputheightandwidthattributes specify the height and width of an<input \ntype=\"image\">element.\n\nThe inputlistattribute refers to a<datalist>element that contains pre-defined options for an <input> element.\n\nThe inputautocompleteattribute specifies whether a form or \nan input field should have autocomplete on or off.\n\nAutocomplete allows the browser to predict the value. When a user starts to \ntype in a field, the browser should display options to fill in the field, based \non earlier typed values.\n\nTheautocompleteattribute works with<form>and the \nfollowing<input>types: text, search, url, tel, email, password, datepickers, range, and color.\n\nTip:In some browsers you may need to activate an \nautocomplete function for this to work (Look under \"Preferences\" in the \nbrowser's menu).\n\n### Code Examples\n\n```\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\"><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\" readonly><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\" disabled><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" size=\"50\"><br>\n<label \n  for=\"pin\">PIN:</label><br>\n<input type=\"text\" id=\"pin\" name=\"pin\" \n  size=\"4\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" size=\"50\"><br>\n<label \n  for=\"pin\">PIN:</label><br>\n<input type=\"text\" id=\"pin\" name=\"pin\" \n  maxlength=\"4\" size=\"4\">\n</form>\n\n---\n\n<form>\n<label for=\"datemax\">Enter a date before \n  1980-01-01:</label>\n<input type=\"date\" id=\"datemax\" name=\"datemax\" \n  max=\"1979-12-31\"><br><br>\n<label for=\"datemin\">Enter a date \n  after 2000-01-01:</label>\n<input type=\"date\" id=\"datemin\" name=\"datemin\" \n  min=\"2000-01-02\"><br><br>\n<label for=\"quantity\">Quantity \n  (between 1 and 5):</label>\n<input type=\"number\" id=\"quantity\" \n  name=\"quantity\" min=\"1\" max=\"5\">\n</form>\n\n---\n\n<form>\n<label for=\"files\">Select files:</label>\n<input \n  type=\"file\" id=\"files\" name=\"files\" multiple>\n</form>\n\n---\n\n<form>\n<label for=\"country_code\">Country code:</label>\n<input type=\"text\" id=\"country_code\" name=\"country_code\"\npattern=\"[A-Za-z]{3}\" title=\"Three letter country code\">\n</form>\n\n---\n\n<form>\n<label for=\"phone\">Enter a phone number:</label>\n<input type=\"tel\" id=\"phone\" name=\"phone\"\nplaceholder=\"123-45-678\"\npattern=\"[0-9]{3}-[0-9]{2}-[0-9]{3}\">\n</form>\n\n---\n\n<form>\n<label for=\"username\">Username:</label>\n<input \n  type=\"text\" id=\"username\" name=\"username\" required>\n</form>\n\n---\n\n<form>\n<label for=\"points\">Points:</label>\n<input \n  type=\"number\" id=\"points\" name=\"points\" step=\"3\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" autofocus><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last \n  name:</label>\n<input type=\"text\" id=\"lname\" name=\"lname\"><br><br>\n<input type=\"image\" src=\"img_submit.gif\" alt=\"Submit\" width=\"48\" height=\"48\">\n</form>\n\n---\n\n<form>\n<input list=\"browsers\">\n<datalist id=\"browsers\">\n<option value=\"Edge\">\n<option value=\"Firefox\">\n<option value=\"Chrome\">\n<option value=\"Opera\">\n<option value=\"Safari\">\n</datalist>\n</form>\n\n---\n\n<form action=\"/action_page.php\" autocomplete=\"on\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<label for=\"email\">Email:</label>\n<input type=\"email\" id=\"email\" name=\"email\" autocomplete=\"off\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n```\n\n## Tutorials\n\nTest what you have learned about HTML input attributes.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_26",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_26",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

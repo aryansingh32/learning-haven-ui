@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 82,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript employs a memory management mechanism known asGarbage Collection.\n\nThe primary functions are:Ensuring efficient use of memory resourcesReclaim memory occupied by variables that are no longer in usePreventing memory leaksWeak ReferencesUnlike a regular Map, a WeakMap does not prevent its keys from being garbage collected.If a key (an object) has no references to it in a program, it becomes eligible for garbage collection.When the key is garbage collected, its key-value pair is removed from the WeakMap.Examplelet myMap = new WeakMap();let myObj = {fname:\"John\", lname:\"Doe\"};myMap.set(myObj, \"secret\");myObj = null;// now myObj (and its values) in myMap can be garbage collectedKeys Must Be ObjectsPrimitive values cannot be used as keys in a WeakMap.Thekeys must be objectsor non-registered symbols.This restriction is tied to the garbage collection mechanism;\nprimitives are not garbage collected in the same way as objects.Tracking ObjectsThe entries in a WeakMap are weakly held: if the object key becomes unreachable,\nits mapping is removed automatically.This is perfect for tracking data about objects without preventing garbage collection.Tracking Visitorslet text = \"\";// Create a WeakMap to store visit countsconst visitsCount = new WeakMap();// Create Visitor Objectsconst John = {name:\"John\", age:40};const Paul = {name:\"Paul\", age:41};const Ringo = {name:\"Ringo\", age:42};const George = {name:\"George\", age:43};// Track visitstrack(Paul);track(Ringo);track(Paul);track(Paul);track(John);// Function to track visitorsfunction track(visitor) {let count = visitsCount.get(visitor) || 0;count++;visitsCount.set(visitor, count);text += visitor.name + \", age \" + visitor.age + \", has visited \" + count + \" time(s).<br>\";}Try it Yourself \u00bbAutomatic CleanupIf you remove all references to a visitor object:Tracking Visitors:John = null;// The entry for John is now removed from the WeakMap (persons)Not IterableWeakMaps arenot enumerable.Youcannot iterateover the keys and values with for loops, forEach(), or keys().You cannot access the size.Limited MethodsWeakMap provides a limited set of methods:new WeakMap()Creates a new WeakMap objectget(key)Gets the value for a key in a WeakMapset(key, value)Sets the value for a key in a WeakMapdelete(key)Removes an element specified by a keyhas(key)Returns true if a key exists in a WeakMapWeak Map Secret DataExample// Create WeakMapconst myMap = new WeakMap();// Private Fields Simulationclass User {constructor(name) {myMap.set(this, {secret:\"hidden data\"});this.name = name;}getSecret() {return myMap.get(this).secret;}}const user1 = new User(\"John\");secret = user1.getSecret();Try it Yourself \u00bbExample ExplainedA WeakMap does not allow iteration.Outside code can not \"discover\" what objects are stored inside a WeakMap.To get the secret, you need thethisreference that was used in the constructor.External code has access to user1 and myMap, bot not to thethisreference inside myMap,\nunless you explicitly expose it, like via getSecret(), the secret value is unreachable.PrivacyWeakMap was intentionally designed for privacy:\nyou can set, get, has, and delete using an object key, but not inspect what is inside.This was a great tool for simulating private properties in JavaScript classes\n(before #private fields were added to the language).Learn More:JavaScript MapsJavaScript Map MethodsJavaScript Map ReferenceJavaScript SetsBrowser SupportWeakMapis anES6  feature.ES6 is fully supported in all modern browsers since June 2017:Chrome51Edge15Firefox54Safari10Opera38May 2016Apr 2017Jun 2017Sep 2016Jun 2016\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Create a WeakMap\nlet myMap = new WeakMap();\n// Create an Object\nlet myObj = {fname:\"John\", lname:\"Doe\"};\n// Set a WeakMap value\nmyMap.set(myObj, \"player\");\n// Get the WeakMap value\nlet type = myMap.get(myObj);\n\n---\n\nlet myMap = new WeakMap();\nlet myObj = {fname:\"John\", lname:\"Doe\"};\nmyMap.set(myObj, \"secret\");\nmyObj = null;\n// now myObj (and its values) in myMap can be garbage collected\n\n---\n\nlet text = \"\";\n// Create a WeakMap to store visit counts\nconst visitsCount = new WeakMap();\n// Create Visitor Objects\nconst John = {name:\"John\", age:40};\nconst Paul = {name:\"Paul\", age:41};\nconst Ringo = {name:\"Ringo\", age:42};\nconst George = {name:\"George\", age:43};\n// Track visits\ntrack(Paul);\ntrack(Ringo);\ntrack(Paul);\ntrack(Paul);\ntrack(John);\n// Function to track visitors\nfunction track(visitor) {\nlet count = visitsCount.get(visitor) || 0;\ncount++;\nvisitsCount.set(visitor, count);\ntext += visitor.name + \", age \" + visitor.age + \", has visited \" + count + \" time(s).<br>\";\n}\n\n---\n\nJohn = null;\n// The entry for John is now removed from the WeakMap (persons)\n\n---\n\n// Create WeakMap\nconst myMap = new WeakMap();\n// Private Fields Simulation\nclass User {\nconstructor(name) {\nmyMap.set(this, {secret:\"hidden data\"});\nthis.name = name;\n}\ngetSecret() {\nreturn myMap.get(this).secret;\n}\n}\nconst user1 = new User(\"John\");\nsecret = user1.getSecret();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_81",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

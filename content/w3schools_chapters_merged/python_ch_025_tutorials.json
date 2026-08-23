@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 25,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nA date in Python is not a data type of its own, but we can import a module \nnameddatetimeto work with dates as date \nobjects.\n\nWhen we execute the code from the example above the result will be:\n\nThe date contains year, month, day, hour, minute, second, and microsecond.\n\nThedatetimemodule has many methods to return information about the date \nobject.\n\nHere are a few examples, you will learn more about them later in this \nchapter:\n\nTo create a date, we can use thedatetime()class (constructor) of thedatetimemodule.\n\nThedatetime()class requires three parameters to create a date: year, \nmonth, day.\n\nThedatetime()class also takes parameters for time and timezone (hour, \nminute, second, microsecond, tzone), but they are optional, and has a default \nvalue of0, (Nonefor timezone).\n\nThedatetimeobject has a method for formatting date objects into readable strings.\n\nThe method is calledstrftime(), and takes one parameter,format, to specify the format of the returned string:\n\nA reference of all the legal format codes:\n\n### Code Examples\n\n```\nimport datetime\nx = datetime.datetime.now()\nprint(x)\n\n---\n\nimport datetime\nx = datetime.datetime.now()\nprint(x.year)\nprint(x.strftime(\"%A\"))\n\n---\n\nimport datetime\nx = datetime.datetime(2020, 5, 17)\nprint(x)\n\n---\n\nimport datetime\nx = datetime.datetime(2018, 6, 1)\nprint(x.strftime(\"%B\"))\n```\n\n## Tutorials\n\nTest your understanding of Python dates by completing a small coding challenge.\n\n## Tutorials\n\nPython has a set of built-in math functions, including an extensive math module, that allows you to perform mathematical tasks on numbers.\n\nThemin()andmax()functions can be used to find the lowest or highest value in an iterable:\n\nTheabs()function returns the absolute (positive) value of the specified number:\n\nThepow(x,y)function returns the value of x to the power of y (xy).\n\nPython has also a built-in module calledmath, which extends the list of mathematical functions.\n\nTo use it, you must import themathmodule:\n\nWhen you have imported themathmodule, you \ncan start using methods and constants of the module.\n\nThemath.sqrt()method for example, returns the square root of a number:\n\nThemath.ceil()method rounds a number upwards to \nits nearest integer, and themath.floor()method rounds a number downwards to its nearest integer, and returns the result:\n\nThemath.piconstant, returns the value of \nPI (3.14...):\n\nIn ourMath Module Referenceyou will \nfind a complete reference of all methods and constants that belongs to the Math module.\n\n### Code Examples\n\n```\nx = min(5, 10, 25)\ny = max(5, 10, 25)\nprint(x)\nprint(y)\n\n---\n\nx = abs(-7.25)\nprint(x)\n\n---\n\nx = pow(4, 3)\nprint(x)\n\n---\n\nimport math\n\n---\n\nimport \n    math\nx = math.sqrt(64)\nprint(x)\n\n---\n\nimport \n    math\nx = math.ceil(1.4)\ny = math.floor(1.4)\nprint(x) # \n    returns 2\nprint(y) # returns 1\n\n---\n\nimport \n    math\nx = math.pi\nprint(x)\n```\n\n## Tutorials\n\nTest your understanding of Python math by completing a small coding challenge.\n\n## Tutorials\n\nJSON is a syntax for storing and exchanging data.\n\nJSON is text, written with JavaScript object notation.\n\nPython has a built-in package calledjson, which can be used to work with JSON data.\n\nIf you have a JSON string, you can parse it by using thejson.loads()method.\n\nIf you have a Python object, you can convert it into a JSON string by \nusing thejson.dumps()method.\n\nYou can convert Python objects of the following types, into JSON strings:\n\nWhen you convert from Python to JSON, Python objects are converted into the JSON (JavaScript) equivalent:\n\nThe example above prints a JSON string, but it is not very easy to read, with no indentations and line breaks.\n\nThejson.dumps()method has parameters to \nmake it easier to read the result:\n\nYou can also define the separators, default value is (\", \", \": \"), which \nmeans using a comma and a space to separate each object, and a colon and a space \nto separate keys from values:\n\nThejson.dumps()method has parameters to \norder the keys in the result:\n\n### Code Examples\n\n```\nimport json\n\n---\n\nimport json\n# some JSON:\nx =\u00a0 '{ \"name\":\"John\", \"age\":30, \"city\":\"New \n  York\"}'\n# parse x:\ny = json.loads(x)\n# the result is a \n  Python dictionary:\nprint(y[\"age\"])\n\n---\n\nimport json\n# a Python object (dict):\nx = {\n\"name\": \n  \"John\",\n\"age\": 30,\n\"city\": \"New York\"\n}\n# \n  convert into JSON:\ny = json.dumps(x)\n# the result is a JSON string:\nprint(y)\n\n---\n\nimport json\nprint(json.dumps({\"name\": \"John\", \"age\": 30}))\nprint(json.dumps([\"apple\", \n  \"bananas\"]))\nprint(json.dumps((\"apple\", \"bananas\")))\nprint(json.dumps(\"hello\"))\nprint(json.dumps(42))\nprint(json.dumps(31.76))\nprint(json.dumps(True))\nprint(json.dumps(False))\nprint(json.dumps(None))\n\n---\n\nimport json\nx = {\n\"name\": \n  \"John\",\n\"age\": 30,\n\"married\": True,\n\"divorced\": False,\n\"children\": (\"Ann\",\"Billy\"),\n\"pets\": \n  None,\n\"cars\": [\n{\"model\": \"BMW 230\", \"mpg\": \n  27.5},\n{\"model\": \"Ford Edge\", \"mpg\": 24.1}\n]\n}\nprint(json.dumps(x))\n\n---\n\njson.dumps(x, indent=4)\n\n---\n\njson.dumps(x, indent=4, separators=(\". \", \" = \"))\n\n---\n\njson.dumps(x, indent=4, sort_keys=True)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_25",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_25",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

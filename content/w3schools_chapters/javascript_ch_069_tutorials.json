@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 69,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thelengthpropertyreturns the length(size) of an array:\n\nThelengthproperty can also be used toset the lengthof an array:\n\nThetoString()method returns the elements of an array as a comma separated string.\n\nES2022introduced the array methodat():\n\nTheat()method returns an indexed element from an array.\n\nTheat()method returns the same as[].\n\nat()is an ECMAScript 2022 feature.\n\nJavaScript 2022is supported in all modern browsers sinceMarch 2022:\n\nThejoin()method also joins all array elements into a string.\n\nIt behaves just liketoString(), but in addition you can specify the separator:\n\nWhen you work with arrays, it is easy to remove elements and add \nnew elements.\n\nThis is what popping and pushing is:\n\nPopping itemsoutof an array, or pushing \nitemsintoan array.\n\nThepop()method removes the last element from an array:\n\nThepop()method returns the value that was \"popped out\":\n\nThepush()method adds a new element to an array (at the end):\n\nThepush()method returns the new array length:\n\nShifting is equivalent to popping, but working on the first element instead of \nthe last.\n\nTheshift()method removes the first array element and \"shifts\" all \nother elements to a lower index.\n\nTheshift()method returns the value that was \"shifted out\":\n\nTheunshift()method adds a new element to an array (at the beginning), and \"unshifts\" \nolder elements:\n\nTheunshift()method returns the new array length:\n\nArray elements are accessed using theirindex number:\n\nThelengthproperty provides an easy way to append a new element to an array:\n\nECMAScript 5 (JavaScript 2009) added the new methodArray.isArray()to JavaScript:\n\nIn programming languages, concatenation means joining strings end-to-end.\n\nConcatenation \"snow\" and \"ball\" gives \"snowball\".\n\nConcatenating arrays means joining arrays end-to-end.\n\nTheconcat()method creates a new array by merging (concatenating) \nexisting arrays:\n\nTheconcat()method can also take strings as arguments:\n\nThecopyWithin()method copies array elements to another position in an array:\n\nFlattening an array is the process of reducing the dimensionality of an array.\n\nFlattening is useful when you want to convert a multi-dimensional array into a one-dimensional array.\n\nES2019Introduced the Array flat() method.\n\nTheflat()method creates a new array with sub-array elements concatenated to a specified depth.\n\nES2019 added the ArrayflatMap()method to JavaScript.\n\nTheflatMap()method first maps all elements of an array\nand then creates a new array by flattening the array.\n\nThesplice()method adds new items to an array.\n\nTheslice()method slices out a piece of an array.\n\nThesplice()method can be used to add new items to an array:\n\nThe first parameter (2) defines the positionwherenew elements should beadded(spliced in).\n\nThe second parameter (0) defineshow manyelements should beremoved.\n\nThe rest of the parameters (\"Lemon\" , \"Kiwi\") define the new elements to beadded.\n\nThesplice()method returns an array with the deleted items:\n\nWith clever parameter setting, you can usesplice()to remove elements without leaving \n\"holes\" in the array:\n\nThe first parameter (0) defines the position where new elements should beadded(spliced in).\n\nThe second parameter (1) defineshow manyelements should beremoved.\n\nThe rest of the parameters are omitted. No new elements will be added.\n\nES2023added the Array toSpliced() method as a safe way to splice an array without altering the original array.\n\nThe difference between the newtoSpliced()method and the oldsplice()method is that the new method\ncreates a new array, keeping the original array unchanged, while the old method altered the original array.\n\nTheslice()method slices out a piece of an array into a new \narray:\n\nTheslice()method can take two arguments likeslice(1, 3).\n\nThe method then selects elements from the start argument, and up to (but not \nincluding) the end argument.\n\nIf the end argument is omitted, like in the first examples, theslice()method slices out the rest of the array.\n\nJavaScript automatically converts an array to a comma separated string when a \nprimitive value is expected.\n\nThis is always the case when you try to output an array.\n\nThese two examples will produce the same result:\n\nSearching arraysare covered in the next chapter of this tutorial.\n\nSorting arrayscovers the methods used to sort arrays.\n\nIterating arrayscovers methods that operate on all array elements.\n\n### Code Snippets\n\n```\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet size = fruits.length;\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.length = 2;\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet myList = fruits.toString();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits.at(2);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits[2];\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\ndocument.getElementById(\"demo\").innerHTML = fruits.join(\" * \");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.pop();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits.pop();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.push(\"Kiwi\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet length = fruits.push(\"Kiwi\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.shift();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits.shift();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.unshift(\"Lemon\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.unshift(\"Lemon\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits[0] = \"Kiwi\";\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits[fruits.length] = \"Kiwi\";\n\n---\n\nArray.isArray(fruits);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\ndelete fruits[0];\n\n---\n\nconst myGirls = [\"Cecilie\", \"Lone\"];\nconst myBoys = [\"Emil\", \"Tobias\", \"Linus\"];\nconst myChildren = myGirls.concat(myBoys);\n\n---\n\nconst arr1 = [\"Cecilie\", \"Lone\"];\nconst arr2 = [\"Emil\", \"Tobias\", \"Linus\"];\nconst arr3 = [\"Robin\", \"Morgan\"];\nconst myChildren = arr1.concat(arr2, arr3);\n\n---\n\nconst arr1 = [\"Emil\", \"Tobias\", \"Linus\"];\nconst myChildren = arr1.concat(\"Peter\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.copyWithin(2, 0);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\", \"Kiwi\"];\nfruits.copyWithin(2, 0, 2);\n\n---\n\nconst myArr = [[1,2],[3,4],[5,6]];\nconst newArr = myArr.flat();\n\n---\n\nconst myArr = [1, 2, 3, 4, 5, 6];\nconst newArr = myArr.flatMap(x => [x, x * 10]);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.splice(2, 0, \"Lemon\", \"Kiwi\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.splice(2, 2, \"Lemon\", \"Kiwi\");\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.splice(0, 1);\n\n---\n\nconst months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\"];\nconst spliced = months.toSpliced(0, 1);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Lemon\", \"Apple\", \"Mango\"];\nconst citrus = fruits.slice(1);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Lemon\", \"Apple\", \"Mango\"];\nconst citrus = fruits.slice(3);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Lemon\", \"Apple\", \"Mango\"];\nconst citrus = fruits.slice(1, 3);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Lemon\", \"Apple\", \"Mango\"];\nconst citrus = fruits.slice(2);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\ndocument.getElementById(\"demo\").innerHTML = fruits.toString();\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\ndocument.getElementById(\"demo\").innerHTML = fruits;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_68",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

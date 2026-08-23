@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 139,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript 2025 includes built-in methods for set operations, such as intersection(), union(), and difference(),\neliminating the need for manual loops or third-party libraries.\n\nThe introduction of an Iterator object provides a functional interface with lazy evaluation,\nallowing developers to wrap various iterators like Arrays.\n\nA new set of functional operators for iterators (like .map(), .filter(), and .take()) allows for lazy evaluation,\nimproving performance when handling large data streams.\n\nTheunion()method returns the union of two sets.\n\nTheunion()method returns a new set containing the elements which are in this set,\nor in the argument set, or in both:\n\nTheunion()method is supported in all modern browsers since June 2024:\n\nTheintersection()method returns the intersection of two sets.\n\nTheintersection()method returns a new set containing the elements which are in this set\nand in the argument set:\n\nTheintersection()method is supported in all modern browsers since June 2024:\n\nThedifference()method returns the difference between two sets.\n\nThedifference()method returns a new set containing elements which are in this set\nbut not in the argument set:\n\nThedifference()method is supported in all modern browsers since June 2024:\n\nThesymmetricDifference()method returns the symmetric difference between to sets.\n\nThesymmetricDifference()method returns a new set containing elements which are in this set\nor in the argument set, but not in both:\n\nThesymmetricDifference()method is supported in all modern browsers since June 2024:\n\nTheisSubsetOf()method returnstrueif all elements in this set are elements in the argument set:\n\nTheisSubsetOf()method is supported in all modern browsers\nsince June 2024:\n\nTheisSupersetOf()method returnstrueif all elements in the argument set are also in this set:\n\nTheisSupersetOf()method is supported in all modern browsers since June 2024:\n\nTheisDisjointFrom()method returnstrueif this set has no elements in common with the argument set:\n\nTheSet.isDisjointFrom()method is supported in all modern browsers since June 2024:\n\nTheIterator.from()creates an iterator object from an existing iterable or iterator object.\n\nThedrop()method\nreturns a new iterator that skips a specified number of elements before yielding the rest.\n\nTheevery(fn)method\nreturnstrueif all elements in the iterator satisfy the provided test function.\n\nThefilter()method\nreturns a new iterator containing elements that satisfy a filter function.\n\nThefind(fn)method\nreturns the first element that satisfies a test function.\n\nTheflatMap()method\nreturns a new iterator by mapping each element and then flattening\nthe results into a single iterator.\n\nTheforEach()method\nexecutes a provided function once for each element in the iterator.\n\nThemap()method\nreturns a new iterator with all elements transformed by a map function.\n\nThereduce()method\napplies a reducer function against an accumulator and each element to reduce it to a single value.\n\nThesome()method\nreturnstrueif at least one element in the iterator satisfies the provided test function.\n\nThetake()method\nreturns a new iterator that yields at most a specified number of elements.\n\nThevflag is an \"upgrade\" to theuflag.\n\nTheu(unicode) flag enables full Unicode support in regular expressions.\n\nThevflag enables more Unicode-related features.\n\nThe new features are:\n\n/regexp/vis supported all in modern browsers since May 2025:\n\nTheRegExp.escape()method returns a string where characters that belongs\nto the regular expression syntax are escaped.\n\nThis makes it possible to treat characters like +, *, ?, ^, $, (, ), [, ], {, }, |, and \\ literally,\nand not as part of a regular expression.\n\nRegExp.escape()is supported all in modern browsers since May 2025:\n\nAFloat16Arrayis aTypedArraythat stores 16-bit (half-precision)\nfloating-point numbers in the IEEE 754 half-precision format.\n\nFloat16Array requires half the memory ofFloat32Arrayand a quarter ofFloat64Array.\n\nTheFloat16Arrayobject is supported in all modern browsers since June 2024:\n\nThe staticMath.f16round()method returns the nearest 16-bit floating point representation of a number.\n\nTheMath.f16round()method is supported in all modern browsers since June 2024:\n\nThe Promise.try() method starts a promise chain from potentially throwing, synchronous code.\n\nThis ensures exceptions are correctly handled as promise rejections.\n\n### Code Snippets\n\n```\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.union(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.intersection(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.difference(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.symmetricDifference(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isSubsetOf(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isSupersetOf(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isDisjointFrom(B);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from([1, 2, 3]);\n// Iterate over the elements\nlet text = \"\";\nfor (const x of myIterator) {\ntext += x;\n}\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);\n// Remove the first five\nconst firstFive = myIterator.drop(5);\n\n---\n\n// Create an Iterator\nconst myIterator = Iterator.from(\"123456789\");\n// Is every Element greater than 7?\nlet result = myIterator.every(x => x > 7);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from([32, 33, 16, 40]);\n// Filter the iterator\nconst filteredIterator = myIterator.filter(x => x > 18);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from([3, 10, 18, 30, 20]);\n// Find first greater than 18\nlet result = myIterator.find(x => x > 18);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);\n// Map the Iterator\nconst mappedIterator = myIterator.flatMap(x => [x, x * 10]);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from(\"123456789\");\n// Iterate over all elements\nlet text = \"\";\nmyIterator.forEach (x => text += x);\n\n---\n\n// Create an iterator\nconst myIterator = Iterator.from(\"123456789\");\n// Now you can use the map method\nconst mappedIterator = myIterator.map(x => x * 2);\n\n---\n\n// Create an Iterator\nconst myIterator = Iterator.from([175, 50, 25]);\n// Reduce the Iterator\nlet result = myIterator.reduce(myFunc);\n\n---\n\n// Create an Iterator\nconst myIterator = Iterator.from(\"123456789\");\n// Is some Element greater than 7?\nlet result = myIterator.some(x => x > 7);\n\n---\n\nconst myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);\n// Take the first five elements\nconst firstFive = myIterator.take(5);\n\n---\n\nlet text = \"Hello \ud83d\ude04\";\nlet pattern = /\\p{RGI_Emoji}/v;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"Hello \ud83d\ude04\";\nlet pattern = /\\p{RGI_Emoji}/;\nlet result = pattern.test(text);\n\n---\n\n// Escape a text for to use as a regular expression\nconst safe = RegExp.escape(\"[*]\");\n// Build a new reglar expression\nconst regex = new RegExp(safe);\n// Text to replace within\nconst oldText = \"[*] is a web school.\";\n// Perform the replace\nconst newText = oldText.match(regex, \"W3Schools\");\n\n---\n\nconst myArr = new Float16Array([1.5, 2.5, 3.5, 4.5]);\nlet bytes = myArr.BYTES_PER_ELEMENT;\nlet length = myArr.length;\n\n---\n\nlet a = Math.f16round(2.60);\nlet b = Math.f16round(2.50);\nlet c = Math.f16round(2.49);\nlet d = Math.f16round(-2.60);\nlet e = Math.f16round(-2.50);\nlet f = Math.f16round(-2.49);\n\n---\n\nfunction compute() {\nreturn Promise.try(() => {\nconst v = mayThrowSync();\nreturn asyncFunc(v);\n});\n}\n\n---\n\nimport {names} from \"module-name\" with {key:\"data\"};\n\n---\n\nimport config from \"config.json\" with {type:\"json\"};\nimport styles from \"styles.css\" with {type:\"css\"};\nimport data from \"data.json\" with {type:\"json\"};\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_138",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

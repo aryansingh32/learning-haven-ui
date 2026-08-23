@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 124,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In the previous page, your learned that elements in aqueueare added at the \nend and removed from the front.A deque (stands fordouble-endedqueue) however, is more flexible, as elements can be added and removed \nfrom both ends (at the front and the back). You can also access elements by \nindex numbers.To use a deque, you have to include the<deque>header file:// Include the deque library#include <deque>Create a DequeTo create a deque, use thedequekeyword, \nand specify thetypeof values it should store within angle brackets<>and then the name of the deque, like:deque<type>dequeName.Example// Create a deque called cars that will store stringsdeque<string> cars;If you want to add elements at the time of declaration, place them in a comma-separated list, inside curly braces{}:Example// Create a deque called cars that will store stringsdeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Print deque elementsfor (string car : cars) {cout << car << \"\\n\";}Try it Yourself \u00bbNote:The type of the deque (stringin our example) cannot be changed after its been declared.Access a DequeYou can access a deque element by referring to the index number inside square brackets[].Deques are 0-indexed, meaning that[0]is the first element,[1]is the second element, and so on:Example// Create a deque called cars that will store stringsdeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Get the first elementcout << cars[0];\u00a0 // Outputs Volvo// Get the \n  second elementcout << cars[1];\u00a0 // Outputs BMWTry it Yourself \u00bbYou can also access the first or the last element of a deque \nwith the.front()and.back()functions:Example// Create a deque called cars that will store stringsdeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Get the first elementcout << cars.front();// Get the last elementcout << cars.back();Try it Yourself \u00bbTo access an element at a specified index, you can use the.at()function \nand specify the index number:Example// Create a deque called cars that will store stringsdeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Get the second elementcout << cars.at(1);// Get the third elementcout << cars.at(2);Try it Yourself \u00bbNote:The.at()function is often preferred over square brackets[]because it throws an \nerror message if the element is out of range:Example// Create a deque called cars that will store stringsdeque<string> cars \n  = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// \n  Try to access an element that does \n  not exist (will throw an exception)cout << cars.at(6);Try it Yourself \u00bbChange a Deque ElementTo change the value of a specific element, you can refer to the index number:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Change the value of the first elementcars[0] = \"Opel\";cout << cars[0];\u00a0 // Now outputs Opel instead of VolvoTry it Yourself \u00bbHowever, it is safer to use the.at()function:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Change the value of the first elementcars.at(0) = \"Opel\";cout << cars.at(0);\u00a0 // Now outputs Opel instead of VolvoTry it Yourself \u00bbAdd Deque ElementsTo add elements to a deque, you can use.push_front()to insert an element at the beginning of the deque and.push_back()to add an element at the end:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Add an \n  element at the beginningcars.push_front(\"Tesla\");// Add an element \n  at the endcars.push_back(\"VW\");Try it Yourself \u00bbRemove Deque ElementsTo remove elements from a deque, use.pop_front()to remove an element from the beginning of the deque and.pop_back()to remove an element at the end:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Remove the \n  first elementcars.pop_front();// Remove the last elementcars.pop_back();Try it Yourself \u00bbDeque SizeTo find out how many elements a deque has, use the.size()function:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};cout << cars.size();\u00a0 \n  // Outputs 4Try it Yourself \u00bbCheck if a Deque is EmptyUse the.empty()function to find out if a \ndeque is empty or not.The.empty()function returns1(true) if the deque is empty and0(false) \notherwise:Exampledeque<string> cars;cout << cars.empty();\u00a0 \n  // Outputs 1 (The deque is empty)Try it Yourself \u00bbExampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};cout << cars.empty();\u00a0 \n  // Outputs 0 (not empty)Try it Yourself \u00bbLoop Through a DequeYou can loop through the deque elements by using aforloop combined with the.size()function:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};for (int i = \n  0; i < cars.size(); i++) {cout << cars[i] << \"\\n\";}Try it Yourself \u00bbYou can also use afor-each loop(introduced in C++ version 11 (2011), which is cleaner and more readable:Exampledeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};for (string car : cars) {cout << car << \"\\n\";}Try it Yourself \u00bbTip:It is also possible to loop through deques with aniterator, which you will learn more about in a later chapter.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Include the deque library\n#include <deque>\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars;\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Print deque elements\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the first element\ncout << cars[0];\u00a0 // Outputs Volvo\n// Get the \n  second element\ncout << cars[1];\u00a0 // Outputs BMW\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the first element\ncout << cars.front();\n// Get the last element\ncout << cars.back();\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the second element\ncout << cars.at(1);\n// Get the third element\ncout << cars.at(2);\n\n---\n\n// Create a deque called cars that will store strings\ndeque<string> cars \n  = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// \n  Try to access an element that does \n  not exist (will throw an exception)\ncout << cars.at(6);\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Change the value of the first element\ncars[0] = \"Opel\";\ncout << cars[0];\u00a0 // Now outputs Opel instead of Volvo\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Change the value of the first element\ncars.at(0) = \"Opel\";\ncout << cars.at(0);\u00a0 // Now outputs Opel instead of Volvo\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Add an \n  element at the beginning\ncars.push_front(\"Tesla\");\n// Add an element \n  at the end\ncars.push_back(\"VW\");\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Remove the \n  first element\ncars.pop_front();\n// Remove the last element\ncars.pop_back();\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.size();\u00a0 \n  // Outputs 4\n\n---\n\ndeque<string> cars;\ncout << cars.empty();\u00a0 \n  // Outputs 1 (The deque is empty)\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.empty();\u00a0 \n  // Outputs 0 (not empty)\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (int i = \n  0; i < cars.size(); i++) {\ncout << cars[i] << \"\\n\";\n}\n\n---\n\ndeque<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_123",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

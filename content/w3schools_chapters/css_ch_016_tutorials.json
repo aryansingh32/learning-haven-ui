@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 16,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A hexadecimal color is specified with: #RRGGBB.\n\nIn CSS, a color can be specified using a hexadecimal value in the form:\n\n#rrggbb\n\nWhere rr (red), gg (green) and bb (blue) are hexadecimal values between 00 and ff (same as decimal 0-255).\n\nFor example, #ff0000 is displayed as red, because red is set to its highest value (ff) and the others are set to \nthe lowest value (00).\n\nTo display black, set all values to 00, like this: #000000.\n\nTo display white, set all values to ff, like \nthis: #ffffff.\n\nExperiment by mixing the HEX values below:\n\nShades of gray are often defined using equal values for all the 3 light sources:\n\nSometimes you will see a 3-digit hex code in the CSS source.\n\nThe 3-digit hex code is a shorthand for some 6-digit hex codes.\n\nThe 3-digit hex code has the following form:\n\n#rgb\n\nWhere r, g, and b represent the red, green, and blue components with values between 0 and f.\n\nThe 3-digit hex code can only be used when both the values (RR, GG, and BB) are the same for \neach component. So, if we have #ff00cc, it can be written like this: #f0c.\n\nHere is an example:\n\n### Code Snippets\n\n```\nbody {\nbackground-color: #fc9; /* same as #ffcc99 */\n}\nh1 {\ncolor: #f0f; /* same as #ff00ff */\n}\np {\ncolor: #b58; /* same as #bb5588 */\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_15",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

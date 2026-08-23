@@ -1,0 +1,422 @@
+Video URL: https://www.youtube.com/watch?v=ZIofkptpXO8
+Video Title: Styling Lists using CSS | Sigma Web Development Course - Tutorial #25
+--------------------------------------------------
+
+00:00:00.000
+We read about different lists in HTML
+00:00:02.540
+We saw that there are ordered list, unordered list, definition list
+00:00:06.240
+There are list items in it
+00:00:07.920
+If you are making a website, then in the navigation bar, for example
+00:00:11.320
+You will have to put list items in an unordered list
+00:00:14.840
+There you have to change a lot of things
+00:00:17.600
+I will tell you in this video that on list item
+00:00:20.760
+And along with that, what kind of CSS properties their CSS properties on their list
+00:00:25.760
+I am really enjoying this course
+00:00:27.760
+we are going to reach our first project
+00:00:29.760
+after finishing all these properties
+00:00:31.760
+so do write sigma batch op in the comment section
+00:00:35.360
+let's go to the computer screen
+00:00:37.360
+let's roll the intro
+00:00:39.360
+intro
+00:00:41.360
+intro
+00:00:43.360
+intro intro so guys I have come inside my computer screen and the first thing I will do is make video 25
+00:00:52.480
+and here I will open with code by right clicking on shift
+00:00:57.200
+See people celebrate the century, they celebrate 50 and a half century, I will also celebrate the quarter century
+00:01:03.600
+25 videos have been made, write congratulations in the comment.
+00:01:06.700
+Now here, while making index.html,
+00:01:09.900
+I will tell you how to style a list.
+00:01:13.300
+List styling is so important,
+00:01:16.300
+that if you want to make a new bar,
+00:01:19.000
+then you will use the list item 70-80% of the time.
+00:01:23.400
+Now here I will quickly
+00:01:25.520
+toggle word wrap
+00:01:27.520
+and turn on screen cast mode
+00:01:29.520
+so that you can see what I am doing
+00:01:31.520
+and I will write here CSS list
+00:01:33.520
+suppose I want to make a nav bar
+00:01:35.520
+I will start with a typical example
+00:01:37.520
+which you will use
+00:01:39.520
+after writing nav, I will say make an unordered list
+00:01:41.520
+make an li and write home
+00:01:43.520
+and along with this make some more LI's
+00:01:47.040
+here write about and here write contact
+00:01:51.600
+so I have written about and contact here
+00:01:54.000
+now first of all you access this playlist
+00:01:55.760
+otherwise I will come to your house and I will snatch your computer and access it myself
+00:01:59.200
+I will bookmark the playlist in your computer
+00:02:00.960
+you will like it, you won't like it, so you do it yourself
+00:02:03.920
+now here you can see that
+00:02:06.000
+I have given you all the source code in
+00:02:08.000
+github.com slash code with ari slash
+00:02:10.000
+sigma web dev course.
+00:02:11.000
+You have to access this too.
+00:02:12.000
+Okay, if you do all these things yourself,
+00:02:14.000
+I will like it.
+00:02:15.000
+Now here you see, I open it in the browser
+00:02:17.000
+and show you.
+00:02:18.000
+And here you can see that it is rendered
+00:02:20.000
+in this way, which is a default behavior.
+00:02:22.000
+Now you can do some styling in list which has a
+00:02:26.000
+big use
+00:02:28.000
+that you want to show it as a nav bar
+00:02:30.000
+now see whenever
+00:02:32.000
+by default a list is made
+00:02:34.000
+I will inspect and show you
+00:02:36.000
+and hide my face so that you can
+00:02:38.000
+see what I am pointing
+00:02:40.000
+now see here
+00:02:42.000
+its display property is list item
+00:02:44.000
+like we read about display item like we read about the display block
+00:02:46.000
+we read about the
+00:02:48.000
+display inline
+00:02:50.000
+we read about the display flex and grid
+00:02:52.000
+the display value
+00:02:54.000
+is a list item
+00:02:56.000
+which means that there will be a marker
+00:02:58.000
+and an item
+00:03:00.000
+now if you want to change the display
+00:03:02.000
+you can do it
+00:03:04.000
+if I block the display, then its display will be blocked.
+00:03:07.500
+But that's not a good approach to remove this marker.
+00:03:11.000
+If you want to remove its marker, then how will you do it?
+00:03:14.000
+To remove its marker, see there is a marker in the LI
+00:03:17.000
+and the content inside it is that.
+00:03:19.500
+In the other LI, there is a marker and this is it.
+00:03:22.500
+So how does it get it?
+00:03:24.500
+Its display is a list item, there is a marker and this one so how does it get this its display is a list item
+00:03:26.800
+that's why it is getting all this
+00:03:28.160
+there are two things in it
+00:03:29.360
+it comprises of a marker and list item
+00:03:32.800
+now there are some properties in this
+00:03:34.400
+that we will talk about
+00:03:35.200
+the most important property is
+00:03:36.960
+that is list style
+00:03:38.560
+if you make list style none
+00:03:40.400
+then you see here this circle will disappear
+00:03:42.240
+that is the marker will disappear
+00:03:44.160
+if you guys list style
+00:03:46.000
+let us say, any value
+00:03:48.000
+you can see how it is changing
+00:03:50.000
+see above, I will circle
+00:03:52.000
+here all these values can be used
+00:03:54.000
+devnagri is also there
+00:03:56.000
+if you do devnagri then 1,2,3,4
+00:03:58.000
+you can also do devnagri for style
+00:04:00.000
+but usually what we do
+00:04:02.000
+is we target this
+00:04:04.000
+let me close this, is we target this list item
+00:04:06.000
+let's say I write here style and I say in nav the li in ul
+00:04:11.000
+what you do is list style
+00:04:17.000
+see if I want to make a new bar then I will make list style none
+00:04:20.000
+but I will just show you by doing devnagri and as soon as I do devnagri
+00:04:25.000
+devnagri I think
+00:04:28.000
+devnagri ok I have done the spelling of devnagri wrong
+00:04:32.000
+my bad and now see here as soon as I do devnagri
+00:04:35.000
+devnagri d e v a n a g r i
+00:04:39.000
+devnagri ok now see here 1 2 3
+00:04:43.000
+which you will get to see ok so you can see 1,2,3 you can see it
+00:04:46.000
+so you can change the list style
+00:04:49.000
+by changing the property, now you can see the marker
+00:04:52.000
+and the content is made by combining these two
+00:04:55.000
+now i will show you one thing, if i change the background
+00:04:58.000
+to yellow, i will say background color
+00:05:01.000
+yellow, ok, here i have changed the background color to yellow
+00:05:04.000
+so you can see see marker is left
+00:05:06.000
+marker means
+00:05:08.000
+it is outside of list item
+00:05:10.000
+it is not inside list item but i want
+00:05:12.000
+my marker to come inside list item
+00:05:14.000
+how i will do it?
+00:05:16.000
+by using list style position
+00:05:18.000
+so i will come here and i will say
+00:05:20.000
+list style position
+00:05:22.000
+inside it means
+00:05:24.000
+take the marker inside
+00:05:26.000
+and now the marker is inside, means any background will be put
+00:05:29.000
+border will be put
+00:05:32.000
+I will also show you the border
+00:05:35.000
+border 2px solid
+00:05:38.000
+black
+00:05:41.000
+and you can see here as soon as I put 2px solid black border
+00:05:44.000
+your markers are inside, why?
+00:05:46.000
+because I have inserted list style position here
+00:05:50.000
+and whenever I insert list style position
+00:05:52.000
+it means that my marker is inside my li
+00:05:55.000
+can I replace it with an image?
+00:05:57.000
+yes I can replace it with an image
+00:05:59.000
+so I can use list style image property here
+00:06:04.000
+and I can put an image URL here
+00:06:07.000
+so URL
+00:06:08.000
+and after this I can put an image URL here
+00:06:11.000
+let us say I put an image URL
+00:06:14.000
+which is this, let me show you
+00:06:16.000
+if I want to use this
+00:06:18.000
+then why didn't we get it here
+00:06:21.000
+let me see
+00:06:22.000
+forbidden, ok
+00:06:23.000
+actually that image was not accessible for some reason
+00:06:25.000
+that's why I used this image and you can see here
+00:06:28.000
+that as soon as I used this image, this image came in place of the marker
+00:06:31.000
+I will show you one more thing, I will comment this out
+00:06:33.000
+and it will go from here, obviously
+00:06:36.000
+what I can do here, I made list style Devnagari
+00:06:39.000
+I can also set list style type as an emoji
+00:06:43.000
+and let's say I set this monkey emoji
+00:06:46.200
+and you see here this monkey has come
+00:06:47.800
+so if you want to put this monkey
+00:06:49.600
+then you can put monkey in this way
+00:06:51.400
+now after this I want to tell you about a syntax
+00:06:54.000
+you list style type
+00:06:56.200
+like let's say I want to disc it
+00:06:58.600
+and after this I want to insert the position
+00:07:02.400
+and along with that image
+00:07:04.600
+let's say I want to set this URL and also set the image URL
+00:07:06.360
+I can do all three at once
+00:07:09.480
+You can see here, as soon as I do this
+00:07:11.960
+and I will comment this and that
+00:07:14.960
+So you can see here that if I remove this URL
+00:07:18.360
+then only the disk will come here
+00:07:21.160
+and if I remove the disk here then the URL will come here
+00:07:23.880
+so if I remove the disk here then the url will come here so if I remove the disk here then the inside url will come here
+00:07:27.000
+you will want to use the disk or url at one time obviously
+00:07:30.000
+so you should know this thing
+00:07:32.000
+but for the sake of syntax I will keep all three like this
+00:07:35.000
+either you will use these two at one time or these two obviously
+00:07:40.000
+for obvious reasons
+00:07:41.000
+because either your image will be seen or your disk will be seen
+00:07:44.000
+so I hope you have understood this thing and you have clearly understood the list style image,
+00:07:50.000
+how to use the shorthand property, I will comment it out and let the disk remain,
+00:07:55.000
+in fact, I like this monkey, or if I put a smiley, how will it be,
+00:07:59.000
+or if I put a fire, how good it will be, so I can also put a fire like this, it looks pretty good.
+00:08:03.800
+So the list is used a lot, as I told you to make navbar
+00:08:08.000
+we usually do some work to make navbar, I will show you
+00:08:12.000
+that all the things I have put on my li, I will remove all of them
+00:08:16.000
+and I will remove this border border, usually what we do here
+00:08:20.000
+we do list style none, in fact I will do this in li
+00:08:24.000
+so that it applies to all, list style none, in fact I will do it in li so that it can be applied in all
+00:08:25.000
+list style none, whenever you write anything here in element.style
+00:08:29.000
+it as, I will show you by closing this video, it will be added here as inline style
+00:08:35.000
+you see here whatever I type, whatever I add or remove here
+00:08:40.000
+whatever is written in element.style will be added here as inline CSS
+00:08:45.000
+you should know this thing, okay
+00:08:46.500
+so i will not write here, i will write here, list style none
+00:08:51.000
+and you can see by doing list style none it is gone
+00:08:53.500
+then usually we flex the display so that it becomes horizontal
+00:08:56.500
+okay, and we do that on its container, on ul
+00:08:59.000
+okay, we will not do it here, we will do it on ul
+00:09:01.000
+so let's flex the display on its container so that all its items become flex
+00:09:04.500
+okay, and what we usually do on the list item is that we set the padding,
+00:09:09.000
+let's say 23 pixels, so see, our navbar is made like this.
+00:09:13.000
+But that's not the point of this video, in the coming videos,
+00:09:16.000
+we will make great, great, strong, strong website ideas.
+00:09:19.000
+Don't take tension at all, access the playlist now,
+00:09:22.000
+either click and bookmark, or click and save.
+00:09:24.000
+Thank you so much guys for watching this video, and I will see you next time. don't take any decision, just access the playlist click here to bookmark, click here to save

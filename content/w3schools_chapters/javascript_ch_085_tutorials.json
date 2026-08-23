@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 85,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The JavaScriptfor..ofstatement loops \nthrough the elements of an iterable object.\n\nIterating means looping over a sequence of elements.\n\nHere are some examples:\n\nYou can use afor...ofloop to iterate over the elements of a string:\n\nYou can use afor...ofloop to iterate over the elements of an Array:\n\nYou can use afor...ofloop to iterate over the elements of a Set:\n\nYou can use afor...ofloop to iterate over the elements of a Map:\n\nTheiterator protocoldefines how to produce asequence of valuesfrom an object.\n\nAn object becomes aniteratorwhen it implements anext()method.\n\nThenext()method must return an object with two properties:value (the next value)done (true or false)valueThe value returned by the iterator(Can be omitted if done is true)donetrueif the iterator has completedfalseif the iterator has produced a new valueTechnically, iterables must implement theSymbol.iteratormethod.In JavaScript the following are iterables:StringsArraysTyped ArraysSetsMapsBecause their prototype objects have aSymbol.iteratormethod:Home Made IterableThis iterable returns never ending number: 10,20,30,40,.... whenthe\nnext()method is called:Example// Home Made Iterablefunction myNumbers() {let n = 0;return {next: function() {n += 10;return {value:n, done:false};}};}// Run the Iterableconst n = myNumbers();n.next(); // Returns 10n.next(); // Returns 20n.next(); // Returns 30Try it Yourself \u00bbHome made iterables do not support the JavaScriptfor...ofstatement.A JavaScript iterable is an object that has aSymbol.iterator.TheSymbol.iteratoris a function that returns anext()function.An iterable can be iterated over with the code:for (const x of iterable) { }Example// Create an ObjectmyNumbers = {};// Make it IterablemyNumbers[Symbol.iterator] = function() {let n = 0;done = false;return {next() {n += 10;if (n == 100) {done = true}return {value:n, done:done};}};}Now you can usefor..offor (const num of myNumbers) {// Any Code Here}Try it Yourself \u00bbThe Symbol.iterator method is called automatically byfor..of.But we can also do it \"manually\":Examplelet iterator = myNumbers[Symbol.iterator]();while (true) {const result = iterator.next();if (result.done) break;// Any Code Here}Try it Yourself \u00bbIterators provide a controlled way to work withdata sequences,\nenablingcustom iteration logicfor various data structures.In the next chapter you will learn about the newIterator Helper Functionsintroduced in ECMAScript 2025.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nfor (variable of iterable) {\n//\ncode block to be executed\n}\n\n---\n\nconst name = \"W3Schools\";\nfor (const x of name) {\n//\ncode block to be executed\n}\n\n---\n\nconst letters = [\"a\",\"b\",\"c\"];\nfor (const x of letters) {\n//\ncode block to be executed\n}\n\n---\n\nconst numbers = [2,4,6,8];\nfor (const x of numbers) {\n//\ncode block to be executed\n}\n\n---\n\nconst letters = new Set([\"a\",\"b\",\"c\"]);\nfor (const x of letters) {\n//\ncode block to be executed\n}\n\n---\n\nconst fruits = new Map([\n[\"apples\", 500],\n[\"bananas\", 300],\n[\"oranges\", 200]\n]);\nfor (const x of fruits) {\n//\ncode block to be executed\n}\n\n---\n\n// Home Made Iterable\nfunction myNumbers() {\nlet n = 0;\nreturn {\nnext: function() {\nn += 10;\nreturn {value:n, done:false};\n}\n};\n}\n// Run the Iterable\nconst n = myNumbers();\nn.next(); // Returns 10\nn.next(); // Returns 20\nn.next(); // Returns 30\n\n---\n\n// Create an Object\nmyNumbers = {};\n// Make it Iterable\nmyNumbers[Symbol.iterator] = function() {\nlet n = 0;\ndone = false;\nreturn {\nnext() {\nn += 10;\nif (n == 100) {done = true}\nreturn {value:n, done:done};\n}\n};\n}\n\n---\n\nfor (const num of myNumbers) {\n// Any Code Here\n}\n\n---\n\nlet iterator = myNumbers[Symbol.iterator]();\nwhile (true) {\nconst result = iterator.next();\nif (result.done) break;\n// Any Code Here\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_84",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

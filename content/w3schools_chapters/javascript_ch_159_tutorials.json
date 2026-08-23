@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 159,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "HTML form validation can be done by JavaScript.\n\nIf a form field (fname) is empty, this function alerts a message, and returns \nfalse, to prevent the form from being submitted:\n\nThe function can be called when the form is submitted:\n\nJavaScript is often used to validate numeric input:\n\nHTML form validation can be performed automatically by the browser:\n\nIf a form field (fname) is empty, therequiredattribute prevents this form from being \nsubmitted:\n\nData validation is the process of ensuring that user input is clean, \ncorrect, and useful.\n\nTypical validation tasks are:\n\nMost often, the purpose of data validation is to ensure correct user input.\n\nValidation can be defined by many different methods, and deployed in many \ndifferent ways.\n\nServer side validationis performed by a web server, after input has been sent to the \nserver.\n\nClient side validationis performed by a web browser, before input is sent to a web server.\n\nHTML5 introduced a new HTML validation concept calledconstraint \nvalidation.\n\nHTML constraint validation is based on:\n\nFor a full list, go toHTML \nInput Attributes.\n\nFor a full list, go toCSS \nPseudo Classes.\n\n### Code Snippets\n\n```\nfunction validateForm() {\nlet\nx = document.forms[\"myForm\"][\"fname\"].value;\nif (x == \"\") {\nalert(\"Name must be filled out\");\nreturn false;\n}\n}\n\n---\n\n<form name=\"myForm\" action=\"/action_page.php\"\nonsubmit=\"return validateForm()\"\nmethod=\"post\">\nName: <input type=\"text\" name=\"fname\">\n<input type=\"submit\" value=\"Submit\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" method=\"post\">\n<input type=\"text\" name=\"fname\"\nrequired\n>\n<input type=\"submit\" value=\"Submit\">\n</form>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_158",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

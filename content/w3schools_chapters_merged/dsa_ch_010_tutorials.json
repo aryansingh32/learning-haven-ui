@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in DSA.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in DSA."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Understanding Tutorials and more in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSeethis pagefor a general explanation of what time complexity is.\n\nTheSelection Sort algorithmgoes through all elements in an array, finds the lowest value, and moves it to the front of the array, and does this over and over until the array is sorted.\n\nSelection Sort goes through an array of \\(n\\) values \\(n-1\\) times. This is because when the algorithm has sorted all values except the last, the last value must also be in its correct place.\n\nThe first time the algorithm runs through the array, every value is compared to find out which one is the lowest.\n\nThe second time the algorithm runs through the array, every valueexcept the first valueis compared to find out which is the lowest.\n\nAnd in this way the unsorted part of the array becomes shorter and shorter until the sorting is done. So on average, \\(\\frac{n}{2}\\) elements are considered when the algorithm goes through the array finding the lowest value and moving it to the front of the array.\n\nIn addition to all the compares needed, the number of swap considerings needed is \\(n -1 \\).\n\nWe can start calculating the number of operations for the Selection Sort algorithm:\n\n\\[\n  \\begin{equation}\n  \\begin{aligned}\n  Operations {} & = (n-1)\\cdot \\frac{n}{2} + (n - 1) \\\\\n                & = \\frac{n^2}{2} - \\frac{n}{2} + (n - 1) \\\\\n                & = \\frac{n^2}{2} + \\frac{n}{2} \n\\end{aligned}\n\\end{equation}\n\\]\n\nWhen looking at the run time for algorithms, we look at very large data sets, meaning \\(n\\) is a very big number. And for a very big number \\(n\\), the term \\(\\frac{n^2}{2}\\) becomes so much bigger than the term \\(\\frac{n}{2}\\) that we can approximate by simply removing that second term \\(\\frac{n}{2}\\).\n\n\\[Operations = \\frac{n^2}{2} + \\frac{n}{2} \\approx \\frac{n^2}{2} = \\frac{1}{2} \\cdot n^2 \\]\n\nUsing Big O notation to describe the time complexity for the Selection Sort algorithm, we get:\n\n\\[ O( \\frac{1}{2} \\cdot n^2) = \\underline{\\underline{O(n^2)}} \\]\n\nAnd time complexity for the Selection Sort algorithm can be displayed in a graph like this:\n\nAs you can see, the run time is the same as for Bubble Sort: The run time increases really fast when the size of the array is increased.\n\nRun the simulation for different number of values in an array, and see how the number of operations Selection Sort needs on an array of \\(n\\) elements is \\(O(n^2)\\):\n\nThe most significant difference from Bubble sort that we can notice in this simulation is that best and worst case is actually almost the same for Selection Sort (\\(O(n^2)\\)), but for Bubble Sort the best case runtime is only \\(O(n)\\).\n\nThe difference in best and worst case for Selection Sort is mainly the number of swaps. In the best case scenario Selection Sort does not have to swap any of the values because the array is already sorted. And in the worst case scenario, where the array already sorted, but in the wrong order, so Selection Sort must do as many swaps as there are values in the array.\n\n## Tutorials\n\nSeethis pagefor a general explanation of what time complexity is.\n\nThe worst case scenario forInsertion Sortis if the array is already sorted, but with the highest values first. That is because in such a scenario, every new value must \"move through\" the whole sorted part of the array.\n\nThese are the operations that are done by the Insertion Sort algorithm for the first elements:\n\nIf we continue this pattern, we get the total number of operations for \\(n\\) values:\n\n\\[1+2+3+...+(n-1)\\]\n\nThis is a well known series in mathematics that can be written like this:\n\n\\[ \\frac{n(n-1)}{2} = \\frac{n^2}{2} - \\frac{n}{2} \\]\n\nFor very large \\(n\\), the \\(\\frac{n^2}{2}\\) term dominates, so we can simplify by removing the second term \\(\\frac{n}{2}\\).\n\nUsing Big O notation, we get this time complexity for the Insertion Sort algorithm:\n\n\\[ O(\\frac{n^2}{2}) = O(\\frac{1}{2} \\cdot n^2) = \\underline{\\underline{O(n^2)}} \\]\n\nThe time complexity can be displayed like this:\n\nAs you can see, the time used by Insertion Sort increases fast when the number of values is \\(n\\) increased.\n\nUse the simulation below to see how the theoretical time complexity \\(O(n^2)\\) (red line) compares with the number of operations of actual Insertion Sorts.\n\nFor Insertion Sort, there is a big difference between best, average and worst case scenarios. You can see that by running the different simulations above.\n\nThe red line above represents the theoretical upper bound time complexity \\(O(n^2)\\), and the actual function in this case is \\(1.07 \\cdot n^2\\).\n\nRemember that a function \\(f(n)\\) is said to be \\(O(g(n))\\) if we have a positive constant \\(C\\) so that \\(C \\cdot g(n)>f(n)\\).\n\nIn this case \\(f(n)\\) is the number of operations used by Insertion Sort, \\(g(n)=n^2\\) and \\(C=1.07\\).\n\n## Tutorials\n\nSeethis pagefor a general explanation of what time complexity is.\n\nTheQuicksortalgorithm chooses a value as the 'pivot' element, and moves the other values so that higher values are on the right of the pivot element, and lower values are on the left of the pivot element.\n\nThe Quicksort algorithm then continues to sort the sub-arrays on the left and right side of the pivot element recursively until the array is sorted.\n\nTo find the time complexity for Quicksort, we can start by looking at the worst case scenario.\n\nThe worst case scenario for Quicksort is if the array is already sorted. In such a scenario, there is only one sub-array after each recursive call, and new sub-arrays are only one element shorter than the previous array.\n\nThis means that Quicksort must call itself recursively \\(n\\) times, and each time it must do \\(\\frac{n}{2}\\) comparisons on average.\n\nWorst case time complexity is:\n\n\\[ O(n \\cdot \\frac{n}{2}) = \\underline{\\underline{O(n^2)}} \\]\n\nOn average, Quicksort is actually much faster.\n\nQuicksort is fast on average because the array is split approximately in half each time Quicksort runs recursively, and so the size of the sub-arrays decrease really fast, which means that not so many recursive calls are needed, and Quicksort can finish sooner than in the worst case scenario.\n\nThe image below shows how an array of 23 values is split into sub-arrays when sorted with Quicksort.\n\nThe pivot element (green) is moved into the middle, and the array is split into sub-arrays (yellow). There are 5 recursion levels with smaller and smaller sub-arrays, where about \\(n\\) values are touched somehow on each level: compared, or moved, or both.\n\n\\( \\log_2 \\) tells us how many times a number can be split in 2, so \\( \\log_2 \\) is a good estimate for how many levels of recursions there are. \\( \\log_2(23) \\approx 4.5 \\) which is a good enough approximation of the number of recursion levels in the specific example above.\n\nIn reality, the sub-arrays are not split exactly in half each time, and there are not exactly \\(n\\) values compared or moved on each level, but we can say that this is the average case to find the time complexity:\n\n\\[ \\underline{\\underline{O(n \\cdot \\log_2n)}} \\]\n\nBelow you can see the significant improvement in time complexity for Quicksort in an average scenario, compared to the previous sorting algorithms Bubble, Selection and Insertion Sort:\n\nThe recursion part of the Quicksort algorithm is actually a reason why the average sorting scenario is so fast, because for good picks of the pivot element, the array will be split in half somewhat evenly each time the algorithm calls itself. So the number of recursive calls do not double, even if the number of values \\(n \\) double.\n\nUse the simulation below to see how the theoretical time complexity \\(O(n^2)\\) (red line) compares with the number of operations of actual Quicksort runs.\n\nThe red line above represents the theoretical upper bound time complexity \\(O(n^2)\\) for the worst case scenario, and the green line represents the average case scenario time complexity with random values \\(O(n \\log_2n)\\).\n\nFor Quicksort, there is a big difference between average random case scenarios and scenarios where arrays are already sorted. You can see that by running the different simulations above.\n\nThe reason why the already ascending sorted array needs so many operations is that it requires the most swapping of elements, because of the way it is implemented. In this case, the last element is chosen as the pivot element, and the last element is also the highest number. So all other values in every sub-array is swapped around to land on the left side of the pivot element (where they are positioned already).\n\n## Tutorials\n\nSeethis pagefor a general explanation of what time complexity is.\n\nCounting Sortworks by first counting the occurrence of different values, and then uses that to recreate the array in a sorted order.\n\nAs a rule of thumb, the Counting Sort algorithm runs fast  when the range of possible values \\(k\\) is smaller than the number of values \\(n\\).\n\nTo represent the time complexity with Big O notation we need to first count the number of operations the algorithm does:\n\nIn total we get:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\nOperations {} & = n + (k+1) + (2 \\cdot n) + n \\\\\n           & = 4 \\cdot n + k + 1 \\\\\n           & \\approx 4 \\cdot n + k\n\\end{aligned}\n\\end{equation}\n\\]\n\nBased on what have seen about time complexity earlier, we can create a simplified expression using Big O notiation to represent time complexity:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\nO(4 \\cdot n + k) {} & = O(4 \\cdot n) + O(k) \\\\\n           & = O(n) + O(k) \\\\\n           & = \\underline{\\underline{O(n+k)}}\n\\end{aligned}\n\\end{equation}\n\\]\n\nIt has already been mentioned that Counting Sort is effective when the range of different values \\(k\\) is relatively small compared to the total number of values to be sorted \\(n\\). We can now see this directly from the Big O expression \\(O(n+k)\\).\n\nJust imagine for example that the range of different numbers \\(k\\) is 10 times as large as the number of the values to be sorted. In such a case we can see that the algorithm uses most of its time on handling the range of different numbers \\(k\\), although the actual number of values to be sorted \\(n\\) is small in comparison.\n\nIt is not straight forward to show the time complexity for Counting Sort in a graph, or to have a simulation for the time complexity as we have had for the previous algorithms, because the time complexity is so greatly affected by the range of values \\(k\\).\n\nBelow is a plot that shows how much the time complexity for Counting Sort can vary, followed by an explanation for the best and worst case scenarios.\n\nThebest casescenario for Counting Sort would be to have the range \\(k\\) just a fraction of \\(n\\), let's say \\(k(n)=0.1 \\cdot n\\). As an example of this, for 100 values, the range would be from 0 to 10, or for 1000 values the range would be from 0 to 100. In this case we get time complexity \\(O(n+k)=O(n+0.1 \\cdot n) = O(1.1 \\cdot n)\\) which is simplified to \\(O(n)\\).\n\nTheworst casehowever would be if the range is a lot larger than the input. Let's say for an input of just 10 values the the range is between 0 and 100, or similarly, for an input of 1000 values, the range is between 0 and 1000000. In such a scenario, the growth of \\(k\\) is quadratic with respect to \\(n\\), like this: \\(k(n)=n^2\\), and we get time complexity \\(O(n+k)=O(n+n^2)\\) which is simplified to \\(O(n^2)\\). A case that is even worse than this could also be constructed, but this case is chosen because it is relatively easy to understand, and perhaps not that unrealistic either.\n\nAs you can see, it is important to consider the range of values compared to the number of values to be sorted before choosing Counting Sort as your algorithm. Also, as mentioned at the top of the page, keep in mind that Counting sort only works for non negative integer values.\n\nRun different simulations of Counting Sort to see how the number of operations falls between the worst case scenario \\(O(n^2)\\) (red line) and best case scenario \\(O(n)\\) (green line).\n\nAs mentioned previously: if the numbers to be sorted varies a lot in value (large \\(k\\)), and there are few numbers to sort (small \\(n\\)), the Counting Sort algorithm is not effective.\n\nIf we hold \\(n\\) and \\(k\\) fixed, the \"Random\", \"Descending\" and \"Ascending\" alternatives in the simulation above results in the same number of operations. This is because the same thing happens in all three cases: A counting array is set up, the numbers are counted, and the new sorted array is created.\n\n## Tutorials\n\nSeethis pagefor a general explanation of what time complexity is.\n\nTheRadix Sortalgorithm sorts non negative integers, one digit at a time.\n\nThere are \\(n\\) values that need to be sorted, and \\(k\\) is the number of digits in the highest value.\n\nWhen Radix Sort runs, every value is moved to the radix array, and then every value is moved back into the initial array. So \\(n\\) values are moved into the radix array, and \\(n\\) values are moved back. This gives us \\(n + n=2 \\cdot n\\) operations.\n\nAnd the moving of values as described above needs to be done for every digit. This gives us a total of \\(2 \\cdot n \\cdot k\\) operations.\n\nThis gives us time complexity for Radix Sort:\n\n\\[\nO(2 \\cdot n \\cdot k) = \\underline{\\underline{O(n \\cdot k)}} \n\\]\n\nRadix Sort is perhaps the fastest sorting algorithms there is, as long as the number of digits \\(k\\) is kept relatively small compared to the number of values \\(n\\).\n\nWe can imagine a scenario where the number of digits \\(k\\) is the same as the number of values \\(n\\), in such a case we get time complexity \\(O(n \\cdot k)=O(n^2)\\) which is quite slow, and has the same time complexity as for example Bubble Sort.\n\nWe can also image a scenario where the number of digits \\(k\\) grow as the number of values \\(n\\) grow, so that \\(k(n)= \\log n\\). In such a scenario we get time complexity \\(O(n \\cdot k)=O(n \\cdot \\log n )\\), which is the same as for example Quicksort.\n\nSee the time complexity for Radix Sort in the image below.\n\nRun different simulations of Radix Sort to see how the number of operations falls between the worst case scenario \\(O(n^2)\\) (red line) and best case scenario \\(O(n)\\) (green line).\n\nThe bars representing the different values are scaled to fit the window, so that it looks ok. This means that values with 7 digits look like they are just 5 times bigger than values with 2 digits, but in reality, values with 7 digits are actually 5000 times bigger than values with 2 digits!\n\nIf we hold \\(n\\) and \\(k\\) fixed, the \"Random\", \"Descending\" and \"Ascending\" alternatives in the simulation above results in the same number of operations. This is because the same thing happens in all three cases.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in DSA.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in DSA?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in DSA that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

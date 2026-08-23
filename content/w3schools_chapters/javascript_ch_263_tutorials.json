@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 263,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thefrom()method creates a new typed array from any iterable object:\n\nTheof()method creates a new typed array from a number of arguments:\n\nTheconstructor.nameproperty returns the name (type) of a typed array:\n\nBYTES_PER_ELEMENTreturns the number of bytes used to store each array element:\n\nTyped Arraysshare many methods withStandard Arrays:\n\nThefill()method changes all elements in a typed array to a value:\n\nThefill()method takes two optional arguments: start index and end index:\n\nThefind()method returns the first element that satisfies a test:\n\nThesome()method returns true if an element for which a provided function returns true:\n\nSome array methods are NOT available for typed array.\n\nThis is due to the fixed-length nature and the lack of fixed structure.\n\nTyped Arraysis anES6  feature.\n\nES6 is fully supported in all modern browsers since June 2017:\n\n### Code Snippets\n\n```\nconst myArr = Int16Array.from(\"1234567890\");\n\n---\n\nconst myArr = Int16Array.from([1,2,3,4,5,6,7,8,9,0]);\n\n---\n\nconst myArr = Int16Array.of(1,2,3,4,5,6,7,8,9,0);\n\n---\n\nmyArr.constructor.name\n\n---\n\nmyArr.BYTES_PER_ELEMENT\n\n---\n\nmyArr.fill(200);\n\n---\n\nmyArr.fill(200, 0, 3);\n\n---\n\nmyArr.find((x) => x > 18)\n\n---\n\nmyArr.some((x) => x > 18)\n\n---\n\nfetch(url)\n.then(request => request.arrayBuffer())\n.then(arrayBuffer =>...);\n\n---\n\nconst canvas = document.getElementById('my_canvas');\nconst context = canvas.getContext('2d');\nconst imageData = context.getImageData(0, 0, canvas.width, canvas.height);\nconst uint8ClampedArray = imageData.data;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_262",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

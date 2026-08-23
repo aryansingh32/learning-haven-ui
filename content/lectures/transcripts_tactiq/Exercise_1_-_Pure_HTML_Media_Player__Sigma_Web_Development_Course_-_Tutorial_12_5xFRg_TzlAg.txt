@@ -1,0 +1,134 @@
+Video URL: https://www.youtube.com/watch?v=5xFRg_TzlAg
+Video Title: Exercise 1 - Pure HTML Media Player | Sigma Web Development Course - Tutorial #12
+--------------------------------------------------
+
+00:00:00.000
+Guys, in today's video, I will give you an exercise and whoever solves this exercise, I will give a shoutout to all of them.
+00:00:06.560
+So, write in the comment section, Challenge Accepted.
+00:00:09.760
+If you accept my challenge, I will give you a question and you have to solve it.
+00:00:15.320
+And it will be based on the concepts we have studied so far in the Sigma Web Development course.
+00:00:21.040
+So, I am very excited to give you a question. I hope you are equally excited.
+00:00:26.000
+Let's roll the intro.
+00:00:27.000
+Intro
+00:00:36.000
+So guys I am on my computer screen.
+00:00:38.000
+As you can see, if you have not accessed the playlist yet,
+00:00:40.000
+then you can click here and bookmark this playlist.
+00:00:43.000
+Or click here and save it. And if you have not accessed the code, then click here to bookmark this playlist or click here to save it.
+00:00:45.000
+And if you haven't accessed the code, then it is also updated on GitHub till video 11.
+00:00:49.000
+And I will keep updating as the videos move forward.
+00:00:52.000
+Now the question I want to give you, for that I will first make a folder.
+00:00:56.000
+I will definitely name the folder as video 12.
+00:00:59.000
+I will click on shift right and open with code.
+00:01:01.000
+And everyone is accepting this challenge.
+00:01:03.000
+If you accept it, I will feel good from my heart
+00:01:05.000
+what you guys do here
+00:01:07.000
+I will make index.html here
+00:01:10.000
+and I will give you a question
+00:01:12.000
+so the question is
+00:01:14.000
+you are given
+00:01:16.000
+you are given 12 video files
+00:01:19.000
+ok
+00:01:20.000
+12 files, 6 audio and 6 video
+00:01:24.000
+and 6 video and 6 video
+00:01:25.600
+design a website using HTML only
+00:01:30.600
+and which shows these 12 files
+00:01:36.200
+ok, let me toggle word wrap so that you can see
+00:01:40.200
+word wrap
+00:01:41.400
+so what you have to do is that you have 12 files
+00:01:44.400
+and what is the name of those files
+00:01:46.000
+1.mp3 2.mp3
+00:01:49.000
+so let me tell you what is the name of those files
+00:01:52.000
+1.mp3 2.mp3 all the way till
+00:01:55.000
+6.mp3 these are your mp3 files
+00:01:58.000
+then you have 1.mp4 2.mp4
+00:02:01.000
+all the way till 6.mp4
+00:02:04.000
+ok, you these are the files you have
+00:02:06.000
+so you have to show these 12 files to them
+00:02:09.000
+by previewing, so i hope it will be done
+00:02:12.000
+it's a very simple question, and you guys comment
+00:02:15.000
+and write challenge accepted, because if you accept this challenge
+00:02:18.000
+then write challenge accepted in the first person
+00:02:21.000
+and whoever will give their code here
+00:02:24.000
+i will give shoutout to them, those who will write challenge accepted and whoever will give me their code I will give them a shoutout, the one who will write challenge accepted
+00:02:26.000
+will get a shoutout for sure and do tell me in the comment section
+00:02:30.000
+so I hope you will complete this and it is a very simple problem
+00:02:35.000
+I know many people will say that it is very simple
+00:02:37.000
+one more thing I will expect from you is that you try to
+00:02:41.000
+use all the concepts I have told you as much as possible to solve this question, okay?
+00:02:47.500
+So this was our question for today, I hope you enjoyed it,
+00:02:51.000
+I will select it and do ctrl forward slash,
+00:02:54.000
+and what happens by doing ctrl forward slash,
+00:02:56.500
+that you can uncomment or comment,
+00:02:58.500
+so if I press ctrl forward slash, then it is uncomment,
+00:03:01.000
+and if I press ctrl forward slash again, then it is comment, okay?
+00:03:04.500
+So you have to complete this website
+00:03:06.640
+it's a very simple problem
+00:03:08.320
+it's a straight forward problem
+00:03:10.080
+everyone must solve it
+00:03:12.080
+so that's it for this video
+00:03:14.080
+thank you so much guys for watching this video
+00:03:16.080
+and i will see you next time Thanks for watching!

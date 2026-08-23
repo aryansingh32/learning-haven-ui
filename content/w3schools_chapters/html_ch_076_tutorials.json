@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 76,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The<div>element is used as a container for other HTML elements.\n\nThe<div>element is by default a \nblock element, meaning that it takes all available width, and comes with line \nbreaks before and after.\n\nThe<div>element has no required attributes, butstyle,classandidare common.\n\nThe<div>element is often used to group sections of a web page together.\n\nIf you have a<div>element that is \nnot 100% wide, and you want to center-align it, set the CSSmarginproperty toauto.\n\nYou can have many<div>containers on the same page.\n\nWhen building web pages, you often want to have two or more<div>elements side by side, like this:\n\nThere are different methods for aligning elements side by side, all include some CSS styling.\nWe will look at the most common methods:\n\nThe CSSfloatproperty was not originally meant to align<div>elements side-by-side,\nbut has been used for this purpose for many years.\n\nThe CSSfloatproperty is used for positioning and formatting content \nand allows elements to be positioned horizontally, rather than vertically.\n\nLearn more about float in ourCSS float tutorial.\n\nIf you change the<div>element'sdisplayproperty fromblocktoinline-block,\nthe<div>elements will no longer add a line break before and after,\nand will be displayed side by side instead of on top of each other.\n\nThe CSS Flexbox Layout Module was introduced to make it easier to design flexible responsive layout\nstructure without using float or positioning.\n\nTo make the CSS flex method work, surround the<div>elements with another<div>element and give\nit the status as a flex container.\n\nLearn more about flex in ourCSS flexbox tutorial.\n\nThe CSS Grid Layout Module offers a grid-based layout system,\nwith rows and columns,\nmaking it easier to design web pages without having to use floats and positioning.\n\nSounds almost the same as flex, but has the ability to define more than one row and position each row \nindividually.\n\nThe CSS grid method requires that you surround the<div>elements with another<div>element and give\nthe status as a grid container, and you must specify the width of each column.\n\nLearn more about grid in ourCSS grid tutorial.\n\n### Code Snippets\n\n```\nLorem Ipsum <div>I am a div</div>\n  dolor sit amet.\n\n---\n\n<div>\n<h2>London</h2>\n<p>London is the capital city of England.</p>\n<p>London has over 9 million inhabitants.</p>\n</div>\n\n---\n\n<style>\ndiv {\nwidth:300px;\nmargin:auto;\n}\n</style>\n\n---\n\n<div>\n<h2>London</h2>\n<p>London is the capital city of England.</p>\n<p>London has over 9 million inhabitants.</p>\n</div>\n<div>\n<h2>Oslo</h2>\n<p>Oslo is the capital city of \n  Norway.</p>\n<p>Oslo has over 700,000 inhabitants.</p>\n</div>\n<div>\n<h2>Rome</h2>\n<p>Rome is the capital city of \n  Italy.</p>\n<p>Rome has over 4 million inhabitants.</p>\n</div>\n\n---\n\n<style>\n.mycontainer {\nwidth:100%;\noverflow:auto;\n}\n.mycontainer div {\nwidth:33%;\nfloat:left;\n}\n</style>\n\n---\n\n<style>\ndiv {\nwidth: 30%;\ndisplay: \n  inline-block;\n}\n</style>\n\n---\n\n<style>\n.mycontainer {\ndisplay: flex;\n}\n.mycontainer \n  > div {\nwidth:33%;\n}\n</style>\n\n---\n\n<style>\n.grid-container {\ndisplay: grid;\ngrid-template-columns: 33% 33% 33%;\n}\n</style>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_75",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

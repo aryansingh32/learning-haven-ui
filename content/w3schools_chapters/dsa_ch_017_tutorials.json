@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 17,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Basic things we can do with linked lists are:\n\nFor simplicity, singly linked lists will be used to explain these operations below.\n\nTraversing a linked list means to go through the linked list by following the links from one node to the next.\n\nTraversal of linked lists is typically done to search for a specific node, and read or modify the node's content, remove the node, or insert a node right before or after that node.\n\nTo traverse a singly linked list, we start with the first node in the list, the head node, and follow that node's next link, and the next node's next link and so on, until the next address is null, like in the animation below:\n\nThe code below prints out the node values as it traverses along the linked list, in the same way as the animation above.\n\nLet's find the lowest value in a singly linked list by traversing it and checking each value.\n\nFinding the lowest value in a linked list is very similar to how wefound the lowest value in an array, except that we need to follow the next link to get to the next node.\n\nThis is how finding the lowest value in a linked list works in principle:\n\nTo find the lowest value we need to traverse the list like in the previous code. But in addition to traversing the list, we must also update the current lowest value when we find a node with a lower value.\n\nIn the code below, the algorithm to find the lowest value is moved into a function calledfindLowestValue.\n\nIn this case we have the link (or pointer or address) to a node that we want to delete.\n\nIt is important to connect the nodes on each side of the node before deleting it, so that the linked list is not broken.\n\nSo before deleting the node, we need to get the next pointer from the previous node, and connect the previous node to the new next node before deleting the node in between.\n\nIn a singly linked list, like we have here, to get the next pointer from the previous node we actually need traverse the list from the start, because there is no way to go backwards from the node we want to delete.\n\nThe simulation below shows the node we want to delete, and how the list must be traversed first to connect the list properly before deleting the node without breaking the linked list.\n\nAlso, it is a good idea to first connect next pointer to the node after the node we want to delete, before we delete it. This is to avoid a 'dangling' pointer, a pointer that points to nothing, even if it is just for a brief moment.\n\nIn the code below, the algorithm to delete a node is moved into a function calleddeleteSpecificNode.\n\nIn thedeleteSpecificNodefunction above, the return value is the new head of the linked list. So for example, if the node to be deleted is the first node, the new head returned will be the next node.\n\nInserting a node into a linked list is very similar to deleting a node, because in both cases we need to take care of the next pointers to make sure we do not break the linked list.\n\nTo insert a node in a linked list we first need to create the node, and then at the position where we insert it, we need to adjust the pointers so that the previous node points to the new node, and the new node points to the correct next node.\n\nThe simulation below shows how the links are adjusted when inserting a new node.\n\nIn theinsertNodeAtPositionfunction above, the return value is the new head of the linked list. So for example, if the node is inserted at the start of the linked list, the new head returned will be the new node.\n\nWe have only covered three basic linked list operations above: traversal (or search), node deletion, and node insertion.\n\nThere are a lot of other operations that could be done with linked lists, like sorting for example.\n\nPreviously in the tutorial we have covered many sorting algorithms, and we could do many of these sorting algorithms on linked lists as well. Let's take selection sort for example. In selection sort we find the lowest value, remove it, and insert it at the beginning. We could do the same with a linked list as well, right? We have just seen how to search through a linked list, how to remove a node, and how to insert a node.\n\nThese are some key linked list properties, compared to arrays:\n\nHere we discuss time complexity of linked list operations, and compare these with the time complexity of the array algorithms that we have discussed previously in this tutorial.\n\nRemember that time complexity just says something about the approximate number of operations needed by the algorithm based on a large set of data \\(n\\), and does not tell us the exact time a specific implementation of an algorithm takes.\n\nThis means that even though linear search is said to have the same time complexity for arrays as for linked list: \\(O(n)\\), it does not mean they take the same amount of time. The exact time it takes for an algorithm to run depends on programming language, computer hardware, differences in time needed for operations on arrays vs linked lists, and many other things as well.\n\nLinear searchfor linked lists works the same as for arrays. A list of unsorted values are traversed from the head node until the node with the specific value is found. Time complexity is \\(O(n)\\).\n\nBinary searchis not possible for linked lists because the algorithm is based on jumping directly to different array elements, and that is not possible with linked lists.\n\nSorting algorithms have the same time complexities as for arrays, and these are explained earlier in this tutorial. But remember, sorting algorithms that are based on directly accessing an array element based on an index, do not work on linked lists.\n\n### Code Snippets\n\n```\nExample\nTraversal of a singly linked list in Python:\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\ndef traverseAndPrint(head):\n    currentNode = head\n    while currentNode:\n        print(currentNode.data, end=\" -> \")\n        currentNode = currentNode.next\n    print(\"null\")\n\nnode1 = Node(7)\nnode2 = Node(11)\nnode3 = Node(3)\nnode4 = Node(2)\nnode5 = Node(9)\n\nnode1.next = node2\nnode2.next = node3\nnode3.next = node4\nnode4.next = node5\n\ntraverseAndPrint(node1)\nTry it Yourself \u00bb\n\n---\n\nExample\nFinding the lowest value in a singly linked list in Python:\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\ndef findLowestValue(head):\n    minValue = head.data\n    currentNode = head.next\n    while currentNode:\n        if currentNode.data < minValue:\n            minValue = currentNode.data\n        currentNode = currentNode.next\n    return minValue\n\nnode1 = Node(7)\nnode2 = Node(11)\nnode3 = Node(3)\nnode4 = Node(2)\nnode5 = Node(9)\n\nnode1.next = node2\nnode2.next = node3\nnode3.next = node4\nnode4.next = node5\n\nprint(\"The lowest value in the linked list is:\", findLowestValue(node1))\nThe marked lines above is the core of the algorithm. The initial lowest value is set to be the value of the first node. Then, if a lower value is found, the lowest value variable is udated.\nTry it Yourself \u00bb\n\n---\n\nExample\nDeleting a specific node in a singly linked list in Python:\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\ndef traverseAndPrint(head):\n    currentNode = head\n    while currentNode:\n        print(currentNode.data, end=\" -> \")\n        currentNode = currentNode.next\n    print(\"null\")\n\ndef deleteSpecificNode(head, nodeToDelete):\n\n    if head == nodeToDelete:\n        return head.next\n\n    currentNode = head\n    while currentNode.next and currentNode.next != nodeToDelete:\n        currentNode = currentNode.next\n\n    if currentNode.next is None:\n        return head\n\n    currentNode.next = currentNode.next.next\n\n    return head\n\nnode1 = Node(7)\nnode2 = Node(11)\nnode3 = Node(3)\nnode4 = Node(2)\nnode5 = Node(9)\n\nnode1.next = node2\nnode2.next = node3\nnode3.next = node4\nnode4.next = node5\n\nprint(\"Before deletion:\")\ntraverseAndPrint(node1)\n\n# Delete node4\nnode1 = deleteSpecificNode(node1, node4)\n\nprint(\"\\nAfter deletion:\")\ntraverseAndPrint(node1)\nTry it Yourself \u00bb\n\n---\n\nExample\nInserting a node in a singly linked list in Python:\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\ndef traverseAndPrint(head):\n    currentNode = head\n    while currentNode:\n        print(currentNode.data, end=\" -> \")\n        currentNode = currentNode.next\n    print(\"null\")\n\ndef insertNodeAtPosition(head, newNode, position):\n    if position == 1:\n        newNode.next = head\n        return newNode\n    \n    currentNode = head\n    for _ in range(position - 2):\n        if currentNode is None:\n            break\n        currentNode = currentNode.next\n\n    newNode.next = currentNode.next\n    currentNode.next = newNode\n    return head\n\nnode1 = Node(7)\nnode2 = Node(3)\nnode3 = Node(2)\nnode4 = Node(9)\n\nnode1.next = node2\nnode2.next = node3\nnode3.next = node4\n\nprint(\"Original list:\")\ntraverseAndPrint(node1)\n\n# Insert a new node with value 97 at position 2\nnewNode = Node(97)\nnode1 = insertNodeAtPosition(node1, newNode, 2)\n\nprint(\"\\nAfter insertion:\")\ntraverseAndPrint(node1)\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

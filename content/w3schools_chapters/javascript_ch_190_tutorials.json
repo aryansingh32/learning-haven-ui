@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 190,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "API stands forApplicationProgrammingInterface.\n\nA Web API is an application programming interface for the Web.\n\nA Browser API can extend the functionality of a web browser.\n\nA Server API can extend the functionality of a web server.\n\nAll browsers have a set of built-in Web APIs \nto support complex operations, and to help accessing data.\n\nFor example, the Geolocation API can return the coordinates of where the browser is located.\n\nThe most important APIs in HTML/JavaScript development are.\n\nThese APIs are fundamental to nearly all modern web development.\n\nThe DOM (Document Object Model) is the core API for HTML and XML documents.\nIt provides a structured representation of a webpage, allowing JavaScript to access and manipulate elements,\nattributes, and content dynamically, creating interactive user interfaces.\n\nThe modern standard for making network requests to servers and retrieving resources (like data from a database or a third-party service). It provides a more robust and flexible alternative to older methods like XMLHttpRequest.\n\nOffers mechanisms (localStorage and sessionStorage) to store key/value pairs of data in the browser more intuitively than cookies, allowing data to persist across sessions or page reloads.\n\nEnables manipulation of the browser's session history, allowing single-page applications (SPAs) to change the URL and provide a seamless navigation experience without full page reloads.\n\nThird party APIs are not built into your browser.\n\nTo use these APIs, you will have to download the code from the Web.\n\nExamples:\n\n### Code Snippets\n\n```\nconst myElement = document.getElementById(\"demo\");\nfunction getLocation() {\nif (navigator.geolocation) {\nnavigator.geolocation.getCurrentPosition(showPosition);\n} else {\nmyElement.innerHTML = \"Geolocation is not supported by this browser.\";\n}\n}\nfunction showPosition(position) {\nmyElement.innerHTML = \"Latitude: \" + position.coords.latitude +\n\"<br>Longitude: \" + position.coords.longitude;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_189",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

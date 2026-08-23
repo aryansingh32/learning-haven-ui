@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 172,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "With thesubplot()function you can draw multiple plots in one figure:\n\nThesubplot()function takes three arguments that describes the layout of the figure.\n\nThe layout is organized in rows and columns, which are represented by thefirstandsecondargument.\n\nThe third argument represents the index of the current plot.\n\nSo, if we want a figure with 2 rows an 1 column (meaning that the two plots will be displayed on top of each other instead of side-by-side),\nwe can write the syntax like this:\n\nYou can draw as many plots you like on one figure, just descibe the number of rows, columns, and the index of the plot.\n\nYou can add a title to each plot with thetitle()function:\n\nYou can add a title to the entire figure with thesuptitle()function:\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nimport numpy as np\n#plot 1:\nx = \n  np.array([0, 1, 2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(1, 2, 1)\nplt.plot(x,y)\n#plot 2:\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, \n  40])\nplt.subplot(1, 2, 2)\nplt.plot(x,y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n#plot 1:\nx = \n  np.array([0, 1, 2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(2, 1, 1)\nplt.plot(x,y)\n#plot 2:\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, \n  40])\nplt.subplot(2, 1, 2)\nplt.plot(x,y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([0, \n  1, 2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(2, 3, 1)\nplt.plot(x,y)\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, \n  40])\nplt.subplot(2, 3, 2)\nplt.plot(x,y)\nx = np.array([0, 1, \n  2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(2, 3, 3)\nplt.plot(x,y)\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, 40])\nplt.subplot(2, 3, 4)\nplt.plot(x,y)\nx = np.array([0, 1, 2, 3])\ny = \n  np.array([3, 8, 1, 10])\nplt.subplot(2, 3, 5)\nplt.plot(x,y)\nx \n  = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, 40])\nplt.subplot(2, \n  3, 6)\nplt.plot(x,y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n#plot 1:\nx = \n  np.array([0, 1, 2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(1, 2, 1)\nplt.plot(x,y)\nplt.title(\"SALES\")\n#plot 2:\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, \n  40])\nplt.subplot(1, 2, 2)\nplt.plot(x,y)\nplt.title(\"INCOME\")\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n#plot 1:\nx = \n  np.array([0, 1, 2, 3])\ny = np.array([3, 8, 1, 10])\nplt.subplot(1, 2, 1)\nplt.plot(x,y)\nplt.title(\"SALES\")\n#plot 2:\nx = np.array([0, 1, 2, 3])\ny = np.array([10, 20, 30, \n  40])\nplt.subplot(1, 2, 2)\nplt.plot(x,y)\nplt.title(\"INCOME\")\nplt.suptitle(\"MY SHOP\")\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_171",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

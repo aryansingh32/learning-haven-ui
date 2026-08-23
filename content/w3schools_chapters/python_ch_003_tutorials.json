@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 3,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "At W3Schools, you can try Python without installing anything.\n\nOur Online Python Editor runs directly in your browser, and shows both the code and the result:\n\nThis editor will be used in the entire tutorial to demonstrate the different aspects of Python.\n\nHowever, if you want to run Python on your own computer, follow the instructions below.\n\nMany Windows PCs and Mac computers already have Python pre-installed.\n\nTo check if Python is installed on Windows, search in the start bar for Python or run the following on the Command Line (cmd.exe):\n\nTo check if you have python installed on a Linux or Mac, then on linux open the command line or on Mac open the Terminal and type:\n\nIf Python is not installed on your computer, you can download it for free from the official website:https://www.python.org/\n\nPython is an interpreted programming language, this means that as a developer you write Python (.py) files in a text editor and then put those files into the python interpreter to be executed.\n\nLet's write our first Python file, calledhello.py, which can be done in any text editor:\n\nSimple as that. Save your file. Open your command line, navigate to the directory where you saved your file, and run:\n\nThe output should be:\n\nCongratulations, you have written and executed your first Python program.\n\nTo check the Python version of the editor, you can find it by importing thesysmodule:\n\nYou will learn more about importing modules in ourPython Moduleschapter.\n\nTo test a short amount of code in python sometimes it is quickest and easiest not to write the code in a file. This is made possible because Python can be run as a command line itself.\n\nType the following on the Windows, Mac or Linux command line:\n\nFrom there you can write any python code, including our hello world example from earlier in the tutorial:\n\nWhich will write \"Hello, World!\" in the command line:\n\nWhenever you are done in the python command line, you can simply type the following to quit the python command line interface:\n\n### Code Snippets\n\n```\nprint(\"Hello, World!\")\n\n---\n\nC:\\Users\\\nYour Name\n>python --version\n\n---\n\npython --version\n\n---\n\nC:\\Users\\\nYour Name\n>python hello.py\n\n---\n\nHello, World!\n\n---\n\nimport sys\nprint(sys.version)\n\n---\n\nC:\\Users\\\nYour Name\n>python\n\n---\n\nC:\\Users\\\nYour Name\n>py\n\n---\n\nC:\\Users\\\nYour Name\n>python\nPython 3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:04:45) [MSC v.1900 32 bit (Intel)] on win32\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.\n>>> print(\"Hello, World!\")\n\n---\n\nC:\\Users\\\nYour Name\n>python\nPython 3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:04:45) [MSC v.1900 32 bit (Intel)] on win32\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.\n>>> print(\"Hello, World!\")\nHello, World!\n\n---\n\nexit()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

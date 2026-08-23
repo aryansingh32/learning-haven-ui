@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSSwidthproperty is used to set the width of a table.\n\nThe width can be set:\n\nTo create a table that spans the entire screen (full-width), usewidth: 100%;:\n\nTo create a table that spans half the page, usewidth: 50%;:\n\nTo create a table with a fixed width, usewidth: 500px:\n\nTo let the browser calculate the width, usewidth: auto;:\n\nThe CSSheightproperty is used to set the height of a table.\n\nThe height can be set:\n\nThe example below sets the height of the table headers (<th>) to 70px:\n\n### Code Examples\n\n```\ntable \n{\nwidth: 100%;\n}\n\n---\n\ntable \n{\nwidth: 50%;\n}\n\n---\n\ntable \n{\nwidth: 500px;\n}\n\n---\n\ntable \n{\nwidth: auto;\n}\n\n---\n\nth\n{\nheight: 70px;\n}\n```\n\n## Tutorials\n\nThe CSStext-alignproperty is used to set the horizontal alignment \nof the content in <th> or <td>.\n\nThis property can have one of the following values:\n\nNote:By default, the content of <th> elements are \ncenter-aligned and the content of <td> elements are left-aligned!\n\nTo center-align the content of\u00a0<td> elements, usetext-align: center:\n\nTo force the content of <th> elements to be \nleft-aligned, usetext-align: lefton <th> \nelements:\n\nThe CSSvertical-alignproperty sets the vertical alignment (like top, bottom, or middle) \nof the content in <th> or <td>.\n\nNote:By default, the vertical alignment of the content in a table is middle (for both <th> \nand <td> elements).\n\nThe following example sets the vertical text alignment to bottom for <td> elements:\n\n### Code Examples\n\n```\ntd\n{\ntext-align: center;\n}\n\n---\n\nth\n{\ntext-align: left;\n}\n\n---\n\ntd\n{\nheight: 50px;\nvertical-align: bottom;\n}\n```\n\n## Tutorials\n\nTo add some more space between the inner borders and the content in a table, use thepaddingproperty on \n<td> and <th> elements:\n\nTo create horizontal dividers for a table, add theborder-bottomproperty to <th> and <td> \nelements:\n\nUse the CSS:hoverselector on <tr> to highlight table rows on mouse \nover:\n\nFor zebra-striped tables, use thenth-child()selector and add abackground-colorto all even (or odd) table rows:\n\nThe example below specifies a background color and a text color for the <th> elements:\n\n### Code Examples\n\n```\nth, td\n{\npadding: 10px;\ntext-align: left;\n}\n\n---\n\nth, td {\nborder-bottom: 1px solid #ddd;\n}\n\n---\n\ntr:hover {background-color: coral;}\n\n---\n\ntr:nth-child(even) {background-color: #f2f2f2;}\n\n---\n\nth {\nbackground-color: #04AA6D;\ncolor: white;\n}\n```\n\n## Tutorials\n\nA responsive table will display a horizontal scrollbar if the screen is too \nsmall to display the full content.\n\nResize the browser window to see the effect:\n\nWrap the <table> element in a <div> container.\n\nSet theoverflow-xproperty toautofor the <div> element:\n\nMake a fancy tableThis example demonstrates how to create a fancy table.\n\nAdd \nand position a table captionThis example demonstrates how to add, and position a table caption.\n\n### Code Examples\n\n```\ndiv.tablecontainer {\noverflow-x: auto;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

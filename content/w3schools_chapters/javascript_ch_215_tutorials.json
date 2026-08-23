@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 215,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ISO 8601is theInternational Standardfor representingdatesandtimes.\n\nIt is a machine-readable text format in the formYYYY-MM-DDThh:mm:ssZ.\n\nISO 8601 was designed to eliminate confusion caused by regional date variations.\n\nIt follows a \"largest to smallest\" hierarchy (year, month, day, hour, minute, second)\nwhich ensures that dates are alphabetically sortable.\n\nAnISO 8601 stringrepresents dates and times in a structured and sortable format:\n\nAnISO 8601 durationrepresent lengths of time.\n\nIt uses a standard format starting with\u00b1P(Period),\nfollowed by the structurenYnMnDTnHnMnS.\n\nRFC 3339is theInternet Standardfor Date and Time Formats.\n\nIt is aSubset of ISO 8601designed for use in Internet protocols.\n\nRFC 9557is the primary format used byJavaScript Temporalto represent dates.\n\nRFC 5545is the official internet standard for theiCalendardata format.\nIt defines how calendar systems should store and share calendar data like meetings, tasks,\nand free/busy times using plain text files.\n\niCalendar istext-based. It Uses readable lines of text encoded inUTF-8.\n\niCalendar is isapplication independent. It works across different apps like Apple Calendar,\nGoogle Calendar, and Microsoft Outlook.\n\nA calendar system defines how dates are calculated.\n\nDifferent cultures use different calendars.\n\nBased on the Earth's orbit around the sun.\n\nThese calendars track seasons accurately.\n\nBased on the phases of the moon.\n\nLunar calendars have shorter years.\n\nCombine solar and lunar cycles.\n\nThey adjust months to stay aligned with seasons.\n\nUse eras instead of a continuous year count.\n\nThefrom()method supports calendars using the [u-ca=calendar] syntax or a calendar\nproperty in objects.\n\n### Code Snippets\n\n```\n\u00b1P nY nM nW nD T nH nM nS\n\n---\n\nP3Y6M4DT12H30M5S\n\n---\n\nBEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Example Corp//NONSGML Calendar App//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:uid123456789@example.com\nDTSTAMP:20260810T120000Z\nORGANIZER;CN=John Doe:mailto:john.doe@example.com\nDTSTART:20260812T140000Z\nDTEND:20260812T150000Z\nSUMMARY:Project Kickoff Meeting\nDESCRIPTION:Initial team synchronization and roadmap review.\nLOCATION:Conference Room A\nSTATUS:CONFIRMED\nCLASS:PUBLIC\nEND:VEVENT\nEND:VCALENDAR\n\n---\n\nTemporal.PlainDate.from(\"2026-05-17[u-ca=japanese]\")\n\n---\n\nTemporal.PlainDate.from({year:2026, month:5, day:17, calendar:\"hebrew\"})\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_214",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

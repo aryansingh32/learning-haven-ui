@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nType casting means converting one data type into another.  \nFor example, turning anintinto adouble.\n\nIn Java, there are two main types of casting:\n\nWidening casting is done automatically when passing a smaller size type into a larger size type.\n\nThis works because there is no risk of losing information.  \nFor example, anintvalue can safely fit inside adouble:\n\nNarrowing casting must be done manually by placing the type in parentheses()in front of the value.\n\nThis is required because narrowing may result in data loss (for example, dropping decimals when converting adoubleto anint):\n\nHere is a real-life example of type casting.  \nWe calculate the percentage of a user's score in relation to the maximum score in a game.\n\nWe use type casting to make sure that the result is afloating-pointvalue, rather than an integer:\n\n### Code Examples\n\n```\nExample\nint myInt = 9;\ndouble myDouble = myInt; // Automatic casting: int to double\n\nSystem.out.println(myInt);    // Outputs 9\nSystem.out.println(myDouble); // Outputs 9.0\nTry it Yourself \u00bb\n\n---\n\nExample\ndouble myDouble = 9.78d;\nint myInt = (int) myDouble; // Manual casting: double to int\n\nSystem.out.println(myDouble); // Outputs 9.78\nSystem.out.println(myInt);    // Outputs 9\nTry it Yourself \u00bb\n\n---\n\nExample\n// Set the maximum possible score in the game to 500\nint maxScore = 500;\n\n// The actual score of the user\nint userScore = 423;\n\n/* Calculate the percentage of the user's score in relation to the maximum available score.\nConvert userScore to double to make sure that the division is accurate */\ndouble percentage = (double) userScore / maxScore * 100.0d;\n\nSystem.out.println(\"User's percentage is \" + percentage);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nOperators are used to perform operations on variables and values.\n\nIn the example below, we use the+operatorto add together two values:\n\nAlthough the+operator is often used to add together two values, like in the example above, it can also be used to add together a variable and a value, or a variable and another variable:\n\nJava divides the operators into the following groups:\n\n### Code Examples\n\n```\nExample\nint x = 100 + 50;\nTry it Yourself \u00bb\n\n---\n\nExample\nint sum1 = 100 + 50;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // 150 (100 + 50)\nint sum2 = sum1 + 250;\u00a0\u00a0\u00a0\u00a0\u00a0 // 400 (150 + 250)\nint sum3 = sum2 + sum2;\u00a0\u00a0\u00a0\u00a0 // 800 (400 + 400)\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nArithmetic operators are used to perform common mathematical operations.\n\nHere is an example using different arithmetic operators in one example:\n\nIncrementing and decrementing are very common in programming, especially when working with counters, loops, and arrays (which you will learn more about in later chapters).\n\nThe++operator increases a value by 1, while the--operator decreases a value by 1:\n\nSometimes, you might both increment and decrement the same variable. Remember that if you increase a value and later decrease it, it will go up by one and then back down by one \n- ending up where it started:\n\nImagine you are building a program to count how many people enter and leave a room.  \nYou can use++to increase the counter when someone enters,  \nand--to decrease it when someone leaves:\n\n### Code Examples\n\n```\nExample\nint x = 10;\nint y = 3;\n\nSystem.out.println(x + y); // 13\nSystem.out.println(x - y); // 7\nSystem.out.println(x * y); // 30\nSystem.out.println(x / y); // 3\nSystem.out.println(x % y); // 1\n\nint z = 5;\n++z;\nSystem.out.println(z); // 6\n--z;\nSystem.out.println(z); // 5\nTry it Yourself \u00bb\n\n---\n\nExample\nint a = 10;\nint b = 3;\nSystem.out.println(a / b);   // Integer division, result is 3\n\ndouble c = 10.0d;\ndouble d = 3.0d;\nSystem.out.println(c / d);   // Decimal division, result is 3.333...\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 5;\n\n++x; // Increment x by 1\nSystem.out.println(x); // 6\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 5;\n\n--x; // Decrement x by 1\nSystem.out.println(x); // 4\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 5;\n\n++x; // Increment x by 1 (x becomes 6)\n--x; // Decrement x by 1 (x becomes 5 again)\n\nSystem.out.println(x); // 5\nTry it Yourself \u00bb\n\n---\n\nExample\nint peopleInRoom = 0;\n\n// 3 people enter\npeopleInRoom++;\npeopleInRoom++;\npeopleInRoom++;\n\nSystem.out.println(peopleInRoom); // 3\n\n// 1 person leaves\npeopleInRoom--;\n\nSystem.out.println(peopleInRoom); // 2\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAssignment operators are used to assign values to variables.\n\nIn the example below, we use theassignmentoperator (=) \nto assign the value10to a variable calledx:\n\nTheaddition assignmentoperator (+=) adds a value to a variable:\n\nA list of all assignment operators:\n\nAssignment operators can also be used in real-life scenarios.  \nFor example, you can use the+=operator to keep track of savings when you add money to an account:\n\n### Code Examples\n\n```\nExample\nint x = 10;\nTry it Yourself \u00bb\n\n---\n\nExample\nint x = 10;\nx += 5;\nTry it Yourself \u00bb\n\n---\n\nExample\nint savings = 100; \nsavings += 50; // add 50 to savings\nSystem.out.println(\"Total savings: \" + savings);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nComparison operators are used to compare two values (or variables). This is important in programming, because it helps us to find answers and make decisions.\n\nThe return value of a comparison is eithertrueorfalse. These values are known asBoolean values, and you will learn more about them in theBooleansandIf..Elsechapter.\n\nIn the following example, we use thegreater thanoperator (>) to find out if 5 is greater than 3:\n\nA list of all comparison operators:\n\nComparison operators are often used in real-world conditions, such as checking if a person is old enough to vote:\n\nAnother common use is checking if a password is long enough:\n\n### Code Examples\n\n```\nExample\nint x = 5;\nint y = 3;\nSystem.out.println(x > y); // returns true, because 5 is higher than 3\nTry it Yourself \u00bb\n\n---\n\nExample\nint age = 18;\n\nSystem.out.println(age >= 18); // true, old enough to vote\nSystem.out.println(age < 18);  // false\nTry it Yourself \u00bb\n\n---\n\nExample\nint passwordLength = 5;\n\nSystem.out.println(passwordLength >= 8); // false, too short\nSystem.out.println(passwordLength < 8);  // true, needs more characters\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

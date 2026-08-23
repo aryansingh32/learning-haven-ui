@@ -34,6 +34,9 @@ export const buildHavenAdminApi = {
   deleteLanguageById: (langId: string) =>
     unwrap<{ message: string }>(api.delete(`${BASE}/languages/${langId}`)),
   deleteChallenge: (id: string) => unwrap<{ challenge: any }>(api.delete(`${BASE}/challenges/${id}`)),
+  hardDeleteChallenge: (id: string) => unwrap<{ message: string }>(api.delete(`${BASE}/challenges/${id}/permanent`)),
+  bulkDeleteChallenges: (ids: string[], permanent: boolean = false) =>
+    unwrap<{ message: string; count: number }>(api.post(`${BASE}/challenges/bulk-delete`, { ids, permanent })),
   getAnalytics: (id: string) => unwrap<{ analytics: any }>(api.get(`${BASE}/challenges/${id}/analytics`)),
   getEnrollments: (programId: string, params?: { language?: string; status?: string; search?: string }) =>
     unwrap<{ enrollments: any[]; total: number }>(api.get(`${BASE}/challenges/${programId}/enrollments`, { params })),

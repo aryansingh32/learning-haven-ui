@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 129,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This chapter describes the different attributes for the HTML<input>element.\n\nThe inputvalueattribute specifies an initial value for an input field:\n\nThe inputreadonlyattribute specifies that an input field is read-only.\n\nA read-only input field cannot be modified (however, a user can tab to it, highlight it, and copy the text from it).\n\nThe value of a read-only input field will be sent when submitting the form!\n\nThe inputdisabledattribute specifies that an input field should be disabled.\n\nA disabled input field is unusable and un-clickable.\n\nThe value of a disabled input field will not be sent when submitting the form!\n\nThe inputsizeattribute specifies the \nvisible width, in characters, of an input field.\n\nThe default value forsizeis 20.\n\nNote:Thesizeattribute \nworks with the following input types: text, search, tel, url, email, and \npassword.\n\nThe inputmaxlengthattribute specifies the maximum number of characters allowed in an input field.\n\nNote:When amaxlengthis set, the input field will not accept more than the \nspecified number of characters. However, this attribute does not provide any feedback. \nSo, if you want to alert the user, \nyou must write JavaScript code.\n\nThe inputminandmaxattributes specify the minimum and maximum values for an \ninput field.\n\nTheminandmaxattributes work with the following input types: number, range, date, datetime-local, month, time and week.\n\nTip:Use the max and min attributes together to create a \nrange of legal values.\n\nThe inputmultipleattribute specifies that the user is allowed to enter more than one value in \nan input field.\n\nThemultipleattribute works with the following input types: email, and file.\n\nThe inputpatternattribute specifies a regular expression that the \ninput field's value is checked against, when the form is submitted.\n\nThepatternattribute works with the following input types: text, \ndate, search, url, tel, email, and password.\n\nTip:Use the globaltitleattribute to describe the pattern to help the user.\n\nTip:Learn more aboutregular expressionsin our JavaScript tutorial.\n\nThe inputplaceholderattribute specifies \na short hint that describes the expected value of an input field (a sample value or a short description of the \nexpected format).\n\nThe short hint is displayed in the input field before the user enters a \nvalue.\n\nTheplaceholderattribute works with the following input types: text, search, url, \nnumber, tel, email, and password.\n\nThe inputrequiredattribute specifies that an input field must be filled out before submitting the form.\n\nTherequiredattribute works with the following input types: text, search, url, tel, email, password, date pickers, number, checkbox, radio, and file.\n\nThe inputstepattribute specifies the legal number intervals for an \ninput field.\n\nExample: if step=\"3\", legal numbers could be -3, 0, 3, 6, etc.\n\nTip:This attribute can be used together with the max and min attributes to create a range of legal values.\n\nThestepattribute works with the following input types: number, range, date, datetime-local, month, time and week.\n\nThe inputautofocusattribute specifies that \nan input field should automatically get focus when the page loads.\n\nThe inputheightandwidthattributes specify the height and width of an<input \ntype=\"image\">element.\n\nThe inputlistattribute refers to a<datalist>element that contains pre-defined options for an <input> element.\n\nThe inputautocompleteattribute specifies whether a form or \nan input field should have autocomplete on or off.\n\nAutocomplete allows the browser to predict the value. When a user starts to \ntype in a field, the browser should display options to fill in the field, based \non earlier typed values.\n\nTheautocompleteattribute works with<form>and the \nfollowing<input>types: text, search, url, tel, email, password, datepickers, range, and color.\n\nTip:In some browsers you may need to activate an \nautocomplete function for this to work (Look under \"Preferences\" in the \nbrowser's menu).\n\n### Code Snippets\n\n```\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\"><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\" readonly><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input type=\"text\" \n  id=\"fname\" name=\"fname\" value=\"John\" disabled><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\" \n  value=\"Doe\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" size=\"50\"><br>\n<label \n  for=\"pin\">PIN:</label><br>\n<input type=\"text\" id=\"pin\" name=\"pin\" \n  size=\"4\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" size=\"50\"><br>\n<label \n  for=\"pin\">PIN:</label><br>\n<input type=\"text\" id=\"pin\" name=\"pin\" \n  maxlength=\"4\" size=\"4\">\n</form>\n\n---\n\n<form>\n<label for=\"datemax\">Enter a date before \n  1980-01-01:</label>\n<input type=\"date\" id=\"datemax\" name=\"datemax\" \n  max=\"1979-12-31\"><br><br>\n<label for=\"datemin\">Enter a date \n  after 2000-01-01:</label>\n<input type=\"date\" id=\"datemin\" name=\"datemin\" \n  min=\"2000-01-02\"><br><br>\n<label for=\"quantity\">Quantity \n  (between 1 and 5):</label>\n<input type=\"number\" id=\"quantity\" \n  name=\"quantity\" min=\"1\" max=\"5\">\n</form>\n\n---\n\n<form>\n<label for=\"files\">Select files:</label>\n<input \n  type=\"file\" id=\"files\" name=\"files\" multiple>\n</form>\n\n---\n\n<form>\n<label for=\"country_code\">Country code:</label>\n<input type=\"text\" id=\"country_code\" name=\"country_code\"\npattern=\"[A-Za-z]{3}\" title=\"Three letter country code\">\n</form>\n\n---\n\n<form>\n<label for=\"phone\">Enter a phone number:</label>\n<input type=\"tel\" id=\"phone\" name=\"phone\"\nplaceholder=\"123-45-678\"\npattern=\"[0-9]{3}-[0-9]{2}-[0-9]{3}\">\n</form>\n\n---\n\n<form>\n<label for=\"username\">Username:</label>\n<input \n  type=\"text\" id=\"username\" name=\"username\" required>\n</form>\n\n---\n\n<form>\n<label for=\"points\">Points:</label>\n<input \n  type=\"number\" id=\"points\" name=\"points\" step=\"3\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label><br>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\" autofocus><br>\n<label for=\"lname\">Last \n  name:</label><br>\n<input type=\"text\" id=\"lname\" name=\"lname\">\n</form>\n\n---\n\n<form>\n<label for=\"fname\">First name:</label>\n<input \n  type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last \n  name:</label>\n<input type=\"text\" id=\"lname\" name=\"lname\"><br><br>\n<input type=\"image\" src=\"img_submit.gif\" alt=\"Submit\" width=\"48\" height=\"48\">\n</form>\n\n---\n\n<form>\n<input list=\"browsers\">\n<datalist id=\"browsers\">\n<option value=\"Edge\">\n<option value=\"Firefox\">\n<option value=\"Chrome\">\n<option value=\"Opera\">\n<option value=\"Safari\">\n</datalist>\n</form>\n\n---\n\n<form action=\"/action_page.php\" autocomplete=\"on\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<label for=\"email\">Email:</label>\n<input type=\"email\" id=\"email\" name=\"email\" autocomplete=\"off\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_128",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

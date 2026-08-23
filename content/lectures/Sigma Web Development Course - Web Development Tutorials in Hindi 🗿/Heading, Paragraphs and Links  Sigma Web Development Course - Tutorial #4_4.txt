@@ -1,0 +1,910 @@
+Video URL: https://www.youtube.com/watch?v=nXba2-mgn1k
+Video Title: Heading, Paragraphs and Links | Sigma Web Development Course - Tutorial #4
+--------------------------------------------------
+
+00:00:00.000
+In today's video, I will tell you about heading and paragraphs.
+00:00:03.200
+Along with that, I will tell you about anchor text.
+00:00:06.360
+If you have found this course awesome till now,
+00:00:08.280
+then do like this video.
+00:00:09.840
+Your likes will help me in getting such free courses.
+00:00:12.280
+In this video, we will make a small project which will be a bookmark website.
+00:00:15.600
+This bookmark website will help you in getting all your favorite websites in one place.
+00:00:20.160
+You will be able to use this and this in actual.
+00:00:22.040
+So let's start quickly.
+00:00:23.400
+Write down in the comment section below
+00:00:26.000
+Sigma batch op. Let's roll the intro.
+00:00:28.000
+Intro
+00:00:30.000
+Intro
+00:00:32.000
+Intro
+00:00:34.000
+Intro
+00:00:36.000
+Intro
+00:00:38.000
+So guys as you can see I have entered in my computer screen.
+00:00:40.000
+And if you haven't accessed the playlist yet
+00:00:42.000
+then you can access it.
+00:00:44.000
+One more thing I want to tell you that if you haven't accessed the playlist yet, then you can access it. One more thing I want to tell you is that if you go to github.com
+00:00:47.600
+slash code with ari, you will get the github repo of the sigma web dev course.
+00:00:52.800
+Now I have made folders of all the videos in it and the commit is also made according to different folders.
+00:00:57.600
+So you will get it, so you must access it so that you get the source code.
+00:01:01.800
+I will also put the source code in the description so there is no problem
+00:01:06.000
+now we will make a very basic website
+00:01:09.000
+but it will be very important for us
+00:01:11.000
+because it will be our first useful website
+00:01:13.000
+so without taking much time
+00:01:15.000
+I will make a new folder in this folder of sigba webdev
+00:01:19.000
+and I will name it video4
+00:01:20.000
+because this is our fourth video
+00:01:22.000
+so I will make it with the name video4
+00:01:24.000
+by right clicking on shift I and clicking on open with code
+00:01:26.000
+so that this folder opens in our VS code
+00:01:28.000
+after doing this I will do the same
+00:01:30.000
+which we have always been doing
+00:01:32.000
+index.html, main.css
+00:01:34.000
+or style.css and along with that
+00:01:36.000
+script.js
+00:01:38.000
+we usually make these 3 files
+00:01:40.000
+if I write css then I will put it here, if I write script then
+00:01:42.000
+I will put it here, but for now
+00:01:44.000
+I will write exclamation mark here and I will write css here, script here, but for now I will write exclamation mark here
+00:01:45.400
+and write my bookmarks in the document,
+00:01:49.400
+so we are going to make a bookmark website,
+00:01:51.600
+and I will write codeway diary here,
+00:01:53.400
+so you must have seen such titles,
+00:01:55.800
+now I will write h1 here,
+00:01:57.600
+now what happens with h1,
+00:01:58.800
+you can add a heading from h1 in your web page,
+00:02:02.100
+we talked about the basic structure,
+00:02:03.600
+we said that it tells that this is an HTML page
+00:02:06.000
+HTML lang is equal to en
+00:02:08.000
+lang is an attribute and its value is en
+00:02:10.000
+this page's content is in English
+00:02:12.000
+this tells the search engines
+00:02:14.000
+or if anyone is sitting with the link of this web page
+00:02:16.000
+then he will know that this web page is in English
+00:02:18.000
+he can parse this web page according to that
+00:02:20.000
+the browser will also know
+00:02:22.000
+that your web page is in English
+00:02:24.000
+now here is the head in which metadata, which title of the page, which CSS is linked, all these things are information
+00:02:31.000
+the main content is inside the body, now there is a tag inside the body to put a heading which is H1
+00:02:36.000
+and I am going to write my bookmarks on it
+00:02:38.000
+so if I write my bookmarks here, then we will write it with H1 tag
+00:02:42.000
+and if I want to do it live live it i will click here and after this
+00:02:46.000
+i will open in browser
+00:02:48.000
+so see this is how my bookmarks look like
+00:02:50.000
+now why we should always use h1
+00:02:52.000
+why i didn't write my bookmark directly
+00:02:54.000
+because i am telling to browser
+00:02:56.000
+that this is my heading and this is my first level
+00:02:58.000
+heading, now suppose in my bookmarks
+00:03:00.000
+i want to keep two types of bookmarks
+00:03:02.000
+one main bookmark and one secondary bookmark
+00:03:04.000
+so i will use h2 meaning second level heading I want to keep two types of bookmarks in the bookmarks one main bookmark and one secondary bookmark
+00:03:05.000
+so I will use h2, meaning the second level heading
+00:03:07.000
+so I will write here, if you have used microsoft word
+00:03:09.000
+then you would know what h1 and h2 are
+00:03:11.000
+but if you don't know then I will tell you
+00:03:13.000
+h1 is your main level heading
+00:03:15.000
+and the second level heading after that
+00:03:17.000
+is from h2, suppose I say
+00:03:19.000
+main bookmarks and secondary bookmarks
+00:03:21.000
+suppose I do something like this
+00:03:23.000
+and here I will do something like this and here I will press Alt, Shift and Down Arrow
+00:03:29.000
+I will do one thing, why don't I turn on screencast mode
+00:03:31.000
+so what I did here, I pressed Alt, Shift and Down Arrow
+00:03:34.000
+so this is replicated, this is a shortcut of VS Code
+00:03:37.000
+I would like to tell you one more shortcut of VS Code
+00:03:39.000
+that if you press Alt on your keyboard
+00:03:41.000
+and then wherever you click, a cursor will be created there
+00:03:43.000
+like let's say I click here, will be a cursor for example, if i click here, there will be only one cursor
+00:03:46.000
+but if i click somewhere else, there will be more cursors
+00:03:50.000
+for example, i want to change all bookmarks to bookmarks code with Harry
+00:03:53.000
+so my bookmarks dash code with Harry
+00:03:55.000
+i can write something like this
+00:03:57.000
+how did i do this? i clicked here, then i clicked alt
+00:04:00.000
+and wherever i click, i will get multiple cursors
+00:04:04.000
+then whatever i type will come in multiple cursors
+00:04:07.520
+wherever there are cursors, whatever I type will be visible
+00:04:10.800
+isn't it fun?
+00:04:11.800
+like it
+00:04:12.800
+so I will remove it here in this way
+00:04:15.520
+and you will see it will be updated
+00:04:16.800
+so this is my main heading, this is my h2
+00:04:19.200
+in the same way, we have headings from h1 to h2 to h6
+00:04:22.400
+like suppose you gave a main heading
+00:04:24.000
+after the main heading you gave a secondary heading After main heading, you gave a secondary heading
+00:04:26.640
+Then you have to give some heading inside it too
+00:04:29.040
+And so on, you have to give a lot of subheadings
+00:04:31.520
+Then you can give heading up to h6
+00:04:33.520
+h6 is more than enough
+00:04:35.040
+In HTML, headings have been put up to h6
+00:04:37.520
+You will never need h7
+00:04:39.680
+If we talk about practical life
+00:04:41.520
+And if you have to, you can use h6 repeatedly
+00:04:44.000
+Because it gets so small after h1 that H6 will become very small.
+00:04:48.000
+So you don't want to be so small.
+00:04:50.000
+Now what I will do here, I will replicate it with the Alt Shift Down Arrow.
+00:04:54.000
+And I will click here, press Alt.
+00:04:56.000
+I am telling you all these shortcuts so that your productivity increases.
+00:05:00.000
+Now I have put two cursors here and here.
+00:05:03.000
+I will press backspace and make it H3. I will click here, press alt and make it h4
+00:05:07.840
+ok
+00:05:08.840
+and I will click here, click here and make it h5
+00:05:12.280
+ok, after this I will click here, click here
+00:05:15.320
+and make it h6, so it is up to h6
+00:05:17.880
+now what I will do, I will write here using h1 so that you can understand
+00:05:21.240
+and I will write using here
+00:05:23.240
+I will press space, I will write using here I will press space I will write using and h
+00:05:26.240
+and now my work is left to click and write 2, 3, 4, 5 and 6
+00:05:31.600
+and you can see that it is looking like this
+00:05:32.960
+so you know that h1 is like this, h2 is like this, h3 is this small, h4 is this small, h5 is this small, h6 is this small
+00:05:39.400
+and what will happen if h6 is smaller than h1, it will end at some point
+00:05:42.840
+so h6 is more than enough
+00:05:44.680
+so I will show you a practical demonstration of this So what will be less than h6, it will end at some point So h6 is more than enough
+00:05:45.000
+So I will show you a practical demonstration of this
+00:05:48.000
+Suppose this is my html tutorial, so here I have given the main heading
+00:05:51.000
+html introduction, then I have given the word as html
+00:05:53.000
+Then I have given the features of html
+00:05:55.000
+I gave this from h1, and this from h2
+00:05:58.000
+Then I gave something from h3
+00:06:01.000
+There is something in it, like here the term was hypertext and markup language was there, this is heading 2
+00:06:06.200
+what is the main heading page, html introduction
+00:06:08.700
+after this, all these are headings, I had to give a quick exercise in this too
+00:06:12.400
+so I used h3 in it too, then again it came in h2
+00:06:16.700
+because it was in it, so in building the hierarchy
+00:06:19.400
+h1, h2, h3, h4, h5, h6 are used, okay
+00:06:22.800
+I hope you all understood, many people are commenting that you are starting too slow
+00:06:27.000
+I am making this course as a beginner course
+00:06:30.000
+When I tell you HTML, then you will say that it is very easy
+00:06:34.000
+Then I will tell you a little CSL, then you will say that it also comes
+00:06:37.000
+Then I will say JavaScript, then you will say that it comes a little
+00:06:40.000
+Then I will say Bootstrap, then you will say that it will also happen
+00:06:44.000
+Then I will say React, then you will say bootstrap then you will say yes this too it will happen, there is a little problem
+00:06:46.000
+then i will say react, you will say what is this
+00:06:48.000
+then say note js
+00:06:50.000
+then i will take things to mongodv mysql
+00:06:52.000
+then after that
+00:06:54.000
+level will go up so much
+00:06:56.000
+i said we will raise the bar
+00:06:58.000
+like anything, this is what i meant
+00:07:00.000
+so when we will do react
+00:07:02.000
+when i will make projects there
+00:07:04.000
+when we will do dangerous things then I will ask their comment
+00:07:05.800
+that brother you tell me what is the level, okay?
+00:07:07.800
+so don't talk about the level, the level is going to rise
+00:07:09.800
+by doing it very well, so these are our headings
+00:07:11.800
+6 headings which I will keep like this
+00:07:13.800
+now if we want to write paragraph
+00:07:15.800
+then you can use p tag
+00:07:17.800
+you will hit p enter and this paragraph will come
+00:07:20.800
+now I will tell you a shortcut trick
+00:07:22.800
+if you want to bring dummy paragraph in VS code through Emmet
+00:07:24.800
+then what you will do
+00:07:26.000
+you will write here
+00:07:28.000
+lorem, let's say i wrote lorem 23
+00:07:30.000
+and here look at emmet abbreviation
+00:07:32.000
+of lorem 23, it will give me 23 words
+00:07:34.000
+something like this, you can click on view
+00:07:36.000
+and wrap the word, so you will not get
+00:07:38.000
+horizontal scroll bar, so wrap the word view
+00:07:40.000
+now here you see lorem, ipsum
+00:07:42.000
+dollar, sit, here this
+00:07:44.000
+dummy text came, why do here a dummy text has come.
+00:07:45.000
+Why do we want dummy text sometimes?
+00:07:47.000
+Because we want it because we are making a template and we have to fill that template with something.
+00:07:52.000
+Like suppose you are making a website which looks like OYO rooms.
+00:07:57.000
+Now here OYO, become a member, OYO for business, I don't have to write all this here.
+00:08:02.000
+I have written lorem here.
+00:08:04.000
+Now I have to write something here, so I will write lorem 7 and hit enter.
+00:08:08.000
+Then I will give it to the OYO people, they will do whatever they want to write.
+00:08:11.000
+So here you use it to fill the placeholder.
+00:08:14.000
+My plan is that we will also make clones of popular websites so that you will know how things work.
+00:08:20.000
+This is also a very popular website, by the way, if you have used their services,
+00:08:23.000
+then do tell us in the comment section below now we will see more things like here is paragraph, how to style it
+00:08:31.300
+and all these things are done through CSS, now in paragraph you see here when I wrote lorem 23, so much text came
+00:08:38.000
+now I will hit p enter here, if I write lorem 10 here, then only 10 words will come, okay
+00:08:43.000
+and if I want to write lorem 100, my page will be filled a lot
+00:08:46.800
+so I can do that too, so this lorem trick is very good, you will enjoy it
+00:08:51.700
+and whenever we make a clone of popular websites, let's say I make a clone of amazon.in
+00:08:55.900
+okay, I make a clone of amazon.in, so let's say I want to write something here
+00:09:00.000
+now I can't see so much text here, let's say I want to write 3 words here
+00:09:02.800
+so I will write lorem 3, I will not think about makeup products,
+00:09:05.800
+I will write lorem 4 here, or lorem 3, or lorem 2,
+00:09:09.000
+and make a template and get it ready, then whatever is there after that,
+00:09:11.800
+it will come in my database and I can bring my in-text in many different ways.
+00:09:17.400
+Many people asked that will this course be job ready,
+00:09:19.800
+the answer is yes, this course is going to be job ready.
+00:09:22.000
+Absolutely, I will make you such that you will be able to do industry level jobs through the learning of this course is going to be job ready. Absolutely, I will make you so that you can actually
+00:09:25.000
+do industry level jobs through the learning of this course.
+00:09:28.000
+Now let's talk about what are the attributes in HTML.
+00:09:31.000
+These are the attributes in HTML.
+00:09:32.000
+Like I used the HTML tag,
+00:09:34.000
+lang is equal to en,
+00:09:35.000
+lang is an attribute.
+00:09:36.000
+We did not use any attribute in the body.
+00:09:38.000
+We did not use any attribute in H1.
+00:09:40.000
+We did not use any attribute in P.
+00:09:42.000
+But I can use a style attribute in P,
+00:09:44.000
+which is also called inline CSS, if I make the background color red
+00:09:49.000
+ok, like this, so its background color will be red
+00:09:53.000
+this is called inline CSS through style attribute
+00:09:55.000
+so if you put style is equal to CSS
+00:09:57.000
+first we learned to put CSS here, but if you put style is equal to
+00:10:01.000
+so you will get this background red here, let will show you, you got this red background, okay.
+00:10:06.800
+I will make this teal or this, this color is looking good,
+00:10:11.600
+so I can also put style inline, but when you make industry level websites,
+00:10:15.600
+we use inline styles very less because the maintainability decreases,
+00:10:19.000
+reusability decreases, okay.
+00:10:20.800
+So we want to ship a small bundle on the browser,
+00:10:23.600
+and our website is more optimized
+00:10:26.000
+so we avoid all these things
+00:10:28.000
+but inline CSS style is a tag
+00:10:30.000
+but here style is an attribute
+00:10:32.000
+P is a tag, P tag has an attribute style
+00:10:35.000
+through which we can style this element
+00:10:37.000
+we will also read about many other attributes
+00:10:39.000
+attributes basically give an element
+00:10:42.000
+enhanced functionality
+00:10:43.000
+like we gave a style to this paragraph
+00:10:47.000
+which was background color Thistle
+00:10:48.500
+to give this background color we used style attribute
+00:10:52.500
+in the same way to give properties to any tag
+00:10:56.000
+or any element we use this kind of attributes
+00:11:00.000
+like if we talk about link
+00:11:02.500
+link colon css
+00:11:04.000
+link has relic attribute, href attribute
+00:11:06.800
+So what we can do with this attribute, we can put this css style sheet
+00:11:12.000
+Like let's say background, background color, I say body first, ok
+00:11:17.600
+What we need in body, background color, and you don't have to worry about it
+00:11:21.400
+Don't worry at all about how is this about it because it will be explained in css
+00:11:26.000
+but i am just telling you that i will hotpink it
+00:11:28.000
+listen to another functionality of vs code
+00:11:30.000
+this ninja technique will be very useful
+00:11:32.000
+here hover the mouse
+00:11:34.000
+and here you can choose any color you want
+00:11:36.000
+of the surrounding
+00:11:38.000
+if i leave it
+00:11:40.000
+and do like this
+00:11:42.000
+so you can see the background color of my body is this
+00:11:44.000
+how did you like the ninja technique, write in the comment
+00:11:45.200
+I liked the ninja technique, brother
+00:11:46.800
+okay, now here we have come back to index.html
+00:11:51.040
+I can remove it if I want
+00:11:52.240
+I will comment it out, so this style sheet will not be there
+00:11:54.640
+which is very natural
+00:11:56.000
+the background color was coming from this style sheet
+00:11:57.840
+removed
+00:11:58.560
+this background color was coming from inline CSS
+00:12:00.480
+so it was not removed
+00:12:01.280
+which is very natural, okay
+00:12:02.400
+it is very normal
+00:12:03.120
+here I did this style is equal to background color
+00:12:06.000
+this is why it's background color was visible
+00:12:08.000
+now we are going to quickly
+00:12:10.000
+make a bookmark
+00:12:12.000
+we are going to make a bookmark manager
+00:12:14.000
+bookmark manager dot html
+00:12:16.000
+and i am making this file because
+00:12:18.000
+i have told you different types of headings
+00:12:20.000
+i am going to make a useful bookmark manager
+00:12:22.000
+so i will write here
+00:12:24.000
+bookmark manager, so I will write here bookmark manager
+00:12:26.000
+now you will say that in chrome it is there why are you making bookmark manager, it is made by our hands
+00:12:31.000
+it will be our own child, we have made it, so you will have a different love for it
+00:12:36.000
+because you have made it yourself, someone made a software, you bought it from somewhere
+00:12:40.000
+you have made a software yourself, so the software you have made a software by yourself, then the software you have made is different now here you can see bookmark manager code is written here
+00:12:47.680
+I will write h1 and write my bookmarks
+00:12:50.880
+I wrote my bookmarks, now I will write h2 and primary bookmarks
+00:12:56.000
+and after this I will write secondary bookmarks from h2
+00:12:59.640
+in fact if I write here secondary bookmarks, then what will happen?
+00:13:06.200
+I can put secondary bookmarks here.
+00:13:07.900
+Now what I will do is, I will write Google in a paragraph.
+00:13:11.200
+Or I write it like this, Google.
+00:13:12.500
+We will write it with a list, but in the coming videos, I will tell you
+00:13:16.800
+how to use the list.
+00:13:18.800
+For now, you can understand it like this.
+00:13:20.100
+Google, let's say I write Google here,
+00:13:23.700
+open Google, and what I will open Google and I will use anchor tag
+00:13:26.680
+so as soon as I type in A, A has a mandatory attribute href
+00:13:30.640
+href means to click and go to which link
+00:13:33.240
+so I will write href is equal to https://www.google.com
+00:13:38.360
+so it will be sent to this address whenever someone clicks on open Google
+00:13:40.960
+and I will cut this open Google and put it here
+00:13:44.240
+that is, the content of the stack will be like this
+00:13:46.000
+and here you can see ahref is equal to open google
+00:13:50.000
+this is called anchor tag which helps us to make links
+00:13:53.000
+you must have seen many such links
+00:13:55.000
+now you see here that as soon as I go to bookmarkmanager.html
+00:14:01.000
+you can see here that you can see all the bookmarks
+00:14:05.000
+Open Google
+00:14:06.000
+Now if I click on it, Google will open
+00:14:08.000
+Now you noticed one thing
+00:14:10.000
+When I did not click on it, its color was blue
+00:14:12.000
+Now I visited it, its color has changed
+00:14:14.000
+So its color changes when you visit it
+00:14:16.000
+That is, it has been converted to a visited link
+00:14:18.000
+So I know that I have visited it
+00:14:20.000
+Now I tell you one more thing
+00:14:22.000
+That here if we want it to open in a new tab,
+00:14:25.000
+Like I am clicking on it, it is opening in the same tab,
+00:14:27.000
+If you want to open it in a new tab, then you have two ways,
+00:14:30.000
+Either you can click on the mouse wheel,
+00:14:35.000
+Now I will tell you another way, if you want to open it in a new tab,
+00:14:40.000
+Then you can use an attribute,
+00:14:42.000
+You can write here that target is equal to
+00:14:46.000
+underscore blank and VS code gives you suggestions
+00:14:48.000
+so I wrote it by hitting two enter
+00:14:50.000
+if you write in notepad or in any other
+00:14:52.000
+cheap editor then what happens to you
+00:14:54.000
+means according to quality, cheap
+00:14:56.000
+free is also VS code but according to quality
+00:14:58.000
+if you use a cheap editor
+00:15:00.000
+then target is equal to underscore
+00:15:02.000
+blank you have to type it completely, it is a little painful
+00:15:04.000
+but if you write it in any way
+00:15:06.160
+and what will happen now
+00:15:06.800
+now I will click on it
+00:15:07.600
+I am clicking
+00:15:08.300
+I am not clicking the mouse wheel
+00:15:09.360
+I am clicking
+00:15:09.960
+I will click
+00:15:10.560
+it came to the new tab
+00:15:11.200
+ok
+00:15:11.460
+I will click the mouse wheel
+00:15:12.160
+then also it will open in the new tab
+00:15:13.260
+so I can open it like this
+00:15:15.000
+now I have written a very simple open google
+00:15:17.660
+if you want then your favorite website
+00:15:20.560
+whatever website is your favorite
+00:15:22.360
+you can put it here
+00:15:23.660
+ok
+00:15:24.160
+good good websites
+00:15:26.000
+now I will write open facebook
+00:15:28.000
+and you can see www.facebook.com
+00:15:31.000
+and I will write here
+00:15:33.000
+quora.com and codewithhari.com
+00:15:35.000
+and after this we will put
+00:15:37.000
+let us say which website should I put
+00:15:39.000
+youtube.com
+00:15:41.000
+let's see if it comes here or not
+00:15:43.000
+you have seen one thing here it is coming in one line if you can see it's coming in one line
+00:15:46.000
+if you want it to not come in one line
+00:15:49.000
+then you can put it in your paragraphs
+00:15:52.000
+this is a very dirty way
+00:15:55.000
+I will tell you why I am saying it is a dirty way later
+00:15:58.000
+but you can enclose it in a paragraph
+00:16:01.000
+and I will press shift and right arrow key
+00:16:04.000
+and then press control x, then press end key, all the cursors will go to end
+00:16:06.000
+Because if you press end key on one cursor, then it goes to end, and then I will do ctrl v
+00:16:11.000
+Now I have used this shortcut a lot, and many of you will be like this, what did you do, if you are a beginner
+00:16:16.000
+But what I did simply is that I used the functionality of VS code, the multiple cursor functionality
+00:16:21.000
+I brought multiple cursors by pressing alt, and then I used it
+00:16:24.000
+This is ideally not a good idea
+00:16:26.000
+to make a list by using paragraphs
+00:16:29.000
+we make lists by using lists but because we have not read the list
+00:16:32.000
+we are using paragraphs but this will work for us
+00:16:35.000
+and the ones we have not visited are blue
+00:16:38.000
+we visited facebook, it's color became purple, we visited quora, it's color became purple
+00:16:41.000
+so now these are your primary bookmarks, what will be your secondary bookmarks
+00:16:44.000
+we put two secondary bookmarks?
+00:16:46.000
+we put 2 secondary bookmarks
+00:16:48.000
+let's say your secondary bookmarks are those which you visit sometimes
+00:16:50.000
+follow wikipedia.com
+00:16:52.000
+wikipedia.com is here and let's say
+00:16:54.000
+stackoverflow.com
+00:16:56.000
+we will write the spelling correctly
+00:16:58.000
+stackoverflow
+00:17:00.000
+let's capitalise stackoverflow
+00:17:02.000
+and now you see here in secondary bookmarks
+00:17:04.000
+wikipedia and stackoverflow is here so this is your bookmark manager and you can make it better
+00:17:08.500
+we will learn styling from CSS so if you find it ugly
+00:17:11.500
+then don't worry, don't say that it looks ugly
+00:17:14.500
+don't worry about that because we will do styling and designing in the coming time
+00:17:18.500
+and we will talk about all those things
+00:17:20.000
+for now, this is how your bookmark looks
+00:17:22.500
+bookmark manager code with h3 is your title
+00:17:24.500
+and I will write it in h1
+00:17:26.280
+so both will be same, our title and h1
+00:17:28.280
+means our title will be same
+00:17:30.280
+and my bookmarks code with harry will be written here
+00:17:32.280
+so in this way you can make a bookmark manager
+00:17:35.560
+you can use it in actual
+00:17:37.560
+now if you save it like this
+00:17:39.560
+like this is my bookmark manager.html
+00:17:41.560
+you can copy it and put it on your desktop
+00:17:44.560
+then whenever you want to open a website
+00:17:46.500
+you just double click it and it will open
+00:17:48.000
+if you double click it and it opens with VS code
+00:17:50.500
+then what you have to do is
+00:17:51.500
+you have to right click, open with
+00:17:53.500
+choose another app
+00:17:55.000
+and then after that you have to choose Google Chrome
+00:17:57.000
+and always
+00:17:58.000
+so I will choose Google Chrome
+00:18:00.000
+and I will always
+00:18:01.000
+so whenever I double click it
+00:18:02.500
+it will open with Google Chrome
+00:18:04.500
+so this was our bookmark manager I hope you liked it now, so whenever I double click, it will open from Google Chrome. So this was our bookmark manager, I hope you liked it.
+00:18:07.400
+I have a request from you that today our 4 videos have been completed.
+00:18:10.600
+So if you liked this course, I want you to share it with your friends in groups.
+00:18:14.600
+I know very few people will share, but if you do,
+00:18:17.200
+then I will have a lot of courage and I will try to bring more courses like this.
+00:18:21.600
+Many people are shocked and saying that how is this course free,
+00:18:24.200
+what is the benefit of you? How will you earn?
+00:18:25.680
+I will find some other ways to make more money.
+00:18:27.600
+But the thing is that I am going to mark this course
+00:18:31.280
+that this is the best course of web development
+00:18:33.120
+with everything.
+00:18:33.840
+I mean, I will put everything in it
+00:18:35.280
+and I will take as little time as possible
+00:18:36.960
+and teach you as much as possible.
+00:18:38.080
+Many edtechs got upset with me.
+00:18:39.520
+Many companies told me
+00:18:40.800
+that they launch it as a paid course
+00:18:42.000
+on our platform.
+00:18:43.200
+I will not take names,
+00:18:43.760
+but many companies are upset with me and they told me that they launch it as a paid course. Do it on our platform. I won't take names but many companies are upset with me.
+00:18:46.000
+They have asked me to launch it as a paid course.
+00:18:48.000
+Why are you doing this? You will regret your decision.
+00:18:50.000
+But hopefully, I won't regret my decision.
+00:18:52.000
+To make this course free.
+00:18:54.000
+I will earn money in other ways.
+00:18:56.000
+And I will also teach you in this course.
+00:18:58.000
+How you can earn more money through web development.
+00:19:00.000
+With that said.
+00:19:02.000
+I will put the source code in the description.
+00:19:04.000
+Otherwise, you can take it from this repository. That's all for now in this video. With that said, I will put the source code in the description
+00:19:05.000
+Otherwise you can take it from this repository
+00:19:07.000
+That's all for now guys
+00:19:08.000
+Thank you so much guys for watching this video

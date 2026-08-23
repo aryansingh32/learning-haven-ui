@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 62,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The most difficult part when working with dates in databases, is to be sure that the format of the date you are trying to insert/select,\nmatches the format of the date column in the database.\n\nDifferent SQL databases have variousdata typesto store date and time values.\n\nMySQLhas the followingdatedata types:\n\nSQL Serverhas the followingdatedata types:\n\nNote:The date data type are defined for a column upon creation of a \nnew table in your database.\n\nLook at the following table:\n\nNow we want to select the records with an OrderDate of \"2025-11-11\" from the table above.\n\nWe use the followingSELECTstatement:\n\nThe result-set will look like this:\n\nNow, assume that the \"Orders\" table looks like this (notice the \nadded time-component in the \"OrderDate\" column):\n\nIf we use the sameSELECTstatement as above:\n\nwe will get no result! This is because the query is looking only for dates with no time portion.\n\n### Code Snippets\n\n```\nSELECT * FROM Orders WHERE OrderDate='2025-11-11'\n\n---\n\nSELECT * FROM Orders WHERE OrderDate='2025-11-11'\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_61",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

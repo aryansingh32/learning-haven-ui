@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 173,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "With Pyplot, you can use thescatter()function \nto draw a scatter plot.\n\nThescatter()function plots one dot for \neach observation. It needs two arrays of the same length, one for the values of \nthe x-axis, and one for values on the y-axis:\n\nThe observation in the example above is the result of 13 cars passing by.\n\nThe X-axis shows how old the car is.\n\nThe Y-axis shows the speed of the car when it passes.\n\nAre there any relationships between the observations?\n\nIt seems that the newer the car, the faster it drives, but that could be a coincidence, after all we only registered 13 cars.\n\nIn the example above, there seems to be a relationship between speed and age,\nbut what if we plot the observations from another day as well?\nWill the scatter plot tell us something else?\n\nBy comparing the two plots, I think it is safe to say that they both gives us the same conclusion: the newer the car, the faster it drives.\n\nYou can set your own color for each scatter plot with thecoloror thecargument:\n\nYou can even set a specific color for each dot by using an array of colors as value for thecargument:\n\nThe Matplotlib module has a number of available colormaps.\n\nA colormap is like a list of colors, where each color has a value that ranges \nfrom 0 to 100.\n\nHere is an example of a colormap:\n\nThis colormap is called 'viridis' and as you can see it ranges from 0, which \nis a purple color, up to 100, which is a yellow color.\n\nYou can specify the colormap with the keyword argumentcmapwith the value of the colormap, in this \ncase'viridis'which is one of the \nbuilt-in colormaps available in Matplotlib.\n\nIn addition you have to create an array with values (from 0 to 100), one value for each point in the scatter plot:\n\nYou can include the colormap in the drawing by including theplt.colorbar()statement:\n\nYou can choose any of the built-in colormaps:\n\nYou can change the size of the dots with thesargument.\n\nJust like colors, make sure the array for sizes has the same length as the arrays for the x- and y-axis:\n\nYou can adjust the transparency of the dots with thealphaargument.\n\nJust like colors, make sure the array for sizes has the same length as the arrays for the x- and y-axis:\n\nYou can combine a colormap with different sizes of the dots. This is best visualized if the dots are transparent:\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\nplt.scatter(x, y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n#day one, the age \n  and speed of 13 cars:\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\nplt.scatter(x, \n  y)\n#day two, the age and speed of 15 cars:\nx = np.array([2,2,8,1,15,8,12,9,7,3,11,4,7,14,12])\ny = np.array([100,105,84,105,90,99,90,95,94,100,79,112,91,80,85])\nplt.scatter(x, y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\nplt.scatter(x, \n  y, color = 'hotpink')\nx = np.array([2,2,8,1,15,8,12,9,7,3,11,4,7,14,12])\ny = np.array([100,105,84,105,90,99,90,95,94,100,79,112,91,80,85])\nplt.scatter(x, y, color = '#88c999')\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\ncolors = np.array([\"red\",\"green\",\"blue\",\"yellow\",\"pink\",\"black\",\"orange\",\"purple\",\"beige\",\"brown\",\"gray\",\"cyan\",\"magenta\"])\nplt.scatter(x, y, c=colors)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\ncolors = np.array([0, \n  10, 20, 30, 40, 45, 50, 55, 60, 70, 80, 90, 100])\nplt.scatter(x, y, c=colors, cmap='viridis')\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\ncolors = np.array([0, \n  10, 20, 30, 40, 45, 50, 55, 60, 70, 80, 90, 100])\nplt.scatter(x, y, c=colors, cmap='viridis')\nplt.colorbar()\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\nsizes = \n  np.array([20,50,100,200,500,1000,60,90,10,300,600,800,75])\nplt.scatter(x, \n  y, s=sizes)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])\ny = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])\nsizes = \n  np.array([20,50,100,200,500,1000,60,90,10,300,600,800,75])\nplt.scatter(x, \n  y, s=sizes, alpha=0.5)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = \n  np.random.randint(100, size=(100))\ny = np.random.randint(100, size=(100))\ncolors = np.random.randint(100, size=(100))\nsizes = 10 * np.random.randint(100, \n  size=(100))\nplt.scatter(x, y, c=colors, s=sizes, alpha=0.5, cmap='nipy_spectral')\nplt.colorbar()\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_172",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

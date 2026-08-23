@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 74,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A multi-dimensional array is an array of arrays.\n\nTo declare a multi-dimensional array, define the variable type, specify the name of the array followed by square brackets which specify how many elements the main array has, followed by another set of square brackets which indicates how many elements the sub-arrays have:\n\nAs with ordinary arrays, you can insert values with an array literal - a \ncomma-separated list inside curly braces. In a multi-dimensional array, each \nelement in an array literal is another array literal.\n\nEach set of square brackets in an array declaration adds anotherdimensionto an array. An array like the one above is said to have two dimensions.\n\nArrays can have any number of dimensions. The more dimensions an array has, the more complex the code becomes. The following array has three dimensions:\n\nTo access an element of a multi-dimensional array, specify an index number in each of the array's dimensions.\n\nThis statement accesses the value of the element in thefirst row (0)andthird column \n(2)of thelettersarray.\n\nTo change the value of an element, refer to the index number of the element in each of the dimensions:\n\nTo loop through a multi-dimensional array, you need one loop for each of the array's dimensions.\n\nThe following example outputs all elements in thelettersarray:\n\nThis example shows how to loop through a three-dimensional array:\n\nMulti-dimensional arrays are great at representing grids. This example shows a\npractical use for them. In the following example we use a multi-dimensional\narray to represent a small game of Battleship:\n\n### Code Snippets\n\n```\nstring letters[2][4];\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\n\n---\n\nstring letters[2][2][2] = {\n{\n{ \"A\", \"B\" },\n{ \"C\", \"D\" }\n},\n{\n{ \"E\", \"F\" },\n{ \"G\", \"H\" }\n}\n};\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\ncout << letters[0][2];\u00a0 // Outputs \"C\"\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\nletters[0][0] = \"Z\";\ncout << letters[0][0];\u00a0 // Now outputs \n  \"Z\" instead of \"A\"\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\nfor (int i = 0; i < 2; i++) {\nfor (int j \n  = 0; j < 4; j++) {\ncout << letters[i][j] << \"\\n\";\n}\n}\n\n---\n\nstring letters[2][2][2] = {\n{\n{ \"A\", \"B\" },\n{ \"C\", \"D\" }\n},\n{\n{ \"E\", \"F\" },\n{ \"G\", \"H\" }\n}\n};\nfor (int i = 0; i < 2; i++) {\nfor (int j = 0; j < 2; j++) {\nfor (int k = 0; k < 2; k++) \n  {\ncout << letters[i][j][k] << \"\\n\";\n}\n}\n}\n\n---\n\n// We put \"1\" to indicate there is a ship.\nbool ships[4][4] = {\n{ \n  0, 1, 1, 0 },\n{ 0, 0, 0, 0 },\n{ 0, 0, 1, 0 },\n{ \n  0, 0, 1, 0 }\n};\n// Keep track of how many hits the player has and \n  how many turns they have played in these variables\nint hits = 0;\nint \n  numberOfTurns = 0;\n// Allow the player to keep going until they have \n  hit all four ships\nwhile (hits < 4) {\nint row, column;\ncout << \"Selecting coordinates\\n\";\n// Ask the player for a row\ncout << \"Choose a row number between 0 and 3: \";\ncin >> row;\n// Ask the player for a column\ncout << \"Choose a column number \n  between 0 and 3: \";\ncin >> column;\n// Check if a ship \n  exists in those coordinates\nif (ships[row][column]) {\n// If the player hit a ship, remove it by setting the value to zero.\nships[row][column] = 0;\n// Increase the hit counter\nhits++;\n// Tell the player that they have hit a ship \n  and how many ships are left\ncout << \"Hit! \" << (4-hits) \n  << \" left.\\n\\n\";\n} else {\n// Tell the player \n  that they missed\ncout << \"Miss\\n\\n\";\n}\n// Count how many turns the player has taken\nnumberOfTurns++;\n}\ncout << \"Victory!\\n\";\ncout << \"You won in \" << numberOfTurns << \" turns\";\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_73",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

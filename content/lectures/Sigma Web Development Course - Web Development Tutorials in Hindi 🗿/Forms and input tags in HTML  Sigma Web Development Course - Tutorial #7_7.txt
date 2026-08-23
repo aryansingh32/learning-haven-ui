@@ -1,0 +1,602 @@
+Video URL: https://www.youtube.com/watch?v=tLBlhp0SA_0
+Video Title: Forms and input tags in HTML | Sigma Web Development Course - Tutorial #7
+--------------------------------------------------
+
+00:00:00.000
+In this video, we will know what are forms and what is the input tag in the form.
+00:00:04.900
+Using a form is a very important element of some websites because through the form, you submit data from client to server.
+00:00:11.300
+These are the forms that you see on contact pages, Google forms or inquiry forms.
+00:00:16.200
+The date and time to go to the flight or railway ticket, all these details we put, they also submit through html forms. In the last video, very few people liked it, I will request you
+00:00:26.000
+to like this video with high energy so that we can maintain high energy throughout the course.
+00:00:31.000
+So let's go to the computer screen, we will see about the forms, we will see about the input tags and we will see some best practices.
+00:00:36.000
+Let's roll the intro.
+00:00:48.500
+so guys i have come to my computer screen and now see i am going to make a folder here
+00:00:51.500
+whose name i am going to keep video 6
+00:00:53.500
+because this is the 6th video
+00:00:54.500
+i will do it with shift right click
+00:00:55.500
+open with code
+00:00:56.500
+i have already told you all this
+00:00:58.500
+and here i am going to make index.html
+00:01:01.500
+and by putting exclamation mark in it
+00:01:04.000
+what i will do is i will wrap the view word
+00:01:06.000
+i will turn on the screen cast mode
+00:01:08.000
+and you see here i will write forms
+00:01:10.000
+let's learn it
+00:01:12.000
+so i have set the title of this forms page
+00:01:16.000
+and what happened by setting the title
+00:01:18.000
+that the title will be visible on our page
+00:01:20.000
+here i want to tell you a very important setting
+00:01:22.000
+of the show preview
+00:01:24.000
+now many people have also pointed out to me in the comment that
+00:01:26.600
+I have to click so many times, can I do something?
+00:01:29.000
+Yes you can, click on gear below, click on settings
+00:01:32.600
+And after clicking on settings, what you do simply
+00:01:35.800
+Write live preview here, live preview
+00:01:39.400
+And we can actually set it such that whenever we click
+00:01:43.200
+So what happens is that it will open on the external browser
+00:01:46.000
+so now I will close everything, as soon as I click here, it will open on the external browser
+00:01:51.000
+and I come to my browser and the playlist of the Sigma web development course is being accessed
+00:01:56.000
+by clicking here on the star and here on the bookmark
+00:01:59.000
+but now I want to tell you that as soon as we click here, you see it opened
+00:02:03.000
+so if you want this, then do this, but sometimes what happens is that you want to prefer side by side view.
+00:02:07.600
+And when would you like to do that?
+00:02:08.800
+When you are actually working on a design using HTML, CSS.
+00:02:12.400
+So whenever you are working on design,
+00:02:14.000
+definitely you guys would like to see live previews here.
+00:02:17.600
+Which is why this extension was made.
+00:02:19.600
+And it was made different from the live server
+00:02:21.600
+so that you can see the preview on the side.
+00:02:24.000
+Now what we will do here, we will know about the forms
+00:02:27.000
+What is a form? You know the name of the form, it means a railway form
+00:02:31.000
+We fill it and our reservation is done
+00:02:33.000
+Along with that, we fill the form of IIT-JEE, the form of NEET, the form of any exam
+00:02:38.000
+So that our data can reach those who want it
+00:02:41.000
+So this is the form
+00:02:43.000
+HTML is a form tag, as soon as you write form, you will hit enter,
+00:02:47.100
+in this way, the first question will ask you, what is the action of your form,
+00:02:49.700
+get or post, let me tell you a very quick difference between get request and post request,
+00:02:54.100
+that is, we will see this thing later when we will read the backend,
+00:02:56.700
+get request is a very simple request, and post request is when we send,
+00:03:01.100
+in most of the cases, when we have to give a lot of data,
+00:03:04.100
+like whenever our form will be posted
+00:03:06.000
+so in most of the cases we will use the post request
+00:03:09.000
+and get request is a very simple request
+00:03:12.000
+that we have to tell the server something
+00:03:14.000
+and that's it or we have to hit the server with a request
+00:03:17.000
+that's it
+00:03:18.000
+but if you don't understand this thing now
+00:03:20.000
+that should be fine
+00:03:21.000
+there is no problem
+00:03:22.000
+because we are going to do this in detail
+00:03:24.000
+so form action is equal to post I wrote, now I can show some input tags in it.
+00:03:29.000
+I will tell you what are input tags, that what elements will come in your form,
+00:03:35.000
+like you can put a date, you can put in the form, you can say name, you can say phone number,
+00:03:41.000
+you can say what is your age, it can be just a number you want to put such things in the form, so I want to tell you here
+00:03:49.000
+that the input tag that you put inside the form and there is a label tag
+00:03:53.000
+which is used to label that input, so what I will do here
+00:03:56.000
+you see the simplest input tag is type is equal to text
+00:04:00.000
+so I will put the input type is equal to text here
+00:04:02.000
+and you see here, if I zoom out and show you so see input type is equal to text here and you see here if I zoom out and show you
+00:04:06.000
+so see here input type is equal to text, name is equal to username
+00:04:08.000
+placeholder enter your username
+00:04:10.000
+and it will look like this
+00:04:12.000
+you can say here enter your username
+00:04:14.000
+and the user in front of you
+00:04:16.000
+will have to enter the username
+00:04:18.000
+I will write an h1 here and I will write
+00:04:20.000
+assume form to
+00:04:22.000
+apply
+00:04:24.000
+for ta for Sigma web dev TA.
+00:04:28.000
+Sigma web development course TA.
+00:04:33.000
+Assume we are hiring teaching assistants for Sigma web development course.
+00:04:37.000
+So we can write something like this here.
+00:04:39.000
+By the way, I have put the subtitles.
+00:04:40.000
+If you have not accessed the playlist, then do access it.
+00:04:43.000
+And with that, I will show you one more thing.
+00:04:45.000
+So these subtitles are very funny.
+00:04:47.000
+I'll show you.
+00:04:48.000
+Write Sigma batch OP and your village land.
+00:04:50.000
+And give your village land to me.
+00:04:51.000
+I mean, if a foreigner is watching this,
+00:04:53.000
+Or if someone is watching this who doesn't know Hindi at all,
+00:04:55.000
+He will say, what happened so far?
+00:04:57.000
+And give your village land to me.
+00:04:59.000
+I like this a lot.
+00:05:00.000
+Anyway, now you can see here that I have put the H1 here.
+00:05:02.000
+Which is our heading.
+00:05:03.000
+This is our main heading.
+00:05:04.000
+Enter your username. This is our input tag,
+00:05:06.480
+Along with the input tag, we use the label tag,
+00:05:08.880
+Now whose label is this? So I will write its id for is equal to,
+00:05:11.960
+For example, I will write its id username,
+00:05:14.880
+And what will I do in for is equal to? I will put its id in for is equal to,
+00:05:19.760
+Now what is this id? I will tell you later,
+00:05:21.920
+For now, you just understand that this is a unique identifier of an element,
+00:05:24.480
+To uniquely identify this element, Like your Aadhar number cannot be anyone else's, Now what is ID? I will tell you later. For now, you just understand that it is a unique identifier of an element.
+00:05:25.000
+To identify this element uniquely, like your Aadhar number can't be of anyone else,
+00:05:30.000
+in the same way, this ID username has been given to it,
+00:05:32.000
+now it can't be given to anyone else. This is the ID.
+00:05:34.000
+I will tell you more in detail later, but for now, understand this.
+00:05:36.000
+So I wrote label for a username.
+00:05:38.000
+I wrote this input and you can see here that the label will come here.
+00:05:43.000
+So I am seeing here, I have not put anything in the label actually
+00:05:45.500
+so I will put enter your username
+00:05:48.420
+and you can see that as soon as I put this here
+00:05:50.940
+you will get to see here enter your username
+00:05:52.820
+after this you can enter your username
+00:05:54.500
+along with that you can put anything here
+00:05:56.980
+like enter your expertise
+00:05:58.000
+suppose I want to ask here what is your gender
+00:06:00.220
+so I can do something like this here
+00:06:02.180
+and you see enter your gender
+00:06:04.140
+and as soon as I did this here i can ask you from male or female
+00:06:07.000
+what is it
+00:06:08.000
+now what happens here is that sometimes we wrap it in div
+00:06:11.000
+what is div?
+00:06:12.000
+div is our block element
+00:06:14.000
+okay
+00:06:15.000
+and what are inline and block elements
+00:06:17.000
+i have not told you in this course yet
+00:06:19.000
+but i will tell you in the coming videos
+00:06:21.000
+so for now you just understand that i am putting it in div to give a new space
+00:06:24.000
+okay, so as soon as i put it in div, it will come in a new space.
+00:06:27.000
+Yes, there is also a br tag, which causes line break.
+00:06:30.000
+But I don't prefer br tag and you will get to know why.
+00:06:33.000
+Why we don't want to bloat our html with br tag.
+00:06:37.000
+You will find out in the coming videos.
+00:06:39.000
+Now you see here that enter your username, male or female.
+00:06:43.000
+Now you see here, as soon as I click on female, this radio button is selected.
+00:06:48.200
+I am clicking on male, it is selected. Why is this happening?
+00:06:50.400
+Because the label of this, I have put for is equal to female and here I have put id female.
+00:06:54.800
+You can see.
+00:06:55.800
+And along with that, you can see, I have put the same name of both of them.
+00:06:58.600
+Here I have put name is equal to gender, this input tag too.
+00:07:01.600
+And name is equal to gender, this input radio tag too. And as soon as we have written type is equal to radio, it is gender is input radio tag
+00:07:05.280
+and here we have type is equal to radio
+00:07:07.520
+which means this is a radio button
+00:07:08.560
+and if we have made the name same
+00:07:10.080
+then only one of these two can be selected at a time
+00:07:12.640
+that is, if I select this, then only this will be selected
+00:07:14.400
+if I select this, then only this will be selected
+00:07:15.920
+now I will show you one thing
+00:07:16.960
+if I mess up the id in the label form
+00:07:19.840
+and here also in the form id
+00:07:21.440
+means I don't mess up the first one
+00:07:22.880
+I mess up the second one
+00:07:24.320
+so when I click on the female of the second one, it will not be selected.
+00:07:27.440
+I'm clicking, it's not being selected.
+00:07:28.840
+I'm clicking on the male, it's being selected.
+00:07:30.160
+So to select the female, I'll have to click on this.
+00:07:33.480
+So what I should do is, I should always put the ID of the input tag.
+00:07:39.280
+So you can see here, I've put the label for is equal to female.
+00:07:42.760
+Along with that, we have an input tag which is type is equal to female Along with that we have an input tag
+00:07:45.000
+Which is type is equal to check box
+00:07:47.000
+Now see here if I put the input of type is equal to check box
+00:07:50.000
+I will do this work by putting it in div
+00:07:52.000
+Right click and format document
+00:07:53.000
+As soon as I do, our document will be very good
+00:07:56.000
+That is, its formatting and indentation will be very good
+00:07:59.000
+Now see here, here subscribe to newsletter
+00:08:02.000
+Here I can check it
+00:08:03.000
+And the difference between radio button and check box is that
+00:08:06.000
+you can check the check box separately
+00:08:08.000
+here if you want to give one of the options male or female
+00:08:11.000
+then you can select it like this
+00:08:14.000
+after this we have text area and select tag
+00:08:17.000
+and I will show you what it is
+00:08:19.000
+so text area and select tag works like this
+00:08:22.000
+as soon as you copy the text area here
+00:08:24.000
+and I will show you the text area
+00:08:26.000
+text area input type is equal to
+00:08:28.000
+text but it has rows
+00:08:30.000
+and column attribute which helps you
+00:08:32.000
+to make the size small
+00:08:34.000
+now see here the placeholder
+00:08:36.000
+I've given enter your comment here
+00:08:38.000
+so I've given enter your comment here
+00:08:40.000
+ideally we'll keep it empty
+00:08:42.000
+or we'll not give at least new line
+00:08:44.000
+so I'll paste it here, enter your comment here
+00:08:46.240
+and now it will reach to the left side
+00:08:49.000
+I will show you, so it has reached to the left side
+00:08:51.000
+see enter your comment here
+00:08:52.000
+and any user can put his comment here
+00:08:55.000
+now see I have put the content of text area
+00:08:57.000
+enter your comment here
+00:08:59.000
+so ideally you will not want to do this
+00:09:00.000
+you will want to keep the text area empty
+00:09:02.000
+and you will want to put a label
+00:09:04.000
+and you can say label for is equal to comment and definitely we will put id here
+00:09:09.000
+whenever we put for, then the element for which it is inside the for is its id
+00:09:14.000
+now see here, if I write enter your comment here then what will happen
+00:09:20.000
+if I write enter your comment, then it will come here
+00:09:23.000
+now you will say that this is not styled properly.
+00:09:25.000
+So this style is not properly because we will style it with CSS later.
+00:09:29.000
+For now, I just put br tag, but I don't recommend br tag.
+00:09:32.000
+I am telling you again that I do not recommend br tag at all.
+00:09:36.000
+Because br tag has problems.
+00:09:38.000
+By the way, you should know br tag, there is a line break tag,
+00:09:40.000
+a line break comes from it, something like this.
+00:09:42.000
+Now you must be feeling everything right, you must be saying,
+00:09:44.000
+what is the problem in br tag
+00:09:45.000
+but i will tell you br tag is something that i don't recommend
+00:09:48.000
+it's not like that you don't have to use it but i don't recommend using it all the time
+00:09:52.000
+i mean the easiest thing is that people think that you can add br tag and add new spaces
+00:09:56.000
+i oppose this thing a lot so i will copy this and show you select tag
+00:10:01.000
+and you see here that as soon as I put select tag here
+00:10:06.000
+in div, so in select
+00:10:08.000
+you get some options, the syntax of select
+00:10:10.000
+is like this, make apple
+00:10:12.000
+and you can use any one of the three
+00:10:14.000
+from cherry, now you see
+00:10:16.000
+any one of the three can be used
+00:10:18.000
+and here I did value is equal to apple
+00:10:20.000
+first I made select tag, in that name is equal to
+00:10:22.000
+fruits, then option value is equal to
+00:10:24.000
+apple, option value is equal to fruits, then option value equal to apple, option value equal to banana, option value equal to cherry
+00:10:28.000
+When we will parse this form data, then I will tell you in the part of JavaScript, how to take this data and send it to the server
+00:10:35.000
+So there are many things about the form that are remaining, I am going to tell you, so stay tuned for that
+00:10:40.000
+This was about the forms, I had to tell you all the elements of the form in this video Along with that, I have told you about select tag and all these things
+00:10:48.300
+About the form, the rest of the attributes, like action, I told you
+00:10:52.300
+You can submit a form on any page with action and where it will handle the form
+00:10:56.600
+So you can give that data here
+00:10:58.300
+Then there is a method, get request or post request
+00:11:00.300
+I will tell you the difference in these two in the coming videos
+00:11:02.300
+But I have told you in a very rough way
+00:11:04.800
+That get request is a very rough way
+00:11:05.000
+GetRequest is a very simple request, PostRequest is used when you have to send big data to the server
+00:11:10.000
+Because there is a limit to GetRequest, you can send a lot of data in PostRequest
+00:11:14.000
+We never send passwords in GetRequest, we send it with the help of PostRequest
+00:11:19.000
+Now here I have told the method, what happens in the name? name is equal to username means we mark it with the name
+00:11:25.000
+if we mark it with the name, then the server will know which key value is corresponding to it
+00:11:29.000
+so the key value that will go to the server will go according to the name
+00:11:32.000
+its name and value will go, okay?
+00:11:34.000
+so we will see this too when we do server side processing
+00:11:36.000
+what is the meaning of placeholder?
+00:11:38.000
+placeholder means what will be written inside it
+00:11:40.000
+like here see enter your username, placeholder
+00:11:42.000
+if I click on this, then this enter your username is not written inside placeholder if I click on it, it will not say enter your username
+00:11:45.500
+I will write anything, see it came
+00:11:47.200
+but enter your username is telling me here that I have to put username in it
+00:11:51.800
+then what is the meaning of required, you have to require it
+00:11:55.500
+you have to put the value of it or else your form will not be submitted
+00:11:58.500
+so we will use this a lot
+00:11:59.800
+then after this we get autofocus
+00:12:02.500
+what does autofocus do? autofocus automatically focuses the cursor, so I will show you the magic of autofocus
+00:12:08.320
+so if you have written autofocus in the input tag
+00:12:10.960
+ok, so I have written autofocus in the username, now I will reload it
+00:12:15.600
+so now see if I type on it, it will automatically focus on it
+00:12:18.880
+so by autofocus, it happens that whenever you type, it will be typed here
+00:12:24.000
+I hope you are understanding these things
+00:12:26.000
+Now validation attributes, I have told you the required
+00:12:29.000
+You can give a pattern, in which you can give regular expression pattern
+00:12:33.000
+Now don't get confused, don't say what are you talking about
+00:12:36.000
+we don't know regular expression, so I am sitting here to teach you all
+00:12:40.000
+But you understand that we will accept only one particular pattern
+00:12:43.000
+If we have put pattern is equal to this, then you can't put anything else than this pattern
+00:12:47.160
+okay, so this thing you should know here
+00:12:51.000
+so I hope you are enjoying this video
+00:12:53.920
+and with that, do write sigma batch op in the comment section
+00:12:57.600
+and please review this course in the first video
+00:13:00.480
+because still many people ask me that should I do this course or not
+00:13:04.520
+it is a free course is not valued by people, they say this course is free
+00:13:07.000
+so we should watch it or take a paid course
+00:13:10.000
+and I would like to give a note for those people who told me that
+00:13:13.000
+we took a paid course, what should we do now?
+00:13:16.000
+they should collect money or we should join sigma batch
+00:13:19.000
+you guys join sigma batch, cut your losses and join sigma batch
+00:13:23.000
+because see what is the quality of this course, I don't think I need to tell you
+00:13:28.000
+so you guys come and do this, you will get everything here, I am telling you
+00:13:33.000
+don't think that it is free, I was going to sell you for 10,000 rupees in this course
+00:13:37.500
+yes that was the amount which we fixed, I was going to sell you for 10,000 rupees in this course
+00:13:42.000
+and I think there is nothing wrong in selling any course, anyone is selling, there is nothing wrong in selling any course
+00:13:46.500
+But the thing is that if you have bought any other course and you still feel from the heart that
+00:13:51.000
+Sigma is a very good course which is there, then you should join, cut your losses and join
+00:13:55.500
+Because once you make your career, you will not find all these things in the future
+00:13:59.500
+If you look back in the coming time, then you will also say that yes, we took a paid course
+00:14:04.000
+Then after that we took a paid course and then we took a free course,
+00:14:05.600
+which we understood and if you become a carrier, then all these things will not matter in the future.
+00:14:10.600
+So do what is right for you and work while understanding your rights and wrongs.
+00:14:15.000
+I hope you are understanding things.
+00:14:17.000
+So like the video, access the playlist, subscribe to the channel and write Sigma batch OP in the comment section below
+00:14:23.600
+and name the land name your village and town
+00:14:26.000
+that's it for now guys
+00:14:27.000
+thank you so much for watching this video

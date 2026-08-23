@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 91,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Theelifkeyword is Python's way of saying \"if the previous conditions were not true, then \ntry this condition\".\n\nTheelifkeyword allows you to check multiple expressions forTrueand execute a block of code as soon as one of the conditions evaluates toTrue.\n\nIn this exampleais equal tob, so the first condition is not true, but theelifcondition is true, so we print to screen that \"a and b are equal\".\n\nYou can have as manyelifstatements as you need. Python will check each condition in order and execute the first one that is true.\n\nIn this example, the program checks each condition in order. Sincescoreis 75, it prints \"Grade: C\" (the first condition that evaluates to true).\n\nWhen you useelif, Python evaluates the conditions from top to bottom. As soon as it finds a condition that is true, it executes that block and skips all remaining conditions.\n\nUseelifwhen you have multiple mutually exclusive conditions to check. This is more efficient than using multiple separateifstatements because Python stops checking once it finds a true condition.\n\n### Code Snippets\n\n```\na = 33\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelif a == b:\nprint(\"a and b are equal\")\n\n---\n\nscore = 75\nif score >= 90:\nprint(\"Grade: A\")\nelif score >= 80:\nprint(\"Grade: B\")\nelif score >= 70:\nprint(\"Grade: C\")\nelif score >= 60:\nprint(\"Grade: D\")\n\n---\n\nage = 25\nif age < 13:\nprint(\"You are a child\")\nelif age < 20:\nprint(\"You are a teenager\")\nelif age < 65:\nprint(\"You are an adult\")\nelif age >= 65:\nprint(\"You are a senior\")\n\n---\n\nday = 3\nif day == 1:\nprint(\"Monday\")\nelif day == 2:\nprint(\"Tuesday\")\nelif day == 3:\nprint(\"Wednesday\")\nelif day == 4:\nprint(\"Thursday\")\nelif day == 5:\nprint(\"Friday\")\nelif day == 6:\nprint(\"Saturday\")\nelif day == 7:\nprint(\"Sunday\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_90",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

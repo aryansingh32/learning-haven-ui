@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 15,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTo add one item to a set use theadd()method.\n\nTo add items from another set into the current set, use theupdate()method.\n\nThe object in theupdate()method does not have \nto be a set, it can be any iterable object (tuples, lists, dictionaries etc.).\n\n### Code Examples\n\n```\nthisset = {\"apple\", \"banana\", \"cherry\"}\nthisset.add(\"orange\")\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\ntropical = {\"pineapple\", \"mango\", \"papaya\"}\nthisset.update(tropical)\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\nmylist = [\"kiwi\", \"orange\"]\nthisset.update(mylist)\nprint(thisset)\n```\n\n## Tutorials\n\nTo remove an item in a set, use theremove(), or thediscard()method.\n\nYou can also use thepop()method to remove \nan item, but this method will remove a random item, so you cannot be sure what item that gets removed.\n\nThe return value of thepop()method is the \nremoved item.\n\n### Code Examples\n\n```\nthisset = {\"apple\", \"banana\", \"cherry\"}\nthisset.remove(\"banana\")\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\nthisset.discard(\"banana\")\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\nx =\n  thisset.pop()\nprint(x)\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\nthisset.clear()\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\ndel\n  thisset\nprint(thisset)\n```\n\n## Tutorials\n\nYou can loop through the set items by using aforloop:\n\n### Code Examples\n\n```\nthisset = {\"apple\", \"banana\", \"cherry\"}\nfor x in thisset:\nprint(x)\n```\n\n## Tutorials\n\nThere are several ways to join two or more sets in Python.\n\nTheunion()andupdate()methods joins all items from both sets.\n\nTheintersection()method keeps ONLY the duplicates.\n\nThedifference()method keeps the items \nfrom the first set that are not in the other set(s).\n\nThesymmetric_difference()method keeps all \nitems EXCEPT the duplicates.\n\nTheunion()method returns a new set with all items from both sets.\n\nYou can use the|operator instead of theunion()method, and you will get the same result.\n\nAll the joining methods and operators can be used to join multiple sets.\n\nWhen using a method, just add more sets in the parentheses, separated by commas:\n\nWhen using the|operator, separate the sets \nwith more|operators:\n\nTheunion()method allows you to join a set with other data types, like lists or tuples.\n\nThe result will be a set.\n\nTheupdate()method inserts all items from one set into another.\n\nTheupdate()changes the original set, and does not return a new set.\n\nKeep ONLY the duplicates\n\nTheintersection()method will return a new set, that only contains the items that are present in both sets.\n\nYou can use the&operator instead of theintersection()method, and you will get the same result.\n\nTheintersection_update()method will also keep ONLY the duplicates,\nbut it will change the original set instead of returning a new set.\n\nThe valuesTrueand1are considered the same value. The same goes forFalseand0.\n\nThedifference()method will\nreturn a new set that will contain only the items from the first set that are not present in the other set.\n\nYou can use the-operator instead of thedifference()method, and you will get the same result.\n\nThedifference_update()method will keep \nthe items from the first set that are not in the other set,\nbut it will change the original set instead of returning a new set.\n\nThesymmetric_difference()method will keep only the elements that are NOT present in both sets.\n\nYou can use the^operator instead of thesymmetric_difference()method, and you will get the same result.\n\nThesymmetric_difference_update()method will also keep all \nbut the duplicates,\nbut it will change the original set instead of returning a new set.\n\n### Code Examples\n\n```\nset1 = {\"a\", \"b\", \"c\"}\nset2 = {1, 2, 3}\nset3 = set1.union(set2)\nprint(set3)\n\n---\n\nset1 = {\"a\", \"b\", \"c\"}\nset2 = {1, 2, 3}\nset3 = set1 | set2\nprint(set3)\n\n---\n\nset1 = {\"a\", \"b\", \"c\"}\nset2 = {1, 2, 3}\nset3 = {\"John\", \"Elena\"}\nset4 = {\"apple\", \n  \"bananas\", \"cherry\"}\nmyset = set1.union(set2, set3, set4)\nprint(myset)\n\n---\n\nset1 = {\"a\", \"b\", \"c\"}\nset2 = {1, 2, 3}\nset3 = {\"John\", \"Elena\"}\nset4 = {\"apple\", \n  \"bananas\", \"cherry\"}\nmyset = set1 | set2 | set3 |set4\nprint(myset)\n\n---\n\nx = {\"a\", \"b\", \"c\"}\ny = (1, 2, 3)\nz = x.union(y)\nprint(z)\n\n---\n\nset1 = {\"a\", \"b\" , \"c\"}\nset2 = {1, 2, 3}\nset1.update(set2)\nprint(set1)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1.intersection(set2)\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1 \n  & set2\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset1.intersection_update(set2)\nprint(set1)\n\n---\n\nset1 = {\"apple\", 1,\u00a0 \"banana\", 0, \"cherry\"}\nset2 = {False, \"google\", \n  1, \"apple\", 2, True}\nset3 = set1.intersection(set2)\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1.difference(set2)\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1 - set2\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset1.difference_update(set2)\nprint(set1)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1.symmetric_difference(set2)\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset3 = set1 ^ set2\nprint(set3)\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {\"google\", \"microsoft\", \"apple\"}\nset1.symmetric_difference_update(set2)\nprint(set1)\n```\n\n## Tutorials\n\nfrozensetis an immutable version of a set.\n\nLike sets, it contains unique, unordered, unchangeable elements.\n\nUnlike sets, elements cannot be added or removed from a frozenset.\n\nUse thefrozenset()constructor to create a frozenset from any iterable.\n\nBeing immutable means you cannot add or remove elements. However, frozensets support all non-mutating operations of sets.\n\n### Code Examples\n\n```\nx = frozenset({\"apple\", \"banana\", \"cherry\"})\nprint(x)\nprint(type(x))\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_15",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_15",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

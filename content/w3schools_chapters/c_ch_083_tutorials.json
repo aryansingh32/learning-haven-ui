@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 83,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Memory management is the process of controlling how much memory your program uses - and how it is used. This includes creating, using, and releasing memory when it's no longer needed.\n\nWhen you create a variable in C++, the compiler automatically reserves space in memory for it.\n\nFor example:\n\nThe line above tells the program: \"I need space to store aninteger.\" C++ handles this memory automatically,\nso in this case, you dont have to worry about managing memory.\n\nYou can check how much memory a variable type uses with thesizeofoperator:\n\nKnowing the size of types helps you write more efficient code, especially in larger programs.\n\nSometimes yes - and sometimes no.\n\nIf your program uses too much memory, or forgets to clean up memory it no longer needs, it can lead toslow performanceor evencrashes.\n\nThat's why understanding memory is important. It gives you more control and helps avoid common bugs.\n\nIn C++, you can usepointersto access and change memory directly.\n\nThis is powerful, but also risky. If you use a pointer the wrong way, you could accidentally change or damage other parts of your program's memory.\n\nIn the next chapter, you'll learn how to create memory manually using pointers - with thenewkeyword, and how to free it usingdelete.\n\n### Code Snippets\n\n```\nint myNumber = 10;\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\nint myInt;\nfloat myFloat;\ndouble myDouble;\nchar myChar;\ncout << sizeof(myInt) << \"\\n\";\u00a0\u00a0\u00a0\u00a0 // 4 bytes (typically)\ncout << sizeof(myFloat) << \"\\n\";\u00a0\u00a0 // 4 bytes\ncout << sizeof(myDouble) << \"\\n\";\u00a0 // 8 bytes\ncout << sizeof(myChar) << \"\\n\";\u00a0\u00a0\u00a0    // 1 byte\nreturn 0;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_82",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

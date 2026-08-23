@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn this chapter we will go through the<blockquote>,<q>,<abbr>,<address>,<cite>, \nand<bdo>HTML elements.\n\nThe HTML<blockquote>element defines a section that \nis quoted from another source.\n\nBrowsers usually indent<blockquote>elements.\n\nThe HTML<q>tag defines a short quotation.\n\nBrowsers normally insert quotation marks around the quotation.\n\nThe HTML<abbr>tag defines an abbreviation or an acronym, like \"HTML\", \n\"CSS\", \"Mr.\", \n\"Dr.\", \"ASAP\", \"ATM\".\n\nMarking abbreviations can give useful information to browsers, translation \nsystems and search-engines.\n\nTip:Use the global title attribute to \nshow the description for the \nabbreviation/acronym when you mouse over the element.\n\nThe HTML<address>tag defines the contact information for the author/owner of a document \nor an article.\n\nThe contact information can be an email address, URL, physical address, phone \nnumber, social media handle, etc.\n\nThe text in the<address>element usually renders initalic,and browsers will\nalways add a line break before and after the<address>element.\n\nThe HTML<cite>tag defines the title of a \ncreative work (e.g. a book, a poem, a song, a movie, a painting, a sculpture, etc.).\n\nNote:A person's name is not the title of a work.\n\nThe text in the<cite>element usually renders initalic.\n\nBDO stands for Bi-Directional Override.\n\nThe HTML<bdo>tag is used to override \nthe current text direction:\n\n### Code Examples\n\n```\n<p>Here is a quote from WWF's website:</p>\n<blockquote cite=\"http://www.worldwildlife.org/who/index.html\">\nFor 60 years, WWF has worked to help people and nature thrive. As the world's \n  leading conservation organization, WWF works in nearly 100 countries. At every \n  level, we collaborate with people around the world to develop and deliver \n  innovative solutions that protect communities, wildlife, and the places in \n  which they live.\n</blockquote>\n\n---\n\n<p>WWF's goal is to: <q>Build a future where people live in harmony with \n nature.</q></p>\n\n---\n\n<p>The <abbr title=\"World Health Organization\">WHO</abbr> was founded in \n 1948.</p>\n\n---\n\n<address>\nWritten by John Doe.<br>\nVisit us at:<br>\nExample.com<br>\nBox 564, Disneyland<br>\nUSA\n</address>\n\n---\n\n<p><cite>The Scream</cite> by Edvard Munch. Painted in 1893.</p>\n\n---\n\n<bdo dir=\"rtl\">This text will be written from right to left</bdo>\n```\n\n## Tutorials\n\nTest what you have learned about HTML quotations.\n\n## Tutorials\n\nTest your understanding of HTML quotation elements by completing this coding challenge.\n\n## Tutorials\n\nHTML comments are not displayed in the browser, but they can \nhelp document your HTML source code.\n\nYou can add comments to your HTML source by using the following syntax:\n\nNotice that there is an exclamation point (!) in the start tag, but not in the \nend tag.\n\nWith comments you can place notifications and reminders in your HTML code:\n\nComments can be used to hide content.\n\nThis can be helpful if you hide content temporarily:\n\nYou can also hide more than one line. Everything between the<!--and the-->will be hidden from the display.\n\nComments are also great for debugging HTML, because you can \ncomment out HTML lines of code, one at a time, to search for errors.\n\nComments can be used to hide parts in the middle of the HTML code.\n\n### Code Examples\n\n```\n<!-- Write your comments here -->\n\n---\n\n<!-- This is a comment -->\n<p>This is a paragraph.</p>\n<!-- Remember to add more information here -->\n\n---\n\n<p>This is a paragraph.</p>\n<!-- <p>This is another paragraph \n  </p> -->\n<p>This is a paragraph too.</p>\n\n---\n\n<p>This is a paragraph.</p>\n<!--\n<p>Look at this cool \n  image:</p>\n<img border=\"0\" src=\"pic_trulli.jpg\" \nalt=\"Trulli\">\n-->\n<p>This is a paragraph too.</p>\n\n---\n\n<p>This <!-- great text --> is a paragraph.</p>\n```\n\n## Tutorials\n\nTest what you have learned about HTML comments.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

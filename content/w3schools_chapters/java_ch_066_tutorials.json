@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 66,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A multidimensional array is an array that contains other arrays.\n\nYou can use it to store data in a table with rows and columns.\n\nTo create a two-dimensional array, write each row inside its owncurly braces:\n\nHere,myNumbershas two arrays (two rows):\n\nThink of it like this:\n\nTo access an element of a two-dimensional array, you need two indexes: the first for the row, and the second for the column.\n\nRemember:Array indexes start at 0. That means row0is the first row, and column0is the first column. (So row index1is thesecondrow, and column index2is thethirdcolumn.)\n\nThis statement accesses the element in thesecond row(index1) andthird column(index2) of themyNumbersarray:\n\nThis example prints the value at row0, column1:\n\nYou can overwrite an existing element using the same two-index notation (row, then column):\n\nYou can uselengthto get the number of rows, andmyNumbers[row].lengthfor the number of columns in a given row:\n\nNote:Notice how rows can have different lengths - In this example, the second row has more elements than the first, and that's perfectly valid in Java.\n\nUse aforloop inside anotherforloop to visit every element (row by row):\n\nOr use afor-eachloop in both levels, which many find easier to read:\n\n### Code Snippets\n\n```\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8} };\n\n---\n\nExample\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8} };\nSystem.out.println(myNumbers[1][2]); // Outputs 8\nTry it Yourself \u00bb\n\n---\n\nExample\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8} };\n\nSystem.out.println(myNumbers[0][1]); // Outputs 4\nTry it Yourself \u00bb\n\n---\n\nExample\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8} };\nmyNumbers[1][2] = 9;\nSystem.out.println(myNumbers[1][2]); // Outputs 9 instead of 8\nTry it Yourself \u00bb\n\n---\n\nExample: Sizes\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8, 5, 2} };\n\nSystem.out.println(\"Rows: \" + myNumbers.length);             // 2\nSystem.out.println(\"Cols in row 0: \" + myNumbers[0].length); // 3\nSystem.out.println(\"Cols in row 1: \" + myNumbers[1].length); // 5\nTry it Yourself \u00bb\n\n---\n\nExample\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8, 5, 2} };\n\nfor (int row = 0; row < myNumbers.length; row++) {\n  for (int col = 0; col < myNumbers[row].length; col++) {\n    System.out.println(\"myNumbers[\" + row + \"][\" + col + \"] = \" + myNumbers[row][col]);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint[][] myNumbers = { {1, 4, 2}, {3, 6, 8, 5, 2} };\n\nfor (int[] row : myNumbers) {\n  for (int num : row) {\n    System.out.println(num);\n  }\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_65",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

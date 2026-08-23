@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 181,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript Fetch APIis a modern browser interface used to makeasynchronous network requeststo web servers.\n\nFetch is an easier and more powerful replacement for the older XMLHttpRequest object.\n\nFetch is uses standard JavaScriptPromisesfor cleanerasynchronouscode.\n\nThe simplest way to demonstratefetch()is to download atext file.\n\nThefetch()method returns aPromisethat resolves to aResponseobject.\n\nThe Response object contains information (properties) about the server response.\n\nJavaScript can continue running while waiting for the server to respond.\n\nThe Response object has methods to read the server response.\n\nfetch()resolveswhen the server responds.\n\nA commonbeginner mistakeis expecting fetch() to fail onHttp errors.\n\nAn HTTP error such as404 Not Founddoesnotreject the Promise.\n\nFetch only rejects on network errors.\n\nA 404 response is not a rejected promise.\n\nYou should always check theokproperty.\n\n### Code Snippets\n\n```\n// Fetch a file\nfetch(file)\n.then(function(response) {\nreturn response.text();\n})\n.then(function(data) {\nmyDisplayer(data);\n});\n\n---\n\n// Fetch a file\nfetch(file)\n.then(response => response.text())\n.then(data => myDisplayer(data));\n\n---\n\n// Async function to fetch a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(await response.text());\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.ok);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.status);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.url);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.url);\n}\nloadText(\"fetch.txt\");\nmyDisplayer(\"JavaScript continues.\");\n\n---\n\nasync function loadText(file) {\nconst response = await fetch(file);\nif (!response.ok) {\nmyDisplayer(response.status + \" \" + response.statusText);\nreturn;\n}\nmyDisplayer(await response.text());\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_180",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

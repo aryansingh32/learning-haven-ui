@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 82,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thethiskeyword in Java refers to the current object \nin a method or constructor.\n\nThethiskeyword is often used to avoid confusion when class attributes have the same name as method or constructor parameters.\n\nSometimes a constructor or method has a parameter with the same name as a class variable. When this happens, the parameter temporarilyhidesthe class variable inside that method or constructor.\n\nTo refer to the class variable and not the parameter, you can use thethiskeyword:\n\nYou can also usethis()to call another constructor in the same class.\n\nThis is useful when you want to provide default values or reuse initialization code instead of repeating it.\n\n### Code Snippets\n\n```\nExample\npublic class Main {\n  int x;  // Class variable x\n\n  // Constructor with one parameter x\n  public Main(int x) {\n    this.x = x; // refers to the class variable x\n}\npublic static void main(String[] args) {\n    // Create an object of Main and pass the value 5 to the constructor\n    Main myObj = new Main(5);\n    System.out.println(\"Value of x = \" + myObj.x);\n}\n}\nOutput:\nValue of x = 5\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n  int modelYear;\n  String modelName;\n\n  // Constructor with one parameter\n  public Main(String modelName) {\n    // Call the two-parameter constructor to reuse code and set a default year    \n    this(2020, modelName);\n  }\n\n  // Constructor with two parameters\n  public Main(int modelYear, String modelName) {\n    // Use 'this' to assign values to the class variables\n    this.modelYear = modelYear;\n    this.modelName = modelName;\n  }\n\n  // Method to print car information\n  public void printInfo() {\n    System.out.println(modelYear + \" \" + modelName);\n  }\n\n  public static void main(String[] args) {\n    // Create a car with only model name (uses default year)\n    Main car1 = new Main(\"Corvette\");\n\n    // Create a car with both model year and name\n    Main car2 = new Main(1969, \"Mustang\");\n\n    car1.printInfo();\n    car2.printInfo();\n  }\n}\nOutput:\n2020 Corvette\n1969 Mustang\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_81",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

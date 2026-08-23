@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 210,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "All temporal objectshave their owncompare() method:\n\nThe compare() methodreturns:\n\nTemporal objects are objects, not primitive numbers.\n\nWhen you write (a < b), JavaScript tries to convert both objects to primitives.\n\nFor Temporal objects, this does not produce a numeric timestamp like Dates.\n\nThe code above fails and throws a RangeError because d2 contains a calendar unit (months),\nwhich has an uneven and variable length.\n\nWithout a specific starting point on the calendar, the JavaScript runtime cannot determine\nexactly how many days are in \"1 month\" to perform the comparison.\n\nFor example, 1 month starting in February could be 28 or 29 days, while 1 month starting in\nJanuary is 31 days.\n\nTo fix this, you must pass a relativeTo option as the third argument to Temporal.Duration.compare().\nThis provides a concrete date context to calculate the exact lengths.\n\nBy altering the relativeTo reference point, the execution context dictates different evaluation results:\n\nFebruary 1st Start: d1 (30 days) is longer than d2 (1 month / 28 days), returning 1.\n\nApril 1st Start: d1 (30 days) is exactly equal to d2 (1 month / 30 days), returning 0.\n\nJanuary 1st Start: d1 (30 days) is shorter than d2 (1 month / 31 days), returning -1.\n\nThecompare()method is designed to be passed directly into the JavaScript Array.sort() method:\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nTheequals()method returnstrueif both dates are equal.\n\nYou cancomparePlaneDateTime values using theequals()method.\n\n### Code Snippets\n\n```\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from(\"2026-05-17\");\nconst date2 = Temporal.PlainDate.from(\"2024-12-25\");\n// Compare the dates\nresult = Temporal.PlainDate.compare(date1, date2);\n\n---\n\n// Create two Temporal objects\nconst a = Temporal.PlainDate.from(\"2026-02-17\");\nconst b = Temporal.PlainDate.from(\"2026-03-01\");\n// Compare the dates\nconsole.log(a < b);  // \u274c Error\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ minutes:90 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ hours:1, minutes:30 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ days:30 });\nconst d2 = Temporal.Duration.from({ months: 1 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\nconst d1 = Temporal.Duration.from({ days: 30 });\nconst d2 = Temporal.Duration.from({ months: 1 });\n// Provide a start date (e.g., January 1st, 2026)\nconst startPoint = Temporal.PlainDate.from(\"2026-01-01\");\n// Compare the Durations using the reference date\nlet result = Temporal.Duration.compare(d1, d2, { relativeTo: startPoint });\n// Returns -1 (January has 31 days. 30 days is SHORTER than 1 month.)\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// compare()\nlet x1 = Temporal.Instant.compare(i1, i2));\nlet x2 = Temporal.Instant.compare(i1, i3));\nlet x3 = Temporal.Instant.compare(i3, i1));\n\n---\n\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from(\"2026-05-17\");\nconst date2 = Temporal.PlainDate.from(\"2024-12-25\");\n// Compare the dates\nresult = Temporal.PlainDate.compare(date1, date2);\n\n---\n\n// Create an Array of dates\nconst dates = [\nTemporal.PlainDate.from(\"2026-05-17\"),\nTemporal.PlainDate.from(\"2022-01-01\"),\nTemporal.PlainDate.from(\"2024-12-25\")\n];\n// Sort chronologically\ndates.sort(Temporal.PlainDate.compare);\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// equals()\nlet x1 = i1.equals(i2); // true\nlet x2 = i1.equals(i3); // false\n\n---\n\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from('2026-05-17');\nconst date2 = Temporal.PlainDate.from('2026-05-17');\nlet result = date1.equals(date2);\n\n---\n\nconst d1 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nconst d2 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nlet result = d1.equals(d2)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_209",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

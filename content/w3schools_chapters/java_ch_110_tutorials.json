@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 110,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Earlier, you learned how towrite text to filesusingFileWriter.\n\nTheFileOutputStreamclass works in a similar way, but it writes data asraw bytes.  \nThat means you can use it not only for text files, but also forbinary files(like images, PDFs, or audio).\n\nThis example writes a short text string to a file usingFileOutputStream.\n\nNote:If the file already exists, its contents will be replaced (overwritten).\n\nExplanation:This program creates (or overwrites)filename.txtand writesHello World!into it. If everything works, it prints\"Successfully wrote to file.\"in the console. Otherwise, it shows an error message.\n\nThe real strength ofFileOutputStreamis that it can handleany file type, not just text.  \nHere is an example that copies an image file:\n\nExplanation:This program readsimage.jpgand writes it intocopy.jpg. Since it works with raw bytes, it can copyany kind of file- text, images, audio, or PDFs.\n\nBy default,FileOutputStreamoverwritesthe file if it already exists.  \nToadd (append)new content instead, passtrueas the second argument:\n\nExplanation:This program addsAppended text!to the end offilename.txt, keeping the existing content.\n\nJava gives you several ways to write to files. Here's when to pick each one:\n\n### Code Snippets\n\n```\nExample\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    // The text we want to write\n    String text = \"Hello World!\";\n\n    // try-with-resources: stream will be closed automatically\n    try (FileOutputStream output = new FileOutputStream(\"filename.txt\")) {\n      output.write(text.getBytes());  // convert text to bytes and write\n      System.out.println(\"Successfully wrote to file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n      e.printStackTrace();\n    }\n  }\n}\nThe output will be:\nSuccessfully wrote to file.\nRun Example \u00bb\n\n---\n\nExample\nimport java.io.FileInputStream;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class CopyFile {\n  public static void main(String[] args) {\n    // Copy image.jpg into copy.jpg\n    try (FileInputStream input = new FileInputStream(\"image.jpg\");\n         FileOutputStream output = new FileOutputStream(\"copy.jpg\")) {\n\n      int b;\n      while ((b = input.read()) != -1) {\n        output.write(b);  // write each raw byte to the new file\n      }\n      System.out.println(\"File copied successfully.\");\n    } catch (IOException e) {\n      System.out.println(\"Error handling file.\");\n    }\n  }\n}\n\n---\n\nExample\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    String text = \"\\nAppended text!\";\n\n    // true = append mode (keeps existing content)\n    try (FileOutputStream output = new FileOutputStream(\"filename.txt\", true)) {\n      output.write(text.getBytes());\n      System.out.println(\"Successfully appended to file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n      e.printStackTrace();\n    }\n  }\n}\nThe output will be:\nSuccessfully appended to file.\nRun Example \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_109",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

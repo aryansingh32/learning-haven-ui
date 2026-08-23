@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 20,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This is how it works:\n\nWhen JavaScript reaches abreakkeyword, itbreaks out of the switchblock.\n\nThis willstop the executioninside the switch block.\n\nNo more statements in the switch block will be executed.\n\nIt is not necessary to break the last case. The switch ends (breaks) there anyway.\n\nThedefaultkeyword specifies a block of code to run if there is no \ncase match.\n\nThedefaultkeyword is optional.\n\nThedefaultcan act as a fallback:\n\nThedefaultcase does not have to be the last case in a switch \nblock:\n\nSometimes you will want different \nswitch cases to use the same \ncode.\n\nIn this example case 4 and 5 share the same code block, and 0 and 6 share \nanother code block:\n\nIf multiple cases matches a case value, thefirstcase is selected.\n\nIf no matching cases are found, the program continues to thedefaultlabel.\n\nIf no default label is found, the program continues to the statement(s)after the switch.\n\nSwitch usesstrictcomparison (===).\n\nThe values must be of the same type to match.\n\nA strict comparison can only be true if both operands are of the same type.\n\n### Code Snippets\n\n```\nswitch(\nexpression\n) {\ncase\nx\n:\n// code block\nbreak;\ncase\ny\n:\n// code block\nbreak;\ndefault:\n//\ncode block\n}\n\n---\n\nswitch (new Date().getDay()) {\ncase 0:\nday = \"Sunday\";\nbreak;\ncase 1:\nday = \"Monday\";\nbreak;\ncase 2:\nday = \"Tuesday\";\nbreak;\ncase 3:\nday = \"Wednesday\";\nbreak;\ncase 4:\nday = \"Thursday\";\nbreak;\ncase 5:\nday = \"Friday\";\nbreak;\ncase 6:\nday = \"Saturday\";\n}\n\n---\n\nswitch (new Date().getDay()) {\ncase 6:\ntext = \"Today is Saturday\";\nbreak;\ncase 0:\ntext = \"Today is Sunday\";\nbreak;\ndefault:\ntext = \"Looking forward to the Weekend\";\n}\n\n---\n\nswitch (new Date().getDay()) {\ndefault:\ntext = \"Looking forward to the Weekend\";\nbreak;\ncase 6:\ntext = \"Today is Saturday\";\nbreak;\ncase 0:\ntext = \"Today is Sunday\";\n}\n\n---\n\nswitch (new Date().getDay()) {\ncase 4:\ncase 5:\ntext = \"Soon it is Weekend\";\nbreak;\ncase 0:\ncase 6:\ntext = \"It is Weekend\";\nbreak;\ndefault:\ntext = \"Looking forward to the Weekend\";\n}\n\n---\n\nlet x = \"0\";\nswitch (x) {\ncase 0:\ntext = \"Off\";\nbreak;\ncase 1:\ntext = \"On\";\nbreak;\ndefault:\ntext = \"No value found\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

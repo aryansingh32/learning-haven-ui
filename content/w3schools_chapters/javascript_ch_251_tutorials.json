@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 251,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript normally executes one task at a time.\n\nIf a task takes a long time to finish, the browser cannot respond to user input until the task has completed.\n\nThis can make a page appear frozen.\n\nThe page becomes unresponsive until the calculation finishes.\n\nTimers, Promises, and async/await do not solve this problem.\n\nThey all execute JavaScript on the same main thread.\n\nIf the thread is busy performing calculations, the browser must still wait.\n\nA Web Worker runs JavaScript in a separate thread.\n\nWhile the worker performs calculations, the browser's main thread remains free to respond to user input.\n\nThe main thread and the worker communicate by sending messages.\n\nBefore creating a worker, check whether the browser supports Web Workers.\n\nCreate a worker with thenew Worker()constructor.\n\nThe file passed to the constructor contains the code that will run in the worker thread.\n\nThe main thread receives messages with theonmessageevent.\n\nThe main thread sends data to the worker withpostMessage().\n\nThepostMessage()method can send numbers, strings, arrays, and objects.\n\nThe browser copies the data and sends the copy to the worker.\n\nA worker can send more than one message.\n\nThis makes it possible to report progress while a long calculation is running.\n\nA worker can be created when the user starts a task.\n\nSaving the worker in a variable makes it possible to stop or reuse the reference later.\n\nUse theterminate()method to stop a worker immediately.\n\nThis example starts a long calculation in a worker.\n\nThe worker reports progress and can be stopped before it finishes.\n\nUse theonerrorevent to handle errors from a worker.\n\nThe error object can contain information such as the message, filename, and line number.\n\nA worker can also catch its own errors and send a message to the main thread.\n\nA worker can stop itself by callingclose().\n\nTheclose()function stops the worker after the current code finishes.\n\nA terminated worker cannot be restarted.\n\nCreate a newWorkerobject to run the task again.\n\nA page can create more than one worker.\n\nEach worker runs in a separate thread.\n\nHowever, creating many workers can use significant memory and processing power.\n\nA Web Worker normally follows these steps:\n\nA Web Worker runs JavaScript just like the main thread.\n\nIt can perform calculations, use timers, make network requests, and work with JavaScript objects.\n\nThis makes workers useful for CPU-intensive tasks that would otherwise block the page.\n\nA worker cannot access the web page.\n\nOnly the main thread can modify the DOM.\n\nA worker cannot update HTML directly.\n\nInstead, it sends the result back to the main thread.\n\nA worker can download data from a server.\n\nThe downloaded data can then be sent back to the main thread.\n\nWorkers support JavaScript timers.\n\nWorkers are useful for long-running JavaScript tasks.\n\nWorkers are not needed for small tasks.\n\nCreating a worker takes time and uses memory.\n\nSimple calculations often run faster on the main thread.\n\nAsynchronous programming and Web Workers solve different problems.\n\nThis will fail:\n\nWorkers must usepostMessage()instead.\n\nWorkers consume memory and CPU resources.\n\nCreate only the workers you need.\n\nTerminate workers when they are no longer needed.\n\n### Code Snippets\n\n```\nfunction calculate() {\nlet total = 0;\nfor (let i = 0; i < 5e9; i++) {\ntotal += i;\n}\nreturn total;\n}\nmyDisplayer(\"Calculating...\");\nlet result = calculate();\nmyDisplayer(result);\n\n---\n\nmyDisplayer(\"Start\");\nsetTimeout(function () {\nmyDisplayer(\"Timer\")}, 1000);\nlet i = 5e9;\nwhile (--i > 0);\nmyDisplayer(\"Finished\");\n\n---\n\nif (typeof(Worker) !== \"undefined\") {\nmyDisplayer(\"Web Workers are supported.\");\n} else {\nmyDisplayer(\"Web Workers are not supported.\");\n}\n\n---\n\nconst worker = new Worker(\"worker.js\");\n\n---\n\nconst worker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\nmyDisplayer(event.data);\n};\n\n---\n\nconst worker = new Worker(\"worker.js\");\nworker.postMessage(25);\n\n---\n\nonmessage = function(event) {\npostMessage(event.data * event.data);\n}\n\n---\n\n625\n\n---\n\nconst worker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\nmyDisplayer(event.data);\n};\nworker.postMessage(1000000);\n\n---\n\nonmessage = function(event) {\nlet sum = 0;\nfor (let i = 0; i <= event.data; i++) {\nsum += i;\n}\npostMessage(sum);\n};\n\n---\n\nconst worker = new Worker(\"worker.js\");\nconst person = {\nname: \"John\",\nage: 30\n};\nworker.postMessage(person);\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\n};\n\n---\n\nonmessage = function(event) {\nconst person = event.data;\nconst message = person.name + \" is \" + person.age + \" years old.\";\npostMessage(message);\n};\n\n---\n\nconst worker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\n};\nworker.postMessage(100000000);\n\n---\n\nonmessage = function(event) {\nconst limit = event.data;\nlet total = 0;\nfor (let i = 0; i <= limit; i++) {\ntotal += i;\nif (i % 10000000 === 0) {\npostMessage(\"Progress: \" + Math.round(i / limit * 100) + \"%\");\n}\n}\npostMessage(\"Result: \" + total);\n};\n\n---\n\nlet worker;\nfunction startWorker() {\nworker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\n};\nworker.postMessage(100000000);\n}\n\n---\n\nworker.terminate();\n\n---\n\nlet worker;\nfunction startWorker() {\nif (worker) {\nreturn;\n}\nworker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\n};\nworker.postMessage(100000000);\n}\nfunction stopWorker() {\nif (worker) {\nworker.terminate();\nworker = undefined;\ndocument.getElementById(\"demo\").innerHTML = \"Worker stopped\";\n}\n}\n\n---\n\n<button onclick=\"startWorker()\">Start Worker</button>\n<button onclick=\"stopWorker()\">Stop Worker</button>\nReady\n\n---\n\nlet worker;\nfunction startWorker() {\nif (worker) {\nreturn;\n}\ndocument.getElementById(\"demo\").innerHTML = \"Starting...\";\nworker = new Worker(\"worker.js\");\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\nif (event.data.startsWith(\"Result:\")) {\nworker.terminate();\nworker = undefined;\n}\n};\nworker.postMessage(100000000);\n}\nfunction stopWorker() {\nif (worker) {\nworker.terminate();\nworker = undefined;\ndocument.getElementById(\"demo\").innerHTML = \"Worker stopped\";\n}\n}\n\n---\n\nonmessage = function(event) {\nconst limit = event.data;\nlet total = 0;\nfor (let i = 0; i <= limit; i++) {\ntotal += i;\nif (i % 10000000 === 0) {\nconst percent = Math.round(i / limit * 100);\npostMessage(\"Progress: \" + percent + \"%\");\n}\n}\npostMessage(\"Result: \" + total);\n};\n\n---\n\nconst worker = new Worker(\"worker.js\");\nworker.onerror = function(error) {\ndocument.getElementById(\"demo\").innerHTML =\n\"Error: \" + error.message;\n};\n\n---\n\nworker.onmessage = function(event) {\nif (event.data.error) {\ndocument.getElementById(\"demo\").innerHTML = event.data.error;\n} else {\ndocument.getElementById(\"demo\").innerHTML = event.data.result;\n}\n};\n\n---\n\nonmessage = function(event) {\ntry {\nconst result = calculate(event.data);\npostMessage({result: result});\n} catch(error) {\npostMessage({error: error.message});\n}\n};\n\n---\n\npostMessage(\"Finished\");\nclose();\n\n---\n\nworker = new Worker(\"worker.js\");\n\n---\n\nconst worker1 = new Worker(\"worker1.js\");\nconst worker2 = new Worker(\"worker2.js\");\n\n---\n\npostMessage(\"Finished\");\n\n---\n\nworker.onmessage = function(event) {\ndocument.getElementById(\"demo\").innerHTML = event.data;\n};\n\n---\n\nasync function loadData() {\nconst response = await fetch(\"data.txt\");\nconst text = await response.text();\npostMessage(text);\n}\nloadData();\n\n---\n\nsetInterval(function() {\npostMessage(new Date().toLocaleTimeString());\n}, 1000);\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello\";\n\n---\n\nworker.terminate();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_250",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 120,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A vector in C++ is like a resizablearray.\n\nBoth vectors and arrays are data structures used to store multiple elements of the same datatype.\n\nThe difference between an array and a vector, is that the size of an array cannot be modified (you cannot add or remove elements from an array). \nA vector however, can grow or shrink in size as needed.\n\nTo use a vector, you have to include the<vector>header file:\n\nTo create a vector, use thevectorkeyword, \nand specify thetypeof values it should store within angle brackets<>and then the name of the vector, like:vector<type>vectorName.\n\nIf you want to add elements at the time of declaration, place them in a comma-separated list, inside curly braces{}, just like \nwith arrays:\n\nYou can access a vector element by referring to the index number inside square brackets[].\n\nVectors, like arrays, are 0-indexed, meaning that[0]is the first element,[1]is the second element, and so on:\n\nOne advantage of using the vector library, is that it includes many useful \nfunctions. For example, you can access the first or the last element of a vector \nwith the.front()and.back()functions:\n\nTo access an element at a specified index, you can use the.at()function \nand specify the index number:\n\nNote:The.at()function is often preferred over square brackets[]because it \nlets you know if an error occurs.\n\nFor example if the element is out of range:\n\nTo change the value of a specific element, you can refer to the index number:\n\nHowever, it is safer to use the.at()function:\n\nThe biggest difference between a vector and an array is that vectors can grow dynamically. \nThat means you can add or remove elements from the vector.\n\nTo add an element to the vector, you can use the.push_back()function, which \nwill add an element at the end of the vector:\n\nYou can add as many elements as you want:\n\nTo remove an element from the vector, you can use the.pop_back()function, which \nremoves an element from the end of the vector:\n\nNote:Elements are usually only added and removed from the end of the vector. If you need to add or remove elements from both ends, it is often better to use adequeinstead of a vector.\n\nTo find out how many elements a vector has, use the.size()function:\n\nThere is also a function to find out whether a vector is empty or not.\n\nThe.empty()function returns1(true) if the vector is empty and0(false) if it contains one or more elements:\n\nYou can loop through the vector elements by using aforloop combined with the.size()function:\n\nYou can also use afor-each loop(introduced in C++ version 11 (2011), which is cleaner and more readable:\n\nTip:It is also possible to loop through vectors with aniterator, which you will learn more about in a later chapter.\n\nFor a complete reference of Vector functions, go to ourC++ Vector Reference.\n\n### Code Snippets\n\n```\n// Include the vector library\n#include <vector>\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars;\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Print vector elements\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the first element\ncout << cars[0];\u00a0 // Outputs Volvo\n// Get the \n  second element\ncout << cars[1];\u00a0 // Outputs BMW\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the first element\ncout << cars.front();\n// Get the last element\ncout << cars.back();\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the second element\ncout << cars.at(1);\n// Get the third element\ncout << cars.at(2);\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars \n  = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// \n  Try to access an element that does \n  not exist (throws an error message)\ncout << cars.at(6);\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Change the value of the first element\ncars[0] = \"Opel\";\ncout << cars[0];\u00a0 // Now outputs Opel instead of Volvo\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Change the value of the first element\ncars.at(0) = \"Opel\";\ncout << cars.at(0);\u00a0 // Now outputs Opel instead of Volvo\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncars.push_back(\"Tesla\");\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncars.push_back(\"Tesla\");\ncars.push_back(\"VW\");\ncars.push_back(\"Mitsubishi\");\ncars.push_back(\"Mini\");\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncars.pop_back();\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.size();\u00a0 \n  // Outputs 4\n\n---\n\nvector<string> cars;\ncout << cars.empty();\u00a0 \n  // Outputs 1 (The vector is empty)\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.empty();\u00a0 \n  // Outputs 0 (not empty)\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (int i = \n  0; i < cars.size(); i++) {\ncout << cars[i] << \"\\n\";\n}\n\n---\n\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_119",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

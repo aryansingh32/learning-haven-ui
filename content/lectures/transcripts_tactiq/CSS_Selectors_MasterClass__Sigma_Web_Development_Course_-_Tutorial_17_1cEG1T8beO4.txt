@@ -1,0 +1,596 @@
+Video URL: https://www.youtube.com/watch?v=1cEG1T8beO4
+Video Title: CSS Selectors MasterClass | Sigma Web Development Course - Tutorial #17
+--------------------------------------------------
+
+00:00:00.000
+Guys, we talked about selectors in CSS and we said that selectors are used to select an element on which style is going to be applied.
+00:00:08.700
+Now, what kind of elements can we apply style on and how can we select those elements?
+00:00:14.300
+For example, element with an id, element with a class, we can target the element by its name.
+00:00:20.000
+And we can also decide that if there is a particular type of element in a particular type of element, then only the styling is applied.
+00:00:27.200
+I will explain the rules of applying this styling in this video and explain the selectors to you.
+00:00:32.400
+If you are enjoying this course, then write sigma patch opi in the comment below.
+00:00:36.080
+We have to maintain high energy throughout the course.
+00:00:38.960
+I want to give you a heads up that this video is very important.
+00:00:41.880
+This is a very important video of CSS.
+00:00:44.040
+So increase your excitement.
+00:00:46.000
+Let's go to the computer screen.
+00:00:48.000
+Let's roll the intro.
+00:00:50.000
+Intro
+00:00:52.000
+Intro
+00:00:54.000
+Intro
+00:00:56.000
+Intro
+00:00:58.000
+Alright guys, so I have come to my computer screen.
+00:01:00.000
+And the first thing I am going to do is
+00:01:02.000
+to make a folder of video 17.
+00:01:04.000
+And video 17 is one of the most important video of css
+00:01:07.560
+because if you understand how the selector works
+00:01:10.320
+then your work will be very easy
+00:01:12.720
+so I will make video 17 here
+00:01:15.800
+index.html will be made here
+00:01:18.120
+and I am going to use internal css here
+00:01:21.480
+I will not make it in stylesheet
+00:01:23.080
+so that you can see what I am doing
+00:01:26.000
+And here I will do a lot of things
+00:01:29.000
+I will do word wrap, screen cast mode
+00:01:32.000
+So that you can see whatever button I press
+00:01:35.000
+And I will write css selectors
+00:01:38.000
+And I will make a div here
+00:01:41.000
+I am a div
+00:01:44.000
+If you have not accessed it yet, do play the playlist of sigma web development
+00:01:46.000
+And the source code is getting updated
+00:01:49.000
+So you don't have to worry about it
+00:01:52.000
+Now what i am going to do
+00:01:55.000
+I will do a simple thing, i will preview it first
+00:01:58.000
+And i want to make the background of this div red
+00:02:01.000
+Now you will ask why do you want to make the background of this div red
+00:02:04.000
+Because i want to know how much space this div is taking
+00:02:06.000
+That's why I want to make it red
+00:02:09.000
+So I will simply give the background red
+00:02:12.000
+So I will first put a style tag here
+00:02:15.000
+I will say that the div
+00:02:18.000
+Make the background color red
+00:02:22.000
+Now this is our property and value
+00:02:26.000
+I will tell you more about property and value
+00:02:29.000
+but for now you understand this is property and value
+00:02:32.000
+so what I did here was element selector
+00:02:35.000
+so I will write here element selector
+00:02:38.000
+and I will comment it here
+00:02:40.000
+in CSS comments are written like this
+00:02:42.000
+here forward slash star and star forward, whatever we write in between,
+00:02:46.000
+Those are the comments in CSS. So I have put a CSS comment
+00:02:48.000
+That this is an element selector, you will see here.
+00:02:50.000
+So the background of this is red.
+00:02:52.000
+This was our element selector.
+00:02:54.000
+A very basic selector.
+00:02:56.000
+Now the element selector that I have made here,
+00:02:58.000
+What are its drawbacks?
+00:03:00.000
+The moment I add another div here,
+00:03:02.000
+So what will happen?
+00:03:04.000
+The background of this background will also turn red
+00:03:06.380
+and it is possible that you don't want to
+00:03:09.060
+make this div's background red
+00:03:10.340
+so if you don't want to make this div's background red
+00:03:13.300
+then what will you do? definitely you will
+00:03:16.580
+use some other type of selector
+00:03:18.820
+and you will want to use a specific selector
+00:03:21.840
+so I can say that do one thing, where class is red
+00:03:24.820
+only make that div red, only that div
+00:03:26.000
+should be red, so i have made
+00:03:28.000
+class is equal to red
+00:03:30.000
+and because i have made class is equal to red
+00:03:32.000
+you can see here
+00:03:34.000
+if i write
+00:03:36.000
+.red and after
+00:03:38.000
+.red if i make background
+00:03:40.000
+color red, let's say i
+00:03:42.000
+comment this, i don't want all div
+00:03:44.000
+to be red, so i show don't want all div to be red.
+00:03:46.000
+So I'll show you that only this div will be red.
+00:03:49.000
+So here I used class selector.
+00:03:52.000
+So this is our class selector.
+00:03:56.400
+I'll write class selector.
+00:03:59.400
+Next one is id selector.
+00:04:02.400
+You might have guessed it as soon as you heard ID selector
+00:04:06.000
+let us say I want the hashtag red ID
+00:04:09.000
+or let's do one thing
+00:04:12.000
+let's make an ID with hashtag green
+00:04:15.000
+and if I write background color green
+00:04:18.000
+then wherever I will give ID green it will be green
+00:04:21.000
+you can see here I am another div
+00:04:24.000
+it doesn't have any color, background color but as soon as I give it ID green, I will show you
+00:04:27.040
+I will write here
+00:04:28.560
+one minute, I will give it ID
+00:04:31.400
+green and you can see that in green name
+00:04:34.640
+I have given background color green
+00:04:35.840
+its background color will be green
+00:04:37.840
+so this is our ID selector
+00:04:39.640
+it was very simple, right?
+00:04:40.760
+yes, it is simple
+00:04:41.960
+we make things simple here, okay
+00:04:44.160
+now I will tell you what is child selector
+00:04:46.000
+and the source code
+00:04:49.540
+this will work for notes
+00:04:52.500
+so what is child selector, if i want
+00:04:55.500
+paragraph in div to be blue
+00:04:58.500
+so i say the color of paragraph in div
+00:05:01.500
+should be blue and background color should be
+00:05:04.280
+background color should be let's say background color should be brown
+00:05:07.260
+let's say I want this
+00:05:10.260
+if I put a paragraph in any div
+00:05:11.900
+I am a para inside div
+00:05:14.880
+so what will happen? this selector will be applied
+00:05:17.880
+child selector
+00:05:20.880
+because this is a child of div
+00:05:23.880
+and I have said that if any paragraph of div is child
+00:05:26.120
+then what will happen?
+00:05:28.500
+then its background will be brown and
+00:05:31.500
+color will be blue. As simple as that.
+00:05:34.500
+Now i will show you one thing. If i wrap this whole thing in div
+00:05:37.500
+understand this carefully. Actually i will span this
+00:05:40.500
+not div. I will
+00:05:43.500
+put it in main or any other element
+00:05:45.400
+Let's say I use article tag here
+00:05:49.000
+So now this paragraph is not in div, now it is in article
+00:05:54.000
+So this property will not be applied, I will show you
+00:05:57.000
+Now this property is not applied
+00:05:59.000
+Because this selector means that if it is directly in div
+00:06:03.000
+Direct child, then this selector will be applied or not Means if div has a direct child Then
+00:06:05.840
+This selector will be applied
+00:06:08.800
+Here it's not a direct child
+00:06:11.800
+It's an article and then p
+00:06:14.800
+But if i want
+00:06:17.800
+If paragraph is a descendant of any div
+00:06:20.800
+Then this property will be applied
+00:06:23.800
+Then i have another way
+00:06:26.080
+i will simply
+00:06:29.040
+use descendant selector
+00:06:32.200
+and what is descendant selector
+00:06:35.200
+we write it like this
+00:06:38.220
+i will write div, space and p
+00:06:41.460
+i am saying that div should have p
+00:06:44.460
+no matter what it is I'll write case and then p I'm saying p should be in div
+00:06:46.000
+whether it's in article, main, footer
+00:06:49.000
+it should be in div
+00:06:52.000
+it should be a descendant of div
+00:06:55.000
+so you can see that it's applied
+00:06:58.000
+but when i talk about child selector
+00:07:01.000
+it should be direct child
+00:07:04.000
+i hope you are getting the sense
+00:07:06.000
+Now there is universal selector
+00:07:09.000
+Means i want to give margin to all elements
+00:07:12.000
+0 and padding 0
+00:07:15.000
+I will write p0
+00:07:18.000
+Means all elements have margin 0 and padding 0
+00:07:21.000
+See everything is stuck here
+00:07:24.000
+Earlier margin and padding 0 see all are stuck here before margin and padding was there
+00:07:26.000
+by default
+00:07:28.000
+but now margin and padding is gone
+00:07:30.000
+like you saw
+00:07:32.000
+i hope you understood
+00:07:34.000
+now see there are many types of selectors
+00:07:36.000
+but these are the most used selectors
+00:07:38.000
+now i will tell you about more selectors
+00:07:40.000
+in the coming videos
+00:07:42.000
+but these are the ones with which we will do web development
+00:07:44.000
+so i don't want to confuse you more
+00:07:46.000
+And you guys
+00:07:48.000
+Didn't learn the main selectors
+00:07:50.000
+So I want you to focus on this
+00:07:52.000
+This is the most important
+00:07:54.000
+Through this, 95 or 99%
+00:07:56.000
+Of the websites are made, so let's focus on this
+00:07:58.000
+For now, I hope
+00:08:00.000
+You guys understood this
+00:08:02.000
+And you guys understood it very well
+00:08:04.000
+There is one more selector which is also important
+00:08:06.000
+And that is pseudo selectors
+00:08:09.000
+Now what is this pseudo selector?
+00:08:12.000
+I have a link, I will write
+00:08:15.000
+Universal selector
+00:08:18.000
+Universal selector
+00:08:21.000
+Universal selector
+00:08:24.000
+Why is there no comment ok, universal selector, what is this? why comment is not working, ok it is working
+00:08:27.000
+now here what I will do, I will write
+00:08:30.000
+Pseudo, Pseudo, yes I know it is called pseudo, don't write in the comment
+00:08:36.000
+that it is not Pseudo, it is pseudo
+00:08:39.000
+it is not pneumonia, it is pneumonia
+00:08:41.000
+I know P is silent here, so why did you put silent
+00:08:44.000
+tell me in the comment section, when it was silent, let it be like this I know that P is silent So why did you put it?
+00:08:46.000
+Tell me in the comment section
+00:08:49.000
+Tell me in the comment section
+00:08:52.000
+But now i will share my knowledge with you
+00:08:55.000
+And that is pseudo selectors
+00:08:58.000
+Now assume i have a link
+00:09:01.000
+Now i will write
+00:09:04.000
+Https://www.google.com
+00:09:06.080
+and i'll write go to google
+00:09:09.280
+and
+00:09:11.120
+it's very good, you'll go to google
+00:09:14.140
+and you'll see what's new in it
+00:09:17.140
+let's say it's color is white
+00:09:20.140
+no not white, let's say it's color is yellow
+00:09:23.140
+so i want a visited
+00:09:26.000
+a visited
+00:09:29.000
+what should be its color? yellow
+00:09:32.000
+so i make its color yellow
+00:09:35.000
+so will it be yellow? yes
+00:09:38.000
+so anchor tags, if i want to see yellow color after visit
+00:09:41.000
+so i can use pseudo selector
+00:09:44.000
+so here you can see yellow color then you can use pseudo selector so here you can see
+00:09:46.000
+the color changing, after this if you
+00:09:49.000
+link a colon, means that link which
+00:09:52.000
+is not visited, and suppose you want the color to be green
+00:09:55.000
+so any link i will put, what will be the color
+00:09:58.000
+suppose i will do it like this
+00:10:01.000
+go to facebook, and yes
+00:10:04.000
+let's capitalize google's g, so will it be I will go to facebook ok and yes we will capitalise google
+00:10:06.000
+so will it be green
+00:10:08.000
+no it will not be green
+00:10:10.000
+I have already visited google
+00:10:12.000
+so i have to write facebook
+00:10:14.000
+ok
+00:10:16.000
+so i will write facebook
+00:10:18.000
+what will happen if i do facebook 2
+00:10:20.000
+yes i have visited facebook
+00:10:22.000
+i have visited facebook
+00:10:24.000
+if you remember in initial few lectures I haven't visited it. I have visited it.
+00:10:26.000
+So that's why it's showing like this.
+00:10:29.000
+Now i'll tell you about 2 more links related.
+00:10:32.000
+One is a active.
+00:10:35.000
+If you type any pseudo selector, it shows you the image.
+00:10:38.000
+If i want the background color to be red.
+00:10:41.000
+So when i click on a link, it shows red.
+00:10:44.000
+Active means when you are clicking.
+00:10:46.000
+So here it is showing on google.com.
+00:10:49.000
+And when I click, its background will turn red.
+00:10:52.000
+I know that ideally you won't want to use this.
+00:10:55.000
+But that was just an example.
+00:10:58.000
+To show you how it works, it is easy for me to make the background red.
+00:11:01.000
+Because you will know it directly.
+00:11:04.000
+Now apart from anchor tag,, what do we have other than anchor tag?
+00:11:07.000
+Some pseudo selectors, the answer is yes, definitely.
+00:11:11.000
+One is hover, if I want that on anchor tag, anyone can hover.
+00:11:17.000
+And I want its background color to be red or yellow.
+00:11:21.000
+I make its background color yellow.
+00:11:23.000
+So if I hover, you can see here that its background color is be yellow so if i hover then you can see
+00:11:26.000
+that the background color is yellow
+00:11:29.000
+as i am hovering, i have written a hover and background color is yellow
+00:11:32.000
+so these were some pseudo selectors
+00:11:35.000
+now i will tell you one more pseudo selector
+00:11:38.000
+and that is, if i want to have a div
+00:11:41.000
+whose class is selector
+00:11:44.000
+and i will write I am selector
+00:11:47.520
+I'll put 1 here, so that you don't get confused
+00:11:51.520
+ONE
+00:11:52.640
+Now I'll tell you about first child pseudo selector
+00:11:55.520
+Which might be a little tricky for you
+00:11:57.520
+And this category is pseudo selector
+00:12:00.480
+So this pseudo selector
+00:12:02.480
+If I write P first child background color aqua
+00:12:06.000
+It means that wherever P is the first child of the parent, the background color will be aqua
+00:12:13.000
+Like in this case, you can see that I have put a main tag here
+00:12:16.000
+And it is written here P I am first and P I am second
+00:12:20.000
+So here you can see that wherever the first child of the main is P, which is here
+00:12:24.000
+This P is the first child of the main is P, which is here, this P is the first child of the parent.
+00:12:27.400
+So this class will be applied in this.
+00:12:29.160
+So see here,
+00:12:31.160
+its background has been acquired, and this has not.
+00:12:33.400
+But I will tell you again that such things are very rarely used when you do web development.
+00:12:38.120
+So you guys do more research about such pseudo classes.
+00:12:42.440
+What I will do in the description,
+00:12:44.240
+I will put links in the description about this type of things.
+00:12:46.000
+So if you want to see additional reading material
+00:12:48.000
+and pseudo classes,
+00:12:50.000
+then you will get the link
+00:12:52.000
+in the description.
+00:12:54.000
+Maybe I will put it in the pinned comment too.
+00:12:56.000
+And if I forget, then please remind me
+00:12:58.000
+that you have not given the link.
+00:13:00.000
+So I will give all the links to you.
+00:13:02.000
+From there you can read about these types of selectors.
+00:13:04.000
+But now we will move ahead in this course.
+00:13:06.000
+And we will read about the main things.
+00:13:09.000
+Because we have to come on projects very soon.
+00:13:12.000
+And we have to make real world apps.
+00:13:15.000
+And we have to do backend and database.
+00:13:18.000
+So we have to build pace.
+00:13:21.000
+I hope you are enjoying this course.
+00:13:24.000
+If you haven't bookmarked it yet, do it now. Click here and save it.
+00:13:25.960
+Access the playlist, gethub code, like the video, share it.
+00:13:28.960
+And name your village and uncle's land.
+00:13:31.960
+Thank you so much for watching this video.

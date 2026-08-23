@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 117,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheCREATE INDEXcommand is used to \ncreate indexes in tables (allows duplicate values).\n\nIndexes are used to retrieve data from the database very fast. The users cannot see the indexes, they are just used to speed up searches/queries.\n\nThe following SQL creates an index named \"idx_lastname\" on the \"LastName\" column in the \"Persons\" table:\n\nIf you want to create an index on a combination of columns, you can list the column names within the parentheses, separated by commas:\n\nNote:The syntax for creating indexes varies among different databases. Therefore: Check the syntax for creating indexes in your database.\n\nTheDROP INDEXcommand is used to delete an \nindex in a table.\n\nMS Access:\n\nSQL Server:\n\nDB2/Oracle:\n\nMySQL:\n\n### Code Snippets\n\n```\nCREATE INDEX idx_lastname\nON Persons (LastName);\n\n---\n\nCREATE INDEX idx_pname\nON Persons (LastName, FirstName);\n\n---\n\nDROP INDEX\nindex_name\nON\ntable_name\n;\n\n---\n\nDROP INDEX\ntable_name\n.\nindex_name\n;\n\n---\n\nDROP INDEX\nindex_name\n;\n\n---\n\nALTER TABLE\ntable_name\nDROP INDEX\nindex_name\n;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_116",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

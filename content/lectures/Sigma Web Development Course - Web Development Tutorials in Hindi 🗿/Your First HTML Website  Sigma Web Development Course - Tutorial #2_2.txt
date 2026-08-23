@@ -1,0 +1,1332 @@
+Video URL: https://www.youtube.com/watch?v=kJEsTjH5mVg
+Video Title: Your First HTML Website | Sigma Web Development Course - Tutorial #2
+--------------------------------------------------
+
+00:00:00.000
+In the last video, you guys gave a lot of love.
+00:00:02.600
+It's my pleasure to keep this course free.
+00:00:05.000
+A like is needed for this free course.
+00:00:06.640
+You know, when I started web development,
+00:00:08.360
+there was no comprehensive course of this quality.
+00:00:10.760
+Forget free or paid, there was no such course.
+00:00:13.440
+So I can understand how important it is for some people to be free of this course.
+00:00:17.640
+And trust me, I live up to the expectations.
+00:00:20.000
+With that said, like this video
+00:00:21.640
+because in this video, we are going to make our first website.
+00:00:24.400
+And in this video, I am going to order an iPhone 15 Pro Max.
+00:00:28.880
+Why? How? What will happen? We will see that in the video.
+00:00:31.920
+For many of you, this will be the first website of your life.
+00:00:35.320
+So it's going to be fun.
+00:00:36.600
+You guys are excited, right?
+00:00:38.000
+Write in the comment, I am excited.
+00:00:39.400
+And whatever I am excited will write in the comment, I will give heart to all those comments.
+00:00:43.480
+In this video, we will learn to link an HTML website with CSS and JavaScript.
+00:00:48.000
+Along with that, in this video, I will be giving you notes, cheat sheets and many other resources.
+00:00:53.300
+I will tell you some techniques that I have learned in years and will make your web development speed 10x.
+00:01:01.000
+In this video, we will also see how to make your VS code awesome.
+00:01:04.500
+Your VS code screen will look killer
+00:01:07.000
+In this video, I will also tell you how to earn money from web development
+00:01:12.000
+So let's start with full energy
+00:01:14.000
+Let's roll the intro
+00:01:31.000
+Alright guys, so we have come to our computer screen and before moving forward in the video, I would like to tell you all that you must access this playlist. Secondly, we are very close to 5 billion subscribers, so if you have not hit the subscribe button, then do it.
+00:01:36.000
+In today's video, we are is to customize our VS Code.
+00:01:46.000
+So this is the folder in which we started our web development series.
+00:01:51.000
+Now I have to give you the source code of this web development series, so I will configure Git here.
+00:01:56.000
+Now it is not necessary for you to know about Git, but I will fire the desktop and add a new repository.
+00:02:07.000
+I will click on add and click on create new repository.
+00:02:11.000
+I will name it as Sigma web dev course.
+00:02:14.000
+I will select this folder and initialize this repository with greed me.
+00:02:20.000
+I will write source code for sigma web development course.
+00:02:23.000
+I will click on create repository.
+00:02:24.000
+By doing this, a repository will be created here named sigma web development course I will click on create repository
+00:02:25.000
+By doing this, a repository will be created here
+00:02:27.000
+whose name is sigma web dev course
+00:02:29.000
+I will put all the things that were relevant from the first video
+00:02:33.000
+These two files were relevant from the first video
+00:02:36.000
+I will name it video 1
+00:02:38.000
+Right click new folder
+00:02:39.000
+I will make a video 1 here
+00:02:41.000
+And I will move these two files to the video 1 folder
+00:02:43.000
+I am not pushing this video on git,
+00:02:45.000
+these are sample videos, you can use your sample videos.
+00:02:48.000
+So now whatever the source code will be, I will keep updating it here,
+00:02:51.000
+and I will keep pushing it on git here.
+00:02:53.000
+Now how do you push it on git here?
+00:02:55.000
+You don't need to learn this,
+00:02:57.000
+but this procedure is very simple.
+00:02:58.000
+Why do you use git?
+00:02:59.000
+I would like to tell you that
+00:03:01.000
+the git is used by web developers,
+00:03:03.000
+or general coders use it when they have to collaborate their code with other people.
+00:03:09.920
+So what will happen is that you will work with many programmers
+00:03:12.520
+and those programmers will collaborate with your source code
+00:03:16.320
+and to do this kind of collaboration, they will also push some code,
+00:03:20.200
+you will also push some code, maybe one person is editing a file,
+00:03:23.560
+another person is editing another file
+00:03:26.000
+so here github comes in use
+00:03:28.000
+and what is github desktop?
+00:03:30.000
+github desktop is a utility to use git
+00:03:32.000
+the difference between git and github is
+00:03:34.000
+git is open source
+00:03:36.000
+but github is a microsoft owned company
+00:03:38.000
+which by using git
+00:03:40.000
+helps you to host repositories on your web interface
+00:03:42.000
+I will tell you more about git in the coming videos
+00:03:44.000
+but I am pushing this repository on my code with harry github account helps to host on your web interface I will tell you more about git in the coming videos
+00:03:45.920
+but I am pushing this repository on my code with harry github account
+00:03:49.600
+so you will get the link of the repository in the description
+00:03:52.520
+so as I will give you links
+00:03:54.360
+if you follow that then you will get all the code
+00:03:56.600
+and I will talk about it later
+00:03:58.040
+I am making this video, the course in fact
+00:04:00.520
+in such a way that absolute beginners can follow it
+00:04:03.720
+so as I click on the published repository,
+00:04:05.800
+this code, this folder will sync with my github account.
+00:04:09.500
+So all the code that I am going to upload here,
+00:04:11.500
+it will go to my github account and it will keep syncing.
+00:04:14.500
+The changes that will be here will be there.
+00:04:16.500
+If someone has made changes there, I can pull it here.
+00:04:19.000
+I can pull it by clicking here by fetch origin.
+00:04:22.000
+I will teach you all this.
+00:04:23.500
+We will dedicate a whole video to git. You don't take tension at all. I did this thing so that I can give by fetch origin I will teach you all this I will dedicate a whole video to git You don't take tension at all
+00:04:26.000
+I did this thing so that I can give you code
+00:04:28.320
+Now I will make a folder named video2
+00:04:30.320
+And I will go inside this video2 folder
+00:04:32.320
+I will press shift right click
+00:04:33.760
+And I will open with vs code
+00:04:35.520
+So here is open with code
+00:04:36.720
+You will get this option
+00:04:37.760
+If you guys have installed the way I told you
+00:04:40.240
+vs code
+00:04:40.800
+If you have made some changes
+00:04:42.480
+And you have not checked
+00:04:43.840
+That checkbox which I showed you then you can have a problem.
+00:04:46.000
+So we will do it, we will dismiss the notification.
+00:04:49.000
+Now whatever file I will make here,
+00:04:51.000
+like I will make index.html here,
+00:04:54.000
+that file will be made here too.
+00:04:56.000
+So everyone knows about this now.
+00:04:57.000
+I know there are a lot of intermediate people here
+00:04:59.000
+who are saying that we already know all these things,
+00:05:01.000
+but I am making this course according to this
+00:05:03.000
+that all beginners can follow along.
+00:05:05.000
+So I will make three files here, one I made here index.html, the second file I am going to make is style.css, and the third file I am going to make is script.js.
+00:05:15.000
+And the name of these files can be anything, but I just want to keep these files self-explanatory, that by looking at their name, we can know what they are doing index.html, html file, script.js, javascript file, style.css
+00:05:27.120
+there is a style sheet, so I have made these three files here
+00:05:30.000
+I will go to index.html and put an exclamation mark
+00:05:32.640
+and as soon as I put an exclamation mark
+00:05:35.000
+you see this code has come here
+00:05:37.400
+I will click on view word wrap so that you can see this code
+00:05:40.600
+the horizontal scroll bar moves away from the word wrap
+00:05:43.280
+I checked the word wrap here
+00:05:44.800
+so now you guys see
+00:05:46.000
+that this code is
+00:05:49.000
+we will understand it, but for now you understand that this code is
+00:05:52.000
+HTML code, we use it to make a website
+00:05:55.000
+now come to the tab of VS Code extensions
+00:05:58.000
+extensions are used to enhance the functionality of VS Code
+00:06:01.000
+we use extensions
+00:06:04.000
+to make VS Code better
+00:06:08.000
+extensions of VS Code make us write code
+00:06:13.200
+so which extension we will use
+00:06:15.200
+first of all i will put some extensions
+00:06:18.200
+which will make our VS Code killer
+00:06:20.700
+if your friends see this they will say
+00:06:22.500
+hacker, hacker
+00:06:24.000
+so what i will do here
+00:06:26.000
+vs code icons
+00:06:28.000
+there is an extension called vs code icons
+00:06:30.000
+which i will install
+00:06:32.000
+you will get to know
+00:06:34.000
+that whatever file it is
+00:06:36.000
+you can see the icon
+00:06:38.000
+you can see the icons
+00:06:40.000
+here
+00:06:42.000
+thanks for installing vs code icons
+00:06:44.000
+i will activate it and you can see these icons clearly thanks for installing VS Code icons here i will activate it
+00:06:46.480
+and here you can see
+00:06:48.480
+that our icons are looking good
+00:06:50.480
+in the coming time if we make a folder
+00:06:52.480
+then this kind of icon will come
+00:06:54.480
+so these icons look good
+00:06:56.480
+and here there are many good themes
+00:06:58.480
+which you can use
+00:07:00.480
+there are some themes jellyfish theme
+00:07:02.480
+there is one github theme
+00:07:04.480
+there are many themes
+00:07:05.840
+you can use these themes but
+00:07:08.840
+I can use only one theme at a time, this is default vs code theme
+00:07:11.840
+which shows you vs code like this
+00:07:14.840
+now if I change my theme
+00:07:17.840
+then my vs code will look different, I will show you
+00:07:20.840
+which one I will prefer when it comes to theme
+00:07:23.840
+first I will show you github theme so g it comes to theme I will first show you the getup theme
+00:07:26.000
+how it looks like, so getup theme is officially
+00:07:29.000
+a theme provided by getup, now see here
+00:07:32.000
+getup dark, getup light, getup dimmed
+00:07:35.000
+getup colorblind, I like this one better
+00:07:38.000
+because the colors in it
+00:07:41.000
+sorry I don't like this one, I will choose getup dark
+00:07:44.000
+because the colors here are different sorry i dont have this one i will choose getup dark
+00:07:46.000
+because the colors are different
+00:07:49.000
+another theme is jellyfish
+00:07:52.000
+and many people like jellyfish theme
+00:07:55.000
+if i install this you can see the VS code
+00:07:58.000
+after this there is material theme
+00:08:01.000
+and that is also popular
+00:08:04.000
+if i use material theme here material theme and material theme icons, we had to install this material theme
+00:08:08.280
+if you have installed material theme icons, then you can change your icons
+00:08:12.160
+which extension to control and here we have installed many extensions
+00:08:16.720
+I will also tell you how to delete extensions
+00:08:19.080
+here I am showing the material theme icons in this way
+00:08:21.760
+and if you want you can use VS Code icons
+00:08:24.600
+if I want the material theme icon are shown in this way and if you want you can use VS Code icons if I want material theme icons to be removed
+00:08:28.200
+then I will simply remove it
+00:08:30.800
+and all my extensions are visible here
+00:08:34.000
+like material theme icon
+00:08:35.400
+and I want to use this one
+00:08:39.400
+so I will select it
+00:08:40.200
+and if I want I can uninstall it
+00:08:42.000
+and sometimes when we uninstall anything
+00:08:43.600
+then reload is required
+00:08:44.600
+so I have to click on reload required.
+00:08:46.000
+And when I click on reload required,
+00:08:48.000
+then my VS Code will be reloaded.
+00:08:50.000
+So you can customize your VS Code as per your liking.
+00:08:52.000
+I will select my VS Code icons here.
+00:08:55.000
+I will select it as VS Code icons,
+00:08:57.000
+so that my icons look like this. I like this a little.
+00:08:59.000
+I also like the jellyfish theme a lot.
+00:09:01.000
+After this, there is another extension whose name is Prettier.
+00:09:03.000
+I will not install it either. but I just want to tell you.
+00:09:07.000
+There is another extension, ES7, when we react, you will know.
+00:09:11.000
+And yes, we will react in this course. For all those asking.
+00:09:14.000
+Sorry for the spoilers, but we are going to react in this course.
+00:09:16.000
+So here is ES7 plus React Redux, React Native Snippets.
+00:09:20.000
+This extension gives you React snippets.
+00:09:22.000
+We will use it when we react.
+00:09:24.000
+We will not install it for now.
+00:09:26.400
+But now the most important extension is
+00:09:30.800
+Live Preview.
+00:09:31.600
+We will install this extension called Live Preview.
+00:09:34.000
+Because this is a very useful extension.
+00:09:35.400
+All the extensions I have told you mostly help you
+00:09:38.800
+to change the look and feel of VS Code.
+00:09:41.600
+But the extension I am telling you today, Live Preview
+00:09:44.600
+will be used by you. Let's come to our HTML, CSS, JavaScript files. to change the look and feel of the website but the extension i am telling you live preview, you will actually use it
+00:09:46.000
+let's come to our html, css and javascript
+00:09:48.000
+files, so here are our html, css
+00:09:50.000
+and javascript files
+00:09:52.000
+this is html file, this is some code
+00:09:54.000
+which tells the website
+00:09:56.000
+how to look
+00:09:58.000
+so here i am saying
+00:10:00.000
+document should be there in the title
+00:10:02.000
+i will write here harry bhai's first website
+00:10:05.820
+harry bhai's course's first website
+00:10:07.820
+course's first website
+00:10:09.820
+Harry's first website will be a lie
+00:10:11.820
+Your first website, you guys have to write your name in it
+00:10:13.820
+Whatever your name is, first website
+00:10:15.820
+And if I write inside the body
+00:10:17.820
+Hey this is my first website
+00:10:19.820
+And everyone write congratulations in the comment below
+00:10:21.820
+Everyone who has this first website
+00:10:23.820
+Write congratulations, congratulations For my first website, okay And congratulate each other, make the environment and everyone write congratulations in the comment section everyone who has this website write congratulations
+00:10:26.000
+for my first website
+00:10:28.000
+and congratulate each other
+00:10:30.000
+make a good atmosphere in the comment section
+00:10:32.000
+i also come in the comment section
+00:10:34.000
+and i give you all my heart
+00:10:36.000
+now
+00:10:38.000
+how to see this
+00:10:40.000
+so there are two ways to see
+00:10:42.000
+we have installed the extension
+00:10:44.000
+live server earlier live server was also working There are two ways to see it. The extension we have installed, Live Preview.
+00:10:46.000
+Before it was also available.
+00:10:48.000
+But Microsoft has released it.
+00:10:50.000
+So I will recommend this.
+00:10:52.000
+It is also available.
+00:10:54.000
+But I am not going to use it.
+00:10:56.000
+After installing live preview,
+00:10:58.000
+You can see this icon.
+00:11:00.000
+Click on it.
+00:11:02.000
+Now you can see your website.
+00:11:04.000
+You can see your website. Because my website will be like this now you say that i want to see this website here
+00:11:06.000
+because my website will be seen in browser
+00:11:09.000
+so if you want to see this in browser, click here
+00:11:12.000
+open in browser, it will open in browser
+00:11:15.000
+and one more thing, you can close it and write
+00:11:18.000
+harry bhai's course is good
+00:11:21.000
+assume you have written it, i am praising my course
+00:11:24.000
+but yes, har is a good course
+00:11:26.000
+I have written here
+00:11:29.000
+and you have noticed one thing
+00:11:32.000
+I have not reloaded this website
+00:11:35.000
+but still it has updated the content
+00:11:38.000
+which I have written in this VS code
+00:11:41.000
+which means whatever I will write here
+00:11:44.000
+will be updated here without reloading it will be updated
+00:11:45.300
+will it be or not?
+00:11:47.300
+clap for us
+00:11:49.300
+ok it will be done
+00:11:51.300
+and here
+00:11:53.300
+hey this is my first website
+00:11:55.300
+harry bhai's course is good
+00:11:57.300
+now i will write here
+00:11:59.300
+sigma harry bhai's course is good
+00:12:01.300
+sigma harry bhai's course is good
+00:12:03.300
+ok so here you have seen
+00:12:06.280
+how this extension will help us
+00:12:09.280
+if you reload it, it will not make any difference because it is being reloaded live
+00:12:12.640
+so there are two things, sometimes we want that
+00:12:15.440
+our page is our preview here only
+00:12:18.360
+I will close it so that you can see the code wide
+00:12:20.840
+sometimes we want that our code is
+00:12:23.600
+we can see it here only because we want to see its code here Because we want to see
+00:12:26.000
+Its live preview. So let's say I'm writing anything
+00:12:29.000
+Harry's course is good and this is sigma course
+00:12:32.000
+And let's say I write something else here. I can write a lot of things here
+00:12:35.000
+So I will write here and I will keep watching here and I can make it small and big
+00:12:38.000
+Something like this. So I will see the live update here
+00:12:41.000
+My old videos, if you have ever seen it, then I
+00:12:44.000
+I used this extension of live server.
+00:12:46.000
+Either this extension was not there
+00:12:48.000
+or I didn't know. Whatever it is, it is.
+00:12:50.000
+Now if something new comes, it takes time to find out.
+00:12:52.000
+But this is something that you should use.
+00:12:54.000
+Because I use AEC in my daily life.
+00:12:56.000
+I do web development.
+00:12:58.000
+Many people asked
+00:13:00.000
+that do you also do web development or just teach?
+00:13:02.000
+I do it too. I make websites.
+00:13:04.000
+I not only make videos, I make websites, not only videos
+00:13:06.000
+I also work by making websites
+00:13:09.000
+and yes I earn money by making websites
+00:13:12.000
+Now all this code that I am writing, you will get it on github
+00:13:15.000
+So you can go to the description of any video
+00:13:18.000
+You will get the code of that corresponding video
+00:13:21.000
+You don't have to take that tension
+00:13:24.000
+Now I will close this because my preview is visible here.
+00:13:26.000
+Now consider HTML, CSS, JavaScript, which we talked about.
+00:13:29.000
+About which we talked so much in the last video.
+00:13:32.000
+Now I will tell you how to link all three.
+00:13:34.000
+Now you will say that yes, you have made index.html.
+00:13:36.000
+Very good, the title is also visible here.
+00:13:38.000
+See here, the first website of the Harry's course.
+00:13:42.000
+Suppose I change its name to Sigma web development course so it will change
+00:13:45.520
+Sigma
+00:13:46.480
+Sigma web development
+00:13:50.880
+course
+00:13:52.560
+here it is written as Sigma web development course
+00:13:54.320
+and you can see here
+00:13:55.360
+that it is updated
+00:13:56.640
+so it will keep getting updated
+00:13:57.520
+it will be live updated
+00:13:58.400
+now I want my background to be red
+00:14:01.360
+ok
+00:14:01.840
+such things are done with CSS
+00:14:03.680
+so I can write here
+00:14:04.960
+body and background color becomes red So this type of work is done with CSS
+00:14:06.000
+So I can write here body and background color red
+00:14:09.000
+So this is the syntax of CSS
+00:14:12.000
+I will teach you CSS in such a way that you will not be able to forget it
+00:14:15.000
+Don't take tension, what is written here is CSS which makes the body color red
+00:14:18.000
+And here you see
+00:14:21.000
+Will the color of the body be red or not?
+00:14:24.000
+Now I will tell the beginners that it will not be red.
+00:14:25.400
+Why it will not be red? Beginners will think it will be red. But it will not be.
+00:14:28.100
+There is not such a good world. This HTML file is running now.
+00:14:31.200
+He does not know about this CSS file.
+00:14:33.300
+Now what is going on in my house, what does my neighbor know?
+00:14:36.300
+Now suppose I made lentils here. And I expect
+00:14:39.300
+Suppose my neighbor has made rice. And suppose I expect
+00:14:42.300
+that I eat it together. It does't happen, you can eat it sometimes
+00:14:46.000
+but you are getting what i am saying
+00:14:49.000
+so you have to link it
+00:14:52.000
+you have to tell your neighbor that i am making dal and you are eating rice
+00:14:55.000
+there will be a handshake, so how will that handshake happen
+00:14:58.000
+in html you will tell where is your css file
+00:15:01.000
+so there is a link tag and the reason for not using notepad
+00:15:04.000
+you will get to know here, as soon as I write link here
+00:15:06.000
+see here link colon css as soon as I select it
+00:15:09.000
+see here it has done half of my work
+00:15:11.000
+write rel is equal to style sheet
+00:15:13.000
+I had to type this manually in notepad
+00:15:15.000
+this is the syntax of html
+00:15:16.000
+I had to write this but here automatically
+00:15:19.000
+it has come
+00:15:20.000
+now style.css is my luck
+00:15:22.000
+its name is also style.css
+00:15:23.000
+of the file and here also style.css is given if its name was harry.css then I would have written harry.css is my luck, it's name is also style.css, it's file name and here also style.css is given.
+00:15:25.280
+If it's name was harry.css, then I would have written harry.css here.
+00:15:28.160
+And guess what?
+00:15:29.760
+Now my background has become red here.
+00:15:31.280
+Now if I want the color of my text to be white,
+00:15:33.840
+then I can make the color of the text white here,
+00:15:35.440
+I can write color white here.
+00:15:37.600
+Now nothing will work here, I wrote color white,
+00:15:40.240
+so see it became white.
+00:15:41.600
+The valid css syntax will work and we will talk about it later
+00:15:46.000
+so this is working
+00:15:48.000
+now how will javascript work
+00:15:50.000
+if i write here alert
+00:15:52.000
+and i write here
+00:15:54.000
+welcome to sigma
+00:15:56.000
+web development course
+00:15:58.000
+suppose i wrote here
+00:16:00.000
+welcome to sigma web development course
+00:16:02.000
+so what will happen, will alert come here?
+00:16:04.000
+why not?
+00:16:06.000
+I'll tell you that this syntax is absolutely correct
+00:16:09.000
+and I'll read javascript properly
+00:16:12.000
+so don't worry about this
+00:16:15.000
+the code is welcome to sigma web development course
+00:16:18.000
+why didn't it flash?
+00:16:21.000
+is my computer broken?
+00:16:24.000
+no, my computer broken? No, my computer is absolutely fine I want to tell you that I have to include the script
+00:16:26.000
+And let's include the script from the body
+00:16:28.000
+just before
+00:16:30.000
+Now here as soon as I include the script
+00:16:32.000
+I will write in src
+00:16:34.000
+script.js how did I write this?
+00:16:36.000
+First of all I wrote script here
+00:16:38.000
+First of all I wrote script here
+00:16:40.000
+Emmet abbreviation
+00:16:42.000
+What is Emmet?
+00:16:44.000
+Emmet is a plugin which is built in VS Code
+00:16:46.000
+as you select it
+00:16:48.000
+it will be auto completed
+00:16:50.000
+if I am writing a script and selecting colon src
+00:16:52.000
+it means I want to give a source file
+00:16:54.000
+you can type it manually
+00:16:56.000
+but the suggestions here
+00:16:58.000
+make your code writing
+00:17:00.000
+more powerful
+00:17:02.000
+make you a great developer
+00:17:04.000
+and increase your power stronger make you a great developer
+00:17:06.000
+and increase your powers so that you can't get into trouble
+00:17:09.000
+and as a developer you can be self-sufficient
+00:17:12.000
+as soon as possible
+00:17:15.000
+you can see here, i have included it
+00:17:18.000
+now i will come here, so you see here
+00:17:21.000
+welcome to sigma web development course, everyone write in the comment that i have become self-sufficient
+00:17:24.000
+write it, because i know that your soul has been satisfied
+00:17:26.000
+By seeing this box that javascript
+00:17:28.000
+Also run, css was running
+00:17:30.000
+Javascript also run, now your soul is satisfied
+00:17:32.000
+I will reload it, it will come again, I will do ok, it will stop
+00:17:34.000
+So as soon as I visit this website
+00:17:36.000
+I will get to see an alert here
+00:17:38.000
+This is called an alert in javascript
+00:17:40.000
+I will tell you what happens next in javascript
+00:17:42.000
+Don't say you didn't tell the alert
+00:17:44.000
+Don't want to start weirdly, I will finish the html Then css then javascript Don't say you didn't tell the alert Don't start it weirdly
+00:17:46.000
+I will finish HTML and then CSS and then Javascript
+00:17:48.000
+So don't worry
+00:17:50.000
+And the best practices
+00:17:52.000
+I am telling you
+00:17:54.000
+You have to remember them
+00:17:56.000
+Because what I am telling you
+00:17:58.000
+Is from my experience
+00:18:00.000
+Like I said live server
+00:18:02.000
+You can use it if you want
+00:18:04.000
+Nothing wrong in that Now Use the live preview from Microsoft.
+00:18:06.080
+Awesome.
+00:18:06.600
+Now I want you to write Sigma batch OP in the comments.
+00:18:09.600
+If you are enjoying the course, write Sigma batch OP in the comments.
+00:18:12.880
+It will be fun to see.
+00:18:14.600
+Yes, it's a batch.
+00:18:15.600
+It's a free course, so what?
+00:18:16.680
+It's a batch.
+00:18:17.480
+So write Sigma course OP with a hashtag.
+00:18:20.080
+Now a lot of people commented in the last video
+00:18:22.280
+on how to do the mouse wheel.
+00:18:24.400
+So you have to go to settings
+00:18:26.000
+and write mouse wheel
+00:18:28.000
+and here you have to check editor mouse wheel zoom
+00:18:30.000
+then you have to press ctrl
+00:18:32.000
+and then mouse wheel
+00:18:34.000
+i have pressed ctrl here and as soon as i do this
+00:18:36.000
+i will be able to zoom in
+00:18:38.000
+and if i right click and do command palette
+00:18:40.000
+then i can toggle screen cast mode
+00:18:42.000
+and whatever i write here
+00:18:44.000
+you will be able to see i have not toggled screen cast mode and you can see what I am writing
+00:18:46.000
+I have not toggled the screen cast mode in this video
+00:18:49.000
+because you already know what I am typing
+00:18:52.000
+so I can toggle the screen cast mode
+00:18:55.000
+in the last video we talked about
+00:18:58.000
+how websites work
+00:19:01.000
+and you understood this very well
+00:19:04.000
+now I will take the example of iphone 15 pro max
+00:19:06.000
+and i will show you how
+00:19:08.000
+client server interaction will be
+00:19:10.000
+whenever a user
+00:19:12.000
+orders an iphone
+00:19:14.000
+so you will find it interesting
+00:19:16.000
+i will show you
+00:19:18.000
+so guys how does the website work
+00:19:20.000
+i have come to explain on apple.com
+00:19:22.000
+now see apple.com is a website
+00:19:24.000
+data must have come from explain this on apple.com Now see apple.com is a website Data must have come from their server
+00:19:26.000
+Till here
+00:19:28.000
+Whatever html files are there
+00:19:30.000
+I will click on preorder
+00:19:32.000
+And after this
+00:19:34.000
+When I am recording, it has not even come
+00:19:36.000
+He is saying that it will come by September
+00:19:38.000
+I will select 15 pro max
+00:19:40.000
+Let's take any color
+00:19:42.000
+Let's take black titanium
+00:19:44.000
+Let's take 250 GB No Apple coverage Colour, black titanium, 2 wefts, no trade in, no apple coverage
+00:19:47.000
+After this, you can see that the communication is going on with their servers
+00:19:53.000
+So in total, the HTML, CSS, JavaScript
+00:19:56.000
+You can see that I have sourced the view page
+00:19:58.000
+So I can see it like this
+00:20:00.000
+And this is our original website
+00:20:02.000
+On which we were working
+00:20:03.000
+Now I will check out quickly here.
+00:20:05.000
+I will do continuous guest.
+00:20:07.000
+I will show you a fun thing.
+00:20:08.000
+As soon as I click on inspect and click on network,
+00:20:10.000
+you see 2 and 4 communication is going on with Apple servers.
+00:20:14.000
+Which means that here, as I am doing action here,
+00:20:18.000
+JavaScript is communicating to the server.
+00:20:21.000
+And there appropriate action server is taking and sending me data.
+00:20:25.000
+I will say here I would like to be delivered,
+00:20:27.000
+continue shipping address, I will put the name etc.
+00:20:30.000
+Will deliver on 19th October, shipping date,
+00:20:32.000
+if it comes I will tell you, I will keep you in the update, okay?
+00:20:35.000
+Yes, everything is fine, terms and conditions,
+00:20:37.000
+I read it, I agree, place your order.
+00:20:40.000
+I agreed, place your order.
+00:20:42.000
+Like the video because I also order iPhones to explain web development to you.
+00:20:45.000
+Here we have OTP. I will confirm OTP.
+00:20:49.000
+And my purchase has been done here.
+00:20:52.000
+In total, I requested something from the Apple.com server.
+00:20:57.000
+I said, give me an iPhone 15 Pro Max.
+00:21:00.000
+Apple.com said, take it.
+00:21:02.000
+So this kind of communication between the server and the client
+00:21:05.000
+This is done through JavaScript without loading the page
+00:21:09.000
+Like you saw I selected iPhone here
+00:21:11.000
+After that I clicked different things
+00:21:13.000
+So all those things are done through JavaScript
+00:21:18.000
+How is the styling done?
+00:21:19.000
+With the help of CSS
+00:21:20.000
+And all that is written is HTML
+00:21:23.000
+I hope you you remember this example
+00:21:26.000
+and i will show you when i get the phone
+00:21:29.000
+or else many people will say that it's fake
+00:21:32.000
+so this is how your websites work
+00:21:35.000
+i hope you understood from this example
+00:21:38.000
+tell me in the comment section
+00:21:41.000
+if i want to give away this iphone
+00:21:44.000
+so what will be the best thing You can also know that I have done a genuine giveaway
+00:21:46.000
+And I can also give away
+00:21:48.000
+You tell me in the comment section
+00:21:50.000
+I don't know about all this
+00:21:52.000
+Now I want to tell you
+00:21:54.000
+Where you will get notes and cheat sheets
+00:21:56.000
+If you go to codewithali.com
+00:21:58.000
+You will get to see notes
+00:22:00.000
+And you can download notes
+00:22:02.000
+With that
+00:22:04.000
+You will get also see cheat sheets
+00:22:06.000
+for example if i want to access html cheat sheet
+00:22:09.000
+so i can access cheat sheet here
+00:22:12.000
+there are all the elements here
+00:22:15.000
+but i will tell you about all the elements in this course
+00:22:18.000
+and if you want to download notes from html
+00:22:21.000
+so you can download pdf notes from here
+00:22:24.000
+i have written handwritten, you will enjoy reading it
+00:22:26.000
+I will tell you everything in this course
+00:22:28.000
+but if you download these notes, you will enjoy it more
+00:22:31.000
+I will make your learning experience so good that you will say that it was fun
+00:22:35.000
+now I want you all to do one thing
+00:22:38.000
+put the initial review of this course in this first video
+00:22:41.000
+I want you all to go to this video
+00:22:43.000
+and in this video and in the comment section
+00:22:46.000
+post the initial review
+00:22:49.000
+I want you to write in the comment section
+00:22:52.000
+how you liked this course and give me 5 stars
+00:22:55.000
+tell me by rating it
+00:22:58.000
+I know the course is not that good
+00:23:01.000
+but what quality and all that
+00:23:04.000
+I will be happy if you do this work, I will like it from the heart
+00:23:06.000
+Go to the first video and rate this course
+00:23:08.000
+Now we will talk
+00:23:10.000
+After doing this course
+00:23:12.000
+How can you earn money
+00:23:14.000
+So the first way to earn money from web development
+00:23:16.000
+It is very simple, you do freelance
+00:23:18.000
+Freelance as a web developer, you make websites
+00:23:20.000
+There are many websites that you
+00:23:22.000
+You can make and make them
+00:23:24.000
+You will get a lot of money by making them
+00:23:25.120
+Many people integrate APIs
+00:23:27.680
+And by integrating APIs, many people earn a lot of money
+00:23:30.960
+Many people say that chat gpt has come
+00:23:33.120
+Now chat gpt has come, then nothing will happen
+00:23:35.280
+Everything is done in chat gpt, but this is not true
+00:23:36.960
+Making a website for you is easier for me
+00:23:40.480
+And when you use chat gpt
+00:23:42.720
+Then you become a giga chat developer
+00:23:48.000
+so use chat gpt
+00:23:50.000
+as much as you can and you
+00:23:52.000
+can save your time, infact
+00:23:54.000
+i am telling you the truth, since chat gpt came
+00:23:56.000
+i am able to deliver more to my freelancing clients
+00:23:58.000
+all the websites i had to make
+00:24:00.000
+from the start, i do half
+00:24:02.000
+of the work with chat gpt and that work
+00:24:04.000
+which chat gpt is not can't do, I do it
+00:24:06.000
+I finally package it and give it to you and I don't have to answer anyone
+00:24:09.000
+that what did I use chat gpt, what did I do without chat gpt
+00:24:12.000
+you can easily deliver everything
+00:24:15.000
+use chat gpt, chat gpt can't do everything
+00:24:18.000
+you have to use chat gpt and
+00:24:21.000
+after that make a website and deliver it to the freelance client
+00:24:24.000
+where will you get freelancing clients, you can go to a website and deliver it to the freelance client. Where will you get freelancing clients?
+00:24:26.000
+You can go to a website like Fiverr. Yes, I know that it is a little difficult to get work on Fiverr.
+00:24:29.000
+But you can go here to the buyer request.
+00:24:32.000
+Fiverr has an option for a buyer request. Just search.
+00:24:35.000
+Now if you go here, you can match with the buyer.
+00:24:38.000
+If I show you images, then here is a buyer request.
+00:24:41.000
+You can give your pitch to these people that I have done this thing
+00:24:44.000
+and I am apt to do this work.
+00:24:46.000
+You will get work and it will start from here.
+00:24:48.000
+As you get good reviews on your gig, you will earn more money.
+00:24:52.000
+Suppose you have a gig of 5 star, no one has ever ordered on it, then you will never get work easily.
+00:24:58.000
+But if 5-6 people have ordered on your gig and everyone has given gave you 5 stars then things become easy for you
+00:25:05.400
+because buyers want the credibility of the people they are getting work from to be good
+00:25:10.200
+so that they also need work
+00:25:12.200
+and they are also giving money so they also want their money not to be wasted
+00:25:16.000
+so here Fiverr, Upwork and many other freelancing websites are there on which you can try
+00:25:20.400
+but before trying you should know how to make good websites
+00:25:23.600
+and today's date responsive, cutting edge
+00:25:26.000
+Using technologies, suppose you want to integrate
+00:25:29.000
+ChargeGPT API, you will get this kind of work, no one will tell you
+00:25:32.000
+Make me a design, make you a simple navbar
+00:25:35.000
+I am saying most of the clients do not do this work
+00:25:38.000
+Nowadays everyone does chargeGPT, you can make complex websites
+00:25:41.000
+You can earn more money
+00:25:44.000
+Then the second thing is get a job as a web developer
+00:25:46.200
+If you get a job as a web developer
+00:25:48.200
+If you become a good web developer, you will get a job
+00:25:51.160
+And it's not that the jobs have decreased
+00:25:52.480
+In fact, the demand for senior developers is increasing
+00:25:55.480
+And their backers are also increasing
+00:25:57.480
+People are earning more money in coding than they used to
+00:26:00.600
+If you are a very basic developer, then yes, you will be replaced by chatgpt
+00:26:04.080
+After this, you can sell your services by creating an Instagram account.
+00:26:08.000
+If you upload any kind of images on your Instagram account,
+00:26:11.000
+and if you take a little bit of traction,
+00:26:14.000
+where you talk about websites,
+00:26:16.000
+then clients start approaching you.
+00:26:18.000
+Many clients approach me,
+00:26:20.000
+who tell me that I want to make a website.
+00:26:22.000
+I am not saying that you should have a lot of followers.
+00:26:24.000
+You can start with very less following
+00:26:26.000
+after this you can give people
+00:26:28.000
+one to one help, you can get this from
+00:26:30.000
+clients Instagram or from social media
+00:26:32.000
+you can say at the end of your reel
+00:26:34.000
+that if you want to learn anything then you
+00:26:36.000
+come to my DM, I will tell you
+00:26:38.000
+and you get clients very easily
+00:26:40.000
+trust me if you find it useful
+00:26:42.000
+after this you can sell a course
+00:26:44.000
+which I was going can sell the course.
+00:26:46.000
+I was going to sell this course, I have uploaded it for free.
+00:26:49.000
+But this course was going to be paid for you.
+00:26:52.000
+The truth is that whenever you get paid for this course,
+00:26:55.000
+everyone would definitely pay for this course.
+00:26:58.000
+Now it is not necessary that you have to make a course for web development.
+00:27:01.000
+There are many things in web development.
+00:27:04.000
+Like how to use chat gpt api Make a course for that
+00:27:06.000
+If you want to make a website
+00:27:08.000
+Then it will be easy to sell it
+00:27:10.000
+Course economy is very huge
+00:27:12.000
+Many people contacted me to buy this course
+00:27:14.000
+That I should launch this course on their platform
+00:27:16.000
+As a paid course
+00:27:18.000
+But I didn't do it because I wanted to give this course for free
+00:27:20.000
+I decided
+00:27:22.000
+I also posted
+00:27:24.000
+Till last moment people contacted me
+00:27:26.000
+Please don't put the course for free but I did
+00:27:29.000
+So you have to write sigma batch op in the comment section and like it
+00:27:32.000
+Now in total, by uploading this course for free, many course sellers have been harmed
+00:27:35.000
+Because when you get iPhone 15, 16, 19 pro max for free
+00:27:38.000
+Then who will ask blackberry
+00:27:41.000
+That too paid blackberry
+00:27:44.000
+And I am saying this because I have put a I have put in this and how much experience I have put in it.
+00:27:48.000
+You will also know in the coming videos.
+00:27:50.000
+So stay tuned, you will get a lot of things in this course in the coming videos.
+00:27:55.000
+I am aware of the fact that we are taking a very slow start, but remember my words.
+00:27:59.000
+We will raise the bar like anything.
+00:28:00.000
+So access the playlist, like the video, name your village land in my name.

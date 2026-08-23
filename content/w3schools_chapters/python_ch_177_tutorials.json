@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 177,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In this tutorial we will go back to mathematics and study statistics, and how to calculate \nimportant numbers based on data sets.\n\nWe will also learn how to use various Python modules to get the answers we \nneed.\n\nAnd we will learn how to make functions that are able to predict the outcome \nbased on what we have learned.\n\nIn the mind of a computer, a data set is any collection of data.\nIt can be anything from an array to a complete database.\n\nExample of an array:\n\nExample of a database:\n\nBy looking at the array, we can guess that the average value is probably around 80 \nor 90, and we are also able to determine the highest value and the lowest value, but what else can we do?\n\nAnd by looking at the database we can see that the most popular color is white, and the oldest car is 17 years,\nbut what if we could predict if a car had an AutoPass, just by looking at the other values?\n\nThat is what Machine Learning is for! Analyzing data and predicting the outcome!\n\nTo analyze data, it is important to know what type of data we are dealing with.\n\nWe can split the data types into three main categories:\n\nNumericaldata are numbers, and can be split into two \nnumerical categories:\n\nCategoricaldata are values that cannot be measured up \nagainst each other. Example: a color value, or any yes/no values.\n\nOrdinaldata are like categorical data, but can be measured \nup against each other. Example: school grades where A is better than B and so \non.\n\nBy knowing the data type of your data source, you will be able to know what \ntechnique to use when analyzing them.\n\nYou will learn more about statistics and analyzing data in the next chapters.\n\n### Code Snippets\n\n```\n[99,86,87,88,111,86,103,87,94,78,77,85,86]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_176",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

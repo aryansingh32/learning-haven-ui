@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 39,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript Numbers are only accurate up to 15 digits:\n\nAll JavaScriptNumbersare stored in a64-bit floating-pointformat (IEEE 754 standard).\n\nWith this standard, large numbers cannot be exactly represented, but will be rounded.\n\nJavaScript can only safely represent integers up to253-1(9007199254740991).\n\nJavaScript can only safely represent integers down to-253-1(-9007199254740991).\n\nYou can create a BigInt in two ways:\n\nYou can also create a BigInt using the Bigint() constructor with aNumber.\n\nWarning !! Numbers are only accurate up to 15 digits.\n\nThe JavaScripttypeofaBigIntis \"bigint\":\n\nBigIntis the second numeric data type in JavaScript\n(afterNumber).\n\nWithBigIntthe total number of supported data types in JavaScript is 8:\n\n1. String2. Number3. Bigint4. Boolean5. Undefined6. Null7. Symbol8. Object\n\nBigIntsupports standard JavaScriptarithmetic operators.\n\n(+, -, ++, --, *, /, %, **)\n\nArithmetic between aBigIntand aNumberis not allowed (will result in aTypeError).\n\nExplicit conversion must be done first.\n\nBigInt to Number:Use the Number() constructor.\n\nNumber to BigInt:Use the BigInt() constructor.\n\nABigIntcan not have decimals.\n\nBigintsupports standard JavaScriptcomparison operators.\n\n(<, > ==, ===, !==, <=, >=)\n\nBigInts can also be compared with Numbers using standard comparison operators.\n\nBigInt supports bitwise operations, butonly with other BigInts(not Numbers):\n\nBigIntonly supports two shift operators:\n\nImpotant Rules:\n\nBigIntcan also be written in hexadecimal, octal, or binary notation:\n\nLike numbers, bigint literals support several bases:\n\nMaximum safe integer in JavaScript is 9007199254740991.\n\nRounding can compromise program security:\n\nBigInt()is an ES2020 feature.\n\nES2020is fully supported in all modern browsers sinceSeptember 2020:\n\n### Code Snippets\n\n```\n// 15 digits:\nlet x = 999999999999999;\n// 16 digits:\nlet y = 9999999999999999;\n\n---\n\n// MAX = 9007199254740991\nlet x = Number.MAX_SAFE_INTEGER;\n// MIN = -9007199254740991\nlet y = Number.MIN_SAFE_INTEGER;\n\n---\n\n// Max (accurate)\nlet x = 9007199254740991;\n// Max + 10 (inaccurate)\nlet y = x + 10;\n\n---\n\n// Min (accurate)\nlet x = -9007199254740991;\n// Min - 10 (inaccurate)\nlet y = x - 10;\n\n---\n\n// Using an integer literal with an n suffix:\nlet x = 999999999999999n;\n// Using the BigInt() constructor with a string:\nlet y = BigInt(\"999999999999999\");\n\n---\n\nlet x = 12345678901234567890n;\nlet y = BigInt(\"12345678901234567890\")\n\n---\n\nlet x = BigInt(9999999999999999);\n\n---\n\nlet x = BigInt(999999999999999);\nlet type = typeof x;\n\n---\n\nlet x = 9007199254740995n;\nlet y = 9007199254740995n;\nlet z = x * y;\n\n---\n\nlet x = 10n;\nlet y = 5;\nlet z = x + y; // \u274c TypeError\n\n---\n\nlet x = 10n;\nlet y = 5;\nlet z = Number(x) + y;\n\n---\n\n// Create a BigInt\nlet largeNumber = BigInt(\"12345678901234567890\");\n// Conversions\nlet num = Number(largeNumber);\n\n---\n\nlet x = 1.5n; // \u274c TypeError\n\n---\n\nlet x = 5n;\nlet y = x / 2;\n//  \u274c Error: Cannot mix BigInt and other types, use explicit conversion.\n\n---\n\nlet x = 5n;\nlet y = Number(x) / 2;\n\n---\n\n// true\nlet x = (10n > 5n);\n// false (different types)\nlet y = (10n === 10);\n// true (loose equality)\nlet z = (10n == 10);\n\n---\n\nlet a = 5n;   // 0101\nlet b = 3n;   // 0011\nlet x = (a & b); // 1n   (0001)\nlet y = (a | b); // 7n   (0111)\nlet z = (a ^ b); // 6n   (0110)\nlet n = (~a);\u00a0\u00a0\u00a0\u00a0// -6n\n\n---\n\nlet big = 10n; // binary: 1010\nlet x = (big << 2n); // 40n  (101000)\nlet y = (big >> 1n); // 5n   (0101)\n\n---\n\nlet num = 256n;\nlet oct = 0o400n;\nlet hex = 0x100n;\nlet bin = 0b100000000n;\n\n---\n\nlet hex = 0x20000000000003n;\nlet oct = 0o400000000000000003n;\nlet bin = 0b100000000000000000000000000000000000000000000000000011n;\n\n---\n\n9007199254740992 === 9007199254740993; // is true !!!\n\n---\n\n9007199254740992n === 9007199254740993n; // is false !!!\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_38",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

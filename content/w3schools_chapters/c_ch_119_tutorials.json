@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 119,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Data structures are used to store and organize data. Anarrayis an example of a data structure, which \nallows multiple elements to be stored in a single variable.\n\nC++ includes many other data structures as well, each is used to handle data \nin different ways.\n\nThese are part of the C++ STL, which stands for TheStandardTemplateLibrary.\n\nSTL is a library that consist of differentdata structuresandalgorithmsto effectively store and manipulate data.\n\nIf we say that data structures store data, we can say that algorithms are used to solve different problems, \noften by searching through and manipulating those data structures.\n\nUsing the right data structure and algorithm makes your program run faster, \nespecially when working with lots of data.\n\nThe most common data structures are:\n\nWhich one to use depends on your specific needs. One thing they all have in common is that you must include the \nappropriate header file to use them:\n\nHere is an example of using vectors, after we have included the<vector>library:\n\nThe next chapters will explain how each data structure works and how to use them.\n\nThe key components of the STL consist ofcontainers,iterators,andalgorithms, and the relationship between them:\n\nIn Computer Science, data structures and algorithms go hand in hand. A data structure is not worth \nmuch if you cannot search through it or manipulate it efficiently using \nalgorithms, and algorithms are not worth much without a data structure to work \non.\n\nIn the following chapters, you will see how everything is connected.\n\n### Code Snippets\n\n```\n// Include the vector library\n#include <vector>\n// Include the list library\n#include <list>\n// Include the set \n  library\n#include <set>\n// Include the map library\n#include <map>\n// Include the stack library\n#include <stack>\n// \n  Include the queue library\n#include <queue>\n\n---\n\n// Create a vector called cars that will store strings\nvector<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Print vector elements\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_118",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

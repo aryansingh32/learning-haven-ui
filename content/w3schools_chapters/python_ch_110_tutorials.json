@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 110,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Recursion is when a function calls itself.\n\nRecursion is a common mathematical and programming concept.\n  It means that a function calls itself.\n  This has the benefit of meaning that you can loop through data to reach a result.\n\nThe developer should be very careful with recursion as it can be quite easy to slip into writing a function which never terminates,\n  or one that uses excess amounts of memory or processor power.\n  However, when written correctly recursion can be a very efficient and mathematically-elegant approach to programming.\n\nEvery recursive function must have two parts:\n\nWithout a base case, the function would call itself forever, causing a stack overflow error.\n\nThe Fibonacci sequence is a classic example where each number is the sum of the two preceding ones. The sequence starts with 0 and 1:\n\n0, 1, 1, 2, 3, 5, 8, 13, ...\n\nThe sequence continues indefinitely, with each number being the sum of the two preceding ones.\n\nWe can use recursion to find a specific number in the sequence:\n\nRecursion can be used to process lists by handling one element at a time:\n\nPython has a limit on how deep recursion can go. The default limit is usually around 1000 recursive calls.\n\nIf you need deeper recursion, you can increase the limit, but be careful as this can cause crashes:\n\n### Code Snippets\n\n```\ndef countdown(n):\nif n <= 0:\nprint(\"Done!\")\nelse:\nprint(n)\ncountdown(n - 1)\ncountdown(5)\n\n---\n\ndef factorial(n):\n# Base case\nif n == 0 or n == 1:\nreturn 1\n# Recursive case\nelse:\nreturn n * factorial(n - 1)\nprint(factorial(5))\n\n---\n\ndef fibonacci(n):\nif n <= 1:\nreturn n\nelse:\nreturn fibonacci(n - 1) + fibonacci(n - 2)\nprint(fibonacci(7))\n\n---\n\ndef sum_list(numbers):\nif len(numbers) == 0:\nreturn 0\nelse:\nreturn numbers[0] + sum_list(numbers[1:])\nmy_list = [1, 2, 3, 4, 5]\nprint(sum_list(my_list))\n\n---\n\ndef find_max(numbers):\nif len(numbers) == 1:\nreturn numbers[0]\nelse:\nmax_of_rest = find_max(numbers[1:])\nreturn numbers[0] if numbers[0] > max_of_rest else max_of_rest\nmy_list = [3, 7, 2, 9, 1]\nprint(find_max(my_list))\n\n---\n\nimport sys\nprint(sys.getrecursionlimit())\n\n---\n\nimport sys\nsys.setrecursionlimit(2000)\nprint(sys.getrecursionlimit())\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_109",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

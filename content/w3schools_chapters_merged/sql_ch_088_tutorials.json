@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 88,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CurrentUser() function returns the name of the current database user.\n\n### Code Examples\n\n```\nSELECT CurrentUser();\n\n---\n\nCurrentUser()\n```\n\n## Tutorials\n\nThe Environ() function returns a string that contains the value of an operating system environment variable.\n\nOR:\n\n### Code Examples\n\n```\nSELECT Environ(1);\n\n---\n\nEnviron(\nnumber\n)\n\n---\n\nEnviron(\nstring\n)\n```\n\n## Tutorials\n\nThe IsDate() function checks whether an expression can be converted to a \ndate.\n\nThis function returns a Boolean value. TRUE (-1) indicates that the expression is a valid date, \nand FALSE (0) indicates that the expression is not a valid date.\n\n### Code Examples\n\n```\nSELECT \n  IsDate(Now());\n\n---\n\nIsDate(\nexpression\n)\n\n---\n\nSELECT\n  IsDate(\"Hello\");\n\n---\n\nSELECT\n  IsDate(\"August 25, 2017\");\n\n---\n\nSELECT IsDate(#25/8/2017#);\n```\n\n## Tutorials\n\nThe IsNull() function checks whether an expression contains Null (no data).\n\nThis function returns a Boolean value. TRUE (-1) indicates that the \nexpression is a Null value, and FALSE (0) indicates that the expression is not a \nNull value.\n\n### Code Examples\n\n```\nSELECT IsNull(null);\n\n---\n\nIsNull(\nexpression\n)\n\n---\n\nSELECT IsNull(\"Hello\");\n\n---\n\nSELECT IsNull(0);\n```\n\n## Tutorials\n\nThe IsNumeric() function checks whether an expression is a valid number.\n\nThis function returns a Boolean value. TRUE (-1) indicates that the \nexpression is a valid number, and FALSE (0) indicates that the expression is not \na valid number.\n\n### Code Examples\n\n```\nSELECT IsNumeric(1030);\n\n---\n\nIsNumeric(\nexpression\n)\n\n---\n\nSELECT IsNumeric(\"Hello\");\n\n---\n\nSELECT IsNumeric(\"1030\");\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_88",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_88",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

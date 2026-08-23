@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 30,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe HTML Drag and Drop API enables an element to be dragged and dropped.\n\nDrag the W3Schools image into the second rectangle.\n\nDrag and drop is a very common feature. It is when you \"grab\" an object and drag it to a different location.\n\nThe numbers in the table specify the first browser version that fully supports Drag and Drop.\n\nThe example below is a simple drag and drop example:\n\nIt might seem complicated, but lets go through all the different parts of a drag and drop event.\n\nFirst of all: To make an element draggable, set thedraggableattribute to true:\n\nor:\n\nThen, specify what should happen when the element is dragged.\n\nIn the example above, theondragstartattribute \nof the <img> element calls a function (dragstartHandler(ev)), \nthat specifies what data to be dragged.\n\nThedataTransfer.setData()method sets the data type and the value of the \ndragged data:\n\nIn this case, the data type is \"text\" and the value is the id of the draggable element (\"img1\").\n\nTheondragoverattrribute of the <div> \nelement calls a function (dragoverHandler(ev)), that specifies where the dragged data can be dropped.\n\nBy default, data/elements cannot be dropped in other elements. To allow a drop, \nwe must prevent the default handling of the element.\n\nThis is done by calling thepreventDefault()method for the ondragover event:\n\nWhen the dragged data is dropped, a drop event occurs.\n\nIn the example above, the ondrop attribute of the <div> element calls a function, dropHandler(event):\n\nCode explained:\n\n### Code Examples\n\n```\n<!DOCTYPE HTML>\n<html>\n<head>\n<script>\nfunction dragstartHandler(ev) {\nev.dataTransfer.setData(\"text\", \n  ev.target.id);\n}\nfunction dragoverHandler(ev) {\nev.preventDefault();\n}\nfunction dropHandler(ev) {\nev.preventDefault();\nconst data = ev.dataTransfer.getData(\"text\");\nev.target.appendChild(document.getElementById(data));\n}\n</script>\n</head>\n<body>\n<div id=\"div1\" ondrop=\"dropHandler(event)\" \n  ondragover=\"dragoverHandler(event)\"></div>\n<img id=\"img1\" src=\"img_logo.gif\" \n  draggable=\"true\" ondragstart=\"dragstartHandler(event)\" width=\"336\" \n  height=\"69\">\n</body>\n</html>\n\n---\n\n<img id=\"img1\" draggable=\"true\">\n\n---\n\n<p \n  id=\"p1\" draggable=\"true\">Draggable text</p>\n\n---\n\nfunction dragstartHandler(ev) {\nev.dataTransfer.setData(\"text\", \n  ev.target.id);\n}\n\n---\n\nfunction dragoverHandler(ev) {\nev.preventDefault();\n}\n\n---\n\nfunction dropHandler(ev) {\nev.preventDefault();\nconst \n   data = ev.dataTransfer.getData(\"text\");\nev.target.appendChild(document.getElementById(data));\n}\n\n---\n\n<script>\nfunction dragstartHandler(ev) {\nev.dataTransfer.setData(\"text\", \n  ev.target.id);\n}\nfunction dragoverHandler(ev) {\nev.preventDefault();\n}\nfunction dropHandler(ev) {\nev.preventDefault();\nconst data = \n  ev.dataTransfer.getData(\"text\");\nev.target.appendChild(document.getElementById(data));\n}\n</script>\n</head>\n<body>\n<div id=\"div1\" ondrop=\"dropHandler(event)\" \n  ondragover=\"dragoverHandler(event)\"></div>\n<h1 id=\"h1\" \n  draggable=\"true\" ondragstart=\"dragstartHandler(event)\">W3Schools.com</h1>\n\n---\n\n<script>\nfunction dragstartHandler(ev) {\nev.dataTransfer.setData(\"text\", \n  ev.target.id);\n}\nfunction dragoverHandler(ev) {\nev.preventDefault();\n}\nfunction dropHandler(ev) {\nev.preventDefault();\nconst data = \n  ev.dataTransfer.getData(\"text\");\nev.target.appendChild(document.getElementById(data));\n}\n</script>\n</head>\n<body>\n<div id=\"div1\" ondrop=\"dropHandler(event)\" \n  ondragover=\"dragoverHandler(event)\"></div>\n<a \n  id=\"link1\" href=\"https://w3schools.com\" draggable=\"true\" ondragstart=\"dragstartHandler(event)\">W3Schools.com</a>\n```\n\n## Tutorials\n\nHTML Web Storage API; better than cookies.\n\nWith web storage, applications can store data locally within the user's browser.\n\nBefore HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data \ncan be stored locally, without affecting website performance.\n\nUnlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.\n\nWeb storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.\n\nWeb storage provides two objects for storing data in the browser:\n\nThe numbers in the table specify the first browser version that fully supports \nWeb Storage.\n\nBefore using web storage, we can quickly check browser support for localStorage and sessionStorage:\n\nThelocalStorageobject stores the data with no expiration date. The data \nwill not be lost when the browser is closed, and will be available the next day, week, or year.\n\nExample explained:\n\nThe syntax for removing the \"lastname\" localStorage item is as follows:\n\nNote:Name/value pairs are always stored as strings. \nRemember to convert them to another format when needed!\n\nThe following example counts the number of times a user has clicked a button. \nIn this code the value string is converted to a number to be able to increase the counter:\n\nThesessionStorageobject is equal to thelocalStorageobject,exceptthat it stores the data for only one session! The data is deleted when the user closes the \nspecific browser tab.\n\nThe following example counts the number of times a user has clicked a button, in the current session:\n\n### Code Examples\n\n```\n<script>\nconst x = document.getElementById(\"result\");\nif (typeof(Storage) \n  !== \"undefined\") {\nx.innerHTML = \"Your browser supports Web \n  storage!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage \n  support!\";\n}\n</script>\n\n---\n\n<script>\nconst x = document.getElementById(\"result\");\nif (typeof(Storage) \n  !== \"undefined\") {\n// Store\nlocalStorage.setItem(\"lastname\", \n  \"Smith\");\nlocalStorage.setItem(\"bgcolor\", \"yellow\");\n// \n  Retrieve\nx.innerHTML = localStorage.getItem(\"lastname\");\nx.style.backgroundColor = localStorage.getItem(\"bgcolor\");\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n</script>\n\n---\n\nlocalStorage.removeItem(\"lastname\");\n\n---\n\n<script>\nfunction clickCounter() {\nconst x = \n  document.getElementById(\"result\");\nif (typeof(Storage) !== \n  \"undefined\") {\nif (localStorage.clickcount) {\nlocalStorage.clickcount = Number(localStorage.clickcount)+1;\n} else {\nlocalStorage.clickcount = 1;\n}\nx.innerHTML = \"You have clicked the button \" + \n  localStorage.clickcount + \" time(s)!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n}\n</script>\n\n---\n\n<script>\nfunction clickCounter() {\nconst x = \n  document.getElementById(\"result\");\nif (typeof(Storage) !== \n  \"undefined\") {\nif (sessionStorage.clickcount) {\nsessionStorage.clickcount = Number(sessionStorage.clickcount)+1;\n} else {\nsessionStorage.clickcount = 1;\n}\nx.innerHTML = \"You have clicked the button \" + \n  sessionStorage.clickcount + \" time(s) in this session!\";\n} else {\nx.innerHTML = \"Sorry, no Web storage support!\";\n}\n}\n</script>\n```\n\n## Tutorials\n\nA web worker is an external JavaScript file that runs in the background, without affecting the performance of the page.\n\nWhen executing scripts in an HTML page, the page becomes unresponsive until the script is finished.\n\nA web worker is an external JavaScript file that runs in the background, independently \nof other scripts, without affecting the performance of the page. You can continue to do whatever you want: \nclicking, selecting things, etc., while the web worker runs in the background.\n\nWeb workers are useful for heavy code that can't be run on the main thread, \nwithout causing long tasks that make the page unresponsive.\n\nThe numbers in the table specify the first browser version that fully support \nthe Web Workers API.\n\nThe example below creates a simple web worker that count numbers in the background:\n\nBefore using web worker, we can quickly check browser support:\n\nNow, let's create a web worker in an external JavaScript file.\n\nHere we create a script that counts. The script is stored in the \"demo_workers.js\" file:\n\nNote:The important part of the code above is thepostMessage()method - which is used to post messages back to the HTML page.\n\nOnce we have created the .js web worker file, we can call it from an HTML page.\n\nThe following lines checks if a worker (w) already exists, if not - it creates a new web worker object and \npoints to the .js file: \n\"demo_workers.js\":\n\nThen we can SEND and RETRIEVE messages from the web worker.\n\nData is sent between web workers and the main thread via a system of messages \n- both sides send their messages using thepostMessage()method, and respond to messages via theonmessageevent handler.\n\nAdd anonmessageevent listener to the web worker \nobject.\n\nWhen the web worker in the .js posts a message, the code within the event listener is executed. The data \nfrom the web worker is stored inevent.data.\n\nWhen a web worker object is created, it will continue to listen for messages until it is terminated.\n\nTo terminate a web worker object, and free browser/computer resources, use theterminate()method:\n\nIf you set the web worker variable to undefined, after it has been terminated, \nyou can reuse the worker/code:\n\nWe have already seen the Web Worker code in the .js file.\n\nBelow is the full code for the HTML page:\n\nSince web workers are in external .js files, they do not have access to the following JavaScript objects:\n\n### Code Examples\n\n```\n<script>\nconst x = document.getElementById(\"result\");\nif(typeof(Worker) !== \"undefined\") {\nx.innerHTML = \"Your browser \n  support Web Workers!\";\n} else {\nx.innerHTML = \"Sorry, your \n  browser does not support Web Workers.\";\n}\n</script>\n\n---\n\nvar i = 0;\nfunction timedCount()\n{\ni = i + 1;\npostMessage(i);\nsetTimeout(\"timedCount()\",500);\n}\ntimedCount();\n\n---\n\nif (typeof(w) == \"undefined\") {\nw = new Worker(\"demo_workers.js\");\n}\n\n---\n\nw.onmessage = function(event){\ndocument.getElementById(\"result\").innerHTML = event.data;\n};\n\n---\n\nw.terminate();\n\n---\n\nw = undefined;\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<p>Count numbers: <output id=\"result\"></output></p>\n<button onclick=\"startWorker()\">Start Worker</button>\n<button onclick=\"stopWorker()\">Stop Worker</button>\n<script>\nlet w;\nfunction startWorker()\n{\nconst x = document.getElementById(\"result\");\nif (typeof(Worker) !== \"undefined\")\n{\nif (typeof(w) == \"undefined\") {\nw = new Worker(\"demo_workers.js\");\n}\nw.onmessage = function(event) {\nx.innerHTML = event.data;\n};\n}\nelse\n{\nx.innerHTML = \"Sorry! No Web Worker support.\";\n}\n}\nfunction stopWorker()\n{\nw.terminate();\nw = undefined;\n}\n</script>\n</body>\n</html>\n```\n\n## Tutorials\n\nThe Server-Sent Events (SSE) API enables pushing \nmessages/updates from a server to the web page via HTTP connection.\n\nA server-sent event is when a web page automatically gets messages/updates from a server.\n\nNormally, a web page has to request data from the server, but with server-sent events, the updates \nare pushed automatically.\n\nExamples: Facebook/Twitter updates, stock market updates, news feeds, sport results, etc.\n\nThe numbers in the table specify the first browser version that fully support \nthe Server-Sent Events API.\n\nTheEventSourceobject is used to receive server-sent event notifications:\n\nExample explained:\n\nIn the tryit example above there were some extra lines of code to check browser support for server-sent events:\n\nFor the example above to work, you need a server capable of sending data updates (like PHP or ASP).\n\nThe server-side event stream syntax is simple. Set the \"Content-Type\" header to \n\"text/event-stream\". Now you can start sending event streams.\n\nCode in PHP (demo_sse.php):\n\nCode in ASP (VB) (demo_sse.asp):\n\nCode explained:\n\nIn the examples above we used the onmessage event to get messages. But other events are also available:\n\n### Code Examples\n\n```\n<script>\nconst x = document.getElementById(\"result\");\n// Check browser support for SSE\nif(typeof(EventSource) \n  !== \"undefined\") {\nvar source = new EventSource(\"demo_sse.php\");\nsource.onmessage = function(event) {\nx.innerHTML += \n  event.data + \"<br>\";\n};\n} else {\nx.innerHTML = \"Sorry, \n  no support for server-sent events.\";\n}\n</script>\n\n---\n\nif(typeof(EventSource) !== \"undefined\") {\n// Yes! Server-sent events support!\n//\nSome code.....\n}\n else {\n// Sorry! No server-sent events support..\n}\n\n---\n\n<?php\nheader('Content-Type: text/event-stream');\nheader('Cache-Control: no-cache');\n$time = date('r');\necho \"data: The server time is: {$time}\\n\\n\";\nflush();\n?>\n\n---\n\n<%\nResponse.ContentType = \"text/event-stream\"\nResponse.Expires = -1\nResponse.Write(\"data: The server time is: \" & now())\nResponse.Flush()\n%>\n```\n\n## Tutorials\n\nPrepare online at your own pace, take the exam when you are ready, and add a verified credential to your CV, LinkedIn profile, and portfolio.\n\nDesigned for students, developers, and professionals who want a practical way to document their knowledge.\n\nAny student or professional working in digital fields can benefit from documenting their skills with a certificate.\n\nCertifications help demonstrate knowledge to current or future employers, clients, and collaborators in an increasingly competitive market.\n\nW3Schools has more than two decades of experience teaching coding online.\n\nOur certificates provide a practical and professional way to show your skills in a format that is easy to verify and share.\n\nThe price is a small fraction of the cost of traditional education.\n\nYou can prepare on your own schedule and take the exam when you are ready.\n\nEach certificate includes a unique verification link that can be shared with employers, clients, and your network.\n\nDownload your certificate to showcase it, and validate it using the unique link or QR code.\n\nSee how it looks in thisexample.\n\nHave any questions? Send us an e-mail:sales@w3schools.com\n\nGetting a certificate shows your commitment to improving your skills.\n\nYou can add the certificate to your CV, resume, LinkedIn profile, and other professional platforms.\n\nIt can help support career growth by making it easier to show your knowledge when applying for jobs, freelance work, or larger projects.\n\nGetting a certificate shows initiative, helps you build credibility, and gives you a professional way to present yourHTMLknowledge.\n\nAre you an educator, manager, or business owner looking for courses or certifications for a group?\n\nWe work with schools, companies, and organizations around the world.\n\nSend us an e-mail:sales@w3schools.com\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_30",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_30",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

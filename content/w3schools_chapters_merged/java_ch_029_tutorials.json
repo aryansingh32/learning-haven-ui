@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 29,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nFind out if a number is even or odd:\n\nExplanation:The operator%gives the remainder when dividing a number.- Ifnumber % 2equals0, the number divides evenly by 2, it is even.- Otherwise, it has a remainder, it is odd.\n\nJava Numbers Tutorial\n\nJava Operators Tutorial\n\nJava Math Tutorial\n\n### Code Examples\n\n```\nExample\nint number = 5;\n\n// Find out if the number above is even or odd\nif (number % 2 == 0) {\n  System.out.println(number + \" is even.\");\n} else {\n  System.out.println(number + \" is odd.\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTake an integer and print it in reverse order:\n\nExplanation:We start with the number1234.  \nInside the loop:-num % 10gives us the last digit (4, then 3, then 2, then 1).- We add this digit toreversed, making the new number grow step by step.-num /= 10removes the last digit from the original number.When the loop finishes,reversedcontains4321.\n\n### Code Examples\n\n```\nExample\nint num = 1234;\nint reversed = 0;\n\nwhile (num != 0) {\n  int digit = num % 10;\n  reversed = reversed * 10 + digit;\n  num /= 10;\n}\n\nSystem.out.println(\"Reversed: \" + reversed);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nFind out if a number is positive or negative:\n\nExplanation:We use simple comparisons with>and<.- If the number is greater than 0, it is positive.- If the number is less than 0, it is negative.- If it is neither, it must be exactly 0.\n\nJava If..Else Tutorial\n\n### Code Examples\n\n```\nExample\nint myNum = 10; // Is this a positive or negative number?\n\nif (myNum > 0) {\n  System.out.println(\"The value is a positive number.\");\n} else if (myNum < 0) {\n  System.out.println(\"The value is a negative number.\");\n} else {\n  System.out.println(\"The value is 0.\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nYou can useMath.sqrt()to find the square root of a number:\n\nJava Math Tutorial\n\nJava Math Reference\n\n### Code Examples\n\n```\nExample\nFind the square root of 64:\nMath.sqrt(64);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThe area of a rectangle can be found by multiplying the length of the \nrectangle by the width:\n\nExplanation:We store the rectangle's length and width in two variables.Then we multiply them (length * width) to get the area.Finally, we print the result, which in this example is10.\n\n### Code Examples\n\n```\nExample\nint length = 5; \nint width = 2; \nint area = length * width; \nSystem.out.println(\"Area of rectangle: \" + area);\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_29",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_29",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 243,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Callbacks work well for simple asynchronous operations.\n\nHowever, several dependent callbacks can become difficult to read.\n\nPromises provide a cleaner and more readable way to organize asynchronous code.\n\nThe code becomes flatter and easier to read.\n\nEvery Promise is always in one of three states.\n\nMany JavaScript APIs return Promises.\n\nThefetch()method is one example.\n\nThefetch()method immediately returns a Promise.\n\nThe download continues in the background while JavaScript runs other code.\n\nThethen()method is called immediately.\n\nIt registers a function that JavaScript will call after the Promise is fulfilled.\n\nThe registered function runs later when the Promise has a result.\n\nEach call tothen()returns a new Promise.\n\nMost of the time you will use Promises returned by JavaScript APIs such asfetch().\n\nSometimes you need to create your own Promise.\n\nCreate a Promise with thePromise()constructor.\n\nThe constructor receives a function with two parameters.\n\nThethen()method registers a function that handles a fulfilled Promise.\n\nThe registered function receives the fulfillment value.\n\nThecatch()method registers a function that handles a rejected Promise.\n\nThefinally()method registers a function that runs when a Promise settles.\n\nIt runs whether the Promise is fulfilled or rejected.\n\nSincethen()returns a new Promise, several asynchronous operations can be chained together.\n\nIf athen()callback starts another asynchronous operation, return its Promise.\n\nIf athen()callback starts another asynchronous operation, return its Promise.\n\nThe secondthen()may run beforestep2()has finished.\n\nUnhandled Promise rejections make debugging difficult.\n\nUsecatch()to handle errors.\n\nCreating a Promise does not pause JavaScript.\n\nJavaScript continues executing while the asynchronous operation is in progress.\n\nThe output is:\n\nA Promise represents the result of an asynchronous operation.\n\nThe asynchronous work is usually performed by a browser API such asfetch()orsetTimeout().\n\nThe Promise provides a clean way to receive the result when that operation finishes.\n\nPromise callbacks do not run immediately.\n\nThey are scheduled to run after the current JavaScript task has completed.\n\nThe JavaScript Event Loop is responsible for running these callbacks.\n\n### Code Snippets\n\n```\nstep1(function(result1) {\nstep2(result1, function(result2) {\nstep3(result2, function(result3) {\ndisplay(result3);\n});\n});\n});\n\n---\n\nstep1()\n.then(step2)\n.then(step3)\n.then(display);\n\n---\n\nfetch(\"fetch.txt\")\n.then(function(response) {\nreturn response.text();\n})\n.then(function(text) {\nmyDisplayer(text);\n})\n.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\nlet promise = fetch(\"fetch.txt\");\npromise.then(function(response) {\nreturn response.text();\n});\nmyDisplayer(\"JavaScript continues...\");\n\n---\n\nconst promise = new Promise(function(resolve, reject) {\n// Asynchronous work\nif (success) {\nresolve(value);\n} else {\nreject(error);\n}\n});\n\n---\n\nconst promise = new Promise(function(resolve, reject) {\nconst success = true;\nif (success) {\nresolve(\"Operation completed\");\n} else {\nreject(\"Operation failed\");\n}\n});\npromise.then(function(value) {\nmyDisplayer(value);\n})\n.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\nfetch(\"fetch.txt\")\n.then(function(response) {\nreturn response.text();\n})\n.then(function(text) {\nmyDisplayer(text);\n});\n\n---\n\nfetch(\"missing.txt\")\n.then(function(response) {\nif (!response.ok) {\nthrow new Error(response.statusText);\n}\nreturn response.text();\n})\n.then(function(text) {\nmyDisplayer(text);\n})\n.catch(function(error) {\nmyDisplayer(error.message);\n});\n\n---\n\nfetch(\"fetch.txt\")\n.then(function(response) {\nreturn response.text();\n})\n.then(function(text) {\nmyDisplayer(text);\n})\n.catch(function(error) {\nmyDisplayer(error.message);\n})\n.finally(function() {\nmyDisplayer(\"Finished\");\n});\n\n---\n\nfunction step1() {\nreturn Promise.resolve(\"A\");\n}\nfunction step2(value) {\nreturn Promise.resolve(value + \"B\");\n}\nfunction step3(value) {\nreturn Promise.resolve(value + \"C\");\n}\nstep1()\n.then(function(value) {\nreturn step2(value);\n})\n.then(function(value) {\nreturn step3(value);\n})\n.then(function(value) {\nmyDisplayer(value);\n})\n.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\nstep1()\n.then(function(value) {\nreturn step2(value);\n})\n.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nstep1()\n.then(function(value) {\nstep2(value);\n})\n.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nstep1()\n.then(function(value) {\nreturn step2(value);\n})\n.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nfetch(\"missing.txt\")\n.then(function(response) {\nif (!response.ok) {\nthrow new Error(response.statusText);\n}\nreturn response.text();\n})\n.catch(function(error) {\nmyDisplayer(error.message);\n});\n\n---\n\nmyDisplayer(\"Start\");\nfetch(\"fetch.txt\")\n.then(function() {\nmyDisplayer(\"Finished\");\n});\nmyDisplayer(\"JavaScript continues\");\n\n---\n\nStart\nJavaScript continues\nFinished\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_242",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

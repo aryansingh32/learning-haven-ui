@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 37,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Java Keywords\n\nTheabstractkeyword is a non-access modifier, used for classes and methods.\n\nClass:An abstract class is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class).\n\nMethod:An abstract method can only be used in an abstract class, and it does not have a body. The body is provided by the subclass (inherited from).\n\nRead more about modifiers in ourJava Modifiers Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nAn\nabstract\nmethod belongs to an\nabstract\nclass, and it does not have a body. \nThe body is provided by the subclass:\n// Code from filename: Main.java\n// abstract class\nabstract class Main {\n\u00a0 public String fname = \"John\";\n\u00a0 public int age = 24;\n\u00a0 public\nabstract\nvoid study(); // abstract method\n}\n\n// Subclass (inherit from Main)\nclass Student extends Main {\n\u00a0 public int graduationYear = 2018;\n\u00a0 public void study() { // the body of the abstract method is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"Studying all day long\");\n\u00a0 }\n}\n// End code from filename: Main.java\n\n// Code from filename: Second.java\nclass Second {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 // create an object of the Student class (which inherits attributes and methods from Main)\n\u00a0\u00a0\u00a0 Student myObj = new Student();\n\n\u00a0\u00a0\u00a0 System.out.println(\"Name: \" + myObj.fname);\n\u00a0\u00a0\u00a0 System.out.println(\"Age: \" + myObj.age);\n\u00a0\u00a0\u00a0 System.out.println(\"Graduation Year: \" + myObj.graduationYear);\n\u00a0\u00a0\u00a0 myObj.study(); // call abstract method\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThebooleankeyword is a data type that can only take the valuestrueorfalse.\n\nBoolean values are mostly used for conditional testing (read theJava Booleans Tutorialfor more information).\n\nRead more about data types in ourJava Data Types Tutorial.\n\nRead more about booleans in ourJava Booleans Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nA boolean data type with true or false values:\nboolean isJavaFun = true;\nboolean isFishTasty = false;\nSystem.out.println(isJavaFun);\u00a0\u00a0\u00a0\u00a0 // Outputs true\nSystem.out.println(isFishTasty);\u00a0\u00a0 // Outputs false\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThebreakkeyword is used to break out aforloop, awhileloop or aswitchblock.\n\nUse thecontinuekeyword to end the current iteration in a loop, but continue with the next.\n\nRead more about for loops in ourJava For Loops Tutorial.\n\nRead more about while loops in ourJava While Loops Tutorial.\n\nRead more about break and continue in ourJava Break Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nEnd the loop when\ni\nis equal to 4:\nfor (int i = 0; i < 10; i++) {\n\u00a0 if (i == 4) {\n\u00a0\u00a0\u00a0 break;\n\u00a0 }\n\u00a0 System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nBreak out of a while loop:\nint i = 0;\nwhile (i < 10) {\n\u00a0\u00a0System.out.println(i);\n\u00a0\u00a0i++;\n\u00a0\u00a0if (i == 4) {\n\u00a0\u00a0\u00a0\u00a0break;\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThebytekeyword is a data type that can store whole numbers from -128 to 127.\n\nRead more about data types in ourJava Data Types Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nbyte myNum = 100;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThecasekeyword marks a block of code in aswitchstatement.\n\nRead more about the switch statement in ourJava Switch Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nCalculate the weekday name:\nint day = 4;\nswitch (day) {\n\u00a0 case 1:\n\u00a0\u00a0\u00a0 System.out.println(\"Monday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 2:\n\u00a0\u00a0\u00a0 System.out.println(\"Tuesday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 3:\n\u00a0\u00a0\u00a0 System.out.println(\"Wednesday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 4:\n\u00a0\u00a0\u00a0 System.out.println(\"Thursday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 5:\n\u00a0\u00a0\u00a0 System.out.println(\"Friday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 6:\n\u00a0\u00a0\u00a0 System.out.println(\"Saturday\");\n\u00a0\u00a0\u00a0 break;\n\u00a0 case 7:\n\u00a0\u00a0\u00a0 System.out.println(\"Sunday\");\n\u00a0\u00a0\u00a0 break;\n}\n// Outputs \"Thursday\" (day 4)\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_37",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_37",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

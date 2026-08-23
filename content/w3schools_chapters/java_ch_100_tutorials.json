@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 100,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "As mentioned in theErrors chapter, different types of errors can occur while running a program - such as coding mistakes, invalid input, or unexpected situations.\n\nWhen an error occurs, Java will normally stop and generate an error message. The technical term for this is: Java will throw anexception(throw an error).\n\nException handling lets you catch and handle errors during runtime - so your program doesn't crash.\n\nIt uses different keywords:\n\nThetrystatement allows you to define a block of code to be \ntested for errors while it is being executed.\n\nThecatchstatement allows you to define a block of code to \nbe executed, if an error occurs in the try block.\n\nThetryandcatchkeywords \ncome in pairs:\n\nConsider the following example:\n\nIf an error occurs, we can usetry...catchto catch the error and execute some code to handle it:\n\nThefinallystatement lets you execute code, aftertry...catch, regardless of the result:\n\nThethrowstatement allows you to create a custom error.\n\nThethrowstatement is used together with anexception type. There are many exception types available in Java:ArithmeticException,FileNotFoundException,ArrayIndexOutOfBoundsException,SecurityException, etc:\n\nIfagewas 20, you wouldnotget an exception:\n\nThe table below shows some of the most common errors and exceptions in Java, with a short description of each:\n\nTip:For a list of all errors and exception types, go to ourJava Errors and Exception Types Reference.\n\n### Code Snippets\n\n```\nSyntax\ntry {\n\u00a0\u00a0//\nBlock of code to try\n}\ncatch(Exception\ne\n) {\n\u00a0\u00a0//\nBlock of code to handle errors\n}\n\n---\n\nThis will generate an error, because\nmyNumbers[10]\ndoes not exist.\npublic class Main {\n\u00a0 public static void main(String[ ] args) {\n\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]); // error!\n\u00a0 }\n}\nThe output will be something like this:\nException in thread \"main\" java.lang.ArrayIndexOutOfBoundsException: 10\nat Main.main(Main.java:4)\nNote:\nArrayIndexOutOfBoundsException\noccurs when you try to access an index number that does not exist.\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[ ] args) {\n\u00a0\u00a0\u00a0 try {\n\u00a0\u00a0\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]);\n\u00a0\u00a0\u00a0 } catch (Exception e) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Something went wrong.\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\nThe output will be:\nSomething went wrong.\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 try {\n\u00a0\u00a0\u00a0\u00a0\u00a0 int[] myNumbers = {1, 2, 3};\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(myNumbers[10]);\n\u00a0\u00a0\u00a0 } catch (Exception e) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Something went wrong.\");\n\u00a0\u00a0\u00a0 } finally {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"The 'try catch' is finished.\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n}\nThe output will be:\nSomething went wrong.\nThe 'try catch' is finished.\nTry it Yourself \u00bb\n\n---\n\nExample\nThrow an exception if\nage\nis below 18 (print \"Access \ndenied\"). If age is 18 or older, print \"Access granted\":\npublic class Main {\n\u00a0 static void checkAge(int age) {\n\u00a0\u00a0\u00a0 if (age < 18) {\n\u00a0\u00a0\u00a0\u00a0\u00a0 throw new ArithmeticException(\"Access denied - You must be at least 18 years old.\");\n\u00a0\u00a0\u00a0 }\n\u00a0\u00a0\u00a0 else {\n\u00a0\u00a0\u00a0\u00a0\u00a0 System.out.println(\"Access granted - You are old enough!\");\n\u00a0\u00a0\u00a0 }\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 checkAge(15); // Set age to 15 (which is below 18...)\n\u00a0 }\n}\nThe output will be:\nException in thread \"main\" java.lang.ArithmeticException: Access denied - You must be at least 18 years old.\nat Main.checkAge(Main.java:4)\nat Main.main(Main.java:12)\nTry it Yourself \u00bb\n\n---\n\nExample\ncheckAge(20);\nThe output will be:\nAccess granted - You are old enough!\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_99",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

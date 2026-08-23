@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 17,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nA constructor in Java is aspecial methodthat is used to initialize objects.\n\nThe constructor is called when an object of a class is created.\n\nIt can be used to \nset initial values for object attributes:\n\nConstructors can also take parameters, which is used to initialize \nattributes.\n\nThe following example adds anint yparameter \nto the constructor. \nInside the constructor we set x to y (x=y). When we call \nthe constructor, we pass a parameter to the constructor (5), which will set the value of \nx to 5:\n\nYou can have as many parameters as you want:\n\n### Code Examples\n\n```\nExample\nCreate a constructor:\n// Create a Main class\npublic class Main {\n\u00a0 int x;\u00a0 // Create a class attribute\n\n\u00a0 // Create a\nclass constructor\nfor the Main class\n\u00a0 public Main() {\n\u00a0\u00a0\u00a0 x = 5;\u00a0 // Set the initial value for the class attribute x\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main(); // Create an object of class Main (This will\ncall the constructor\n)\n\u00a0\u00a0\u00a0 System.out.println(myObj.x); // Print the value of x\n\u00a0 }\n}\n\n// Outputs 5\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 int x;\n\n\u00a0 public Main(int y) {\n\u00a0\u00a0\u00a0 x = y;\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main(5);\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\n\n// Outputs 5\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 int modelYear;\n\u00a0 String modelName;\n\n\u00a0 public Main(int year, String name) {\n\u00a0\u00a0\u00a0 modelYear = year;\n\u00a0\u00a0\u00a0 modelName = name;\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myCar = new Main(1969, \"Mustang\");\n\u00a0\u00a0\u00a0 System.out.println(myCar.modelYear + \" \" + myCar.modelName);\n\u00a0 }\n}\n\n// Outputs 1969 Mustang\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThethiskeyword in Java refers to the current object \nin a method or constructor.\n\nThethiskeyword is often used to avoid confusion when class attributes have the same name as method or constructor parameters.\n\nSometimes a constructor or method has a parameter with the same name as a class variable. When this happens, the parameter temporarilyhidesthe class variable inside that method or constructor.\n\nTo refer to the class variable and not the parameter, you can use thethiskeyword:\n\nYou can also usethis()to call another constructor in the same class.\n\nThis is useful when you want to provide default values or reuse initialization code instead of repeating it.\n\n### Code Examples\n\n```\nExample\npublic class Main {\n  int x;  // Class variable x\n\n  // Constructor with one parameter x\n  public Main(int x) {\n    this.x = x; // refers to the class variable x\n}\npublic static void main(String[] args) {\n    // Create an object of Main and pass the value 5 to the constructor\n    Main myObj = new Main(5);\n    System.out.println(\"Value of x = \" + myObj.x);\n}\n}\nOutput:\nValue of x = 5\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n  int modelYear;\n  String modelName;\n\n  // Constructor with one parameter\n  public Main(String modelName) {\n    // Call the two-parameter constructor to reuse code and set a default year    \n    this(2020, modelName);\n  }\n\n  // Constructor with two parameters\n  public Main(int modelYear, String modelName) {\n    // Use 'this' to assign values to the class variables\n    this.modelYear = modelYear;\n    this.modelName = modelName;\n  }\n\n  // Method to print car information\n  public void printInfo() {\n    System.out.println(modelYear + \" \" + modelName);\n  }\n\n  public static void main(String[] args) {\n    // Create a car with only model name (uses default year)\n    Main car1 = new Main(\"Corvette\");\n\n    // Create a car with both model year and name\n    Main car2 = new Main(1969, \"Mustang\");\n\n    car1.printInfo();\n    car2.printInfo();\n  }\n}\nOutput:\n2020 Corvette\n1969 Mustang\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nBy now, you are quite familiar with thepublickeyword that appears in almost \nall of our examples:\n\nThepublickeyword is anaccess modifier, \nmeaning that it is used to set the access level for classes, attributes, methods and \nconstructors.\n\nWe divide modifiers into two groups:\n\nForclasses, you can use eitherpublicordefault:\n\nForattributes, methods and constructors, you can use the one of the \nfollowing:\n\nIn the example below, the class has onepublicattribute and oneprivateattribute.\n\nThink of it like real life:\n\nHere,nameis declared aspublic, so it can be accessed from outside thePersonclass.  \nButageis declared asprivate, so it can only be used inside thePersonclass.\n\n### Code Examples\n\n```\npublic\nclass Main\n\n---\n\nExample\nclass Person {\n  public String name = \"John\";   // Public - accessible everywhere\n  private int age = 30;          // Private - only accessible inside this class\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Person p = new Person();\n    System.out.println(p.name);   // Works fine\n    System.out.println(p.age);    // Error: age has private access in Person\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nNon-access modifiers do not control visibility (likepublicorprivate), but instead addother featuresto classes, methods, and attributes.\n\nThe most commonly used non-access modifiers arefinal,static, andabstract.\n\nIf you don't want the ability to override existing attribute values, declare \nattributes asfinal:\n\nAstaticmethod belongs to the class, not to any specific object. \nThis means you can call it without creating an object of the class.\n\nAnabstractmethod belongs to anabstractclass, and it does not have a body. \nThe body is provided by the subclass:\n\nForclasses, you can use eitherfinalorabstract:\n\nForattributes and methods, you can use the one of the \nfollowing:\n\n### Code Examples\n\n```\nExample\npublic class Main {\nfinal\nint x = 10;\nfinal\ndouble PI = 3.14;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 myObj.x = 50; // will generate an error: cannot assign a value to a\nfinal\nvariable\n\u00a0\u00a0\u00a0 myObj.PI = 25; // will generate an error: cannot assign a value to a\nfinal\nvariable\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nA simple example showing how to call a\nstatic\nmethod directly:\npublic class Main {\n\u00a0 // Static method\n\u00a0 static void myStaticMethod() {\n\u00a0\u00a0\u00a0 System.out.println(\"Static methods can be called without creating objects\");\n\u00a0 }\n\n\u00a0 // Main method\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 myStaticMethod();         // Call the static method\n\u00a0\u00a0\u00a0 Main.myStaticMethod();    // Or call it using the class name\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\n// abstract class\nabstract class Main {\n\u00a0 public String fname = \"John\";\n\u00a0 public int age = 24;\n\u00a0 public\nabstract\nvoid study(); // abstract method\n}\n\n// Subclass (inherit from Main)\nclass Student extends Main {\n\u00a0 public int graduationYear = 2018;\n\u00a0 public void study() { // the body of the abstract method is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"Studying all day long\");\n\u00a0 }\n}\n// Code from filename: Second.java\nclass Second {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 // create an object of the Student class (which inherits attributes and methods from Main)\n\u00a0\u00a0\u00a0 Student myObj = new Student();\n\n\u00a0\u00a0\u00a0 System.out.println(\"Name: \" + myObj.fname);\n\u00a0\u00a0\u00a0 System.out.println(\"Age: \" + myObj.age);\n\u00a0\u00a0\u00a0 System.out.println(\"Graduation Year: \" + myObj.graduationYear);\n\u00a0\u00a0\u00a0 myObj.study(); // call abstract method\n}\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThe meaning ofEncapsulation, is to make sure that \"sensitive\" data is hidden \nfrom users. To achieve this, you must:declare class variables/attributes asprivateprovide publicgetandsetmethods to access and update the value of aprivatevariableGet and SetYou learned from the previous chapter thatprivatevariables can only be \naccessed within the same class (an outside class has no access to it). However, \nit is possible to access them if we provide publicgetandsetmethods.Thegetmethod returns the variable value, and thesetmethod sets the value.Syntax for both is that they start with eithergetorset, followed by the \nname of the variable, with the first letter in upper case:Examplepublic class Person {\n\u00a0 private String name; // private = restricted access\n\n\u00a0 // Getter\n\u00a0 public String getName() {\n\u00a0\u00a0\u00a0 return name;\n\u00a0 }\n\n\u00a0 // Setter\n\u00a0 public void setName(String newName) {\n\u00a0\u00a0\u00a0 this.name = newName;\n\u00a0 }\n}Example explainedThegetmethod returns the value of the variablename.Thesetmethod takes a parameter (newName) and assigns it to thenamevariable. Thethiskeyword is used to refer to the current \nobject.However, as thenamevariable is declared asprivate, wecannotaccess it from outside this class:Examplepublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Person myObj = new Person();\n\u00a0\u00a0\u00a0 myObj.name = \"John\";\u00a0 // error\n\u00a0\u00a0\u00a0 System.out.println(myObj.name); // error\u00a0\n\u00a0 }\n}Run Example \u00bbIf the variable was declared aspublic, we would expect the following output:JohnHowever, as we try to access aprivatevariable, we get an error:MyClass.java:4: error: name has private access in PersonmyObj.name = \"John\";^MyClass.java:5: error: name has private access in PersonSystem.out.println(myObj.name);^2 errorsInstead, we use thegetName()andsetName()methods to access and update the variable:Examplepublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Person myObj = new Person();\n\u00a0\u00a0\u00a0 myObj.setName(\"John\"); // Set the value of the name variable to \"John\"\n\u00a0\u00a0\u00a0 System.out.println(myObj.getName());\n\u00a0 }\n}\n\n// Outputs \"John\"Try it Yourself \u00bbWhy Encapsulation?Better control of class attributes and methodsClass attributes can be maderead-only(if you only use thegetmethod), orwrite-only(if you only use thesetmethod)Flexible: the programmer can change one part of the code without affecting other partsIncreased security of data\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nExample\npublic class Person {\n\u00a0 private String name; // private = restricted access\n\n\u00a0 // Getter\n\u00a0 public String getName() {\n\u00a0\u00a0\u00a0 return name;\n\u00a0 }\n\n\u00a0 // Setter\n\u00a0 public void setName(String newName) {\n\u00a0\u00a0\u00a0 this.name = newName;\n\u00a0 }\n}\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Person myObj = new Person();\n\u00a0\u00a0\u00a0 myObj.name = \"John\";\u00a0 // error\n\u00a0\u00a0\u00a0 System.out.println(myObj.name); // error\u00a0\n\u00a0 }\n}\nRun Example \u00bb\n\n---\n\nJohn\n\n---\n\nMyClass.java:4: error: name has private access in Person\nmyObj.name = \"John\";\n^\nMyClass.java:5: error: name has private access in Person\nSystem.out.println(myObj.name);\n^\n2 errors\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Person myObj = new Person();\n\u00a0\u00a0\u00a0 myObj.setName(\"John\"); // Set the value of the name variable to \"John\"\n\u00a0\u00a0\u00a0 System.out.println(myObj.getName());\n\u00a0 }\n}\n\n// Outputs \"John\"\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_17",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_17",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

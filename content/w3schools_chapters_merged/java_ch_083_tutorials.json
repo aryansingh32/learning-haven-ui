@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 83,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Scanner Methods\n\nThehasNextBoolean()method returnstrueif the next token represents a boolean value. A token represents a boolean value if its value matches one of the strings \"true\" or \"false\". The match is case-insensitive, which means that values like \"True\" and \"FALSE\" also represent a boolean value.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nPrint the first boolean value that is found:\n// Create a scanner object\nScanner myObj = new Scanner(\"The value is false\");\n\n// Skip tokens until a boolean is found\nwhile (myObj.hasNext() && !myObj.hasNextBoolean()) {\n  myObj.next();\n}\n\n// If there is a boolean then print it\nif (myObj.hasNextBoolean()) {\n  System.out.print(\"The boolean value is \");\n  System.out.println(myObj.nextBoolean());\n} else {\n  System.out.println(\"No boolean found\");\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThehasNextByte()method returnstrueif the next token represents a number that can be stored by thebytedata type, which is any whole number between -128 and 127.\n\nIf theradixparameter is used, then it interprets numbers using the radix. For example, a radix of 16 would interpret numbers as hexadecimal (digits 0 to 9 and A to F). If theradixparameter is not used then it interprets numbers using the scanner's radix, which is 10 by default but it can be changed with theuseRadix()method.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nPrint the value of every byte in the string:\n// Create a scanner object\nScanner myObj = new Scanner(\"A byte is a number between -128 and 127\");\n\n// Print the value of every byte in the scanner\nwhile(myObj.hasNext()) {\n  if(myObj.hasNextByte()) {\n    System.out.println(myObj.nextByte());\n  } else {\n    myObj.next();\n  }\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThehasNextDouble()method returnstrueif the next token represents a valid number.\n\nThe scanner is able to interpret digit groupings, such as using a comma for separating groups of 3 digits. The format of the groupings and the character used as a decimal point depend on the locale settings of the scanner, which can be changed with theuseLocale()method.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nPrint the value of every floating point number in the string:\n// Create a scanner object\nScanner myObj = new Scanner(\"The probability is 45.6 percent\");\n\n// Print the value of every floating point number in the scanner\nwhile (myObj.hasNext()) {\n  if (myObj.hasNextDouble()) {\n    System.out.println(myObj.nextDouble());\n  } else {\n    myObj.next();\n  }\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThehasNextFloat()method returnstrueif the next token represents a valid number.\n\nThe scanner is able to interpret digit groupings, such as using a comma for separating groups of 3 digits. The format of the groupings and the character used as a decimal point depend on the locale settings of the scanner, which can be changed with theuseLocale()method.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nPrint the value of every floating point number in the string:\n// Create a scanner object\nScanner myObj = new Scanner(\"The probability is 45.6 percent\");\n\n// Print the value of every floating point number in the scanner\nwhile (myObj.hasNext()) {\n  if (myObj.hasNextFloat()) {\n    System.out.println(myObj.nextFloat());\n  } else {\n    myObj.next();\n  }\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nThehasNextInt()method returnstrueif the next token represents a number that can be stored by theintdata type, which is any whole number between -2,147,483,648 and 2,147,483,647.\n\nThe scanner is able to interpret digit groupings, such as using a comma for separating groups of 3 digits. The format of the groupings depends on the locale settings of the scanner, which can be changed with theuseLocale()method.\n\nIf theradixparameter is used, then it interprets numbers using the radix. For example, a radix of 16 would interpret numbers as hexadecimal (digits 0 to 9 and A to F). If theradixparameter is not used then it interprets numbers using the scanner's radix, which is 10 by default but it can be changed with theuseRadix()method.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nPrint the value of every integer in the string:\n// Create a scanner object\nScanner myObj = new Scanner(\"An int is a number between -2,147,483,648 and 2,147,483,647\");\n\n// Print the value of every int in the scanner\nwhile (myObj.hasNext()) {\n  if (myObj.hasNextInt()) {\n    System.out.println(myObj.nextInt());\n  } else {\n    myObj.next();\n  }\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_83",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_83",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

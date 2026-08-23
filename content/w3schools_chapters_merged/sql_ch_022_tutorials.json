@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 22,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheDROP INDEXcommand is used to delete an \nindex in a table.\n\nMS Access:\n\nSQL Server:\n\nDB2/Oracle:\n\nMySQL:\n\n### Code Examples\n\n```\nDROP INDEX\nindex_name\nON\ntable_name\n;\n\n---\n\nDROP INDEX\ntable_name\n.\nindex_name\n;\n\n---\n\nDROP INDEX\nindex_name\n;\n\n---\n\nALTER TABLE\ntable_name\nDROP INDEX\nindex_name\n;\n```\n\n## Tutorials\n\nTheDROP TABLEcommand deletes a table in \nthe database.\n\nThe following SQL deletes the table \"Shippers\":\n\nTheTRUNCATE TABLEcommand deletes the data inside a table, but \nnot the table itself.\n\nThe following SQL truncates the table \"Categories\":\n\n### Code Examples\n\n```\nDROP TABLE Shippers;\n\n---\n\nTRUNCATE TABLE Categories;\n```\n\n## Tutorials\n\nTheDROP VIEWcommand deletes a view.\n\nThe following SQL drops the \"Brazil Customers\" view:\n\n### Code Examples\n\n```\nDROP VIEW [Brazil Customers];\n```\n\n## Tutorials\n\nTheEXECcommand is used to execute a stored procedure.\n\nThe following SQL executes a stored procedure named \"SelectAllCustomers\":\n\n### Code Examples\n\n```\nEXEC SelectAllCustomers;\n```\n\n## Tutorials\n\nTheEXISTScommand tests for the existence of any record in a subquery, \nand returns true if the subquery returns one or more records.\n\nThe following SQL lists the suppliers with a product price less than 20:\n\nThe following SQL lists the suppliers with a product price \nequal to 22:\n\n### Code Examples\n\n```\nSELECT SupplierName\nFROM Suppliers\nWHERE EXISTS (SELECT ProductName FROM \n  Products WHERE SupplierId = Suppliers.supplierId AND Price < 20);\n\n---\n\nSELECT SupplierName\nFROM Suppliers\nWHERE EXISTS (SELECT ProductName FROM \n  Products WHERE SupplierId = Suppliers.supplierId AND Price = 22);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_22",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_22",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

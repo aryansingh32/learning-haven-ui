@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 94,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Function overloadingallows multiple functions to have the same name, as long as their parameters are different intypeornumber:\n\nThis lets you use the same function name for similar tasks.\n\nConsider the following example, which have two functions that add numbers of different type:\n\nProblem:We had to create two different function names for the same logic.\n\nInstead of defining two functions that should do the same thing, it is better to overload one.\n\nIn the example below, we overload theplusFuncfunction to work for bothintanddouble:\n\nIn this example, we overload a function by using a different number of parameters:\n\n### Code Snippets\n\n```\nint myFunction(int x)\nfloat myFunction(float x)\ndouble \n  myFunction(double x, double y)\n\n---\n\nint plusFuncInt(int x, int y) {\nreturn x + y;\n}\ndouble plusFuncDouble(double x, double y) {\nreturn x + y;\n}\nint main() {\nint myNum1 = plusFuncInt(8, \n  5);\ndouble myNum2 = plusFuncDouble(4.3, 6.26);\ncout << \n  \"Int: \" << myNum1 << \"\\n\";\ncout << \"Double: \" << myNum2;\nreturn 0;\n}\n\n---\n\nint plusFunc(int x, int \n  y) {\nreturn x + y;\n}\ndouble plusFunc(double x, double y) {\nreturn x + y;\n}\nint main() {\nint myNum1 = plusFunc(8, \n  5);\ndouble myNum2 = plusFunc(4.3, 6.26);\ncout << \"Int: \" << \n  myNum1 << \"\\n\";\ncout << \"Double: \" << myNum2;\nreturn 0;\n}\n\n---\n\nint plusFunc(int x, int y) {\nreturn x + y;\n}\nint plusFunc(int x, int y, int z) {\nreturn x + y + z;\n}\nint main() {\nint result1 = plusFunc(3, 7);\nint result2 = plusFunc(1, 2, 3);\ncout << \"Sum of 2 numbers: \" << result1 << \"\\n\";\ncout << \"Sum of 3 numbers: \" << result2;\nreturn 0;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_93",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

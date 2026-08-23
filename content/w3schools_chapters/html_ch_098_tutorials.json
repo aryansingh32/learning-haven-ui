@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 98,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Websites often display content in multiple columns (like a magazine or \na newspaper).\n\nHTML has several semantic elements that define the different parts of a web page:\n\nThere are four different techniques to create multicolumn layouts. Each \ntechnique has its pros and cons:\n\nIf you want to create your layout fast, you can use a CSS framework, likeW3.CSSorBootstrap.\n\nYou can create entire web layouts using the CSSfloatproperty. Float is easy to learn \n- you just need to remember how thefloatandclearproperties work.Disadvantages:Floating elements are tied to the document flow, which may harm \nthe flexibility. Learn more about float in ourCSS \nFloat and Clearchapter.\n\nUse of flexbox ensures that elements behave predictably when the page layout \nmust accommodate different screen sizes and different display devices.\n\nLearn more about flexbox in ourCSS Flexboxchapter.\n\nThe CSS Grid Layout Module offers a grid-based layout system, with rows and columns,\nmaking it easier to design web pages without having to use floats and positioning.\n\nLearn more about CSS grids in ourCSS Grid Introchapter.\n\n### Code Snippets\n\n```\nExample\nCities\nLondon\nParis\nTokyo\nLondon\nLondon is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.\nStanding on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.\nFooter\nTry it Yourself \u00bb\n\n---\n\nExample\nCities\nLondon\nParis\nTokyo\nLondon\nLondon is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.\nStanding on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.\nFooter\nTry it Yourself \u00bb\n\n---\n\nExample\nCities\nLondon\nParis\nTokyo\nLondon\nLondon is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.\nStanding on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.\nFooter\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_97",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

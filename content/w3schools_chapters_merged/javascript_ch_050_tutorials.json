@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 50,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nUnderstanding the Event Loop explains many common JavaScript behaviors.\n\nJavaScript executes code in sequence.\n\nOnly one function can execute at any given moment.\n\nFunctions execute in the order they are called.\n\nEach function must finish before the next one can begin.\n\nJavaScript itself does not wait for timers or download web pages.\n\nInstead, the browser performs these operations while JavaScript continues running.\n\nExamples include:\n\nWhen an operation finishes, JavaScript is notified that the result is ready.\n\nThe Event Loop continuously checks whether JavaScript is busy.\n\nWhen JavaScript finishes its current task, the Event Loop starts the next waiting task.\n\nThis process repeats for as long as the page is open.\n\nThe callback is not executed immediately.\n\nInstead, it waits until JavaScript finishes its current work.\n\nThe timer finishes almost immediately.\n\nHowever, the callback cannot run until JavaScript finishes executing the current code.\n\nThe Event Loop starts the callback after the current task has completed.\n\nWhy did the Promise callback run before the timer?\n\nThe answer is that Promise callbacks are placed in a special queue with higher priority.\n\nJavaScript uses two main queues for asynchronous work.\n\nAfter each task finishes, JavaScript processes all waiting microtasks before starting the next task.\n\nIf JavaScript executes a long-running task, everything else must wait.\n\nDuring this time, the browser cannot execute other JavaScript code.\n\nUser clicks, timers, and completed downloads must wait until the current task finishes.\n\nVisualizer \u00bb\n\n### Code Examples\n\n```\nfunction step1() {\nmyDisplayer(\"Step 1\");\n}\nfunction step2() {\nmyDisplayer(\"Step 2\");\n}\nstep1();\nstep2();\n\n---\n\nStep 1\nStep 2\n\n---\n\nfunction step1() {\nmyDisplayer(\"Step 1\");\n}\nfunction step2() {\nmyDisplayer(\"Step 2\");\n}\nstep2();\nstep1();\n\n---\n\nStep 2\nStep 1\n\n---\n\nJavaScript starts\n\u2193\nRun code\n\u2193\nStart timer\n\u2193\nContinue running\n\u2193\nTimer finishes\n\u2193\nEvent Loop\n\u2193\nRun callback\n\n---\n\nmyDisplayer(\"A\");\nsetTimeout(function() {\nmyDisplayer(\"B\");\n}, 2000);\nmyDisplayer(\"C\");\n\n---\n\nA\nC\nB\n\n---\n\nmyDisplayer(\"A\");\nPromise.resolve().then(function() {\nmyDisplayer(\"B\");\n});\nmyDisplayer(\"C\");\n\n---\n\nA\nC\nB\n\n---\n\nfunction wait() {\nlet i = 4e9;\nwhile (--i > 0);\n}\nmyDisplayer(\"Start\");\nwait();\nmyDisplayer(\"Done\");\n\n---\n\nmyDisplayer(\"Start\");\nwait();\nmyDisplayer(\"Done\");\n\n---\n\nmyDisplayer(\"Start\");\n\n---\n\n<p id=\"demo\">Start</p>\n\n---\n\nwait();\n\n---\n\nmyDisplayer(\"Done\");\n\n---\n\n<p id=\"demo\">Start Done</p>\n\n---\n\nStart Done\n\n---\n\nJavaScript starts\n\u2193\nmyDisplayer(\"Start\")\n(DOM changes)\n\u2193\nwait()\n(JavaScript busy)\n\u2193\nmyDisplayer(\"Done\")\n(DOM changes again)\n\u2193\nJavaScript finishes\n\u2193\nBrowser repaints\n\u2193\nScreen shows:\nStart Done\n\n---\n\nfunction wait() {\nlet i = 4e9;\nwhile (--i > 0);\n}\nmyDisplayer(\"Start\");\nsetTimeout(function () {\nwait();\nmyDisplayer(\"Done\");\n}, 0);\n\n---\n\nJavaScript starts\n\u2193\nDisplay \"Start\"\n\u2193\nCurrent task finishes\n\u2193\nBrowser repaints\n(Start becomes visible)\n\u2193\nEvent Loop\n\u2193\nRun wait()\n\u2193\nDisplay \"Done\"\n\u2193\nBrowser repaints\n```\n\n## Tutorials\n\nThe simplest use offetch()is to download atext file.\n\nfetch()retuns aPromisethat resolves to aResponseobject.\n\nThe Response object contains information about the server response.\n\nThejson() methodconverts a JSON response into a JavaScript object.\n\nIndependent downloads can run in parallel.\n\nfetch()resolveswhen the server responds.\n\nAn HTTP error such as404 (Not Found)doesnotreject the Promise.\n\nInstead, check theokproperty.\n\nUsetry ... catchto handle errors.\n\nThis logs a promise.\n\nYou must useawaitto get the JSON.\n\nIf fetch is not working, check the console.\n\nThen check the Network tab.\n\n### Code Examples\n\n```\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(await response.text());\n}\n// Call the async function\nloadText(\"demo.txt\");\n\n---\n\n<p>The Fetch API interface allows web browser to make HTTP requests to web servers.</p>\n<p>If you use the XMLHttpRequest Object, Fetch can do the same in a simpler way.</p>\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.ok);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.status);\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response.url);\n}\n\n---\n\nasync function loadCustomer() {\nconst response = await fetch(\"customer.json\");\nconst customer = await response.json();\nmyDisplayer(customer.name);\n}\n// Call the async function\nloadCustomer();\n\n---\n\n// Async function to download files\nasync function loadData() {\nconst [customerResponse, productsResponse, newsResponse] = await Promise.all([\nfetch(\"customer.json\"),\nfetch(\"products.json\"),\nfetch(\"news.json\")\n]);\nconst customer = await customerResponse.json();\nconst products = await productsResponse.json();\nconst news = await newsResponse.json();\nmyDisplayer(\"Custome name: \" + customer.name);\nmyDisplayer(products.length + \" products\");\nmyDisplayer(news.length + \" news items\");\n}\n// Call the async function\nloadData();\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nif (!response.ok) {\nthrow new Error(response.status + \" \" + response.statusText);\n}\nreturn await response.text();\n}\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\ntry {\nconst response = await fetch(file);\nif (!response.ok) {\nthrow new Error(\"HTTP Error \" + response.status);;\n}\nmyDisplayer(await response.text();\n} catch(err) {\nmyDisplayer(err.message);\n}\n}\n\n---\n\n// Call the async function\nloadText(\"fetch.txt\");\n\n---\n\n// Call the async function\nloadText(\"missing.txt\");\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = response.json();\nmyDisplayer(data);\n}\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = await response.json();\nmyDisplayer(data);\n}\n```\n\n## Tutorials\n\nThefetch()method returns aPromise.\n\nIf you forgetawait, you get the Promise instead of the downloaded data.\n\nTheawaitkeyword can only be used inside anasyncfunction or at the top level of a JavaScript module.\n\nThe Promise returned byfetch()is fulfilled when the server responds.\n\nAn HTTP error such as404 Not Founddoes not reject the Promise.\n\nAlways checkresponse.ok.\n\nA callback is simply a function passed to another function.\n\nA callback may be called immediately or later.\n\nThe callback itself does not make code asynchronous.\n\nLong-running JavaScript blocks timers, user events, and screen updates.\n\nChanging the DOM does not always update the screen immediately.\n\nThe browser usually waits until the current JavaScript task has finished before repainting the page.\n\nIf operations are independent, start them together.\n\nTheforEach()method does not wait for asynchronous callbacks.\n\nPromises can be rejected.\n\nAlways handle possible errors.\n\nA zero-millisecond timeout means \"run as soon as possible.\"\n\nThe callback still waits until the current JavaScript task has finished.\n\nBefore writing asynchronous code, ask yourself:\n\n### Code Examples\n\n```\nconst response = fetch(\"demo.txt\");\n\n---\n\nconst response = await fetch(\"demo.txt\");\n\n---\n\nfunction load() {\nlet response = await fetch(\"demo.txt\");\n}\n\n---\n\nasync function load() {\nlet response = await fetch(\"demo.txt\");\n}\n\n---\n\nconst response = await fetch(\"demo.txt\");\nif (!response.ok) {\nthrow new Error(response.status);\n}\n\n---\n\nnumbers.forEach(show);\n\n---\n\nsetTimeout(show,1000);\n\n---\n\nfunction wait() {\nlet i = 4e9;\nwhile(--i > 0);\n}\n\n---\n\nmyDisplayer(\"Start\");\nwait();\nmyDisplayer(\"Done\");\n\n---\n\nawait fetch(\"a.json\");\nawait fetch(\"b.json\");\nawait fetch(\"c.json\");\n\n---\n\nawait Promise.all([\nfetch(\"a.json\"),\nfetch(\"b.json\"),\nfetch(\"c.json\")\n]);\n\n---\n\nfiles.forEach(async function(file){\nawait upload(file);\n});\n\n---\n\nfor (const file of files) {\nawait upload(file);\n}\n\n---\n\ntry {\nconst response = await fetch(url);\n}\ncatch(err) {\nconsole.log(err);\n}\n\n---\n\nconsole.log(\"A\");\nsetTimeout(() => console.log(\"B\"),0);\nconsole.log(\"C\");\n```\n\n## Tutorials\n\nThe easiest way to debug asynchronous code is tolog when things happen.\n\nWhy can't JavaScript do the same?\n\nThere is no standard properties like:\n\nThey simply do not exist.\n\nThe state part of the Promise is not in its public API.\n\nAsync code often fails after your function has already returned.\n\nThis makes it feel like nothing happened.\n\nUnhandled promise rejections confuse beginners.\n\nHandle errors early and clearly.\n\nUsetry...catchto handle Promises.\n\nFetch does not reject on HTTP errors like 404.\n\nYou must checkresponse.ok.\n\nLogging a promise is not the same as logging the data.\n\nLog the response and status first.\n\nTheNetwork tabis a panel in yourBrowser's Developer Tools.\n\nIt shows all network request made by your web page.\n\nHow to Use the Developer Tools:\n\nThe Network tab shows every request made by your application:\n\nModern browsers allow you to pause JavaScript execution.\n\nWhile execution is paused, you can inspect variables, Promises, and the Call Stack.\n\nYou can set breakpoints onawaitlines.\n\nThis lets you inspect values before and after async steps.\n\nSet a breakpoint on the firstawaitline.\n\nStep over and inspectresponse.\n\nThis logs a promise, not the JSON.\n\nPromises can fail anywhere in the chain.\n\nAdd logs between steps to find where it fails.\n\nThis shows which step is failing.\n\nMany beginners forget this.\n\nExplain the difference between:\n\n### Code Examples\n\n```\nconsole.log(\"Before fetch\");\nconst promise = fetch(\"fetch.txt\");\nconsole.log(\"After fetch\");\n\n---\n\nmyDisplayer(\"Before fetch\");\nconst promise = fetch(\"fetch.txt\");\nmyDisplayer(\"After fetch\");\n\n---\n\n// Async function to download a file\nasync function loadText(file) {\nconst response = await fetch(file);\nmyDisplayer(response);\n}\nmyDisplayer(\"Start\");\n// Try to load a missing file\nloadText(\"missing.txt\");\nmyDisplayer(\"Done\");\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\ntry {\nlet response = await fetch(file);\nlet data = await response.json()\nmyDisplayer(JSON.stringify(data));\n} catch (error) {\nmyDisplayer(error);\n}\n}\n// Call async function\nloadData(\"customer.json\")\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\ntry {\nlet response = await fetch(file);\nif (!response.ok) {\nconsole.log(\"HTTP Error:\", response.status);\nreturn;\n}\nlet data = await response.json()\nmyDisplayer(JSON.stringify(data));\n} catch (error) {\nmyDisplayer(error);\n}\n}\n\n---\n\n// Async function to download a file\nasync function loadData(file) {\nlet response = await fetch(file);\nmyDisplayer(response.status);\nmyDisplayer(response.headers.get(\"content-type\"));\n}\n\n---\n\nconst response = await fetch(\"customer.json\");\n\n---\n\nExample\nconst response = await fetch(\"demo.txt\");\ndebugger;\nconst text = await response.text();\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = await response.json();\nconsole.log(data);\n}\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = response.json();\nconsole.log(data);\n}\n\n---\n\nasync function loadData() {\nlet response = await fetch(\"data.json\");\nlet data = await response.json();\nconsole.log(data);\n}\n\n---\n\nfetch(\"data.json\")\n.then(function(response) {\nconsole.log(\"Got response\");\nreturn response.json();\n})\n.then(function(data) {\nconsole.log(\"Got data\");\nconsole.log(data);\n})\n.catch(function(error) {\nconsole.log(\"Failed\");\nconsole.log(error);\n});\n\n---\n\nmyDisplayer(\"Start\");\nsetTimeout(function() {myDisplayer(\"Timer\")},1000);\nmyDisplayer(\"End\");\n\n---\n\nStart\nEnd\nTimer\n\n---\n\nconst customer = fetch(\"customer.json\");\nconst products = fetch(\"products.json\");\nconst news = fetch(\"news.json\");\n\n---\n\nconst response = await fetch(\"missing.txt\");\nconst text = await response.text();\n\n---\n\nif (!response.ok) {\nconsole.log(response.status);\n}\n\n---\n\nfetch(\"missing.txt\")\n.then(function(response){\nreturn response.text();\n})\n.catch(function(err){\nconsole.log(err);\n});\n\n---\n\nshowSpinner();\ntry {\n...\n}\nfinally {\nhideSpinner();\n}\n```\n\n## Tutorials\n\nSometimes an asynchronous operation is no longer needed.\n\nExamples include:\n\nIn these situations, you can cancel the operation instead of waiting for it to finish.\n\nCreate an AbortController with thenewkeyword.\n\nAnAbortControllerprovides anAbortSignal.\n\nThe signal is passed to an asynchronous operation.\n\nThe operation receives the signal and stops.\n\nPass the controller's signal tofetch().\n\nCallabort()to cancel the operation.\n\nA request can be canceled when the user clicks a button.\n\nOnce an AbortController has been aborted, it cannot be reused.\n\nCreate a new controller for each new request.\n\nSearch applications often cancel an earlier request before starting a new one.\n\nYou can combine timers with AbortController)=.\n\nForgetting to pass the signal.\n\nRemember to create a new controller.\n\nAn aborted request is often expected.\n\nHandle it separately.\n\nAbortControlleris supported by all modern browsers.\n\nIt is widely used together with the Fetch API.\n\n### Code Examples\n\n```\nconst controller = new AbortController();\n\n---\n\nconst controller = new AbortController();\nconst signal = controller.signal;\n\n---\n\nconst controller = new AbortController();\nfetch(\"largefile.txt\", {\nsignal: controller.signal\n});\n\n---\n\ncontroller.abort();\n\n---\n\nconst controller = new AbortController();\n// Async function to download a file\nasync function loadFile(file) {\ntry {\nconst response = await fetch(file, {\nsignal: controller.signal\n});\nmyDisplayer(await response.text());\n} catch(err) {\nif (err.name == \"AbortError\") {\nmyDisplayer(\"Download canceled\");\n}\n}\n}\n// Call the async function\nloadFile(\"fetch.txt\");\n\n---\n\n<button onclick='loadFile(\"fetch.txt\")'>Start Download</button>\n<button onclick=\"controller.abort()\">Cancel Download</button>\n<p id=\"demo\"></p>\n\n---\n\nlet controller;\nasync function search(text) {\nif (controller) {\ncontroller.abort();\n}\ncontroller = new AbortController();\ntry {\nconst response = await fetch(\n\"/search?q=\" + text,\n{signal: controller.signal}\n);\nconsole.log(await response.text());\n}\ncatch(err) {\nif (err.name != \"AbortError\") {\nconsole.log(err);\n}\n}\n}\n\n---\n\nUser types:\n\nc\nca\ncat\ncats\n\n\u2193\n\nOnly the last request finishes.\n\n---\n\nconst controller = new AbortController();\nsetTimeout(function(){\ncontroller.abort();\n},5000);\nawait fetch(url,{\nsignal: controller.signal\n});\n\n---\n\nfetch(url);\n\n---\n\nfetch(url);\n\n---\n\nif (err.name == \"AbortError\") {\nreturn;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_50",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_50",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

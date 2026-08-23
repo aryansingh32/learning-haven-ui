@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 123,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Always use the same coding conventions for all your JavaScript \nprojects.\n\nCoding conventions arestyle guidelines for programming. \nThey typically cover:\n\nCoding conventionssecure quality:\n\nCoding conventions can be documented rules for teams to follow, or just be your individual coding practice.\n\nAt W3schools we usecamelCasefor identifier names (variables and functions).\n\nAll names start with aletter.\n\nAt the bottom of this page, you will find a wider discussion about naming \nrules.\n\nAlways put spaces around operators ( = + - * / ), and after commas:\n\nAlways use 2 spaces for indentation of code blocks:\n\nGeneral rules for simple statements:\n\nGeneral rules for complex (compound) statements:\n\nGeneral rules for object definitions:\n\nShort objects can be written compressed, on one line, using spaces only \nbetween properties, like this:\n\nFor readability, avoid lines longer than 80 \ncharacters.\n\nIf a JavaScript statement does not fit on one line, the best place to break \nit, is after an operator or a comma.\n\nAlways use the same naming convention for all your code. For example:\n\nShould you usehyp-hens,camelCase, orunder_scoresin variable names?\n\nThis is a question programmers often discuss. The answer depends on who you \nask:\n\nHyphens in HTML and CSS:\n\nHTML5 attributes can start with data- (data-quantity, data-price).\n\nCSS uses hyphens in property-names (font-size).\n\nUnderscores:\n\nMany programmers prefer to use underscores (date_of_birth), especially in SQL \ndatabases.\n\nUnderscores are often used in PHP documentation.\n\nPascalCase:\n\nPascalCase is often preferred by C programmers.\n\ncamelCase:\n\ncamelCase is used by JavaScript itself, by jQuery, and other JavaScript \nlibraries.\n\nUse simple syntax for loading external scripts (the type attribute is not \nnecessary):\n\nA consequence of using \"untidy\" HTML styles, might result in JavaScript errors.\n\nThese two JavaScript statements will produce different results:\n\nIf possible, use the same naming convention (as JavaScript) in HTML.\n\nVisit the HTML Style Guide.\n\nHTML files should have a.htmlextension (.htmis allowed).CSS files should have a.cssextension.JavaScript files should have a.jsextension.Use Lower Case File NamesMost web servers (Apache, Unix) are case sensitive about file names:london.jpg cannot be accessed as London.jpg.Other web servers (Microsoft, IIS) are not case sensitive:london.jpg can be accessed as London.jpg or london.jpg.If you use a mix of upper and lower case, you have to be extremely \nconsistent.If you move from a case insensitive, to a case sensitive server, even small \nerrors can break your web site.To avoid these problems, always use lower case file names (if possible).PerformanceCoding conventions are not used by computers. Most rules have \nlittle impact on the execution of programs.Indentation and extra spaces are not significant in small scripts.For code in development, readability should be preferred. Larger production \nscripts should be minimized.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nfirstName = \"John\";\nlastName = \"Doe\";\nprice = 19.90;\ntax = 0.20;\nfullPrice = price + (price * tax);\n\n---\n\nlet x = y + z;\nconst myArray = [\"Volvo\", \"Saab\", \n \"Fiat\"];\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5 / 9) * (fahrenheit - 32);\n}\n\n---\n\nconst cars = [\"Volvo\", \"Saab\", \n \"Fiat\"];\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \n \"blue\"\n};\n\n---\n\nfunction toCelsius(fahrenheit) {\nreturn (5 / 9) * (fahrenheit - 32);\n}\n\n---\n\nfor (let i = 0; i < 5; i++) {\nx += i;\n}\n\n---\n\nif (time < 20) {\ngreeting = \"Good day\";\n} else {\ngreeting = \"Good evening\";\n}\n\n---\n\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \n \"blue\"\n};\n\n---\n\nconst person = {firstName:\"John\", lastName:\"Doe\", age:50, eyeColor:\"blue\"};\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Hello Dolly.\";\n\n---\n\n<script src=\"myscript.js\"></script>\n\n---\n\nconst obj = getElementById(\"Demo\")\nconst obj = getElementById(\"demo\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_122",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

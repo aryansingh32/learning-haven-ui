@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 38,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS Transforms by completing a small coding challenge.\n\n## Tutorials\n\nThe CSStransformproperty applies a 2D or 3D transformation to an element. This property allows \nyou to rotate, scale, move, and skew elements.\n\nMouse over the elements below to see the difference between a 2D \nand a 3D transformation:\n\nWith the CSStransformproperty you can use \nthe following 3D transformation functions:\n\nTherotateX()function rotates an element around its X-axis at a given degree:\n\nTherotateY()function rotates an element around its Y-axis at a given degree:\n\nTherotateZ()function rotates an element around its Z-axis at a given degree:\n\nThe following table lists all the 3D transform properties:\n\n### Code Examples\n\n```\n#myDiv\n{\ntransform: rotateX(150deg);\n}\n\n---\n\n#myDiv\n{\ntransform: rotateY(150deg);\n}\n\n---\n\n#myDiv\n{\ntransform: rotateZ(90deg);\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS 3D Transforms by completing a small coding challenge.\n\n## Tutorials\n\nCSS transitions allows you to change property values smoothly, over a given duration.\n\nMouse over the element below to see a CSS transition effect:\n\nTo create a transition effect, you must specify the CSS property you want to add a \ntransition to, and the duration of the transition.\n\nThe CSStransitionproperty is a shorthand property for:\n\nThe following example shows a 100px * 100px <div> element. The <div> \nelement has specified a transition effect for the width property, with a duration of 2 seconds:\n\nThe transition is triggered when there is a change in the element's properties. \nThis often happens within pseudo-classes (:hover, :active, :focus, or \n:checked).\n\nSo, from the code above, the transition effect will start when the width property changes value.\n\nNow, we add a div:hover class that specifies a new value for the width property when a user \nmouses over the <div> element:\n\nNotice that when the cursor mouses out of the element, it will gradually change back to its original style.\n\nYou can change multiple properties by separating them by commas.\n\nThe following example adds a transition effect for the width, height, and \nbackground-color properties, with a duration \nof 2 seconds for the width, 4 seconds for the height, and 3 seconds for the \nbackground-color:\n\nThe following table lists all the CSS transition properties:\n\n### Code Examples\n\n```\ndiv\n{\nwidth: 100px;\nheight: 100px;\nbackground-color: red;\ntransition: width 2s;\n}\n\n---\n\ndiv:hover\n{\nwidth: 300px;\n}\n\n---\n\ndiv\n{\ntransition: width 2s, height 4s, background-color 3s;\n}\n```\n\n## Tutorials\n\nThetransition-timing-functionproperty specifies the speed curve of the transition effect.\n\nThis property can have one of the following values:\n\nThe following example shows some of the different speed curves that can be used:\n\nThetransition-delayproperty specifies a delay \nbefore the transition starts.\n\nThetransition-delayvalue is defined in \nseconds (s) or milliseconds (ms).\n\nThe following example has a 1 second delay before starting:\n\nThe following example combines transition and transform for a <div>:\n\nThe following example combines transition and transform for a button:\n\nThe CSS transition properties can be specified one by one, like this:\n\nor by using the shorthand propertytransition:\n\nThe following table lists all the CSS transition properties:\n\n### Code Examples\n\n```\n#div1 {transition-timing-function: linear;}\n#div2 \n{transition-timing-function: ease;}\n#div3 {transition-timing-function: \nease-in;}\n#div4 {transition-timing-function: ease-out;}\n#div5 \n{transition-timing-function: ease-in-out;}\n\n---\n\ndiv {\ntransition-delay: 1s;\n}\n\n---\n\ndiv {\ntransition: \nwidth 2s, height 2s, background-color 2s, transform 2s;\n}\n\n---\n\nbutton {\ntransition: background-color 1s ease-out, transform 1s \n  ease-out;\n}\n\n---\n\ndiv\n{\ntransition-property: width;\ntransition-duration: 2s;\ntransition-timing-function: linear;\ntransition-delay: 1s;\n}\n\n---\n\ndiv\n{\ntransition: width 2s linear 1s;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_38",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_38",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

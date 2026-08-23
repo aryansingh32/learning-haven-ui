@@ -1,0 +1,566 @@
+Video URL: https://www.youtube.com/watch?v=L8NfSewTfxY
+Video Title: More on CSS Selectors | Sigma Web Development Course - Tutorial #35
+--------------------------------------------------
+
+00:00:00.000
+We talked about selectors in CSS, in today's video we will look at selectors more closely
+00:00:05.160
+and I will tell you some things about selectors which we will use in actual when we build websites.
+00:00:10.600
+With high energy, do like this video and write Sigma Batch OP in the comment section below.
+00:00:15.080
+Let's go to the computer screen, let's roll the intro.
+00:00:17.880
+Intro intro intro intro
+00:00:26.000
+intro
+00:00:28.000
+intro
+00:00:30.000
+intro
+00:00:32.000
+intro
+00:00:34.000
+intro
+00:00:36.000
+intro
+00:00:38.000
+intro
+00:00:40.000
+intro
+00:00:42.000
+intro
+00:00:44.000
+intro intro I have made a folder named video 35
+00:00:46.000
+and I am writing here CSS more on selectors
+00:00:50.000
+and let's make it more on CSS selectors
+00:00:53.000
+it will be better
+00:00:54.000
+now I will tell you some more things about selectors
+00:00:57.000
+which are important
+00:00:58.000
+so here I will write style
+00:01:00.000
+and let's start
+00:01:01.000
+so here I will write div.boxes and after this I will write div.boxes
+00:01:05.600
+and then I will write div.box
+00:01:08.000
+and here I am a box
+00:01:10.000
+and let's say I want to replicate it
+00:01:13.000
+and after that let's say
+00:01:15.200
+I want to see how it will look like
+00:01:18.400
+and I will open it in browser
+00:01:20.000
+and it will look like this
+00:01:21.400
+if I want to select the first element
+00:01:24.800
+so I can select the first element by selecting first child
+00:01:27.320
+so if I write here dot boxes
+00:01:29.720
+and I write here first child
+00:01:31.600
+so I can select the first child here
+00:01:33.680
+and make the background color red
+00:01:35.600
+I have to do dot box here
+00:01:37.200
+so basically what happens
+00:01:38.520
+it means that if dot box is the first child of your parent
+00:01:44.000
+then the background color will be red
+00:01:46.000
+now see it will be on the first one
+00:01:47.000
+and what happened when I wrote boxes first
+00:01:49.000
+it was on the whole
+00:01:50.000
+it was on the whole, on boxes
+00:01:52.000
+because boxes is the first child of the body
+00:01:54.000
+so this is how to see it
+00:01:56.000
+many people get confused in this
+00:01:57.000
+but I hope you have understood this
+00:01:59.000
+after this I will say that
+00:02:00.000
+the dot box, I can select its first letter
+00:02:03.000
+in fact I can select its first line if the dot box In fact, I can select the first line of it
+00:02:05.400
+If it has a lot of text in it
+00:02:08.120
+And I can say color it yellow
+00:02:10.440
+Okay, and for this I will comment this one
+00:02:13.160
+And maybe I have to put a big lorem here
+00:02:16.520
+Lorem 455
+00:02:18.600
+I know it's a lot of text
+00:02:19.920
+Now see the first line of it
+00:02:21.600
+It came in yellow color
+00:02:23.080
+And the rest of the lines are of default black color So I can also select the first line is yellow and the rest of the lines are black.
+00:02:25.760
+So I can also select the first line from CSS and then I will make it smaller.
+00:02:29.440
+Now see the first line that is being rendered in the device, it means that it does not mean anything else.
+00:02:34.640
+It's not that the first line is so many words or so many characters or let's say not so much width.
+00:02:40.960
+First line of your device, now see I have I have made it yellow it is not visible somewhere
+00:02:45.000
+but you got the point
+00:02:47.000
+I am trying to make it black
+00:02:51.000
+and see it changed to black
+00:02:53.000
+I will make it red
+00:02:55.000
+see it is changing to red
+00:02:57.000
+if you can see
+00:02:58.000
+it is changing to red
+00:02:59.000
+so you can select first line like this
+00:03:01.000
+if I come back
+00:03:02.000
+we talked about element selector
+00:03:04.000
+we talked about class selector ID selector was very simple we talked about the element selector, class selector, ID selector, child selector, descendant thing related to universal selector and that is if I want to control z all the boxes
+00:03:30.000
+I will make the text a little smaller
+00:03:32.000
+I am first box and I will comment this out for now
+00:03:37.000
+and I will say here, inside the boxes inside the boxes, all the elements
+00:03:46.000
+what you do, color it blue
+00:03:49.000
+ok, so what will happen, dot box star means
+00:03:52.000
+it will be applied on all the elements inside the boxes
+00:03:55.000
+and I will say border 2px solid black
+00:04:00.000
+do something like this, so you see here
+00:04:02.000
+it will be applied here, border 2px solid black
+00:04:05.000
+so to select the elements in the boxes
+00:04:08.000
+you can start dot boxes and select them
+00:04:11.000
+see if I talk about selectors
+00:04:13.000
+then I can say many selectors
+00:04:16.000
+but I just want to teach you that much
+00:04:18.000
+which is important and to do this
+00:04:20.000
+what I will do is that I will choose only those selectors
+00:04:23.000
+which will be of maximum use when we make our real world websites now I will tell you that I will choose only those selectors for you which will be most used when we make our real world websites
+00:04:27.300
+now I will tell you about an attribute selector
+00:04:29.800
+I told you in the course
+00:04:32.200
+but let's say I put here in div
+00:04:35.000
+let's say I put data color is equal to primary
+00:04:39.900
+ok, I put primary here
+00:04:41.500
+now I want that where data color is primary
+00:04:43.700
+there should be margin top is applied
+00:04:46.680
+so i can use attribute selector like this
+00:04:48.920
+and i can say
+00:04:50.120
+that data color
+00:04:52.120
+is equal to if it is primary
+00:04:54.680
+so what you do
+00:04:55.680
+so you do let us say
+00:04:57.680
+margin top
+00:04:59.680
+45 pixels
+00:05:01.400
+and where data color is primary
+00:05:03.640
+there margin top is applied
+00:05:04.920
+you can see here so if i see this so ever data color is primary there will be a margin top
+00:05:06.000
+so if i see this
+00:05:08.000
+so if i see this, data color was primary so margin top is here
+00:05:11.000
+you can see here margin top is here
+00:05:14.000
+and here border is also here, so i have put margin and border
+00:05:17.000
+if i do padding it will be from inside
+00:05:19.000
+let me tell you this also, so you can see the border
+00:05:22.000
+so see here in this element margin top is added because it has data color primary
+00:05:26.000
+you can do this for any attribute
+00:05:28.000
+it is not necessary to do it for data attributes
+00:05:30.000
+you can do it for even classes, for id
+00:05:32.000
+whatever attribute is there in the HTML element
+00:05:34.000
+you can do it for that
+00:05:36.000
+now you can group it, like if i want
+00:05:38.000
+in all paragraphs, in all a's
+00:05:40.000
+in all box classes
+00:05:42.000
+and in all data color primary
+00:05:44.000
+you can do this, so in primary so I can do grouping like this
+00:05:46.560
+so this is grouping of selector
+00:05:48.560
+and it's effect will be like this, it will be applied in all
+00:05:50.560
+because I have selected all
+00:05:52.560
+A's, all P's
+00:05:54.560
+so this is grouping of selectors
+00:05:56.560
+now I want to show you
+00:05:58.560
+I will comment this
+00:06:00.560
+I don't want you to be confused
+00:06:02.560
+with it's effect
+00:06:04.560
+I will write the link in the description I don't want you to get confused I will write here that
+00:06:06.000
+the boxes
+00:06:08.000
+or I will write on the box
+00:06:10.000
+I will say
+00:06:12.000
+nth child
+00:06:14.000
+and I will say
+00:06:16.000
+if nth child is even then make the background color blue
+00:06:18.000
+ok
+00:06:20.000
+if nth child is even then make the background color blue
+00:06:22.000
+ok, so this count starts from 1
+00:06:24.000
+1,2,3 2 is even then make background color blue so this count starts from 1
+00:06:26.000
+1,2,3,2 is even so blue is here
+00:06:29.000
+1 and 3 are odd so you can do it like this
+00:06:32.000
+and you can write odd or even directly
+00:06:35.000
+so this was our nth child selector
+00:06:38.000
+now you can put a number in dot, box, nth child
+00:06:41.000
+1,2,3,4
+00:06:44.000
+and nth last child let's say I do 1, and after that I write background color red,
+00:06:49.000
+so you will see that the first one from below will be red, and if you do 2 here, then the second one from below will be red,
+00:06:57.000
+and this means top from below, it was said that I have topped from below, so this is the same thing to top from below so this is the same thing people used to say
+00:07:05.000
+when we were in school
+00:07:06.000
+top is done but from below
+00:07:08.000
+so this kind of work
+00:07:10.000
+you can do
+00:07:12.000
+then as you write nth here
+00:07:14.000
+so you will get to see many more
+00:07:16.000
+pseudo selectors like this
+00:07:17.000
+so we have to explore them
+00:07:19.000
+and here you see
+00:07:20.000
+as you take arrow keys in them
+00:07:21.000
+it is written about it
+00:07:23.000
+that this property is experimental
+00:07:24.000
+do not use it then represents an element that these properties are experimental, don't use it
+00:07:25.120
+then represents an element that has
+00:07:27.280
+an plus b minus 1 siblings
+00:07:29.680
+I have told you about nth child
+00:07:31.520
+and then some properties are experimental
+00:07:33.520
+which I would like you to stay away from
+00:07:35.920
+the experimental properties
+00:07:37.440
+okay, so these are the nth child properties
+00:07:40.080
+which you can use
+00:07:41.520
+see I don't want to make the video too bloated
+00:07:43.920
+of useless properties
+00:07:45.500
+Infact, nothing is useless
+00:07:47.000
+I will say that if you are a beginner
+00:07:49.000
+and you are doing a web development
+00:07:51.000
+then relatively I am not discussing
+00:07:53.000
+the properties that are less useful for you
+00:07:55.500
+because I don't want the video to get bloated
+00:07:57.500
+I want to make a 10-20 minute video
+00:07:59.500
+in which I talk about the topic
+00:08:01.000
+instead of talking about everything
+00:08:02.500
+I don't want to make a documentation video
+00:08:04.500
+so I want to tell you about before and after
+00:08:06.000
+if I write here boxes
+00:08:08.000
+and here before
+00:08:10.000
+so you see after doing this
+00:08:12.000
+I can put content here
+00:08:14.000
+and I can say in content Harry is good
+00:08:16.000
+so what is the point of putting content
+00:08:18.000
+by doing this boxes before
+00:08:20.000
+now you see when I will inspect it here
+00:08:22.000
+I will put myself here
+00:08:24.000
+and you see when I inspect it here, I will move myself here and you see when I wrote boxes here, then see here it has inserted a before element
+00:08:29.600
+that is, it put an element before the main content of the boxes inside the boxes
+00:08:35.200
+and it has made its content, Harry is good
+00:08:37.440
+so in this way, the element can be dynamically inserted through CSS
+00:08:42.240
+what can be done, dynamically insert the element
+00:08:46.000
+and this is done with the help of before and after
+00:08:48.000
+this is a very important point
+00:08:50.000
+is it used? yes, it is used a lot
+00:08:52.000
+I am saying it is used a lot
+00:08:54.000
+so what will before do?
+00:08:56.000
+insert the content before main content
+00:08:58.000
+put the content you want in the content
+00:09:00.000
+what will after do? I will show you after also
+00:09:02.000
+if I had done this thing after
+00:09:04.000
+can both be used at once? yes, both can be done I will show you after also can we use both before and after
+00:09:06.080
+yes we can
+00:09:09.140
+and i will write after sigma course is also good
+00:09:12.160
+and i will show you
+00:09:15.060
+here harry is good, sigma course is also good
+00:09:18.060
+i can style it by the way
+00:09:21.060
+i can change its color to red or blue
+00:09:24.060
+i can do all that, okay
+00:09:25.000
+so I can do styling, I made it blue, the after of it, sigma courses also good, made it red
+00:09:30.500
+and here you will see that before will be inserted here, after will be inserted here, main content will be inserted in between
+00:09:36.000
+sometimes you have to put content dynamically, then before and after are used
+00:09:41.000
+pseudo elements, they are called pseudo elements, not selectors
+00:09:45.000
+pseudo elements and you can write css in it, now I told you about
+00:09:49.000
+list markers, now I will tell you about selection, so if I say
+00:09:53.000
+something like this, dot boxes selection, that if someone has selected
+00:09:58.000
+user, so let's say I want our color to be aqua, and I am not in conjunction with any element,
+00:10:06.000
+I will write it like this, so it will work for the selection of all pages,
+00:10:09.000
+now it will work, I will show you, so I will select, see the color has become aqua,
+00:10:12.000
+of selected text, I can also add background if I want, I can say,
+00:10:15.000
+make the background black, okay, what should I do with the background color,
+00:10:18.000
+make it black and make the color aqua, and now you will select,
+00:10:21.000
+you will see it will be selected like this so this our selector will select
+00:10:26.080
+selected elements, style will be applied on it
+00:10:28.640
+so you can do this thing too
+00:10:30.240
+now i will tell you about first letter
+00:10:32.480
+so if i want that my dot box
+00:10:35.360
+and in that first letter
+00:10:38.240
+first letter, the color of that
+00:10:41.520
+what should it be
+00:10:42.720
+suppose its color is i me scroll up a little,
+00:10:47.000
+let's say it's color is purple, or it should be Peru, Peru, ok, by putting semicolon,
+00:10:53.000
+I will show you, the color of our first letter is purple here, ok,
+00:10:58.000
+now you can do all those things like transform, uppercase, ok,
+00:11:01.000
+like I told you before, but this way you can select the first letter and obviously you can increase
+00:11:06.000
+font size, if I increase font size
+00:11:08.000
+to 45 pixels which is
+00:11:10.000
+ridiculously large font size
+00:11:12.000
+so it will look like this
+00:11:14.000
+now I will tell you about an input element
+00:11:16.000
+so if I write here, suppose I have a form
+00:11:18.000
+I will write here input type is equal to text
+00:11:20.000
+and suppose I write here placeholder
+00:11:22.000
+is equal to
+00:11:24.000
+type your name here
+00:11:26.000
+ok, let's say I wrote this
+00:11:28.000
+now I can target the input and say
+00:11:31.000
+that I want to target the placeholder
+00:11:34.000
+and I want to make the placeholder color blue
+00:11:38.000
+ok, so I can make the placeholder color blue
+00:11:40.000
+I can change the size of the placeholder
+00:11:42.000
+I can do a lot of things inside its placeholder, okay,
+00:11:46.000
+so if I want to increase its font size, I say I want 56 pixels, which is a ridiculously large font size,
+00:11:53.000
+so see it will overflow and it will look like this, okay, sometimes you need this kind of effect circle,
+00:11:58.000
+so you can do it, so let's fix the input placeholder, what is this behavior of mine, that I am making it blue color, let's show it well, let's start web development,
+00:12:08.000
+so that it looks like there are some websites being made,
+00:12:12.000
+not just demo, I know that, I know that you are waiting for
+00:12:16.000
+beautiful websites, they are coming very soon, so I hope this thing
+00:12:20.000
+is clear to you, so these were some such selectors,
+00:12:24.000
+pseudo selectors and pseudo elements that I wanted to tell you
+00:12:27.000
+and in my opinion, this is enough, if anything else is needed then I will tell you
+00:12:32.000
+whenever we make projects, I will tell you in that, I just hope everyone is enjoying
+00:12:37.000
+I will write something in the comment section below that they are enjoying
+00:12:41.000
+and if you have not accessed the playlist of Sigma web development yet,
+00:12:46.000
+then click here to bookmark it, click here to save it,
+00:12:49.000
+and I am also putting the getup code, you will get all the getup code,
+00:12:52.000
+and I hope you are enjoying it, everyone wants a comment section,
+00:12:55.000
+I don't know, that's all for this video guys,
+00:12:58.000
+thank you so much guys for watching this video,

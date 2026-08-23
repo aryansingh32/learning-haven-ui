@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 43,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe POWER() function returns the value of a number raised to the power of \nanother number.\n\nNote:This function is equal to thePOW()function.\n\n### Code Examples\n\n```\nSELECT POWER(4, 2);\n\n---\n\nPOWER(\nx, y\n)\n\n---\n\nSELECT POWER(8, 3);\n```\n\n## Tutorials\n\nThe RADIANS() function converts a degree value into radians.\n\nNote:See also theDEGREES()andPI()functions.\n\n### Code Examples\n\n```\nSELECT RADIANS(180);\n\n---\n\nRADIANS(\nnumber\n)\n\n---\n\nSELECT RADIANS(-45);\n```\n\n## Tutorials\n\nThe RAND() function returns a random number between 0 (inclusive) and 1 \n(exclusive).\n\n### Code Examples\n\n```\nSELECT RAND();\n\n---\n\nRAND(\nseed\n)\n\n---\n\nSELECT RAND(6);\n\n---\n\nSELECT RAND()*(10-5)+5;\n\n---\n\nSELECT FLOOR(RAND()*(10-5+1)+5);\n```\n\n## Tutorials\n\nThe ROUND() function rounds a number to a specified number of decimal places.\n\nNote:See also theFLOOR(),CEIL(),CEILING(), andTRUNCATE()functions.\n\n### Code Examples\n\n```\nSELECT ROUND(135.375, 2);\n\n---\n\nROUND(\nnumber\n,\ndecimals\n)\n\n---\n\nSELECT ROUND(345.156, \n  0);\n\n---\n\nSELECT ProductName, Price, ROUND(Price, 1) AS RoundedPrice\nFROM Products;\n```\n\n## Tutorials\n\nThe SIGN() function returns the sign of a number.\n\nThis function will return one of the following:\n\n### Code Examples\n\n```\nSELECT SIGN(255.5);\n\n---\n\nSIGN(\nnumber\n)\n\n---\n\nSELECT SIGN(-12);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_43",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_43",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

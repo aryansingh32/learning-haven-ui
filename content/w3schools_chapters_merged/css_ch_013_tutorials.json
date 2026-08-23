@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 13,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSSfont-sizeproperty \nis used to specify the size of the text/font.\n\nBeing able to manage the text size is very important in web design.\n\nHowever, you \nshould not use font size adjustments to make paragraphs look like headings, or \nheadings look like paragraphs. Always use the proper HTML tags, like <h1> - <h6> for headings and <p> for \nparagraphs.\n\nThefont-sizecan be set to an absolute size or to a relative size.\n\nAbsolute sizes:\n\nRelative sizes:\n\nSetting the text size with pixels (px) gives \nyou full control over the text size.\n\nIf you use pixels, the web page may not scale very well on different screen \nsizes and the users cannot adjust the text size in their browser settings. \nHowever, users can still use the zoom tool to resize the entire page.\n\nTheemunit is relative to the font size of \nthe parent element. So, if the parent element has a font size of 16px, then 2.5em \nwould result in 40px.\n\nIn the following example, the text size inemis the same as the previous example \nin pixels. However, theemunit allows the user to adjust the text size \nin the browser settings.\n\nTheremunit is relative to the font size of \nthe root HTML element (<html>).\n\nUnlikeem, which is relative to the font-size of its parent element,remalways refers to the font-size of the <html> element, regardless of its position \nin the document tree. This makesremvery useful for creating scalable and responsive \ndesigns. By changing the font-size of the <html> element, all elements sized \nwithremunits will scale proportionally throughout the entire page.\n\nThe default font-size of the <html> element in most browsers, is 16px. \nSo, by default, 1rem equals 16px unless explicitly overridden in the CSS.\n\nThe font size can also be set with thevwunit, which means the \"viewport width\".\n\nThevwunit is a relative unit that \nrepresents a percentage of the width of the viewport.\n\n1vw = 1% of the current width of the browser's viewport. So, if the viewport is 500px wide, 1vw is 5px.\n\nThis way the text size will follow the size of the browser window:\n\n### Code Examples\n\n```\nh1 {\nfont-size: 40px;\n}\nh2 {\nfont-size: 30px;\n}\np {\nfont-size: 16px;\n}\n\n---\n\nbody {\nfont-size: 16px; /* Base font size */\n}\nh1 {\nfont-size: 2.5em; /* 2.5 * 16 = 40px */\n}\nh2 {\nfont-size: 1.875em; /* 1.875 * 16 = 30px */\n}\np {\nfont-size: 1em; /* 1 * 16 = 16px */\n}\n\n---\n\nhtml {\nfont-size: 16px; /* Set the root font size */\n}\nh1 {\nfont-size: 2.5rem; /* 2.5 * 16 = 40px */\n}\nh2 {\nfont-size: 1.875rem; /* 1.875 * 16 = 30px */\n}\np {\nfont-size: 1rem; /* 1 * 16 = 16px */\n}\n\n---\n\nh1 {\nfont-size:10vw;\n}\np {\nfont-size:5vw;\n}\n```\n\n## Tutorials\n\nIf you do not want to use any of the standard fonts in HTML, you can use Google Fonts.\n\nGoogle Fonts are free to use, and have more than 1000 fonts to choose from.\n\nJust add a special style sheet link in the <head> section and then refer to the font in the CSS.\n\nFor a list of all available Google Fonts, visit ourHow To - Google Fonts Tutorial.\n\nTo use multiple Google fonts, just separate the font names with a pipe \ncharacter (|), like this:\n\nOf course you can style Google Fonts as you like, with CSS!\n\nGoogle has also enabled different font effects that you can use.\n\nFirst addeffect=effectnameto the Google API, \nthen add a special class name to the element that is going to use the special \neffect. The class name always starts withfont-effect-and ends with theeffectname.\n\nTo request multiple font effects, just separate the effect names with a pipe character \n(|), like this:\n\n### Code Examples\n\n```\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Sofia\">\n<style>\nbody {\nfont-family: \"Sofia\", sans-serif;\n}\n</style>\n</head>\n\n---\n\nSofia Font\nLorem ipsum dolor sit amet.\n123456790\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Trirong\">\n<style>\nbody {\nfont-family: \"Trirong\", serif;\n}\n</style>\n</head>\n\n---\n\nTrirong Font\nLorem ipsum dolor sit amet.\n123456790\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Audiowide\">\n<style>\nbody {\nfont-family: \"Audiowide\", sans-serif;\n}\n</style>\n</head>\n\n---\n\nAudiowide Font\nLorem ipsum dolor sit amet.\n123456790\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong\">\n<style>\nh1.a {font-family: \"Audiowide\", sans-serif;}\nh1.b {font-family: \"Sofia\", \n  sans-serif;}\nh1.c {font-family: \"Trirong\", serif;}\n</style>\n</head>\n\n---\n\nAudiowide Font\nSofia Font\nTrirong Font\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Sofia\">\n<style>\nbody {\nfont-family: \"Sofia\", sans-serif;\nfont-size: 30px;\ntext-shadow: 3px 3px 3px #ababab;\n}\n</style>\n</head>\n\n---\n\nSofia Font\nLorem ipsum dolor sit amet.\n123456790\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Sofia&effect=fire\">\n<style>\nbody {\nfont-family: \"Sofia\", sans-serif;\nfont-size: 30px;\n}\n</style>\n</head>\n<body>\n<h1 class=\"font-effect-fire\">Sofia on \n  Fire</h1>\n</body>\n\n---\n\nSofia on Fire\n\n---\n\n<head>\n<link rel=\"stylesheet\" \n  href=\"https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple\">\n<style>\nbody {\nfont-family: \"Sofia\", sans-serif;\nfont-size: 30px;\n}\n</style>\n</head>\n<body>\n<h1 class=\"font-effect-neon\">Neon Effect</h1>\n<h1 class=\"font-effect-outline\">Outline \n  Effect</h1>\n<h1 class=\"font-effect-emboss\">Emboss \n  Effect</h1>\n<h1 class=\"font-effect-shadow-multiple\">Multiple \n  Shadow Effect</h1>\n</body>\n\n---\n\nNeon Effect\nOutline Effect\nEmboss Effect\nMultiple Shadow Effect\n```\n\n## Tutorials\n\nGreat font pairings are essential to great design!\n\nHere are some basic rules to create great font pairings:\n\nIt is always safe to find font pairings that complement one another.\n\nA great font combination should harmonize, without being too similar or too different.\n\nA font superfamily is a set of fonts designed to work well together. So, using different fonts within the same superfamily is safe.\n\nFor example, the Lucida superfamily contains the following fonts: Lucida \nSans, Lucida Serif, Lucida Typewriter Sans, Lucida Typewriter Serif and Lucida Math.\n\nTwo fonts that are too similar will often conflict. However, contrasts, done \nthe right way, brings out the best in each font.\n\nExample: Combining serif with sans serif is a well known combination.\n\nA strong superfamily includes both serif and sans serif variations of the same font (e.g. Lucida and Lucida Sans).\n\nOne font should be the boss. This establishes a hierarchy for the fonts on \nyour page. This can be achieved by varying the size, weight and color.\n\nBelow, we have shown some popular font pairings that will suit many brands and contexts.\n\nGeorgia and Verdana is a classic combination. It also sticks to the web safe font standards:\n\nHelvetica and Garamond is another classic combination that uses web safe fonts:\n\nIf you do not want to use standard fonts in HTML, you can use Google Fonts.\n\nGoogle Fonts are free to use, and have more than 1000 fonts to choose from.\n\nBelow are some popular Google Web Font Pairings.\n\nFor a list of all free Google Fonts, visit ourHow To - Google Fonts Tutorial.\n\n### Code Examples\n\n```\nbody {\nbackground-color: black;\nfont-family: Verdana, \n  sans-serif;\nfont-size: 16px;\ncolor: gray;\n}\nh1 \n  {\nfont-family: Georgia, serif;\nfont-size: 60px;\ncolor: white;\n}\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by Sweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n\n---\n\nBeautiful Norway\nNorway has a total area of 385,252 square \nkilometers and a population of 5,438,657 (December 2020). Norway is bordered by \nSweden, Finland and Russia to the north-east, and the Skagerrak to the south, with Denmark on the other side.\nNorway has beautiful mountains, glaciers and stunning fjords. Oslo, the capital, is a city of green spaces and museums. Bergen, with colorful wooden houses, is the starting point for cruises to the dramatic Sognefjord. Norway is also known for fishing, hiking and skiing.\n```\n\n## Tutorials\n\nTo shorten the code, it is possible to specify all the individual font properties in one \ndeclaration.\n\nThe CSSfontproperty is a shorthand property for:\n\n### Code Examples\n\n```\np.a {\nfont: 20px Arial, sans-serif;\n}\np.b {\nfont: \n    italic bold 16px Arial, sans-serif;\n}\np.c {\nfont: italic \n    small-caps bold 15px/30px Georgia, serif;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_13",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_13",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

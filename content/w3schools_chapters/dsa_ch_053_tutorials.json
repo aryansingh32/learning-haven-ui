@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 53,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Seethis pagefor a general explanation of what time complexity is.\n\nBinary Searchfinds the target value in an already sorted array by checking the center value. If the center value is not the target value, Linear Search selects the left or right sub-array and continues the search until the target value is found.\n\nTo find the time complexity for Binary Search, let's see how many compare operations are needed to find the target value in an array with \\(n\\) values.\n\nThebest case scenariois if the first middle value is the same as the target value. If this happens the target value is found straight away, with only one compare, so the time complexity is \\(O(1)\\) in this case.\n\nTheworst case scenariois if the search area must be cut in half over and over until the search area is just one value. When this happens, it does not affect the time complexity if the target value is found or not.\n\nLet's consider array lengths that are powers of 2, like 2, 4, 8, 16, 32 64 and so on.\n\nHow many times must 2 be cut in half until we are looking at just one value? It is just one time, right?\n\nHow about 8? We must cut an array of 8 values in half 3 times to arrive at just one value.\n\nAn array of 32 values must be cut in half 5 times.\n\nWe can see that \\(2=2^1\\), \\(8=2^3\\) and \\(32=2^5\\). So the number of times we must cut an array to arrive at just one element can be found in the power with base 2. Another way to look at it is to ask \"how many times must I multiply 2 with itself to arrive at this number?\". Mathematically we can use the base-2 logarithm, so that we can find out that an array of length \\(n\\) can be split in half \\( \\log_{2}(n)\\) times.\n\nThis means that time complexity for Binary Search is\n\n\\[ \\underline{\\underline{O( \\log_{2} n )}} \\]\n\nTheaverage case scenariois not so easy to pinpoint, but since we understand time complexity of an algorithm as the upper bound of the worst case scenario, using Big O notation, the average case scenario is not that interesting.\n\nIf we draw how much time Binary Search needs to find a value in an array of \\(n\\) values, compared to Linear Search, we get this graph:\n\nRun the simulation for different number of values \\(n\\) in an array, and see how many compares are needed for Binary Search to find the target value:\n\nAs you can see when running simulations of Binary Search, the search requires very few compares, even if the the array is big and the value we are looking for is not found.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_52",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 275,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "CSS media queries allow you to apply styles based on the characteristics of a \ndevice or the environment displaying the web page.\n\nCSS media queries are essential for creating responsive web pages.\n\nThe CSS@mediarule \nis used to add media queries to your style sheet.\n\nOn the previous page we made a grid layout web page. Now we want to add a \nbreakpoint with mediaqueries to rearrange the grid items on bigger screens.\n\nYou can add as many breakpoints as you like.\n\nThere are tons of screens and devices with different heights and widths, so it is hard to create an exact breakpoint for each device. To keep things simple you could target \nfive groups:\n\nMedia queries can also be used to change the layout of a page depending on the orientation of the screen.\n\nHere, we change the background-color of the body, if the screen orientation is in landscape mode:\n\nHere, we use media queries to hide an element on small screens:\n\nHere, we use media queries to change the font size of an element on different viewport widths:\n\nSome users have motion sensitivity and prefer websites with less animation.\n\nTheprefers-reduced-motionmedia feature lets you check if\n   a user has asked to reduce motion, such as animations or transitions. Use \nthis feature to turn off animations \nand transitions for the users who has activated this setting on their computer:\n\nFor a full overview of all the media types and features/expressions, please look at the@media rule in our CSS reference.\n\n### Code Snippets\n\n```\n@media (min-width: 600px) {\n.header {grid-area: 1 / span 6;}\n.menu {grid-area: 2 / span 1;}\n.content {grid-area: 2 / span 4;}\n.facts {grid-area: 2 / span 1;}\n.footer {grid-area: 3 / span 6;}\n}\n\n---\n\n@media (min-width: 600px) {\n.header {grid-area: 1 / span 6;}\n.menu {grid-area: 2 / span 1;}\n.content {grid-area: 2 / span 4;}\n.facts {grid-area: 3 / span 6;}\n.footer {grid-area: 4 / span 6;}\n}\n@media (min-width: 768px) {\n.header {grid-area: 1 / span 6;}\n.menu {grid-area: 2 / span 1;}\n.content {grid-area: 2 / span 4;}\n.facts {grid-area: 2 / span 1;}\n.footer {grid-area: 3 / span 6;}\n}\n\n---\n\n/* \n  Extra small devices (phones, 600px and down) */\n@media only screen and (max-width: 600px) \n  {...}\n/* Small devices (portrait tablets and large phones, 600px and up) \n  */\n@media only screen and (min-width: 600px) {...}\n/* Medium devices (landscape tablets, 768px and up) */\n@media only screen and (min-width: 768px) {...}\n/* Large devices (laptops/desktops, 992px and up) \n  */\n@media only screen and (min-width: 992px) {...}\n/* Extra large devices (large \n  laptops and desktops, \n  1200px and up) */\n@media only screen and (min-width: 1200px) {...}\n\n---\n\n@media only screen and (orientation: \nlandscape) {\nbody {\nbackground-color: lightblue;\n}\n}\n\n---\n\n/* Hide element if the viewport width is 600px or less */\n@media \n  screen and (max-width: 600px) {\n#div1 {\ndisplay: none;\n}\n}\n\n---\n\n/* If viewport width is 600px or more, set font-size to 80px */\n@media screen and (min-width: \n  600px) {\n#div1 {\nfont-size: 80px;\n}\n}\n\n---\n\n@media (prefers-reduced-motion: reduce) {\n* {\nanimation: none !important;\ntransition: none !important;\n}\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_274",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 28,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheSELECTcommand is used to select data \nfrom a database. The data returned is stored in a result table, called the result set.\n\nThe following SQL statement selects the \"CustomerName\" and \"City\" columns \nfrom the \"Customers\" table:\n\nThe following SQL statement selects all the columns from the \"Customers\" \ntable:\n\n### Code Examples\n\n```\nSELECT CustomerName, City FROM Customers;\n\n---\n\nSELECT * FROM Customers;\n```\n\n## Tutorials\n\nTheSELECT DISTINCTcommand returns only \ndistinct (different) values in the result set.\n\nThe following SQL statement selects only the DISTINCT values from the \"Country\" column in the \"Customers\" table:\n\n### Code Examples\n\n```\nSELECT DISTINCT Country FROM Customers;\n```\n\n## Tutorials\n\nTheSELECT INTOcommand copies data \nfrom one table and inserts it into a new table.\n\nThe following SQL statement creates a backup copy of Customers:\n\nThe following SQL statement uses the IN clause to copy the table into a new \ntable in another database:\n\nThe following SQL statement copies only a few columns into a new table:\n\nThe following SQL statement copies only the German customers into a new table:\n\nThe following SQL statement copies data from more than one table into a new table:\n\n### Code Examples\n\n```\nSELECT * INTO CustomersBackup2017\nFROM Customers;\n\n---\n\nSELECT *\nINTO CustomersBackup2017 IN 'Backup.mdb'\nFROM Customers;\n\n---\n\nSELECT CustomerName, ContactName INTO CustomersBackup2017\nFROM Customers;\n\n---\n\nSELECT *\nINTO CustomersGermany\nFROM Customers\nWHERE Country = 'Germany';\n\n---\n\nSELECT Customers.CustomerName, Orders.OrderID\nINTO CustomersOrderBackup2017\nFROM Customers\nLEFT JOIN Orders\n ON Customers.CustomerID = Orders.CustomerID;\n```\n\n## Tutorials\n\nTheLIMIT,SELECT TOPorROWNUMcommand is used to specify the number of records to return.\n\nThe following SQL statement selects the first three records from the \"Customers\" table \n(SQL SERVER):\n\nThe following SQL statement shows the equivalent example using the LIMIT clause \n(MySQL):\n\nThe following SQL statement shows the equivalent example using ROWNUM \n(Oracle):\n\n### Code Examples\n\n```\nSELECT TOP 3 * FROM Customers;\n\n---\n\nSELECT * FROM Customers\nLIMIT 3;\n\n---\n\nSELECT * FROM Customers\nWHERE ROWNUM  <= 3;\n```\n\n## Tutorials\n\nTheSETcommand is used with UPDATE to specify which columns and values that should be updated \nin a table.\n\nThe following SQL updates the first customer (CustomerID = 1) with a new ContactNameanda new City:\n\nThe following SQL will \nupdate the \"ContactName\" field to \"Juan\" for all records where Country is \"Mexico\":\n\n### Code Examples\n\n```\nUPDATE Customers\nSET ContactName = 'Alfred Schmidt', City= 'Frankfurt'\nWHERE CustomerID = 1;\n\n---\n\nUPDATE Customers\nSET ContactName='Juan'\nWHERE Country='Mexico';\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_28",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_28",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

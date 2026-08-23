@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 1,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nWith our \"Try it Yourself\" editor, you can edit the HTML code and view the \nresult in the browser:\n\nClick on the \"Try it Yourself\" button to see how it works.\n\nThis tutorial supplements all explanations with clarifying examples.\n\nSee all HTML Examples\n\nMany chapters in this tutorial end with an exercise where you can check your level of knowledge.\n\nSee all HTML Exercises\n\nTest your HTML skills with our HTML Quiz!\n\nStart HTML Quiz!\n\nAt W3Schools you will find complete references about HTML elements, \nattributes, events, color names, entities, character-sets, URL encoding, \nlanguage codes, HTTP messages, browser support, and more:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<title>Page Title</title>\n</head>\n<body>\n<h1>This is a Heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nHTML is the standard markup language for creating Web pages.\n\nAn HTML element is defined by a start tag, some content, and an end tag:\n\nThe HTMLelementis everything from the start tag to the end tag:\n\nThe purpose of a web browser (Chrome, Edge, Firefox, Safari) is to read HTML documents and display them \ncorrectly.\n\nA browser does not display the HTML tags, but uses them to determine how to display the document:\n\nBelow is a visualization of an HTML page structure:\n\nSince the early days of the World Wide Web, there have been many versions of HTML:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<title>Page Title</title>\n</head>\n<body>\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nTest what you have learned about HTML introduction.\n\n## Tutorials\n\nA simple text editor is all you need to learn HTML.\n\nWeb pages can be created and modified by using professional HTML editors.\n\nHowever, for learning HTML we recommend a simple text editor like Notepad (PC) or TextEdit (Mac).\n\nWe believe that using a simple text editor is a good way to learn HTML.\n\nFollow the steps below to create your first web page with Notepad or TextEdit.\n\nWindows 8 or later:\n\nOpen theStart Screen(the window symbol at the bottom left on your screen). TypeNotepad.\n\nWindows 7 or earlier:\n\nOpenStart>Programs >Accessories >Notepad\n\nOpenFinder > Applications > TextEdit\n\nAlso change some preferences to get the application to \nsave files correctly.InPreferences > Format >choose\"Plain Text\"\n\nThen under \"Open and Save\", check the box that says \"Display HTML files as HTML code instead of formatted text\".\n\nThen open a new document to place the code.\n\nWrite or copy the following HTML code into Notepad:\n\nSave the file on your computer. SelectFile > Save asin the Notepad menu.\n\nName the file\"index.htm\"and set the encoding toUTF-8(which is the preferred encoding for HTML files).\n\nOpen the saved HTML file in your favorite browser (double click on the file, \nor right-click - and choose \"Open with\").\n\nThe result will look much like this:\n\nWith our free online editor, you can edit the HTML code and view the result in your browser.\n\nIt is the perfect tool when you want totestcode fast. It also has color \ncoding and the ability to save and share code with others:\n\nClick on the \"Try it Yourself\" button to see how it works.\n\nIf you want to create your own website and save your code online, try ourwebsite builder, calledW3schools Spaces:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<title>Page Title</title>\n</head>\n<body>\n<h1>This is a Heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nIn this chapter we will show some basic HTML examples.\n\nDon't worry if we use tags you have not learned about yet.\n\nAll HTML documents must start with a document type declaration:<!DOCTYPE html>.\n\nThe HTML document itself begins with<html>and ends with</html>.\n\nThe visible part of the HTML document is between<body>and</body>.\n\nThe<!DOCTYPE>declaration represents the document type, and helps browsers to display web pages correctly.\n\nIt must only appear once, at the top of the page (before any HTML tags).\n\nThe<!DOCTYPE>declaration is not case sensitive.\n\nThe<!DOCTYPE>declaration for HTML5 is:\n\nHTML headings are defined with the<h1>to<h6>tags.\n\n<h1>defines the most important heading.<h6>defines the least important \nheading:\n\nHTML paragraphs are defined with the<p>tag:\n\nHTML links are defined with the<a>tag:\n\nThe link's destination is specified in thehrefattribute.\n\nAttributes are used to provide additional information about HTML elements.\n\nYou will learn more about attributes in a later chapter.\n\nHTML images are defined with the<img>tag.\n\nThe source file (src), alternative text (alt),width, andheightare provided as attributes:\n\nHave you ever seen a Web page and wondered \"Hey! How did they do that?\"\n\nClick CTRL + U in an HTML page, or right-click on the page and select \"View Page Source\". This will open a \nnew tab \ncontaining the HTML source code of the page.\n\nRight-click on an element (or a blank area), and choose \"Inspect\" to see what elements are made up of (you will see both \nthe HTML and the CSS). You can also edit the HTML or CSS on-the-fly in the \nElements or Styles panel that opens.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Heading</h1>\n<p>My first paragraph.</p>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n\n---\n\n<h1>This is heading 1</h1>\n<h2>This is heading 2</h2>\n<h3>This is heading 3</h3>\n\n---\n\n<p>This is a paragraph.</p>\n<p>This is another paragraph.</p>\n\n---\n\n<a href=\"https://www.w3schools.com\">This is a link</a>\n\n---\n\n<img src=\"w3schools.jpg\" alt=\"W3Schools.com\" width=\"104\" height=\"142\">\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_1",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_1",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

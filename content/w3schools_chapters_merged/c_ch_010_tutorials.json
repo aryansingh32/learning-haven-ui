@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nABoolean expressionis a piece of code that compares values or variables and returns a boolean value:1(true) or0(false).\n\nBoolean expressions are the foundation of decision making in programming - they let your program decide what to do based on whether something is true or false.\n\nYou can use acomparison operator, such as thegreater than(>) operator,\nto find out if an expression (or variable) is true or false:\n\nOr even easier:\n\nIn the examples below, we use theequal to(==) operator to evaluate an expression:\n\nYou can also store the result of a comparison in aboolvariable:\n\n### Code Examples\n\n```\nint x = 10;\nint y = 9;\ncout << (x > y); // returns 1 (true), because 10 is higher than 9\n\n---\n\ncout << (10 > 9); // returns 1 (true), because 10 is higher than 9\n\n---\n\nint x = 10;\ncout << (x == 10);\u00a0 // returns 1 (true), because the value\n  of x is equal to 10\n\n---\n\ncout << (10 == 15);\u00a0 // returns\n  0 (false), because 10 is not equal to 15\n\n---\n\nint x = 10;\nint y = 9;\nbool isGreater = x > y;\ncout << isGreater; // returns 1 (true)\n```\n\n## Tutorials\n\nLet's use booleans in a real-life example where we want to find out if a person is old enough to vote.\n\nIn the example below, we use the>=comparison operator to find out if the age (25) isgreater than OR equal tothe voting age limit, which is set to18:\n\nCool, right? An even better approach (since we are on a roll now), would be to wrap the code above in anif...elsestatement, so we can perform \ndifferent actions depending on the result:\n\n### Code Examples\n\n```\nint myAge = 25;\nint votingAge = 18;\ncout << (myAge >= votingAge); \n  // returns 1 (true), meaning 25 year olds are allowed to vote!\n\n---\n\nint myAge = 25;\nint votingAge = 18;\nif (myAge >= votingAge) {\ncout << \"Old enough to vote!\";\n} else {\ncout << \"Not old enough to vote.\";\n}\n// Outputs: Old enough to vote!\n```\n\n## Tutorials\n\nTest your understanding ofC++ booleansby completing a small coding challenge.\n\n## Tutorials\n\nYou already know that C++ supports familiar comparison conditions from mathematics, such as:\n\nThese conditions are used to perform different actions depending on whether something is true or false.\n\nC++ has the following conditional statements:\n\nUse theifstatement to specify a block of C++ code to be executed\nif a condition istrue.\n\nIn the example below, we test two values to find out if 20 is greater than 18.\nIf the condition istrue, we print a message:\n\nWe can also use variables in conditions:\n\nIn the example above, we use two variables,xandy,\nto test whetherxis greater thany.\nBecause 20 is greater than 18, the condition is true, and the message is printed.\n\nSince the condition in anifstatement must be either true or false,\nyou can store the result in a boolean variable instead of writing the comparison directly:\n\nThiscanmake your code easier to read, especially when the condition is complex\nor used more than once.\n\n### Code Examples\n\n```\nif (\ncondition\n) {\n// block of code to be executed if the condition is true\n}\n\n---\n\nif (20 > 18) {\ncout << \"20 is greater than 18\";\n}\n\n---\n\nint x = 20;\nint y = 18;\nif (x > y) {\ncout << \"x is greater than y\";\n}\n\n---\n\nint x = 20;\nint y = 18;\nbool isGreater = x > y;\nif (isGreater) {\ncout << \"x is greater than y\";\n}\n```\n\n## Tutorials\n\nUse theelsestatement to specify a block of code to be executed\nif the condition isfalse.\n\nIn the example below, the program checks the value oftime.\nIf it is less than 18, it prints \"Good day\". Otherwise, it prints \"Good evening\":\n\nBecausetimeis 20, the conditiontime < 18is false,\nso the code inside theelseblock runs and prints \"Good evening.\".\nIftimewas less than 18, the program would print \"Good day.\" instead.\n\nYou can also store the condition in a boolean variable and use it in theif...elsestatement.\nThis can make the code easier to read.\n\n### Code Examples\n\n```\nif (\ncondition\n) {\n// block of code to be executed if the condition is true\n} else {\n// block of code to be executed if the condition is false\n}\n\n---\n\nint time = 20;\nif (time < 18) {\ncout << \"Good day.\";\n} else {\ncout << \"Good evening.\";\n}\n// Outputs \"Good evening.\"\n\n---\n\nint time = 20;\nbool isDay = time < 18;\nif (isDay) {\ncout << \"Good day.\";\n} else {\ncout << \"Good evening.\";\n}\n// Outputs \"Good evening.\"\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

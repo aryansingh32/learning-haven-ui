@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 58,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Math Methods\n\nThefloorDiv()method returns the division between two integers rounded down. This is different from an ordinary integer division in that negative results are rounded down away from zero instead of truncated towards it.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nPerform integer divisions:\nSystem.out.println(Math.floorDiv(10, 5));\nSystem.out.println(Math.floorDiv(10, 4));\nSystem.out.println(Math.floorDiv(-10, 4));\nSystem.out.println(Math.floorDiv(-10, 5));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThefloorMod()method returns the remainder of a division between two integers where the result of the division was rounded down.\n\nSyntaxOne of the following:public static int floorMod(intdividend, intdivisor)public static long floorMod(longdividend, longdivisor)Parameter ValuesParameterDescriptiondividendRequired. The dividend of the remainder operation.divisorRequired. The divisor of the remainder operation.Technical DetailsReturns:Anintorlongvalue representing the remainder from a division between two integers.Throws:ArithmeticException- If the divisor is zero.Java version:1.8+\u276e Math Methods\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nExample\nReturn the remainders of rounded-down divisions:\nSystem.out.println(Math.floorMod(10, 4));\nSystem.out.println(Math.floorMod(-10, 4));\nSystem.out.println(Math.floorMod(10, 3));\nSystem.out.println(Math.floorMod(-10, 3));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThegetExponent()method returns the unbiased exponent of Java's internal representation of a floating point number.\n\nJava represents every floating point number internally in the form m\u00b72x. ThegetExponent()method returns the value ofxfor any floating point number. The termunbiasedrefers to the fact that the exponent can only be represented internally as a positive number, so there is a positive bias to the exponent. When you subtract the bias from the exponent you get theunbiased(true) value of the exponent.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nGet the exponent of different floating point numbers:\nSystem.out.println(Math.getExponent(1));\nSystem.out.println(Math.getExponent(2));\nSystem.out.println(Math.getExponent(-8));\nSystem.out.println(Math.getExponent(10));\nSystem.out.println(Math.getExponent(0.5));\nSystem.out.println(Math.getExponent(-0.33));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThehypot()method returns the length of the hypotenuse of a right angle triangle, which is equivalent to the distance between a 2D point (x, y) and the origin (0, 0).\n\nThis method returns a value equal toMath.sqrt(x * x + y * y)but it is optimized to prevent overflows and underflows caused during intermediate operations such as addition and multiplication.\n\n### Code Examples\n\n```\nExample\nGet the distance of 2D points (x, y) from the origin (0, 0):\nSystem.out.println(Math.hypot(3, 4));\nSystem.out.println(Math.hypot(1, 1));\nSystem.out.println(Math.hypot(1, 10));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nTheIEEEremainder()method computes the remainder operation on two numbers as prescribed by the IEEE 754 standard.\n\nThe return value of this method for two numbers a and b is equal toa - (b * Math.rint(a/b)).\n\n### Code Examples\n\n```\nExample\nCalculate the IEEE 754 remainder of different pairs of numbers:\nSystem.out.println(Math.IEEEremainder(11, 3));\nSystem.out.println(Math.IEEEremainder(16, 4));\nSystem.out.println(Math.IEEEremainder(31, 2.5));\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_58",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_58",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

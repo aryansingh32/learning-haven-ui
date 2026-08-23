@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 209,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "With CSS it is easy to shape (clip) images to circles, ellipses and polygons.\n\nTheclip-pathproperty lets you clip an \nelement to a basic shape.\n\nThecircle()function defines a circle with a radius and a position.\n\nHere we clip an image to a circle with 50% radius:\n\nWe can also specify the center of the circle. This can be a length or percentage value. It can also be a value such as left, right, top, or bottom. The default value is center.\n\nHere we clip an image to a circle with 50% radius and position the center of the \ncircle to the right:\n\nTheshape-outsideproperty lets you define a shape for \nthe wrapping of the inline content.\n\nThecircle()function defines a circle with a radius and a position.\n\nHere we clip an image to a circle with 40% radius, and set the shape-outside \nto a circle with 45% radius (to shape the text):\n\nTheclip-pathproperty lets you clip an \nelement to a basic shape.\n\nTheellipse()function defines an ellipse with two radii x and y.\n\nHere we clip an image to an ellipse with 50% radius x and 35% radius y:\n\nWe can also specify the center of the ellipse. This can be a length or percentage value. It can also be a value such as left, right, top, or bottom. The default value is center.\n\nHere we clip an image to an ellipse with 50% radius x and 35% radius y, and \nposition the center of the ellipse to the right:\n\nHere we clip an image to an ellipse with 40% radius x and 50% radius y, and set the shape-outside \nto an ellipse with 45% radius x and 50% radius y (to shape the text):\n\nThepolygon()function defines a \npolygon.\n\nThis function contains points that \ndefine the polygon. This can be a length or percentage value. Each point is a \npair of x and y coordinates. 0 0 defines the left top corner and 100% 100% \ndefines the right bottom corner.\n\nThepolygon()function is used within theclip-pathproperty and theshape-outsideproperty.\n\nHere we clip an image to a polygon:\n\nThe following table lists the CSS properties and functions used in this \nchapter:\n\n### Code Snippets\n\n```\nimg {\nclip-path: circle(50%);\n}\n\n---\n\nimg {\nclip-path: circle(50% at right);\n}\n\n---\n\nimg {\nfloat: left;\nclip-path: circle(40%);\nshape-outside: circle(45%);\n}\n\n---\n\nimg {\nclip-path: ellipse(50% 35%);\n}\n\n---\n\nimg {\nclip-path: ellipse(50% 35% at right);\n}\n\n---\n\nimg {\nfloat: left;\nclip-path: ellipse(40% 50%);\nshape-outside: ellipse(45% 50%);\n}\n\n---\n\nimg {\nclip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_208",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

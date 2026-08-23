@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 106,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Semantic elements = elements with a meaning.\n\nA semantic element clearly describes its meaning to both the browser and the developer.\n\nExamples ofnon-semanticelements:<div>and<span>- Tells nothing about its content.\n\nExamples ofsemanticelements:<img>,<table>, and<article>- Clearly defines its content.\n\nMany web sites contain HTML code like:\n<div id=\"nav\"> <div class=\"header\"> <div id=\"footer\">\nto indicate navigation, header, and footer.\n\nIn HTML there are several semantic elements that can be used to define different parts of a web page:\n\nThe<section>element defines a section in a document.\n\nAccording to W3C's HTML documentation: \"A section is a thematic grouping of content, typically with a heading.\"\n\nExamples of where a<section>element can be used:\n\nA web page could normally be split into sections for introduction, \ncontent, and contact information.\n\nThe<article>element specifies independent, self-contained content.\n\nAn article should make sense on its own, and it should be possible to \ndistribute it independently from the rest of the web site.\n\nExamples of where the<article>element can be used:\n\nThe<article>element specifies independent, self-contained content.\n\nThe<section>element defines a section in a document.\n\nCan we use the definitions to decide how to nest those elements? No, we cannot!\n\nSo, you will find HTML pages with<section>elements \ncontaining<article>elements, and<article>elements containing<section>elements.\n\nThe<header>element represents a container for introductory content or \na set of navigational links.\n\nA<header>element typically contains:\n\nNote:You can have several<header>elements in one \nHTML document. However,<header>cannot be placed within a<footer>,<address>or another<header>element.\n\nThe<footer>element defines a footer for a document or section.\n\nA<footer>element typically contains:\n\nYou can have several<footer>elements in one document.\n\nThe<nav>element defines a set of navigation links.\n\nThe<aside>element defines some content aside from the content it is \nplaced in (like a sidebar).\n\nThe<aside>content should be \nindirectly related to the surrounding content.\n\nThe<figure>tag specifies self-contained content, like illustrations, diagrams, photos, code listings, etc.\n\nThe<figcaption>tag defines a caption for a<figure>element. The<figcaption>element can be placed as the first or \nas the last child of a<figure>element.\n\nThe<img>element defines the actual image/illustration.\n\nAccording to the W3C: \"A semantic Web allows data to be shared and reused across applications, \nenterprises, and communities.\"\n\nBelow is a list of some of the semantic elements in HTML.\n\n### Code Snippets\n\n```\n<section>\n<h1>WWF</h1>\n<p>The World Wide Fund for Nature (WWF) is an \n    international organization working on issues regarding the conservation, \n    research and restoration of the environment, formerly named the World \n    Wildlife Fund. WWF was founded in 1961.</p>\n</section>\n<section>\n<h1>WWF's Panda symbol</h1>\n<p>The Panda has become the symbol of WWF. \n    The well-known panda logo of WWF originated from a panda named Chi Chi that \n    was transferred from the Beijing Zoo to the London Zoo in the same year of \n    the establishment of WWF.</p>\n</section>\n\n---\n\n<article>\n<h2>Google Chrome</h2>\n<p>Google Chrome is a web browser \n    developed by Google, released in 2008. Chrome is the world's most popular \n    web browser today!</p>\n</article>\n<article>\n<h2>Mozilla \n    Firefox</h2>\n<p>Mozilla Firefox is an open-source web browser developed \n    by Mozilla. Firefox has been the second most popular web browser since \n    January, 2018.</p>\n</article>\n<article>\n<h2>Microsoft Edge</h2>\n<p>Microsoft Edge is a web browser developed by Microsoft, released in 2015. \n    Microsoft Edge replaced Internet Explorer.</p>\n</article>\n\n---\n\n<html>\n<head>\n<style>\n.all-browsers {\nmargin: 0;\npadding: 5px;\nbackground-color: lightgray;\n}\n.all-browsers \n  > h1, .browser {\nmargin: 10px;\npadding: 5px;\n}\n.browser {\nbackground: white;\n}\n.browser > h2,  \n  p {\nmargin: 4px;\nfont-size: 90%;\n}\n</style>\n</head>\n<body>\n<article class=\"all-browsers\">\n<h1>Most \n  Popular Browsers</h1>\n<article class=\"browser\">\n<h2>Google Chrome</h2>\n<p>Google Chrome is a web browser \n  developed by Google, released in 2008. Chrome is the world's most popular web \n  browser today!</p>\n</article>\n<article class=\"browser\">\n<h2>Mozilla Firefox</h2>\n<p>Mozilla Firefox is an \n  open-source web browser developed by Mozilla. Firefox has been the second most \n  popular web browser since January, 2018.</p>\n</article>\n<article class=\"browser\">\n<h2>Microsoft Edge</h2>\n<p>Microsoft Edge is a web browser developed by Microsoft, released in 2015. \n  Microsoft Edge replaced Internet Explorer.</p>\n</article>\n</article>\n</body>\n</html>\n\n---\n\n<article>\n<header>\n<h1>What Does WWF Do?</h1>\n<p>WWF's mission:</p>\n</header>\n<p>WWF's mission is to stop the degradation of our planet's natural environment,\nand build a future in which humans live in harmony with nature.</p>\n</article>\n\n---\n\n<footer>\n<p>Author: Hege Refsnes</p>\n<p><a href=\"mailto:hege@example.com\">hege@example.com</a></p>\n</footer>\n\n---\n\n<nav>\n<a href=\"/html/\">HTML</a> |\n<a href=\"/css/\">CSS</a> |\n<a href=\"/js/\">JavaScript</a> |\n<a href=\"/jquery/\">jQuery</a>\n</nav>\n\n---\n\n<p>My family and I visited The Epcot center this summer. The weather was \n    nice, and Epcot was amazing! I had a great summer together with my \n    family!</p>\n<aside>\n<h4>Epcot Center</h4>\n<p>Epcot is a theme \n    park at Walt Disney World Resort featuring exciting attractions, \n    international pavilions, award-winning fireworks and seasonal special \n    events.</p>\n</aside>\n\n---\n\n<html>\n<head>\n<style>\naside {\nwidth: 30%;\npadding-left: 15px;\nmargin-left: 15px;\nfloat: right;\nfont-style: italic;\nbackground-color: lightgray;\n}\n</style>\n</head>\n<body>\n<p>My family and I visited The Epcot \n  center this summer. The weather was nice, and Epcot was amazing! I had a great \n  summer together with my family!</p>\n<aside>\n<p>The Epcot center is a \n  theme park at Walt Disney World Resort featuring exciting attractions, \n  international pavilions, award-winning fireworks and seasonal special \n  events.</p>\n</aside>\n<p>My family and I visited The Epcot center \n  this summer. The weather was nice, and Epcot was amazing! I had a great summer \n  together with my family!</p>\n<p>My family and I visited The Epcot center \n  this summer. The weather was nice, and Epcot was amazing! I had a great summer \n  together with my family!</p>\n</body>\n</html>\n\n---\n\n<figure>\n<img src=\"pic_trulli.jpg\" alt=\"Trulli\">\n<figcaption>Fig1. - Trulli, Puglia, Italy.</figcaption>\n</figure>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_105",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

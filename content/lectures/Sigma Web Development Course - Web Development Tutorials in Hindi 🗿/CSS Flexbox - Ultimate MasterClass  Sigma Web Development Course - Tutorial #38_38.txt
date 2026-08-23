@@ -1,0 +1,1270 @@
+Video URL: https://www.youtube.com/watch?v=DWk2mndNTHY
+Video Title: CSS Flexbox - Ultimate MasterClass | Sigma Web Development Course - Tutorial #38
+--------------------------------------------------
+
+00:00:00.000
+After watching this flexbox video, you will not have any confusion about flexbox.
+00:00:04.540
+This is not a claim, but a guarantee.
+00:00:06.040
+In this flexbox video, I am going to tell you everything related to flexbox.
+00:00:10.000
+I will tell you with examples, with practical scenarios,
+00:00:13.200
+and I will cover the most used things as soon as possible.
+00:00:16.580
+So that you can easily make layouts through flexbox on your website.
+00:00:21.340
+Although this video is a part of my Sigma Web Development course,
+00:00:24.260
+but if you watch this video independently, then you will easily make layouts. This video is a part of my Sigma web development course but if you watch this video independently
+00:00:26.000
+then you will get the flexbox.
+00:00:28.000
+Flexbox is the most confusing topic
+00:00:30.000
+in which advanced developers are also confused.
+00:00:32.000
+So I will make this video so that
+00:00:34.000
+if you watch it from start to end
+00:00:36.000
+then you will get the flexbox very well.
+00:00:38.000
+Do like this video
+00:00:40.000
+and if you are watching this video through
+00:00:42.000
+the Sigma web development course
+00:00:44.000
+then do write Sigma batch op in the comment section below.
+00:00:45.840
+So let's go to the computer screen.
+00:00:47.320
+Let's roll the intro.
+00:00:48.840
+Intro
+00:00:57.040
+So guys, I have made a folder named video38 here.
+00:00:59.760
+And I will tell you flexbooks first,
+00:01:02.160
+that you will also say that is it so easy to make flexbox?
+00:01:06.040
+Then I will do a detailed breakdown of all the properties of flexbox.
+00:01:11.120
+So I quickly make index.html here.
+00:01:13.760
+And before that, I will tell you a little history of flexbox.
+00:01:18.840
+See what used to happen before, people used to use floats, positioning,
+00:01:22.840
+And it used to be a big problem for positioning and to center a div was a big problem for web developers
+00:01:26.960
+then web developers said that in CSS3
+00:01:29.760
+we should introduce such a thing
+00:01:31.240
+by which it becomes very easy to align content
+00:01:35.000
+and how will it be very easy?
+00:01:36.680
+put simple things that I want content in the center
+00:01:39.920
+I want content in the side
+00:01:41.520
+I want content in the end
+00:01:43.080
+there was no need to define so much in CSS
+00:01:45.600
+means there was no way to set a basic layout in CSS
+00:01:50.200
+and to add that solution, flexbox was made
+00:01:53.600
+so see what is flexbox
+00:01:55.000
+first of all I will tell you that you will also say that
+00:01:57.000
+is this flexbox so easy?
+00:01:59.000
+yes you will say this, it will come out of your mouth
+00:02:01.000
+so what I will do quickly is I will use this style tag
+00:02:04.600
+and here first of all
+00:02:06.000
+let's say i have a main and container
+00:02:09.000
+and inside this container i have some items
+00:02:12.000
+so i wrote div.item
+00:02:15.000
+and i have put 5 items here
+00:02:18.000
+you can see it clearly
+00:02:21.000
+now listen to me carefully, i am giving some styling to these items
+00:02:24.000
+i will say that I will give some styling
+00:02:26.000
+in the container and
+00:02:28.000
+I will give some styling in the item
+00:02:30.000
+the height of this will be
+00:02:32.000
+12 pixels and the width
+00:02:34.000
+of this will be 12 pixels and
+00:02:36.000
+the background color of this
+00:02:38.000
+I will choose red
+00:02:40.000
+or let's say
+00:02:42.000
+I will choose violet, there is no problem
+00:02:44.000
+and I will preview this and show you, I will choose violet, there is no problem
+00:02:45.000
+and I will preview it and show you, I have set my settings like this
+00:02:49.000
+that it looks like this, if I open browser, it will look straight here
+00:02:53.000
+now see what I will do, when I say here
+00:02:57.000
+let's say I say border 2px solid black
+00:03:02.000
+and with that I will give margin
+00:03:06.180
+4 pixels, now see
+00:03:09.180
+I will give border 2 pixel
+00:03:12.180
+solid red, so in this container
+00:03:15.180
+these items are lay down
+00:03:18.180
+which is a very simple behavior, now suppose I want to make it straight
+00:03:21.180
+means in this direction I want it to be lay
+00:03:24.180
+means my layout is something like this
+00:03:26.000
+that the boxes come in this direction from left to right
+00:03:29.000
+so this was a big problem in CSS that how to do
+00:03:32.000
+now with the help of flexbox, flexbox says that on the container
+00:03:35.000
+not on the items, on the container
+00:03:38.000
+ok, on the container, what do we have to do
+00:03:41.000
+display flex has to be given, so this will become a flexbox
+00:03:44.000
+display flex means that now you can use the properties of flexbox,
+00:03:48.000
+so here I wrote display flex and now you can use the property of flexbox, by default flexbox automatically makes your items left to right,
+00:03:57.000
+its logic is that flexbox says that you are using flexbox, maybe you have to do something different from the default behavior, so the items on the left and right side have come, okay, I will increase their width a little more, where I have done 12 pixels, I will increase the width and height of it to 32, so that it looks a little bigger, so our container will be like this and the items inside it will be like this, okay, I can put as many items as I want here, and I can replicate it by using Alt Shift and Down Arrow key
+00:04:28.000
+I will quickly open screen cast mode for you and turn on the word wrap
+00:04:32.000
+Now see so many items are here
+00:04:34.000
+If I increase the size of it a little more, let's say I make it 60 to 62, then our box will be a little bigger
+00:04:41.000
+And it will look like this, let's make our box bigger
+00:04:44.000
+Maybe I would like to make it 92-92
+00:04:46.000
+so that it starts coming in the lower line too.
+00:04:48.000
+Now see, it won't come in the lower line
+00:04:50.000
+by default, but
+00:04:52.000
+most of the properties that we use
+00:04:54.000
+of the flexbox, we put a display flex
+00:04:56.000
+in it and justify or
+00:04:58.000
+align these items. Okay, for now
+00:05:00.000
+I will reduce the items a little so that it takes up so much space.
+00:05:02.000
+Now you see, by default, all these items
+00:05:04.000
+have become left to right. If I want all these items to be it takes up space Now you see by default all these items are left to right, if I want
+00:05:06.000
+all these items to be center then what will I do
+00:05:08.000
+and let's say the height of the container
+00:05:10.000
+I will do it
+00:05:12.000
+80 v edge
+00:05:14.000
+so this container is like this
+00:05:16.000
+these are my items and I have also
+00:05:18.000
+just put display flex on it, I have not done much work
+00:05:20.000
+in this, okay
+00:05:22.000
+I just put display flex, I want this item to be horizontal
+00:05:24.000
+center, so I don't have to do in this, okay? I just put display flex, I want this item to be horizontally centered.
+00:05:25.000
+So I don't have to do anything, I will write here
+00:05:27.000
+justify content center, and as soon as I write justify content center, it will be centered.
+00:05:31.000
+After this I will write align item center,
+00:05:34.000
+align item center, so it will be vertically centered.
+00:05:39.000
+And let me tell you one thing guys,
+00:05:41.000
+that most of the time this much flexbox is used.
+00:05:43.000
+I will say that 70% of the time, you'll find yourself doing this.
+00:05:48.000
+You'll see yourself doing this, that you have put display flex, you have put justify content center,
+00:05:51.000
+you have put align content center.
+00:05:53.000
+And yes, the center is mostly put.
+00:05:55.000
+All the projects I make, I have so much experience, I have mostly gone to the center
+00:05:59.000
+with the help of flexbox.
+00:06:01.000
+But for some reason, you want it to come at the top,
+00:06:03.000
+then you can change the value of align items
+00:06:06.000
+align items have some properties which I will talk about
+00:06:09.000
+and these properties are applied on the container
+00:06:12.000
+not on the individual items
+00:06:14.000
+if you go inside the container and change the justify content
+00:06:17.000
+not by centering it, suppose you do
+00:06:20.000
+flex end, then it will go towards the end of flex
+00:06:23.000
+if you start flex, then it will go towards the start of flex if you do flex start, it will go to the start of flex if you do right
+00:06:26.000
+it will go to right
+00:06:28.000
+if you do space around
+00:06:30.000
+it will go to left
+00:06:32.000
+if you do space between
+00:06:34.000
+it will go to left
+00:06:36.000
+space around and space between
+00:06:38.000
+this is the difference
+00:06:40.000
+here also space comes in starting
+00:06:42.000
+if you do space around, it will go to left
+00:06:44.000
+it will give equal space if we do space between then we will get spaces like this
+00:06:48.000
+that it will not give space here, means space will be in between both
+00:06:52.000
+space evenly means make space equally
+00:06:56.000
+and then i told you at start that all these properties are there
+00:07:00.000
+so by using these properties you can make all items horizontal
+00:07:04.000
+and then you can change align items, you can use this to move it horizontally then you can change align items
+00:07:06.000
+you can write same things in this
+00:07:08.000
+like flex start, flex end
+00:07:10.000
+flex start will come up
+00:07:12.000
+flex end will come down
+00:07:14.000
+I have already told you about center
+00:07:16.000
+then in baseline
+00:07:18.000
+you can find all the baselines
+00:07:20.000
+like this
+00:07:22.000
+for example, if you want to find center
+00:07:24.000
+then you can find all the centers and makes a baseline,
+00:07:28.000
+it is very rarely used, most of the time flex start flex end and center is used, so in this way you can use all the properties
+00:07:36.000
+and the center is used the most, so this was just a flex box that now your work will go on,
+00:07:41.000
+now if you leave the video from here, then your work will be done, but don't leave it because I will tell you such things that you will enjoy.
+00:07:48.700
+But I still say that so much flexbox should come to everyone, it is better to come to flexbox than not to come, it is very good,
+00:07:55.360
+in your 70% projects, the things that are going to be used will be used, and if some more will be used, then it will be used very rarely.
+00:08:01.460
+Come on, we understood this very well. Now here
+00:08:06.000
+There are some concepts of flexbox that I will tell you.
+00:08:08.000
+First concept
+00:08:10.000
+That the items in the flexbox are not always
+00:08:12.000
+Left to right, they are
+00:08:14.000
+In flex direction.
+00:08:16.000
+You have to understand this carefully.
+00:08:18.000
+What is flex direction?
+00:08:20.000
+Flex direction is where the items are being laid.
+00:08:22.000
+By default it is left to right.
+00:08:24.000
+But this flex direction can be changed
+00:08:26.000
+you can also do top to bottom, if I put a property in my container
+00:08:29.000
+and I write flex direction
+00:08:32.000
+and I write column here, so from top to bottom
+00:08:35.000
+it will be laid, now I will put a number in it, ok why are you putting a number
+00:08:38.000
+I will tell you why I am putting a number, you will know why I am putting a number
+00:08:41.000
+so I put 1,2,3,4 number and
+00:08:44.000
+leave the rest empty
+00:08:46.000
+so my first item has number 1
+00:08:48.000
+and second has 2 3 4
+00:08:50.000
+and I have made flex direction column
+00:08:52.000
+so it will take items in column
+00:08:54.000
+instead of row
+00:08:56.000
+as you can see from top to bottom
+00:08:58.000
+if I change flex direction
+00:09:00.000
+and I make column reverse
+00:09:02.000
+column reverse
+00:09:04.000
+then it will bring the opposite items
+00:09:06.000
+now all my items are same
+00:09:08.000
+sometimes if I have some things
+00:09:10.000
+like I have some
+00:09:12.000
+navigation tabs, home, about
+00:09:14.000
+services
+00:09:16.000
+if I have all these tabs
+00:09:18.000
+then what I will do
+00:09:20.000
+if I will do column reverse then it will be opposite
+00:09:22.000
+if I want to get the contact us first and home at the end
+00:09:24.000
+then I will do column reverse sorry will be upside down, if I want the contact us to come first and home to go at the end then I will reverse the column, sorry I will reverse the row because it is usually in row navigation
+00:09:28.800
+but you understood here, by reversing the column it will come upside down, if I make it row then what will happen
+00:09:33.280
+if I make it row then it will come like this 1,2,3,4 as you can see but if I reverse the row
+00:09:38.240
+then it will start laying the items from here in this direction, okay so you have to understand this thing
+00:09:43.680
+I hope you understood, now come
+00:09:46.000
+let's understand more concepts, let's go in more depth
+00:09:49.000
+and clear our understanding
+00:09:52.000
+how do I tell you, suppose this is my flex box
+00:09:55.000
+I made this flex box, I put some items in it
+00:09:58.000
+now this flex box
+00:10:01.000
+if I give display flex then only this flex box will be made
+00:10:04.000
+so by default the items will go in which direction so if I give display flex to this flex box then this flex box will be made
+00:10:05.000
+so by default the items will go in which direction
+00:10:08.000
+my items will go in this direction
+00:10:10.000
+from here to here
+00:10:11.000
+so this is your flex direction row
+00:10:13.000
+so if the flex direction is row
+00:10:17.000
+then the scene will be like this
+00:10:18.000
+so if the flex direction is row
+00:10:20.000
+then the scene will be like this
+00:10:21.000
+that items will be leaked in this direction
+00:10:23.000
+this is your first item then after then your second item will come here
+00:10:27.600
+then your third item will come and so on
+00:10:32.240
+so in this way your items will be taken
+00:10:34.640
+I will show you your items again, like this they will be taken in this direction
+00:10:39.040
+from here to here, so this axis is called main axis
+00:10:43.840
+what is called main axis and this is called cross axis
+00:10:47.040
+if flex direction is row then in which direction items are laying is main axis
+00:10:51.680
+and in which direction items are not laying is perpendicular cross axis
+00:10:57.440
+as you can see here
+00:10:58.880
+now the main axis and cross axis can change
+00:11:03.840
+if i change flex direction changed if I change flex direction
+00:11:06.000
+if I make flex direction column
+00:11:08.000
+I say if flex direction is column
+00:11:10.000
+then scene will look like this
+00:11:12.000
+if flex direction is column
+00:11:14.000
+then your main axis will be this
+00:11:16.000
+and cross axis will be this
+00:11:18.000
+now what happens is
+00:11:20.000
+justify content and align items properties
+00:11:22.000
+work according to main axis and cross axis
+00:11:24.000
+when you say justify content center then what it says content and align items properties they work according to main axis and cross axis
+00:11:25.280
+when you say justify content center
+00:11:27.280
+so what it says is center it in main axis
+00:11:29.280
+so justify content center will do it like this
+00:11:31.840
+and what it will do is justify content center
+00:11:33.840
+I will make it a little bigger
+00:11:35.840
+I will make the box a little bigger
+00:11:37.840
+so that I can explain you properly
+00:11:39.840
+suppose these items are laid like this
+00:11:41.840
+not in the center so
+00:11:43.840
+what justify content center will do
+00:11:46.000
+it will not look horizontal or vertical, it will look at the main axis
+00:11:49.000
+and will say that this is the main axis, so let's center them in the main axis
+00:11:52.000
+so it will center like this, so many people
+00:11:55.000
+who are beginners get confused about this
+00:11:58.000
+that I read justify content center
+00:12:01.000
+that it centers horizontally, no this is wrong
+00:12:04.000
+justify content center will first check flex direction
+00:12:06.000
+then it will determine main axis
+00:12:08.000
+if main axis is row then it will be this
+00:12:10.000
+if column then it will be this
+00:12:12.000
+and it will center in main axis
+00:12:14.000
+i hope you understood this
+00:12:16.000
+justify content center will be in main axis
+00:12:18.000
+if you call justify content as flex start
+00:12:20.000
+then it will bring main start in main axis
+00:12:22.000
+now what is main start
+00:12:24.000
+now i am not going to go into terminology so it will bring the main start in the main axis now what is this main start
+00:12:25.200
+now i am not going to go in the terminology
+00:12:28.560
+but let's go
+00:12:30.240
+so this is our main start
+00:12:33.280
+what is this our main start
+00:12:36.480
+and what is here our main end
+00:12:39.440
+means where the main axis is ending
+00:12:41.600
+and similarly what is this our cross start
+00:12:44.400
+this is our cross start this is our cross start
+00:12:46.000
+and this is cross end
+00:12:48.000
+where cross axis starts and ends
+00:12:50.000
+and here cross axis ends
+00:12:52.000
+this is cross end
+00:12:54.000
+so i will quickly put a label here
+00:12:56.000
+so main start, main end, cross start, cross end
+00:12:58.000
+where cross axis starts and ends
+00:13:00.000
+that is cross start
+00:13:02.000
+and where cross axis ends that is cross end
+00:13:04.000
+and similarly main start and main end
+00:13:05.500
+and similarly here main start
+00:13:07.500
+what will happen, main start will be here
+00:13:09.500
+main end will be here
+00:13:11.500
+and cross start will be here and cross end will be here
+00:13:13.500
+here the cross axis is ending
+00:13:15.500
+you are getting it, it is equal right?
+00:13:17.500
+everyone write in the comment section below, it is equal
+00:13:19.500
+what will you write, it is equal
+00:13:21.500
+ok, let's move ahead
+00:13:23.500
+now there is one more concept of main size and cross size
+00:13:26.000
+what happens is that the distance from the main axis to here
+00:13:29.000
+is the main size and the distance from here to here is the cross size
+00:13:32.000
+similarly, the distance from here to here is the cross size
+00:13:35.000
+and the distance from here to here is the main size
+00:13:38.000
+I hope everyone is understanding
+00:13:40.000
+now let me tell you the concept of flex wrap
+00:13:44.000
+suppose I have so many items that there is no place to fit
+00:13:47.400
+and I will replicate it and make so many items that there is no place to fit
+00:13:51.120
+and its flex direction, now it has started leaking from here, has it started overflowing or not?
+00:13:54.880
+see you have started overflowing
+00:13:56.400
+so what I will do is I will make its flex direction to row
+00:13:59.120
+because in most of the cases we encounter flex direction to row
+00:14:02.560
+I have commented this
+00:14:04.560
+justify center, align item center I keep align item center, not justify center In this process, we encounter the flex direction row only. I have commented this.
+00:14:05.000
+Justify center, align item center.
+00:14:07.000
+I keep align item center, not justify center.
+00:14:09.000
+So it will look like this.
+00:14:11.000
+It will be vertically centered, not horizontally centered.
+00:14:14.000
+Now you will see that there are many boxes.
+00:14:16.000
+But it is overflowing here and it is very difficult.
+00:14:19.000
+So I want it to wrap down.
+00:14:21.000
+And why I want to wrap it down
+00:14:23.000
+Because you think
+00:14:26.000
+the content in my phone
+00:14:28.000
+all the photos are showing like this
+00:14:30.000
+so i want to see it down
+00:14:32.000
+i don't want it to overflow and hide
+00:14:34.000
+so what i will do here
+00:14:36.000
+that i will use flex wrap property
+00:14:38.000
+where does this property apply
+00:14:40.000
+all the properties i have told you so far
+00:14:42.000
+apply on container
+00:14:44.000
+and flex wrap will be wrap
+00:14:46.000
+so i will wrap flex wrap
+00:14:49.000
+what is wrap? wrap means it will wrap
+00:14:52.000
+new content will come down
+00:14:55.000
+and so on
+00:14:58.000
+if i put two more
+00:15:01.000
+i replicated it like this
+00:15:04.000
+and it will come down more
+00:15:06.000
+and it will keep on moving like this
+00:15:09.000
+so I told you about justify content and align items
+00:15:12.000
+there is also align content
+00:15:15.000
+now what is align content
+00:15:18.000
+when we have more than one line
+00:15:21.000
+then it looks like this
+00:15:24.000
+now if I want these multiple lines to come in the center
+00:15:26.000
+so i will not use align items
+00:15:28.000
+i will use align content
+00:15:30.000
+so i will say align content center
+00:15:32.000
+and these two lines will come in the center
+00:15:34.000
+so i will show you here on container
+00:15:36.000
+align items center
+00:15:38.000
+sorry align content center
+00:15:40.000
+align content center
+00:15:42.000
+when we have only one line
+00:15:44.000
+means if we have only one line and we don't have items in the other line
+00:15:46.640
+then we use align items and if we have more than one line
+00:15:51.240
+then we use align content, so if I do align content center
+00:15:54.040
+then it will come in the center from multiple lines
+00:15:56.040
+I can also do flex start, flex end
+00:15:59.040
+and it will come in the center and will come at the start or end
+00:16:02.640
+depending upon whether I have used center, flex start or flex end
+00:16:06.300
+so you can see here that
+00:16:07.620
+align content comes like this by flex start
+00:16:10.140
+do we have, now listen to this carefully
+00:16:12.740
+do we have, the way we have align items and content
+00:16:16.580
+do we have justify items also
+00:16:19.380
+no, we don't have justify items because it's not required in flexbox
+00:16:22.380
+there is no justify items in flexbox
+00:16:28.200
+there are no justify items in flexbox
+00:16:30.500
+and it's not used at all
+00:16:33.500
+there is justify content, align items
+00:16:36.500
+and align content, when do we use align items?
+00:16:39.000
+when we have only one line and when do we use align content?
+00:16:42.000
+when we have multiple lines, when will we have multiple lines? when our items will wrap
+00:16:48.000
+means they will come in the second line after overflowing
+00:16:52.000
+we also have wrap reverse which makes it
+00:16:56.000
+wrap in reverse, see this is 1,2,3,4, now if I
+00:17:00.000
+wrap reverse, then it will be wrapped in this way
+00:17:04.000
+first lay will be done then wrap will be like this that the first layer will be below and then the top will be wrapped
+00:17:06.000
+so wrap is reversed from reverse
+00:17:08.000
+this property is used very rarely
+00:17:10.000
+but in most of the cases we use wrap no wrap
+00:17:13.000
+no wrap is the default property, it will not wrap if you do no wrap
+00:17:16.000
+ok, I hope this is clear to you
+00:17:19.000
+now we will talk about the flex flow property
+00:17:22.000
+so what happens in the flex flow property so in flex flow property
+00:17:26.000
+first of all you tell me where to wrap
+00:17:29.000
+suppose i want to wrap column reverse
+00:17:32.000
+or suppose i want to wrap row reverse
+00:17:35.000
+so first of all i will tell you the direction of flex
+00:17:38.000
+and after that i will tell you
+00:17:41.000
+where to wrap flex, suppose i want to wrap row reverse
+00:17:44.000
+so i have set these two things
+00:17:46.240
+I have set flex direction here
+00:17:49.040
+then I have set flex wrap, see here it is telling
+00:17:52.080
+that this property is used to set two things at the same time
+00:17:55.360
+one is flex direction and the other is flex wrap
+00:17:58.880
+so we have this thing, now the properties I told you
+00:18:02.320
+these properties were of container
+00:18:04.720
+that is, of flex box you these properties are of container
+00:18:06.000
+some properties are of items
+00:18:09.000
+now we will talk about item property
+00:18:12.000
+but before that i will tell you about gap property
+00:18:15.000
+i want to tell you about gap property
+00:18:18.000
+suppose i have made gap 30px
+00:18:21.000
+and i will end the padding
+00:18:24.000
+i have given padding in the item I have given margin in fact
+00:18:26.400
+I will finish the margin like this and you see
+00:18:28.400
+that this gap is due to the gap property
+00:18:30.400
+this spacing is coming so I will refresh it
+00:18:32.400
+and what I will do here
+00:18:34.400
+now it is giving me an error
+00:18:36.400
+invalid property value and it is giving me
+00:18:38.400
+because I have made a mistake here
+00:18:40.400
+first I have written flex direction here and then I have to write flex wrap
+00:18:42.400
+which is wrap no wrap
+00:18:44.400
+or wrap reverse
+00:18:45.480
+I should write this
+00:18:47.680
+if I write wrap reverse here
+00:18:49.040
+then see this wrap will be reversed
+00:18:50.440
+but I don't want this to be wrap reverse
+00:18:51.880
+I want it to be wrap
+00:18:53.320
+okay so I have done row and wrap here
+00:18:54.920
+this is right
+00:18:55.420
+okay so first of all we have to write flex direction and flex wrap
+00:18:58.320
+which I wrote wrong a while ago
+00:19:00.280
+but that's fine
+00:19:01.000
+now you will see here if I have made the gap 30 pixels
+00:19:03.640
+then the gap between their items will be 30px
+00:19:07.000
+all items between horizontal and vertical
+00:19:09.000
+now see if I remove this then it will stick
+00:19:11.000
+so by using the gap property
+00:19:13.000
+you have defined the gap between the items
+00:19:16.000
+now I will show you one more thing
+00:19:18.000
+in gap you can define row gap and column gap
+00:19:21.000
+in different ways
+00:19:22.000
+if I write row gap here
+00:19:24.000
+and I write 40px here row gap and i write
+00:19:26.000
+40px so
+00:19:28.000
+gap between rows will be 40px
+00:19:30.000
+and if i say column gap
+00:19:32.000
+column gap
+00:19:34.000
+column gap
+00:19:36.000
+let's say i write 10px
+00:19:38.000
+gap between column is 10px
+00:19:40.000
+gap between rows is increased
+00:19:42.000
+so this is the difference between row gap and column gap
+00:19:44.000
+i hope you understood this thing what between row gap and column gap i hope you understood this
+00:19:46.000
+now i can define gap in this way
+00:19:49.000
+let me bring it here so that you can get syntax
+00:19:52.000
+when i give you code, so here you can see
+00:19:55.000
+i will document the format
+00:19:58.000
+now you can see i can write gap like this
+00:20:01.000
+if i write it 10px 40px then it is short end of row and column
+00:20:04.000
+so first write row gap and then column gap
+00:20:07.280
+so if I want to write the same thing
+00:20:09.280
+then I will write 40 first and then 10
+00:20:11.280
+because
+00:20:13.280
+first comes row gap and then column gap
+00:20:15.760
+so you see here
+00:20:16.960
+even if I don't put all these gaps here
+00:20:19.520
+I will just put this much gap 40 10
+00:20:22.000
+so it will be understood that
+00:20:24.000
+the gap of my rows is 40 that the gap of rows is 40
+00:20:26.000
+and gap of columns is 10
+00:20:28.000
+I hope you all have understood this
+00:20:30.000
+so this way flexbox
+00:20:32.000
+container properties work
+00:20:34.000
+a very common mistake people
+00:20:36.000
+do is that
+00:20:38.000
+they put container properties in item
+00:20:40.000
+they put item properties in container
+00:20:42.000
+don't do this
+00:20:44.000
+you have to remember which property is of the item
+00:20:46.000
+Which property is of the container.
+00:20:49.000
+I don't know how to keep it. You keep it as you want.
+00:20:52.000
+You have to remember. So most of the properties are of the container.
+00:20:55.000
+I want to tell you that the container property
+00:20:58.000
+Is going to be used the most. Now I will tell you
+00:21:01.000
+Item's property. So the first property of the item
+00:21:04.000
+Which I want to discuss is
+00:21:05.780
+i have order
+00:21:07.740
+so if i make 3 classes here
+00:21:11.820
+and i say order 1
+00:21:15.200
+it means order 1
+00:21:17.720
+similarly i say order 2
+00:21:20.260
+and in order 2 order 2 will be made
+00:21:23.080
+and by doing order 2 and order 3, what happens is
+00:21:26.000
+that the flex item
+00:21:28.000
+I will make its order 3
+00:21:30.000
+so the flex items that are taken by default
+00:21:33.000
+are in the order in which you have put it
+00:21:35.000
+that is, your 1 will come here, 2 will come here, 3 will come here
+00:21:38.000
+but if I reduce the order of any item
+00:21:41.000
+then it will come first
+00:21:42.000
+so see I will make its order 1
+00:21:44.000
+which is written here 4, I will put a class in it order so i will reduce the order
+00:21:46.000
+i will put class order 1
+00:21:49.000
+so the order property will come later
+00:21:52.000
+the order which is more will come later
+00:21:55.000
+the order which is less will come later
+00:21:58.000
+if i give order to this item
+00:22:01.000
+let us say i give it
+00:22:04.000
+i will zoom it that you can see
+00:22:06.000
+so the first item
+00:22:08.000
+which is this item
+00:22:10.000
+if I give 100 order
+00:22:12.000
+then it will go to the end
+00:22:14.000
+so the more order the more item will come
+00:22:16.000
+so you can in a flex box
+00:22:18.000
+an item's order
+00:22:20.000
+in that item
+00:22:22.000
+you can change the CSS property by using the order
+00:22:24.000
+if I want this 2 to come after this box
+00:22:28.000
+so I will set their order in this way such that
+00:22:32.000
+the one with the least number of orders will come first and the one with the most number of orders will come later
+00:22:36.000
+as simple as that, this property is very easy, so what happens with the order, you guys keep in mind
+00:22:40.000
+the more the order, the later it will come, so by doing order 1, wherever I have set order 1
+00:22:44.000
+it will come in the beginning, where ever I added order 1 class, it will come in the beginning
+00:22:46.000
+where I have added order 2 class, it will come in the end
+00:22:48.000
+suppose I write 66 here
+00:22:50.000
+in any random and here I write
+00:22:52.000
+order 1, I will put
+00:22:54.000
+order 1 class in this, so the less
+00:22:56.000
+order will come, the earlier it will come
+00:22:58.000
+and the more order will come later, default
+00:23:00.000
+order is 0, now
+00:23:02.000
+understand this that here
+00:23:04.000
+I have put order 1 default order is 0 now understand this here i have put the order 1
+00:23:06.000
+default order is 0
+00:23:08.000
+so
+00:23:10.000
+all of them had 0 order
+00:23:12.000
+so they came here
+00:23:14.000
+this 4
+00:23:16.000
+i have put order 1
+00:23:18.000
+and this 66
+00:23:20.000
+i have put order 1
+00:23:22.000
+so both have same order
+00:23:24.000
+so the first one came first, the one coming later will come later, the more the order, the less the order, the default order is 0
+00:23:31.500
+and according to this, you set the order and lay your items, it will be the same if I do the flex direction column, then according to that, these items you have taken will be left to right
+00:23:45.000
+so I told you according to that
+00:23:47.000
+now I have changed my html here in such a way that I have only a few items
+00:23:51.000
+I have kept these items in such a way that I have only one row left
+00:23:54.000
+it has a purpose, I want to tell you about a property
+00:23:57.000
+whose name is flex grow, let's say I make all the items flex grow 1
+00:24:01.000
+I say flex grow is 1, I am saying flex grow is 1 I will say flex grow is 1 I am saying flex grow is 1
+00:24:06.000
+By default flex grow is 0
+00:24:08.000
+By changing it to 1 we said
+00:24:10.000
+The width of the flex box
+00:24:12.000
+All items will take equal space
+00:24:14.000
+Taking the whole width
+00:24:16.000
+And of a particular item whose name is item 1
+00:24:18.000
+I will change its flex grow to 2
+00:24:20.000
+So now it will take the space of 2
+00:24:22.000
+I will change it to flex grow 2
+00:24:24.000
+So it will take the space of i will make it flex grow 2 so it will take place of 2 items
+00:24:26.000
+as you can see here
+00:24:28.000
+so the place it is taking is
+00:24:30.000
+less than the items
+00:24:32.000
+sorry it is taking double place
+00:24:34.000
+let me show you by inspecting
+00:24:36.000
+and let's say i want to make
+00:24:38.000
+some good layouts so you see
+00:24:40.000
+that the more i increase the value
+00:24:42.000
+it will take more space
+00:24:44.000
+relative to other items
+00:24:45.600
+so here what will happen is that all items will come in the same row
+00:24:50.800
+and this particular item will grow as necessary
+00:24:54.200
+now I will tell you the flex shrink property
+00:24:56.800
+so see if I write flex shrink here
+00:24:59.400
+I write flex shrink here
+00:25:02.000
+and I write flex shrink 2
+00:25:04.200
+and I remove flex grow
+00:25:06.000
+and i remove this too
+00:25:09.000
+so you see
+00:25:12.000
+flex shrink is the ability of a flex item
+00:25:15.000
+to shrink if necessary, now when it will be necessary
+00:25:18.000
+see i have put flex shrink on this item
+00:25:21.000
+so if i make the layout small and remove the wrap
+00:25:24.000
+i will remove the wrap from the container
+00:25:26.000
+and you can see as I make it smaller
+00:25:29.320
+what will happen is
+00:25:31.320
+which item is getting smaller
+00:25:33.320
+I will remove the wrap, it is flex wrap
+00:25:35.320
+I removed the flex wrap
+00:25:37.320
+you can see that item is getting smaller
+00:25:39.320
+this is its ability to get smaller
+00:25:41.320
+how much can it get smaller?
+00:25:43.320
+it can get smaller upto 2, it can be half the more I do it, the smaller it can be it can be half
+00:25:46.000
+as much as i do it, it can be half
+00:25:49.000
+so flex shrink to 2 means
+00:25:52.000
+it will shrink with double speed
+00:25:55.000
+these properties are very less used
+00:25:58.000
+but you should know about them
+00:26:01.000
+last but not the least
+00:26:04.000
+align self and what align self will do
+00:26:05.840
+it will align this particular element
+00:26:07.800
+I call it flex start
+00:26:09.840
+okay
+00:26:10.360
+or flex end
+00:26:11.440
+I say flex end
+00:26:13.240
+and to do its work
+00:26:14.320
+I have to remove the align content
+00:26:15.960
+which I have put
+00:26:17.240
+so because I have only a single line
+00:26:18.840
+so I will remove the align content
+00:26:20.560
+I will keep align items
+00:26:21.440
+and you will see that align item was center
+00:26:23.440
+but because I have in this element
+00:26:25.000
+aligned self to flex end
+00:26:27.000
+it came in flex end similarly
+00:26:29.000
+if I want to align this particular element to flex start
+00:26:31.000
+then I will say align self
+00:26:33.000
+and I will do flex start
+00:26:35.000
+and it went up
+00:26:37.000
+so if you want to override
+00:26:39.000
+a particular item's configuration
+00:26:41.000
+such that its position
+00:26:43.000
+changes, it aligns itself
+00:26:46.000
+only aligns itself
+00:26:48.000
+then you can use align-self property
+00:26:50.000
+so this was flexbox in nutshell
+00:26:52.000
+this much will be used
+00:26:54.000
+and this was comprehensive flexbox
+00:26:56.000
+I have covered 99% properties
+00:26:58.000
+and it's not even used much
+00:27:00.000
+to be honest
+00:27:02.000
+so I hope you understood this
+00:27:04.000
+what I will do is
+00:27:06.000
+i will export this diagram as a pdf
+00:27:09.000
+i will export it as an image
+00:27:12.000
+i have exported the diagram here
+00:27:15.000
+you can see it like this
+00:27:18.000
+you will understand it better
+00:27:21.000
+i hope you guys liked this video
+00:27:24.000
+do tell me in the comment section
+00:27:26.000
+and keep writing sigma batch op
+00:27:29.000
+bookmark and save this playlist

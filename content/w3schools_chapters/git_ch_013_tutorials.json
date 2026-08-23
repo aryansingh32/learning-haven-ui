@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 13,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In Git, abranchis like a separate workspace where you can make changes and try new ideas without affecting the main project. Think of it as a \"parallel universe\" for your code.\n\nBranches let you work on different parts of a project, like new features or bug fixes, without interfering with the main branch.\n\nLet's say you have a large project, and you need to update the design on it.\n\nHow would that work without and with Git:\n\nBranches allow you to work on different parts of a project without impacting the main branch.\n\nWhen the work is complete, a branch can be merged with the main project.\n\nYou can even switch between branches and work on different projects without them interfering with each other.\n\nBranching in Git is very lightweight and fast!\n\nLet's say you want to add a new feature. You can create a new branch for it.\n\nLet add some new features to ourindex.htmlpage.\n\nWe are working in our local repository, and we do not want to disturb or possibly wreck the main project.\n\nSo we create a newbranch:\n\nNow we created a newbranchcalled \"hello-world-images\"\n\nLet's confirm that we have created a newbranch.\n\nTo see all branches in your repository, use:\n\nWe can see the new branch with the name \"hello-world-images\", but the*besidemasterspecifies that we are currently on thatbranch.\n\ncheckoutis the command used to check out abranch.\n\nMoving usfromthe currentbranch,tothe one specified at the end of the command:\n\nNow you can work in your new branch without affecting the main branch.\n\nNow we have moved our current workspace from the master branch, to the newbranch\n\nOpen your favourite editor and make some changes.\n\nFor this example, we added an \nimage (img_hello_world.jpg) to the working folder and a line of code in theindex.htmlfile:\n\nWe have made changes to a file and added a new file in the working directory \n(same directory as themainbranch).\n\nNow check the status of the currentbranch:\n\nSo let's go through what happens here:\n\nSo we need to add both files to the Staging Environment for thisbranch:\n\nUsing--allinstead of individual filenames \nwillStageall changed (new, modified, and deleted) files.\n\nCheck thestatusof thebranch:\n\nWe are happy with our changes. So we will commit them to thebranch:\n\nNow we have a newbranch, that is different from the masterbranch.\n\nNote:Using the-boption \n  oncheckoutwill create a new branch, and move to it, if it does not exist\n\nNow let's see just how quick and easy it is to work with different branches, and how well it works.\n\nWe are currently on the branchhello-world-images. We added an image to this branch, so let's list the files in the current directory:\n\nWe can see the new fileimg_hello_world.jpg, and if we open the html file, we can see the code has been altered. All is as it should be.\n\nNow, let's see what happens when we change branch tomaster\n\nThe new image is not a part of this branch. List the files in the current directory again:\n\nimg_hello_world.jpgis no longer there! And if we open the html file, we can see the code reverted to what it was before the alteration.\n\nSee how easy it is to work with branches? And how this allows you to work on different things?\n\nNow imagine that we are not yet done with hello-world-images, but we need to fix an error on master.\n\nI don't want to mess with master directly, and I do not want to mess with \nhello-world-images, since it is not done yet.\n\nSo we create a new branch to deal with the emergency:\n\nNow we have created a new branch from master, and changed to it. We can \nsafely fix the error without disturbing the other branches.\n\nLet's fix our imaginary error:\n\nWe have made changes in this file, and we need to get those changes to the \nmaster branch.\n\nCheck the status:\n\nstage the file, and commit:\n\nNow we have a fix ready for master, and we need to merge the two branches.\n\nWhen you're done with a branch, you can delete it:\n\nThis deletes the branch namedhello-world-images(if it's already merged).\n\nIf you don't see your changes on the main branch, remember: changes in one branch stay there until you merge them.\n\nWhen deleting a branch, make sure it's merged first. If you try to delete an unmerged branch, Git will prevent you from doing so.\n\nTo force delete an unmerged branch, usegit branch -D branch-name.\n\n### Code Snippets\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<title>Hello World!</title>\n<link \n  rel=\"stylesheet\" href=\"bluestyle.css\">\n</head>\n<body>\n<h1>Hello \n  world!</h1>\n<div><img src=\"img_hello_world.jpg\" alt=\"Hello World from \n  Space\"\nstyle=\"width:100%;max-width:960px\"></div>\n<p>This is the first \n  file in my new Git Repo.</p>\n<p>A new line in our file!</p>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<title>Hello World!</title>\n<link \n  rel=\"stylesheet\" href=\"bluestyle.css\">\n</head>\n<body>\n<h1>Hello \n  world!</h1>\n<p>This is the first \n  file in my new Git Repo.</p>\n<p>This line is here to show how \n  merging works.</p>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_12",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

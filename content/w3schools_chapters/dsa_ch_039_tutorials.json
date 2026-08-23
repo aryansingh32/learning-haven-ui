@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 39,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Prim's algorithm finds the Minimum Spanning Tree (MST) in a connected and undirected graph.\n\nThe MST found by Prim's algorithm is the collection of edges in a graph, that connects all vertices, with a minimum sum of edge weights.\n\nPrim's algorithm finds the MST by first including a random vertex to the MST. The algorithm then finds the vertex with the lowest edge weight from the current MST, and includes that to the MST. Prim's algorithm keeps doing this until all nodes are included in the MST.\n\nPrim's algorithm is greedy, and has a straightforward way to create a minimum spanning tree.\n\nFor Prim's algorithm to work, all the nodes must be connected. To find the MST's in an unconnected graph,Kruskal's algorithmcan be used instead. You can read about Kruskal's algorithm on the next page.\n\nLet's run through Prim's algorithm manually on the graph below, so that we understand the detailed step-by-step operations before we try to program it.\n\nPrim's algorithm starts growing the Minimum Spanning Tree (MST) from a random vertex, but for this demonstration vertex A is chosen as the starting vertex.\n\nFrom vertex A, the MST grows along the edge with the lowest weight. So vertices A and D now belong to the group of vertices that belong to the Minimum Spanning Tree.\n\nAparentsarray is central to how Prim's algorithm grows the edges in the MST.\n\nAt this point, theparentsarray looks like this:\n\nVertex A, the starting vertex, has no parent, and has therefore value-1. Vertex D's parent is A, that is why D's parent value is0(vertex A is located at index 0). B's parent is also A, and D is the parent of E and F.\n\nTheparentsarray helps us to keep the MST tree structure (a vertex can only have one parent).\n\nAlso, to avoid cycles and to keep track of which vertices are currently in the MST, thein_mstarray is used.\n\nThein_mstarray currently looks like this:\n\nThe next step in Prim's algorithm is to include one more vertex as part of the MST, and the vertex closest to the current MST nodes A and D is chosen.\n\nSince both A-B and D-F have the same lowest edge weight4, either B or F can be chosen as the next MST vertex. We choose B as the next MST vertex for this demonstration.\n\nAs you can see, the MST edge to E came from vertex D before, now it comes from vertex B, because B-E with weight6is lower than D-E with weight7. Vertex E can only have one parent in the MST tree structure (and in theparentsarray), so B-E and D-E cannot both be MST edges to E.\n\nThe next vertex in the MST is vertex C, because edge B-C with weight3is the shortest edge weight from the current MST vertices.\n\nAs vertex C is included in the MST, edges out from C are checked to see if there are edges with a lower weight from this MST vertex to vertices outside the MST. Edge C-E has a lower weight (3) than the previous B-E MST edge (6), and the C-H edge gets included in the MST with edge weight2.\n\nVertex H is the next to be included in the MST, as it has the lowest edge weight6, and vertex H becomes the parent of vertex G in theparentsarray.\n\nThe next vertex to be included in the MST is either E or F because they have both the lowest edge weight to them:4.\n\nWe choose vertex E as the next vertex to be included in the MST for this demonstration.\n\nThe next and last two vertices to be added to the MST are vertices F and G. D-F is the MST edge to F, and E-G is the MST edge to G because these edges are the edges with the lowest weight from the current MST.\n\nRun the simulation below to see Prim's algorithm doing the manual steps that we have just done.\n\nFor Prim's algorithm to find a Minimum Spanning Tree (MST), we create aGraphclass. We will use the methods inside thisGraphclass later to create the graph from the example above, and to run Prim's algorithm on it.\n\nLine 3-5:At first, the adjacency matrix is empty, meaning there are no edges in the graph. Also, the vertices have no names to start with.\n\nLine 7-10:Theadd_edgemethod is for adding an edge, with an edge weight value, to the undirected graph.\n\nLine 12-14:Theadd_vertex_datamethod is used for giving names to the vertices, like for example 'A' or 'B'.\n\nNow that the structure for creating a graph is in place, we can implement Prim's algorithm as a method inside theGraphclass:\n\nLine 17:Thein_mstarray holds the status of which vertices are currently in the MST. Initially, none of the vertices are part of the MST.\n\nLine 18:Thekey_valuesarray holds the current shortest distance from the MST vertices to each vertex outside the MST.\n\nLine 19:The MST edges are stored in theparentsarray. Each MST edge is stored by storing the parent index for each vertex.\n\nLine 21:To keep it simple, and to make this code run like in the \"Manual Run Through\" animation/example above, the first vertex (vertex A at index0) is set as the staring vertex. Changing the index to4will run Prim's algorithm from vertex E, and that works just as well.\n\nLine 25:The index is found for the vertex with the lowest key value that is not yet part of the MST. Check out these explanations forminandlambdato better understand this Python code line.\n\nLine 32-35:After a new vertex is added to the MST (line 27), this part of the code checks to see if there are now edges from this newly added MST vertex that can lower the key values to other vertices outside the MST. If that is the case, thekey_valuesandparentsarrays are updated accordingly. This can be seen clearly in the animation when a new vertex is added to the MST and becomes the active (current) vertex.\n\nNow let's create the graph from the \"Manual Run Through\" above and run Prim's algorithm on it:\n\nFor a general explanation of what time complexity is, visitthis page.\n\nWith \\(V\\) as the number of vertices in our graph, the time complexity for Prim's algorithm is\n\n\\[ O( V^2 ) \\]\n\nThe reason why we get this time complexity is because of the nested loops inside the Prim's algorithm (one for-loop with two other for-loops inside it).\n\nThe first for-loop (line 24) goes through all the vertices in the graph. This has time complexity \\(O(V)\\).\n\nThe second for-loop (line 25) goes through all the adjacent vertices in the graph to find the vertex with the lowest key value that is outside the MST, so that it can be the next vertex included in the MST. This has time complexity \\(O(V)\\).\n\nAfter a new vertex is included in the MST, a third for-loop (line 32) checks all other vertices to see if there are outgoing edges from the newly added MST vertex to vertices outside the MST that can lead to lower key values and updated parent relations. This also has time complexity \\(O(V)\\).\n\nPutting the time complexities together we get:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\nO(V)\\cdot (O(V)+O(V))  & = O(V)\\cdot (2\\cdot O(V)) \\\\\n              & = O(V\\cdot 2\\cdot V) \\\\\n              & = O(2\\cdot V^2) \\\\\\\\\n              & = O(V^2)\n\\end{aligned}\n\\end{equation}\n\\]\n\nBy using a priority queue data structure to manage key values, instead of using an array like we do here, the time complexity for Prim's algorithm can be reduced to:\n\n\\[ O( E \\cdot \\log{V}) \\]\n\nWhere \\(E\\) is the number of edges in the graph, and \\(V\\) is the number of vertices.\n\nSuch an implementation of Prim's algorithm using a priority queue is best for sparse graphs. A graph is sparse when the each vertex is just connected to a few of the other vertices.\n\n### Code Snippets\n\n```\nparents = [-1,  0, -1,  0,  3,  3, -1, -1]\n#vertices [ A,  B,  C,  D,  E,  F,  G,  H]\n\n---\n\nin_mst = [ true, false, false,  true, false, false, false, false]\n#vertices [    A,     B,     C,     D,     E,     F,     G,     H]\n\n---\n\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = weight\n            self.adj_matrix[v][u] = weight  # For undirected graph\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n---\n\ndef prims_algorithm(self):\n        in_mst = [False] * self.size\n        key_values = [float('inf')] * self.size\n        parents = [-1] * self.size\n\n        key_values[0] = 0  # Starting vertex\n\n        print(\"Edge \\tWeight\")\n        for _ in range(self.size):\n            u = min((v for v in range(self.size) if not in_mst[v]), key=lambda v: key_values[v])\n\n            in_mst[u] = True\n\n            if parents[u] != -1:  # Skip printing for the first vertex since it has no parent\n                print(f\"{self.vertex_data[parents[u]]}-{self.vertex_data[u]} \\t{self.adj_matrix[u][parents[u]]}\")\n\n            for v in range(self.size):\n                if 0 < self.adj_matrix[u][v] < key_values[v] and not in_mst[v]:\n                    key_values[v] = self.adj_matrix[u][v]\n                    parents[v] = u\n\n---\n\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = weight\n            self.adj_matrix[v][u] = weight  # For undirected graph\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def prims_algorithm(self):\n        in_mst = [False] * self.size\n        key_values = [float('inf')] * self.size\n        parents = [-1] * self.size\n\n        key_values[0] = 0  # Starting vertex\n\n        print(\"Edge \\tWeight\")\n        for _ in range(self.size):\n            u = min((v for v in range(self.size) if not in_mst[v]), key=lambda v: key_values[v])\n\n            in_mst[u] = True\n\n            if parents[u] != -1:  # Skip printing for the first vertex since it has no parent\n                print(f\"{self.vertex_data[parents[u]]}-{self.vertex_data[u]} \\t{self.adj_matrix[u][parents[u]]}\")\n\n            for v in range(self.size):\n                if 0 < self.adj_matrix[u][v] < key_values[v] and not in_mst[v]:\n                    key_values[v] = self.adj_matrix[u][v]\n                    parents[v] = u\n\ng = Graph(8)\n\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\ng.add_vertex_data(5, 'F')\ng.add_vertex_data(6, 'G')\ng.add_vertex_data(7, 'H')\n\ng.add_edge(0, 1, 4)  # A - B\ng.add_edge(0, 3, 3)  # A - D\ng.add_edge(1, 2, 3)  # B - C\ng.add_edge(1, 3, 5)  # B - D\ng.add_edge(1, 4, 6)  # B - E\ng.add_edge(2, 4, 4)  # C - E\ng.add_edge(2, 7, 2)  # C - H\ng.add_edge(3, 4, 7)  # D - E\ng.add_edge(3, 5, 4)  # D - F\ng.add_edge(4, 5, 5)  # E - F\ng.add_edge(4, 6, 3)  # E - G\ng.add_edge(5, 6, 7)  # F - G\ng.add_edge(6, 7, 5)  # G - H\n\nprint(\"Prim's Algorithm MST:\")\ng.prims_algorithm()\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_38",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

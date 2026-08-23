@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 173,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The:hoverselector can change an element when the mouse is over it.\n\nCSS transitions can animate changes smoothly.\n\nCSS can show and hide content using selectors.\n\nThis can be useful for simple menus and dropdowns.\n\nCSS media queries can change the layout for different screen sizes.\n\nThis avoids the need for JavaScript-based layout changes.\n\nCSS animations can create repeated movement without JavaScript.\n\nCSS is often enough when the change is visual.\n\nUse CSS for colors, sizes, spacing, layout, motion, and simple visibility changes.\n\nUse JavaScript when the page needs logic, data processing, storage, or communication with a server.\n\n### Code Snippets\n\n```\n<style>\nbutton:hover {\nbackground-color:#059862;\n}\n</style>\n<button>Hover Over Me</button>\n\n---\n\n<style>\n.box {\nwidth:100px;\nheight:100px;\nbackground-color:#04AA6D;\ntransition:width 0.5s;\n}\n.box:hover {\nwidth:200px;\n}\n</style>\n<div class=\"box\"></div>\n\n---\n\n<style>\n.menu-content {\ndisplay:none;\n}\n.menu:hover .menu-content {\ndisplay:block;\n}\n</style>\n<div class=\"menu\">\nMenu\n<div class=\"menu-content\">\n<a href=\"#\">Link 1</a>\n<a href=\"#\">Link 2</a>\n</div>\n</div>\n\n---\n\n<style>\n.container {\ndisplay:grid;\ngrid-template-columns:1fr 1fr 1fr;\ngap:16px;\n}\n@media (max-width:600px) {\n.container {\ngrid-template-columns:1fr;\n}\n}\n</style>\n\n---\n\n<style>\n.spinner {\nwidth:40px;\nheight:40px;\nborder:6px solid #ddd;\nborder-top:6px solid #04AA6D;\nborder-radius:50%;\nanimation:spin 1s linear infinite;\n}\n@keyframes spin {\nto { transform:rotate(360deg); }\n}\n</style>\n<div class=\"spinner\"></div>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_172",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

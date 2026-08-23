@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 233,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheObject.defineProperty()method can be used to:\n\nSyntax:\n\nThis example adds a new property to an object:\n\nThis example changes a property value:\n\nAll properties have a name. In addition they also have a value.\n\nThe value is one of the property's attributes.\n\nOther attributes are: enumerable, configurable, and writable.\n\nThese attributes define how the property can be accessed (is it readable?, is \nit writable?)\n\nIn JavaScript, all attributes can be read, but only the value attribute can \nbe changed (and only if the property is writable).\n\n( ECMAScript 5 has methods for both getting and setting all property \nattributes)\n\nThe following property meta data can be changed:\n\nGetters and setters can also be changed:\n\nThis example makes language read-only:\n\nThis example makes language not enumerable:\n\nTheObject.getOwnPropertyNames()method can:\n\nThis example gets all properties of an object:\n\nObject.getOwnPropertyNames()will also list properties that are not enumerable:\n\nTheObject.keys()method can:\n\nThis example usesObject.keys()insted ofObject.getOwnPropertyNames():\n\nTheObject.defineProperty()method can also be used to add Getters and \nSetters:\n\nJavaScript objects inherit the properties of their prototype.\n\nThedeletekeyword does not delete inherited properties, but if you delete a \nprototype property, it will affect all objects \ninherited from the prototype.\n\n### Code Snippets\n\n```\n// Adding or changing an object property\nObject.defineProperty(object, property, descriptor)\n// Adding or changing object properties\nObject.defineProperties(object, descriptors)\n// Accessing a Property\nObject.getOwnPropertyDescriptor(object, property)\n// Accessing Properties\nObject.getOwnPropertyDescriptors(object)\n// Returns all properties as an array\nObject.getOwnPropertyNames(object)\n// Accessing the prototype\nObject.getPrototypeOf(object)\n\n---\n\nObject.defineProperty(\nobject, property, descriptor\n)\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \"John\",\nlastName : \n  \"Doe\",\nlanguage : \"EN\"\n};\n// Add a Property\nObject.defineProperty(person, \"year\", \n  {value:\"2008\"});\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"EN\"\n};\n// Change a Property\nObject.defineProperty(person, \"language\", \n  {value : \"NO\"});\n\n---\n\nwritable : true\u00a0 \u00a0\u00a0\u00a0\u00a0// Property value can be changed\nenumerable : true\u00a0 \u00a0 // Property can be enumerated\nconfigurable : true\u00a0 // Property can be reconfigured\n\n---\n\nwritable : false\u00a0\u00a0\u00a0\u00a0 // Property value can not be changed\nenumerable : false\u00a0\u00a0 // Property can be not enumerated\nconfigurable : false // Property can be not reconfigured\n\n---\n\n// Defining a getter\nget: function() { return language }\n// Defining a setter\nset: function(value) { language = value }\n\n---\n\nObject.defineProperty(person, \"language\", {writable:false});\n\n---\n\nObject.defineProperty(person, \"language\", {enumerable:false});\n\n---\n\nObject.getOwnPropertyNames(\nobject\n)\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"EN\"\n};\n// Get all Properties\nObject.getOwnPropertyNames(person);\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"EN\"\n};\n// Set the language Property not enumerable\nObject.defineProperty(person, \"language\", {enumerable:false});\n// Get all Properties\nObject.getOwnPropertyNames(person);\n\n---\n\nObject.keys(\nobject\n)\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName : \"Doe\",\nlanguage : \"EN\"\n};\n// Change the \"language\" Property\nObject.defineProperty(person, \"language\", {enumerable:false});\n// Get all Enumerable Properties\nObject.keys(person);\n\n---\n\n//Create an object\nconst person = {firstName:\"John\", lastName:\"Doe\"};\n// Define a getter\nObject.defineProperty(person, \"fullName\", {\nget: \nfunction () {return this.firstName + \" \" + this.lastName;}\n});\n\n---\n\n// Define object\nconst obj = {counter:0};\n// Define setters\nObject.defineProperty(obj, \"reset\", {\nget : function () {this.counter = 0;}\n});\nObject.defineProperty(obj, \"increment\", {\nget : function () {this.counter++;}\n});\nObject.defineProperty(obj, \"decrement\", {\nget : function () {this.counter--;}\n});\nObject.defineProperty(obj, \"add\", {\nset : function (value) {this.counter += value;}\n});\nObject.defineProperty(obj, \"subtract\", {\nset : function (i) {this.counter -= i;}\n});\n// Play with the counter:\nobj.reset;\nobj.add = 5;\nobj.subtract = 1;\nobj.increment;\nobj.decrement;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_232",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 14,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTo demonstrate a practical example of the for loop, let's create a program that counts to 100 by tens:\n\nIn this example, we create a program that only print even numbers between 0 and 10 (inclusive):\n\nHere we only print odd numbers:\n\nIn this example we print the powers of 2 up to 512:\n\nAnd in this example, we create a program that prints the multiplication table for a specified number:\n\n### Code Examples\n\n```\nfor (int i = 0; i <= 100; i += 10) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 0; i <= 10; i = i + 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 1; i <= 10; i = i + 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 2; i <= 512; i *= 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nint number = 2;\nint i;\n// Print the multiplication table for the \n  number 2\nfor (i = 1; i <= 10; i++) {\ncout << number << \" x \" << i \n  << \" = \" << number * i << \"\\n\";\n}\n```\n\n## Tutorials\n\nTest your understanding ofC++ for loopsby completing a small coding challenge.\n\n## Tutorials\n\nYou have already seen thebreakstatement used in an earlier chapter of this tutorial. It was used to \"jump out\" of aswitchstatement.\n\nThebreakstatement can also be used to jump out of aloop.\n\nThis example jumps out of the loop wheniis equal to 4:\n\nThecontinuestatement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.\n\nThis example skips the value of 4:\n\nYou can also usebreakandcontinuein while loops:\n\n### Code Examples\n\n```\nfor (int i = 0; i < 10; i++) {\nif (i == 4) {\nbreak;\n}\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 0; i < 10; i++) {\nif (i == 4) {\ncontinue;\n}\ncout << i << \"\\n\";\n}\n\n---\n\nint i = 0;\nwhile (i < 10) {\ncout << i << \"\\n\";\ni++;\nif (i == 4) {\nbreak;\n}\n}\n\n---\n\nint i = 0;\nwhile (i < 10) {\nif (i == 4) {\ni++;\ncontinue;\n}\ncout << i << \"\\n\";\ni++;\n}\n```\n\n## Tutorials\n\nArrays are used to store multiple values in a single variable, instead of declaring separate variables for each \nvalue.\n\nTo declare an array, define the variable type, specify the name \nof the array followed bysquare bracketsand specify the number of elements it should store:\n\nWe have now declared a variable that holds an array of four strings. To insert \nvalues to it, we can use an array literal - place the values in a \ncomma-separated list, inside curly braces:\n\nTo create an array of three integers, you could write:\n\nYou access an array element by referring to the index number inside square \nbrackets[].\n\nThis statement accesses the value of thefirst elementincars:\n\nTo change the value of a specific element, refer to the index number:\n\n### Code Examples\n\n```\nstring cars[4];\n\n---\n\nstring cars[4] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n\n---\n\nint myNum[3] = {10, 20, 30};\n\n---\n\nstring cars[4] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars[0];\n// Outputs Volvo\n\n---\n\ncars[0] = \"Opel\";\n\n---\n\nstring cars[4] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncars[0] = \"Opel\";\ncout << cars[0];\n// Now outputs Opel instead of Volvo\n```\n\n## Tutorials\n\nYou can loop through the array elements with theforloop.\n\nThe following example outputs all elements in thecarsarray:\n\nThis example outputs the index of each element together with its value:\n\nAnd this example shows how to loop through an array of integers:\n\nThere is also a \"for-eachloop\" (introduced in C++ version 11 (2011)), which is used exclusively to loop through elements in an array (and other data structures, likevectorsandlists):\n\nThe following examples output all elements in an array using a \"for-eachloop\":\n\n### Code Examples\n\n```\n// Create an array of strings\nstring cars[5] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\", \n  \"Tesla\"};\n// Loop through strings\nfor (int i = 0; i < 5; \n  i++) {\ncout << cars[i] << \"\\n\";\n}\n\n---\n\nstring cars[5] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\", \n  \"Tesla\"};\nfor (int i = 0; i < 5; \n  i++) {\ncout << i << \" = \" << cars[i] << \"\\n\";\n}\n\n---\n\nint myNumbers[5] = {10, 20, 30, 40, 50};\nfor (int i = 0; i < 5; i++) {\ncout << myNumbers[i] << \"\\n\";\n}\n\n---\n\nfor (\ntype variableName\n:\narrayName\n) {\n// code block to be executed\n}\n\n---\n\n// Create an array of integers\nint myNumbers[5] = {10, 20, 30, 40, 50};\n// Loop through integers\nfor (int num : myNumbers) {\ncout << num << \"\\n\";\n}\n\n---\n\n// Create an array of strings\nstring cars[5] = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\", \"Tesla\"};\n// Loop through strings\nfor (string \n  car : cars) {\ncout << car << \"\\n\";\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_14",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_14",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

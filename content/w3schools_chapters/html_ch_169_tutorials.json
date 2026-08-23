@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 169,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "You can add a canvas element anywhere in an HTML page with the<canvas>tag:\n\nYou can access a<canvas>element with theHTML \nDOMmethodgetElementById().\n\nTo draw in the canvas you need to create a2D contextobject:\n\nAfter you have created a 2D context, you can draw on the canvas.\n\nThefillRect()method draws a black rectangle with a top-left corner at position 20,20.\nThe rectangle is 150 pixel wide and 100 pixels high.\n\nThefillStyleproperty sets the fill color of the drawing object:\n\nYou can also create a new<canvas>element \nwith thedocument.createElement()method,\nand add the element to an existing HTML page:\n\nThe common way to draw on the canvas is to:Begin a Path - beginPath()Move to a Point - moveTo()Draw in the Path - lineTo()Draw the Path - stroke()\n\nThere are only 3 methods to draw directly on the canvas:\n\nThe canvas object also supports the standardpropertiesandevents.\n\nCanvas tutorial:Canvas Tutorial\n\nHTML tutorial:HTML5 Canvas\n\nHTML reference:HTML <canvas> tag\n\nThe<canvas>element is an HTML5 standard (2014).\n\nCanvas APIis supported in all modern browsers:\n\n### Code Snippets\n\n```\n<canvas id=\"myCanvas\" width=\"300\" height=\"150\"></canvas>\n\n---\n\nconst myCanvas = document.getElementById(\"myCanvas\");\nconst ctx = myCanvas.getContext(\"2d\");\n\n---\n\nconst myCanvas = document.getElementById(\"myCanvas\");\nconst ctx = myCanvas.getContext(\"2d\");\nctx.fillRect(20, 20, 150, 100);\n\n---\n\nconst myCanvas = document.getElementById(\"myCanvas\");\nconst ctx = myCanvas.getContext(\"2d\");\nctx.fillStyle = \"red\";\nctx.fillRect(20, 20, 150, 100);\n\n---\n\nconst myCanvas = document.createElement(\"canvas\");\ndocument.body.appendChild(myCanvas);\nconst ctx = myCanvas.getContext(\"2d\");\nctx.fillStyle = \"red\";\nctx.fillRect(20, 20, 150, 100);\n\n---\n\nconst canvas = document.getElementById(\"myCanvas\");\nconst ctx = canvas.getContext(\"2d\");\nctx.beginPath();\nctx.moveTo(20, 20);\nctx.lineTo(20, 100);\nctx.lineTo(70, 100);\nctx.stroke();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_168",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

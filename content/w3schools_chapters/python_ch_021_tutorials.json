@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 21,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "There are three numeric types in Python:\n\nVariables of numeric types are created when you assign a value to them:\n\nTo verify the type of any object in Python, use thetype()function:\n\nInt, or integer, is a whole number, \npositive or negative, without decimals, of unlimited length.\n\nFloat, or \"floating point number\" is a number, positive or negative, containing one or more decimals.\n\nFloat can also be scientific numbers with an \"e\" to indicate the power of 10.\n\nComplex numbers are written with a \"j\" as the imaginary part:\n\nYou can convert from one type to another with theint(),float(), andcomplex()methods:\n\nPython does not have arandom()function to \nmake a random number, but Python has a built-in module calledrandomthat can be used to make random numbers:\n\nIn ourRandom Module Referenceyou will learn more about the Random module.\n\n### Code Snippets\n\n```\nx = 1\u00a0\u00a0\u00a0 \n  # int\ny = 2.8\u00a0 # float\nz = 1j\u00a0\u00a0 # complex\n\n---\n\nprint(type(x))\nprint(type(y))\nprint(type(z))\n\n---\n\nx = 1\ny = 35656222554887711\nz = \n  -3255522\nprint(type(x))\nprint(type(y))\nprint(type(z))\n\n---\n\nx = 1.10\ny = 1.0\nz = -35.59\nprint(type(x))\nprint(type(y))\nprint(type(z))\n\n---\n\nx = 35e3\ny = 12E4\nz = -87.7e100\nprint(type(x))\nprint(type(y))\nprint(type(z))\n\n---\n\nx = 3+5j\ny = 5j\nz = -5j\nprint(type(x))\nprint(type(y))\nprint(type(z))\n\n---\n\nx = 1\u00a0\u00a0\u00a0 # int\ny = 2.8\u00a0 # float\nz = 1j\u00a0\u00a0 # complex\n#convert from int to float:\na = float(x)\n#convert from float to int:\nb = int(y)\n#convert from int to complex:\nc = complex(x)\nprint(a)\nprint(b)\nprint(c)\nprint(type(a))\nprint(type(b))\nprint(type(c))\n\n---\n\nimport random\nprint(random.randrange(1, 10))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

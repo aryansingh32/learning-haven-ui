@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 132,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "F-String was introduced in Python 3.6,\nand is now the preferred way of formatting strings.\n\nBefore Python 3.6 we had to use theformat()method.\n\nF-string allows you to format selected parts of a string.\n\nTo specify a string as an f-string, simply put anfin front of the string \nliteral, like this:\n\nTo format values in an f-string, add placeholders{}, \na placeholder can contain variables,\noperations, functions, and modifiers to format the value.\n\nA placeholder can also include amodifierto format the value.\n\nA modifier is included by adding a colon:followed by a legal formatting type, like.2fwhich means fixed point number with 2 decimals:\n\nYou can also format a value directly without keeping it in a variable:\n\nYou can perform Python operations inside the placeholders.\n\nYou can do math operations:\n\nYou can perform math operations on variables:\n\nYou can performif...elsestatements inside the placeholders:\n\nYou can execute functions inside the placeholder:\n\nThe function does not have to be a built-in Python method, you can create your own functions and use them:\n\nAt the beginning of this chapter we explained how to use the.2fmodifier to \nformat a number into a fixed point number with 2 decimals.\n\nThere are several other modifiers that can be used to format values:\n\nHere is a list of all the formatting types.\n\nBefore Python 3.6 we used theformat()method to format strings.\n\nTheformat()method can still be used,\nbut f-strings are faster and the preferred way to format strings.\n\nThe next examples in this page demonstrates how to format strings with theformat()method.\n\nTheformat()method also uses curly brackets as placeholders{}, but the syntax is slightly different:\n\nYou can add parameters inside the curly brackets to specify how to convert \nthe value:\n\nCheck out all formatting types in ourString format() Reference.\n\nIf you want to use more values, just add more values to theformat()method:\n\nAnd add more placeholders:\n\nYou can use index numbers (a number inside the curly brackets{0}) to be sure the \nvalues are placed \nin the correct placeholders:\n\nAlso, if you want to refer to the same value more than once, use the index number:\n\nYou can also use named indexes by entering a name inside the curly brackets{carname}, \nbut then you must use names when you pass the parameter valuestxt.format(carname = \"Ford\"):\n\n### Code Snippets\n\n```\ntxt = f\"The price is 49 dollars\"\nprint(txt)\n\n---\n\nprice = 59\ntxt = f\"The price is {price} dollars\"\nprint(txt)\n\n---\n\nprice = 59\ntxt = f\"The price is {price:.2f} dollars\"\nprint(txt)\n\n---\n\ntxt = f\"The price is {95:.2f} dollars\"\nprint(txt)\n\n---\n\ntxt = f\"The price is {20 * 59} dollars\"\nprint(txt)\n\n---\n\nprice = 59\ntax = 0.25\ntxt = f\"The price is {price + (price * tax)} dollars\"\nprint(txt)\n\n---\n\nprice = 49\ntxt = f\"It is very {'Expensive' if price>50 else 'Cheap'}\"\nprint(txt)\n\n---\n\nfruit = \"apples\"\ntxt = f\"I love {fruit.upper()}\"\nprint(txt)\n\n---\n\ndef myconverter(x):\nreturn x * 0.3048\ntxt = f\"The plane is flying at a {myconverter(30000)} meter altitude\"\nprint(txt)\n\n---\n\nprice = 59000\ntxt = f\"The price is {price:,} dollars\"\nprint(txt)\n\n---\n\nprice = 49\ntxt = \"The price is {} dollars\"\nprint(txt.format(price))\n\n---\n\ntxt = \"The price is {:.2f} dollars\"\n\n---\n\nprint(txt.format(price, itemno, count))\n\n---\n\nquantity = 3\nitemno = 567\nprice = 49\nmyorder = \"I want {} pieces of \n  item number {} for {:.2f} dollars.\"\nprint(myorder.format(quantity, itemno, price))\n\n---\n\nquantity = 3\nitemno = 567\nprice = 49\nmyorder = \"I want {0} pieces of \n  item number {1} for {2:.2f} dollars.\"\nprint(myorder.format(quantity, itemno, price))\n\n---\n\nage = 36\nname = \"John\"\ntxt = \"His name is {1}. {1} is {0} years old.\"\nprint(txt.format(age, \n  name))\n\n---\n\nmyorder = \"I have a {carname}, it is a {model}.\"\nprint(myorder.format(carname \n  = \"Ford\", model = \"Mustang\"))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_131",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

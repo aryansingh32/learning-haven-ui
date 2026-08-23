@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 13,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAn auto-increment field is a numeric column that automatically generates a \nunique number, when a new record is inserted into a table.\n\nThe auto-increment field is typically thePRIMARY KEYfield that we want to \nautomatically be assigned a unique number, every time a new record is inserted.\n\nMySQL uses theAUTO_INCREMENTkeyword to perform an auto-increment feature.\n\nThe following SQL defines the \"Personid\" column to be an auto-increment primary key field in the \"Persons\" table:\n\nThe default starting value forAUTO_INCREMENTis 1, and it will increment by 1 for each new record.\n\nTo letAUTO_INCREMENTstart with another value, use the following SQL statement:\n\nWhen we insert a new record into the \"Persons\" table, we will NOT have to specify a value for the \"Personid\"\ncolumn (a unique value will be added automatically):\n\nThe SQL above inserts a new record into the \"Persons\" table, and the \n\"Personid\" column will automatically be assigned the next unique \nnumber.\n\nThe SQL Server uses theIDENTITYkeyword to perform an auto-increment feature.\n\nThe following SQL defines the \"Personid\" column to be an auto-increment primary key field in the \"Persons\" table:\n\nIn the example above, the starting value forIDENTITYis 1, and it will increment by 1 for each new record.\n\nTip:To specify that the \"Personid\" column should start at value 10 and increment by 5, change \nit toIDENTITY(10,5).\n\nWhen we insert a new record into the \"Persons\" table, we will NOT have to specify a value for the \"Personid\"\ncolumn (a unique value will be added automatically):\n\nThe SQL above inserts a new record into the \"Persons\" table, and the \n\"Personid\" column will automatically be assigned the next unique \nnumber.\n\nThe MS Access uses theAUTOINCREMENTkeyword to perform an auto-increment feature.\n\nThe following SQL statement defines the \"Personid\" column to be an auto-increment primary key field in the \"Persons\" table:\n\nThe default starting value forAUTOINCREMENTis 1, and it will increment by 1 for each new record.\n\nTip:To specify that the \"Personid\" column should start at value 10 and increment by 5, change the autoincrement toAUTOINCREMENT(10,5).\n\nWhen we insert a new record into the \"Persons\" table, we will NOT have to specify a value for the \"Personid\"\ncolumn (a unique value will be added automatically):\n\nThe SQL above inserts a new record into the \"Persons\" table, and the \n\"Personid\" column will automatically be assigned the next unique \nnumber.\n\nIn Oracle, you have to create an auto-increment field with theSEQUENCEobject (this object generates a number sequence).\n\nHere is theCREATE SEQUENCEsyntax:\n\nThe code above creates aSEQUENCEobject called seq_person, that starts with 1 and will increment by 1.\nIt will also cache up to 10 values for performance. The cache option specifies how many sequence values will be stored in memory for faster access.\n\nWhen we insert a new record into the \"Persons\" table, we will have to use the nextval function (this function retrieves the next value from seq_person \nsequence):\n\nThe SQL above inserts a new record into the \"Persons\" table, and the \"Personid\" column would be assigned the next \nunique number from the seq_person \nsequence.\n\n### Code Examples\n\n```\nCREATE TABLE Persons\n(\nPersonid int AUTO_INCREMENT PRIMARY KEY,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int\n);\n\n---\n\nALTER TABLE Persons AUTO_INCREMENT = 100;\n\n---\n\nINSERT INTO Persons (FirstName, LastName)\nVALUES ('Lars', 'Monsen');\n\n---\n\nCREATE TABLE Persons\n(\nPersonid int IDENTITY(1,1) PRIMARY KEY,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int\n);\n\n---\n\nINSERT INTO Persons (FirstName, LastName)\nVALUES ('Lars', 'Monsen');\n\n---\n\nCREATE TABLE Persons\n(\nPersonid AUTOINCREMENT PRIMARY KEY,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int\n);\n\n---\n\nINSERT INTO Persons (FirstName, LastName)\nVALUES ('Lars', 'Monsen');\n\n---\n\nCREATE SEQUENCE seq_person\nMINVALUE 1\nSTART WITH 1\nINCREMENT BY 1\nCACHE 10;\n\n---\n\nINSERT INTO Persons (Personid, FirstName, LastName)\nVALUES (seq_person.nextval, 'Lars', 'Monsen');\n```\n\n## Tutorials\n\nThe most difficult part when working with dates in databases, is to be sure that the format of the date you are trying to insert/select,\nmatches the format of the date column in the database.\n\nDifferent SQL databases have variousdata typesto store date and time values.\n\nMySQLhas the followingdatedata types:\n\nSQL Serverhas the followingdatedata types:\n\nNote:The date data type are defined for a column upon creation of a \nnew table in your database.\n\nLook at the following table:\n\nNow we want to select the records with an OrderDate of \"2025-11-11\" from the table above.\n\nWe use the followingSELECTstatement:\n\nThe result-set will look like this:\n\nNow, assume that the \"Orders\" table looks like this (notice the \nadded time-component in the \"OrderDate\" column):\n\nIf we use the sameSELECTstatement as above:\n\nwe will get no result! This is because the query is looking only for dates with no time portion.\n\n### Code Examples\n\n```\nSELECT * FROM Orders WHERE OrderDate='2025-11-11'\n\n---\n\nSELECT * FROM Orders WHERE OrderDate='2025-11-11'\n```\n\n## Tutorials\n\nAn SQL view is a virtual table based on the result-set of an SQL statement. An SQL view contains rows and columns, just like a real table. The fields in \nthe view are fields from one or more real tables in the database.\n\nYou can add SQL statements and functions to a view and present the data as if \nit were coming from one single table.\n\nA view is created with theCREATE VIEWstatement.\n\nNote:A view always shows real-time data! The database engine only \nstores the view's definition (the SELECT statement), not a copy of the data.\n\nThe following SQL creates a view named \"Brazil Customers\", that shows all customers from Brazil:\n\nTo query the view above, use the following SQL syntax:\n\nThe following SQL creates a view named \"Products Above Average Price\", that selects \nall products in the \"Products\" table with a Price higher than the average price:\n\nTo query the view above, use the following SQL syntax:\n\nIn SQL Server, a view can be updated with theALTER \nVIEWstatement.\n\nThe following SQL adds the \"City\" column to the \"Brazil Customers\" view:\n\nIn MySQL and Oracle, a view can be updated with theCREATE OR REPLACE \nVIEWstatement.\n\nThe following SQL adds the \"City\" column to the \"Brazil Customers\" view:\n\nA view is deleted with theDROP VIEWstatement.\n\nThe following SQL deletes the \"Brazil Customers\" view:\n\n### Code Examples\n\n```\nCREATE VIEW\nview_name\nAS\nSELECT\ncolumn1\n,\ncolumn2\n, ...\nFROM\ntable_name\nWHERE\ncondition\n;\n\n---\n\nCREATE VIEW [Brazil Customers] AS\nSELECT CustomerName, ContactName\nFROM Customers\nWHERE Country = 'Brazil';\n\n---\n\nSELECT * FROM [Brazil Customers];\n\n---\n\nCREATE VIEW [Products Above Average Price] AS\nSELECT ProductName, Price\nFROM Products\nWHERE Price > (SELECT AVG(Price) FROM Products);\n\n---\n\nSELECT * FROM [Products Above Average Price];\n\n---\n\nALTER VIEW\nview_name\nAS\nSELECT\ncolumn1\n,\ncolumn2\n, ...\nFROM\ntable_name\nWHERE\ncondition\n;\n\n---\n\nALTER VIEW [Brazil Customers] AS\nSELECT CustomerName, ContactName, City\nFROM Customers\nWHERE Country = 'Brazil';\n\n---\n\nCREATE OR REPLACE VIEW\nview_name\nAS\nSELECT\ncolumn1\n,\ncolumn2\n, ...\nFROM\ntable_name\nWHERE\ncondition\n;\n\n---\n\nCREATE OR REPLACE VIEW [Brazil Customers] AS\nSELECT CustomerName, ContactName, City\nFROM Customers\nWHERE Country = 'Brazil';\n\n---\n\nDROP VIEW\nview_name\n;\n\n---\n\nDROP VIEW [Brazil Customers];\n```\n\n## Tutorials\n\nSQL injection is a code injection technique that can destroy your database. SQL injections \nare a common web hacking technique.\n\nSQL injections are when attackers insert malicious SQL code into user-input fields, and this way can read, modify, or delete sensitive data in \na database.\n\nSQL injections usually occur when you ask a user for input, like  \nusername/userid, and instead of giving a name/id, the attacker inserts an SQL \ncommand \nthat executes something in your database.\n\nLook at the following example which creates aSELECTstatement by adding a variable \n(txtUserId) to a select string. The variable is fetched from user input \n(getRequestString):\n\nThe rest of this chapter describes the potential dangers of using user input in SQL statements.\n\nThe next chapters show the most effective methods toprevent SQL \ninjections, usingSQL \nParametersandSQL Prepared Statements.\n\nLook at the example above again. The original purpose of the SQL code was to select a \nuser with a given user id.\n\nIf there is nothing to prevent a user from entering \"wrong\" input, the user \ncan enter some \"smart\" input like this:\n\nUserId:\n\nThen, the SQL statement will look like this:\n\nThe SQL above is valid and will return ALL rows from the \"Users\" table, sinceOR 1=1is always TRUE.\n\nDoes the example above look dangerous? What if the \"Users\" table contains names and passwords?\n\nA hacker might get access to all the user names and passwords in a database, by \nsimply inserting \n105 OR 1=1 into the input field.\n\nHere is an example of a user login on a web site:\n\nUsername:\n\nPassword:\n\nA hacker might get access to user names and passwords\u00a0in a database by \nsimply inserting \" OR \"\"=\" into the user name or password text box:\n\nUser Name:\n\nPassword:\n\nThe SQL statement will now look like this:\n\nThe SQL above is valid and will return ALL rows from the \"Users\" table, \nsinceOR \"\"=\"\"is always TRUE.\n\nBatched SQL statements is a group of two or more SQL statements, separated by semicolons.\n\nThe SQL statement below will return all rows from the \"Users\" table, then delete the \n\"Suppliers\" table.\n\nLook at the following example:\n\nAnd the following input:\n\nUser id:\n\nThe valid SQL statement would look like this:\n\n### Code Examples\n\n```\ntxtUserId = getRequestString(\"UserId\");\ntxtSQL = \"SELECT *\nFROM Users WHERE UserId = \" + txtUserId;\n\n---\n\nSELECT * FROM Users WHERE UserId = 105 OR 1=1;\n\n---\n\nuName = getRequestString(\"username\");\nuPass = getRequestString(\"userpassword\");\nsql = 'SELECT * FROM Users WHERE Name =\"' + uName + '\" AND Pass =\"' + uPass + \n '\"'\n\n---\n\nSELECT * FROM Users WHERE Name =\"John Doe\" AND Pass =\"myPass\"\n\n---\n\nSELECT * FROM Users WHERE Name =\"\" or \"\"=\"\" AND Pass =\"\" or \"\"=\"\"\n\n---\n\nSELECT * FROM Users; DROP TABLE Suppliers;\n\n---\n\ntxtUserId = getRequestString(\"UserId\");\ntxtSQL = \"SELECT *\nFROM Users WHERE UserId = \" + txtUserId;\n\n---\n\nSELECT * FROM Users WHERE \nUserId = 105; DROP TABLE Suppliers;\n```\n\n## Tutorials\n\nSQL parameters (Parameterized Queries) can be used to protect a web site from SQL injections.\n\nA parameterized query is a SQL statement that uses placeholders instead of \ndirectly adding the input values into the query text. The placeholders get replaced \nwith the actual values when the query executes. This makes the queries more safe \nand more reusable.\n\nMost databases support parameterized queries, but the syntax varies:\n\nSQL parameters are added to an SQL query at execution time, in a controlled manner.\n\nNote that parameters in SQL Server are presented by a @ marker.\n\nThe SQL engine checks each parameter to ensure that it is correct for its column\nand are treated literally, and not as part of the SQL to be executed.\n\nThe following examples shows how to build parameterized queries in some common web languages.\n\nSELECT STATEMENT IN ASP.NET:\n\nINSERT INTO STATEMENT IN ASP.NET:\n\n### Code Examples\n\n```\nuserid = getRequestString(\"UserId\");\nquery = \"SELECT *\nFROM Users WHERE UserId = @userid\";\ndb.Execute(query, userid);\n\n---\n\ncname = getRequestString(\"CustomerName\");\ncaddress = getRequestString(\"Address\");\nccity = getRequestString(\"City\");\nquery = \"INSERT INTO Customers (CustomerName, Address, City) Values(@cname, @caddress, @ccity)\";\ndb.Execute(query, \n  cname, caddress, ccity);\n\n---\n\nuserid = getRequestString(\"UserId\");\nquery = \"SELECT * FROM Customers WHERE CustomerId = @userid\";\ncmd = new SqlCommand(query);\ncmd.Parameters.AddWithValue(\"@userid\", \n  userid);\ncmd.ExecuteReader();\n\n---\n\ncname = getRequestString(\"CustomerName\");\ncaddress = getRequestString(\"Address\");\nccity = getRequestString(\"City\");\nquery = \"INSERT INTO Customers (CustomerName, Address, City) Values(@cname, @caddress, @ccity)\";\ncmd = new SqlCommand(query);\ncmd.Parameters.AddWithValue(\"@cname\", cname);\ncmd.Parameters.AddWithValue(\"@caddress\", caddress);\ncmd.Parameters.AddWithValue(\"@ccity\", \n  ccity);\ncmd.ExecuteNonQuery();\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_13",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_13",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

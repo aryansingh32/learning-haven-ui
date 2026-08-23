@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 21,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest what you have learned about HTML responsive.\n\n## Tutorials\n\nTest your understanding of responsive web design by completing this coding challenge.\n\n## Tutorials\n\nHTML contains several elements for defining user input and \ncomputer code.\n\nThe HTML<kbd>element is used \nto define keyboard input. The content inside is displayed in the browser's \ndefault monospace font.\n\nThe HTML<samp>element is used to \ndefine sample output from a computer program. The content inside is displayed in \nthe browser's default monospace font.\n\nThe HTML<code>element\u00a0 is used \nto define a piece of computer code. The content inside is displayed in the \nbrowser's default monospace font.\n\nNotice that the<code>element does \nNOT preserve extra whitespace and line-breaks.\n\nTo preserve extra whitespace and line-breaks, you can put the<code>element inside a<pre>element:\n\nThe HTML<var>element\u00a0 is used \nto define a variable in programming or in a mathematical expression. The \ncontent inside is typically displayed in italic.\n\n### Code Examples\n\n```\n<code>\nx = 5;\ny = 6;\nz = x + y;\n</code>\n\n---\n\n<p>Save the document by pressing <kbd>Ctrl + S</kbd></p>\n\n---\n\n<p>Message from my computer:</p>\n<p><samp>File not found.<br>Press F1 to \n  continue</samp></p>\n\n---\n\n<code>\nx = 5;\ny = 6;\nz = x + y;\n</code>\n\n---\n\n<pre>\n<code>\nx = 5;\ny = 6;\nz = x + y;\n</code>\n</pre>\n\n---\n\n<p>The area of a triangle is: 1/2 x <var>b</var> x <var>h</var>, where <var>b</var> \n  is the base, and <var>h</var> is the vertical height.</p>\n```\n\n## Tutorials\n\nTest what you have learned about HTML computercode.\n\n## Tutorials\n\nTest your understanding of HTML computer code elements by completing this coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_21",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_21",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

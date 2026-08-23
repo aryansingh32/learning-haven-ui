@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 71,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In C++, you don't have to specify the size of the array. The compiler is \nsmart enough to determine the size of the array based on the number of inserted values:\n\nThe example above is equal to:\n\nHowever, the last approach is considered as \"good practice\", because it will reduce \nthe chance of errors in your program.\n\nIt is also possible to declare an array without specifying the elements on \ndeclaration, and add them later:\n\nNote:The example above only works when you have specified the size of the array.\n\nIf you don't specify the array size, an error occurs:\n\nYou will often hear the terms \"fixed size\" and \"dynamic size\" when discussing \narrays in C++.\n\nThis is because the size of an array in C++ is fixed, meaning youcannotaddorremoveelements \nafter it is created.\n\nFor operations that require adding and removing array elements, C++ providesvectors, which areresizable arrays.\n\nThe size of a vector is dynamic, meaning it can grow and shrink as needed.\n\nVectors are found in the<vector>library, and they come with many useful \nfunctions to add, remove and modify elements:\n\n### Code Snippets\n\n```\nstring cars[] = {\"Volvo\", \"BMW\", \"Ford\"}; // Three array elements\n\n---\n\nstring cars[3] = {\"Volvo\", \"BMW\", \"Ford\"}; // Also three array elements\n\n---\n\nstring cars[5];\ncars[0] = \"Volvo\";\ncars[1] = \"BMW\";\ncars[2] \n  = \"Ford\";\ncars[3] = \"Mazda\";\ncars[4] = \"Tesla\";\n\n---\n\nstring cars[];\u00a0 \n  // Array size is not specified\ncars[0] = \"Volvo\";\ncars[1] = \"BMW\";\ncars[2] \n  = \"Ford\";\ncars[3] = \"Mazda\";\ncars[4] = \"Tesla\";\n// error: array size missing in 'cars'\n\n---\n\n// An array with 3 elements\nstring cars[3] = {\"Volvo\", \"BMW\", \"Ford\"};\n// Trying to add another element (a fourth element) to the cars array will \n  result in an error\ncars[3] = \"Tesla\";\n\n---\n\n// A vector with 3 elements\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\"};\n// Adding another element to the vector\ncars.push_back(\"Tesla\");\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_70",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

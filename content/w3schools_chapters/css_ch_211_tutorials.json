@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 211,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The CSSobject-fitproperty is used to specify how an <img> or <video> should \nbe resized to fit its container.\n\nThis property can take one of the following values:\n\nTheobject-fit: fill;value does not preserve the aspect ratio, and the image is resized to fill the container (the \nimage will be stretched or squeezed to fit):\n\nTheobject-fit: cover;value preserves the aspect ratio, and \nthe image fills the container. The image will be clipped to fit:\n\nTheobject-fit: contain;value preserves the aspect ratio, and fits the image inside the container, without cutting - will leave empty \nspace if needed:\n\nTheobject-fit: none;value does not resize or scale the image:\n\nTheobject-fit: scale-down;value scales the image down to the smallest version ofnoneorcontain:\n\nHere we have two images and we want them to fill the width of 50% of the browser window and 100% of the height of the container.\n\nIn the following example we do NOT useobject-fit, so when we resize the browser window, the aspect ratio of the images will be destroyed:\n\nIn the next example, we useobject-fit: cover;, so when we resize the browser window, the aspect ratio of the images \nis preserved:\n\nThe following table lists the CSS object-* properties:\n\n### Code Snippets\n\n```\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: fill;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: cover;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: contain;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: none;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: scale-down;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_210",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

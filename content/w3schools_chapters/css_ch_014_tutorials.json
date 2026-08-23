@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 14,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In CSS, colors are specified by using a predefined color name, or with a RGB, HEX, HSL, RGBA, HSLA value.\n\nIn CSS, a color can be specified by using a predefined color name:\n\nTry it Yourself \u00bb\n\nCSS/HTML support140 standard color names.\n\nYou can set the background color for HTML elements:\n\nYou can set the color of text:\n\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\n\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.\n\nYou can set the color of borders:\n\nIn CSS, colors can also be specified using RGB values, HEX values, HSL \nvalues, RGBA values, and HSLA values:\n\nSame as color name \"Tomato\":\n\nSame as color name \"Tomato\", but 50% transparent:\n\n### Code Snippets\n\n```\n<h1 style=\"background-color:DodgerBlue;\">Hello World</h1>\n<p style=\"background-color:Tomato;\">Lorem \n  ipsum...</p>\n\n---\n\n<h1 style=\"color:Tomato;\">Hello \n  World</h1>\n<p style=\"color:DodgerBlue;\">Lorem \n  ipsum...</p>\n<p style=\"color:MediumSeaGreen;\">Ut wisi \n  enim...</p>\n\n---\n\n<h1 style=\"border:2px \n  solid Tomato;\">Hello \n  World</h1>\n<h1 style=\"border:2px \n  solid DodgerBlue;\">Hello \n  World</h1>\n<h1 style=\"border:2px \n  solid Violet;\">Hello \n  World</h1>\n\n---\n\n<h1 style=\"background-color:rgb(255, \n  99, 71);\">...</h1>\n<h1 style=\"background-color:#ff6347;\">...</h1>\n<h1 style=\"background-color:hsl(9, \n  100%, 64%);\">...</h1>\n<h1 style=\"background-color:rgba(255, \n  99, 71, 0.5);\">...</h1>\n<h1 style=\"background-color:hsla(9, \n  100%, 64%, 0.5);\">...</h1>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_13",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

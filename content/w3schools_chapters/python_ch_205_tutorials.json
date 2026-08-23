@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 205,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Hash Table is a data structure designed to be fast to work with.\n\nThe reason Hash Tables are sometimes preferred instead of arrays or linked lists is because searching for, adding, and deleting data can be done really quickly, even for large amounts of data.\n\nIn aLinked List, finding a person \"Bob\" takes time because we would have to go from one node to the next, checking each node, until the node with \"Bob\" is found.\n\nAnd finding \"Bob\" in anlist/arraycould be fast if we knew the index, but when we only know the name \"Bob\", we need to compare each element and that takes time.\n\nWith a Hash Table however, finding \"Bob\" is done really fast because there is a way to go directly to where \"Bob\" is stored, using something called a hash function.\n\nTo get the idea of what a Hash Table is, let's try to build one from scratch, to store unique first names inside it.\n\nWe will build the Hash Table in 5 steps:\n\nTo keep it simple, let's create a list with 10 empty elements.\n\nNow comes the special way we interact with Hash Tables.\n\nWe want to store a name directly into its right place in the array, and this is where thehash functioncomes in.\n\nA hash function can be made in many ways, it is up to the creator of the Hash Table.\nA common way is to find a way to convert the value into a number that equals one of the Hash Table's index numbers, in this case a number from 0 to 9.\n\nIn our example we will use the Unicode number of each character, summarize them and do a modulo 10 operation to get index numbers 0-9.\n\nThe characterBhas Unicode number66,ohas111,\n  andbhas98.\n  Adding those together we get275.\n  Modulo 10 of275is5,\n  so\"Bob\"should be stored at index5.\n\nThe number returned by the hash function is called thehash code.\n\nAccording to our hash function, \"Bob\" should be stored at index 5.\n\nLets create a function that add items to our hash table:\n\nAfter storing \"Bob\" at index 5, our array now looks like this:\n\nWe can use the same functions to store \"Pete\", \"Jones\", \"Lisa\", and \"Siri\" as well.\n\nAfter using the hash function to store those names in the correct position, our array looks like this:\n\nNow that we have a super basic Hash Table, let's see how we can look up a name from it.\n\nTo find \"Pete\" in the Hash Table, we give the name \"Pete\" to our hash function. The hash function returns8,\nmeaning that \"Pete\" is stored at index 8.\n\nBecause we do not have to check element by element to find out if \"Pete\" is in there,\n  we can just use the hash function to go straight to the right element!\n\nLet's also add \"Stuart\" to our Hash Table.\n\nWe give \"Stuart\" to our hash function, which returns3, meaning \"Stuart\" should be stored at index 3.\n\nTrying to store \"Stuart\" in index 3, creates what is called acollision, because \"Lisa\" is already stored at index 3.\n\nTo fix the collision, we can make room for more elements in the same bucket.\n  Solving the collision problem in this way is calledchaining, \n  and means giving room for more elements in the same bucket.\n\nStart by creating a new list with the same size as the original list, but with empty buckets:\n\nRewrite theadd()function, and add the same names as before:\n\nAfter implementing each bucket as a list, \"Stuart\" can also be stored at index 3, and our Hash Set now looks like this:\n\nHash Tables are great for:\n\nThe most important reason why Hash Tables are great for these things is that Hash Tables are very fast compared Arrays and Linked Lists,\n  especially for large sets.\n  Arrays and Linked Lists have time complexityO(n)for search and delete,\n  while Hash Tables have justO(1)on average.\n\nHash Table elements are stored in storage containers calledbuckets.\n\nAhash functiontakes the key of an element to generate ahash code.\n\nThe hash code says what bucket the element belongs to, so now we can go directly to that Hash Table element: to modify it, or to delete it, or just to check if it exists.\n\nAcollisionhappens when two Hash Table elements have the same hash code, because that means they belong to the samebucket.\n\nCollision can be solved byChainingby using lists to allow more than one element in the same bucket.\n\n### Code Snippets\n\n```\nmy_list = [None, None, None, None, None, None, None, None, None, None]\n\n---\n\ndef hash_function(value):\nsum_of_chars = 0\nfor char in value:\nsum_of_chars += ord(char)\nreturn sum_of_chars % 10\nprint(\"'Bob' has hash code:\", hash_function('Bob'))\n\n---\n\ndef add(name):\nindex = hash_function(name)\nmy_list[index] = name\nadd('Bob')\nprint(my_list)\n\n---\n\nmy_list = [None, None, None, None, None, 'Bob', None, None, None, None]\n\n---\n\nadd('Pete')\nadd('Jones')\nadd('Lisa')\nadd('Siri')\nprint(my_list)\n\n---\n\nmy_list = [None, 'Jones', None, 'Lisa', None, 'Bob', None, 'Siri', 'Pete', None]\n\n---\n\ndef contains(name):\nindex = hash_function(name)\nreturn my_list[index] == name\nprint(\"'Pete' is in the Hash Table:\", contains('Pete'))\n\n---\n\nmy_list = [\n[],\n[],\n[],\n[],\n[],\n[],\n[],\n[],\n[],\n[]\n]\n\n---\n\ndef add(name):\nindex = hash_function(name)\nmy_list[index].append(name)\nadd('Bob')\nadd('Pete')\nadd('Jones')\nadd('Lisa')\nadd('Siri')\nadd('Stuart')\nprint(my_list)\n\n---\n\nmy_list = [\n[None],\n['Jones'],\n[None],\n['Lisa', 'Stuart'],\n[None],\n['Bob'],\n[None],\n['Siri'],\n['Pete'],\n[None]\n]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_204",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

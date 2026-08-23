@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 15,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheADDcommand is used to add a column in an \nexisting table.\n\n### Code Examples\n\n```\nALTER TABLE Customers\nADD Email varchar(255);\n```\n\n## Tutorials\n\nTheADD CONSTRAINTcommand is used to create \na constraint after a table is already created.\n\nThe following SQL adds a constraint named \"PK_Person\" that is a \nPRIMARY KEY constraint on multiple columns (ID and LastName):\n\n### Code Examples\n\n```\nALTER TABLE Persons\nADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);\n```\n\n## Tutorials\n\nTheALLcommand returns true if all of the subquery values meet \nthe \ncondition.\n\nThe following SQL statement returns TRUE and lists the productnames if ALL \nthe records in the OrderDetails table has quantity = 10:\n\n### Code Examples\n\n```\nSELECT ProductName\nFROM Products\nWHERE ProductID = ALL (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);\n```\n\n## Tutorials\n\nTheALTER TABLEcommand adds, deletes, or \nmodifies columns in a table.\n\nTheALTER TABLEcommand also adds and \ndeletes various constraints in a table.\n\nThe following SQL adds an \"Email\" column to the \"Customers\" table:\n\nThe following SQL deletes the \"Email\" column from the \"Customers\" table:\n\nTheALTER COLUMNcommand is used to change the data type of a column in a table.\n\nThe following SQL changes the data type of the column named \"BirthDate\" in \nthe \"Employees\" table to type year:\n\n### Code Examples\n\n```\nALTER TABLE Customers\nADD Email varchar(255);\n\n---\n\nALTER TABLE Customers\nDROP COLUMN Email;\n\n---\n\nALTER TABLE Employees\nALTER COLUMN BirthDate \n  year;\n```\n\n## Tutorials\n\nTheALTER COLUMNcommand is used to change the data type of a column in a table.\n\nThe following SQL changes the data type of the column named \"BirthDate\" in \nthe \"Employees\" table to type year:\n\n### Code Examples\n\n```\nALTER TABLE Employees\nALTER COLUMN BirthDate \n  year;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_15",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_15",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

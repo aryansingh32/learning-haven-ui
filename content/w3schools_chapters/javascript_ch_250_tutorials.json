@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 250,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Sometimes an asynchronous operation is no longer needed.\n\nExamples include:\n\nIn these situations, you can cancel the operation instead of waiting for it to finish.\n\nCreate an AbortController with thenewkeyword.\n\nAnAbortControllerprovides anAbortSignal.\n\nThe signal is passed to an asynchronous operation.\n\nThe operation receives the signal and stops.\n\nPass the controller's signal tofetch().\n\nCallabort()to cancel the operation.\n\nA request can be canceled when the user clicks a button.\n\nOnce an AbortController has been aborted, it cannot be reused.\n\nCreate a new controller for each new request.\n\nSearch applications often cancel an earlier request before starting a new one.\n\nYou can combine timers with AbortController)=.\n\nForgetting to pass the signal.\n\nRemember to create a new controller.\n\nAn aborted request is often expected.\n\nHandle it separately.\n\nAbortControlleris supported by all modern browsers.\n\nIt is widely used together with the Fetch API.\n\n### Code Snippets\n\n```\nconst controller = new AbortController();\n\n---\n\nconst controller = new AbortController();\nconst signal = controller.signal;\n\n---\n\nconst controller = new AbortController();\nfetch(\"largefile.txt\", {\nsignal: controller.signal\n});\n\n---\n\ncontroller.abort();\n\n---\n\nconst controller = new AbortController();\n// Async function to download a file\nasync function loadFile(file) {\ntry {\nconst response = await fetch(file, {\nsignal: controller.signal\n});\nmyDisplayer(await response.text());\n} catch(err) {\nif (err.name == \"AbortError\") {\nmyDisplayer(\"Download canceled\");\n}\n}\n}\n// Call the async function\nloadFile(\"fetch.txt\");\n\n---\n\n<button onclick='loadFile(\"fetch.txt\")'>Start Download</button>\n<button onclick=\"controller.abort()\">Cancel Download</button>\n<p id=\"demo\"></p>\n\n---\n\nlet controller;\nasync function search(text) {\nif (controller) {\ncontroller.abort();\n}\ncontroller = new AbortController();\ntry {\nconst response = await fetch(\n\"/search?q=\" + text,\n{signal: controller.signal}\n);\nconsole.log(await response.text());\n}\ncatch(err) {\nif (err.name != \"AbortError\") {\nconsole.log(err);\n}\n}\n}\n\n---\n\nUser types:\n\nc\nca\ncat\ncats\n\n\u2193\n\nOnly the last request finishes.\n\n---\n\nconst controller = new AbortController();\nsetTimeout(function(){\ncontroller.abort();\n},5000);\nawait fetch(url,{\nsignal: controller.signal\n});\n\n---\n\nfetch(url);\n\n---\n\nfetch(url);\n\n---\n\nif (err.name == \"AbortError\") {\nreturn;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_249",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

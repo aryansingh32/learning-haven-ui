@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 36,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe Hypertext Transfer Protocol (HTTP) is designed to enable \ncommunications between clients and servers.\n\nHTTP works as a request-response protocol between a client and server.\n\nExample: A client (browser) sends an HTTP request to the server; then the server \nreturns a response to the client. The response contains status information about \nthe request and may also contain the requested content.\n\nThe two most common HTTP methods are: GET and POST.\n\nGET is used to request data from a specified \nresource.\n\nNote that the query string (name/value pairs) is sent in the URL of \na GET request:\n\nSome notes on GET requests:\n\nPOST is used to send data to a server to create/update a resource.\n\nThe data sent to the server with POST is stored in the request body of the \nHTTP request:\n\nSome notes on POST requests:\n\nThe following table compares the two HTTP methods: GET and POST.\n\nPUT is used to send data to a server to create/update a resource.\n\nThe difference between POST and PUT is that PUT requests are idempotent. That \nis, calling the same PUT request multiple times will always produce the same \nresult. In contrast, calling a POST request repeatedly have side effects of \ncreating the same resource multiple times.\n\nHEAD is almost identical to GET, but without the response body.\n\nIn other words, if GET /users returns a list of users, then HEAD /users will \nmake the same request but will not return the list of users.\n\nA HEAD request is useful for checking what a GET request will return before \nactually making a GET request - a HEAD request can read the Content-Length \nheader to check the size of the file, without actually downloading the file.\n\nThe DELETE method deletes the specified resource.\n\nThe PATCH method is used to apply partial modifications to a resource.\n\nThe OPTIONS method describes the communication options for the target \nresource.\n\nThe CONNECT method is used to start a two-way communications (a tunnel) with \nthe requested resource.\n\nThe TRACE method is used to perform a message loop-back test that \ntests the path for the target resource (useful for debugging purposes).\n\n### Code Examples\n\n```\n/test/demo_form.php?name1=value1&name2=value2\n\n---\n\nPOST /test/demo_form.php HTTP/1.1\nHost: w3schools.com\nname1=value1&name2=value2\n```\n\n## Tutorials\n\nThe tool below allows you to work out the em sizes from pixels (or vice versa).\n\nIn the table below, select a body font size in pixels (px) to display a \ncomplete \"px to em and percent\" conversion table.\n\n## Tutorials\n\nKeyboard shortcuts are often used in modern operating systems and computer software programs.\n\nLearning and using keyboard shortcuts can save you a lot of time.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_36",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_36",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

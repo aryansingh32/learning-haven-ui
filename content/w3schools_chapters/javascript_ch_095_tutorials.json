@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 95,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The ^ metacharacter matches the beginning of a string.\n\nThe $ metacharacter matches the end of a string.\n\nThe \\b metacharacter matches the beginning of a word or the end of a word.\n\nx(?=y) matches \"x\" if \"x\" is followed by \"y\".\n\nx(?!y) matches \"x\" if \"x\" is NOT followed by \"y\".\n\nExplanation\n\nW3Schools matches the literal word.\n\n(?! Tutorials) asserts that what follows is not \" Tutorials\".\n\nIf text = \"W3Schools Tutorials\", the test returns false.\n\nIf text = \"W3Schools Website\", the test returns true.\n\n(?<=y)x matches \"x\" if \"x\" is preceded by \"y\".\n\n(?<!y)x matches \"x\" only if \"x\" is NOT preceded by \"y\".\n\nRegular ExpressionSearchandReplacecan be done with different methods.\n\nThese are the most common:\n\n### Code Snippets\n\n```\n// Match beginning of string\nconst pattern = /^W3Schools/;\n// Match end of string\nconst pattern = /W3Schools$/;\n\n---\n\nconst pattern = /^W3Schools/;\nlet text = \"W3Schools Tutorial\";\nlet result = pattern.test(text); // true\n\n---\n\nconst pattern = /^W3Schools/;\nlet text = \"Hello W3Schools\";\nlet result = pattern.test(text); // false\n\n---\n\nconst pattern = /W3Schools$/;\nlet text = \"Hello W3Schools\";\nlet result = pattern.test(text); // true\n\n---\n\nconst pattern = /W3Schools$/;\nlet text = \"W3Schools tutorial\";\nlet result = pattern.test(text); // false\n\n---\n\nlet text = \"HELLO, LOOK AT YOU!\";\nlet result = text.search(/\\bLO/);\n\n---\n\nlet text = \"HELLO, LOOK AT YOU!\";\nlet result = text.search(/LO\\b/);\n\n---\n\nlet text = \"W3Schools Tutorials\";\nlet pattern = /W3Schools(?= Tutorials)/;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"W3Schools Tutorials\";\nlet pattern = /W3Schools(?! Tutorials)/;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"Hello W3Schools\";\nlet pattern = /(?<=Hello )W3Schools/;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"Hello W3Schools\";\nlet pattern = /(?<!Hello )W3Schools/;\nlet result = pattern.test(text);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_94",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

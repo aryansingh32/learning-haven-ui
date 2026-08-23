@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 47,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "With HTML image maps, you can create clickable areas on an image.\n\nThe HTML<map>tag defines an image map. An image map is an image with \nclickable areas. The areas are defined with one or more<area>tags.\n\nTry to click on the computer, phone, or the cup of coffee in the image below:\n\nThe idea behind an image map is that you should be able to perform different \nactions depending on where in the image you click.\n\nTo create an image map you need an image, and some HTML code that describes the clickable areas.\n\nThe image is inserted using the<img>tag. \nThe only difference from other images is that you must \nadd ausemapattribute:\n\nTheusemapvalue starts with a hash tag#followed by the name of the image map, and is used to create a relationship \nbetween the image and the image map.\n\nThen, add a<map>element.\n\nThe<map>element is used to create an image map, and is linked to the image by using the \nrequirednameattribute:\n\nThenameattribute must have the same value as the<img>'susemapattribute .\n\nThen, add the clickable areas.\n\nA clickable area is defined using an<area>element.\n\nYou must define the shape of the clickable area, and you can choose one of these \nvalues:\n\nYou must also define some coordinates to be able to place the clickable area onto \nthe image.\n\nThe coordinates forshape=\"rect\"come in pairs, one for the x-axis and one for the y-axis.\n\nSo, the coordinates34,44is located 34 pixels \nfrom the left margin and 44 pixels from the top:\n\nThe coordinates270,350is located 270 \npixels from the left margin and 350 pixels from the top:\n\nNow we have enough data to create a clickable rectangular area:\n\nThis is the area that becomes clickable and will send the user to the page \"computer.htm\":\n\nTo add a circle area, first locate the coordinates of the center of the circle:\n\n337,300\n\nThen specify the radius of the circle:\n\n44pixels\n\nNow you have enough data to create a clickable circular area:\n\nThis is the area that becomes clickable and will send the user to the page \"coffee.htm\":\n\nTheshape=\"poly\"contains several coordinate \npoints, which creates a shape formed with straight lines (a polygon).\n\nThis can be used to create any shape.\n\nLike maybe a croissant shape!\n\nHow can we make the croissant in the image below become a clickable link?\n\nWe have to find the x and y coordinates for all edges of the \ncroissant:\n\nThe coordinates come in pairs, one for the x-axis and one for the y-axis:\n\nThis is the area that becomes clickable and will send the user to the page \"croissant.htm\":\n\nA clickable area can also \ntrigger a JavaScript function.\n\nAdd aclickevent to the<area>element\nto execute a JavaScript function:\n\n### Code Snippets\n\n```\n<img src=\"workplace.jpg\" alt=\"Workplace\" usemap=\"#workmap\">\n<map name=\"workmap\">\n<area shape=\"rect\" coords=\"34,44,270,350\" \n  alt=\"Computer\" href=\"computer.htm\">\n<area shape=\"rect\" coords=\"290,172,333,250\" \n  alt=\"Phone\" href=\"phone.htm\">\n<area shape=\"circle\" coords=\"337,300,44\" \n  alt=\"Coffee\" href=\"coffee.htm\">\n</map>\n\n---\n\n<img src=\"workplace.jpg\" alt=\"Workplace\" usemap=\"#workmap\">\n\n---\n\n<map name=\"workmap\">\n\n---\n\n<area shape=\"rect\" coords=\"34, 44, 270, 350\" href=\"computer.htm\">\n\n---\n\n<area shape=\"circle\" coords=\"337, 300, 44\" href=\"coffee.htm\">\n\n---\n\n<area shape=\"poly\" coords=\"140,121,181,116,204,160,204,222,191,270,140,329,85,355,58,352,37,322,40,259,103,161,128,147\" href=\"croissant.htm\">\n\n---\n\n<map name=\"workmap\">\n<area shape=\"circle\" coords=\"337,300,44\" \n  href=\"coffee.htm\" onclick=\"myFunction()\">\n</map>\n<script>\nfunction \n  myFunction() {\nalert(\"You clicked the coffee cup!\");\n}\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

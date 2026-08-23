@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheborder-widthproperty specifies the width of the four borders.\n\nThe width can be set as a specific size (in px, pt, cm, em, etc) or by using \none of the three pre-defined values: thin, medium, or thick:\n\nTheborder-widthproperty can have from one to four values (for the top border, right border, \nbottom border, and the left border):\n\n### Code Examples\n\n```\np.one\n{\nborder-style: solid;\nborder-width: 5px;\n}\np.two\n{\nborder-style: solid;\nborder-width: medium;\n}\np.three\n{\nborder-style: dotted;\nborder-width: 2px;\n}\np.four\n{\nborder-style: dotted;\nborder-width: thick;\n}\n\n---\n\np.one {\nborder-style: solid;\nborder-width: 5px 20px; /* \n  5px top and bottom, 20px on the sides */\n}\np.two {\nborder-style: \n  solid;\nborder-width: 20px 5px; /* 20px top and bottom, 5px on the \n  sides */\n}\np.three {\nborder-style: solid;\nborder-width: 25px 10px \n  4px 35px; /* 25px top, 10px right, 4px bottom and 35px left */\n}\n```\n\n## Tutorials\n\nTheborder-colorproperty is used to set the color of the four borders.\n\nThe color can be set by:\n\nNote:Ifborder-coloris not set, it inherits the color of the element.\n\nTheborder-colorproperty can have from one to four values (for \nthe top border, right border, bottom border, and the left border).\n\nThe color of the border can also be specified using a hexadecimal value (HEX):\n\nOr by using RGB values:\n\nYou can also use HSL values:\n\n### Code Examples\n\n```\np.one\n{\nborder-style: solid;\nborder-color: red;\n}\np.two\n{\nborder-style: solid;\nborder-color: green;\n}\np.three {\nborder-style: dotted;\nborder-color: \n  blue;\n}\n\n---\n\np.one {\nborder-style: solid;\nborder-color: red green blue yellow; \n  /* red top, green right, blue bottom and yellow left */\n}\n\n---\n\np.one {\nborder-style: solid;\nborder-color: #ff0000; /* red \n  */\n}\n\n---\n\np.one {\nborder-style: solid;\nborder-color: rgb(255, 0, 0); \n  /* red */\n}\n\n---\n\np.one {\nborder-style: solid;\nborder-color: hsl(0, 100%, 50%); \n  /* red */\n}\n```\n\n## Tutorials\n\nFrom the examples on the previous pages, you have seen that it is possible to specify a \ndifferent border for each side.\n\nIn CSS, there are also properties for specifying each of the borders (top, \nright, bottom, and left):\n\nIn the example below we use the four properties above to set the style of \neach border side:\n\nWe can also use the shorthandborder-styleproperty to \nachieve the same result.\n\nThe example below gives the same result as the example above:\n\nSo, here is how it works:\n\nIf theborder-styleproperty has four values:\n\nIf theborder-styleproperty has three values:\n\nIf theborder-styleproperty has two values:\n\nIf theborder-styleproperty has one value:\n\n### Code Examples\n\n```\np\n{\nborder-top-style: dotted;\nborder-right-style: solid;\nborder-bottom-style: dotted;\nborder-left-style: solid;\n}\n\n---\n\np {\nborder-style: dotted solid;\n}\n\n---\n\n/* Four values */\np {\nborder-style: dotted solid double dashed;\n}\n/* Three \n  values */\np {\nborder-style: dotted solid double;\n}\n/* Two values */\np {\nborder-style: dotted solid;\n}\n/* One value */\np {\nborder-style: dotted;\n}\n```\n\n## Tutorials\n\nLike you saw in the previous page, there are many properties to consider when dealing with borders.\n\nTo shorten the code, it is also possible to specify all the individual border properties in \none property.\n\nTheborderproperty is a shorthand property for the following individual border properties:\n\nYou can also specify all the individual border properties for just one side:\n\n### Code Examples\n\n```\np {\nborder: 5px solid red;\n}\n\n---\n\np {\nborder-left: 6px solid red;\n}\n\n---\n\np {\nborder-bottom: 6px solid red;\n}\n```\n\n## Tutorials\n\nTheborder-radiusproperty is used to add rounded borders to an element:\n\nNormal border\n\nRound border\n\nRounder border\n\nRoundest border\n\nAll the top border properties in one declarationThis example demonstrates a shorthand property for setting all of the properties for the top border in one declaration.\n\nSet the style of the bottom borderThis example demonstrates how to set the style of the bottom border.\n\nSet the width of the left borderThis example demonstrates how to set the width of the left border.\n\nSet the color of the four bordersThis example demonstrates how to set the color of the four borders. It can have from one to four colors.\n\nSet the color of the right borderThis example demonstrates how to set the color of the right border.\n\n### Code Examples\n\n```\np {\nborder: 2px solid red;\nborder-radius: 5px;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

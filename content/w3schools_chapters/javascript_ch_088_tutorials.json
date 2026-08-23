@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 88,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The syntax for any Math property is :Math.property.\n\nJavaScript provides 8 mathematical constants that can be accessed as Math properties:\n\nThe syntax for Math any methods is :Math.method(number)\n\nThere are 4 common methods to round a number to an integer:\n\nMath.round(x)returns the nearest integer:\n\nMath.ceil(x)returns the value of x roundedupto its nearest integer:\n\nMath.floor(x)returns the value of x roundeddownto its nearest integer:\n\nMath.trunc(x)returns the integer part of x:\n\nMath.sign(x)returns if x is negative, null or positive.\n\nMath.pow(x, y)returns the value of x to the power of y:\n\nMath.sqrt(x)returns the square root of x:\n\nMath.abs(x)returns the absolute (positive) value of x:\n\nMath.sin(x)returns the sine (a value between -1 and 1) of the angle x (given in radians).\n\nIf you want to use degrees instead of radians, you have to convert degrees to radians:\n\nAngle in radians = Angle in degrees x PI / 180.\n\nMath.cos(x)returns the cosine (a value between -1 and 1) of the angle x (given in radians).\n\nIf you want to use degrees instead of radians, you have to convert degrees to radians:\n\nAngle in radians = Angle in degrees x PI / 180.\n\nMath.min()andMath.max()can be used to find the lowest or highest value in a list of arguments:\n\nMath.random()returns a random number between 0 (inclusive), and 1 \n(exclusive):\n\nMath.log(x)returns the natural logarithm of x.\n\nThe natural logarithm returns the time needed to reach a certain level of growth:\n\nMath.E and Math.log() are twins.\n\nMath.log2(x)returns the base 2 logarithm of x.\n\nMath.log10(x)returns the base 10 logarithm of x.\n\n### Code Snippets\n\n```\nMath.PI;\n\n---\n\nMath.E\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// returns Euler's number\nMath.PI\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// returns PI\nMath.SQRT2\u00a0\u00a0\u00a0\u00a0// returns the square root of 2\nMath.SQRT1_2\u00a0\u00a0// returns the square root of 1/2\nMath.LN2\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// returns the natural logarithm of 2\nMath.LN10\u00a0\u00a0\u00a0\u00a0\u00a0// returns the natural logarithm of 10\nMath.LOG2E\u00a0\u00a0\u00a0\u00a0// returns base 2 logarithm of E\nMath.LOG10E\u00a0\u00a0\u00a0// returns base 10 logarithm of E\n\n---\n\nMath.round(4.6);\n\n---\n\nMath.round(4.5);\n\n---\n\nMath.round(4.4);\n\n---\n\nMath.ceil(4.9);\nMath.ceil(4.7);\nMath.ceil(4.4);\nMath.ceil(4.2);\nMath.ceil(-4.2);\n\n---\n\nMath.floor(4.9);\nMath.floor(4.7);\nMath.floor(4.4);\nMath.floor(4.2);\nMath.floor(-4.2);\n\n---\n\nMath.trunc(4.9);\nMath.trunc(4.7);\nMath.trunc(4.4);\nMath.trunc(4.2);\nMath.trunc(-4.2);\n\n---\n\nMath.sign(-4);\nMath.sign(0);\nMath.sign(4);\n\n---\n\nMath.pow(8, 2);\n\n---\n\nMath.sqrt(64);\n\n---\n\nMath.abs(-4.7);\n\n---\n\nMath.sin(90 * Math.PI / 180);\u00a0\u00a0\u00a0\u00a0\u00a0// returns 1 (the sine of 90 degrees)\n\n---\n\nMath.cos(0 * Math.PI / 180);\u00a0\u00a0\u00a0\u00a0\u00a0// returns 1 (the cos of 0 degrees)\n\n---\n\nMath.min(0, 150, 30, 20, -8, -200);\n\n---\n\nMath.max(0, 150, 30, 20, -8, -200);\n\n---\n\nMath.random();\n\n---\n\nMath.log(1);\n\n---\n\nMath.log(2);\n\n---\n\nMath.log(3);\n\n---\n\nMath.log(10);\n\n---\n\nMath.log2(8);\n\n---\n\nMath.log10(1000);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_87",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

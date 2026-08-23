@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 52,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e String Methods\n\nTheregionMatches()method compares regions in two different strings to check if they are equal.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nTest if two string regions are equal:\nString myStr1 = \"Hello, World!\";\nString myStr2 = \"New World\";\nSystem.out.println(myStr1.regionMatches(7, myStr2, 4, 5));\nSystem.out.println(myStr1.regionMatches(0, myStr2, 0, 5));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThereplace()method searches a string for a specified \ncharacter, and returns a new string where the specified character(s) are replaced.\n\n### Code Examples\n\n```\nExample\nReturn a new string where all \"l\" characters are replaced with \"p\" characters:\nString myStr = \"Hello\";\nSystem.out.println(myStr.replace('l', 'p'));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThereplaceAll()method replaces all the matches of a regular expression in a string with a new substring.\n\nReplacement strings may contain a backreference in the form $n where n is the index of a group in the pattern. In the returned string, instances of $n will be replaced with the substring that was matched by the group or, if $0 is used, by the whole expression. See \"More Examples\" below for an example of using a backreference.\n\nTip:See theJava RegExtutorial to learn about regular expressions.\n\n### Code Examples\n\n```\nExample\nReplace every match of a regular expression with a substring:\nString myStr = \"I love cats. Cats are very easy to love. Cats are very popular.\";\nString regex = \"(?i)cat\";\nSystem.out.println(myStr.replaceAll(regex, \"dog\"));\nTry it Yourself \u00bb\n\n---\n\nExample\nUse a backreference to wrap numbers in parentheses:\nString myStr = \"Quest complete! Earned 30 gold and 500 experience.\";\nString regex = \"[0-9]+\";\nSystem.out.println(myStr.replaceAll(regex, \"($0)\"));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThereplaceFirst()method replaces the first match of a regular expression in a string with a new substring.\n\nReplacement strings may contain a backreference in the form $n where n is the index of a group in the pattern. In the returned string, instances of $n will be replaced with the substring that was matched by the group or, if $0 is used, by the whole expression. See \"More Examples\" below for an example of using a backreference.\n\nTip:See theJava RegExtutorial to learn about regular expressions.\n\n### Code Examples\n\n```\nExample\nReplace the first match of a regular expression with a different substring:\nString myStr = \"This is W3Schools\";\nString regex = \"is\";\nSystem.out.println(myStr.replaceFirst(regex, \"at\"));\nTry it Yourself \u00bb\n\n---\n\nExample\nUse a backreference to wrap the first number in parentheses:\nString myStr = \"Quest complete! Earned 30 gold and 500 experience.\";\nString regex = \"[0-9]+\";\nSystem.out.println(myStr.replaceFirst(regex, \"($0)\"));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e String Methods\n\nThesplit()method splits a string into an array of substrings using a regular expression as the separator.\n\nIf a limit is specified, the returned array will not be longer than the limit. The last element of the array will contain the remainder of the string, which may still have separators in it if the limit was reached.\n\nTip:See theJava RegExtutorial to learn about regular expressions.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nSplit a string into an array of strings:\nString myStr = \"Split a string by spaces, and also punctuation.\";\nString regex = \"[,\\\\.\\\\s]\";\nString[] myArray = myStr.split(regex);\nfor (String s : myArray) {\n  System.out.println(s);\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_52",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_52",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

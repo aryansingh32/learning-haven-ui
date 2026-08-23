@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 126,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A map stores elements in \"key/value\" pairs.\n\nElements in a map are:\n\nTo use a map, you have to include the<map>header file:// Include the map library#include <map>Create a MapTo create a map, use themapkeyword, \nand specify thetypeof both the key and the value it should store within angle brackets<>. \nAt last, specify the name of the map, like:map<keytype, \nvaluetype>mapName:Example// Create a \n  map called people that will store strings as keys and integers as valuesmap<string, int> peopleIf you want to add elements at the time of declaration, place them in a comma-separated list, inside curly braces{}:Example// Create a \n  map that will store the name and age of different peoplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };Access a MapYou cannot access map elements by referring to index numbers, like you would witharraysandvectors.Instead, you can access a map element by referring to its key inside square \nbrackets[]:Example// Create a map that will store the name and age of different peoplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Get the value associated with the key \"John\"cout << \"John is: \" << \n  people[\"John\"] << \"\\n\";// Get the value associated with the key \n  \"Adele\"cout << \"Adele is: \" << people[\"Adele\"] << \"\\n\";Try it Yourself \u00bbYou can also access elements with the.at()function:Example// Create a map that will store the name and age of different peoplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// \n  Get the value associated with the key \"Adele\"cout << \"Adele is: \" <<people.at(\"Adele\") << \"\\n\";// Get the value associated with the key \n  \"Bo\"cout << \"Bo is: \" << people.at(\"Bo\") << \"\\n\";Try it Yourself \u00bbNote:The.at()function is often preferred over square brackets[]because it throws an \nerror message if the element does not exist:Example// Create a map that will store the name and age of different peoplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// \n  Try to access an element that does \n  not exist (will throw an exception)cout << people.at(\"Jenny\");Try it Yourself \u00bbChange ValuesYou can also change the value associated with a key:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Change John's value to 50 instead of 32people[\"John\"] = 50;cout << \"John is: \" << people[\"John\"];\u00a0 // Now outputs John is: 50Try it Yourself \u00bbHowever, it is safer to use the.at()function:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Change John's value to 50 instead of 32people.at(\"John\") = 50;cout << \"John is: \" << people.at(\"John\");\u00a0 // Now outputs John is: 50Try it Yourself \u00bbAdd ElementsTo add elements to a map, it is ok to use square brackets[]:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Add new elementspeople[\"Jenny\"] = 22;people[\"Liam\"] = 24;people[\"Kasper\"] = 20;people[\"Anja\"] = 30;Try it Yourself \u00bbBut you can also use the.insert()function:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Add new elementspeople.insert({\"Jenny\", 22});people.insert({\"Liam\", 24});people.insert({\"Kasper\", 20});people.insert({\"Anja\", 30});Try it Yourself \u00bbElements with Equal KeysA map cannot have elements with equal keys.For example, if we try to add \"Jenny\" two times to the map, it will only keep the first one:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Trying to add two elements with equal keyspeople.insert({\"Jenny\", 22});people.insert({\"Jenny\", 30});Try it Yourself \u00bbTo sum up;values can be equal, but keys must be unique.Remove ElementsTo remove specific elements from a map, you can use the.erase()function:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Remove an element by keypeople.erase(\"John\");Try it Yourself \u00bbTo remove all elements from a map, you can use the.clear()function:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };// Remove all elementspeople.clear();Find the Size of a MapTo find out how many elements a map has, use the.size()function:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };cout \n  << people.size();\u00a0 // Outputs 3Try it Yourself \u00bbCheck if a Map is EmptyUse the.empty()function to find out if a \nmap is empty or not.The.empty()function returns1(true) if the map is empty and0(false) \notherwise:Examplemap<string, int> people;cout << people.empty(); \n  // Outputs 1 (The map is empty)Try it Yourself \u00bbExamplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };cout \n  << people.empty();\u00a0 \n  // Outputs 0 (not empty)Try it Yourself \u00bbNote:You can also check if a specific element exists, by using the.count(key)function.It returns1(true) if the element exists and0(false) \notherwise:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };cout \n  << people.count(\"John\");\u00a0 \n  // Outputs 1 (John exists)Try it Yourself \u00bbLoop Through a MapYou can loop through a map with thefor-eachloop. \nHowever, there are a couple of things to be aware of:You should use theautokeyword (introduced in C++ version 11) inside theforloop. \nThis allows the compiler \nto automatically determine the correct data type for each key-value pair.Since map elements consist of both keys and values, you have to include.firstto access the keys, and.secondto access values in the loop.Elements in the map are sorted automatically in ascending order by their \n  keys:Examplemap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };for (autoperson : people) {cout <<person.first<< \" is: \" <<person.second<< \"\\n\";}The output will be:Adele is: 45Bo is: 29John is: 32Try it Yourself \u00bbIf you want to reverse the order, you can use thegreater<type>functor inside the angle brackets, like this:Examplemap<string, int,greater<string>> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };for (auto person : people) {cout << person.first << \" is: \" << \n  person.second << \"\\n\";}The output will be:John is: 32Bo is: 29Adele is: 45Try it Yourself \u00bbTip:It is also possible to loop through maps with aniterator, which you will learn more about in the next chapter.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Include the map library\n#include <map>\n\n---\n\n// Create a \n  map called people that will store strings as keys and integers as values\nmap<string, int> people\n\n---\n\n// Create a \n  map that will store the name and age of different people\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n\n---\n\n// Create a map that will store the name and age of different people\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Get the value associated with the key \"John\"\ncout << \"John is: \" << \n  people[\"John\"] << \"\\n\";\n// Get the value associated with the key \n  \"Adele\"\ncout << \"Adele is: \" << people[\"Adele\"] << \"\\n\";\n\n---\n\n// Create a map that will store the name and age of different people\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// \n  Get the value associated with the key \"Adele\"\ncout << \"Adele is: \" <<\npeople.at(\"Adele\") << \"\\n\";\n// Get the value associated with the key \n  \"Bo\"\ncout << \"Bo is: \" << people.at(\"Bo\") << \"\\n\";\n\n---\n\n// Create a map that will store the name and age of different people\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// \n  Try to access an element that does \n  not exist (will throw an exception)\ncout << people.at(\"Jenny\");\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Change John's value to 50 instead of 32\npeople[\"John\"] = 50;\ncout << \"John is: \" << people[\"John\"];\u00a0 // Now outputs John is: 50\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Change John's value to 50 instead of 32\npeople.at(\"John\") = 50;\ncout << \"John is: \" << people.at(\"John\");\u00a0 // Now outputs John is: 50\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Add new elements\npeople[\"Jenny\"] = 22;\npeople[\"Liam\"] = 24;\npeople[\"Kasper\"] = 20;\npeople[\"Anja\"] = 30;\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Add new elements\npeople.insert({\"Jenny\", 22});\npeople.insert({\"Liam\", 24});\npeople.insert({\"Kasper\", 20});\npeople.insert({\"Anja\", 30});\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Trying to add two elements with equal keys\npeople.insert({\"Jenny\", 22});\npeople.insert({\"Jenny\", 30});\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Remove an element by key\npeople.erase(\"John\");\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\n// Remove all elements\npeople.clear();\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\ncout \n  << people.size();\u00a0 // Outputs 3\n\n---\n\nmap<string, int> people;\ncout << people.empty(); \n  // Outputs 1 (The map is empty)\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\ncout \n  << people.empty();\u00a0 \n  // Outputs 0 (not empty)\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\ncout \n  << people.count(\"John\");\u00a0 \n  // Outputs 1 (John exists)\n\n---\n\nmap<string, int> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\nfor (\nauto\nperson : people) {\ncout <<\nperson.first\n<< \" is: \" <<\nperson.second\n<< \"\\n\";\n}\n\n---\n\nmap<string, int,\ngreater<string>\n> people = { {\"John\", 32}, {\"Adele\", 45}, {\"Bo\", 29} };\nfor (auto person : people) {\ncout << person.first << \" is: \" << \n  person.second << \"\\n\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_125",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 29,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe<ctime>library has a variety of functions that allow you to measure dates and times.\n\n## Tutorials\n\nThe<vector>library has many functions that allow you to perform tasks on vectors.\n\nA list of popular vector functions can be found in the table below.\n\nLearn more about vectors in ourC++ Vector Tutorial.\n\n## Tutorials\n\nThe<algorithm>library has many functions that allow you to modify ranges of data from data structures.\n\nA list of useful functions in the algorithm library can be found below.\n\nLearn more about algorithms in ourC++ Algorithm Tutorial.\n\n## Tutorials\n\n\n\n## Tutorials\n\nThis page contains a list of practical examples used in real world projects.\n\nFor a tutorial about variables and data types in C++, visit ourVariables ChapterandData Types Chapter.\n\nFor a tutorial about strings in C++, visit ourStrings Chapter.\n\nFor a tutorial about booleans in C++, visit ourBooleans Chapter.\n\nFor a tutorial about conditions in C++, visit ourIf..Else Chapter.\n\nFor a tutorial about switch in C++, visit ourSwitch Chapter.\n\nFor a tutorial about while loops in C++, visit ourWhile Loops Chapter.\n\nFor a tutorial about for loops in C++, visit ourFor Loops Chapter.\n\nFor a tutorial about arrays in C++, visit ourArrays Chapter.\n\nFor a tutorial about structs in C++, visit ourStructures Chapter.\n\nFor a tutorial about functions in C++, visit ourFunctions Chapter.\n\n### Code Examples\n\n```\n// Student data\nint studentID = 15;\nint studentAge = 23;\nfloat \n  studentFee = 75.25;\nchar studentGrade = 'B';\n// Print variables\ncout << \"Student ID: \" << studentID << \"\\n\";\ncout << \"Student \n  Age: \" << studentAge << \"\\n\";\ncout << \"Student Fee: \" << studentFee << \n  \"\\n\";\ncout << \"Student Grade: \" << studentGrade << \"\\n\";\n\n---\n\n// Create integer variables\nint length = 4;\nint width = 6;\nint \n  area;\n// Calculate the area of a rectangle\narea = length * width;\n// Print the variables\ncout << \"Length is: \" << length << \"\\n\";\ncout << \"Width is: \" << width << \"\\n\";\ncout << \"Area of the \n  rectangle is: \" << area << \"\\n\";\n\n---\n\n// Create variables of different data types\nint items = 50;\ndouble \n  cost_per_item = 9.99;\ndouble total_cost = items * cost_per_item;\nchar \n  currency = '$';\n// Print variables\ncout << \"Number of items: \" << \n  items << \"\\n\";\ncout << \"Cost per item: \" << cost_per_item << \"\" << \n  currency << \"\\n\";\ncout << \"Total cost = \" << total_cost << \"\" << currency \n  << \"\\n\";\n\n---\n\nstring message = \"Good to see you, \";\nstring fname = \"John\";\ncout << \n  greeting + fname;\n\n---\n\nint myAge = 25;\nint votingAge = 18;\ncout << (myAge >= votingAge); \n  // returns 1 (true), meaning 25 year olds are allowed to vote!\n\n---\n\nint doorCode = 1337;\nif (doorCode == 1337) {\ncout << \"Correct \n  code.\\nThe door is now open.\\n\";\n} else {\ncout << \"Wrong \n  code.\\nThe door remains closed.\\n\";\n}\n\n---\n\nint myNum = 10; // Is this a positive or negative number?\nif (myNum > \n  0) {\ncout << \"The value is a positive number.\\n\";\n} else if \n  (myNum < 0) {\ncout << \"The value is a negative number.\\n\";\n} else \n  {\ncout << \"The value is 0.\\n\";\n}\n\n---\n\nint myAge = 25;\nint votingAge = 18;\nif (myAge >= votingAge) {\ncout << \"Old enough to vote!\\n\";\n} else {\ncout << \"Not old enough \n  to vote.\\n\";\n}\n\n---\n\nint myNum = 5;\nif (myNum % 2 == 0) {\ncout << myNum << \" is \n  even.\\n\";\n} else {\ncout << myNum << \" is odd.\\n\";\n}\n\n---\n\nint day = 4;\nswitch (day) {\ncase 1:\ncout << \"Monday\";\nbreak;\ncase 2:\ncout << \"Tuesday\";\nbreak;\ncase 3:\ncout << \"Wednesday\";\nbreak;\ncase \n  4:\ncout << \"Thursday\";\nbreak;\ncase 5:\ncout << \"Friday\";\nbreak;\ncase 6:\ncout << \"Saturday\";\nbreak;\ncase 7:\ncout << \"Sunday\";\nbreak;\n}\n// Outputs \"Thursday\" (day 4)\n\n---\n\nint countdown = 3;\nwhile (countdown > 0) {\ncout << countdown \n  << \"\\n\";\ncountdown--;\n}\ncout << \"Happy New Year!!\\n\";\n\n---\n\nint i = 0;\nwhile (i <= 10) {\ncout << i << \"\\n\";\ni \n  += 2;\n}\n\n---\n\n// A variable with some specific numbers\nint numbers = 12345;\n// A \n  variable to store the reversed number\nint revNumbers = 0;\n// Reverse \n  and reorder the numbers\nwhile (numbers) {\n// Get the last number \n  of 'numbers' and add it to 'revNumbers'\nrevNumbers = revNumbers * 10 \n  + numbers % 10;\n// Remove the last number of 'numbers'\nnumbers /= 10;\n}\ncout << \"Reversed numbers: \" << revNumbers << \"\\n\";\n\n---\n\nint dice = 1;\nwhile (dice <= 6) {\nif (dice < 6) {\ncout << \"No Yatzy\\n\";\n} else {\ncout << \n  \"Yatzy!\\n\";\n}\ndice = dice + 1;\n}\n\n---\n\nfor (int i = 0; i <= 100; i += 10) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 0; i <= 10; i = i + 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 1; i <= 10; i = i + 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nfor (int i = 2; i <= 512; i *= 2) {\ncout << i << \"\\n\";\n}\n\n---\n\nint number = 2;\nint i;\n// Print the multiplication table for the \n  number 2\nfor (i = 1; i <= 10; i++) {\ncout << number << \" x \" << i \n  << \" = \" << number * i << \"\\n\";\n}\n\n---\n\n// An array storing different ages\nint ages[8] = {20, 22, 18, 35, 48, 26, \n  87, 70};\nfloat avg, sum = 0;\nint i;\n// Get the length of the \n  array\nint length = sizeof(ages) / sizeof(ages[0]);\n// Loop through \n  the elements of the array\nfor (int age : ages) {\nsum += age;\n}\n// Calculate the average by dividing the sum by the length\navg = sum / \n  length;\n// Print the average\ncout << \"The average age is: \" << avg \n  << \"\\n\";\n\n---\n\n// An array storing different ages\nint ages[8] = {20, 22, 18, 35, 48, 26, \n  87, 70};\nint i;\n// Get the length of the array\nint length = \n  sizeof(ages) / sizeof(ages[0]);\n// Create a variable and assign the \n  first array element of ages to it\nint lowestAge = ages[0];\n// Loop \n  through the elements of the ages array to find the lowest age\nfor (int age \n  : ages) {\nif (lowestAge > age) {\nlowestAge = \n  age;\n}\n}\n// Print the lowest age\ncout << \"The lowest \n  age is: \" << lowestAge << \"\\n\";\n\n---\n\n// Declare a structure named \"car\"\nstruct car {\nstring brand;\nstring model;\nint year;\n};\nint main() {\n// Create a car structure and store it in myCar1;\ncar myCar1;\nmyCar1.brand = \"BMW\";\nmyCar1.model = \"X5\";\nmyCar1.year = 1999;\n// Create another car structure and store it in myCar2;\ncar myCar2;\nmyCar2.brand = \"Ford\";\nmyCar2.model = \"Mustang\";\nmyCar2.year = 1969;\n// Print the structure members\ncout << myCar1.brand << \" \" << myCar1.model << \" \" << myCar1.year << \"\\n\";\ncout << myCar2.brand << \" \" << myCar2.model << \" \" << myCar2.year << \"\\n\";\nreturn 0;\n}\n\n---\n\n// Function to convert \n  Fahrenheit to Celsius\nfloat toCelsius(float fahrenheit) {\nreturn \n  (5.0 / 9.0) * (fahrenheit - 32.0);\n}\nint main() {\n// Set a \n  fahrenheit value\nfloat f_value = 98.8;\n// Call the \n  function with the fahrenheit value\nfloat result = \n  toCelsius(f_value);\n// Print the fahrenheit value\ncout \n  << \"Fahrenheit: \" << f_value << \"\\n\";\n// Print the result\ncout << \"Convert Fahrenheit to Celsius: \" << result << \"\\n\";\nreturn 0;\n}\n\n---\n\nint doubleGame(int x) {\nreturn x * 2;\n}\nint main() {\nfor (int i = 1; i <= 5; i++) \n  {\ncout << \"Double of \" << i << \" is \" << \n  doubleGame(i) << \n  endl;\n}\nreturn 0;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_29",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_29",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

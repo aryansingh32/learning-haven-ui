@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 113,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The built-inrange()function returns an immutable sequence of numbers, commonly used for looping a specific number of times.\n\nThis set of numbers has its own data type calledrange.\n\nTherange()function can be called with 1, 2, or 3 arguments, using this syntax:\n\nIf the range function is called with only one argument, the argument represents thestopvalue.Thestartargument is optional, and if not provided, it defaults to 0.range(10)returns a sequence of each number from 0 to 9. (The start argument, 0 is inclusive, and the stop argument, 10 is exclusive).ExampleCreate a range of numbers from 0 to 9:x = range(10)Try it Yourself \u00bbCall range() With Two ArgumentsIf the range function is called with two arguments,\n    the first argument represents thestartvalue,\n    and the second argument represents thestopvalue.range(3, 10)returns a sequence of each number from 3 to 9:ExampleCreate a range of numbers from 3 to 9:x = range(3, 10)Try it Yourself \u00bbCall range() With Three ArgumentsIf the range function is called with three arguments, the third argument represents thestepvalue.The step value means the difference between each number in the sequence. It is optional, and if not provided, it defaults to 1.range(3, 10, 2)returns a sequence of each number from 3 to 9, with a step of 2:ExampleCreate a range of numbers from 3 to 9:x = range(3, 10, 2)Try it Yourself \u00bbUsing rangesRanges are often used inforloops to iterate over a sequence of numbers.ExampleIterate over each value in a range:for i in range(10):print(i)Try it Yourself \u00bbUsing List to Display RangesThe range object is a data type that represents an immutable sequence of numbers, and it is not directly displayable.Therefore, ranges are often converted to lists for display.ExampleConvert different ranges to lists:print(list(range(5)))print(list(range(1, 6)))print(list(range(5, 20, 3)))Try it Yourself \u00bbSlicing RangesLike other sequences, ranges can be sliced to extract a subsequence.ExampleExtract a subsequence from a range:r = range(10)print(r[2])print(r[:3])Try it Yourself \u00bbNote:The first print statement returns the value at index 2, and the second print statement returns a new range object, from index 0 to 3.Membership TestingRanges support membership testing with theinoperator.ExampleTest if the numbers 6 and 7 are present in a range:r = range(0, 10, 2)print(6 in r)print(7 in r)Try it Yourself \u00bbThe return value isTruewhen the number is present in the range, andFalsewhen it is not.LengthRanges support thelen()function to get the number of elements in the range.ExampleGet the length of a range:r = range(0, 10, 2)print(len(r))Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nx = range(10)\n\n---\n\nx = range(3, 10)\n\n---\n\nx = range(3, 10, 2)\n\n---\n\nfor i in range(10):\nprint(i)\n\n---\n\nprint(list(range(5)))\nprint(list(range(1, 6)))\nprint(list(range(5, 20, 3)))\n\n---\n\nr = range(10)\nprint(r[2])\nprint(r[:3])\n\n---\n\nr = range(0, 10, 2)\nprint(6 in r)\nprint(7 in r)\n\n---\n\nr = range(0, 10, 2)\nprint(len(r))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_112",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 8,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nGit Amend is a command that allows you to modify the most recent commit.\n\nYou can use it to fix typos, add or remove files, or change the commit message.\n\nUse Git Amend when you need to make small changes to your last commit.\n\nIt's perfect for fixing mistakes, adding forgotten files, or updating the commit message.\n\nTo change the last commit message, follow these steps:\n\nTo add files to the last commit, follow these steps:\n\nTo remove files from the last commit, follow these steps:\n\nNow let's check thelog:\n\nOh no! thecommitmessage is full of spelling errors.\n\nEmbarrassing. Let'samendthat:\n\nAnd re-check thelog:\n\nWe see the previouscommitis replaced with our amended one!\n\nWarning:Messing with thecommithistory of a repository can be dangerous.\n\nIt is usually ok to make these kinds of changes to your own local repository.\n\nHowever, you should avoid making changes that rewrite history toremoterepositories, especially if others are working with them.\n\nAdding files with--amendworks the same way as above.\n\nJust add them to thestaging environmentbefore committing.\n\n### Code Examples\n\n```\nExample\ngit commit --amend -m \"Corrected commit message\"\n\n---\n\nExample\ngit add forgotten.txt\ngit commit --amend\n\n---\n\nExample\ngit reset HEAD^ -- unwanted.txt\ngit commit --amend\n 1 file changed, 3 insertions(+), 1 deletion(-)\n\n---\n\nExample\ngit log --oneline\n07c5bc5 (HEAD -> master) Adding plines to reddme\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n\n---\n\nExample\ngit commit --amend -m \"Added lines to README.md\"\n[master eaa69ce] Added lines to README.md\n Date: Thu Apr 22 12:18:52 2021 +0200\n 1 file changed, 3 insertions(+), 1 deletion(-))\n\n---\n\nExample\ngit log --oneline\neaa69ce (HEAD -> master) Added lines to README.md\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n```\n\n## Tutorials\n\nRebasingmoves or combines a sequence of commits to a new base commit.\n\nIt is often used to keep a clean, linear project history.\n\nRebasing can make your commit history easier to read by avoiding unnecessary merge commits.\n\nUse Git Rebase to:\n\nTo move your current branch on top of another branch (e.g., update your feature branch with latest main):\n\nThis reapplies your feature branch changes on top of the latestmainbranch.\n\ngit rebase -i <base>lets you edit, reorder, squash, or fix up commits before a certain point.\n\nThis is useful for cleaning up your commit history before sharing it with others.\n\nThis opens an editor where you can:\n\nFollow these steps:\n\nIf you hit a conflict or need to finish editing a commit, usegit rebase --continueafter resolving the issue.\n\nThis tells Git to keep going with the rebase process.\n\nIf something goes wrong or you want to stop the rebase, usegit rebase --abort.\n\nThis will put your branch back to how it was before you started rebasing.\n\nIf you can't fix a commit during a rebase (for example, if a conflict can't be resolved), you can skip it withgit rebase --skip.\n\nGit will leave out that commit and move on to the next one.\n\nAfter completing the rebase, review your changes to ensure everything is correct.\n\nRebasing rewrites commit history.\n\nAvoid rebasing commits that you have already pushed to a shared repository.\n\nUsegit rebase -ito edit, reorder, squash, or fix up commits before a certain point.\n\nUsegit rebase --continueto continue a rebase after resolving conflicts.\n\nUsegit rebase --abortto cancel a rebase in progress.\n\nIf you encounter conflicts during a rebase, resolve them and then usegit rebase --continueto continue the rebase process.\n\nIf you can't fix a commit during a rebase, usegit rebase --skipto skip it.\n\nNote:Rebasing rewrites commit history.\n\nAvoid rebasing commits that you have already pushed to a shared repository.\n\n### Code Examples\n\n```\nExample: Rebase onto main\ngit checkout feature-branch\ngit rebase main\n\n---\n\nExample: Start Interactive Rebase\ngit rebase -i HEAD~3\n\n---\n\nExample\ngit add fixed_file.txt\ngit rebase --continue\n\n---\n\nExample\ngit rebase --abort\n\n---\n\nExample\ngit rebase --skip\n```\n\n## Tutorials\n\ngit reflogrecords updates to the tip of branches and HEAD.\n\nIt lets you see where your branch and HEAD have been, even changes you made by mistake.\n\nThis is useful for recovering lost commits or undoing a reset.\n\nUsegit reflogwhen you need to:\n\nTo see the history of where HEAD and branches have pointed, use:\n\nThis lists recent positions of HEAD, so you can see actions like commits, resets, merges, and checkouts.\n\nIf you accidentally reset or deleted commits, you can use the reflog to find the commit and restore it.\n\nEach entry in the reflog has a reference likeHEAD@{2}.\n\nThis puts your branch back to the state it was in at that point.\n\nThe reflog is automatically cleaned by Git, but you can manually expire old entries if needed:\n\nThis removes reflog entries older than 30 days for themainbranch and runs garbage collection.\n\nIf you encounter issues withgit reflog, try:\n\nBe careful when usinggit reflogto recover lost commits or changes, as it can overwrite existing changes.\n\n### Code Examples\n\n```\nExample\ngit reflog\ne56ba1f (HEAD -> master) HEAD@{0}: commit: Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 HEAD@{1}: commit: Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) HEAD@{2}: commit: Added .gitignore\n81912ba HEAD@{3}: commit: Corrected spelling error\n3fdaa5b HEAD@{4}: merge: Merge pull request #1 from w3schools-test/update-readme\n836e5bf HEAD@{5}: commit: Updated readme for GitHub Branches\n...\n\n---\n\nExample: Undo a Hard Reset\ngit reflog\ne56ba1f (HEAD -> master) HEAD@{0}: commit: Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 HEAD@{1}: commit: Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) HEAD@{2}: commit: Added .gitignore\n81912ba HEAD@{3}: commit: Corrected spelling error\n...\ngit reset --hard HEAD@{2}\nHEAD is now at 9a9add8 Added .gitignore\n\n---\n\nExample\ngit reflog expire --expire=30.days refs/heads/main\ngit gc --prune=now\nCounting objects: 15, done.\nCompressing objects: 100% (10/10), done.\nPruning objects\n```\n\n## Tutorials\n\nGit recovery means getting back lost commits, branches, or files.\n\nGit keeps a record of recent changes so you can undo mistakes-even after a reset or delete.\n\nUse Git recovery when you:\n\ngit reflogrecords changes to the tip of branches and lets you find lost commits.\n\nFind the commit hash you want to recover from the list.\n\nIf you deleted a branch but the commits are still in reflog, you can recreate it:\n\nThis brings back the branch at the commit you specify.\n\nIf you deleted or changed a file and want to get it back, usegit restore:\n\nThis brings back the file from the latest commit.\n\nIf you usedgit reset --hardand lost commits, you can use the reflog to find and restore them:\n\nThis puts your branch back to the state it was in at that point.\n\n### Code Examples\n\n```\nExample: Show Reflog\ngit reflog\ne56ba1f (HEAD -> master) HEAD@{0}: commit: Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 HEAD@{1}: commit: Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) HEAD@{2}: commit: Added .gitignore\n81912ba HEAD@{3}: commit: Corrected spelling error\n3fdaa5b HEAD@{4}: merge: Merge pull request #1 from w3schools-test/update-readme\n836e5bf HEAD@{5}: commit: Updated readme for GitHub Branches\n...\n\n---\n\nExample: Restore a Branch\ngit checkout -b branch-name <commit-hash>\nSwitched to a new branch 'branch-name'\n\n---\n\nExample: Restore a File\ngit restore filename.txt\n\n---\n\nExample: Undo a Hard Reset\ngit reflog\ne56ba1f (HEAD -> master) HEAD@{0}: commit: Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 HEAD@{1}: commit: Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) HEAD@{2}: commit: Added .gitignore\n81912ba HEAD@{3}: commit: Corrected spelling error\n3fdaa5b HEAD@{4}: merge: Merge pull request #1 from w3schools-test/update-readme\n836e5bf HEAD@{5}: commit: Updated readme for GitHub Branches\n...\ngit reset --hard HEAD@{2}\nHEAD is now at 9a9add8 Added .gitignore\n```\n\n## Tutorials\n\nThe.gitignorefile tells Git which files and folders to ignore (not track).\n\nThis is useful for keeping log files, temporary files, build artifacts, or personal files out of your repository.\n\nThe.gitignorefile itselfistracked by Git, so everyone using the repository ignores the same files.\n\nTo ignore a folder and everything inside it, use a trailing slash:\n\nThis ignores any folder namedtempanywhere in your project.\n\nWildcards let you match many files or folders at once:\n\nUse!tonotignore something that would otherwise be ignored. This is called an exception:\n\nThis ignores all.logfiles exceptimportant.log.\n\nLines starting with#are comments and are ignored by Git. Blank lines are also ignored. Use comments to explain your rules:\n\nIf you want to ignore files only for yourself (not for everyone who uses the repository), add them to.git/info/exclude. This works just like.gitignorebut is not shared.\n\nYou can set up a global.gitignorefile for all your projects. This is great for ignoring OS or editor files everywhere (like.DS_StoreorThumbs.db):\n\nThen add your patterns to~/.gitignore_global.\n\nIf you add a file to.gitignorebut Git is still tracking it, you need to tell Git to stop:\n\nThis removes the file from the repository but keeps it on your computer. Next time you commit, Git will ignore it.\n\nHere are some common patterns and how they match:\n\n### Code Examples\n\n```\ntemp/\n\n---\n\n*.tmp      # all .tmp files\nmy?ile.txt # matches my1ile.txt, myAile.txt, etc.\nlog[0-9].txt # log1.txt, log2.txt, ... log9.txt\n\n---\n\n*.log\n!important.log\n\n---\n\n# Ignore log files\n*.log\n\n# Ignore temp folders\ntemp/\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_8",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_8",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

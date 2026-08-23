@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 67,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "If you have a list of items (a list of car names, for example), storing the \nnames in single variables could look like this:\n\nHowever, what if you want to loop through the cars and find a specific one? \nAnd what if you had not 3 cars, but 300?\n\nThe solution is an array!\n\nAn array can hold many values under a single name, and you can \naccess the values by referring to an index number.\n\nUsing an array literal is the easiest way to create a JavaScript Array.\n\nSyntax:\n\nSpaces and line breaks are not important. A declaration can span multiple lines:\n\nYou can also create an empty array, and provide elements later:\n\nThe following example also creates an Array, and assigns values to it:\n\nYou access an array element by referring to theindex number:\n\nThis statement changes the value of the first element incars:\n\nThe JavaScript methodtoString()converts an array to a \nstring of (comma separated) array values.\n\nIn JavaScript, the full array can be displayed by referring to the array name:\n\nThe full array can also be displayed using JSON.stringify():\n\nArrays are a special type of objects. Thetypeofoperator in JavaScript returns \"object\" for \narrays.\n\nBut, JavaScript arrays are best described as arrays.\n\nArrays usenumbersto access its \"elements\". In this \nexample,person[0]returns John:\n\nObjects usenamesto access its \"members\". In this example,person.firstNamereturns John:\n\nJavaScript variables can be objects. Arrays are special kinds of objects.\n\nBecause of this, you can have variables of different types in the \nsame Array.\n\nYou can have objects in an Array. You can have functions in an Array. You can \nhave arrays in an Array:\n\nThe real strength of JavaScript arrays are the built-in array properties and \nmethods:\n\nArray methods are covered in the next chapters.\n\nThelengthproperty of an array returns the length of an array (the number of array \nelements).\n\nOne way to loop through an array, is using aforloop:\n\nYou can also use theArray.forEach()function:\n\nThe easiest way to add a new element to an array is using thepush()method:\n\nNew element can also be added to an array using thelengthproperty:\n\nMany programming languages support arrays with named indexes.\n\nArrays with named indexes are called associative \narrays (or hashes).\n\nJavaScript doesnotsupport arrays with named indexes.\n\nIn JavaScript,arraysalways usenumbered indexes.\n\nIn JavaScript,arraysusenumbered indexes.\n\nIn JavaScript,objectsusenamed indexes.\n\nJavaScript has a built-in array constructornew Array().\n\nBut you can safely use[]instead.\n\nThese two different statements both create a new empty array named points:\n\nThese two different statements both create a new array containing 6 numbers:\n\nA common question is: How do I know if a variable is an array?\n\nThe problem is that the JavaScript operatortypeofreturns \n\"object\":\n\nThe typeof operator returns object because a JavaScript array is an \nobject.\n\nTo solve this problem ECMAScript 5 (JavaScript 2009) defined a new methodArray.isArray():\n\nTheinstanceofoperator returns true if an object is created \nby a given constructor:\n\nValues in objects can be arrays, and values in arrays can be objects:\n\nTo access arrays inside arrays, use a for-in loop for each array:\n\n### Code Snippets\n\n```\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n\n---\n\nlet car1 = \"Saab\";\nlet car2 = \"Volvo\";\nlet car3 = \"BMW\";\n\n---\n\nconst\narray_name\n= [\nitem1\n,\nitem2\n, ...];\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n\n---\n\nconst cars = [\n\"Saab\",\n\"Volvo\",\n\"BMW\"\n];\n\n---\n\nconst cars = [];\ncars[0]= \"Saab\";\ncars[1]= \"Volvo\";\ncars[2]= \"BMW\";\n\n---\n\nconst cars = new Array(\"Saab\", \"Volvo\", \"BMW\");\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\nlet car = cars[0];\n\n---\n\ncars[0] = \"Opel\";\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\ncars[0] = \"Opel\";\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\ndocument.getElementById(\"demo\").innerHTML = fruits.toString();\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\nlet text = cars;\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\nlet text = JSON.stringify(cars);\n\n---\n\nconst person = [\"John\", \"Doe\", 46];\n\n---\n\nconst person = {firstName:\"John\", lastName:\"Doe\", age:46};\n\n---\n\nmyArray[0] = Date.now;\nmyArray[1] = myFunction;\nmyArray[2] = myCars;\n\n---\n\ncars.length\u00a0\u00a0\u00a0// Returns the number of elements\ncars.sort()\u00a0\u00a0\u00a0// Sorts the array\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet length = fruits.length;\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits[0];\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fruit = fruits[fruits.length - 1];\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet fLen = fruits.length;\nlet text = \"<ul>\";\nfor (let i = 0; i < fLen; i++) {\ntext += \"<li>\" + fruits[i] + \"</li>\";\n}\ntext \n  += \"</ul>\";\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet text = \"<ul>\";\nfruits.forEach(myFunction);\ntext += \"</ul>\";\nfunction \n  myFunction(value) {\ntext += \"<li>\" + value + \"</li>\";\n}\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\"];\nfruits.push(\"Lemon\");\u00a0\u00a0// Adds a new element (Lemon) to fruits\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\"];\nfruits[fruits.length] = \"Lemon\";\u00a0\u00a0// Adds \"Lemon\" to fruits\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\"];\nfruits[6] = \"Lemon\";\u00a0\u00a0// Creates undefined \"holes\" in fruits\n\n---\n\nconst person = [];\nperson[0] = \"John\";\nperson[1] = \"Doe\";\nperson[2] = 46;\nperson.length;\u00a0\u00a0\u00a0\u00a0// Will return 3\nperson[0];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Will return \"John\"\n\n---\n\nconst person = [];\nperson[\"firstName\"] = \"John\";\nperson[\"lastName\"] = \"Doe\";\nperson[\"age\"] = 46;\nperson.length;\u00a0\u00a0\u00a0\u00a0\u00a0// Will return 0\nperson[0];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Will return undefined\n\n---\n\nconst points = new Array();\nconst points = [];\n\n---\n\nconst points = new Array(40, 100, 1, 5, 25, 10);\nconst points = [40, 100, 1, 5, 25, 10];\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\"];\nlet type = typeof fruits;\n\n---\n\nArray.isArray(fruits);\n\n---\n\nconst fruits = [\"Banana\", \"Orange\", \"Apple\"];\n(fruits instanceof Array);\n\n---\n\nconst myObj =\n  {\nname: \"John\",\nage: 30,\ncars: [\n{name:\"Ford\", \n  models:[\"Fiesta\", \"Focus\", \"Mustang\"]},\n{name:\"BMW\", models:[\"320\", \"X3\", \"X5\"]},\n{name:\"Fiat\", models:[\"500\", \"Panda\"]}\n]\n}\n\n---\n\nfor (let i in myObj.cars) {\nx += \"<h1>\" + myObj.cars[i].name \n  + \"</h1>\";\nfor (let j in myObj.cars[i].models) {\nx += myObj.cars[i].models[j];\n}\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_66",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

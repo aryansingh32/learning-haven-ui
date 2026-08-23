@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 209,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The only difference between a regularBinary Search Treeand an AVL Tree is that AVL Trees do rotation operations in addition, to keep the tree balance.\n\nA Binary Search Tree is in balance when the difference in height between left and right subtrees is less than 2.\n\nBy keeping balance, the AVL Tree ensures a minimum tree height, which means that search, insert, and delete operations can be done really fast.\n\nThe two trees above are both Binary Search Trees, they have the same nodes, and the same in-order traversal (alphabetical), but the height is very different because the AVL Tree has balanced itself.\n\nStep through the building of an AVL Tree in the animation below to see how the balance factors are updated, and how rotation operations are done when required to restore the balance.\n\nContinue reading to learn more about how the balance factor is calculated, how rotation operations are done, and how AVL Trees can be implemented.\n\nTo restore balance in an AVL Tree, left or right rotations are done, or a combination of left and right rotations.\n\nThe previous animation shows one specific left rotation, and one specific right rotation.\n\nBut in general, left and right rotations are done like in the animation below.\n\nNotice how the subtree changes its parent. Subtrees change parent in this way during rotation to maintain the correct in-order traversal, and to maintain the BST property that the left child is less than the right child, for all nodes in the tree.\n\nAlso keep in mind that it is not always the root node that become unbalanced and need rotation.\n\nA node's balance factor is the difference in subtree heights.\n\nThe subtree heights are stored at each node for all nodes in an AVL Tree, and the balance factor is calculated based on its subtree heights to check if the tree has become out of balance.\n\nThe height of a subtree is the number of edges between the root node of the subtree and the leaf node farthest down in that subtree.\n\nLet's take a closer look at the different rotation operations that an AVL Tree can do to regain balance.\n\nWhen the balance factor of just one node is less than -1, or more than 1, the tree is regarded as out of balance, and a rotation is needed to restore balance.\n\nThere are four different ways an AVL Tree can be out of balance, and each of these cases require a different rotation operation.\n\nSee animations and explanations of these cases below.\n\nThe node where the unbalance is discovered is left heavy, and the node's left child node is also left heavy.\n\nWhen this LL case happens, a single right rotation on the unbalanced node is enough to restore balance.\n\nStep through the animation below to see the LL case, and how the balance is restored by a single right rotation.\n\nAs you step through the animation above, two LL cases happen:\n\nA Right-Right case happens when a node is unbalanced and right heavy, and the right child node is also right heavy.\n\nA single left rotation at the unbalanced node is enough to restore balance in the RR case.\n\nThe RR case happens two times in the animation above:\n\nThe Left-Right case is when the unbalanced node is left heavy, but its left child node is right heavy.\n\nIn this LR case, a left rotation is first done on the left child node, and then a right rotation is done on the original unbalanced node.\n\nStep through the animation below to see how the Left-Right case can happen, and how the rotation operations are done to restore balance.\n\nAs you are building the AVL Tree in the animation above, the Left-Right case happens 2 times, and rotation operations are required and done to restore balance:\n\nThe Right-Left case is when the unbalanced node is right heavy, and its right child node is left heavy.\n\nIn this case we first do a right rotation on the unbalanced node's right child, and then we do a left rotation on the unbalanced node itself.\n\nStep through the animation below to see how the Right-Left case can occur, and how rotations are done to restore the balance.\n\nAfter inserting node B, we get a Right-Left case because node A becomes unbalanced and right heavy, and its right child is left heavy. To restore balance, a right rotation is first done on node F, and then a left rotation is done on node A.\n\nThe next Right-Left case occurs after nodes G, E, and D are added. This is a Right-Left case because B is unbalanced and right heavy, and its right child F is left heavy. To restore balance, a right rotation is first done on node F, and then a left rotation is done on node B.\n\nAfter inserting or deleting a node in an AVL tree, the tree may become unbalanced. To find out if the tree is unbalanced, we need to update the heights and recalculate the balance factors of all ancestor nodes.\n\nThis process, known as retracing, is handled through recursion. As the recursive calls propagate back to the root after an insertion or deletion, each ancestor node's height is updated and the balance factor is recalculated. If any ancestor node is found to have a balance factor outside the range of -1 to 1, a rotation is performed at that node to restore the tree's balance.\n\nIn the simulation below, after inserting node F, the nodes C, E and H are all unbalanced, but since retracing works through recursion, the unbalance at node H is discovered and fixed first, which in this case also fixes the unbalance in nodes E and C.\n\nAfter node F is inserted, the code will retrace, calculating balancing factors as it propagates back up towards the root node. When node H is reached and the balancing factor -2 is calculated, a right rotation is done. Only after this rotation is done, the code will continue to retrace, calculating balancing factors further up on ancestor nodes E and C.\n\nBecause of the rotation, balancing factors for nodes E and C stay the same as before node F was inserted.\n\nThis code is based on the BST implementation on theprevious page, for inserting nodes.\n\nThere is only one new attribute for each node in the AVL tree compared to the BST, and that is the height, but there are many new functions and extra code lines needed for the AVL Tree implementation because of how the AVL Tree rebalances itself.\n\nThe implementation below builds an AVL tree based on a list of characters, to create the AVL Tree in the simulation above. The last node to be inserted 'F', also triggers a right rotation, just like in the simulation above.\n\nWhen deleting a node that is not a leaf node, the AVL Tree requires theminValueNode()function to find a node's next  node in the in-order traversal. This is the same as when deleting a node in a Binary Search Tree, as explained on the previous page.\n\nTo delete a node in an AVL Tree, the same code to restore balance is needed as for the code to insert a node.\n\nTake a look at the unbalanced Binary Search Tree below. Searching for \"M\" means that all nodes except 1 must be compared. But searching for \"M\" in the AVL Tree below only requires us to visit 4 nodes.\n\nSo in worst case, algorithms like search, insert, and delete must run through the whole height of the tree. This means that keeping the height (h) of the tree low, like we do using AVL Trees, gives us a lower runtime.\n\nSee the comparison of the time complexities between Binary Search Trees and AVL Trees below, and how the time complexities relate to the height (\\(h\\)) of the tree, and the number of nodes (\\(n\\)) in the tree.\n\nThe fact that the time complexity is \\(O(h) = O( \\log n)\\) for search, insert, and delete on an AVL Tree with height \\(h\\) and nodes \\(n\\) can be explained like this:\n\nImagine a perfect Binary Tree where all nodes have two child nodes except on the lowest level, like the AVL Tree below.\n\nThe number of nodes on each level in such an AVL Tree are:\n\n\\[1, 2, 4, 8, 16, 32, ..\\]\n\nWhich is the same as:\n\n\\[2^0, 2^1, 2^2, 2^3, 2^4, 2^5, ..\\]\n\nTo get the number of nodes \\(n\\) in a perfect Binary Tree with height \\(h=3\\), we can add the number of nodes on each level together:\n\n\\[n_3=2^0 + 2^1 + 2^2 + 2^3 = 15\\]\n\nWhich is actually the same as:\n\n\\[n_3=2^4 - 1 = 15\\]\n\nAnd this is actually the case for larger trees as well! If we want to get the number of nodes \\(n \\) in a tree with height \\(h=5 \\) for example, we find the number of nodes like this:\n\n\\[n_5=2^6 - 1 = 63\\]\n\nSo in general, the relationship between the height \\(h \\) of a perfect Binary Tree and the number of nodes in it \\(n \\), can be expressed like this:\n\n\\[n_h = 2^{h+1} - 1\\]\n\nWe know that the time complexity for searching, deleting, or inserting a node in an AVL tree is \\(O(h) \\), but we want to argue that the time complexity is actually \\(O(\\log(n)) \\), so we need to find the height \\(h\\) described by the number of nodes \\(n\\):\n\n\\[\n  \\begin{equation}\n  \\begin{aligned}\n  n             & = 2^{h+1}-1 \\\\\n  n+1           & = 2^{h+1} \\\\\n  \\log_2(n+1)   & = \\log_2(2^{h+1}) \\\\\n  h             & = \\log_2(n+1) - 1 \\\\\n  \\\\\n  O(h)          & = O(\\log{n})\n  \\end{aligned}\n  \\end{equation}\n  \\]\n\nHow the last line above is derived might not be obvious, but for a Binary Tree with a lot of nodes (big \\(n\\)), the \"+1\" and \"-1\" terms are not important when we consider time complexity. For more details on how to calculate the time complexity using Big O notation, seethis page.\n\nThe math above shows that the time complexity for search, delete, and insert operations on an AVL Tree \\(O(h) \\), can actually be expressed as \\(O(\\log{n}) \\), which is fast, a lot faster than the time complexity for BSTs which is \\(O(n) \\).\n\n### Code Snippets\n\n```\nclass TreeNode:\ndef __init__(self, data):\nself.data = data\nself.left = None\nself.right = None\nself.height = 1\ndef getHeight(node):\nif not node:\nreturn 0\nreturn node.height\ndef getBalance(node):\nif not node:\nreturn 0\nreturn getHeight(node.left) - getHeight(node.right)\ndef rightRotate(y):\nprint('Rotate right on node',y.data)\nx = y.left\nT2 = x.right\nx.right = y\ny.left = T2\ny.height = 1 + max(getHeight(y.left), getHeight(y.right))\nx.height = 1 + max(getHeight(x.left), getHeight(x.right))\nreturn x\ndef leftRotate(x):\nprint('Rotate left on node',x.data)\ny = x.right\nT2 = y.left\ny.left = x\nx.right = T2\nx.height = 1 + max(getHeight(x.left), getHeight(x.right))\ny.height = 1 + max(getHeight(y.left), getHeight(y.right))\nreturn y\ndef insert(node, data):\nif not node:\nreturn TreeNode(data)\nif data < node.data:\nnode.left = insert(node.left, data)\nelif data > node.data:\nnode.right = insert(node.right, data)\n# Update the balance factor and balance the tree\nnode.height = 1 + max(getHeight(node.left), getHeight(node.right))\nbalance = getBalance(node)\n# Balancing the tree\n# Left Left\nif balance > 1 and getBalance(node.left) >= 0:\nreturn rightRotate(node)\n# Left Right\nif balance > 1 and getBalance(node.left) < 0:\nnode.left = leftRotate(node.left)\nreturn rightRotate(node)\n# Right Right\nif balance < -1 and getBalance(node.right) <= 0:\nreturn leftRotate(node)\n# Right Left\nif balance < -1 and getBalance(node.right) > 0:\nnode.right = rightRotate(node.right)\nreturn leftRotate(node)\nreturn node\ndef inOrderTraversal(node):\nif node is None:\nreturn\ninOrderTraversal(node.left)\nprint(node.data, end=\", \")\ninOrderTraversal(node.right)\n# Inserting nodes\nroot = None\nletters = ['C', 'B', 'E', 'A', 'D', 'H', 'G', 'F']\nfor letter in letters:\nroot = insert(root, letter)\ninOrderTraversal(root)\n\n---\n\ndef minValueNode(node):\ncurrent = node\nwhile current.left is not None:\ncurrent = current.left\nreturn current\ndef delete(node, data):\nif not node:\nreturn node\nif data < node.data:\nnode.left = delete(node.left, data)\nelif data > node.data:\nnode.right = delete(node.right, data)\nelse:\nif node.left is None:\ntemp = node.right\nnode = None\nreturn temp\nelif node.right is None:\ntemp = node.left\nnode = None\nreturn temp\ntemp = minValueNode(node.right)\nnode.data = temp.data\nnode.right = delete(node.right, temp.data)\nreturn node\ndef inOrderTraversal(node):\nif node is None:\nreturn\ninOrderTraversal(node.left)\nprint(node.data, end=\", \")\ninOrderTraversal(node.right)\n# Inserting nodes\nroot = None\nletters = ['C', 'B', 'E', 'A', 'D', 'H', 'G', 'F']\nfor letter in letters:\nroot = insert(root, letter)\ninOrderTraversal(root)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_208",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

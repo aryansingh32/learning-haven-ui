@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 217,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Counting Sort algorithm sorts an array by counting the number of times each value occurs.\n\nRun the simulation to see how 17 integer values from 1 till 5 are sorted using Counting Sort.\n\nCounting Sort does not compare values like the previous sorting algorithms we have looked at, and only works on non negative integers.\n\nFurthermore, Counting Sort is fast when the range of possible values \\(k\\) is smaller than the number of values \\(n\\).\n\nThese are the reasons why Counting Sort is said to only work for a limited range of non-negative integer values:\n\nBefore we implement the Counting Sort algorithm in a programming language, let's manually run through a short array, just to get the idea.\n\nStep 1:We start with an unsorted array.\n\nStep 2:We create another array for counting how many there are of each value. The array has 4 elements, to hold values 0 through 3.\n\nStep 3:Now let's start counting. The first element is 2, so we must increment the counting array element at index 2.\n\nStep 4:After counting a value, we can remove it, and count the next value, which is 3.\n\nStep 5:The next value we count is 0, so we increment index 0 in the counting array.\n\nStep 6:We continue like this until all values are counted.\n\nStep 7:Now we will recreate the elements from the initial array, and we will do it so that the elements are ordered lowest to highest.\n\nThe first element in the counting array tells us that we have 1 element with value 0. So we push 1 element with value 0 into the array, and we decrease the element at index 0 in the counting array with 1.\n\nStep 8:From the counting array we see that we do not need to create any elements with value 1.\n\nStep 9:We push 3 elements with value 2 into the end of the array. And as we create these elements we also decrease the counting array at index 2.\n\nStep 10:At last we must add 2 elements with value 3 at the end of the array.\n\nFinally! The array is sorted.\n\nRun the simulation below to see the steps above animated:\n\nTo implement the Counting Sort algorithm in a Python program, we need:\n\nOne more thing:We need to find out what the highest value in the array is, so that the counting array can be created with the correct size. For example, if the highest value is 5, the counting array must be 6 elements in total, to be able count all possible non negative integers 0, 1, 2, 3, 4 and 5.\n\nThe resulting code looks like this:\n\nHow fast the Counting Sort algorithm runs depends on both the range of possible values \\(k\\) and the number of values \\(n\\).\n\nIn general, time complexity for Counting Sort is \\(O(n+k)\\).\n\nIn a best case scenario, the range of possible different values \\(k\\) is very small compared to the number of values \\(n\\) and Counting Sort has time complexity \\(O(n)\\).\n\nBut in a worst case scenario, the range of possible different values \\(k\\) is very big compared to the number of values \\(n\\) and Counting Sort can have time complexity \\(O(n^2)\\) or even worse.\n\nThe plot below shows how much the time complexity for Counting Sort can vary.\n\nAs you can see, it is important to consider the range of values compared to the number of values to be sorted before choosing Counting Sort as your algorithm. Also, as mentioned at the top of the page, keep in mind that Counting Sort only works for non negative integer values.\n\nAs mentioned previously: if the numbers to be sorted varies a lot in value (large \\(k\\)), and there are few numbers to sort (small \\(n\\)), the Counting Sort algorithm is not effective.\n\nIf we hold \\(n\\) and \\(k\\) fixed, the \"Random\", \"Descending\" and \"Ascending\" alternatives in the simulation above results in the same number of operations. This is because the same thing happens in all three cases: A counting array is set up, the numbers are counted, and the new sorted array is created.\n\n### Code Snippets\n\n```\nmyArray = [ 2, 3, 0, 2, 3, 2]\n\n---\n\nmyArray = [ 2, 3, 0, 2, 3, 2]\ncountArray = [ 0, 0, 0, 0]\n\n---\n\nmyArray = [\n2\n, 3, 0, 2, 3, 2]\ncountArray = [ 0, 0,\n1\n, 0]\n\n---\n\nmyArray = [\n3\n, 0, 2, 3, 2]\ncountArray = [ 0, 0, 1,\n1\n]\n\n---\n\nmyArray = [\n0\n, 2, 3, 2]\ncountArray = [\n1\n, 0, 1, 1]\n\n---\n\nmyArray = [ ]\ncountArray = [\n1, 0, 3, 2\n]\n\n---\n\nmyArray = [\n0\n]\ncountArray = [\n0\n, 0, 3, 2]\n\n---\n\nmyArray = [ 0]\ncountArray = [ 0,\n0\n, 3, 2]\n\n---\n\nmyArray = [ 0,\n2, 2, 2\n]\ncountArray = [ 0, 0,\n0\n, 2]\n\n---\n\nmyArray = [0, 2, 2, 2,\n3, 3\n]\ncountArray = [ 0, 0, 0,\n0\n]\n\n---\n\ndef countingSort(arr):\nmax_val = max(arr)\ncount = [0] * (max_val + 1)\nwhile len(arr) > 0:\nnum = arr.pop(0)\ncount[num] += 1\nfor i in range(len(count)):\nwhile count[i] > 0:\narr.append(i)\ncount[i] -= 1\nreturn arr\nmylist = [4, 2, 2, 6, 3, 3, 1, 6, 5, 2, 3]\nmysortedlist = countingSort(mylist)\nprint(mysortedlist)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_216",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

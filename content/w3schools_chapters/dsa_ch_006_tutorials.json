@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 6,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Selection Sort algorithm finds the lowest value in an array and moves it to the front of the array.\n\nThe algorithm looks through the array again and again, moving the next lowest values to the front, until the array is sorted.\n\nContinue reading to fully understand the Selection Sort algorithm and how to implement it yourself.\n\nBefore we implement the Selection Sort algorithm in a programming language, let's manually run through a short array only one time, just to get the idea.\n\nStep 1:We start with an unsorted array.\n\nStep 2:Go through the array, one value at a time. Which value is the lowest? 3, right?\n\nStep 3:Move the lowest value 3 to the front of the array.\n\nStep 4:Look through the rest of the values, starting with 7. 7 is the lowest value, and already at the front of the array, so we don't need to move it.\n\nStep 5:Look through the rest of the array: 12, 9 and 11. 9 is the lowest value.\n\nStep 6:Move 9 to the front.\n\nStep 7:Looking at 12 and 11, 11 is the lowest.\n\nStep 8:Move it to the front.\n\nFinally, the array is sorted.\n\nRun the simulation below to see the steps above animated:\n\nWe must understand what happened above to fully understand the algorithm, so that we can implement the algorithm in a programming language.\n\nCan you see what happened to the lowest value 3? In step 3, it has been moved to the start of the array, where it belongs, but at that step the rest of the array remains unsorted.\n\nSo the Selection Sort algorithm must run through the array again and again, each time the next lowest value is moved in front of the unsorted part of the array, to its correct position. The sorting continues until the highest value 12 is left at the end of the array. This means that we need to run through the array 4 times, to sort the array of 5 values.\n\nAnd each time the algorithm runs through the array, the remaining unsorted part of the array becomes shorter.\n\nWe will now use what we have learned to implement the Selection Sort algorithm in a programming language.\n\nTo implement the Selection Sort algorithm in a programming language, we need:\n\nThe resulting code looks like this:\n\nThe Selection Sort algorithm can be improved a little bit more.\n\nIn the code above, the lowest value element is removed, and then inserted in front of the array.\n\nEach time the next lowest value array element is removed, all following elements must be shifted one place down to make up for the removal.\n\nThese shifting operation takes a lot of time, and we are not even done yet! After the lowest value (5) is found and removed, it is inserted at the start of the array, causing all following values to shift one position up to make space for the new value, like the image below shows.\n\nInstead of all the shifting, swap the lowest value (5) with the first value (64) like below.\n\nWe can swap values like the image above shows because the lowest value ends up in the correct position, and it does not matter where we put the other value we are swapping with, because it is not sorted yet.\n\nHere is a simulation that shows how this improved Selection Sort with swapping works:\n\nHere is an implementation of the improved Selection Sort, using swapping:\n\nFor a general explanation of what time complexity is, visitthis page.\n\nFor a more thorough and detailed explanation of Selection Sort time complexity, visitthis page.\n\nSelection Sort sorts an array of \\(n\\) values.\n\nOn average, about \\(\\frac{n}{2}\\) elements are compared to find the lowest value in each loop.\n\nAnd Selection Sort must run the loop to find the lowest value approximately \\(n\\) times.\n\nWe get time complexity:\n\n\\[ O( \\frac{n}{2} \\cdot n) = \\underline{\\underline{O(n^2)}} \\]\n\nThe time complexity for the Selection Sort algorithm can be displayed in a graph like this:\n\nAs you can see, the run time is the same as for Bubble Sort: The run time increases really fast when the size of the array is increased.\n\nRun the simulation below for different sized arrays.\n\nThe red dashed line represents the theoretical time complexity \\(O(n^2)\\).\n\nBlue crosses appear when you run the simulation. The blue crosses show how many operations are needed to sort an array of a certain size.\n\nThe most significant difference from Bubble sort that we can notice in this simulation is that best and worst case is actually almost the same for Selection Sort (\\(O(n^2)\\)), but for Bubble Sort the best case runtime is only \\(O(n)\\).\n\nThe difference in best and worst case for Selection Sort is mainly the number of swaps. In the best case scenario Selection Sort does not have to swap any of the values because the array is already sorted. And in the worst case scenario, where the array already sorted, but in the wrong order, so Selection Sort must do as many swaps as there are values in array.\n\n### Code Snippets\n\n```\n[ 7, 12, 9, 11, 3]\n\n---\n\n[ 7, 12, 9, 11,\n3\n]\n\n---\n\n[\n3\n, 7, 12, 9, 11]\n\n---\n\n[ 3,\n7\n, 12, 9, 11]\n\n---\n\n[ 3, 7, 12,\n9\n, 11]\n\n---\n\n[ 3, 7,\n9\n, 12, 11]\n\n---\n\n[ 3, 7, 9, 12,\n11\n]\n\n---\n\n[ 3, 7, 9,\n11\n, 12]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_5",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

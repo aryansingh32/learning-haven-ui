@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 276,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To convert aBarChart to aPiechart, just replace:google.visualization.BarChartwith:google.visualization.PieChart\n\nTo display the Pie in 3D, just addis3D: trueto the options:\n\nToscatter plotthe same data, change google.visualization to ScatterChart:\n\n### Code Snippets\n\n```\n<div id=\"myChart\" style=\"max-width:700px; height:400px\"></div>\n\n---\n\n<script src=\"https://www.gstatic.com/charts/loader.js\"></script>\n\n---\n\n<script>\ngoogle.charts.load('current',{packages:['corechart']});\ngoogle.charts.setOnLoadCallback(drawChart);\n// Your Function\nfunction drawChart() {\n...\n}\n</script>\n\n---\n\nfunction drawChart() {\n// Set Data\nconst data = google.visualization.arrayToDataTable([\n['Contry', 'Mhl'],\n['Italy', 55],\n['France', 49],\n['Spain', 44],\n['USA', 24],\n['Argentina', 15]\n]);\n// Set Options\nconst options = {\ntitle: 'World Wide Wine Production'\n};\n// Draw\nconst chart = new google.visualization.BarChart(document.getElementById('myChart'));\nchart.draw(data, options);\n}\n\n---\n\nconst chart = new google.visualization.\nPieChart\n(document.getElementById('myChart'));\n\n---\n\nconst options = {\ntitle: 'World Wide Wine Production',\nis3D: true\n};\n\n---\n\nfunction drawChart() {\n// Set Data\nconst data = google.visualization.arrayToDataTable([\n['Price', 'Size'],\n[50,7],[60,8],[70,8],[80,9],[90,9],[100,9],\n[110,10],[120,11],[130,14],[140,14],[150,15]\n]);\n// Set Options\nconst options = {\ntitle: 'House Prices vs Size',\nhAxis: {title: 'Square Meters'},\nvAxis: {title: 'Price in Millions'},\nlegend: 'none'\n};\n// Draw Chart\nconst chart = new google.visualization.LineChart(document.getElementById('myChart'));\nchart.draw(data, options);\n}\n\n---\n\nconst chart = new google.visualization.ScatterChart(document.getElementById('myChart'));\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_275",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 135,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "SVG defines vector-based graphics in XML, which can be directly embedded in HTML pages.\n\nSVG graphics are scalable, and do not lose any quality if they are zoomed or resized:\n\nSVG is supported by all major browsers.\n\nThe HTML<svg>element is a container for SVG graphics.\n\nSVG has several methods for drawing paths, rectangles, circles, polygons, text, and \nmuch more.\n\nSVG is a language for describing 2D graphics in XML, while Canvas draws 2D graphics, on the fly (with JavaScript).\n\nSVG is XML based, which means that every element is available within the SVG \nDOM. You can attach JavaScript event handlers to SVG graphics.\n\nIn SVG, each drawn shape is remembered as an object. If attributes of an SVG \nobject are changed, the browser can automatically re-render the shape.\n\nCanvas is rendered pixel by pixel. In canvas, once the graphic is drawn, it is forgotten by the browser. If its \nposition should be changed, the entire scene needs to be redrawn, including any \nobjects that might have been covered by the graphic.\n\nThe table below shows some important differences between Canvas and SVG:\n\nTo learn more about SVG, please read ourSVG Tutorial.\n\n### Code Snippets\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<svg \n width=\"100\" height=\"100\">\n<circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" \n stroke-width=\"4\" fill=\"yellow\" />\n</svg>\n</body>\n</html>\n\n---\n\n<svg width=\"400\" height=\"120\">\n<rect \n  x=\"10\" y=\"10\" width=\"200\" height=\"100\" \n  stroke=\"red\" stroke-width=\"6\" fill=\"blue\" \n />\n</svg>\n\n---\n\n<svg width=\"400\" height=\"180\">\n<rect x=\"50\" y=\"20\" rx=\"20\" ry=\"20\" \n width=\"150\" height=\"150\"\nstyle=\"fill:red;stroke:black;stroke-width:5;opacity:0.5\" />\n</svg>\n\n---\n\n<svg width=\"300\" height=\"200\">\n<polygon points=\"100,10 40,198 190,78 10,78 160,198\"\nstyle=\"fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;\" />\n</svg>\n\n---\n\n<svg height=\"130\" width=\"500\">\n<defs>\n<linearGradient id=\"grad1\">\n<stop offset=\"0%\" stop-color=\"yellow\" \n />\n<stop offset=\"100%\" stop-color=\"red\" />\n</linearGradient>\n</defs>\n<ellipse cx=\"100\" cy=\"70\" rx=\"85\" ry=\"55\" \n fill=\"url(#grad1)\" />\n<text fill=\"#ffffff\" font-size=\"45\" \n font-family=\"Verdana\" x=\"50\" y=\"86\">SVG</text>\nSorry, your browser does not \n support inline SVG.\n</svg>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_134",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

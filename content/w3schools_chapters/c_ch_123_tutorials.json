@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 123,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A queue stores multiple elements in a specific order, calledFIFO.\n\nFIFOstands forFirst in, First Out. To visualize FIFO, think of a queue as people standing in line in a supermarket.\nThe first person to stand in line is also the first who can pay and leave the supermarket. This way of organizing elements is called FIFO in computer science and programming.\n\nUnlikevectors, elements in the queue are not \naccessed by index numbers. Since queue elements are added at the end and removed \nfrom the front, you can only access an element at the front or the back.\n\nTo use a queue, you have to include the<queue>header file:// Include the queue library#include <queue>Create a QueueTo create a queue, use thequeuekeyword, \nand specify thetypeof values it should store within angle brackets<>and then the name of the queue, like:queue<type>queueName.// Create a \n  queue of strings called carsqueue<string> cars;Note:The type of the queue (string in our example) cannot be changed after its been declared.Note:You cannot add elements to the queue at the time of declaration, like you can withvectors:queue<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};Add ElementsTo add elements to the queue, you can use the.push()function after declaring the queue.The.push()function adds an element at the \nend of the queue:Example// Create a queue of stringsqueue<string> cars;// Add elements to the queuecars.push(\"Volvo\");cars.push(\"BMW\");cars.push(\"Ford\");cars.push(\"Mazda\");The queue will look like this:Volvo (front (first) element)BMWFordMazda (back (last) element)Access Queue ElementsYou cannot access queue elements by referring to index numbers, like you would witharraysandvectors.In a queue, you can only access the element at the front or the back, using.front()and.back()respectively:Example// Access the \n    front element (first and oldest)cout << cars.front();\u00a0 // \n    Outputs \"Volvo\"// Access the \n    back element (last and newest)cout << cars.back();\u00a0 // \n    Outputs \"Mazda\"Try it Yourself \u00bbChange Front and Back ElementsYou can also use.frontand.backto change the value of the front and back elements:Example// Change the value of the front elementcars.front() = \"Tesla\";// Change the value of the back elementcars.back() = \"VW\";// \n    Access the front elementcout << cars.front();\u00a0 // Now outputs \n    \"Tesla\" instead of \"Volvo\"// Access the back elementcout << cars.back();\u00a0 // Now outputs \"VW\" instead \n    of \"Mazda\"Try it Yourself \u00bbRemove ElementsYou can use the.pop()function to remove an element from the \nqueue.This will remove the front element (the first and oldest element that was added to the \nqueue):Example// Create a queue of stringsqueue<string> cars;// Add elements to the queuecars.push(\"Volvo\");cars.push(\"BMW\");cars.push(\"Ford\");cars.push(\"Mazda\");// Remove the \n  front \n  element (Volvo)cars.pop();// Access the front \n  element (Now BMW)cout << cars.front();Try it Yourself \u00bbGet the Size of a QueueTo find out how many elements there are in a queue, use the.size()function:Examplecout \n  << cars.size();Try it Yourself \u00bbCheck if the Queue is EmptyUse the.empty()function to find out if the \nqueue is empty or not.The.empty()function returns1(true) if the queue is empty and0(false) \notherwise:Examplequeue<string> cars;cout << cars.empty(); \n  // Outputs 1 (The queue is empty)Try it Yourself \u00bbExamplequeue<string> cars;cars.push(\"Volvo\");cars.push(\"BMW\");cars.push(\"Ford\");cars.push(\"Mazda\");cout \n  << cars.empty();\u00a0 \n  // Outputs 0 (not empty)Try it Yourself \u00bbStacks and QueuesQueues are often mentioned together withStacks, which is a similar data structure described in theprevious page.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Include the queue library\n#include <queue>\n\n---\n\n// Create a \n  queue of strings called cars\nqueue<string> cars;\n\n---\n\nqueue<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n\n---\n\n// Create a queue of strings\nqueue<string> cars;\n// Add elements to the queue\ncars.push(\"Volvo\");\ncars.push(\"BMW\");\ncars.push(\"Ford\");\ncars.push(\"Mazda\");\n\n---\n\n// Access the \n    front element (first and oldest)\ncout << cars.front();\u00a0 // \n    Outputs \"Volvo\"\n// Access the \n    back element (last and newest)\ncout << cars.back();\u00a0 // \n    Outputs \"Mazda\"\n\n---\n\n// Change the value of the front element\ncars.front() = \"Tesla\";\n// Change the value of the back element\ncars.back() = \"VW\";\n// \n    Access the front element\ncout << cars.front();\u00a0 // Now outputs \n    \"Tesla\" instead of \"Volvo\"\n// Access the back element\ncout << cars.back();\u00a0 // Now outputs \"VW\" instead \n    of \"Mazda\"\n\n---\n\n// Create a queue of strings\nqueue<string> cars;\n// Add elements to the queue\ncars.push(\"Volvo\");\ncars.push(\"BMW\");\ncars.push(\"Ford\");\ncars.push(\"Mazda\");\n// Remove the \n  front \n  element (Volvo)\ncars.pop();\n// Access the front \n  element (Now BMW)\ncout << cars.front();\n\n---\n\ncout \n  << cars.size();\n\n---\n\nqueue<string> cars;\ncout << cars.empty(); \n  // Outputs 1 (The queue is empty)\n\n---\n\nqueue<string> cars;\ncars.push(\"Volvo\");\ncars.push(\"BMW\");\ncars.push(\"Ford\");\ncars.push(\"Mazda\");\ncout \n  << cars.empty();\u00a0 \n  // Outputs 0 (not empty)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_122",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 153,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Encapsulation is about protecting data inside a class.\n\nIt means keeping data (properties) and methods together in a class, while controlling how the data can be accessed from outside the class.\n\nThis prevents accidental changes to your data and hides the internal details of how your class works.\n\nIn Python, you can make properties private by using a double underscore__prefix:\n\nTo access a private property, you can create a getter method:\n\nTo modify a private property, you can create a setter method.\n\nThe setter method can also validate the value before setting it:\n\nEncapsulation provides several benefits:\n\nPython also has a convention for protected properties using a single underscore_prefix:\n\nYou can also make methods private using the double underscore prefix:\n\nName mangling is how Python implements private properties and methods.\n\nWhen you use double underscores__, Python automatically renames it internally by adding_ClassNamein front.\n\nFor example,__agebecomes_Person__age.\n\n### Code Snippets\n\n```\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.__age = age  # Private property\np1 = Person(\"Emil\", 25)\nprint(p1.name)\nprint(p1.__age)  # This will cause an error\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.__age = age\ndef get_age(self):\nreturn self.__age\np1 = Person(\"Tobias\", 25)\nprint(p1.get_age())\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.__age = age\ndef get_age(self):\nreturn self.__age\ndef set_age(self, age):\nif age > 0:\nself.__age = age\nelse:\nprint(\"Age must be positive\")\np1 = Person(\"Tobias\", 25)\nprint(p1.get_age())\np1.set_age(26)\nprint(p1.get_age())\n\n---\n\nclass Student:\ndef __init__(self, name):\nself.name = name\nself.__grade = 0\ndef set_grade(self, grade):\nif 0 <= grade <= 100:\nself.__grade = grade\nelse:\nprint(\"Grade must be between 0 and 100\")\ndef get_grade(self):\nreturn self.__grade\ndef get_status(self):\nif self.__grade >= 60:\nreturn \"Passed\"\nelse:\nreturn \"Failed\"\nstudent = Student(\"Emil\")\nstudent.set_grade(85)\nprint(student.get_grade())\nprint(student.get_status())\n\n---\n\nclass Person:\ndef __init__(self, name, salary):\nself.name = name\nself._salary = salary  # Protected property\np1 = Person(\"Linus\", 50000)\nprint(p1.name)\nprint(p1._salary)  # Can access, but shouldn't\n\n---\n\nclass Calculator:\ndef __init__(self):\nself.result = 0\ndef __validate(self, num):\nif not isinstance(num, (int, float)):\nreturn False\nreturn True\ndef add(self, num):\nif self.__validate(num):\nself.result += num\nelse:\nprint(\"Invalid number\")\ncalc = Calculator()\ncalc.add(10)\ncalc.add(5)\nprint(calc.result)\n# calc.__validate(5)  # This would cause an error\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.__age = age\np1 = Person(\"Emil\", 30)\n# This is how Python mangles the name:\nprint(p1._Person__age)  # Not recommended!\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_152",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

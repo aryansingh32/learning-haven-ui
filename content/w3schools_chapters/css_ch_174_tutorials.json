@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 174,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The CSSconic-gradient()function creates a conic gradient.\n\nA conic gradient is a gradient with color transitions rotated around a center point.\n\nTo create a conic gradient you must define at least two colors.\n\nBy default,angleis 0deg andpositionis center.\n\nIf nodegreeis specified, the colors will be spread equally around \nthe center point.\n\nThe following example shows a conic gradient with three colors:\n\nThe following example shows a conic gradient with five colors:\n\nThe following example shows a conic gradient with three colors and a degree for each color:\n\nJust addborder-radius: 50%to make the conic gradient look like a pie:\n\nHere is another pie chart with defined degrees for all the colors:\n\nThe [fromangle] specifies an angle that the entire conic gradient is \nrotated by.\n\nThe following example shows a conic gradient with a from angle of 90deg:\n\nThe [atposition] specifies the center of the conic gradient.\n\nThe following example shows a conic gradient with a center position of 60% \n45%:\n\nThe CSSrepeating-conic-gradient()function is used to repeat conic gradients:\n\nHere is a repeating conic gradient with defined color-starts and color-stops:\n\nThe following table lists the CSS gradient functions:\n\n### Code Snippets\n\n```\nbackground-image: conic-gradient([from\nangle\n] [at\nposition\n,]\ncolor\n[\ndegree\n]\n, color\n[\ndegree\n]\n, ...\n);\n\n---\n\n#grad {\nbackground-image: conic-gradient(red, yellow, green);\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(red, yellow, green, blue, black);\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(red 45deg, yellow \n    90deg, green 210deg);\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(red, yellow, green, blue, \n    black);\nborder-radius: 50%;\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(red 0deg, red 90deg, yellow 90deg, yellow \n    180deg, green 180deg, green 270deg, blue 270deg);\nborder-radius: 50%;\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(from 90deg, red, yellow, \n    green);\n}\n\n---\n\n#grad {\nbackground-image: conic-gradient(at 60% 45%, red, yellow, \n    green);\n}\n\n---\n\n#grad {\nbackground-image: \nrepeating-conic-gradient(red 10%, yellow 20%);\nborder-radius: 50%;\n}\n\n---\n\n#grad {\nbackground-image: \nrepeating-conic-gradient(red 0deg 10deg, yellow 10deg 20deg, blue 20deg 30deg);\nborder-radius: 50%;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_173",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1196 @@
+Video URL: https://www.youtube.com/watch?v=nkaAJYfRDVk
+Video Title: CSS Sizing Units - px, rem, em, vh, vw, % & more | Sigma Web Development Course - Tutorial #22
+--------------------------------------------------
+
+00:00:00.000
+In CSS, you will get to see different types of sizing units.
+00:00:03.220
+Sometimes you will get to see pixels, sometimes you will get to see VH,
+00:00:06.720
+sometimes you will get to see VW, sometimes you will get to see RAM,
+00:00:09.680
+you will get to see M.
+00:00:10.760
+Which unit do you want to use? Which is the best among them?
+00:00:13.800
+Which one do you want to avoid?
+00:00:15.180
+And what do these units mean?
+00:00:16.880
+This will be the topic of this video.
+00:00:18.560
+Let's go to the computer screen.
+00:00:20.020
+I am really very excited.
+00:00:21.560
+Let's roll the intro. Intro
+00:00:32.000
+So guys I'm in my computer screen and the thing I'm going to tell you today is very dangerous and you will enjoy it after learning it.
+00:00:39.000
+Because its use is so much of sizing.
+00:00:42.000
+It is so much of use that you guys make any it will always be good for you to know about sizing
+00:00:48.000
+here I will do shift right click
+00:00:50.000
+and after doing shift right click here I will make a new folder
+00:00:53.000
+in fact to make a new folder
+00:00:55.000
+I will do something like this
+00:00:57.000
+and after this I will do shift right click and open with code
+00:00:59.000
+I will make a file with the name index.html
+00:01:01.000
+and here I will tell you
+00:01:03.000
+so see if you have a box
+00:01:06.000
+I wrote div.box here and wrote here this is a box
+00:01:09.000
+Ok, and I gave a very basic style in it
+00:01:12.000
+I said brother, give the border of my box
+00:01:15.000
+2 pixels solid black
+00:01:18.000
+And make its width 233 pixels
+00:01:21.000
+So what is pixels? Pixels are units that I used here
+00:01:24.000
+Is there only a unit which I have used here.
+00:01:25.000
+Is there a unit called pixel only or not? We have many units to use in CSS.
+00:01:30.000
+You can use any kind of units and which unit to use
+00:01:35.000
+when, it will depend on what you are doing. For example, if you want
+00:01:40.000
+that you have to set your height according to the viewport height of an element, then you can do that too.
+00:01:46.300
+And I will tell you this thing here.
+00:01:48.300
+So first of all, if you have not accessed the playlist, then do it.
+00:01:51.100
+Very few people have accessed the playlist from those who are watching,
+00:01:53.900
+that's why I am saying this again and again.
+00:01:55.100
+And many people also write the source code,
+00:01:57.100
+where is it, where is it, you guys watch the video,
+00:01:58.900
+that's why I am telling you again and again.
+00:02:00.400
+I hope you guys have also got the source code,
+00:02:02.600
+now let's preview it.
+00:02:04.200
+So I wrote this is the box I wrote
+00:02:06.000
+I said make the width 200px
+00:02:08.000
+You can also put background black
+00:02:10.000
+Sorry, background
+00:02:12.000
+Let's say you put
+00:02:14.000
+Aquamarine in it
+00:02:16.000
+Now one unit is our pixel
+00:02:18.000
+I will tell you about some other units
+00:02:20.000
+The pixel is
+00:02:22.000
+196th of an inch
+00:02:24.000
+So if I write 233 pixel here
+00:02:27.200
+you can see here
+00:02:28.500
+the width will be set accordingly
+00:02:31.000
+now I will do one thing
+00:02:32.000
+I will put a universal selector here
+00:02:33.500
+and by putting a universal selector
+00:02:35.200
+I will make M0 here
+00:02:37.400
+writing M0 makes margin 0
+00:02:39.900
+and writing P0 makes padding 0
+00:02:42.100
+so here the margin padding by default
+00:02:44.000
+will be 0
+00:02:46.000
+now my monitor is 2K monitor
+00:02:48.000
+2K monitor resolution
+00:02:50.000
+if I see the resolution of 2K monitor
+00:02:52.000
+it's width is 2048px
+00:02:54.000
+so if I make it
+00:02:56.000
+2048px
+00:02:58.000
+2048px
+00:03:00.000
+so you can see here
+00:03:02.000
+it has taken the full width and a little
+00:03:04.000
+scroll bar has also come
+00:03:05.000
+maybe because of its border
+00:03:08.000
+if I do box sizing, border box
+00:03:11.000
+box sizing, border box
+00:03:14.000
+and if I show you, then see this horizontal scroll bar
+00:03:17.000
+that also went, now if I show you by inspecting it rightly
+00:03:20.000
+and if I increase it by 1 pixel
+00:03:23.000
+so see here a horizontal scroll bar
+00:03:26.000
+so my width is exactly 2048 pixels
+00:03:29.000
+I hope you understood
+00:03:32.000
+so this is what pixel means
+00:03:35.000
+if you said that the width is 2048 pixels
+00:03:38.000
+and you go to a small device which doesn't have a big monitor
+00:03:41.000
+suppose you have a 1080p monitor
+00:03:44.000
+which default width is 1920 x 1080,
+00:03:47.680
+that is, its height is 1080 and width is 1920,
+00:03:50.480
+in this case, your website code will be corrupted,
+00:03:54.480
+so you don't want your website code to be corrupted,
+00:03:56.800
+so what you will do is use a responsive unit,
+00:03:59.280
+so I told you a unit in pixel,
+00:04:01.200
+we will use this and say that its width should be 100vw
+00:04:06.000
+Vw means viewport width
+00:04:08.000
+Means it will take the width of your viewport
+00:04:11.000
+If I increase it, then what will happen
+00:04:13.000
+Obviously, if I increase it, it will make a horizontal scroll, you can see
+00:04:16.000
+And I will show you one thing
+00:04:18.000
+As I told you in some of the earlier videos
+00:04:20.000
+You can right click, inspect and click here
+00:04:23.000
+You can click on this TV that is visible And as soon as you click on it and click here you can click on this TV
+00:04:25.000
+and as soon as you click on it and if you choose responsive
+00:04:28.000
+so you will do it like this, you can't see the scroll bar
+00:04:31.000
+because its width is measured in the unit of VH
+00:04:34.000
+because its width is measured in the unit of VH
+00:04:37.000
+that's why you guys can't see the horizontal scroll bar here
+00:04:40.000
+so you can do this thing
+00:04:43.000
+now if I don't want to use VHh you can see a big advantage of using vh
+00:04:46.000
+that here horizontal scroll bar
+00:04:48.000
+doesn't come
+00:04:50.000
+so sometimes you want that
+00:04:52.000
+the width of your element is equal to viewport width
+00:04:54.000
+or let's say you want
+00:04:56.000
+let's say this is 80vw
+00:04:58.000
+so here you see
+00:05:00.000
+your container will come
+00:05:02.000
+many times you have to do this
+00:05:04.000
+that you want to center a particular thing
+00:05:06.360
+like I want to center this div
+00:05:08.680
+and I want to make it 80bw here
+00:05:12.240
+so in this case I will auto its margin
+00:05:15.120
+what does margin auto mean?
+00:05:16.400
+if I do margin auto
+00:05:18.040
+margin auto
+00:05:20.280
+margin auto means that I want to automatically put margin from left and right
+00:05:24.800
+and from margin auto means that I want to put margin automatically from left and right and from margin auto, your div will automatically put margin from left and right
+00:05:29.600
+so your div will be centered
+00:05:31.600
+Now see here, by doing margin auto it will be centered
+00:05:34.400
+but you have to keep one thing in mind
+00:05:36.000
+if you put margin auto on this, it will be centered only when it is a block level element
+00:05:41.600
+if it is an inline element, it will not be centered
+00:05:43.600
+I will show you by doing it suppose this box is a block level element if it is an inline element, then it will not be centered I will show you by doing it
+00:05:45.760
+suppose this box is a span
+00:05:47.520
+ok
+00:05:48.880
+suppose
+00:05:50.720
+suppose it is a span
+00:05:51.840
+so first of all you can't put width on it
+00:05:54.520
+and the second thing is that you
+00:05:56.320
+can't do anything like this
+00:05:58.680
+you can't say that it's margin is odd
+00:06:00.360
+ok, so the solution to this problem
+00:06:01.800
+I will tell you in the coming videos
+00:06:03.080
+what to do
+00:06:03.600
+but you can center it like this
+00:06:06.000
+Suppose I want to make another box, I want to say that this was my navbar
+00:06:09.000
+Now I want to make a container
+00:06:12.000
+And I want to give the same width to this container
+00:06:15.000
+Which I gave above
+00:06:18.000
+So here if you see if I want to give the same width to it
+00:06:21.000
+Then I will do one thing, I will apply the same thing
+00:06:24.000
+And maybe I want to give the margin top of 23 pixels
+00:06:28.120
+so whenever you want to separate horizontal and vertical margin
+00:06:31.400
+you can use margin-shortened property
+00:06:34.520
+here 23 pixels is the margin of top-bottom
+00:06:37.240
+and auto means auto from left to right
+00:06:39.000
+so you see 23 pixels is applied on top-bottom
+00:06:41.560
+now because there is nothing in the container
+00:06:43.840
+I will write 56 and you will tell me in the comment why because there is nothing in the container I will write 56
+00:06:46.000
+and you will tell me in the comment why I wrote 56
+00:06:48.000
+what was the reason to write 56
+00:06:50.000
+I will do it in the format document
+00:06:52.000
+and here you see that I
+00:06:54.000
+made two boxes and exactly
+00:06:56.000
+their width is the same
+00:06:58.000
+if I see it in an iPhone
+00:07:00.000
+suppose in iPhone 12 pro
+00:07:02.000
+actually I don't have 12 pro, I have 13
+00:07:04.000
+and 15 is also coming many people were asking for an update of that too,
+00:07:08.000
+so when it will come, they are not giving it, it's been so long since I ordered it, I don't know what will happen, I'm waiting,
+00:07:14.000
+now you can see here that it looks like this on the phone, if I make it responsive, then it will adapt something like this,
+00:07:20.000
+so we have seen a very small taste of responsive responsive design but a lot is yet to come
+00:07:25.360
+we are going to do a lot of things in the perspective of responsive design
+00:07:28.360
+so this is not all, we will see more in the coming videos
+00:07:31.640
+now after this I want to tell you about VH
+00:07:34.120
+if I want the height of the container to be 80% of the height of my viewport
+00:07:39.960
+so I will do 80 VH
+00:07:41.200
+so see it took 80% of the height
+00:07:42.920
+and let's say I want it to take 10% of the height of the viewport so what will I will make it 80 VH, so it took 80% of height and let's say I want it to take 10% of the height of viewport
+00:07:46.320
+so what I will do to it
+00:07:47.680
+I will make the height 10 VH
+00:07:50.480
+so it's height is 10 VH and it's height is 80% of the viewport
+00:07:54.480
+now if I change the height of the viewport
+00:07:56.720
+if I change the height of the viewport
+00:07:58.720
+in this way, let's say I make it smaller
+00:08:00.720
+so it will always take 10% of the viewport height
+00:08:03.600
+and the one below will take 80% of the viewport height
+00:08:06.000
+So VH and VW are very important units
+00:08:09.000
+Pixel is our universal unit which we will keep using
+00:08:12.000
+And you can't avoid it, you have to use it
+00:08:15.000
+You will always use it, okay?
+00:08:17.000
+After this, REM and M are very important units
+00:08:20.000
+So the M is EM and the other one is REM
+00:08:23.000
+So first of all, I will tell you about Em
+00:08:26.000
+Now assume the font size of this container
+00:08:29.000
+Font size
+00:08:32.000
+Let us say 1M
+00:08:35.000
+Now assume that the font size of this container is 16px
+00:08:38.000
+Which is the default and it was going to be computed
+00:08:41.000
+I will make it more interesting, I will put a paragraph in it
+00:08:44.000
+And I will put the lorem in this paragraph and you'll know why I did this
+00:08:48.040
+now see, I'll put this font size in the paragraph
+00:08:51.140
+I'll say, the paragraph of the dot container
+00:08:53.840
+make its font size 1m
+00:08:55.540
+so, and I'll make its font size, let us say
+00:08:58.720
+font size, I'll make it 16 pixels
+00:09:00.980
+now you guys carefully see where things are going, okay
+00:09:03.360
+now see, its font size is 16px
+00:09:05.920
+So the paragraph will also inherit its font size
+00:09:08.960
+If I don't write this here, then here it is obvious
+00:09:11.960
+Its font size will also be 16px, which is default
+00:09:15.320
+If I make it 18px, then it will change to 18px
+00:09:18.320
+You see it is a little big, you can see it
+00:09:21.280
+So I changed its size
+00:09:24.280
+Now here what i will do
+00:09:26.000
+i will make the font size 1m
+00:09:29.000
+what will be the computed font size, you have to listen to me carefully
+00:09:32.000
+because understanding m and rem is very important
+00:09:35.000
+in computed i will search font size, now see here 18px
+00:09:38.000
+paragraph size is 18px because
+00:09:41.000
+it will inherit from container, some properties
+00:09:44.000
+inherit in CSS and
+00:09:46.000
+font-size is one of the properties, so this property
+00:09:49.000
+will inherit and you can see here
+00:09:52.000
+font-size is 18, it has been computed, so far
+00:09:55.000
+so good you understood everything, now i will tell you
+00:09:58.000
+that if i will write 1m
+00:10:01.000
+what will be the difference, there is no difference, it is 18 pixels
+00:10:04.000
+now if i will make it 1 what will be the difference 18px only, now if i write 1.2M
+00:10:06.000
+or 1.5M, then
+00:10:09.000
+the font size will be 1.5 times of the original
+00:10:12.000
+which means the value that was going to be inherited
+00:10:15.000
+1.5 times of that, so you can see here
+00:10:18.000
+1.5 times of 18 is 27
+00:10:21.000
+let's write 2 so that you can see the calculation
+00:10:24.000
+36, so I will make it 2
+00:10:26.040
+so you can see 36
+00:10:29.220
+I hope you understood this, what will be the font size of the container
+00:10:33.020
+the font size of the container will be the same as we have given
+00:10:36.080
+18 pixels, so what does M mean
+00:10:39.080
+the amount of font size it will get by inheriting
+00:10:42.080
+that much, like if I
+00:10:46.000
+do 1.5 M, it means, or 2 M, it means
+00:10:49.000
+the amount of paragraph it was going to get by inheriting it, it's 2 times
+00:10:52.000
+means whatever it was going to get, it's 2 times, ok
+00:10:55.000
+now if I remove 18 pixels from here, then what will happen
+00:10:58.000
+so it will be 2 times of 16, because it was going to get
+00:11:01.000
+16 by default, so now the font size will be 32, so now
+00:11:04.000
+if you see the value in computed, you will get 32
+00:11:06.200
+as you can see here, ok
+00:11:07.820
+I hope it is clear, M is everything
+00:11:09.500
+now I will tell you the RAM
+00:11:10.580
+now assume for some weird reason
+00:11:12.600
+or for some good reason
+00:11:14.120
+anything can happen, I am making my website
+00:11:16.820
+for any reason, I will change its font size
+00:11:19.320
+from letters
+00:11:21.140
+umm
+00:11:22.360
+from letters I will change my font size
+00:11:24.380
+to 12 pixels I said my font size 12 pixels
+00:11:26.440
+I said that the font size of html is 12 pixels
+00:11:28.840
+so what will happen?
+00:11:30.520
+everything will be 12 pixels
+00:11:31.880
+see this is the box font size
+00:11:33.560
+it is inherited from html and it is 12 pixels
+00:11:35.560
+now assume the font size of this
+00:11:39.160
+the font size of the root element
+00:11:40.680
+which is html
+00:11:41.480
+html is the root element by the way
+00:11:42.880
+let me tell you
+00:11:43.640
+I want the font size of root element
+00:11:46.000
+to be 2 times
+00:11:48.000
+my font size
+00:11:50.000
+so how i will do this? i will write rem
+00:11:52.000
+rem means the amount of root element
+00:11:54.000
+2 times of that
+00:11:56.000
+so if i will make it 2rem
+00:11:58.000
+so what will happen?
+00:12:00.000
+it will be 12 or 24
+00:12:02.000
+you can see here
+00:12:04.000
+i got 24 pixels, you can see here it got 24 pixels
+00:12:05.160
+REM means
+00:12:06.680
+give the font size of the root as much as it can
+00:12:09.160
+EM means
+00:12:10.280
+give the font size of the root as much as it can
+00:12:12.520
+ok, I hope you understood
+00:12:14.080
+see I told paragraph
+00:12:16.880
+give 2 rem, means
+00:12:18.640
+2 times the font size of the root
+00:12:20.920
+which was 12 for the root
+00:12:22.600
+by default it is 16
+00:12:24.200
+but I made it 12 font size of the root is by default it is 16 but i have made it 12
+00:12:26.000
+font size of root is 24
+00:12:29.000
+if i make this rem as m then tell me in the comment section
+00:12:32.000
+how much font size you will get
+00:12:35.000
+and please keep 2 way interaction
+00:12:38.000
+you have to comment below
+00:12:41.000
+all the people who commented 24 you have done it right
+00:12:44.000
+i told you that i'll raise the bar like anything, many people commented wrong
+00:12:46.000
+I know, and I'll tell you where 24 came from
+00:12:49.000
+So see, what happens, font size property
+00:12:52.000
+is inherent, so first of all, the head will get from html
+00:12:55.000
+all the elements will get from html
+00:12:58.000
+body will get from body, this div will get from this div
+00:13:01.000
+what will be the font size of this div, of the container
+00:13:04.000
+12, ok 12 pixels, what will be the font size of this div? 12 pixels what will be the paragraph?
+00:13:06.720
+12 pixels because it is not changed anywhere
+00:13:08.720
+because it had 12 pixels font size
+00:13:10.720
+so if I do 2m
+00:13:12.720
+double of 12 is 24
+00:13:14.720
+but if I do 18
+00:13:16.720
+now tell me in the comment what will be
+00:13:18.720
+its font size
+00:13:20.720
+and I am telling you the answer
+00:13:22.720
+the answer is 18x2 is 36
+00:13:24.720
+its font size will be 36 because it was going to get 36 but its double,
+00:13:28.800
+and if you still think that you did not understand this thing,
+00:13:32.000
+then I will say that you watch the video by turning it back,
+00:13:33.800
+if you watch it twice, you will definitely understand the difference between Rem and Em.
+00:13:38.000
+Are these the units? No, there are many other units,
+00:13:41.400
+but what happens is that this is the unit that is used the most,
+00:13:44.600
+and if I tell you personally, then I use these units to make my websites.
+00:13:48.800
+Yes, there are two more units about which I will tell you.
+00:13:50.800
+Vmin and Vmax.
+00:13:52.400
+You must have known what they do by their name.
+00:13:54.600
+But I will tell you practically what Vmin and Vmax is.
+00:13:58.200
+Sometimes what will happen is that your width will be greater than the height.
+00:14:02.200
+But in the phone, your height is bigger than width
+00:14:05.280
+is it or not?
+00:14:06.640
+so if you are in phone
+00:14:08.160
+then your vmin will be width
+00:14:10.160
+but if you are in computer
+00:14:12.800
+then your vmin will be height
+00:14:15.200
+because height of monitor is small
+00:14:17.440
+but the width of phone is small
+00:14:20.320
+you understand?
+00:14:21.040
+so what is the meaning of vmin and vmax
+00:14:23.040
+I will tell you
+00:14:24.480
+so if I say 100 vmin
+00:14:26.000
+so it means 100 of
+00:14:29.000
+whatever is the minimum of height and width
+00:14:32.000
+so this is minimum and this is 100 and if this is minimum then this
+00:14:35.000
+i will do it and show you if you are not understanding
+00:14:38.000
+so i will make one more container and i will write
+00:14:41.000
+dev.mycont, i made container with mycont name
+00:14:44.000
+i am another container
+00:14:47.060
+and here I will style mycont
+00:14:49.060
+so I will write .mycont here
+00:14:51.700
+and here I will give it background color red
+00:14:54.260
+and color I will give it
+00:14:56.260
+what should I give? yellow?
+00:14:57.760
+ok fine I will give it
+00:14:58.760
+font size I will give it 22 pixels
+00:15:01.260
+and here you see that I made another container
+00:15:04.260
+now I want to give the width of this container as vmin
+00:15:08.640
+so I will say width is 100 vmin
+00:15:13.160
+so how much will be 100 vmin
+00:15:15.840
+what is vmin
+00:15:17.680
+vmin is height or width
+00:15:19.640
+min will be for this
+00:15:21.600
+in my device, the device in which I am making the video
+00:15:24.600
+what is vmin in that vmin is height so it will be equal to vh for this device the device in which I am making this video
+00:15:26.000
+vmin is height
+00:15:29.000
+so it will be equal to vh
+00:15:32.000
+so 100 vmin means 100 vh for this device
+00:15:35.000
+so you can see here it is 100 vh
+00:15:38.000
+so should I write 100 vmin or 100 vh
+00:15:41.000
+not always, in this device
+00:15:44.000
+now what happens is if you want
+00:15:46.000
+to have VH in phone
+00:15:48.000
+VH in phone and
+00:15:50.000
+VW in computer
+00:15:52.000
+you are looking for Vmax
+00:15:54.000
+it is used in complex scenarios
+00:15:56.000
+don't get confused, it is used less but it is used
+00:15:58.000
+you should know Vmin and Vmax
+00:16:00.000
+so if I
+00:16:02.000
+here I
+00:16:04.000
+mycont it to 100vmin
+00:16:07.000
+and if I change it to 100vh
+00:16:09.000
+will it make any difference?
+00:16:10.000
+no it won't make any difference
+00:16:11.000
+should I change it to 100vh or should I change the width to 100vmin?
+00:16:16.000
+in this device vmin and vmax are the same
+00:16:19.000
+and in my phone what will be my vmin?
+00:16:22.000
+will it be vh or vw?
+00:16:23.000
+tell me in the comment section.
+00:16:26.000
+In my phone, in this case,
+00:16:28.000
+will it be vmin height or width?
+00:16:30.000
+Tell me in the comment section.
+00:16:32.000
+What will be vmin in phone and what will be vmin in device?
+00:16:34.000
+I hope you have understood the concept of vmin and vmax.
+00:16:36.000
+So this was about vmin and vmax.
+00:16:38.000
+There are many more complex units.
+00:16:40.000
+I am using the word complex
+00:16:42.000
+because it is not used so much.
+00:16:44.000
+Your websites will be made up of these units. And the rest of the then there are many more complex units I am using the word complex because it is not used so much
+00:16:45.620
+your websites will be made up of these units
+00:16:48.840
+and if I open the MDN docs
+00:16:52.220
+CSS MDN Docs
+00:16:54.700
+Reference for Units
+00:16:57.100
+so you will get to see a lot of units
+00:16:59.200
+now see here there is Q, IN, PC, PT
+00:17:02.500
+you will not remember all these units
+00:17:04.500
+but in this video I have told you that matters In, PC, PT You won't remember all these units
+00:17:05.359
+But in this video I have told you that matters
+00:17:08.359
+You are going to learn that matters
+00:17:10.819
+If you want a reference of something
+00:17:13.819
+In which all the units are there, then here is the reference
+00:17:16.599
+You can screenshot it
+00:17:19.160
+What is M? Font size of the element, what is X? X-Side of the element
+00:17:22.180
+There are many more units but the one I told you is the most important
+00:17:26.000
+and that is the one
+00:17:28.000
+you will use the most
+00:17:30.000
+but in case you are looking for a comprehensive list
+00:17:32.000
+here is the comprehensive list
+00:17:34.000
+for you and I will give you the link of this MDN
+00:17:36.000
+in this source code
+00:17:38.000
+so you have got the link of this MDN
+00:17:40.000
+so you have the comprehensive list
+00:17:42.000
+but don't read this comprehensive list
+00:17:44.000
+I will recommend you my suggestion so you have a comprehensive list but don't read this list
+00:17:45.360
+i will recommend you this
+00:17:48.320
+my suggestion is because
+00:17:51.200
+do as much as i told you in this video
+00:17:54.200
+remember this many units
+00:17:57.040
+may not be for a normal person
+00:18:00.040
+but if you take a challenge you can do it
+00:18:03.300
+i am saying in normal scenarios that it is not possible, I get a lot of people in the comments who I want to tell you, okay? So if I come here, okay?
+00:18:26.740
+And I say that this is my container
+00:18:28.740
+and I want to make this container a little beautiful
+00:18:30.740
+First of all, I want to remove this background color from reddish
+00:18:33.040
+Okay?
+00:18:33.540
+And I will do box sizing, border box
+00:18:36.040
+and along with that, the way I
+00:18:38.040
+umm...
+00:18:38.540
+in this
+00:18:39.540
+I put this border
+00:18:41.040
+I will put it here too
+00:18:42.540
+and I will also give margin so that it becomes the center
+00:18:45.680
+Okay, and now it looks like this, as you can see
+00:18:49.040
+It was down, I will also put the border so that you can see the border, plus I will make the color a little dark
+00:18:54.480
+So I will make it black instead of yellow, okay
+00:18:57.080
+And here you see, I will also give its border
+00:19:01.080
+I will copy it
+00:19:02.520
+And here I will give the border to this mycont box
+00:19:05.000
+So I have given the border here, I don't need to make the width equal to it
+00:19:09.000
+But again I have made it 100vmin which is fine
+00:19:13.000
+If I make it 100vmax then it will go out a little bit
+00:19:17.000
+But that's fine, I will do this much for now
+00:19:19.000
+I will make its width 80v, so that there is no confusion.
+00:19:26.000
+And let me do one more thing, 80 VW.
+00:19:31.000
+So this is how the scene is made in front of us.
+00:19:34.000
+We have made a very basic website.
+00:19:37.000
+You can see here that this footer and main content website is made.
+00:19:43.000
+Now you see here
+00:19:46.240
+i am another container, i want to tell you a point
+00:19:49.240
+i want this container
+00:19:52.240
+to have some height
+00:19:55.240
+or i will do the same thing in this div
+00:19:58.240
+because this is our main content of the website, suppose you are putting
+00:20:01.240
+some content here, so your website will look like this
+00:20:04.240
+if i remove the height
+00:20:06.000
+So see what will happen
+00:20:08.000
+And you want
+00:20:10.000
+Your website to look like this
+00:20:12.000
+So you want
+00:20:14.000
+Our box
+00:20:16.000
+To have minimum height
+00:20:18.000
+What?
+00:20:20.000
+And if i add more content
+00:20:22.000
+Then height will be adjusted
+00:20:24.000
+So i will say Do one thing and if i put more content then height will be adjusted
+00:20:26.000
+so i will say, do one thing
+00:20:29.000
+minimum height
+00:20:32.000
+minimum height
+00:20:35.000
+80vh
+00:20:38.000
+we have to keep 80vh
+00:20:41.000
+maximum content
+00:20:44.000
+will increase the main height of this is this much, but there is no limit to the maximum. Maximum content you put in this will keep increasing, it will keep increasing,
+00:20:46.000
+it will keep increasing, I will show you by doing it.
+00:20:48.000
+So if I put a lot of lorems in it,
+00:20:51.000
+in fact, I put lorem 122 here,
+00:20:54.000
+I don't know how much text is this,
+00:20:57.000
+it is actually very less text,
+00:21:00.000
+it is less text, so I actually want to fill it,
+00:21:03.000
+I do one thing, I do lorem 1233, I know it's a lot of text,
+00:21:09.000
+and see our website is adjusted, and you can see that our box height is adjusted,
+00:21:17.000
+and the content I will put in it, it will keep taking, I have set its minimum height,
+00:21:23.000
+and same goes for min width also
+00:21:25.600
+I can say that keep the minimum width
+00:21:27.600
+and maximum space
+00:21:29.600
+you can give it
+00:21:31.600
+so this way we can use min width and max width
+00:21:33.600
+I hope you are enjoying
+00:21:35.600
+I will reduce the text
+00:21:37.600
+I think I have done it too much
+00:21:39.600
+I think I could have
+00:21:41.600
+done it by 999
+00:21:43.600
+could I? I could have demonstrated it by 999 could I?
+00:21:46.000
+yes I could have demonstrated it by 999
+00:21:49.000
+and in fact if I want to do more then I can do more
+00:21:52.000
+but you got the point, I will leave it like this
+00:21:55.000
+I will do lorem 999 here, you can expand it
+00:21:58.000
+if you see lorem 999 then expand it
+00:22:01.000
+expand
+00:22:03.880
+to see that this container will adjust its height
+00:22:11.000
+and I will put a comment here
+00:22:13.000
+you will see that the more text you see, the more you will see that its height is increasing
+00:22:19.000
+of the second container and it is adjusting
+00:22:22.000
+in total, this is the thing, ok
+00:22:23.000
+I hope you you understood about sizing
+00:22:26.000
+I have also shown you exhaustive list
+00:22:29.000
+exhaustive list of units
+00:22:32.000
+I will tell you one more thing before going percentage units
+00:22:35.000
+percentage units are very important
+00:22:38.000
+percentage units means
+00:22:41.000
+if you have made width 50% in a particular box
+00:22:44.000
+it means parent, width 50% means parent's 50% of the width
+00:22:45.500
+so if I give paragraph width 50%
+00:22:48.500
+let me show you here
+00:22:50.500
+if I say width 50%
+00:22:52.500
+it means
+00:22:54.500
+parent's width 50%
+00:22:56.500
+so see it took 50%
+00:22:58.500
+it is on half
+00:23:00.500
+so width 50% means
+00:23:02.500
+parent's 50%
+00:23:04.500
+now percent property is not applicable everywhere
+00:23:08.000
+So you have to take care of this
+00:23:10.000
+Now a very common mistake people do is
+00:23:12.000
+Where the height is not set, people put 100% or 80% height in that container
+00:23:18.000
+But the height of the parent is not set, so they have a problem
+00:23:20.000
+So always use VH and VW units
+00:23:23.000
+You can use the percentage if you know what you are doing
+00:23:26.000
+Means you know that the width of the parent is set
+00:23:29.000
+And you want to give half of it, 25% width
+00:23:32.000
+For example, in this case, I am giving this paragraph
+00:23:35.000
+Width 50%, I will put a border in it
+00:23:38.000
+I will put border 2px solid red here
+00:23:41.000
+And you see it looks like this, it has taken 50%
+00:23:44.000
+Of its parent, which was this and you can see that it has taken 50% of the parent's width
+00:23:46.000
+now if I put a span in it
+00:23:50.000
+and I say that the span in the container
+00:23:54.000
+in that border 2px solid blue
+00:23:58.000
+and width 50%
+00:24:00.000
+then it will be 50% of the parent's width
+00:24:03.000
+if I put put span in paragraph
+00:24:06.000
+let me show you
+00:24:09.000
+if i put span and write lorem 23
+00:24:12.000
+so you can see here
+00:24:15.000
+in fact i didn't want to put span, i wanted to put div
+00:24:18.000
+i wanted to put div in this too
+00:24:21.000
+why i am putting div in this, because span is inline element
+00:24:24.000
+so it will be a little difficult
+00:24:26.000
+so if I say that there is a div inside p
+00:24:29.000
+so I have styled it like this, you can see
+00:24:32.000
+and the problem in this is that I had to write it like this
+00:24:35.000
+I will write it like this, why will I write it like this
+00:24:38.000
+I will write it like this so that the immediate child is on it
+00:24:41.000
+now see here I have written border
+00:24:44.000
+2px solid blue
+00:24:46.000
+actually the thing is we can't put div in paragraph
+00:24:48.000
+so let me do one thing, I will make it div
+00:24:50.000
+and
+00:24:52.000
+inside it also make it div
+00:24:54.000
+instead of para I will make it div
+00:24:56.000
+and let's make it div
+00:24:58.000
+and now you can see
+00:25:00.000
+what I am trying to say
+00:25:02.000
+so this is 50% of its parent
+00:25:04.000
+and this is also 50% of its parent as you can see what I am trying to say so this is 50% of its parent and this is also 50% of its parent
+00:25:06.000
+as you can see, what is its parent
+00:25:08.000
+of blue box, red box
+00:25:10.000
+and what is the parent of red box, this black border box
+00:25:12.000
+I hope
+00:25:14.000
+things are clear, you know everything about percentage
+00:25:16.000
+you have the link of
+00:25:18.000
+rest of the units
+00:25:20.000
+you also check
+00:25:22.000
+and I am telling you, as much as I have told you in this video
+00:25:24.000
+it's all that you need to know and rest of the things you should also check it out and i am telling you that all i have told you in this video
+00:25:26.000
+is all that you need to know
+00:25:28.000
+and all other things
+00:25:30.000
+like ex, cap, ch
+00:25:32.000
+are very less
+00:25:34.000
+i would say 1-2% of the websites
+00:25:36.000
+are used, so you are safe
+00:25:38.000
+and as you will increase your css skills
+00:25:40.000
+you will know about all these things
+00:25:42.000
+what is reading, what is what
+00:25:44.000
+i hope you are enjoying this course.
+00:25:45.500
+If you haven't accessed the playlist yet, then do it.
+00:25:50.000
+Click here to bookmark and click here to save.
+00:25:54.000
+And access the source code.
+00:25:56.000
+Like the video.
+00:25:57.000
+Thank you so much for watching this video.

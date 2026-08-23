@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 11,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of HTML images by completing this coding challenge.\n\n## Tutorials\n\nComplete each step in the editor and watch the result as your page takes shape.\n\n## Tutorials\n\nA favicon is a small image displayed next to the page title in the browser tab.\n\nYou can use any image you like as your favicon. You can also create your own \nfavicon on sites likehttps://www.favicon.cc.\n\nA favicon image is displayed to the left of the page title in the browser tab, like this:\n\nTo add a favicon to your website, either save your favicon image to the root \ndirectory of your webserver, or create a folder in the root directory \ncalled images, and save your favicon image in this folder. A common name for a favicon image is \"favicon.ico\".\n\nNext, add a<link>element to your \"index.html\" file, \nafter the<title>element, like this:\n\nNow, save the \"index.html\" file and reload it in your browser. Your browser tab should now \ndisplay your favicon image to the left of the page title.\n\nThe following table shows the file format support for a favicon image:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<title>My Page \n  Title</title>\n<link rel=\"icon\" type=\"image/x-icon\" href=\"/images/favicon.ico\">\n</head>\n<body>\n<h1>This is a Heading</h1>\n<p>This is a paragraph.</p>\n</body>\n</html>\n```\n\n## Tutorials\n\nTest what you have learned about HTML favicon.\n\n## Tutorials\n\nEvery web page should have a page title to describe the meaning of the page.\n\nThe<title>element adds a title \nto your page:\n\nThe title should describe the content and the meaning of the page.\n\nThe page title is very important for search engine optimization \n(SEO). The text is used by search engine algorithms to decide the order \nwhen listing pages in search results.\n\nThe<title>element:\n\nSo, try to make the title as accurate and meaningful as possible!\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<title>HTML Tutorial</title>\n</head>\n<body>\nThe content of the document......\n</body>\n</html>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_11",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_11",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 59,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Hoisting is JavaScript's default behavior of moving declarations to the \ntop.\n\nIn JavaScript, a variable can be declared after it has been used.\n\nIn other words; a variable can be used before it has been declared.\n\nExample 1gives the same result asExample 2:\n\nTo understand this, you have to understand the term \"hoisting\".\n\nHoisting is JavaScript's default behavior of moving all declarations to the \ntop of the current scope (to the top of the current script or the current function).\n\nVariables defined withletandconstare hoisted to the top \nof the block, but notinitialized.Meaning: The block of code is aware of the \nvariable, but it cannot be used until it has been declared.Using aletvariable before it is declared will result in aReferenceError.The variable is in a \"temporal dead zone\" from the start \nof the block until it is declared:ExampleThis will result in aReferenceError:carName = \"Volvo\";let carName;Try it Yourself \u00bbUsing aconstvariable before it is declared, is a syntax error,\nso the code will simply not run.ExampleThis code will not run.carName = \"Volvo\";const carName;Try it Yourself \u00bbRead more about let and const inJS Let / Const.JavaScript Initializations are Not HoistedJavaScript only hoists declarations, not initializations.Example 1doesnotgive the same result asExample 2:Example 1var x = 5; // Initialize xvar y = 7; // Initialize yelem = document.getElementById(\"demo\"); // Find an elementelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and yTry it Yourself \u00bbExample 2var x = 5; // Initialize xelem = document.getElementById(\"demo\"); // Find an elementelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and yvar y = 7; // Initialize yTry it Yourself \u00bbDoes it make sense that y is undefined in the last example?This is because only the declaration (var y), not the initialization (=7) is hoisted to the top.Because of hoisting, y has been declared before it is used, but because \ninitializations are not hoisted, the value of y is undefined.Example 2 is the same as writing:Examplevar x = 5; // Initialize xvar y;\u00a0\u00a0\u00a0\u00a0 // Declare yelem = document.getElementById(\"demo\"); // Find an elementelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and yy = 7;\u00a0\u00a0\u00a0 // Assign 7 to yTry it Yourself \u00bbDeclare Your Variables At the Top !Hoisting is (to many developers) an unknown or overlooked behavior of  \nJavaScript.If a developer doesn't understand hoisting, programs may contain bugs (errors).To avoid bugs, always declare all variables at the beginning of \nevery scope.Since this is how JavaScript interprets the \ncode, it is always a good rule.JavaScript in strict mode does not allow variables to be used if they are \nnot declared.Study\"use strict\"in the next chapter.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nx = 5; // Assign 5 to x\nelem = document.getElementById(\"demo\"); // Find an element\nelem.innerHTML = x;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n// Display x in the element\nvar x; // Declare x\n\n---\n\nvar x; // Declare x\nx = 5; // Assign 5 to x\nelem = document.getElementById(\"demo\"); // Find an element\nelem.innerHTML = x;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n// Display x in the element\n\n---\n\ncarName = \"Volvo\";\nlet carName;\n\n---\n\ncarName = \"Volvo\";\nconst carName;\n\n---\n\nvar x = 5; // Initialize x\nvar y = 7; // Initialize y\nelem = document.getElementById(\"demo\"); // Find an element\nelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and y\n\n---\n\nvar x = 5; // Initialize x\nelem = document.getElementById(\"demo\"); // Find an element\nelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and y\nvar y = 7; // Initialize y\n\n---\n\nvar x = 5; // Initialize x\nvar y;\u00a0\u00a0\u00a0\u00a0 // Declare y\nelem = document.getElementById(\"demo\"); // Find an element\nelem.innerHTML = x + \" \" + y;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Display x and y\ny = 7;\u00a0\u00a0\u00a0 // Assign 7 to y\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_58",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

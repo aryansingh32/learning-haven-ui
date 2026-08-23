@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 156,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The easiest way to find an HTML element in the DOM, is by using the element id.\n\nThis example finds the element withid=\"intro\":\n\nIf the element is found, the method will return the element as an object (in element).\n\nIf the element is not found, element will containnull.\n\nThis example finds all<p>elements:\n\nThis example finds the element withid=\"main\", and then finds all<p>elements \ninside\"main\":\n\nIf you want to find all HTML elements with the same class name, usegetElementsByClassName().\n\nThis example returns a list of all elements withclass=\"intro\".\n\nIf you want to find all HTML elements that match a specified CSS selector \n(id, class names, types, attributes, values of attributes, etc), use thequerySelectorAll()method.\n\nThis example returns a list of all<p>elements withclass=\"intro\".\n\nThis example finds the form element withid=\"frm1\", in the forms \ncollection, and displays all element \nvalues:\n\nThe following HTML objects (and object collections) are also accessible:\n\n### Code Snippets\n\n```\nconst element = document.getElementById(\"intro\");\n\n---\n\nconst element = document.getElementsByTagName(\"p\");\n\n---\n\nconst x = document.getElementById(\"main\");\nconst y = x.getElementsByTagName(\"p\");\n\n---\n\nconst x = document.getElementsByClassName(\"intro\");\n\n---\n\n<html>\n<body>\n<p class=\"demo\"></p>\n<script>\n// Access a paragraph Element\nconst myPara = document.querySelector(\".demo\");\n// Change the content of the Element\nmyPara.innerHTML = \"Hello World!\";\n</script>\n</body>\n</html>\n\n---\n\n<html>\n<body>\n<p class=\"demo\">One</p>\n<p class=\"demo\">Two</p>\n<script>\n// Access a paragraph Element\nconst myItems = document.querySelectorAll(\".demo\");\n// Change the content of the Element\nmyItems[0].innerHTML = \"First\";\n</script>\n</body>\n</html>\n\n---\n\nconst x = document.querySelectorAll(\"p.intro\");\n\n---\n\nconst x = document.forms[\"frm1\"];\nlet text = \"\";\nfor (let i = 0; i < x.length; i++) {\ntext += x.elements[i].value + \"<br>\";\n}\ndocument.getElementById(\"demo\").innerHTML = text;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_155",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

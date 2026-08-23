@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 41,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Links are found in nearly all web pages. Links allow users to click their way from page to page.\n\nHTML links are hyperlinks.\n\nYou can click on a link and jump to another document.\n\nWhen you move the mouse over a link, the mouse arrow will turn into a little hand.\n\nThe HTML<a>tag defines a hyperlink. \nIt has the following syntax:\n\nThe most important attribute of the<a>element is thehrefattribute, which indicates the link's destination.\n\nThelink textis the part that will be visible to the reader.\n\nClicking on the link text, will send the reader to the specified URL address.\n\nBy default, links will appear as follows in all browsers:\n\nBy default, the linked page will be displayed in the current browser window. \nTo change this, you must specify another target for the link.\n\nThetargetattribute specifies where to open the linked document.\n\nThetargetattribute can have one of the following values:\n\nBoth examples above are using anabsolute URL(a full web address) \nin thehrefattribute.\n\nA local link (a link to a page within the same website) is specified with arelative URL(without \nthe \"https://www\" part):\n\nTo use an image as a link, just put the<img>tag inside the<a>tag:\n\nUsemailto:inside thehrefattribute to create a link that opens the user's email program (to \nlet them send a new email):\n\nTo use an HTML button as a link, you have to add some JavaScript code.\n\nJavaScript allows you to specify what happens at certain events, such as a click of a button:\n\nThetitleattribute specifies extra information about an element.\nThe information is most often shown as a tooltip text when the mouse moves over the element.\n\n### Code Snippets\n\n```\n<a href=\"\nurl\n\">\nlink text\n</a>\n\n---\n\n<a href=\"https://www.w3schools.com/\">Visit W3Schools.com!</a>\n\n---\n\n<a href=\"https://www.w3schools.com/\"\ntarget=\"_blank\">Visit W3Schools!</a>\n\n---\n\n<h2>Absolute URLs</h2>\n<p><a href=\"https://www.w3.org/\">W3C</a></p>\n<p><a href=\"https://www.google.com/\">Google</a></p>\n<h2>Relative \n  URLs</h2>\n<p><a href=\"html_images.asp\">HTML Images</a></p>\n<p><a href=\"/css/default.asp\">CSS \n  Tutorial</a></p>\n\n---\n\n<a href=\"default.asp\">\n<img src=\"smiley.gif\" alt=\"HTML tutorial\" style=\"width:42px;height:42px;\">\n</a>\n\n---\n\n<a href=\"mailto:someone@example.com\">Send email</a>\n\n---\n\n<button \n  onclick=\"document.location='default.asp'\">HTML Tutorial</button>\n\n---\n\n<a href=\"https://www.w3schools.com/html/\" title=\"Go to W3Schools HTML \n  section\">Visit our HTML Tutorial</a>\n\n---\n\n<a href=\"https://www.w3schools.com/html/default.asp\">HTML tutorial</a>\n\n---\n\n<a href=\"/html/default.asp\">HTML tutorial</a>\n\n---\n\n<a href=\"default.asp\">HTML tutorial</a>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_40",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

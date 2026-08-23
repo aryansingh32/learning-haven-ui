@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 136,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Python allows for user input.\n\nThat means we are able to ask the user for input.\n\nThe following example asks for your name, and when you enter a name, it gets printed on the screen:\n\nIn the example above, the user had to input their name on a new line. The Pythoninput()function has apromptparameter,\nwhich acts as a message you can put in front of the user input, on the same line:\n\nYou can add as many inputs as you want, Python will stop executing at each of them,\nwaiting for user input:\n\nThe input from the user is treated as a string. Even if, in the example above, you can input a number,\nthe Python interpreter will still treat it as a string.\n\nYou can convert the input into a number with thefloat()function:\n\nIt is a good practice to validate any input from the user. In the example above, \nan error will occur if the user inputs something other than a number.\n\nTo avoid getting an error, we can test the input, and if it is not a number, the user could get a message like \"Wrong input, please try again\",\nand allowed to make a new input:\n\n### Code Snippets\n\n```\nprint(\"Enter your name:\")\nname = input()\nprint(f\"Hello {name}\")\n\n---\n\nname = input(\"Enter your name:\")\nprint(f\"Hello {name}\")\n\n---\n\nname = input(\"Enter your name:\")\nprint(f\"Hello {name}\")\nfav1 = input(\"What is your favorite animal:\")\nfav2 = input(\"What is your favorite color:\")\nfav3 = input(\"What is your favorite number:\")\nprint(f\"Do you want a {fav2} {fav1} with {fav3} legs?\")\n\n---\n\nx = input(\"Enter a number:\")\n#find the square root of the number:\ny = math.sqrt(float(x))\nprint(f\"The square root of {x} is {y}\")\n\n---\n\ny = True\nwhile y == True:\nx = input(\"Enter a number:\")\ntry:\nx = float(x);\ny = False\nexcept:\nprint(\"Wrong input, please try again.\")\nprint(\"Thank you!\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_135",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

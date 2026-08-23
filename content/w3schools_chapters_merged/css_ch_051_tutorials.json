@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 51,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nYou learned from theCSS Media Querieschapter that you can use media queries to create different layouts for different screen sizes and devices.\n\nFor example, if you want to create a three-column layout for large screen sizes, and \na one-column layout for small screen sizes (such as phones), you can change theflex-directionfromrowtocolumnat a specific breakpoint (600px in the example below):\n\nAnother way is to change the percentage of theflexproperty of the flex items \nto create different layouts for different screen sizes. Note that we \nalso have to includeflex-wrap: wrap;on the flex container for this example to \nwork:\n\nHere, we use media queries together with flexbox to create a responsive image gallery:\n\nUse flexbox to create a responsive website, containing a flexible navigation bar and flexible content:\n\n### Code Examples\n\n```\n.flex-container {\ndisplay: flex;\nflex-direction: row;\n}\n.flex-item {\nbackground-color: #f1f1f1;\npadding: 10px;\nfont-size: 30px;\ntext-align: center;\nwidth: 100%;\n}\n/* \n  Make a one column-layout instead of three-column layout */\n@media \n  (max-width: 600px) {\n.flex-container {\nflex-direction: column;\n}\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-wrap: wrap;\n}\n.flex-item \n  {\nbackground-color: #f1f1f1;\npadding: 10px;\ntext-align: center;\nfont-size: 30px;\nflex: 33.3%;\n}\n/* \n  Make a one \n  column-layout instead of a three-column layout */\n@media (max-width: 600px) \n  {\n.flex-item {\nflex: 100%;\n}\n}\n```\n\n## Tutorials\n\nTest your understanding of Responsive Flexbox by completing a small coding challenge.\n\n## Tutorials\n\nThe Grid Layout Module offers a grid-based layout system, with rows and columns.\n\nThe Grid Layout Module allows developers to easily create complex web layouts.\n\nThe Grid Layout Module makes it easy to design a responsive layout structure, \nwithout usingfloator positioning.\n\nTry it Yourself \u00bb\n\nA grid always consists of:\n\nThe element below represents agrid container(the blue area) with fivegrid items.\n\n### Code Examples\n\n```\n<html>\n<head>\n<style>\n.container {\ndisplay: grid;\ngrid-template-columns: auto auto auto;\nbackground-color: dodgerblue;\npadding: 10px;\n}\n.container div {\nbackground-color: #f1f1f1;\nborder: 1px solid black;\npadding: 10px;\nfont-size: 30px;\ntext-align: center;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div>1</div>\n<div>2</div>\n<div>3</div>\n<div>4</div>\n<div>5</div>\n</div>\n</body>\n</html>\n```\n\n## Tutorials\n\nTest your understanding of CSS Grid basics by completing a small coding challenge.\n\n## Tutorials\n\nA grid container contains one or more grid items arranged in columns and rows.\n\nAll direct child elements of a grid container automatically become grid items.\n\nAn element becomes a grid container when itsdisplayproperty \nis set togridorinline-grid.\n\nTry it Yourself \u00bb\n\nThe<div>element becomes a grid container when itsdisplayproperty \nis set togridorinline-grid.\n\n### Code Examples\n\n```\n.container {\ndisplay: grid;\n}\n\n---\n\n.container {\ndisplay: inline-grid;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_51",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_51",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

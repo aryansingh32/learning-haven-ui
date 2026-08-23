@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 8,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nOperators are used to perform operations on variables and values.\n\nIn the example below, we use the+operator to add together two values:\n\nAlthough the+operator is often used to add together two values, like in the example above, it can also be used to add together a variable and a value, or two variables:\n\nPython divides the operators in the following groups:\n\n### Code Examples\n\n```\nprint(10 + 5)\n\n---\n\nsum1 = 100 + 50\u00a0\u00a0\u00a0\u00a0\u00a0 # 150 (100 + 50)\nsum2 = sum1 + 250\u00a0\u00a0\u00a0 # 400 (150 + 250)\nsum3 = sum2 + sum2\u00a0\u00a0 # 800 (400 + 400)\n```\n\n## Tutorials\n\nArithmetic operators are used with numeric values to perform common mathematical operations:\n\nHere is an example using different arithmetic operators:\n\nPython has two division operators:\n\n### Code Examples\n\n```\nx = 15\ny = 4\nprint(x + y)\nprint(x - y)\nprint(x * y)\nprint(x / y)\nprint(x % y)\nprint(x ** y)\nprint(x // y)\n\n---\n\nx = 12\ny = 5\nprint(x / y)\n\n---\n\nx = 12\ny = 5\nprint(x // y)\n```\n\n## Tutorials\n\nAssignment operators are used to assign values to variables:\n\nPython 3.8 introduced the:=operator, known as the \"walrus operator\". It assigns values to variables as part of a larger expression:\n\n### Code Examples\n\n```\nnumbers = [1, 2, 3, 4, 5]\nif (count := len(numbers)) > 3:\nprint(f\"List has {count} elements\")\n```\n\n## Tutorials\n\nThe ternary operator allows you to assign one value if a condition is true, and another if it is false:\n\nThe ternary operator can be used instead ofelifin longer if statements:\n\n### Code Examples\n\n```\nnum = 6\nx = \"WEEKEND!\" if num > 5 else \"Workday\"\nprint(x)\n\n---\n\nnum = 6\nx = \"Fri\" if num == 5 else \"Sat\" if num == 6 else \"Sun\" if num == 7 else \"weekday\"\nprint(x)\n```\n\n## Tutorials\n\nComparison operators are used to compare two values:\n\nComparison operators returnTrueorFalsebased on the comparison:\n\nPython allows you to chain comparison operators:\n\n### Code Examples\n\n```\nx = 5\ny = 3\nprint(x == y)\nprint(x != y)\nprint(x > y)\nprint(x < y)\nprint(x >= y)\nprint(x <= y)\n\n---\n\nx = 5\nprint(1 < x < 10)\nprint(1 < x and x < 10)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_8",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_8",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

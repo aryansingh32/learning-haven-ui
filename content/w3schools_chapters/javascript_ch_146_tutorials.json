@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 146,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ECMAScript 2018is supported in all modern browsers sinceJun 2020:\n\nECMAScript 2018 added asynchronous iterators and iterables.\n\nWith asynchronous iterables, we can use theawaitkeyword infor/ofloops.Examplefor await () {}JavaScript Promise.finally()ECMAScript 2018 finalizes the full implementation of the Promise object withPromise.finally:Promise.finally() defines a function to be executed when a promise has either been successfully resolved\nrejected.Examplelet myPromise = new Promise();myPromise.then();myPromise.catch();myPromise.finally();JavaScript Array Rest ElementsECMAScript 2018 added the rest operator (...).The rest operator (...) allows us to destruct an array and collect the leftovers:Example 1let a, rest;const arr1 = [1,2,3,4,5,6,7,8];[a, ...rest] = arr1;Try it Yourself \u00bbExample 2let a, b, rest;const arr1 = [1,2,3,4,5,6,7,8];[a, b, ...rest] = arr1;Try it Yourself \u00bbJavaScript Object Rest PropertiesECMAScript 2018 added the rest operator (...).This allows us to destruct an object and collect the leftovers onto a new object:Example// Create an Object:const car = {type:\"Fiat\", model:\"500\", color:\"white\"};// Destructure the Objectlet {type, model, color} = car;document.getElementById(\"demo\").innerHTML = \"The car type is: \" + type;Try it Yourself \u00bbNew JavaScript RegExp FeaturesECMAScript 2018 added 4 new RegExp features:/s (dotAll) FlagUnicode Property Escapes (\\p{...})Lookbehind Assertions (?<=y)x and (?<!y)xNamed Capture GroupsRegExp /s FlagExamplelet text = \"Line\\nLine.\";let pattern = /Line./gs;let result = text.match(pattern);Try it Yourself \u00bbDescriptionThes(dotAll) flag allows the . (dot) metacharacter to match any character,\nincluding line terminator characters (like \\n, \\r, \\u2028, \\u2029).Withouts, \\n does not match line terminators.RegExp \\p MetacharacterExamplelet text = \"Hello \ud83d\ude04\";let pattern = /\\p{RGI_Emoji}/v;let result = pattern.test(text);Try it Yourself \u00bbDescriptionThe \\p{Unicode Property} metacharacter matches any character with a Unicode character property.RegExp LookbehindExample (?<=y)xlet text = \"Hello W3Schools\";let pattern = /(?<=Hello )W3Schools/;let result = pattern.test(text);Try it Yourself \u00bbDescription(?<=y)x matches \"x\" if \"x\" is preceded by \"y\".Negative LookbehindExample (?<!y)xlet text = \"Hello W3Schools\";let pattern = /(?<=Hello )W3Schools/;let result = pattern.test(text);Try it Yourself \u00bbDescription(?<!y)x matches \"x\" if \"x\" is NOT preceded by \"y\".RegExp Named Capturing GroupsExample (?<name>...)const text = \"Name: John Doe\";// Using named capturing groupsconst regex = /(?<firstName>\\w+) (?<lastName>\\w+)/;const match = text.match(regex);let fName = match.groups.firstName;let lName = match.groups.lastName;Try it Yourself \u00bbExplained(?<firstName>\\w+) captures a word and labels it firstName(?<lastName>\\w+) does the same for lastNametext.match() returns an array with a groups propertymatch.groups() returns an object:{firstName:\"John\", lastName:\"Doe\" }When using a regular expression with capturing groups, the match() method of a string\nreturns a result array that includes a groups property.\nThis groups property is an object that holds the matches for named capturing groups.JavaScript ThreadsIn JavaScript you use the Web Workers API to create threads.Worker threads are used to execute code in the background so that the main program can continue execution.Worker threads run simultaneously with the main program. Simultaneous execution of different parts\nof a program can be time-saving.JavaScript Shared MemoryShared memory is a feature that allows threads (different parts of a program) to\naccess and update the same data in the same memory.Instead of passing data between threads, you can pass a SharedArrayBuffer object\nthat points to the memory where data is saved.SharedArrayBufferA SharedArrayBuffer object represents a fixed-length raw binary data buffer similar to the ArrayBuffer object.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nfor await () {}\n\n---\n\nlet myPromise = new Promise();\nmyPromise.then();\nmyPromise.catch();\nmyPromise.finally();\n\n---\n\nlet a, rest;\nconst arr1 = [1,2,3,4,5,6,7,8];\n[a, ...rest] = arr1;\n\n---\n\nlet a, b, rest;\nconst arr1 = [1,2,3,4,5,6,7,8];\n[a, b, ...rest] = arr1;\n\n---\n\n// Create an Object:\nconst car = {type:\"Fiat\", model:\"500\", color:\"white\"};\n// Destructure the Object\nlet {type, model, color} = car;\ndocument.getElementById(\"demo\").innerHTML = \"The car type is: \" + type;\n\n---\n\nlet text = \"Line\\nLine.\";\nlet pattern = /Line./gs;\nlet result = text.match(pattern);\n\n---\n\nlet text = \"Hello \ud83d\ude04\";\nlet pattern = /\\p{RGI_Emoji}/v;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"Hello W3Schools\";\nlet pattern = /(?<=Hello )W3Schools/;\nlet result = pattern.test(text);\n\n---\n\nlet text = \"Hello W3Schools\";\nlet pattern = /(?<=Hello )W3Schools/;\nlet result = pattern.test(text);\n\n---\n\nconst text = \"Name: John Doe\";\n// Using named capturing groups\nconst regex = /(?<firstName>\\w+) (?<lastName>\\w+)/;\nconst match = text.match(regex);\nlet fName = match.groups.firstName;\nlet lName = match.groups.lastName;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_145",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 211,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The table below shows how Temporal types can be converted.\n\nYou might like to add a time.\n\nYou can combinePlainDateand PlainTime to create a PlainDateTime object.\n\nPlainDateTimedoes not contain a time zone.\n\nYou must provide one to create a ZonedDateTime.\n\nInstantdoes not have a toZonedDateTime() method.\n\nYou must convert it to a ISO zone first.\n\nConverting time from another time zone is handled\nby the ZonedDateTime method withTimeZone().\n\n### Code Snippets\n\n```\nconst legacyDate = new Date();\nconst instant = legacyDate.toTemporalInstant();\n\n---\n\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\nconst dateTime = date.toPlainDateTime();\n\n---\n\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\nconst dateTime = date.toPlainDateTime(\"14:30\");\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n// Create a PlainTime object\nconst time = Temporal.PlainTime.from(\"14:30\");\n// Convert into a PlainDateTime object\nconst dateTime = date.toPlainDateTime(time);\n\n---\n\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T14:30\");\nconst date = dateTime.toPlainDate();\n\n---\n\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T14:30\");\nconst time = dateTime.toPlainTime();\n\n---\n\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T14:30\");\nconst zoned = dateTime.toZonedDateTime();\n\n---\n\nconst dateTime = Temporal.PlainDateTime.from(\"2026-05-17T14:30\");\nconst zoned = dateTime.toZonedDateTime(\"Europe/Oslo\");\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00+02:00[Europe/Oslo]\");\nconst dateTime = zoned.toPlainDateTime();\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00+02:00[Europe/Oslo]\");\nconst date = zoned.toPlainDate();\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00+02:00[Europe/Oslo]\");\nconst time = zoned.toPlainTime();\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00+02:00[Europe/Oslo]\");\nconst instant = zoned.toInstant();\n\n---\n\nconst instant = Temporal.Instant.from(\"2026-05-17T12:30:00Z\");\nconst zoned = instant.toZonedDateTime(\"Europe/Oslo\");\n\n---\n\nconst instant = Temporal.Instant.from(\"2026-05-17T12:30:00Z\");\nconst zoned = instant.toZonedDateTimeISO(\"Europe/Oslo\");\n\n---\n\nconst yearMonth = new Temporal.PlainYearMonth(2026, 5);\nconst date = yearMonth.toPlainDate({ day: 17 });\n\n---\n\nconst monthDay = new Temporal.PlainYearMonth(2026, 5);\nconst date = monthDay.toPlainDate({ year: 2026 });\n\n---\n\nconst zdtOslo = Temporal.Now.zonedDateTimeISO('Europe/Oslo');\nconst zdtTokyo = zdtOslo.withTimeZone('Asia/Tokyo');\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_210",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

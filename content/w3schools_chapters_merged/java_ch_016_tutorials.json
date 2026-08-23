@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nOOP stands forObject-Oriented Programming.\n\nProcedural programming is about writing procedures or methods that perform \noperations on the data, while object-oriented programming is about \ncreating objects that contain both data and methods.\n\nOOP is ideal for building scalable, reusable, and maintainable code.\n\nObject-oriented programming has several advantages over procedural \nprogramming:\n\nTip:The \"Don't Repeat Yourself\" (DRY) principle is about \nreducing the repetition of code. You should extract out the codes that are \ncommon for the application, and place them at a single place and reuse them \ninstead of repeating it.\n\nClasses and objects are the two main aspects of object-oriented programming.\n\nLook at the following illustration to see the difference between class and \nobjects:\n\nAnother example:\n\nSo, a class is a template for objects, and an object is an instance of a class.\n\nWhen the individual objects are created, they inherit all the \nvariables and methods from the class.\n\nYou will learn much more aboutclasses and objectsin the next chapter.\n\n## Tutorials\n\nJava is an object-oriented programming language.\n\nEverything in Java is associated with classes and objects, along with its attributes and \nmethods. For example: in real life, a car is an object. The car hasattributes, such as weight and color, andmethods, such as drive and brake.\n\nA Class is like an object constructor, or a \"blueprint\" for creating objects.\n\nTo create a class, use the keywordclass.\n\nIn this example, we create a class named \"Main\" with a \nvariablex:\n\nIn Java, an object is created from a class. After defining a class, you can create objects from it using thenewkeyword:\n\nYou can create multiple objects of one class:\n\nYou can also create an object of a class and access it in another class. This \nis often used for better organization of classes (one class has all the \nattributes and methods, while the other class holds themain()method (code to \nbe executed)).\n\nRemember that the name of the java file should match the class name. In this \nexample, we have created two files in the same directory/folder:\n\nWhen both files have been compiled:\n\nRun the Second.java file:\n\nAnd the output will be:\n\n### Code Examples\n\n```\nC:\\Users\\\nYour Name\n>javac Main.java\nC:\\Users\\\nYour Name\n>javac Second.java\n\n---\n\nC:\\Users\\\nYour Name\n>java Second\n```\n\n## Tutorials\n\nIn the previous chapter, we used the term \"variable\" forxin the example (as shown below).\n\nIn Java, variables declared inside a class are called \"attributes\".\n\nYou can also say that attributes are variables that belong to a class:\n\nYou can access attributes by creating an object of the class, and by using the dot syntax (.):\n\nThe following example will create an object of theMainclass, with the \nnamemyObj. We use thexattribute on the object to print its value:\n\nYou can also modify attribute values:\n\nOr override existing values:\n\nIf you don't want the ability to override existing values, declare the attribute asfinal:\n\nIf you create multiple objects of one class, you can change the attribute values in one object, without affecting the attribute values in the other:\n\nYou can specify as many attributes as you want:\n\n### Code Examples\n\n```\nCreate a class called \"\nMain\n\" with two attributes:\nx\nand\ny\n:\npublic class Main {\n\u00a0 int x = 5;\n\u00a0 int y = 3;\n}\n\n---\n\nExample\nCreate an object called \"\nmyObj\n\" and print the value of\nx\n:\npublic class Main {\n\u00a0 int x = 5;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nSet the value of\nx\nto 40:\npublic class Main {\n\u00a0 int x;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 myObj.x = 40;\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nChange the value of\nx\nto 25:\npublic class Main {\n\u00a0 int x = 10;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 myObj.x = 25; // x is now 25\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\nfinal\nint x = 10;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 myObj.x = 25; // will generate an error: cannot assign a value to a\nfinal\nvariable\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nChange the value of\nx\nto 25 in\nmyObj2\n, and leave\nx\nin\nmyObj1\nunchanged:\npublic class Main {\n\u00a0 int x = 5;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj1 = new Main();\u00a0 // Object 1\n\u00a0\u00a0\u00a0 Main myObj2 = new Main();\u00a0 // Object 2\n\u00a0\u00a0\u00a0 myObj2.x = 25;\n\u00a0\u00a0\u00a0 System.out.println(myObj1.x);\u00a0 // Outputs 5\n\u00a0\u00a0\u00a0 System.out.println(myObj2.x);\u00a0 // Outputs 25\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 String fname = \"John\";\n\u00a0 String lname = \"Doe\";\n\u00a0 int age = 24;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main myObj = new Main();\n\u00a0\u00a0\u00a0 System.out.println(\"Name: \" + myObj.fname + \" \" + myObj.lname);\n\u00a0\u00a0\u00a0 System.out.println(\"Age: \" + myObj.age);\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nYou learned from theJava Methodschapter that methods are declared within a \nclass, and that they are used to perform certain actions:\n\nmyMethod()prints a text (the action), when it iscalled. To \ncall a method, write the method's name followed by two parentheses()and a semicolon;\n\n1) We created a customMainclass with theclasskeyword.\n\n2) We created thefullThrottle()andspeed()methods in theMainclass.\n\n3) ThefullThrottle()method and thespeed()method will print out some text, when they are called.\n\n4) Thespeed()method accepts anintparameter calledmaxSpeed- we \nwill use this in8).\n\n5) In order to use theMainclass and its \nmethods, we need to create anobjectof theMainClass.\n\n6) Then, go to themain()method, which you know by now is a built-in \nJava method that runs your program (any code inside main is executed).\n\n7) By using thenewkeyword we created an object with the namemyCar.\n\n8) Then, we call thefullThrottle()andspeed()methods on themyCarobject, and run the program using the name of the object (myCar), followed by a dot (.), followed by the name of the method (fullThrottle();andspeed(200);). \nNotice that we add anintparameter of200inside thespeed()method.\n\nLike we specified in theClasses chapter, it is \na good practice to create an object of a class and access it in another class.\n\nRemember that the name of the java file should match the class name. In this \nexample, we have created two files in the same directory:\n\nWhen both files have been compiled:\n\nRun the Second.java file:\n\nAnd the output will be:\n\n### Code Examples\n\n```\nC:\\Users\\\nYour Name\n>javac Main.java\nC:\\Users\\\nYour Name\n>javac Second.java\n\n---\n\nC:\\Users\\\nYour Name\n>java Second\n```\n\n## Tutorials\n\nTest your understanding ofJava Classes and Objectsby completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

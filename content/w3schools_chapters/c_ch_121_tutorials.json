@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 121,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A list is similar to avectorin that it can store multiple elements of the same type and dynamically grow in size.\n\nHowever, two major differences between lists and vectors are:\n\nTo use a list, you have to include the<list>header file:// Include the list library#include <list>Create a ListTo create a list, use thelistkeyword, and \nspecify thetypeof values it should store within angle brackets<>and then the name of the list, like:list<type>listName.Example// Create a list called cars that will store stringslist<string> cars;If you want to add elements at the time of declaration, place them in a comma-separated list, inside curly braces{}:Example// Create a list called cars that will store stringslist<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Print list elementsfor (string car : cars) {cout << car << \"\\n\";}Try it Yourself \u00bbNote:The type of the list (stringin our example) cannot be changed after its been declared.Access a ListYou cannot access list elements by referring to index numbers, like with \narrays and vectors.However, you can access the first or the last element with the.front()and.back()functions, respectively:Example// Create a list called cars that will store stringslist<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};// Get the first elementcout << cars.front();\u00a0 // Outputs Volvo// Get the \n  last elementcout << cars.back();\u00a0 // Outputs MazdaTry it Yourself \u00bbChange a List ElementYou can also change the value of the first or the last element with the.front()and.back()functionsExamplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Change the \n  value of the first elementcars.front() = \"Opel\";// Change the \n  value of the last elementcars.back() = \"Toyota\";cout << cars.front(); // Now \n  outputs Opel instead of Volvocout << cars.back();\u00a0 // Now \n  outputs Toyota instead of MazdaTry it Yourself \u00bbAdd List ElementsTo add elements to a list, you can use.push_front()to insert an element at the beginning of the list and.push_back()to add an element at the end:Examplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Add an \n  element at the beginningcars.push_front(\"Tesla\");// Add an element \n  at the endcars.push_back(\"VW\");Try it Yourself \u00bbRemove List ElementsTo remove elements from a list, use.pop_front()to remove an element from the beginning of the list and.pop_back()to remove an element at the end:Examplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};// Remove the \n  first elementcars.pop_front();// Remove the last elementcars.pop_back();Try it Yourself \u00bbList SizeTo find out how many elements a list has, use the.size()function:Examplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};cout << cars.size();\u00a0 \n  // Outputs 4Try it Yourself \u00bbCheck if a List is EmptyUse the.empty()function to find out if a list is empty or not.The.empty()function returns1(true) if the list is empty and0(false) \notherwise:Examplelist<string> cars;cout << cars.empty();\u00a0 \n  // Outputs 1 (The list is empty)Try it Yourself \u00bbExamplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};cout << cars.empty();\u00a0 \n  // Outputs 0 (not empty)Try it Yourself \u00bbLoop Through a ListYou cannot loop through the list elements with a traditionalforloop combined with the.size()function, since it is not possible to access \nelements in a list by index:Examplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};for (int i = \n  0; i < cars.size(); i++) {cout << cars[i] << \"\\n\";}The simplest way to loop through a list is with thefor-eachloop:Examplelist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};for (string car : cars) {cout << car << \"\\n\";}Try it Yourself \u00bbTip:It is also possible to loop through lists with aniterator, which you will learn more about in a later chapter.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Include the list library\n#include <list>\n\n---\n\n// Create a list called cars that will store strings\nlist<string> cars;\n\n---\n\n// Create a list called cars that will store strings\nlist<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Print list elements\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n\n---\n\n// Create a list called cars that will store strings\nlist<string> cars = {\"Volvo\", \"BMW\", \n  \"Ford\", \"Mazda\"};\n// Get the first element\ncout << cars.front();\u00a0 // Outputs Volvo\n// Get the \n  last element\ncout << cars.back();\u00a0 // Outputs Mazda\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Change the \n  value of the first element\ncars.front() = \"Opel\";\n// Change the \n  value of the last element\ncars.back() = \"Toyota\";\ncout << cars.front(); // Now \n  outputs Opel instead of Volvo\ncout << cars.back();\u00a0 // Now \n  outputs Toyota instead of Mazda\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Add an \n  element at the beginning\ncars.push_front(\"Tesla\");\n// Add an element \n  at the end\ncars.push_back(\"VW\");\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n// Remove the \n  first element\ncars.pop_front();\n// Remove the last element\ncars.pop_back();\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.size();\u00a0 \n  // Outputs 4\n\n---\n\nlist<string> cars;\ncout << cars.empty();\u00a0 \n  // Outputs 1 (The list is empty)\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\ncout << cars.empty();\u00a0 \n  // Outputs 0 (not empty)\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (int i = \n  0; i < cars.size(); i++) {\ncout << cars[i] << \"\\n\";\n}\n\n---\n\nlist<string> cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\nfor (string car : cars) {\ncout << car << \"\\n\";\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_120",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

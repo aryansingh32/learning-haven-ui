@@ -1,0 +1,186 @@
+Video URL: https://www.youtube.com/watch?v=PIC0Ps_Ci-s
+Video Title: Exercise 8 - Bounce Animation | Sigma Web Development Course - Tutorial #48
+--------------------------------------------------
+
+00:00:00.000
+We have learnt transition and animation very well.
+00:00:03.000
+Now it's time to check your transition and animation skills.
+00:00:06.500
+I will give you a question that you have to solve.
+00:00:09.300
+Do like the video and write Sigma patch in the comment section.
+00:00:13.200
+Let's go to the computer screen.
+00:00:14.700
+Let's roll the intro.
+00:00:16.200
+Intro So friends, the exercise I want to give you now is on transition and animation.
+00:00:29.000
+So I am going to make a folder here in the name of video 48 and after making this folder, I am going to open it in VS code.
+00:00:36.000
+Here I will make a file in the name of index.html and put a comment.
+00:00:41.000
+And what I will do is that I will ask you a question in the comment section
+00:00:46.000
+and because this is going to be done with transition animation
+00:00:49.000
+we will use transition animation, that was very easy to predict
+00:00:52.000
+so now comes the problem which you have to solve
+00:00:55.000
+you have this cube and here you have a background
+00:00:58.000
+what you have to do is
+00:01:01.000
+you have to make this cube bounce here
+00:01:04.000
+like a ball and i will make it a ball
+00:01:06.000
+by giving it a border radius
+00:01:08.000
+so I will give it a border radius to make a ball
+00:01:10.000
+so let's do it
+00:01:12.000
+so I will come here and inspect
+00:01:14.000
+this box
+00:01:16.000
+I have put some CSS on it
+00:01:18.000
+I will give it a border radius
+00:01:20.000
+border radius
+00:01:22.000
+and here I will
+00:01:24.000
+give it in this way such that it becomes a ball
+00:01:28.480
+58 pixels, after 69 pixels it became a ball
+00:01:32.000
+so I will make it 70 pixels only, its border radius
+00:01:34.480
+let's go and after doing this
+00:01:37.840
+this box has become a ball
+00:01:41.440
+and I will put a semicolon here and you see it has become aolon and you see this ball is made
+00:01:46.000
+what you have to do is to make this ball
+00:01:49.000
+like a real ball
+00:01:52.000
+this is a physics simulation and some of you
+00:01:55.000
+will find it difficult but I will give you some hints
+00:01:58.000
+because I know it can be a little difficult for you
+00:02:01.000
+now you can do this question either with transition or animation
+00:02:04.000
+I don't have any problem with that.
+00:02:05.000
+Your choice will be, you want to do it with transition or animation.
+00:02:09.000
+But I would like to give a hint to you if you find it difficult.
+00:02:12.000
+The first hint I want to give you is that you have to make a separate animation in X and separate animation in Y.
+00:02:18.000
+At least I will solve it in this way.
+00:02:20.000
+Make two separate animations.
+00:02:22.000
+If you want to bounce any ball bounce then the trajectory in the y axis
+00:02:26.000
+is like
+00:02:28.000
+that its speed decreases
+00:02:30.000
+so think about such animations
+00:02:32.000
+that its speed decreases
+00:02:34.000
+first make the y animation then
+00:02:36.000
+make the x animation
+00:02:38.000
+and how will the x animation be? it will be linear
+00:02:40.000
+because your speed
+00:02:42.000
+in x does not decrease
+00:02:44.000
+and if you are not able to understand how to do it
+00:02:46.320
+then you try it
+00:02:47.520
+see in X axis you have to take it from here to here
+00:02:51.080
+and in Y axis you have to take it from here to here
+00:02:55.600
+such that when it is coming from here to here
+00:02:57.720
+then its speed is decreasing and becoming zero
+00:03:00.280
+and you have to repeat that animation backwards
+00:03:02.800
+how to do that I told you in the animation video and both the animations have to be that animation backwards I have told you how to do that in the animation video
+00:03:05.000
+and both the animations have to be pasted together
+00:03:07.000
+that's it, one linear animation
+00:03:09.000
+and one animation you have to decide
+00:03:12.000
+and if you want to do it with transition
+00:03:16.000
+then you can do it with transition
+00:03:18.000
+so it will be your choice, I will not tell you anything
+00:03:21.000
+and it is available in solution
+00:03:22.000
+yes I know it is a little advanced exercise
+00:03:24.000
+but I want all of you to attempt it, at least attempt it.
+00:03:28.200
+And if you don't get it, it's okay, come to the solution,
+00:03:31.200
+listen to me, there is no problem, if you don't get it,
+00:03:33.560
+there is no tension, don't think of yourself as useless.
+00:03:36.160
+Don't think of these exercises as if you are useless if you don't get it.
+00:03:39.760
+Many people think of exercise as if you are not able to do it,
+00:03:44.560
+so you didn't understand, no. Actually, I will tell not able to do it, so you did not understand.
+00:03:46.000
+Actually, I will tell you how to do complex animations with exercise.
+00:03:50.000
+Then simple animations will look like a dessert to you.
+00:03:52.000
+Your confidence will go up.
+00:03:54.000
+So after doing this course, I want to make you a very successful web developer.
+00:03:58.000
+That you will not get stuck anywhere.
+00:04:00.000
+So if you don't do this kind of work, then this will not happen in the course.
+00:04:02.000
+I have to do this.
+00:04:04.000
+And let's meet in the video of its solution
+00:04:06.000
+it is going to be very interesting, do watch it
+00:04:08.500
+if you have not accessed this playlist, then do access it
+00:04:11.000
+by clicking here or by clicking there, save it
+00:04:13.000
+and the whole course has been uploaded in the github, so do access it too
+00:04:15.000
+that's all for me in this video guys
+00:04:17.000
+thank you so much guys for watching this video

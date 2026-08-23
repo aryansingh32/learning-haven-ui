@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 56,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTo convert aBarChart to aPiechart, just replace:google.visualization.BarChartwith:google.visualization.PieChart\n\nTo display the Pie in 3D, just addis3D: trueto the options:\n\nToscatter plotthe same data, change google.visualization to ScatterChart:\n\n### Code Examples\n\n```\n<div id=\"myChart\" style=\"max-width:700px; height:400px\"></div>\n\n---\n\n<script src=\"https://www.gstatic.com/charts/loader.js\"></script>\n\n---\n\n<script>\ngoogle.charts.load('current',{packages:['corechart']});\ngoogle.charts.setOnLoadCallback(drawChart);\n// Your Function\nfunction drawChart() {\n...\n}\n</script>\n\n---\n\nfunction drawChart() {\n// Set Data\nconst data = google.visualization.arrayToDataTable([\n['Contry', 'Mhl'],\n['Italy', 55],\n['France', 49],\n['Spain', 44],\n['USA', 24],\n['Argentina', 15]\n]);\n// Set Options\nconst options = {\ntitle: 'World Wide Wine Production'\n};\n// Draw\nconst chart = new google.visualization.BarChart(document.getElementById('myChart'));\nchart.draw(data, options);\n}\n\n---\n\nconst chart = new google.visualization.\nPieChart\n(document.getElementById('myChart'));\n\n---\n\nconst options = {\ntitle: 'World Wide Wine Production',\nis3D: true\n};\n\n---\n\nfunction drawChart() {\n// Set Data\nconst data = google.visualization.arrayToDataTable([\n['Price', 'Size'],\n[50,7],[60,8],[70,8],[80,9],[90,9],[100,9],\n[110,10],[120,11],[130,14],[140,14],[150,15]\n]);\n// Set Options\nconst options = {\ntitle: 'House Prices vs Size',\nhAxis: {title: 'Square Meters'},\nvAxis: {title: 'Price in Millions'},\nlegend: 'none'\n};\n// Draw Chart\nconst chart = new google.visualization.LineChart(document.getElementById('myChart'));\nchart.draw(data, options);\n}\n\n---\n\nconst chart = new google.visualization.ScatterChart(document.getElementById('myChart'));\n```\n\n## Tutorials\n\nTo use D3.js in your web page,add a linkto the library:\n\nThis script selects the body element and appends a paragraph with the text \"Hello World!\":\n\n### Code Examples\n\n```\n<script src=\"//d3js.org/d3.v3.min.js\"></script>\n\n---\n\nd3.select(\"body\").append(\"p\").text(\"Hello World!\");\n\n---\n\n// Set Dimensions\nconst xSize = 500;\nconst ySize = 500;\nconst margin = 40;\nconst xMax = xSize - margin*2;\nconst yMax = ySize - margin*2;\n// Create Random Points\nconst numPoints = 100;\nconst data = [];\nfor (let i = 0; i < numPoints; i++) {\ndata.push([Math.random() * xMax, Math.random() * yMax]);\n}\n// Append SVG Object to the Page\nconst svg = d3.select(\"#myPlot\")\n.append(\"svg\")\n.append(\"g\")\n.attr(\"transform\",\"translate(\" + margin + \",\" + margin + \")\");\n// X Axis\nconst x = d3.scaleLinear()\n.domain([0, 500])\n.range([0, xMax]);\nsvg.append(\"g\")\n.attr(\"transform\", \"translate(0,\" + yMax + \")\")\n.call(d3.axisBottom(x));\n// Y Axis\nconst y = d3.scaleLinear()\n.domain([0, 500])\n.range([ yMax, 0]);\nsvg.append(\"g\")\n.call(d3.axisLeft(y));\n// Dots\nsvg.append('g')\n.selectAll(\"dot\")\n.data(data).enter()\n.append(\"circle\")\n.attr(\"cx\", function (d) { return d[0] } )\n.attr(\"cy\", function (d) { return d[1] } )\n.attr(\"r\", 3)\n.style(\"fill\", \"Red\");\n```\n\n## Tutorials\n\nThe HTML page contains a <div> section and a <button>.\n\nThe <div> \nsection is used to display information from a server.\n\nThe <button> calls a function (if it is clicked).\n\nThe function requests data from a web \nserver and displays it:\n\nAJAX =AsynchronousJavaScriptAndXML.\n\nAJAX is not a programming language.\n\nAJAX just uses a combination of:\n\nAJAX allows web pages to be updated asynchronously by exchanging data with a web server behind the scenes.\nThis means that it is possible to update parts of a web page, without reloading the whole page.\n\nModern Browsers can use Fetch API instead of the XMLHttpRequest Object.\n\nThe Fetch API interface allows web browser to make HTTP requests to web servers.\n\nIf you use the XMLHttpRequest Object, Fetch can do the same in a simpler way.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<div id=\"demo\">\n<h2>Let AJAX change this text</h2>\n<button type=\"button\" onclick=\"loadDoc()\">Change Content</button>\n</div>\n</body>\n</html>\n\n---\n\nfunction loadDoc() {\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\ndocument.getElementById(\"demo\").innerHTML = this.responseText;\n}\nxhttp.open(\"GET\", \"ajax_info.txt\", true);\nxhttp.send();\n}\n```\n\n## Tutorials\n\nAll modern browsers support theXMLHttpRequestobject.\n\nTheXMLHttpRequestobject can be used to exchange data with a web server behind the \nscenes. This means that it is possible to update parts of a web page, without \nreloading the whole page.\n\nAll modern browsers (Chrome, Firefox, IE, Edge, Safari, Opera) have a built-inXMLHttpRequestobject.\n\nSyntax for creating anXMLHttpRequestobject:\n\nA callback function is a function passed as a parameter to another function.\n\nIn this case, the callback function should contain the code to execute when the \nresponse is ready.\n\nTo send a request to a server, you can use the open() and send() methods of theXMLHttpRequestobject:\n\nFor security reasons, modern browsers do not allow access across domains.\n\nThis means that both the web page and the XML file it tries to load, must be located on the same server.\n\nThe examples on W3Schools all open XML files located on the W3Schools domain.\n\nIf you want to use the example above on one of your own web pages,\nthe XML files you load must be located on your own server.\n\nWith theXMLHttpRequestobject you can define a callback function to be executed when \nthe request receives an answer.\n\nThe function is defined in theonloadproperty of theXMLHttpRequestobject:\n\nIf you have more than one AJAX task in a website, you should create one function for \nexecuting theXMLHttpRequestobject, and one callback function for each \nAJAX task.\n\nThe function call should contain the URL and what function to call when the \nresponse is ready.\n\nThereadyStateproperty holds the status of the XMLHttpRequest.\n\nTheonreadystatechangeproperty defines a callback function to be executed when the readyState changes.\n\nThestatusproperty and thestatusTextproperties hold the status of the XMLHttpRequest object.\n\nTheonreadystatechangefunction is called every time the readyState changes.\n\nWhenreadyStateis 4 and status is 200, the response is ready:\n\n### Code Examples\n\n```\nvariable\n= new XMLHttpRequest();\n\n---\n\nxhttp.onload = function() {\n// What to do when the response is ready\n}\n\n---\n\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n\n---\n\n// Create an XMLHttpRequest object\nconst xhttp = new XMLHttpRequest();\n// Define a callback function\nxhttp.onload = function() {\n// Here you can use the Data\n}\n// Send a request\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n\n---\n\nxhttp.onload = function() {\ndocument.getElementById(\"demo\").innerHTML = this.responseText;\n}\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n\n---\n\nloadDoc(\"\nurl-1\n\", myFunction1);\nloadDoc(\"\nurl-2\n\", myFunction2);\nfunction loadDoc(url, cFunction) {\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {cFunction(this);}\nxhttp.open(\"GET\", url);\nxhttp.send();\n}\nfunction myFunction1(xhttp) {\n// action goes here\n}\nfunction myFunction2(xhttp) {\n// action goes here\n}\n\n---\n\nfunction loadDoc() {\nconst xhttp = new XMLHttpRequest();\nxhttp.onreadystatechange = function() {\nif (this.readyState == 4 && this.status == 200) {\ndocument.getElementById(\"demo\").innerHTML =\nthis.responseText;\n}\n};\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n}\n```\n\n## Tutorials\n\nThe XMLHttpRequest object is used to request data from a server.\n\nTo send a request to a server, we use the open() and send() methods of theXMLHttpRequestobject:\n\nThe url parameter of theopen()method, is an address to a file on a server:\n\nThe file can be any kind of file, like .txt and \n.xml, or server scripting files like .asp and .php (which can perform  \nactions on the server before sending the response back).\n\nServer requests should be sent asynchronously.\n\nThe async parameter of the open() \nmethod should be set to true:\n\nBy sending asynchronously, the \nJavaScript does not have to wait for the server response, but can instead:\n\nGETis simpler and faster thanPOST, and can be used in most cases.\n\nHowever, always use POST requests when:\n\nA simpleGETrequest:\n\nIn the example above, you may get a cached result. To avoid this, add a unique ID to the URL:\n\nIf you want to send information with theGETmethod, add the information to the URL:\n\nHow the server uses the input and how the server responds to a request, is explained in a later chapter.\n\nA simplePOSTrequest:\n\nTo POST data like an HTML form, add an HTTP header withsetRequestHeader(). \nSpecify the data you want to send in thesend()method:\n\nTo execute a synchronous request, change the third parameter in theopen()method tofalse:\n\nSometimes async = false are used for quick testing. You will also find \nsynchronous requests in older JavaScript code.\n\nSince the code will wait for server completion, there is no need for anonreadystatechangefunction:\n\n### Code Examples\n\n```\nxhttp.open(\"GET\", \"ajax_info.txt\", true);\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"ajax_test.asp\", true);\n\n---\n\nxhttp.open(\"GET\", \"ajax_test.asp\", true);\n\n---\n\nxhttp.open(\"GET\", \"demo_get.asp\");\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"demo_get.asp?t=\" + Math.random());\nxhttp.send();\n\n---\n\nxhttp.open(\"GET\", \"demo_get2.asp?fname=Henry&lname=Ford\");\nxhttp.send();\n\n---\n\nxhttp.open(\"POST\", \"demo_post.asp\");\nxhttp.send();\n\n---\n\nxhttp.open(\"POST\", \"ajax_test.asp\");\nxhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");\nxhttp.send(\"fname=Henry&lname=Ford\");\n\n---\n\nxhttp.open(\"GET\", \"ajax_info.txt\", false);\n\n---\n\nxhttp.open(\"GET\", \"ajax_info.txt\", false);\nxhttp.send();\ndocument.getElementById(\"demo\").innerHTML = xhttp.responseText;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_56",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_56",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

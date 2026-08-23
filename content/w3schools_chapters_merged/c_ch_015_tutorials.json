@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 15,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn C++, you don't have to specify the size of the array. The compiler is \nsmart enough to determine the size of the array based on the number of inserted values:\n\nThe example above is equal to:\n\nHowever, the last approach is considered as \"good practice\", because it will reduce \nthe chance of errors in your program.\n\nIt is also possible to declare an array without specifying the elements on \ndeclaration, and add them later:\n\nNote:The example above only works when you have specified the size of the array.\n\nIf you don't specify the array size, an error occurs:\n\nYou will often hear the terms \"fixed size\" and \"dynamic size\" when discussing \narrays in C++.\n\nThis is because the size of an array in C++ is fixed, meaning youcannotaddorremoveelements \nafter it is created.\n\nFor operations that require adding and removing array elements, C++ providesvectors, which areresizable arrays.\n\nThe size of a vector is dynamic, meaning it can grow and shrink as needed.\n\nVectors are found in the<vector>library, and they come with many useful \nfunctions to add, remove and modify elements:\n\n### Code Examples\n\n```\nstring cars[] = {\"Volvo\", \"BMW\", \"Ford\"}; // Three array elements\n\n---\n\nstring cars[3] = {\"Volvo\", \"BMW\", \"Ford\"}; // Also three array elements\n\n---\n\nstring cars[5];\ncars[0] = \"Volvo\";\ncars[1] = \"BMW\";\ncars[2] \n  = \"Ford\";\ncars[3] = \"Mazda\";\ncars[4] = \"Tesla\";\n\n---\n\nstring cars[];\u00a0 \n  // Array size is not specified\ncars[0] = \"Volvo\";\ncars[1] = \"BMW\";\ncars[2] \n  = \"Ford\";\ncars[3] = \"Mazda\";\ncars[4] = \"Tesla\";\n// error: array size missing in 'cars'\n\n---\n\n// An array with 3 elements\nstring cars[3] = {\"Volvo\", \"BMW\", \"Ford\"};\n// Trying to add another element (a fourth element) to the cars array will \n  result in an error\ncars[3] = \"Tesla\";\n\n---\n\n// A vector with 3 elements\nvector<string> cars = {\"Volvo\", \"BMW\", \"Ford\"};\n// Adding another element to the vector\ncars.push_back(\"Tesla\");\n```\n\n## Tutorials\n\nTo get the size of an array, you can use thesizeof()operator:\n\nWhy did the result show20instead of5, when the array contains 5 elements?\n\nIt is because thesizeof()operator returns the size of a type inbytes.\n\nYou learned from theData Types chapterthat aninttype is usually 4 bytes, so from the example above,4 x 5 (4 bytes x 5 elements) =20 bytes.\n\nTo find out how many elements an array has, you have to divide the size of the array \nby the size of the first element in the array:\n\nIn theArrays and Loops Chapter, we wrote the size of the array in the loop condition (i < \n5). This is not ideal, since it will only work for arrays of a specified size.\n\nHowever, by using thesizeof()approach from \nthe example above, we can now make loops that work for arrays of any size, which \nis more \nsustainable.\n\nInstead of writing:\n\nIt is better to write:\n\nNote that, in C++ version 11 (2011), you can also use the\"for-each\" loop, \nwhich is even cleaner and simpler:\n\n### Code Examples\n\n```\nint myNumbers[5] = {10, 20, 30, 40, 50};\ncout <<\nsizeof(myNumbers)\n;\n\n---\n\nint myNumbers[5] = {10, 20, 30, 40, 50};\nint getArrayLength =\nsizeof(myNumbers) / sizeof(myNumbers[0])\n;\ncout << getArrayLength;\n\n---\n\nint myNumbers[5] = {10, 20, 30, 40, 50};\nfor (int i = 0; i < \n  5; i++) {\ncout << myNumbers[i] << \n  \"\\n\";\n}\n\n---\n\nint myNumbers[5] = {10, 20, 30, 40, 50};\nfor (int i = 0; i < \n  sizeof(myNumbers) / sizeof(myNumbers[0]); i++) {\ncout << myNumbers[i] << \n  \"\\n\";\n}\n\n---\n\nint myNumbers[5] = {10, 20, 30, 40, 50};\nfor (int num : myNumbers) {\ncout << num << \"\\n\";\n}\n```\n\n## Tutorials\n\nTo demonstrate a practical example of using arrays, let's create a program that calculates the average of different ages:\n\nAnd in this example, we create a program that finds the lowest age among different ages:\n\n### Code Examples\n\n```\n// An array storing different ages\nint ages[8] = {20, 22, 18, 35, 48, 26, \n  87, 70};\nfloat avg, sum = 0;\nint i;\n// Get the length of the \n  array\nint length = sizeof(ages) / sizeof(ages[0]);\n// Loop through \n  the elements of the array\nfor (int age : ages) {\nsum += age;\n}\n// Calculate the average by dividing the sum by the length\navg = sum / \n  length;\n// Print the average\ncout << \"The average age is: \" << avg \n  << \"\\n\";\n\n---\n\n// An array storing different ages\nint ages[8] = {20, 22, 18, 35, 48, 26, \n  87, 70};\nint i;\n// Create a variable and assign the \n  first array element of ages to it\nint lowestAge = ages[0];\n// Loop \n  through the elements of the ages array to find the lowest age\nfor (int age \n  : ages) {\nif (lowestAge > age) {\nlowestAge = \n  age;\n}\n}\n// Print the lowest age\ncout << \"The lowest \n  age is: \" << lowestAge << \"\\n\";\n```\n\n## Tutorials\n\nA multi-dimensional array is an array of arrays.\n\nTo declare a multi-dimensional array, define the variable type, specify the name of the array followed by square brackets which specify how many elements the main array has, followed by another set of square brackets which indicates how many elements the sub-arrays have:\n\nAs with ordinary arrays, you can insert values with an array literal - a \ncomma-separated list inside curly braces. In a multi-dimensional array, each \nelement in an array literal is another array literal.\n\nEach set of square brackets in an array declaration adds anotherdimensionto an array. An array like the one above is said to have two dimensions.\n\nArrays can have any number of dimensions. The more dimensions an array has, the more complex the code becomes. The following array has three dimensions:\n\nTo access an element of a multi-dimensional array, specify an index number in each of the array's dimensions.\n\nThis statement accesses the value of the element in thefirst row (0)andthird column \n(2)of thelettersarray.\n\nTo change the value of an element, refer to the index number of the element in each of the dimensions:\n\nTo loop through a multi-dimensional array, you need one loop for each of the array's dimensions.\n\nThe following example outputs all elements in thelettersarray:\n\nThis example shows how to loop through a three-dimensional array:\n\nMulti-dimensional arrays are great at representing grids. This example shows a\npractical use for them. In the following example we use a multi-dimensional\narray to represent a small game of Battleship:\n\n### Code Examples\n\n```\nstring letters[2][4];\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\n\n---\n\nstring letters[2][2][2] = {\n{\n{ \"A\", \"B\" },\n{ \"C\", \"D\" }\n},\n{\n{ \"E\", \"F\" },\n{ \"G\", \"H\" }\n}\n};\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\ncout << letters[0][2];\u00a0 // Outputs \"C\"\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\nletters[0][0] = \"Z\";\ncout << letters[0][0];\u00a0 // Now outputs \n  \"Z\" instead of \"A\"\n\n---\n\nstring letters[2][4] = {\n{ \"A\", \"B\", \"C\", \"D\" },\n{ \"E\", \n  \"F\", \"G\", \"H\" }\n};\nfor (int i = 0; i < 2; i++) {\nfor (int j \n  = 0; j < 4; j++) {\ncout << letters[i][j] << \"\\n\";\n}\n}\n\n---\n\nstring letters[2][2][2] = {\n{\n{ \"A\", \"B\" },\n{ \"C\", \"D\" }\n},\n{\n{ \"E\", \"F\" },\n{ \"G\", \"H\" }\n}\n};\nfor (int i = 0; i < 2; i++) {\nfor (int j = 0; j < 2; j++) {\nfor (int k = 0; k < 2; k++) \n  {\ncout << letters[i][j][k] << \"\\n\";\n}\n}\n}\n\n---\n\n// We put \"1\" to indicate there is a ship.\nbool ships[4][4] = {\n{ \n  0, 1, 1, 0 },\n{ 0, 0, 0, 0 },\n{ 0, 0, 1, 0 },\n{ \n  0, 0, 1, 0 }\n};\n// Keep track of how many hits the player has and \n  how many turns they have played in these variables\nint hits = 0;\nint \n  numberOfTurns = 0;\n// Allow the player to keep going until they have \n  hit all four ships\nwhile (hits < 4) {\nint row, column;\ncout << \"Selecting coordinates\\n\";\n// Ask the player for a row\ncout << \"Choose a row number between 0 and 3: \";\ncin >> row;\n// Ask the player for a column\ncout << \"Choose a column number \n  between 0 and 3: \";\ncin >> column;\n// Check if a ship \n  exists in those coordinates\nif (ships[row][column]) {\n// If the player hit a ship, remove it by setting the value to zero.\nships[row][column] = 0;\n// Increase the hit counter\nhits++;\n// Tell the player that they have hit a ship \n  and how many ships are left\ncout << \"Hit! \" << (4-hits) \n  << \" left.\\n\\n\";\n} else {\n// Tell the player \n  that they missed\ncout << \"Miss\\n\\n\";\n}\n// Count how many turns the player has taken\nnumberOfTurns++;\n}\ncout << \"Victory!\\n\";\ncout << \"You won in \" << numberOfTurns << \" turns\";\n```\n\n## Tutorials\n\nTest your understanding ofC++ arraysby completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_15",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_15",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

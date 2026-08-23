@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 7,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nPython has a set of built-in methods that you can use on strings.\n\n## Tutorials\n\nNow you have learned a lot about Strings, and how to use them in Python.\n\nAre you ready for a test?\n\nMore Python Exercises:\n\nPython Exercises\n\n## Tutorials\n\nTest your understanding of creating, slicing, modifying, and formatting strings.\n\n## Tutorials\n\nBooleans represent one of two values:TrueorFalse.\n\nIn programming you often need to know if an expression isTrueorFalse.\n\nYou can evaluate any expression in Python, and get one of two \nanswers,TrueorFalse.\n\nWhen you compare two values, the expression is evaluated and Python returns \nthe Boolean answer:\n\nWhen you run a condition in an if statement, Python returnsTrueorFalse:\n\nThebool()function allows you to evaluate \nany value, and give youTrueorFalsein return,\n\nAlmost any value is evaluated toTrueif it \nhas some sort of content.\n\nAny string isTrue, except empty strings.\n\nAny number isTrue, except0.\n\nAny list, tuple, set, and dictionary areTrue, except \nempty ones.\n\nIn fact, there are not many values that evaluate toFalse, except empty values, such as(),[],{},\"\", the number0, and the valueNone. \nAnd of course the valueFalseevaluates toFalse.\n\nOne more value, or object in this case, evaluates toFalse, and that is if you have an object that \nis made from a class with a__len__function that returns0orFalse:\n\nYou can create functions that returns a Boolean Value:\n\nYou can execute code based on the Boolean answer of a function:\n\nPython also has many built-in functions that return a boolean value, like theisinstance()function, which can be used to determine if an object is of a certain data type:\n\n### Code Examples\n\n```\nprint(10 > 9)\nprint(10 == 9)\nprint(10 < 9)\n\n---\n\na = 200\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelse:\nprint(\"b is not greater than a\")\n\n---\n\nprint(bool(\"Hello\"))\nprint(bool(15))\n\n---\n\nx = \"Hello\"\ny = 15\nprint(bool(x))\nprint(bool(y))\n\n---\n\nbool(\"abc\")\nbool(123)\nbool([\"apple\", \"cherry\", \"banana\"])\n\n---\n\nbool(False)\nbool(None)\nbool(0)\nbool(\"\")\nbool(())\nbool([])\nbool({})\n\n---\n\nclass myclass():\ndef __len__(self):\nreturn 0\nmyobj = myclass()\nprint(bool(myobj))\n\n---\n\ndef myFunction() :\nreturn True\nprint(myFunction())\n\n---\n\ndef myFunction() :\nreturn True\nif myFunction():\nprint(\"YES!\")\nelse:\nprint(\"NO!\")\n\n---\n\nx = 200\nprint(isinstance(x, int))\n```\n\n## Tutorials\n\nTest your understanding of Python booleans by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_7",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

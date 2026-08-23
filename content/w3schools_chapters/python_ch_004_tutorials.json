@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 4,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "As we learned in the previous page, Python syntax can be executed by writing directly in the Command Line:\n\nOr by creating a python file on the server, using the .py file extension, and running it in the Command Line:\n\nIndentation refers to the spaces at the beginning of a code line.\n\nWhere in other programming languages the indentation in code is for readability \nonly, the indentation in Python is very important.\n\nPython uses indentation to indicate a block of code.\n\nPython will give you an error if you skip the indentation:\n\nThe number of spaces is up to you as a programmer, the most common use is four, but it has \nto be at least one.\n\nYou have to use the same number of spaces in the same block of code, \notherwise Python will give you an error:\n\nIn Python, a variable is created when you assign a value to it:ExampleVariables in Python:x = 5y = \"Hello, World!\"Try it Yourself \u00bbPython has no command for declaring a variable.You will learn more about variables in thePython Variableschapter.CommentsPython has commenting capability for the purpose of in-code documentation.Comments start with a#, and Python will render the rest of the line as a comment:ExampleComments in Python:#This is a comment.print(\"Hello, World!\")Try it Yourself \u00bbVideo: Python Syntax\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n>>> print(\"Hello, World!\")\nHello, World!\n\n---\n\nC:\\Users\\\nYour Name\n>python myfile.py\n\n---\n\nif 5 > 2:\nprint(\"Five is greater than two!\")\n\n---\n\nif 5 > 2:\nprint(\"Five is greater than two!\")\n\n---\n\nif 5 > 2:\nprint(\"Five is greater than two!\")\nif 5 > 2:\nprint(\"Five is greater than two!\")\n\n---\n\nif 5 > 2:\nprint(\"Five is greater than two!\")\nprint(\"Five is greater than \n  two!\")\n\n---\n\nx = 5\ny = \"Hello, World!\"\n\n---\n\n#This is a comment.\nprint(\"Hello, World!\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

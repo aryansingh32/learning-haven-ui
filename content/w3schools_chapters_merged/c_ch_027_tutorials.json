@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 27,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nPrepare online at your own pace, take the exam when you are ready, and add a verified credential to your CV, LinkedIn profile, and portfolio.\n\nDesigned for students, developers, and professionals who want a practical way to document their knowledge.\n\nAny student or professional working in digital fields can benefit from documenting their skills with a certificate.\n\nCertifications help demonstrate knowledge to current or future employers, clients, and collaborators in an increasingly competitive market.\n\nW3Schools has more than two decades of experience teaching coding online.\n\nOur certificates provide a practical and professional way to show your skills in a format that is easy to verify and share.\n\nThe price is a small fraction of the cost of traditional education.\n\nYou can prepare on your own schedule and take the exam when you are ready.\n\nEach certificate includes a unique verification link that can be shared with employers, clients, and your network.\n\nDownload your certificate to showcase it, and validate it using the unique link or QR code.\n\nSee how it looks in thisexample.\n\nHave any questions? Send us an e-mail:sales@w3schools.com\n\nGetting a certificate shows your commitment to improving your skills.\n\nYou can add the certificate to your CV, resume, LinkedIn profile, and other professional platforms.\n\nIt can help support career growth by making it easier to show your knowledge when applying for jobs, freelance work, or larger projects.\n\nGetting a certificate shows initiative, helps you build credibility, and gives you a professional way to present yourHTMLknowledge.\n\nAre you an educator, manager, or business owner looking for courses or certifications for a group?\n\nWe work with schools, companies, and organizations around the world.\n\nSend us an e-mail:sales@w3schools.com\n\n## Tutorials\n\nLearn how to add two numbers in C++:\n\nIn this example, the user must input two numbers. Then we print the \nsum by calculating (adding) the two numbers:\n\n### Code Examples\n\n```\nint x = 5;\nint y = 6;\nint sum = x + y;\ncout << sum;\n\n---\n\nint x, y;\nint sum;\ncout << \"Type a number: \";\ncin >> x;\ncout << \"Type another number: \";\ncin >> \n  y;\nsum = x + y;\ncout << \"Sum is: \" << sum;\n```\n\n## Tutorials\n\nYou can use therand()function, found in the<cstdlib>library, to generate a random number:\n\nTo get more control over the random number, for example, if you only want a random number between 0 and 100, you can use the following formula:\n\nNote:The examples above just outputs a random number once. \nThey don't output different random numbers each time the program runs. To fix \nthis, you can use thesrand()function \nand add thetime()function from the<ctime>library.\n\nThis will generate a random number from 0 to 100 each time the program runs:\n\n### Code Examples\n\n```\ncout << rand();\n\n---\n\n// Generate a random number between 0 and 100\nint \n  randomNum = rand() % 101;\ncout << randomNum;\nreturn 0;\n\n---\n\n// Get a different random number each time the program runs\nsrand(time(0));\n// Generate a random number between 0 and 100\nint \n  randomNum = rand() % 101;\ncout << randomNum;\nreturn 0;\n```\n\n## Tutorials\n\nThis section contains a C++ reference documentation.\n\nA list of C++ keywords and popular libraries can be found here:\n\n## Tutorials\n\nA list of useful keywords in C++ can be found in the table below.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_27",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_27",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

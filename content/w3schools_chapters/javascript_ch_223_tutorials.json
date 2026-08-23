@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 223,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thebind()method creates a new function.\n\nThe first argument sets thethisvalue for the new function.\n\nAdditional arguments becomefixed argumentsfor the new function.\n\nThe most common use ofbind()is to make sure a function always uses the samethisvalue.\n\nThe example below creates 2 objects (person and member).\n\nThe member object borrows the fullname method from the person object:\n\nThe difference between these methods is important:\n\nWithoutbind(), thethisvalue may be lost.\n\nThe function above loses itsthisvalue.\n\nThebind()method can be used toprevent losing this.\n\nIn the following example, theperson objecthas adisplay method.\n\nIn the display method,thisrefers to theperson object:\n\nWhen a function is used as a callback,thisis lost.\n\nThe example below uses person.display as a callback in the setTimeout() method.\n\nThebind()method solves this problem.\n\nIn the following example, thebind()method is used to bind person.display to person.\n\nArguments passed tobind()become fixed values.\n\nThis is sometimes calledpartial application.\n\nThe original function is not modified.\n\nEach call tobind()creates a new function.\n\nJavaScript Self Invocing Functions\n\n### Code Snippets\n\n```\nconst newFunction = functionName.bind(\nthis\n, arg1, arg2, ...);\n\n---\n\nconst person1 = { name: \"John\" };\nconst person2 = { name: \"Paul\" };\nconst person3 = { name: \"Ringo\" };\nfunction greet() {\nreturn \"Hello \" + this.name;\n}\nconst greetJohn = greet.bind(person1);\ngreetJohn();\n\n---\n\n// Create person Object\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\nfullName: function () {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\n// Create member Object\nconst member = {\nfirstName:\"Hege\",\nlastName: \"Nilsen\",\n}\n// Bind the fullName method to the member Object\nlet fullName = person.fullName.bind(member);\n// Later call fullname()\nfullname()\n\n---\n\n// Call a function\ngreet.call(person);\n// Call a function\ngreet.apply(person);\n// Create a new function\nconst greetLater = greet.bind(person);\n// Call the new function\ngreetLater();\n\n---\n\nconst person = {\nname: \"John\",\nsayHello: function() {\nreturn \"Hello \" + this.name;\n}\n};\nconst hello = person.sayHello;\nhello(); // this is not person\n\n---\n\nconst hello = person.sayHello.bind(person);\nhello();\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nperson.display();\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nsetTimeout(person.display, 3000);\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nlet display = person.display.bind(person);\nsetTimeout(display, 3000);\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\nconst double = multiply.bind(null, 2);\ndouble(5);\n\n---\n\nconst greetJohn = greet.bind({ name: \"John\" });\nconst greetAnna = greet.bind({ name: \"Anna\" });\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_222",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

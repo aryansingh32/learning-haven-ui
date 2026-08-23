@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 41,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Maximum Flow problem is about finding the maximum flow through a directed graph, from one place in the graph to another.\n\nMore specifically, the flow comes from a source vertex \\(s\\), and ends up in a sink vertex \\(t\\), and each edge in the graph is defined with a flow and a capacity, where the capacity is the maximum flow that edge can have.\n\nFinding the maximum flow can be very useful:\n\nAflow networkif often what we call a directed graph with a flow flowing through it.\n\nThecapacity\\(c\\) of an edge tells us how much flow is allowed to flow through that edge.\n\nEach edge also has aflowvalue that tells how much the current flow is in that edge.\n\nThe edge in the image above \\( v_1 \\rightarrow v_2 \\), going from vertex \\( v_1 \\) to vertex \\( v_2 \\), has its flow and capacity described as0/7, which means the flow is0, and the capacity is7. So the flow in this edge can be increased up to 7, but not more.\n\nIn its simplest form, flow network has onesource vertex\\(s\\) where the flow comes out, and onesink vertex\\(t\\) where the flow goes in. The other vertices just have flow passing through them.\n\nFor all vertices except \\(s\\) and \\(t\\), there is aconservation of flow, which means that the same amount of flow that goes into a vertex, must also come out of it.\n\nThe maximum flow is found by algorithms such as Ford-Fulkerson, or Edmonds-Karp, by sending more and more flow through the edges in the flow network until the capacity of the edges are such that no more flow can be sent through. Such a path where more flow can be sent through is called anaugmented path.\n\nThe Ford-Fulkerson and Edmonds-Karp algorithms are implemented using something called aresidual network. This will be explained in more detail on the next pages.\n\nTheresidual networkis set up with theresidual capacitieson each edge, where the residual capacity of an edge is the capacity on that edge, minus the flow. So when flow is increased in a an edge, the residual capacity is decreased with the same amount.\n\nFor each edge in the residual network, there is also areversed edgethat points in the opposite direction of the original edge. The residual capacity of a reversed edge is the flow of the original edge. Reversed edges are important for sending flow back on an edge as part of the maximum flow algorithms.\n\nThe image below shows the reversed edges in the graph from the simulation at the top of this page. Each reversed edge points in the opposite direction, and because there is no flow in the graph to begin with, the residual capacities for the reversed edges are 0.\n\nSome of these concepts, like the residual network and the reversed edge, can be hard to understand. That is why these concepts are explained more in detail, and with examples, on the next two pages.\n\nWhen the maximum flow is found, we get a value for how much flow can be sent through the flow network in total.\n\nThe Ford-Fulkerson and Edmonds-Karp algorithms expects one source vertex and one sink vertex to be able to find the maximum flow.\n\nIf the graph has more than one source vertex, or more than one sink vertex, the graph should be modified to find the maximum flow.\n\nTo modify the graph so that you can run the Ford-Fulkerson or Edmonds-Karp algorithm on it, create an extra super-source vertex if you have multiple source vertices, and create an extra super-sink vertex if you have multiple sink-vertices.\n\nFrom the super-source vertex, create edges to the original source vertices, with infinite capacities. And create edges from the sink vertices to the super-sink vertex similarly, with infinite capacities.\n\nThe image below shows such a graph with two sources \\(s_1\\) and \\(s_2\\), and three sinks \\(t_1\\), \\(t_2\\), and \\(t_3\\).\n\nTo run Ford-Fulkerson or Edmonds-Karp on this graph, a super source \\(S\\) is created with edges with infinite capacities to the original source nodes, and a super sink \\(T\\) is created with edges with infinite capacities to it from the original sinks.\n\nThe Ford-Fulkerson or Edmonds-Karp algorithm is now able to find maximum flow in a graph with multiple source and sink vertices, by going from the super source \\(S\\), to the super sink \\(T\\).\n\nTo understand what this theorem says we first need to know what a cut is.\n\nWe create two sets of vertices: one with only the source vertex inside it called \"S\", and one with all the other vertices inside it (including the sink vertex) called \"T\".\n\nNow, starting in the source vertex, we can choose to expand set S by including adjacent vertices, and continue to include adjacent vertices as much as we want as long as we do not include the sink vertex.\n\nExpanding set S will shrink set T, because any vertex belongs either to set S or set T.\n\nIn such a setup, with any vertex belonging to either set S or set T, there is a \"cut\" between the sets. The cut consists of all the edges stretching from set S to set T.\n\nIf we add all the capacities from edges going from set S to set T, we get the capacity of the cut, which is the total possible flow from source to sink in this cut.\n\nThe minimum cut is the cut we can make with the lowest total capacity, which will be the bottleneck.\n\nIn the image below, three different cuts are done in the graph from the simulation in the top of this page.\n\nCut A:This cut has vertices \\(s\\) and \\(v_1\\) in set S, and the other vertices are in set T. The total capacity of the edges leaving set S in this cut, from sink to source, is 3+4+7=14. We are not adding the capacity from edge \\(v_2 \\rightarrow v_1\\), because this edge goes in the opposite direction, from sink to source. So the maximum possible flow across cut A is 14.\n\nCut B:The maximum possible flow is 3+4+3=10 across cut B.\n\nCut C:The maximum possible flow is 2+6=8 across cut C. If we checked all other cuts in the graph, we would not find a cut with a lower total capacity. This is the minimum cut. Have you run the simulation finding the maximum flow in the top of this page? Then you also know that 8 is the maximum flow, which is exactly what the max-flow min-cut theorem says.\n\nThe max-flow min-cut theorem says that finding the minimum cut in a graph, is the same as finding the maximum flow, because the value of the minimum cut will be the same value as the maximum flow.\n\nFinding the maximum flow in a graph using an algorithm like Ford-Fulkerson also helps us to understand where the minimum cut is: The minimum cut will be where the edges have reached full capacity.\n\nThe minimum cut will be where the bottleneck is, so if we want to increase flow beyond the maximum limit, which is often the case in practical situations, we now know which edges in the graph that needs to be modified to increase the overall flow.\n\nModifying edges in the minimum cut to allow more flow can be very useful in many situations:\n\nSo using maximum flow algorithms to find the minimum cut, helps us to understand where the system can be modified to allow an even higher throughput.\n\nThe maximum flow problem is not just a topic in Computer Science, it is also a type of Mathematical Optimization, that belongs to the field of Mathematics.\n\nIn case you want to understand this better mathematically, the maximum flow problem is described in mathematical terms below.\n\nAll edges (\\(E\\)) in the graph, going from a vertex (\\(u\\)) to a vertex (\\(v\\)), have a flow (\\(f\\)) that is less than, or equal to, the capacity (\\(c\\)) of that edge:\n\n\\[ \\forall (u,v) \\in E: f(u,v) \\leq c(u,v)  \\]\n\nThis basically just means that the flow in an edge is limited by the capacity in that edge.\n\nAlso, for all edges (\\(E\\)), a flow in one direction from \\(u\\) to \\(v\\) is the same as having a negative flow in the reverse direction, from \\(v\\) to \\(u\\):\n\n\\[ \\forall (u,v) \\in E: f(u,v) = -f(v,u) \\]\n\nAnd the expression below states that conservation of flow is kept for all vertices (\\(u\\)) except for the source vertex (\\(s\\)) and for the sink vertex (\\(t\\)):\n\n\\[ \\forall u \\in V \\setminus \\{s,t\\} \\Rightarrow \\sum_{w \\in V} f(u,w) = 0  \\]\n\nThis just means that the amount of flow going into a vertex, is the same amount of flow that comes out of that vertex (except for the source and sink vertices).\n\nAnd at last, all flow leaving the source vertex \\(s\\), must end up in the sink vertex \\(t\\):\n\n\\[ \\sum_{(s,u) \\in E} f(s,u) = \\sum_{(v,t) \\in E} f(v,t) \\]\n\nThe equation above states that adding all flow going out on edges from the source vertex will give us the same sum as adding the flow in all edges going into the sink vertex.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_40",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 61,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Math Methods\n\nThenextUp()method returns the floating point number adjacent to a number in the positive direction, which is the lowest possible floating point number that is greater than the starting number.The return value fordoubletype arguments will be closer to the starting number than the return value forfloattype arguments.SyntaxOne of the following:public static double nextUp(doublestart)public static float nextUp(floatstart)Parameter ValuesParameterDescriptionstartRequired. The number to start from.Technical DetailsReturns:Adoubleorfloatvalue representing the floating point number adjacent to a starting number in the positive direction.Java version:1.6+\u276e Math Methods\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nExample\nFind the next floating point number above different numbers:\nSystem.out.println(Math.nextUp(1.0f));\nSystem.out.println(Math.nextUp(1.0));\nSystem.out.println(Math.nextUp(0.5f));\nSystem.out.println(Math.nextUp(0.5));\nSystem.out.println(Math.nextUp(Math.PI));\nSystem.out.println(Math.nextUp(3.1415927f));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThepow()method raises a number to the power of another number.\n\n### Code Examples\n\n```\nExample\nRaise different numbers to different powers:\nSystem.out.println(Math.pow(2, 8));\nSystem.out.println(Math.pow(3, 4));\nSystem.out.println(Math.pow(9, 0.5));\nSystem.out.println(Math.pow(8, -1));\nSystem.out.println(Math.pow(10, -2));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nTherandom()method returns a random number between 0 and 1.\n\nThis method never returns exactly 1, but it can return 0.\n\n### Code Examples\n\n```\nExample\nGenerate a random number:\nSystem.out.println(Math.random());\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nTherint()method rounds a number to the nearest integer. If there are two integers that are equally close to the number then the even integer will be returned.\n\nNote:This method is very similar toround(). The main differences betweenrint()andround()are:\n\n### Code Examples\n\n```\nExample\nRound numbers to the nearest integer:\nSystem.out.println(Math.rint(0.5));\nSystem.out.println(Math.rint(1.5));\nSystem.out.println(Math.rint(5));\nSystem.out.println(Math.rint(5.1));\nSystem.out.println(Math.rint(-5.1));\nSystem.out.println(Math.rint(-5.9));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nTheround()method rounds a number to the \nnearest integer.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nRound numbers to the nearest integer:\nSystem.out.println(Math.round(0.60));\nSystem.out.println(Math.round(0.40));\nSystem.out.println(Math.round(5));\nSystem.out.println(Math.round(5.1));\nSystem.out.println(Math.round(-5.1));\nSystem.out.println(Math.round(-5.9));\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_61",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_61",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

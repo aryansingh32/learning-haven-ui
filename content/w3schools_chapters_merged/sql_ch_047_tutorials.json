@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 47,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe DATE_FORMAT() function formats a date as specified.\n\n### Code Examples\n\n```\nSELECT DATE_FORMAT(\"2017-06-15\", \"%Y\");\n\n---\n\nDATE_FORMAT(\ndate\n,\nformat\n)\n\n---\n\nSELECT DATE_FORMAT(\"2017-06-15\", \"%M %d %Y\");\n\n---\n\nSELECT DATE_FORMAT(\"2017-06-15\", \"%W %M \n  %e %Y\");\n\n---\n\nSELECT DATE_FORMAT(BirthDate, \"%W %M %e %Y\") FROM Employees;\n```\n\n## Tutorials\n\nThe DATE_SUB() function subtracts a time/date interval from a date and then returns the date.\n\n### Code Examples\n\n```\nSELECT DATE_SUB(\"2017-06-15\", INTERVAL 10 DAY);\n\n---\n\nDATE_SUB(\ndate\n, INTERVAL\nvalue interval\n)\n\n---\n\nSELECT DATE_SUB(\"2017-06-15 09:34:21\", INTERVAL 15 MINUTE);\n\n---\n\nSELECT DATE_SUB(\"2017-06-15 09:34:21\", INTERVAL 3 HOUR);\n\n---\n\nSELECT DATE_SUB(\"2017-06-15\", INTERVAL -2 MONTH);\n```\n\n## Tutorials\n\nThe DAY() function returns the day of the month for a given date (a number from 1 to 31).\n\nNote:This function equals theDAYOFMONTH()function.\n\n### Code Examples\n\n```\nSELECT DAY(\"2017-06-15\");\n\n---\n\nDAY(\ndate\n)\n\n---\n\nSELECT DAY(\"2017-06-15 09:34:21\");\n\n---\n\nSELECT DAY(CURDATE());\n```\n\n## Tutorials\n\nThe DAYNAME() function returns the weekday name for a given date.\n\n### Code Examples\n\n```\nSELECT DAYNAME(\"2017-06-15\");\n\n---\n\nDAYNAME(\ndate\n)\n\n---\n\nSELECT DAYNAME(\"2017-06-15 09:34:21\");\n\n---\n\nSELECT DAYNAME(CURDATE());\n```\n\n## Tutorials\n\nThe DAYOFMONTH() function returns the day of the month for a given date (a number from 1 to 31).\n\nNote:This function equals theDAY()function.\n\n### Code Examples\n\n```\nSELECT DAYOFMONTH(\"2017-06-15\");\n\n---\n\nDAYOFMONTH(\ndate\n)\n\n---\n\nSELECT DAYOFMONTH(\"2017-06-15 09:34:21\");\n\n---\n\nSELECT DAYOFMONTH(CURDATE());\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_47",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_47",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

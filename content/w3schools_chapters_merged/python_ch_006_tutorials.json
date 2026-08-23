@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nYou can return a range of characters by using the slice syntax.\n\nSpecify the start index and the end index, separated by a colon, to return a \npart of the string.\n\nBy leaving out the start index, the range will start at the first character:\n\nBy leaving out theendindex, the range will go to the end:\n\n### Code Examples\n\n```\nb = \"Hello, World!\"\nprint(b[2:5])\n\n---\n\nb = \"Hello, World!\"\nprint(b[:5])\n\n---\n\nb = \"Hello, World!\"\nprint(b[2:])\n\n---\n\nb = \"Hello, World!\"\nprint(b[-5:-2])\n```\n\n## Tutorials\n\nPython has a set of built-in methods that you can use on strings.\n\nWhitespace is the space before and/or after the actual text, and very often you want to remove this space.\n\nThesplit()method returns a list where the text between the specified separator becomes the list items.\n\nLearn more about Lists in ourPython Listschapter.\n\nLearn more about String Methods with ourString Methods Reference\n\n### Code Examples\n\n```\na = \"Hello, World!\"\nprint(a.upper())\n\n---\n\na = \"Hello, World!\"\nprint(a.lower())\n\n---\n\na = \" Hello, World! \"\nprint(a.strip()) # returns \"Hello, World!\"\n\n---\n\na = \"Hello, World!\"\nprint(a.replace(\"H\", \"J\"))\n\n---\n\na = \"Hello, World!\"\nprint(a.split(\",\")) # \n  returns ['Hello', ' World!']\n```\n\n## Tutorials\n\nTo concatenate, or combine, two strings you can use the + operator.\n\n### Code Examples\n\n```\na = \"Hello\"\nb = \"World\"\nc = a + b\nprint(c)\n\n---\n\na = \"Hello\"\nb = \"World\"\nc = a + \" \" + b\nprint(c)\n```\n\n## Tutorials\n\nAs we learned in the Python Variables chapter, we cannot combine strings and numbers like this:\n\nBut we can combine strings and numbers by usingf-stringsor theformat()method!\n\nF-String was introduced in Python 3.6,\nand is now the preferred way of formatting strings.\n\nTo specify a string as an f-string, simply put anfin front of the string \nliteral, and add curly brackets{}as \nplaceholders for variables and other operations.\n\nA placeholder can contain variables,\noperations, functions, and modifiers to format the value.\n\nA placeholder can include amodifierto format the value.\n\nA modifier is included by adding a colon:followed by a legal formatting type, like.2fwhich means fixed point number with 2 decimals:\n\nA placeholder can contain Python code, like math operations:\n\nLearn more about String Formatting in ourString Formattingchapter.\n\n### Code Examples\n\n```\nage = 36\n#This will produce an error:\ntxt = \"My name is John, I am \" + age\nprint(txt)\n\n---\n\nage = 36\ntxt = f\"My name is John, I am {age}\"\nprint(txt)\n\n---\n\nprice = 59\ntxt = f\"The price is {price} dollars\"\nprint(txt)\n\n---\n\nprice = 59\ntxt = f\"The price is {price:.2f} dollars\"\nprint(txt)\n\n---\n\ntxt = f\"The price is {20 * 59} dollars\"\nprint(txt)\n```\n\n## Tutorials\n\nTo insert characters that are illegal in a string, use an escape character.\n\nAn escape character is a backslash\\followed by the character you want to insert.\n\nAn example of an illegal character is a double quote inside a string that is surrounded by double quotes:\n\nTo fix this problem, use the escape character\\\":\n\nOther escape characters used in Python:\n\n### Code Examples\n\n```\ntxt = \"We are the so-called \"Vikings\" from the north.\"\n\n---\n\ntxt = \"We are the so-called \\\"Vikings\\\" from the north.\"\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -272,7 +272,8 @@ export default function BuildChallengeUsersPage() {
                   <TableHead>Stage</TableHead>
                   <TableHead className="min-w-[120px]">Progress</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Repo URL</TableHead>
+                  <TableHead>Mode</TableHead>
+                  <TableHead>Repo / Submission</TableHead>
                   <TableHead>Last Activity</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 67,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe DEGREES() function converts a value in radians to degrees.\n\nNote:See also theRADIANS()andPI()functions.\n\n### Code Examples\n\n```\nSELECT DEGREES(1.5);\n\n---\n\nDEGREES(\nnumber\n)\n\n---\n\nSELECT DEGREES(PI()*2);\n```\n\n## Tutorials\n\nThe EXP() function returns e raised to the power of a specified number.\n\nThe constant e (2.718281...), is the base of natural logarithms.\n\nNote:See also theLOG()function.\n\n### Code Examples\n\n```\nSELECT EXP(1);\n\n---\n\nEXP(\nnumber\n)\n\n---\n\nSELECT EXP(2);\n```\n\n## Tutorials\n\nThe FLOOR() function returns the largest integer value that is smaller than \nor equal to a number.\n\nTip:Also look at theCEILING()andROUND()functions.\n\n### Code Examples\n\n```\nSELECT FLOOR(25.75) AS FloorValue;\n\n---\n\nFLOOR(\nnumber\n)\n\n---\n\nSELECT FLOOR(25) AS FloorValue;\n\n---\n\nSELECT FLOOR(-13.5) AS FloorValue;\n```\n\n## Tutorials\n\nThe LOG() function returns the natural logarithm of a specifiednumber, or the logarithm of \nthenumberto the \nspecifiedbase.\n\nFrom SQL Server 2012, you can also change the base of the \nlogarithm to another value by using the optional base parameter.\n\nNote:Also look at theEXP()function.\n\nOR:\n\n### Code Examples\n\n```\nSELECT LOG(2);\n\n---\n\nLOG(\nnumber, base\n) -- Syntax for SQL Server\n\n---\n\nLOG(\nnumber\n) -- Syntax for Azure SQL Database, Azure SQL Data Warehouse, Parallel Data Warehouse\n\n---\n\nSELECT LOG(2, 4);\n```\n\n## Tutorials\n\nThe LOG10() function returns the natural logarithm of a number to base 10.\n\nNote:Also look at theLOG()function.\n\n### Code Examples\n\n```\nSELECT LOG10(2);\n\n---\n\nLOG10(\nnumber\n)\n\n---\n\nSELECT LOG10(4.5);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_67",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_67",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

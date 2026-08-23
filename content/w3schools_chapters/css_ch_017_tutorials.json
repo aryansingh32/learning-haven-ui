@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 17,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "HSL stands for hue, saturation, and lightness.\n\nIn CSS, a color can be specified using hue, saturation, and lightness (HSL) in the form:\n\nhsl(hue,saturation,lightness)\n\nHueis a degree on the color wheel (from 0 to 360):0 (or 360) is red120 is green240 is blue\n\nSaturationis a percentage value: 0% means a shade of gray, and 100% is the full color.\n\nLightnessis also a percentage; 0% is black, 50% is neither light or dark, 100% is white.\n\nExperiment by mixing the HSL values below:\n\nSaturation can be described as the intensity of a color.\n\n100% is pure color, no shades of gray.\n\n50% is 50% gray, but you can still see the color.\n\n0% is completely gray; you can no longer see the color.\n\nThe lightness of a color can be described as how much light you want to give the color, where 0% means no light (black), 50% means 50% light (neither dark nor light) \nand 100% means full lightness (white).\n\nShades of gray are often defined by setting the hue and saturation to 0, and \nadjust the lightness from 0% to 100% to get darker/lighter shades:\n\nHSLA color values are an extension of HSL color values with an alpha channel \n- which specifies the opacity for a color.\n\nAn HSLA color value is \nspecified with:\n\nhsla(hue,saturation,lightness, \nalpha)\n\nThe alpha parameter is a number \nbetween 0.0 (fully transparent) and 1.0 (not transparent at all):\n\nExperiment by mixing the HSLA values below:\n\n### Code Snippets\n\n```\nExample\nhsl(0, 100%, 50%)\nhsl(240, 100%, 50%)\nhsl(147, 50%, 47%)\nhsl(300, 76%, 72%)\nhsl(39, 100%, 50%)\nhsl(248, 53%, 58%)\nTry it Yourself \u00bb\n\n---\n\nExample\nhsl(0, 100%, 50%)\nhsl(0, 80%, 50%)\nhsl(0, 60%, 50%)\nhsl(0, 40%, 50%)\nhsl(0, 20%, 50%)\nhsl(0, 0%, 50%)\nTry it Yourself \u00bb\n\n---\n\nExample\nhsl(0, 100%, 0%)\nhsl(0, 100%, 25%)\nhsl(0, 100%, 50%)\nhsl(0, 100%, 75%)\nhsl(0, 100%, 90%)\nhsl(0, 100%, 100%)\nTry it Yourself \u00bb\n\n---\n\nExample\nhsl(0, 0%, 0%)\nhsl(0, 0%, 24%)\nhsl(0, 0%, 47%)\nhsl(0, 0%, 71%)\nhsl(0, 0%, 94%)\nhsl(0, 0%, 100%)\nTry it Yourself \u00bb\n\n---\n\nExample\nhsla(9, 100%, 64%, 0)\nhsla(9, 100%, 64%, 0.2)\nhsla(9, 100%, 64%, 0.4)\nhsla(9, 100%, 64%, 0.6)\nhsla(9, 100%, 64%, 0.8)\nhsla(9, 100%, 64%, 1)\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 37,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Because strings must be written within quotes, Java will misunderstand this string, \nand generate an error:\n\nThe solution to avoid this problem, is to use thebackslash escape character.\n\nThe backslash (\\) escape character turns special characters into string characters:\n\nThe sequence\\\"inserts a double quote in a string:ExampleString txt = \"We are the so-called \\\"Vikings\\\" from the north.\";Try it Yourself \u00bbThe sequence\\'inserts a single quote in a string:ExampleString txt = \"It\\'s alright.\";Try it Yourself \u00bbThe sequence\\\\inserts a single backslash in a string:ExampleString txt = \"The character \\\\ is called backslash.\";Try it Yourself \u00bbOther common escape sequences that are valid in Java are:CodeResultTry it\\nNew LineTry it \u00bb\\tTabTry it \u00bb\\bBackspaceTry it \u00bb\\rCarriage Return\\fForm FeedNote:Most of these escape codes are rarely used in modern programming. \nThe most common ones are\\n(new line),\\\"(double quote), and\\\\(backslash).\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nString txt = \"We are the so-called \"Vikings\" from the north.\";\n\n---\n\nExample\nString txt = \"We are the so-called \\\"Vikings\\\" from the north.\";\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"It\\'s alright.\";\nTry it Yourself \u00bb\n\n---\n\nExample\nString txt = \"The character \\\\ is called backslash.\";\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_36",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

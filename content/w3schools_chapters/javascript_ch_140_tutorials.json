@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 140,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheObject.groupBy()method groups elements of an object\naccording to string values returned from a callback function.\n\nTheObject.groupBy()method return a new object.\n\nTheObject.groupBy()method does not change the original object.\n\nTheMap.groupBy()method groups elements of a map\naccording to string values returned from a callback function.\n\nTheMap.groupBy()method returns a new map.\n\nTheMap.groupBy()method does not change the original object.\n\nThe difference between Object.groupBy() and Map.groupBy() is:\n\nObject.groupBy() groups elements into a JavaScript object.\n\nMap.groupBy() groups elements into a Map object.\n\nTheisWellFormed()method returnstrueif a string is well formed.\n\nOtherwise it returnsfalse.\n\nA string is not well formed if it containslone surrogates.\n\nThe String methodtoWellFormed()returns a new string where all \"lone surrogates\" are replaced with the Unicode replacement character (U+FFFD).Exampleslet text = \"Hello World \\uD800\";let result = text.toWellFormed();Try it Yourself \u00bbJavaScript Promise.withResolvers()Promise.withResolvers()is a static method that simplifies the creation and management of Promises.Promise.withResolvers()provides a more convenient way to access\nthe resolve and reject functions associated with a Promise outside of its executor function.Instead of the traditionalnew Promise((resolve, reject) => { ... })constructor pattern,\nPromise.withResolvers() returns an object containing:promise:The newly created Promise instanceresolve:A function to fulfill the promise with a valuereject:A function to reject the promise with a reason (error)Example<p id=\"demo\">Waiting...</p><script>const {promise, resolve, reject} = Promise.withResolvers();// You can now use 'resolve' and 'reject' anywhere// in your code to control the state of 'promise'.// Simulate async worksetTimeout(() => {const success = Math.random() > 0.5;if (success) {resolve(\"Operation successful!\");} else {reject(\"Operation failed!\");}}, 1000);// Update the UI when the promise finishespromise.then((message) => {document.getElementById(\"demo\").innerHTML = message;}).catch((error) => {document.getElementById(\"demo\").innerHTML = error;\n;});</script>Try it Yourself \u00bbExample ExplainedThe <p id=\"demo\"> initially shows \"Waiting...\"After 1 second, the promise resolves or rejectsThe result is written into \"demo\"\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Create an Array\nconst fruits = [\n{name:\"apples\", quantity:300},\n{name:\"bananas\", quantity:500},\n{name:\"oranges\", quantity:200},\n{name:\"kiwi\", quantity:150}\n];\n// Callback function to Group Elements\nfunction myCallback({ quantity }) {\nreturn quantity > 200 ? \"ok\" : \"low\";\n}\n// Group by Quantity\nconst result = Object.groupBy(fruits, myCallback);\n\n---\n\n// Create a Map\nconst fruits = [\n{name:\"apples\", quantity:300},\n{name:\"bananas\", quantity:500},\n{name:\"oranges\", quantity:200},\n{name:\"kiwi\", quantity:150}\n];\n// Callback function to Group Elements\nfunction myCallback({ quantity }) {\nreturn quantity > 200 ? \"ok\" : \"low\";\n}\n// Group by Quantity\nconst result = Map.groupBy(fruits, myCallback);\n\n---\n\nlet text = \"Hello world!\";\nlet result = text.isWellFormed();\n\n---\n\nlet text = \"Hello World \\uD800\";\nlet result = text.isWellFormed();\n\n---\n\nlet text = \"Hello World \\uD800\";\nlet result = text.toWellFormed();\n\n---\n\n<p id=\"demo\">Waiting...</p>\n<script>\nconst {promise, resolve, reject} = Promise.withResolvers();\n// You can now use 'resolve' and 'reject' anywhere\n// in your code to control the state of 'promise'.\n// Simulate async work\nsetTimeout(() => {\nconst success = Math.random() > 0.5;\nif (success) {\nresolve(\"Operation successful!\");\n} else {\nreject(\"Operation failed!\");\n}\n}, 1000);\n// Update the UI when the promise finishes\npromise\n.then((message) => {\ndocument.getElementById(\"demo\").innerHTML = message;\n})\n.catch((error) => {\ndocument.getElementById(\"demo\").innerHTML = error;\n;\n});\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_139",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

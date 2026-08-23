@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 43,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSSobject-fitproperty is used to specify how an <img> or <video> should \nbe resized to fit its container.\n\nThis property can take one of the following values:\n\nTheobject-fit: fill;value does not preserve the aspect ratio, and the image is resized to fill the container (the \nimage will be stretched or squeezed to fit):\n\nTheobject-fit: cover;value preserves the aspect ratio, and \nthe image fills the container. The image will be clipped to fit:\n\nTheobject-fit: contain;value preserves the aspect ratio, and fits the image inside the container, without cutting - will leave empty \nspace if needed:\n\nTheobject-fit: none;value does not resize or scale the image:\n\nTheobject-fit: scale-down;value scales the image down to the smallest version ofnoneorcontain:\n\nHere we have two images and we want them to fill the width of 50% of the browser window and 100% of the height of the container.\n\nIn the following example we do NOT useobject-fit, so when we resize the browser window, the aspect ratio of the images will be destroyed:\n\nIn the next example, we useobject-fit: cover;, so when we resize the browser window, the aspect ratio of the images \nis preserved:\n\nThe following table lists the CSS object-* properties:\n\n### Code Examples\n\n```\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: fill;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: cover;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: contain;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: none;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\nmargin-bottom: 25px;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: scale-down;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS object-fit by completing a small coding challenge.\n\n## Tutorials\n\nThe CSSobject-positionproperty \nis used together with theobject-fitproperty to \nspecify how an <img> or <video> should be positioned with x/y coordinates within \nits container.\n\nThe first value controls the x-axis and the second value controls the y-axis. \nThe value can be a string (left, center or right), or a number (in px or %). \nNegative values are also allowed.\n\nLet's say that the part of the image that is shown, is not the part that we \nwant. To \nposition the image, we will use theobject-positionproperty.\n\nHere we position the image so that the great old building is in \ncenter:\n\nHere we will use theobject-positionproperty \nto position the image so that the famous Eiffel Tower is in center:\n\nThe following table lists the CSS object-* properties:\n\n### Code Examples\n\n```\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: cover;\nobject-position: 80% \n  100%;\n}\n\n---\n\n.image-container {\nwidth: 200px;\nheight: 300px;\nborder: 1px solid black;\n}\n.image-container img {\nwidth: 100%;\nheight: 100%;\nobject-fit: cover;\nobject-position: 15% \n  100%;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS object-position by completing a small coding challenge.\n\n## Tutorials\n\nCSS masking allows you to create a mask layer to place over an element to partially or fully hide portions of the element.\n\nThe CSSmask-imageproperty specifies a mask \nlayer image.\n\nThe mask layer image can be a PNG image, an SVG image, aCSS gradient, or anSVG <mask> element.\n\nTo use a PNG image as the mask layer, use a url() value to pass in the mask \nlayer image.\n\nThe mask image needs to have a transparent or semi-transparent area. Black \nindicates fully transparent.\n\nHere is the mask image (\"w3logo.png\") we will use:\n\nHere is an image from Cinque Terre, in Italy:\n\nNow, we apply the mask image as the mask layer for the image from Cinque Terre, Italy:\n\nThemask-imageproperty specifies the image \nto be used as a mask layer for an element.\n\nThemask-repeatproperty specifies if or how \na mask image will be repeated.\u00a0Theno-repeatvalue indicates that the mask image will not be repeated (the mask image will \nonly be shown once).\n\nIf we omit themask-repeatproperty, the mask image will be repeated all over the image from Cinque Terre, Italy:\n\nThemask-positionproperty sets the starting position of a mask image \n(relative to the mask position area). By default, a mask image is placed at the \ntop-left corner of an element, and repeated both vertically and horizontally.\n\nHere, we position the mask image in center:\n\nThe following table lists all the CSS masking properties:\n\n### Code Examples\n\n```\n.mask1 {\n-webkit-mask-image: url(w3logo.png);\nmask-image: \n  url(w3logo.png);\nmask-repeat: no-repeat;\n}\n\n---\n\n.mask1 {\n-webkit-mask-image: url(w3logo.png);\nmask-image: \n  url(w3logo.png);\n}\n\n---\n\n.mask1 {\n-webkit-mask-image: url(w3logo.png);\nmask-image: \n  url(w3logo.png);\nmask-repeat: no-repeat;\nmask-position: \n  center;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_43",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_43",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 32,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CONCAT_WS() function adds two or more expressions together with a separator.\n\nNote:Also look at theCONCAT()function.\n\n### Code Examples\n\n```\nSELECT CONCAT_WS(\"-\", \"SQL\", \"Tutorial\", \"is\", \"fun!\") AS ConcatenatedString;\n\n---\n\nCONCAT_WS(\nseparator\n,\nexpression1\n,\nexpression2\n,\nexpression3\n,...)\n\n---\n\nSELECT CONCAT_WS(\" \", Address, PostalCode, City) AS Address\nFROM \n  Customers;\n```\n\n## Tutorials\n\nThe FIELD() function returns the index position of a value in a list of \nvalues.\n\nThis function performs a case-insensitive search.\n\nNote:If the specified value is not found in the list of values, this function \nwill return 0. If value is NULL, this function will return 0.\n\n### Code Examples\n\n```\nSELECT FIELD(\"q\", \"s\", \"q\", \"l\");\n\n---\n\nFIELD(\nvalue\n,\nval1\n,\nval2\n,\nval3\n, ...)\n\n---\n\nSELECT FIELD(\"c\", \"a\", \"b\");\n\n---\n\nSELECT FIELD(\"Q\", \"s\", \"q\", \"l\");\n\n---\n\nSELECT FIELD(5, 0, 1, 2, 3, 4, 5);\n```\n\n## Tutorials\n\nThe FIND_IN_SET() function returns the position of a string within a list of strings.\n\n### Code Examples\n\n```\nSELECT FIND_IN_SET(\"q\", \"s,q,l\");\n\n---\n\nFIND_IN_SET(\nstring\n,\nstring_list\n)\n\n---\n\nSELECT FIND_IN_SET(\"a\", \"s,q,l\");\n\n---\n\nSELECT FIND_IN_SET(\"q\", null);\n```\n\n## Tutorials\n\nThe FORMAT() function formats a number to a format like \"#,###,###.##\", rounded to a \nspecified number \nof decimal places, then it returns the result as a string.\n\n### Code Examples\n\n```\nSELECT FORMAT(250500.5634, 2);\n\n---\n\nFORMAT(\nnumber\n,\ndecimal_places\n)\n\n---\n\nSELECT FORMAT(250500.5634, 0);\n```\n\n## Tutorials\n\nThe INSERT() function inserts a string within a string at the specified position \nand for a certain number of characters.\n\n### Code Examples\n\n```\nSELECT INSERT(\"W3Schools.com\", 1, 9, \"Example\");\n\n---\n\nINSERT(\nstring\n,\nposition\n,\nnumber\n,\nstring2\n)\n\n---\n\nSELECT INSERT(\"W3Schools.com\", 11, 3, \"no\");\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_32",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_32",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 112,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheBufferedWriterclass is used to write text to a file, one line or one string at a time.  \nIf the file already exists, its contents will be replaced (overwritten).\n\nUseBufferedWriterwithFileWriterto write text to a file.  \nThewrite()method adds text, and you can usenewLine()to insert a line break:\n\nExplanation:This program creates (or overwrites)filename.txtand writes two lines of text into it. ThenewLine()method inserts a line break between\"First line\"and\"Second line\".  \nIf everything goes well, the console will print\"Successfully wrote to the file.\"\n\nTo add new content to the end of a file (instead of overwriting), passtruetoFileWriter:\n\nExplanation:This program keeps the existing content offilename.txtand adds a new line with the text\"Appended line\"at the end.  \nIf everything works, the console prints\"Successfully appended to the file.\"\n\nJava gives you several ways to write to files. Here's when to pick each one:\n\n### Code Snippets\n\n```\nExample\nimport java.io.BufferedWriter;\nimport java.io.FileWriter;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    try (BufferedWriter bw = new BufferedWriter(new FileWriter(\"filename.txt\"))) {\n      bw.write(\"First line\");\n      bw.newLine();  // add line break\n      bw.write(\"Second line\");\n      System.out.println(\"Successfully wrote to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n    }\n  }\n}\nThe output will be:\nSuccessfully wrote to the file.\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.io.BufferedWriter;\nimport java.io.FileWriter;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    // true = append mode\n    try (BufferedWriter bw = new BufferedWriter(new FileWriter(\"filename.txt\", true))) {\n      bw.newLine();                      // move to a new line\n      bw.write(\"Appended line\");         // add new text at the end\n      System.out.println(\"Successfully appended to the file.\");\n    } catch (IOException e) {\n      System.out.println(\"Error writing file.\");\n    }\n  }\n}\nThe output will be:\nSuccessfully appended to the file.\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_111",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

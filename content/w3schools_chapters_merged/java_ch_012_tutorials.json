@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 12,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding ofJava While Loopsby completing a small coding challenge.\n\n## Tutorials\n\nWhen you know exactly how many times you want to loop through a block of \ncode, use theforloop instead of awhileloop:\n\nStatement 1is executed (one time) before the execution of the code block.\n\nStatement 2defines the condition for executing the code block.\n\nStatement 3is executed (every time) after the code block has been executed.\n\nThe example below will print the numbers 0 to 4:\n\nThis example prints even values between 0 and 10:\n\nThis example calculates the sum of numbers from 1 to 5:\n\nThis example prints a countdown from 5 to 1:\n\nJust like awhileloop, aforloop may also never run.  \nIf the condition isfalseright from the start, the code inside the loop will be skipped entirely:\n\nIn this example, the loop starts withi = 10.  \nThe conditioni < 5is already false, so the loop body is skipped, and nothing is printed.\n\n### Code Examples\n\n```\nSyntax\nfor (\nstatement 1\n;\nstatement 2\n;\nstatement 3\n) {\n// code block to be executed\n}\n\n---\n\nExample\nfor (int i = 0; i < 5; i++) {\nSystem.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int i = 0; i <= 10; i = i + 2) {\nSystem.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint sum = 0;\nfor (int i = 1; i <= 5; i++) {\nsum = sum + i;\n}\nSystem.out.println(\"Sum is \" + sum);\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int i = 5; i > 0; i--) {\nSystem.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int i = 10; i < 5; i++) {\n  System.out.println(\"This will never be printed\");\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nIt is also possible to place a loop inside another loop. This is called anested loop.\n\nThe \"inner loop\" will be executed one time for each iteration of the \"outer loop\":\n\nThis example uses nested loops to print a simple multiplication table (1 to 3):\n\nNested loops are useful when working with tables, matrices, ormulti-dimensional data structures.\n\n### Code Examples\n\n```\nExample\n// Outer loop\nfor (int i = 1; i <= 2; i++) {\n  System.out.println(\"Outer: \" + i); // Executes 2 times\n  \n  // Inner loop\n  for (int j = 1; j <= 3; j++) {\n    System.out.println(\" Inner: \" + j); // Executes 6 times (2 * 3)\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int i = 1; i <= 3; i++) {\nfor (int j = 1; j <= 3; j++) {\nSystem.out.print(i * j + \" \");\n}\nSystem.out.println();\n}\n1 2 3\n2 4 6\n3 6 9\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nThere is also a \"for-each\" loop, which is used exclusively to loop through elements in anarray(or otherdata structures):\n\nThefor-eachloop is simpler and more readable than a regularforloop, since you don't need a counter (likei < array.length).\n\nThe following example prints all elements in thecarsarray:\n\nHere is a similar example with numbers. We create an array of integers and use afor-eachloop to print each value:\n\n### Code Examples\n\n```\nSyntax\nfor (\ntype\nvariableName\n:\narrayName\n) {\n// code block to be executed\n}\n\n---\n\nExample\nString[] cars = {\"Volvo\", \"BMW\", \"Ford\", \"Mazda\"};\n\nfor (String car : cars) {\n  System.out.println(car);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint[] numbers = {10, 20, 30, 40};\n\nfor (int num : numbers) {\n  System.out.println(num);\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTo demonstrate a practical example of thefor loop, let's create a program that counts to 100 by tens:\n\nIn this example, we create a program that only print even values between 0 and 10:\n\nAnd in this example, we create a program that prints the multiplication table for a specified number:\n\nHere is a simple program that prints the seat numbers in a theater row:\n\nUse a loop to calculate the factorial of a given number:\n\n### Code Examples\n\n```\nExample\nfor (int i = 0; i <= 100; i += 10) {\n  System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int i = 0; i <= 10; i = i + 2) {\n  System.out.println(i);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint number = 2;\n\n// Print the multiplication table for the number 2\nfor (int i = 1; i <= 10; i++) {\n  System.out.println(number + \" x \" + i + \" = \" + (number * i));\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nfor (int seat = 1; seat <= 5; seat++) {\n  System.out.println(\"Seat number: \" + seat);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nint n = 5;\nint fact = 1;\n\nfor (int i = 1; i <= n; i++) {\n  fact *= i;\n}\n\nSystem.out.println(\"Factorial of \" + n + \" is \" + fact);\n// Output: Factorial of 5 is 120\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_12",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_12",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 184,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The term regression is used when you try to find the relationship between variables.\n\nIn Machine Learning, and in statistical modeling, that relationship is used to predict the outcome of future events.\n\nLinear regression uses the relationship between the data-points to draw a straight line through \nall them.\n\nThis line can be used to predict future values.\n\nIn Machine Learning, predicting the future is very important.\n\nPython has methods for finding a relationship between data-points and to draw a line of linear regression. \nWe will show you \nhow to use these methods instead of going through the mathematic formula.\n\nIn the example below, the x-axis represents age, and the y-axis represents speed. We have registered the age and speed of 13 cars as they were passing a \ntollbooth. Let us see if the data we collected could be used in a linear \nregression:\n\nImport the modules you need.\n\nYou can learn about the Matplotlib module in ourMatplotlib Tutorial.\n\nYou can learn about the SciPy module in ourSciPy Tutorial.\n\nCreate the arrays that represent the values of the x and y axis:\n\nExecute a method that returns some important key values of Linear Regression:\n\nCreate a function that uses theslopeandinterceptvalues to return a new value. This \nnew value represents where on the y-axis the corresponding x value will be \nplaced:\n\nRun each value of the x array through the function. This will result in a new \narray with new values for the y-axis:\n\nDraw the original scatter plot:\n\nDraw the line of linear regression:\n\nDisplay the diagram:\n\nIt is important to know how the relationship between the values of the \nx-axis and the values of the y-axis is, if there are no relationship the linear \nregression can not be used to predict anything.\n\nThis relationship - the coefficient of correlation - is calledr.\n\nThervalue ranges from -1 to 1, where 0 means no relationship, and 1 \n(and -1) \nmeans 100% related.\n\nPython and the Scipy module will compute this value for you, all you have to \ndo is feed it with the x and y values.\n\nNow we can use the information we have gathered to predict future values.\n\nExample: Let us try to predict the speed of a 10 years old car.\n\nTo do so, we need the samemyfunc()function \nfrom the example above:\n\nThe example predicted a speed at 85.6, which we also could read from the \ndiagram:\n\nLet us create an example where linear regression would not be the best method \nto predict future values.\n\nAnd therfor relationship?\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nx = [5,7,8,7,2,17,2,9,4,11,12,9,6]\ny = \n  [99,86,87,88,111,86,103,87,94,78,77,85,86]\nplt.scatter(x, y)\nplt.show()\n\n---\n\nimport matplotlib.pyplot as plt\nfrom scipy import stats\nx = [5,7,8,7,2,17,2,9,4,11,12,9,6]\ny = \n  [99,86,87,88,111,86,103,87,94,78,77,85,86]\nslope, intercept, r, \n  p, std_err = stats.linregress(x, y)\ndef myfunc(x):\nreturn slope * x + intercept\nmymodel = list(map(myfunc, x))\nplt.scatter(x, y)\nplt.plot(x, mymodel)\nplt.show()\n\n---\n\nfrom scipy import stats\nx = \n  [5,7,8,7,2,17,2,9,4,11,12,9,6]\ny = \n  [99,86,87,88,111,86,103,87,94,78,77,85,86]\nslope, intercept, r, \n  p, std_err = stats.linregress(x, y)\nprint(r)\n\n---\n\nfrom scipy import stats\nx = [5,7,8,7,2,17,2,9,4,11,12,9,6]\ny = \n  [99,86,87,88,111,86,103,87,94,78,77,85,86]\nslope, intercept, r, \n  p, std_err = stats.linregress(x, y)\ndef myfunc(x):\nreturn slope * x + intercept\nspeed = myfunc(10)\nprint(speed)\n\n---\n\nimport matplotlib.pyplot as plt\nfrom scipy import stats\nx = [89,43,36,36,95,10,66,34,38,20,26,29,48,64,6,5,36,66,72,40]\ny = \n  [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]\nslope, \n  intercept, r, p, std_err = stats.linregress(x, y)\ndef \n  myfunc(x):\nreturn slope * x + intercept\nmymodel = list(map(myfunc, \n  x))\nplt.scatter(x, y)\nplt.plot(x, mymodel)\nplt.show()\n\n---\n\nimport numpy\nfrom scipy import stats\nx = \n  [89,43,36,36,95,10,66,34,38,20,26,29,48,64,6,5,36,66,72,40]\ny = \n  [21,46,3,35,67,95,53,72,58,10,26,34,90,33,38,20,56,2,47,15]\nslope, intercept, r, \n  p, std_err = stats.linregress(x, y)\nprint(r)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_183",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

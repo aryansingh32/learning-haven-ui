@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 45,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThecall()method is used tocall a functionwith anobject as an argument.\n\nThecall()method takesthisas the first argument.\n\nAdditional arguments are passed as acomma-separated list.\n\nWhen you usecall(), you can decide whatthisshould refer to.\n\nIn the example below, thegreet functionreturns a greeting +this.name.\n\nWhen you usecall(), you decide thatthisshould be theperson3object.\n\nYou can usecall()toborrow a methodfrom another object:\n\nThecall()method can accept arguments.\n\nArguments are passed normally, separated by commas:\n\nCompare a normal function call with acall()call.\n\nWithoutcall(),thisis not thepersonobject.\n\nWithcall(),thisis set explicitly.\n\nThecall()method executes the function immediately.It does not return a new function.\n\nIf you need a new function that remembersthis, usebind()instead.\n\nJavaScript Function apply()\n\n### Code Examples\n\n```\nfunctionName.call(\nthis\n, arg1, arg2, ...);\n\n---\n\nconst person1 = { name: \"John\" };\nconst person2 = { name: \"Paul\" };\nconst person3 = { name: \"Ringo\" };\nfunction greet(greeting) {\nreturn greeting + \" \" + this.name;\n}\ngreet.call(person3, \"Hello\");\n\n---\n\nconst person = {\nfullName\n: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\nconst person2 = {\nfirstName:\"Mary\",\nlastName: \"Doe\"\n}\n// This will return \"John Doe\":\nperson.fullName.call(\nperson1\n);\n\n---\n\nconst person = {\nfullName\n: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\nconst person2 = {\nfirstName:\"Mary\",\nlastName: \"Doe\"\n}\n// This will return \"Mary Doe\"\nperson.fullName.call(\nperson2\n);\n\n---\n\nconst person = {\nfullName: function(city, country) {\nreturn this.firstName + \" \" + this.lastName \n  + \",\" + city + \",\" + country;\n}\n}\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\nperson.fullName.call(person1, \"Oslo\", \"Norway\");\n\n---\n\nfunction showName() {\nreturn this.name;\n}\nconst person = { name: \"John\" };\nshowName();\nshowName.call(person);\n\n---\n\nfunction sayHello() {\nreturn \"Hello \" + this.name;\n}\nconst person = { name: \"John\" };\nsayHello.call(person);\n```\n\n## Tutorials\n\nTheapply()method is used tocall a functionwith anobject as an argument.\n\nTheapply()method takesthisas the first argument.\n\nThe second argument isan array of valuespassed to the function.\n\nTheapply()method is similar to thecall()method (previous chapter).\n\nWhen you useapply(), you can decide whatthisshould refer to.\n\nIn the example below, thegreet functionreturns a greeting +this.name.\n\nWhen you useapply(), you decide thatthisshould be theperson3object.\n\nThe only difference betweenapply()andcall()is how arguments are passed.\n\nThecall()method takes argumentsseparately.\n\nTheapply()method takes arguments as anarray.\n\nYou can useapply()toborrow a methodfrom another object:\n\nTheapply()method accepts arguments in an array.\n\nAll arguments must be placed inside an array, in the correct order.\n\nCompared with thecall()method:\n\nA common use case forapply()is working with Math functions on arrays.\n\nTheMath.max()method returns the highest number in a list of number arguments:\n\nJavaScript Arraysdo nothave a max() method, but you cansimulateit with theapplymethod.\n\nIn the example above,nullis used asthis, becauseMath.max()does\nnot need athisvalue.\n\nThese examples will give the same result:\n\nIn JavaScript strict mode, if the first argument of theapply()method is not an object,\nit becomes the owner (object) of the invoked function.\nIn \"non-strict\" mode, it becomes the global object.\n\nThecall()method and theapply()method runs the function immediately.They do not return a new function.Examplefunction sum(a, b) {return a + b;}sum.apply(null, [4, 5]);If you want a function that can be called later with the samethis, usebind()instead.Common MistakesForgetting to Use an ArrayThe second argument toapply()must be an array.Confusing apply() with bind()apply()runs immediately.bind()returns a new function.Usingapply()whencall()is SimplerIf you do not have an array,call()is often clearer.RelatedthisTopicsThethisKeywordThecall()MethodTheapply()MethodThebind()MethodNext ChapterJavaScript Function bind()\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nfunctionName.apply(\nthis\n, [arg1, arg2, ...]);\n\n---\n\nconst person1 = { name: \"John\" };\nconst person2 = { name: \"Paul\" };\nconst person3 = { name: \"Ringo\" };\nfunction greet(greeting) {\nreturn greeting + \" \" + this.name;\n}\ngreet.apply(person3, [\"Hello\"]);\n\n---\n\ngreet.call(person, \"Hello\");\ngreet.apply(person, [\"Hello\"]);\n\n---\n\n// Create a person Object\nconst person = {\nfullName\n: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\n// Create a person1 Object\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\n// Create a person2 Object\nconst person2 = {\nfirstName:\"Mary\",\nlastName: \"Doe\"\n}\n// This will return \"John Doe\":\nperson.fullName.apply(\nperson1\n);\n\n---\n\n// Create a person Object\nconst person = {\nfullName\n: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\n// Create a person1 Object\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\n// Create a person2 Object\nconst person2 = {\nfirstName:\"Mary\",\nlastName: \"Doe\"\n}\n// This will return \"Mary Doe\"\nperson.fullName.call(\nperson2\n);\n\n---\n\nconst person = {\nfullName: function(city, country) {\nreturn this.firstName + \" \" + this.lastName \n  + \",\" + city + \",\" + country;\n}\n}\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\nperson.fullName.apply(person1, [\"Oslo\", \"Norway\"]);\n\n---\n\nconst person = {\nfullName: function(city, country) {\nreturn this.firstName + \" \" + this.lastName \n  + \",\" + city + \",\" + country;\n}\n}\nconst person1 = {\nfirstName:\"John\",\nlastName: \"Doe\"\n}\nperson.fullName.call(person1, \"Oslo\", \"Norway\");\n\n---\n\nMath.max(4, 8, 5, 1);\u00a0 // Will return 8\n\n---\n\nconst numbers = [4, 8, 5, 1];\nMath.max.apply(null, numbers);\n\n---\n\nMath.max.apply(\" \", numbers);\n\n---\n\nMath.max.apply(0, numbers);\n\n---\n\nfunction sum(a, b) {\nreturn a + b;\n}\nsum.apply(null, [4, 5]);\n```\n\n## Tutorials\n\nThebind()method creates a new function.\n\nThe first argument sets thethisvalue for the new function.\n\nAdditional arguments becomefixed argumentsfor the new function.\n\nThe most common use ofbind()is to make sure a function always uses the samethisvalue.\n\nThe example below creates 2 objects (person and member).\n\nThe member object borrows the fullname method from the person object:\n\nThe difference between these methods is important:\n\nWithoutbind(), thethisvalue may be lost.\n\nThe function above loses itsthisvalue.\n\nThebind()method can be used toprevent losing this.\n\nIn the following example, theperson objecthas adisplay method.\n\nIn the display method,thisrefers to theperson object:\n\nWhen a function is used as a callback,thisis lost.\n\nThe example below uses person.display as a callback in the setTimeout() method.\n\nThebind()method solves this problem.\n\nIn the following example, thebind()method is used to bind person.display to person.\n\nArguments passed tobind()become fixed values.\n\nThis is sometimes calledpartial application.\n\nThe original function is not modified.\n\nEach call tobind()creates a new function.\n\nJavaScript Self Invocing Functions\n\n### Code Examples\n\n```\nconst newFunction = functionName.bind(\nthis\n, arg1, arg2, ...);\n\n---\n\nconst person1 = { name: \"John\" };\nconst person2 = { name: \"Paul\" };\nconst person3 = { name: \"Ringo\" };\nfunction greet() {\nreturn \"Hello \" + this.name;\n}\nconst greetJohn = greet.bind(person1);\ngreetJohn();\n\n---\n\n// Create person Object\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\nfullName: function () {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\n// Create member Object\nconst member = {\nfirstName:\"Hege\",\nlastName: \"Nilsen\",\n}\n// Bind the fullName method to the member Object\nlet fullName = person.fullName.bind(member);\n// Later call fullname()\nfullname()\n\n---\n\n// Call a function\ngreet.call(person);\n// Call a function\ngreet.apply(person);\n// Create a new function\nconst greetLater = greet.bind(person);\n// Call the new function\ngreetLater();\n\n---\n\nconst person = {\nname: \"John\",\nsayHello: function() {\nreturn \"Hello \" + this.name;\n}\n};\nconst hello = person.sayHello;\nhello(); // this is not person\n\n---\n\nconst hello = person.sayHello.bind(person);\nhello();\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nperson.display();\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nsetTimeout(person.display, 3000);\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\ndisplay: function () {\nlet x = document.getElementById(\"demo\");\nx.innerHTML = this.firstName + \" \" + this.lastName;\n}\n}\nlet display = person.display.bind(person);\nsetTimeout(display, 3000);\n\n---\n\nfunction multiply(a, b) {\nreturn a * b;\n}\nconst double = multiply.bind(null, 2);\ndouble(5);\n\n---\n\nconst greetJohn = greet.bind({ name: \"John\" });\nconst greetAnna = greet.bind({ name: \"Anna\" });\n```\n\n## Tutorials\n\nNormally, a function runs only when it is called.\n\nAn IIFE runs automatically when the JavaScript engine reads it (compiles it).\n\nEverything inside an IIFE is private to that function.\n\nVariables inside an IIFE cannot be accessed from outside.\n\nThe function above is also called ananonymous self-invoking function(function \nwithout name).\n\nFunction expressionscan be madeself-invoking.\n\nA self-invoking function expression isinvoked (started) automatically, without being called.\n\nParentheses around the function tell JavaScript to treat the function as an expression.\n\nYou can pass arguments into an IIFE.\n\nAn IIFE can return a value, which can be stored in a variable.\n\nArrow functions can also be used as IIFEs.\n\nToday, JavaScript modules often replace the need for IIFEs.Modules have their own scope by default.\n\nThe variablexis scoped to the module and not global.\n\nYou can give an IIFE a name:\n\nBut, the name greet exists only inside the function itself, not in the outer/global scope.\n\nWhy use a named IIFE?\n\nFor self-recursion functions (calling itself repeatedly):\n\n### Code Examples\n\n```\n(function () {\n// Code to run immediately\n})();\n\n---\n\n(function () {\nlet x = 10;\n})();\n// x is not accessible here\n\n---\n\n(function () {\nlet hidden = 42;\n})();\nlet result = hidden; // \u26d4 Error: hidden is not defined\n\n---\n\n(function () {\nlet text = \"Hello! I called myself.\";\n})();\n\n---\n\nfunction () {\n// Code to run\n};\n\n---\n\n(function () {\n// Code to run\n});\n\n---\n\n(function () {\n// Code to run\n})();\n\n---\n\n(function (name) {\nlet text = \"Hello \" + name;\n})(\"John Doe\");\n\n---\n\nlet result = (function () {\nreturn 5 + 5;\n})();\n\n---\n\n(() => {\nlet text = \"Hello! I called myself.\";\n})();\n\n---\n\n((name) => {\nlet text = \"Hello \" + name;\n})(\"John Doe\");\n\n---\n\n<script type=\"module\">\nlet x = 10;\n</script>\n\n---\n\n(function greet() {\nlet text = \"Hello! I called myself.\";\n})();\ngreet(); // \u26d4 ReferenceError\n\n---\n\n(function factorial(n) {\nif (n <= 1) return 1;\nreturn n * factorial(n - 1); // recursive call\n})(5);\n\n---\n\nconst counter = (function () {\nlet value = 0;\nreturn {\nincrement() { value++; },\nget() { return value; }\n};\n})();\ncounter.increment();\nlet x = counter.get();\n```\n\n## Tutorials\n\nAlocal variableis a \"private\" variable definedinsidea function.\n\nAfunctioncan access all variables in thelocal scope.\n\nAglobal variableis a \"public\" variable definedoutsidea function.\n\nAfunctioncan access all variables in theglobal scope:\n\nIn a web page, global variables belong to the page.\n\nGlobal variables can be used (or changed) by all scripts in the page.\n\nA local variable can only be used inside the function where it is defined. It \nis private and hidden from other functions and other scripting code.\n\nGlobal \nand local variables with the same name are  \ndifferent variables. Modifying one, does not modify the other.\n\nGlobal variables live until the page is discarded, like when you navigate \nto another page or close the window.\n\nLocal \nvariables have short lives. They are created when the function is \ninvoked, and deleted when the function is finished.\n\nSuppose you want to use a variable for counting something, and you want this \ncounter to be available to everyone (all functions).\n\nYou could use a global variable, and afunctionto increase the counter:\n\nThere is a problem with the solution above: Any code on the page can change the counter,without calling add().\n\nThe counter should be local to theadd()function, to prevent other code from changing \nit:\n\nIt did not work because we display the global counter instead of the local \ncounter.\n\nWe can remove the global counter and access the local counter by letting the \nfunction return it:\n\nIt did not work because we reset the local counter every time we call the \nfunction.\n\nAll functions have access to the global scope.\n\nIn fact, in JavaScript, all functions have access to the scope \"above\" them.\n\nJavaScript supports nested functions. Nested functions have access to the \nscope \"above\" them.\n\nThis could have solved the counter dilemma, if we could reach theplus()function from the outside.\n\nWe also need to find a way to executecounter = 0only once.\n\nThe variableaddis assigned to the return value of a function.\n\nThe function only runs once. It sets the counter to zero (0), and returns a function expression.\n\nThis way add becomes a function. The \"wonderful\" part is that it can access the counter in its parent scope.\n\nThis is called aclosure.It makes it possible \nfor a function to have \"private\" variables.\n\nThe counter is protected by the scope of the myCounter function, \nand can only be changed using the add function.\n\nA closure is a function that has access to the parent scope, after the parent function has closed.\n\nClosures has historically been used to:\n\nSince ECMAScript 2022, JavaScript supports real private class fields using the#syntax.\n\nPrivate fields are enforced by the language and cannot be accessed outside the class.\n\nAll modern browsers support private class fields.\n\nPrivate class fields are usually preferred when working with classes.\n\nClosures are still important and useful outside of classes.\n\nClosures are also widely used in older codebases and functional programming patterns.\n\n### Code Examples\n\n```\nfunction myFunction() {\nlet a = 4;\nreturn a * a;\n}\n\n---\n\nlet a = 4;\nfunction myFunction() {\nreturn a * a;\n}\n\n---\n\nfunction myFunction() {\na = 4;\n}\n\n---\n\n// Initiate counter\nlet counter = 0;\n// Function to increment \n  counter\nfunction add() {\ncounter += 1;\n}\n// Call add() 3 times\nadd();\nadd();\nadd();\n// The counter should now be 3\n\n---\n\n// Initiate counter\nlet counter = 0;\n// Function to increment \n  counter\nfunction add() {\nlet counter = 0;\ncounter += 1;\n}\n// \n  Call add() 3 times\nadd();\nadd();\nadd();\n// The counter should \n  now be 3. But it is 0\n\n---\n\n// Function to increment counter\nfunction add() {\nlet counter = 0;\ncounter += 1;\nreturn counter;\n}\nlet x= 0;\n// Call add() 3 times\nx = add();\nx = add();\nx = add();\n// The counter should now be 3. But it is 1.\n\n---\n\nfunction add() {\nlet counter = 0;\nfunction plus() {counter += 1;}\nplus();\nreturn counter;\n}\n\n---\n\nfunction myCounter() {\nlet counter = 0;\nreturn function() {\ncounter++;\nreturn counter;\n};\n}\nconst add = myCounter();\nadd();\nadd();\nadd();\n// the counter is now 3\n\n---\n\nclass Counter {\n#count = 0;\nincrement() {\nthis.#count++;\nreturn this.#count;\n}\n}\nconst myCounter = new Counter();\nmyCounter.increment();\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_45",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_45",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 92,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thez-indexproperty specifies the stack order of \npositioned elements.\n\nThe stack order defines which element should be placed in front or behind other \nelements.\n\nWhen elements are positioned, they can overlap other elements.\n\nAn element can have a positive or negative stack order (z-index):\n\nNote:z-indexonly works onpositioned elements(position: absolute, \nposition: relative, position: fixed, or position: sticky) andflex items(elements that are direct children of display: flex elements).\n\nA positioned element with a greater stack order is always above an element \nwith a lower stack order.\n\nIf several positioned elements overlap each other without az-indexspecified, the elements render in the order they are defined in the HTML source \ncode.\n\n### Code Snippets\n\n```\nimg\n{\nposition: absolute;\nleft: 0px;\ntop: 0px;\nz-index: -1;\n}\n\n---\n\n<html>\n<head>\n<style>\n.container {\nposition: relative;\n}\n.black-box {\nposition: relative;\nz-index: 1;\nborder: 2px solid black;\nheight: 100px;\nmargin: 30px;\n}\n.gray-box {\nposition: absolute;\nz-index: 3;\nbackground: lightgray;\nheight: 60px;\nwidth: 70%;\nleft: 50px;\ntop: 50px;\n}\n.green-box {\nposition: absolute;\nz-index: 2;\nbackground: lightgreen;\nwidth: 35%;\nleft: 270px;\ntop: -15px;\nheight: \n  100px;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div \n  class=\"black-box\">Black box</div>\n<div class=\"gray-box\">Gray \n  box</div>\n<div class=\"green-box\">Green box</div>\n</div>\n</body>\n</html>\n\n---\n\n<html>\n<head>\n<style>\n.container {\nposition: relative;\n}\n.black-box {\nposition: relative;\nborder: 2px solid black;\nheight: 100px;\nmargin: 30px;\n}\n.gray-box {\nposition: absolute;\nbackground: lightgray;\nheight: 60px;\nwidth: 70%;\nleft: 50px;\ntop: 50px;\n}\n.green-box {\nposition: absolute;\nbackground: lightgreen;\nwidth: 35%;\nleft: 270px;\ntop: -15px;\nheight: \n  100px;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div \n  class=\"black-box\">Black box</div>\n<div class=\"gray-box\">Gray \n  box</div>\n<div class=\"green-box\">Green box</div>\n</div>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_91",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

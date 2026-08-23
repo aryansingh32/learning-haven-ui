@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 27,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThis chapter describes the differentform*attributes for the HTML<input>element.\n\nThe inputformattribute specifies the form \nthe<input>element belongs to.\n\nThe value of this attribute must be equal to the id attribute of the <form> \nelement it belongs to.\n\nThe inputformactionattribute specifies the URL of \nthe file that will process the input when the form is submitted.\n\nNote:This attribute overrides theactionattribute of the<form>element.\n\nTheformactionattribute works with the \nfollowing input types: submit and image.\n\nThe inputformenctypeattribute specifies how the form-data should be encoded when submitted (only for forms with method=\"post\").\n\nNote:This attribute overrides the enctype attribute of the<form>element.\n\nTheformenctypeattribute works with the \nfollowing input types: submit and image.\n\nThe inputformmethodattribute defines the HTTP method for sending form-data to the action URL.\n\nNote:This attribute overrides the method  attribute of the<form>element.\n\nTheformmethodattribute works with the \nfollowing input types: submit and image.\n\nThe form-data can be sent as URL variables (method=\"get\") or as an HTTP post \ntransaction (method=\"post\").\n\nNotes on the \"get\" method:\n\nNotes on the \"post\" method:\n\nThe inputformtargetattribute specifies a name or a keyword that indicates where \nto display the response that is received after submitting the form.\n\nNote:This attribute overrides the target attribute of the<form>element.\n\nTheformtargetattribute works with the \nfollowing input types: submit and image.\n\nThe inputformnovalidateattribute specifies \nthat an <input> element should not be validated when submitted.\n\nNote:This attribute overrides the novalidate attribute of the<form>element.\n\nTheformnovalidateattribute works with the \nfollowing input types: submit.\n\nThenovalidateattribute is a<form>attribute.\n\nWhen present, novalidate specifies that all of the form-data should not be validated when submitted.\n\n### Code Examples\n\n```\n<form action=\"/action_page.php\" id=\"form1\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n<label for=\"lname\">Last \n    name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\" form=\"form1\">\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" formaction=\"/action_page2.php\" value=\"Submit as Admin\">\n</form>\n\n---\n\n<form action=\"/action_page_binary.asp\" method=\"post\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" \n    formenctype=\"multipart/form-data\"\nvalue=\"Submit as \n    Multipart/form-data\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" method=\"get\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit using \n    GET\">\n<input type=\"submit\" formmethod=\"post\" value=\"Submit using \n    POST\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" formtarget=\"_blank\" value=\"Submit to a new window/tab\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"email\">Enter your \n    email:</label>\n<input type=\"email\" id=\"email\" name=\"email\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" \n    formnovalidate=\"formnovalidate\"\nvalue=\"Submit without validation\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" novalidate>\n<label \n    for=\"email\">Enter your email:</label>\n<input type=\"email\" \n    id=\"email\" name=\"email\"><br><br>\n<input type=\"submit\" \n    value=\"Submit\">\n</form>\n```\n\n## Tutorials\n\nTest what you have learned about HTML input form attributes.\n\n## Tutorials\n\nThe HTML<canvas>element is used to draw graphics, on the fly, via JavaScript.\n\nThe<canvas>element is only a container for graphics. You must use  \nJavaScript to actually draw the graphics.\n\nCanvas has several methods for drawing paths, boxes, circles, text, and adding images.\n\nCanvas is supported by all major browsers.\n\nA canvas is a rectangular area on an HTML page. By default, a canvas has no border and no content.\n\nThe markup looks like this:\n\nNote:Always specify anidattribute (to be referred to in a script), \nand awidthandheightattribute to define the size of the canvas. To add a border, use thestyleattribute.\n\nHere is an example of a basic, empty canvas:\n\nAfter creating the rectangular canvas area, you must add a JavaScript to do \nthe drawing.\n\nHere are some examples:\n\nTo learn more about<canvas>, please \nread ourHTML Canvas Tutorial.\n\n### Code Examples\n\n```\n<canvas id=\"myCanvas\" width=\"200\" height=\"100\"></canvas>\n\n---\n\n<canvas id=\"myCanvas\" width=\"200\" height=\"100\"\nstyle=\"border:1px solid \n#000000;\">\n</canvas>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.moveTo(0, 0);\nctx.lineTo(200, 100);\nctx.stroke();\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.beginPath();\nctx.arc(95, 50, 40, 0, 2 * Math.PI);\nctx.stroke();\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.font = \"30px Arial\";\nctx.fillText(\"Hello World\", 10, 50);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.font = \"30px Arial\";\nctx.strokeText(\"Hello World\", 10, 50);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\n// Create gradient\nvar grd = ctx.createLinearGradient(0, 0, 200, 0);\ngrd.addColorStop(0, \"red\");\ngrd.addColorStop(1, \"white\");\n// Fill with gradient\nctx.fillStyle = grd;\nctx.fillRect(10, 10, 150, 80);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\n// Create gradient\nvar grd = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);\ngrd.addColorStop(0, \"red\");\ngrd.addColorStop(1, \"white\");\n// Fill with gradient\nctx.fillStyle = grd;\nctx.fillRect(10, 10, 150, 80);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nvar img = document.getElementById(\"scream\");\nctx.drawImage(img, 10, 10);\n</script>\n```\n\n## Tutorials\n\nTest your understanding of the HTML canvas element by completing this coding challenge.\n\n## Tutorials\n\nSVG defines vector-based graphics in XML, which can be directly embedded in HTML pages.\n\nSVG graphics are scalable, and do not lose any quality if they are zoomed or resized:\n\nSVG is supported by all major browsers.\n\nThe HTML<svg>element is a container for SVG graphics.\n\nSVG has several methods for drawing paths, rectangles, circles, polygons, text, and \nmuch more.\n\nSVG is a language for describing 2D graphics in XML, while Canvas draws 2D graphics, on the fly (with JavaScript).\n\nSVG is XML based, which means that every element is available within the SVG \nDOM. You can attach JavaScript event handlers to SVG graphics.\n\nIn SVG, each drawn shape is remembered as an object. If attributes of an SVG \nobject are changed, the browser can automatically re-render the shape.\n\nCanvas is rendered pixel by pixel. In canvas, once the graphic is drawn, it is forgotten by the browser. If its \nposition should be changed, the entire scene needs to be redrawn, including any \nobjects that might have been covered by the graphic.\n\nThe table below shows some important differences between Canvas and SVG:\n\nTo learn more about SVG, please read ourSVG Tutorial.\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<svg \n width=\"100\" height=\"100\">\n<circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" \n stroke-width=\"4\" fill=\"yellow\" />\n</svg>\n</body>\n</html>\n\n---\n\n<svg width=\"400\" height=\"120\">\n<rect \n  x=\"10\" y=\"10\" width=\"200\" height=\"100\" \n  stroke=\"red\" stroke-width=\"6\" fill=\"blue\" \n />\n</svg>\n\n---\n\n<svg width=\"400\" height=\"180\">\n<rect x=\"50\" y=\"20\" rx=\"20\" ry=\"20\" \n width=\"150\" height=\"150\"\nstyle=\"fill:red;stroke:black;stroke-width:5;opacity:0.5\" />\n</svg>\n\n---\n\n<svg width=\"300\" height=\"200\">\n<polygon points=\"100,10 40,198 190,78 10,78 160,198\"\nstyle=\"fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;\" />\n</svg>\n\n---\n\n<svg height=\"130\" width=\"500\">\n<defs>\n<linearGradient id=\"grad1\">\n<stop offset=\"0%\" stop-color=\"yellow\" \n />\n<stop offset=\"100%\" stop-color=\"red\" />\n</linearGradient>\n</defs>\n<ellipse cx=\"100\" cy=\"70\" rx=\"85\" ry=\"55\" \n fill=\"url(#grad1)\" />\n<text fill=\"#ffffff\" font-size=\"45\" \n font-family=\"Verdana\" x=\"50\" y=\"86\">SVG</text>\nSorry, your browser does not \n support inline SVG.\n</svg>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_27",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_27",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 2,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of C++ by completing a small coding challenge.\n\n## Tutorials\n\nThecoutobject, together with the<<operator, is used to output values and print text.\n\nJust remember to surround the text with double quotes (\"\"):\n\nYou can add as manycoutobjects as you want. However, note that it does not insert a new line at the end of the output:\n\nTip:You will learn how to add new lines in theC++ New Lines chapter.\n\n### Code Examples\n\n```\n#include <iostream>\nusing namespace std;\nint main() {\ncout\n<< \"Hello World!\";\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\ncout\n<< \"Hello World!\";\ncout\n<< \"I am learning C++\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nYou can also usecout()to \nprint numbers.\n\nHowever, unlike text, we don't put numbers inside double \nquotes:\n\nYou can also perform mathematical calculations:\n\n### Code Examples\n\n```\n#include <iostream>\nusing namespace std;\nint main() {\ncout << 3;\nreturn 0;\n}\n\n---\n\ncout << 3 + 3;\n\n---\n\ncout << 2 * 5;\n```\n\n## Tutorials\n\nTo insert a new line in your output, you can use the\\ncharacter:\n\nYou can also use another<<operator and place the\\ncharacter after the text, like this:\n\nTip:Two\\ncharacters after each other will create a blank line:\n\nAnother way to insert a new line, is with theendlmanipulator:\n\n### Code Examples\n\n```\n#include <iostream>\nusing namespace std;\nint main() {\ncout << \"Hello World!\n\\n\n\";\ncout << \"I am learning C++\";\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\ncout << \"Hello World!\"\n<< \"\\n\";\ncout << \"I am learning C++\";\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\ncout << \"Hello World!\" << \"\n\\n\\n\n\";\ncout << \"I am learning C++\";\nreturn 0;\n}\n\n---\n\n#include <iostream>\nusing namespace std;\nint main() {\ncout << \"Hello World!\" <<\nendl\n;\ncout << \"I am learning C++\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nTest your understanding ofC++ outputby completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_2",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 47,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThevar()function is used to insert the value of a \nCSS variable.\n\nCSS variables have access to the DOM, which means that you can create \nvariables with local or global scope, change the variables with JavaScript, and \nchange the variables based on media queries.\n\nA good way to use CSS variables is when it comes to the colors of your \ndesign. Instead of copy and paste the same colors over and over again, you can \nplace them in variables.\n\nCSS variables can have a global or local scope.\n\nGlobal variables can be accessed through the entire document, while \nlocal variables can be used only inside the selector where it is declared.\n\nTo create a global variable, declare it inside the:rootselector. The:rootselector matches the document's root element.\n\nTo create a local variable, declare it inside the selector that is going to use it.\n\nA CSS variable name must begin with two dashes (--) and is case sensitive!\n\nThevar()function is used to insert the value of a \ndeclared CSS variable.\n\nAdvantages of usingvar()are:\n\nHere, we declare two global variables (--primary-bg-color and --primary-color).\n\nThen, we use thevar()function to insert the value of the variables later in the style sheet:\n\nTo change the look of the page, you just need to change the two variable values:\n\n### Code Examples\n\n```\n:root {\n--primary-bg-color: green; /* global scope */\n}\n.note {\n--note-bg: \n  yellow; /* local scope */\n}\n\n---\n\nvar(--\nname, value\n)\n\n---\n\n:root {\n--primary-bg-color: #1e90ff;\n--primary-color: \n  #ffffff;\n}\nbody {\nbackground-color: \n  var(--primary-bg-color);\n}\n.container {\ncolor: \n  var(--primary-bg-color);\nbackground-color: var(--primary-color);\npadding: 15px;\n}\n.container h2 {\nborder-bottom: 2px solid \n  var(--primary-bg-color);\n}\n.container .note {\nborder: 1px \n  solid var(--primary-bg-color);\npadding: 10px;\n}\n\n---\n\n:root {\n--primary-bg-color: #8FBC8F;\n--primary-color: \n  #FFFAF0;\n}\nbody {\nbackground-color: var(--primary-bg-color);\n}\n.container {\ncolor: var(--primary-bg-color);\nbackground-color: var(--primary-color);\npadding: 15px;\n}\n.container h2 {\nborder-bottom: 2px solid var(--primary-bg-color);\n}\n.container .note {\nborder: 1px solid \n  var(--primary-bg-color);\npadding: 10px;\n}\n```\n\n## Tutorials\n\nFrom the previous page we have learned that global variables can be accessed through the entire document, while \nlocal variables can be used only inside the selector where it is declared.\n\nSometimes we want the variables to change only in a specific section of the page.\n\nAssume we want a different border color for <p class=\"note\"> elements. Then, we can \nre-declare the --primary-bg-color variable inside the .note selector. When we use var(--primary-bg-color) \ninside this selector, it will use the local --primary-bg-color variable value declared here.\n\nWe see that the local --primary-bg-color variable will override the global --primary-bg-color \nvariable for the .note selector:\n\nIf a variable is going to be used only one single place, we could also have declared a new local variable, like this:\n\n### Code Examples\n\n```\n:root {\n--primary-bg-color: #1e90ff;\n--primary-color: \n  #ffffff;\n}\nbody {\nbackground-color: \n  var(--primary-bg-color);\n}\n.container {\ncolor: \n  var(--primary-bg-color);\nbackground-color: var(--primary-color);\npadding: 15px;\n}\n.container h2 {\nborder-bottom: 2px solid \n  var(--primary-bg-color);\n}\n.container .note {\n--primary-bg-color: red; /* local variable will override global */\nborder: 1px solid var(--primary-bg-color);\npadding: 10px;\n}\n\n---\n\n:root {\n--primary-bg-color: #1e90ff;\n--primary-color: \n  #ffffff;\n}\nbody {\nbackground-color: \n  var(--primary-bg-color);\n}\n.container {\ncolor: \n  var(--primary-bg-color);\nbackground-color: var(--primary-color);\npadding: 15px;\n}\n.container h2 {\nborder-bottom: 2px solid \n  var(--primary-bg-color);\n}\n.container .note {\n--note-border-color: red; /* new local variable */\nborder: 1px solid \n  var(--note-border-color);\npadding: 10px;\n}\n```\n\n## Tutorials\n\nCSS variables have access to the DOM, which means that you can change them with JavaScript.\n\nHere is an example of how you can create a script to display and change the --primary-bg-color variable from the example used in the previous pages. \nFor now, do not worry if you are not familiar with JavaScript. You can learn \nmore about JavaScript in ourJavaScript Tutorial:\n\n### Code Examples\n\n```\n<script>\n// Get the root element\nvar r = \n  document.querySelector(':root');\n// Function for getting a variable \n  value\nfunction myFunction_get() {\n// Get the styles (properties \n  and values) for the root\nvar rs = getComputedStyle(r);\n// \n  Alert the value of the --primary-bg-color variable\nalert(\"The value \n  of --primary-bg-color is: \" + rs.getPropertyValue('--primary-bg-color'));\n}\n// Function for setting a variable value\nfunction myFunction_set() {\n// Set the value of variable --primary-bg-color to another value (in this case \n  \"green\")\nr.style.setProperty('--primary-bg-color', 'green');\n}\n</script>\n```\n\n## Tutorials\n\nMedia Queries are about defining different style rules for different devices (screens, tablets, mobile phones, etc.). You can learn more \nMedia Queries in ourMedia Queries Chapter.\n\nNow we want to set one variable value for screens below 450px wide, and \nanother variable value for screens above 450px wide.\n\nHere, we first declare a new local variable named --fontsize for the.containerclass. We set its value to 20 pixels. Then, we create a@mediarule that says \"When the browser's width \nis 450px or wider, change the --fontsize variable value of the.containerclass to 40px.\":\n\nHere is another example where we also change the value of the --primary-bg-color variable \nin the@mediarule:\n\n### Code Examples\n\n```\n:root {\n--primary-bg-color: #1e90ff;\n--primary-color: \n  #ffffff;\n}\nbody {\nbackground-color: \n  var(--primary-bg-color);\n}\n.container {\n--fontsize: 20px;\ncolor: var(--primary-bg-color);\nbackground-color: \n  var(--primary-color);\npadding: 15px;\nfont-size: \n  var(--fontsize);\n}\n.container h2 {\nborder-bottom: 2px \n  solid var(--primary-bg-color);\n}\n@media screen and (min-width: \n  450px) {\n.container {\n--fontsize: 40px;\n}\n}\n\n---\n\n:root {\n--primary-bg-color: #1e90ff;\n--primary-color: \n  #ffffff;\n}\nbody {\nbackground-color: \n  var(--primary-bg-color);\n}\n.container {\n--fontsize: 20px;\ncolor: var(--primary-bg-color);\nbackground-color: \n  var(--primary-color);\npadding: 15px;\nfont-size: \n  var(--fontsize);\n}\n.container h2 {\nborder-bottom: 2px \n  solid var(--primary-bg-color);\n}\n@media screen and (min-width: 450px) {\n.container {\n--fontsize: 40px;\n}\n:root {\n--primary-bg-color: lightblue;\n}\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_47",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_47",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

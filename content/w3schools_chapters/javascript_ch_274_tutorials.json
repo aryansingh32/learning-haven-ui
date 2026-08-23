@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 274,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Bubble Plots are Scatter Plots whose markers have variable color, size, and symbols.\n\nIt is a type of 3-dimensional chart with only two axes (x and y) where the size of the bubble\ncommunicates the third dimention.\n\n### Code Snippets\n\n```\nconst xArray = [\"Italy\",\"France\",\"Spain\",\"USA\",\"Argentina\"];\nconst yArray = [55, 49, 44, 24, 15];\nconst data = [{\nx: xArray,\ny: yArray,\ntype: \"bar\",\norientation:\"v\",\nmarker: {color:\"rgba(0,0,255)\"}\n}];\nconst layout = {title:\"World Wide Wine Production\"};\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nconst xArray = [55, 49, 44, 24, 15];\nconst yArray = [\"Italy\",\"France\",\"Spain\",\"USA\",\"Argentina\"];\nconst data = [{\nx: xArray,\ny: yArray,\ntype: \"bar\",\norientation: \"h\",\nmarker: {color:\"rgba(255,0,0,0.6)\"}\n}];\nconst layout = {title:\"World Wide Wine Production\"};\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nconst data = [{\nlabels: xArray,\nvalues: yArray,\ntype: \"pie\"\n}];\n\n---\n\nconst data = [{\nlabels: xArray,\nvalues: yArray,\nhole: .4,\ntype: \"pie\"\n}];\n\n---\n\nlet exp = \"Math.sin(x)\";\n// Generate values\nconst xValues = [];\nconst yValues = [];\nfor (let x = 0; x <= 10; x += 0.1) {\nxValues.push(x);\nyValues.push(eval(exp));\n}\n// Display using Plotly\nconst data = [{x:xValues, y:yValues, mode:\"lines\"}];\nconst layout = {title: \"y = \" + exp};\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\n// Display using Plotly\nconst data = [{x:xValues, y:yValues,\nmode:\"markers\"\n}];\nconst layout = {title: \"y = \" + exp};\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nconst xArray = [50,60,70,80,90,100,110,120,130,140,150];\nconst yArray = [7,8,8,9,9,9,10,11,14,14,15];\n// Define Data\nconst data = [{\nx: xArray,\ny: yArray,\nmode:\"markers\",\ntype:\"scatter\"\n}];\n// Define Layout\nconst layout = {\nxaxis: {range: [40, 160], title: \"Square Meters\"},\nyaxis: {range: [5, 16], title: \"Price in Millions\"},\ntitle: \"House Prices vs. Size\"\n};\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nconst xArray = [50,60,70,80,90,100,110,120,130,140,150];\nconst yArray = [7,8,8,9,9,9,10,11,14,14,15];\n// Define Data\nconst data = [{\nx: xArray,\ny: yArray,\nmode: \"lines\",\ntype: \"scatter\"\n}];\n// Define Layout\nconst layout = {\nxaxis: {range: [40, 160], title: \"Square Meters\"},\nyaxis: {range: [5, 16], title: \"Price in Millions\"},\ntitle: \"House Prices vs Size\"\n};\n// Display using Plotly\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nconst xArray = [1,2,3,4];\nconst yArray = [10,20,30,40];\nconst trace1 = {\nx: xArray,\ny: yArray,\nmode: 'markers',\nmarker: {\ncolor: ['red', 'green',  'blue', 'orange'],\nsize: [20, 30, 40, 50]\n}\n};\nconst data = [trace1];\nconst layout = {\ntitle: \"Plotting Bubbles\"\n};\nPlotly.newPlot('myPlot', data, layout);\n\n---\n\nlet exp = \"x + 17\";\n// Generate values\nconst xValues = [];\nconst yValues = [];\nfor (let x = 0; x <= 10; x += 1) {\nyValues.push(eval(exp));\nxValues.push(x);\n}\n// Define Data\nconst data = [{\nx: xValues,\ny: yValues,\nmode: \"lines\"\n}];\n// Define Layout\nconst layout = {title: \"y = \" + exp};\n// Display using Plotly\nPlotly.newPlot(\"myPlot\", data, layout);\n\n---\n\nlet exp1 = \"x\";\nlet exp2 = \"1.5*x\";\nlet exp3 = \"1.5*x + 7\";\n// Generate values\nconst x1Values = [];\nconst x2Values = [];\nconst x3Values = [];\nconst y1Values = [];\nconst y2Values = [];\nconst y3Values = [];\nfor (let x = 0; x <= 10; x += 1) {\nx1Values.push(x);\nx2Values.push(x);\nx3Values.push(x);\ny1Values.push(eval(exp1));\ny2Values.push(eval(exp2));\ny3Values.push(eval(exp3));\n}\n// Define Data\nconst data = [\n{x: x1Values, y: y1Values, mode:\"lines\"},\n{x: x2Values, y: y2Values, mode:\"lines\"},\n{x: x3Values, y: y3Values, mode:\"lines\"}\n];\n// Define Layout\nconst layout = {title: \"[y=\" + exp1 + \"]  [y=\" + exp2 + \"]  [y=\" + exp3 + \"]\"};\n// Display using Plotly\nPlotly.newPlot(\"myPlot\", data, layout);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_273",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

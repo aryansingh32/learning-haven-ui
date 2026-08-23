@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 172,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The CSS gradient functions let you display smooth transitions between two or more colors \nwithin an element.\n\nCSS defines three types of gradients:\n\nThe CSS gradient functions are used within thebackground-imageproperty.\n\nThe CSSlinear-gradient()function creates a linear gradient.\n\nA linear gradient defines a color transition that goes in a straight line, it \ncan go down, up, to left, to right, \n  or diagonally.\n\nA linear gradient requires \nat least two color stops. Color stops are the colors you want to render smooth transitions \namong. You can also set a starting point and a direction (or an angle) along \nwith the gradient effect.\n\nThe following example shows a linear gradient that goes from top to bottom. It starts red, transitioning to yellow:\n\nThe following example shows a linear gradient that goes from bottom to top. It starts red, transitioning to yellow:\n\nThe following example shows a linear gradient that goes from left to right. It starts red, transitioning to \nyellow:\n\nThe following example shows a linear gradient that goes from top-left to bottom-right. It starts red, transitioning to yellow:\n\nIf you want more control over the direction of the gradient, you can define \nanangleparameter, instead of the predefined directions (to bottom, to \ntop, to right, to left, to bottom right, etc.).\n\nThe following example shows how to use angles on linear gradients:\n\nThe following example shows a linear gradient (from top to bottom) with \nmultiple color stops:\n\nThe following example shows a linear gradient (from left to \nright) with the color of the rainbow and some text:\n\nCSS gradients also support transparency, which can be used to create fading effects.\n\nTo add transparency, we use the rgba() function to define the color stops. \nThe last parameter in the rgba() function can be a value from 0 to 1, and it \ndefines the transparency of the color: 0 indicates full transparency, 1 \nindicates full color (no transparency).\n\nThe following example shows a linear gradient that goes from left to right. It starts fully transparent, transitioning to full color red:\n\nThe CSSrepeating-linear-gradient()function is used to repeat linear gradients:\n\n### Code Snippets\n\n```\nbackground-image: linear-gradient(\ndirection\n,\ncolor-stop1\n,\ncolor-stop2, ...\n);\n\n---\n\n#grad {\nbackground-image: linear-gradient(to bottom, red, yellow);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(to top, red, yellow);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(to right, red , yellow);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(to bottom right, red, yellow);\n}\n\n---\n\nbackground-image: linear-gradient(\nangle\n,\ncolor-stop1\n,\ncolor-stop2\n);\n\n---\n\n#grad {\nbackground-image: linear-gradient(180deg, red, yellow);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(red, yellow, green);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);\n}\n\n---\n\n#grad {\nbackground-image: linear-gradient(to right, rgba(255,0,0,0), \nrgba(255,0,0,1));\n}\n\n---\n\n#grad {\nbackground-image: \nrepeating-linear-gradient(red, yellow 10%, green 20%);\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_171",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

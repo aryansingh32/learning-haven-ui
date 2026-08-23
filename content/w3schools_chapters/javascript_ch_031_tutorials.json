@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 31,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thelengthproperty returns the length of a string:\n\nThere are 4 methods for extracting string characters:\n\nThecharAt()method returns the character at a specified \nindex (position) in a string:\n\nThecharCodeAt()method returns the code of the character \nat a specified index in a string:\n\nThe method returns a UTF-16 code (an integer between 0 and 65535).\n\nES2022introduced the string methodat():\n\nTheat()method returns the character at a specified index (position) in a string.\n\nTheat()method is supported in all modern browsers since March 2022:\n\nat()is an ECMAScript 2022 feature.\n\nJavaScript 2022is supported in all modern browsers sinceMarch 2022:\n\nconcat()joins two or more strings:\n\nTheconcat()method can be used instead of the plus operator. \nThese two lines do the same:\n\nThere are 3 methods for extracting a part of a string:\n\nslice()extracts a part of a string and returns the \nextracted part in a new string.\n\nThe method takes 2 parameters: start position, and end position (end not included).\n\nsubstring()is similar toslice().\n\nThe difference is that start and end values less than 0 are treated as 0 insubstring().\n\nIf you omit the second parameter,substring()will slice out the rest of the \nstring.\n\nsubstr()is similar toslice().\n\nThe difference is \nthat the second parameter specifies thelengthof the extracted part.\n\nIf you omit the second parameter,substr()will slice out the rest of the \nstring.\n\nIf the first parameter is negative, the position counts from the end of the \nstring.\n\nA string is converted to upper case withtoUpperCase():\n\nA string is converted to lower case withtoLowerCase():\n\nTheisWellFormed()method returnstrueif a string is well formed.\n\nOtherwise it returnsfalse.\n\nA string is not well formed if it containslone surrogates.\n\nThe String methodtoWellFormed()returns a new string where all \"lone surrogates\" are replaced with the Unicode replacement character (U+FFFD).Exampleslet text = \"Hello World \\uD800\";let result = text.toWellFormed();Try it Yourself \u00bbJavaScript String trim()Thetrim()method removes whitespace from both sides of a string:Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0 Hello World! \u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trim();Try it Yourself \u00bbJavaScript String trimStart()ECMAScript 2019added the String methodtrimStart()to JavaScript.ThetrimStart()method works liketrim(), but removes whitespace only from the start of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimStart();Try it Yourself \u00bbBrowser SupporttrimStart()is an ECMAScript 2019 feature.ES2019is supported in all modern browsers sinceJanuary 2020:Chrome66Edge79Firefox61Safari12Opera50Apr 2018Jan 2020Jun 2018Sep 2018May 2018JavaScript String trimEnd()ECMAScript 2019added the string methodtrimEnd()to JavaScript.ThetrimEnd()method works liketrim(), but removes whitespace only from the end of a string.Examplelet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";let text2 = text1.trimEnd();Try it Yourself \u00bbBrowser SupporttrimEnd()is an ECMAScript 2019 feature.ES2019is supported in all modern browsers sinceJanuary 2020:Chrome66Edge79Firefox61Safari12Opera50Apr 2018Jan 2020Jun 2018Sep 2018May 2018JavaScript String PaddingECMAScript 2017added two new string methods to JavaScript:padStart()andpadEnd()to support padding at the beginning and at the end of a string.JavaScript String padStart()ThepadStart()method pads a string from the start.It pads a string with another string (multiple times) until it reaches a given length.ExamplesPad a string with \"0\" until it reaches the length 4:let text = \"5\";let padded = text.padStart(4,\"0\");Try it Yourself \u00bbPad a string with \"x\" until it reaches the length 4:let text = \"5\";let padded = text.padStart(4,\"x\");Try it Yourself \u00bbThepadStart()method is a string method.To pad a number, convert the number to a string first.See the example below.Examplelet numb = 5;let text = numb.toString();let padded = text.padStart(4,\"0\");Try it Yourself \u00bbJavaScript String padEnd()ThepadEnd()method pads a string from the end.It pads a string with another string (multiple times) until it reaches a given length.Exampleslet text = \"5\";let padded = text.padEnd(4,\"0\");Try it Yourself \u00bblet text = \"5\";let padded = text.padEnd(4,\"x\");Try it Yourself \u00bbThepadEnd()method is a string method.To pad a number, convert the number to a string first.See the example below.Examplelet numb = 5;let text = numb.toString();let padded = text.padEnd(4,\"0\");Try it Yourself \u00bbJavaScript String repeat()Therepeat()method returns a string with a number of copies of a string.Therepeat()method returns a new string.Therepeat()method does not change the original string.ExamplesCreate copies of a text:let text = \"Hello world!\";let result = text.repeat(2);Try it Yourself \u00bblet text = \"Hello world!\";let result = text.repeat(4);Try it Yourself \u00bbSyntaxstring.repeat(count)ParametersParameterDescriptioncountRequired.The number of copies wanted.Return ValueTypeDescriptionStringA new string containing the copies.Replacing String ContentThereplace()method replaces a specified value with another \nvalue in a string:Examplelet text = \"Please visit Microsoft!\";let newText = text.replace(\"Microsoft\", \"W3Schools\");Try it Yourself \u00bbThereplace()method does not change the string it is called on.Thereplace()method returns a new string.Thereplace()method replacesonly the firstmatchIf you want to replace all matches, use a regular expression with the /g flag set. See examples below.By default, thereplace()method replacesonly the firstmatch:Examplelet text = \"Please visit Microsoft and Microsoft!\";let newText = text.replace(\"Microsoft\", \"W3Schools\");Try it Yourself \u00bbBy default, thereplace()method is case sensitive. Writing MICROSOFT (with \nupper-case) will not work:Examplelet text = \"Please visit Microsoft!\";let newText = text.replace(\"MICROSOFT\", \"W3Schools\");Try it Yourself \u00bbTo replace case insensitive, use aregular expressionwith an/iflag (insensitive):Examplelet text = \"Please visit Microsoft!\";let newText = text.replace(/MICROSOFT/i, \"W3Schools\");Try it Yourself \u00bbRegular expressions are written without quotes.To replace all matches, use aregular expressionwith a/gflag (global match):Examplelet text = \"Please visit Microsoft and Microsoft!\";let newText = text.replace(/Microsoft/g, \"W3Schools\");Try it Yourself \u00bbYou will learn a lot more about regular expressions in the chapterJavaScript Regular \nExpressions.JavaScript String ReplaceAll()In 2021, JavaScript introduced the string methodreplaceAll():Exampletext = text.replaceAll(\"Cats\",\"Dogs\");text = text.replaceAll(\"cats\",\"dogs\");Try it Yourself \u00bbThereplaceAll()method allows you to specify a\nregular expression instead of a string to be replaced.If the parameter is a regular expression, the global flag (g) must be set, otherwise\na TypeError is thrown.Exampletext = text.replaceAll(/Cats/g,\"Dogs\");text = text.replaceAll(/cats/g,\"dogs\");Try it Yourself \u00bbreplaceAll()is anES2021feature.replaceAll()does not work in Internet Explorer.Converting a String to an ArrayIf you want to work with a string as an array, you can convert it to an array.JavaScript String split()A string can be converted to an array with thesplit()method:Syntaxtext.split(\"\")\u00a0\u00a0\u00a0\u00a0\u00a0// Split on characterstext.split(\",\")\u00a0\u00a0\u00a0\u00a0// Split on commastext.split(\" \")\u00a0\u00a0\u00a0\u00a0// Split on spacestext.split(\"|\")\u00a0\u00a0\u00a0\u00a0// Split on pipeExamplesIf the parameter is (\"\"), the returned array will be an array of single characters:let text = \"Hi fox!\";const myArr = text.split(\"\");Try it Yourself \u00bbIf the parameter is (\" \"), the returned array will be an array of words:let text = \"The quick brown fox.\";const myArr = text.split(\"\");Try it Yourself \u00bbIf the separator is omitted, the returned array will contain the whole string in index [0].let text = \"The quick brown fox.\";const myArr = text.split();Try it Yourself \u00bbUsing split(\"\") Can be UnsafeUsing split(\"\") is unsafe for strings containing emojis or complex characters.The method splits by UTF-16 code units and will break surrogate pairs.split(\"\") is alwaysunsafe for emojis. It will slice right through them and create broken, corrupt code fragments.split(\" \") is usually safe for words, even if they have emojis inside them, as long as the emoji is not glued right next to a space you are splitting on.Summary of Options:text.split(\"\") is most unsafeIt breaks up 4-byte emojis (like \ud83d\udca9 becomes ['\\uD83D', '\\uDCA9']).Spread  [...text] is partially safe:It works for simple emojis like \ud83d\udca9 or \ud83d\udd25, but destroys complex emojis like \ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66, \ud83e\uddd1\u200d\u2695\ufe0f (doctor), or flags.Intl.Segmenter is 100% Safe:It handles every emoji, accent, and complex characters.ExamplesThe spread operator breaks the family apart into individual people.let text = \"\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66\";const myArr = text.split(\"\");Try it Yourself \u00bbIntl.Segmenter keeps them together safely.let text = \"\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66\";const segmenter = new Intl.Segmenter(\"en\", {granularity:\"grapheme\"});const myArr = Array.from(segmenter.segment(text)).map(s => s.segment);Try it Yourself \u00bbComplete JavaScript ReferenceFor a complete reference to all JavaScript properties and methods, with full descriptions and many examples, go to:W3Schools' Full JavaScript Reference.The reference inludes all JavaScript updates from 1999 to 2025.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nlet text = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\nlet length = text.length;\n\n---\n\nlet text = \"HELLO WORLD\";\nlet char = text.charAt(0);\n\n---\n\nlet text = \"HELLO WORLD\";\nlet char = text.charCodeAt(0);\n\n---\n\nlet text = \"HELLO WORLD\";\nlet code = text.codePointAt(0);\n\n---\n\nconst name = \"W3Schools\";\nlet letter = name.at(2);\n\n---\n\nconst name = \"W3Schools\";\nlet letter = name[2];\n\n---\n\nconst name = \"W3Schools\";\nlet letter = name.at(-5);\n\n---\n\nconst name = \"W3Schools\";\nlet letter = charAt(myString.length-5);\n\n---\n\nlet text = \"HELLO WORLD\";\nlet char = text[0];\n\n---\n\nlet text = \"HELLO WORLD\";\n// Try to change the first letter to \"A\"\ntry {\ntext[0] = \"A\";\n} catch(err) {\ntext = err.message\n}\n\n---\n\n\"using strict\";\nlet text = \"HELLO WORLD\";\n// Try to change the first letter to \"A\"\ntry {\ntext[0] = \"A\";\n} catch(err) {\ntext = err.message\n}\n\n---\n\nlet text1 = \"Hello\";\nlet text2 = \"World\";\nlet text3 = text1.concat(\" \", text2);\n\n---\n\ntext = \"Hello\" + \" \" + \"World!\";\ntext = \"Hello\".concat(\" \", \"World!\");\n\n---\n\nlet text = \"Apple, Banana, Kiwi\";\nlet part = text.slice(7, 13);\n\n---\n\nlet text = \"Apple, Banana, Kiwi\";\nlet part = text.slice(7);\n\n---\n\nlet text = \"Apple, Banana, Kiwi\";\nlet part = text.slice(-12);\n\n---\n\nlet text = \"Apple, Banana, Kiwi\";\nlet part = text.slice(-12, -6);\n\n---\n\nlet str = \"Apple, Banana, Kiwi\";\nlet part = str.substring(7, 13);\n\n---\n\nlet str = \"Apple, Banana, Kiwi\";\nlet part = str.substr(7, 6);\n\n---\n\nlet str = \"Apple, Banana, Kiwi\";\nlet part = str.substr(7);\n\n---\n\nlet str = \"Apple, Banana, Kiwi\";\nlet part = str.substr(-4);\n\n---\n\nlet text1 = \"Hello World!\";\nlet text2 = text1.toUpperCase();\n\n---\n\nlet text1 = \"Hello World!\";\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // String\nlet text2 = text1.toLowerCase();\u00a0\u00a0// text2 is text1 \nconverted to lower\n\n---\n\nlet text = \"Hello world!\";\nlet result = text.isWellFormed();\n\n---\n\nlet text = \"Hello World \\uD800\";\nlet result = text.isWellFormed();\n\n---\n\nlet text = \"Hello World \\uD800\";\nlet result = text.toWellFormed();\n\n---\n\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0 Hello World! \u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trim();\n\n---\n\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimStart();\n\n---\n\nlet text1 = \"\u00a0\u00a0\u00a0\u00a0\u00a0Hello World!\u00a0\u00a0\u00a0\u00a0\u00a0\";\nlet text2 = text1.trimEnd();\n\n---\n\nlet text = \"5\";\nlet padded = text.padStart(4,\"0\");\n\n---\n\nlet text = \"5\";\nlet padded = text.padStart(4,\"x\");\n\n---\n\nlet numb = 5;\nlet text = numb.toString();\nlet padded = text.padStart(4,\"0\");\n\n---\n\nlet text = \"5\";\nlet padded = text.padEnd(4,\"0\");\n\n---\n\nlet text = \"5\";\nlet padded = text.padEnd(4,\"x\");\n\n---\n\nlet numb = 5;\nlet text = numb.toString();\nlet padded = text.padEnd(4,\"0\");\n\n---\n\nlet text = \"Hello world!\";\nlet result = text.repeat(2);\n\n---\n\nlet text = \"Hello world!\";\nlet result = text.repeat(4);\n\n---\n\nstring\n.repeat(\ncount\n)\n\n---\n\nlet text = \"Please visit Microsoft!\";\nlet newText = text.replace(\"Microsoft\", \"W3Schools\");\n\n---\n\nlet text = \"Please visit Microsoft and Microsoft!\";\nlet newText = text.replace(\"Microsoft\", \"W3Schools\");\n\n---\n\nlet text = \"Please visit Microsoft!\";\nlet newText = text.replace(\"MICROSOFT\", \"W3Schools\");\n\n---\n\nlet text = \"Please visit Microsoft!\";\nlet newText = text.replace(/MICROSOFT/i, \"W3Schools\");\n\n---\n\nlet text = \"Please visit Microsoft and Microsoft!\";\nlet newText = text.replace(/Microsoft/g, \"W3Schools\");\n\n---\n\ntext = text.replaceAll(\"Cats\",\"Dogs\");\ntext = text.replaceAll(\"cats\",\"dogs\");\n\n---\n\ntext = text.replaceAll(/Cats/g,\"Dogs\");\ntext = text.replaceAll(/cats/g,\"dogs\");\n\n---\n\ntext\n.split(\"\")\u00a0\u00a0\u00a0\u00a0\u00a0// Split on characters\ntext\n.split(\",\")\u00a0\u00a0\u00a0\u00a0// Split on commas\ntext\n.split(\" \")\u00a0\u00a0\u00a0\u00a0// Split on spaces\ntext\n.split(\"|\")\u00a0\u00a0\u00a0\u00a0// Split on pipe\n\n---\n\nlet text = \"Hi fox!\";\nconst myArr = text.split(\"\");\n\n---\n\nlet text = \"The quick brown fox.\";\nconst myArr = text.split(\"\");\n\n---\n\nlet text = \"The quick brown fox.\";\nconst myArr = text.split();\n\n---\n\nlet text = \"\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66\";\nconst myArr = text.split(\"\");\n\n---\n\nlet text = \"\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66\";\nconst segmenter = new Intl.Segmenter(\"en\", {granularity:\"grapheme\"});\nconst myArr = Array.from(segmenter.segment(text)).map(s => s.segment);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_30",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

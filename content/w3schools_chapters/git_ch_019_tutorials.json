@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 19,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "SSH(Secure Shell) is a way to connect securely to remote computers and services, like Git repositories.\n\nSSH uses a pair of keys (public and private) to make sure only you can access your code.\n\nSSH keys come in pairs: apublic key(like a lock) and aprivate key(like your own key).\n\nYou share the public key with the server (like GitHub or Bitbucket), but keep the private key safe on your computer.\n\nOnly someone with the private key can access what's locked by the public key.\n\nIf you've never used SSH keys before, follow this step to enable the SSH agent on your operating system:\n\nTo create a new SSH key pair, use this command in the terminal (Linux, macOS, or Git Bash for Windows):\n\nFollow the prompts to choose a file location (press Enter to use the default) and set a passphrase (optional, but recommended for extra security).\n\nAfter creating your key, add it to the SSH agent so Git can use it:\n\nTo use SSH with Git hosting services, you need to copy your public key and add it to your account settings on GitHub, GitLab, or Bitbucket.\n\nSee which keys are loaded in your SSH agent:\n\nTo remove a key from the agent:\n\nTip:Never share your private key with anyone. Use a passphrase for extra security.\n\nIf your private key is ever exposed, generate a new key pair and update your Git host immediately.\n\n### Code Snippets\n\n```\nExample: Enable SSH Agent\neval $(ssh-agent -s)\n\n---\n\nExample: Generate SSH Key\nssh-keygen -t rsa -b 4096 -C \"your@email.com\"\n\n---\n\nExample: Add Key to SSH Agent\nssh-add ~/.ssh/id_rsa\n\n---\n\nExample: List Loaded SSH Keys\nssh-add -l\n\n---\n\nExample: Remove SSH Key from Agent\nssh-add -d ~/.ssh/id_rsa\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

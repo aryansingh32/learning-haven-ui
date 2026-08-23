@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 11,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Git keeps a detailed record of every change made to your project.\n\nYou can use history commands to see what changed, when, and who made the change.\n\nThis is useful for tracking progress, finding bugs, and understanding your project's evolution.\n\nShow a detailed list of all commits in your repository:\n\nThis command shows all commits, including author, date, and message.\n\nUse the arrow keys to scroll, and pressqto quit.\n\nTip:While viewing the log, you can search for a word by typing/followed by your search term(for example,/fix), then pressnto jump to the next match.\n\nPressqat any time to quit.\n\nSee all the details and changes for a specific commit:\n\nThis command shows everything about a commit: who made it, when, the message, and the exact changes.\n\nSee what is different between your working directory and the last commit (unstaged changes):\n\nThis command shows changes you have made but not yet staged for commit.\n\nSee what is different between your staged files and the last commit:\n\nThis command shows changes that are staged and ready to be committed.\n\nSee what changed between any two commits:\n\nThis command shows the differences between two specific commits.\n\nShow a short summary of each commit (great for a quick overview):\n\nThis command shows each commit on a single line for easy reading.\n\nSee only the commits made by a specific author:\n\nThis command filters the log to show only commits by the author you specify.\n\nSee only commits made in the last two weeks:\n\nThis command shows only the commits made in a recent time frame.\n\nSee which files were changed in each commit and how many lines were added or removed:\n\nThis command adds a summary of file changes to each commit in the log.\n\nSee a simple ASCII graph of your branch history (great for visualizing merges):\n\nThis command shows a simple graph of your branch and merge history.\n\nNote:Exploring your history helps you understand what changed, when, and why.\n\n### Code Snippets\n\n```\nExample: Full Commit History\ngit log\ncommit 09f4acd3f8836b7f6fc44ad9e012f82faf861803 (HEAD -> master)\nAuthor: w3schools-test\nDate:   Fri Mar 26 09:35:54 2021 +0100\n\n    Updated index.html with a new line\n\n---\n\nExample: Show Commit Details\ngit show 09f4acd\ncommit 09f4acd3f8836b7f6fc44ad9e012f82faf861803 (HEAD -> master)\nAuthor: w3schools-test\nDate:   Fri Mar 26 09:35:54 2021 +0100\n\n    Updated index.html with a new line\n\ndiff --git a/index.html b/index.html\nindex 1234567..89abcde 100644\n--- a/index.html\n+++ b/index.html\n@@ ...\n+\nNew Title\n\n---\n\nExample: See Unstaged Changes\ngit diff\ndiff --git a/index.html b/index.html\nindex 1234567..89abcde 100644\n--- a/index.html\n+++ b/index.html\n@@ ...\n-\nOld Title\n+\nNew Title\n\n---\n\nExample: See Staged Changes\ngit diff --staged\ndiff --git a/index.html b/index.html\nindex 1234567..89abcde 100644\n--- a/index.html\n+++ b/index.html\n@@ ...\n-\nOld Title\n+\nNew Title\n\n---\n\nExample: Compare Two Commits\ngit diff 1234567 89abcde\ndiff --git a/index.html b/index.html\nindex 1234567..89abcde 100644\n--- a/index.html\n+++ b/index.html\n@@ ...\n-\nOld Title\n+\nNew Title\n\n---\n\nExample: Oneline Log\ngit log --oneline\n09f4acd Updated index.html with a new line\n8e7b2c1 Add about page\n1a2b3c4 Initial commit\n\n---\n\nExample: Commits by Author\ngit log --author=\"Alice\"\ncommit 1a2b3c4d5e6f7g8h9i0j\nAuthor: Alice\nDate:   Mon Mar 22 10:12:34 2021 +0100\n\n    Add about page\n\n---\n\nExample: Recent Commits\ngit log --since=\"2 weeks ago\"\ncommit 09f4acd3f8836b7f6fc44ad9e012f82faf861803\nAuthor: w3schools-test\nDate:   Fri Mar 26 09:35:54 2021 +0100\n\n    Updated index.html with a new line\n\n---\n\nExample: Log with Stats\ngit log --stat\ncommit 09f4acd3f8836b7f6fc44ad9e012f82faf861803\nAuthor: w3schools-test\nDate:   Fri Mar 26 09:35:54 2021 +0100\n\n    Updated index.html with a new line\n\nindex.html | 2 +-\n1 file changed, 1 insertion(+), 1 deletion(-)\n\n---\n\nExample: Log with Graph\ngit log --graph --oneline\n* 09f4acd Updated index.html with a new line\n* 8e7b2c1 Add about page\n|\\\n| * aabbccd Merge branch 'feature-x'\n|/\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

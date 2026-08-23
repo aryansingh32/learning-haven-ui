@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 3,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheINSERT INTOstatement is used to insert new records in a table.\n\nIt is possible to write theINSERT INTOstatement in two ways:\n\nSpecify both the column names and the values to be inserted:\n\nIf you insert values for ALL the columns of the table, you can omit the column names.\n\nHowever, the order of the values must be in the same order as the columns in the table:\n\nBelow is a selection from theCustomerstable used in the examples:\n\nHere we insert values for ALL the columns of the table, so we omit the column names.\n\nThe following SQL inserts a new record in the \"Customers\" table:\n\nThe last record in the \"Customers\" table will now look like this:\n\nHere we insert values only in some specific columns of the table.\n\nThe following SQL inserts a new record - but only inserts data in the \"CustomerName\",\n\"City\", and \"Country\" columns (CustomerID will be updated automatically):\n\nThe last record in the \"Customers\" table will now look like this:\n\nTo insert multiple rows of data, we use the sameINSERT INTOstatement, but with multiple values:\n\nThe following SQL inserts three new records in the \"Customers\" table:\n\nNote:Make sure you separate each set of values with a comma,.\n\nThe last three records in the \"Customers\" table will now look like this:\n\n### Code Examples\n\n```\nINSERT INTO Customers\nVALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');\n\n---\n\nINSERT INTO Customers (CustomerName, City, Country)\nVALUES ('Cardinal', 'Stavanger', 'Norway');\n\n---\n\nINSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)\nVALUES\n('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'),\n('Greasy Burger', 'Per Olsen', 'Gateveien 15', 'Sandnes', '4306', 'Norway'),\n('Tasty Tee', 'Finn Egan', 'Streetroad 19B', 'Liverpool', 'L1 0AA', 'UK');\n```\n\n## Tutorials\n\nIf a field in a table is optional, it is possible to insert or update a record without adding any value to this field.\nThis way, the field will be saved with aNULLvalue.\n\nANULLvalue represents an unknown, missing, or inapplicable data in a database field. It is not a value itself, but a placeholder to indicate the absence of data.\n\nIt is not possible to test for NULL values with comparison operators, such as \n=, <, or <>.\n\nWe will have to use theIS NULLandIS NOT NULLoperators instead.\n\nBelow is a selection from theCustomerstable used in the examples:\n\nTheIS NULLoperator is used to test for empty values (NULL values).\n\nThe following SQL lists all customers with a NULL value in the \"Address\" field:\n\nTheIS NOT NULLoperator is used to test for non-empty values (NOT NULL \nvalues).\n\nThe following SQL lists all customers with a value in the \"Address\" field:\n\n### Code Examples\n\n```\nSELECT CustomerName, ContactName, Address\nFROM Customers\nWHERE Address \n  IS NULL;\n\n---\n\nSELECT CustomerName, ContactName, Address\nFROM Customers\nWHERE Address \n  IS NOT NULL;\n```\n\n## Tutorials\n\nTheUPDATEstatement is used to update or modify \none or more records in a table.\n\nBelow is a selection from theCustomerstable used in the examples:\n\nThe following SQL updates the record with CustomerID = 1, with a new contact person \nAND \na new city.\n\nThe selection from the \"Customers\" table will now look like this:\n\nTheWHEREclause determines which records \nthat will be updated.\n\nThe following SQL will \nupdate the ContactName to \"Juan\" for ALL records where country is \"Mexico\":\n\nThe selection from the \"Customers\" table will now look like this:\n\nThe following SQL will update the ContactName to \"Juan\" for ALL records:\n\nThe selection from the \"Customers\" table will now look like this:\n\n### Code Examples\n\n```\nUPDATE Customers\nSET ContactName = 'Alfred Schmidt', City= 'Frankfurt'\nWHERE CustomerID = 1;\n\n---\n\nUPDATE Customers\nSET ContactName='Juan'\nWHERE Country='Mexico';\n\n---\n\nUPDATE Customers\nSET ContactName='Juan';\n```\n\n## Tutorials\n\nTheDELETEstatement is used to delete existing records in a table.\n\nBelow is a selection from theCustomerstable used in the examples:\n\nThe following SQL deletes the customer \"Alfreds Futterkiste\" from \nthe \"Customers\" table:\n\nThe selection from the \"Customers\" table will now look like this:\n\nIt is possible to delete all records in a table, without deleting the table. \nThis means that the table structure, attributes, and indexes will be intact.\n\nThe following SQL deletes ALL records in the \"Customers\" table, without deleting the table:\n\nTo delete the table completely, use theDROP TABLEstatement:\n\nThe following SQL drops the entire \"Customers\" table:\n\n### Code Examples\n\n```\nDELETE FROM Customers\n WHERE CustomerName='Alfreds Futterkiste';\n\n---\n\nDELETE FROM Customers;\n\n---\n\nDROP TABLE Customers;\n```\n\n## Tutorials\n\nTheSELECT TOPclause is used to limit the number of records to return.\n\nTheSELECT TOPclause is useful on large tables with thousands of \nrecords. Returning a large number of records can impact performance.\n\nThe following SQL selects only the first 3 records of the \"Customers\" table:\n\nBelow is a selection from theCustomerstable used in the examples:\n\nThe following SQL shows the equivalent example for MySQL:\n\nThe following SQL shows the equivalent example for \nOracle:\n\nHere we will use theSELECT TOPclause with the percent syntax.\n\nThe following SQL selects the first 50% of the records from the \"Customers\" table (for SQL Server/MS Access):\n\nThe following SQL shows the equivalent example for \nOracle:\n\nThe following SQL selects the first three records from the \"Customers\" table, \nwhere Country is \"Germany\" (for SQL Server/MS Access):\n\nThe following SQL shows the equivalent example for MySQL:\n\nThe following SQL shows the equivalent example for \nOracle:\n\nAdd theORDER BYkeyword when you want to sort the result, and return the first 3 records of the sorted result.\n\nFor SQL Server and MS Access:\n\nThe following SQL shows the equivalent example for MySQL:\n\nThe following SQL shows the equivalent example for \nOracle:\n\n### Code Examples\n\n```\nSELECT TOP 3 * FROM Customers;\n\n---\n\nSELECT * FROM Customers\nLIMIT 3;\n\n---\n\nSELECT * FROM Customers\nFETCH FIRST 3 ROWS ONLY;\n\n---\n\nSELECT TOP 50 PERCENT * FROM Customers;\n\n---\n\nSELECT * FROM Customers\nFETCH FIRST 50 PERCENT ROWS ONLY;\n\n---\n\nSELECT TOP 3 * FROM Customers\nWHERE Country = 'Germany';\n\n---\n\nSELECT * FROM Customers\nWHERE Country = 'Germany'\nLIMIT 3;\n\n---\n\nSELECT * FROM Customers\nWHERE Country = 'Germany'\nFETCH FIRST 3 ROWS ONLY;\n\n---\n\nSELECT TOP 3 * FROM Customers\nORDER BY CustomerName DESC;\n\n---\n\nSELECT * FROM Customers\nORDER BY CustomerName DESC\nLIMIT 3;\n\n---\n\nSELECT * FROM Customers\nORDER BY CustomerName DESC\nFETCH FIRST 3 ROWS ONLY;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_3",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

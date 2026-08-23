@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 130,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Generics allow you to write classes, interfaces, and methods that work with different data types, without having to specify the exact type in advance.\n\nThis makes your code more flexible, reusable, and type-safe.\n\nYou can create a class that works with different data types using generics:\n\nTis a generic type parameter. It's like a placeholder for a data type.\n\nThis way, the same class can be reused with different data types without rewriting the code.\n\nYou can also create methods that work with any data type using generics:\n\nThis is useful when you want to write one method that works with multiple types, instead of repeating code for each one.\n\nYou can use theextendskeyword to limit the types a generic class or method can accept.\n\nFor example, you can require that the type must be a subclass ofNumber:\n\nEven thoughintvalues are used in the first case, the.doubleValue()method converts them todouble, so the result is shown with a decimal point.\n\nJava Collections likeArrayListandHashMapuse generics internally:\n\n### Code Snippets\n\n```\nclass Box<T> {\nT value; // T is a placeholder for any data type\nvoid set(T value) {\nthis.value = value;\n}\nT get() {\nreturn value;\n}\n}\npublic class Main {\npublic static void main(String[] args) {\n// Create a Box to hold a String\nBox<String> stringBox = new Box<>();\nstringBox.set(\"Hello\");\nSystem.out.println(\"Value: \" + stringBox.get());\n// Create a Box to hold an Integer\nBox<Integer> intBox = new Box<>();\nintBox.set(50);\nSystem.out.println(\"Value: \" + intBox.get());\n}\n}\n\n---\n\npublic class Main {\n// Generic method: works with any type T\npublic static <T> void printArray(T[] array) {\nfor (T item : array) {\nSystem.out.println(item);\n}\n}\npublic static void main(String[] args) {\n// Array of Strings\nString[] names = {\"Jenny\", \"Liam\"};\n// Array of Integers\nInteger[] numbers = {1, 2, 3};\n// Call the generic method with both arrays\nprintArray(names);\nprintArray(numbers);\n}\n}\n\n---\n\nclass Stats<T extends Number> {\nT[] nums;\n// Constructor\nStats(T[] nums) {\nthis.nums = nums;\n}\n// Calculate average\ndouble average() {\ndouble sum = 0;\nfor (T num : nums) {\nsum += num.doubleValue();\n}\nreturn sum / nums.length;\n}\n}\npublic class Main {\npublic static void main(String[] args) {\n// Use with Integer\nInteger[] intNums = {10, 20, 30, 40};\nStats<Integer> intStats = new Stats<>(intNums);\nSystem.out.println(\"Integer average: \" + intStats.average());\n// Use with Double\nDouble[] doubleNums = {1.5, 2.5, 3.5};\nStats<Double> doubleStats = new Stats<>(doubleNums);\nSystem.out.println(\"Double average: \" + doubleStats.average());\n}\n}\n\n---\n\nArrayList<String> list = new ArrayList<>();\nlist.add(\"Apple\");\nString fruit = list.get(0); // No need to cast\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_129",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

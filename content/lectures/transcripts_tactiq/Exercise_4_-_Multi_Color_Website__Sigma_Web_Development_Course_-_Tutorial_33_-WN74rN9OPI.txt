@@ -1,0 +1,84 @@
+Video URL: https://www.youtube.com/watch?v=-WN74rN9OPI
+Video Title: Exercise 4 - Multi Color Website | Sigma Web Development Course - Tutorial #33
+--------------------------------------------------
+
+00:00:00.000
+Today we will see who has the guts
+00:00:02.000
+Because in this video, I am going to give you all the concepts that we have learned in the Sigma web development course
+00:00:07.000
+I am going to give you an exercise based on that
+00:00:09.000
+Which you have to solve
+00:00:10.000
+And if you have decided that you are going to solve that question
+00:00:14.000
+Then write in the comment section below
+00:00:16.000
+Challenge Accepted
+00:00:17.000
+Everyone write
+00:00:18.000
+And like this video too
+00:00:19.000
+Because my energy is high to start this video
+00:00:23.000
+Let's go to the computer screen
+00:00:25.000
+let's roll the intro
+00:00:35.000
+so guys i have entered the computer screen
+00:00:37.000
+i have made a folder named video 33
+00:00:39.000
+and i am going to tell you guys
+00:00:41.000
+what you guys have to do in this exercise
+00:00:44.000
+i have uploaded the shoutouts of the last exercise
+00:00:47.500
+If you have not seen the video
+00:00:49.000
+And this time I want to tell you that you will get shoutout
+00:00:53.500
+Which will write challenge accepted in the comment section below
+00:00:56.500
+So what you have to do in this exercise
+00:00:58.000
+I tell you that you have to design a navbar
+00:01:01.000
+And after designing a navbar
+00:01:03.500
+You have to make a style sheet
+00:01:06.000
+in which I will change a variable
+00:01:09.000
+and according to those variables
+00:01:12.000
+the color of your color will change
+00:01:15.000
+that is, you have to make a multicolored navbar
+00:01:18.000
+and you can do this simply by using CSS variables
+00:01:21.000
+I have told you about CSS variables
+00:01:24.000
+in video no. 30
+00:01:26.000
+So you have to make this multi-colour navbar using the concepts that I have told you in video no. 30
+00:01:33.000
+I also want to tell you that we will gradually transition to make a full website
+00:01:39.000
+There are some important concepts after covering them
+00:01:41.000
+Like we have flexbox, grid, transitions and animations, we will make full on websites.
+00:01:51.000
+So many people are waiting for full on websites to be made.
+00:01:55.000
+So their wait is going to be over very soon.
+00:01:58.000
+So I hope you have accessed this playlist and the source code is also being uploaded.
+00:02:03.000
+So you guys do access it too too that's it for now guys
+00:02:05.680
+thank you so much guys for watching this video

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 28,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nLearn how to apply your Java knowledge to real-world projects.\n\nIn this section, we will build small applications using the features you've learned throughout the tutorial.\n\nProjects are an essential part of learning Java. Start small and gradually add more features:\n\nYou can start with very small projects that use simple input and output. For example, write a program that:\n\nOnce you are comfortable, try slightly bigger projects that combine loops, conditions, and arrays:\n\nAs your skills grow, move on to more advanced projects that use methods, classes, and file handling:\n\nLet's create a program to calculate a student's average from multiple grades.\n\nThe program asks the user to enter 1 to 5 grades and calculates the average. Then it displays the average and a corresponding letter grade (A to F):\n\nKey Concepts Used:loops, methods, conditions, input handling withScanner, and basic logic.\n\nBuild your own small project. For example, write a program that:\n\nExtra Challenge:Add a feature that lets the user search for an item and tells them if it is in the list.\n\nOpen your favorite Java IDE (for example IntelliJ IDEA or VS Code)  and experiment on your own!\n\n### Code Examples\n\n```\nExample\nimport java.util.Scanner;\n\npublic class Main {\n\n  // Returns a letter grade based on the average\n  static char gradeFunction(double avg) {\n    if (avg >= 90) return 'A';\n    else if (avg >= 80) return 'B';\n    else if (avg >= 70) return 'C';\n    else if (avg >= 60) return 'D';\n    else return 'F';\n  }\n\n  public static void main(String[] args) {\n    Scanner scanner = new Scanner(System.in);\n\n    System.out.print(\"How many grades (1 to 5)? \");\n    int count = scanner.nextInt();\n\n    // Validate the input count\n    if (count < 1 || count > 5) {\n      System.out.println(\"Invalid number. You must enter between 1 and 5 grades.\");\n      scanner.close();\n      return; // Exit\n    }\n\n    double sum = 0.0;\n\n    // Read each grade\n    for (int i = 1; i <= count; i++) {\n      System.out.print(\"Enter grade \" + i + \": \");\n      double grade = scanner.nextDouble();\n      sum += grade;\n    }\n\n    double avg = sum / count;\n\n    System.out.println(\"Average: \" + avg);\n    System.out.println(\"Letter grade: \" + gradeFunction(avg));\n\n    scanner.close();\n  }\n}\nExample output:\nHow many grades (1 to 5)? 3\nEnter grade 1: 85\nEnter grade 2: 91\nEnter grade 3: 78\nAverage: 84.66666666666667\nLetter grade: B\nRun Example \u00bb\n```\n\n## Tutorials\n\nPrepare online at your own pace, take the exam when you are ready, and add a verified credential to your CV, LinkedIn profile, and portfolio.\n\nDesigned for students, developers, and professionals who want a practical way to document their knowledge.\n\nAny student or professional working in digital fields can benefit from documenting their skills with a certificate.\n\nCertifications help demonstrate knowledge to current or future employers, clients, and collaborators in an increasingly competitive market.\n\nW3Schools has more than two decades of experience teaching coding online.\n\nOur certificates provide a practical and professional way to show your skills in a format that is easy to verify and share.\n\nThe price is a small fraction of the cost of traditional education.\n\nYou can prepare on your own schedule and take the exam when you are ready.\n\nEach certificate includes a unique verification link that can be shared with employers, clients, and your network.\n\nDownload your certificate to showcase it, and validate it using the unique link or QR code.\n\nSee how it looks in thisexample.\n\nHave any questions? Send us an e-mail:sales@w3schools.com\n\nGetting a certificate shows your commitment to improving your skills.\n\nYou can add the certificate to your CV, resume, LinkedIn profile, and other professional platforms.\n\nIt can help support career growth by making it easier to show your knowledge when applying for jobs, freelance work, or larger projects.\n\nGetting a certificate shows initiative, helps you build credibility, and gives you a professional way to present yourHTMLknowledge.\n\nAre you an educator, manager, or business owner looking for courses or certifications for a group?\n\nWe work with schools, companies, and organizations around the world.\n\nSend us an e-mail:sales@w3schools.com\n\n## Tutorials\n\nThese examples show how to solve common tasks in Java.\n\n## Tutorials\n\nLearn how to add two numbers in Java:\n\nExplanation:We create two integer variables (xandy) and assign them values. The expressionx + yis stored in the variablesum. Finally, we print the result withSystem.out.println().\n\nLearn how to add two numbers with user input:\n\nExplanation:Here we use theScannerclass to read two numbers from the keyboard. The methodnextInt()reads an integer from the user. We then add the two numbers together and print the result.\n\n### Code Examples\n\n```\nExample\nint x = 5;\nint y = 6;\nint sum = x + y;\nSystem.out.println(sum); // Print the sum of x + y\nTry it Yourself \u00bb\n\n---\n\nExample\nimport java.util.Scanner; // Import the Scanner class\n\nclass MyClass {\n  public static void main(String[] args) {\n    int x, y, sum;\n    Scanner myObj = new Scanner(System.in); // Create a Scanner object\n    System.out.println(\"Type a number:\");\n    x = myObj.nextInt(); // Read user input\n\n    System.out.println(\"Type another number:\");\n    y = myObj.nextInt(); // Read user input\n\n    sum = x + y;  // Calculate the sum of x + y\n    System.out.println(\"Sum is: \" + sum); // Print the sum\n  }\n}\nRun Example \u00bb\n```\n\n## Tutorials\n\nExchange the values of two variables using a temporary variable:\n\nExplanation:We saveain a temporary variable, movebintoa, and then move the saved value intob.\n\n### Code Examples\n\n```\nExample\nint a = 5;\nint b = 10;\n\nint temp = a;\na = b;\nb = temp;\n\nSystem.out.println(\"a = \" + a + \", b = \" + b);\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_28",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_28",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

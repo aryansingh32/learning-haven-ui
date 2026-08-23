@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 130,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Learn how to apply your C++ knowledge to real-world projects.\n\nIn this section, we will build mini applications using the features you've learned throughout the tutorial.\n\nProjects are an essential part of learning C++. Start small and gradually add more features:\n\nSome examples of fun C++ projects could be:\n\nLet's create a program to calculate a student's average from multiple grades.\n\nThe program asks the user to enter 1 to 5 grades and calculates the average. Then display the average and a corresponding letter grade (A to F):\n\nKey Concepts Used:loops, functions, conditions, input handling, and basic logic.\n\nTry to make your own projects. For example, write a program that:\n\nOpen CodeBlocks or any similar C++ IDE, and experiment on your own!\n\n### Code Snippets\n\n```\n// This function returns a letter grade based on the average of a student\nchar gradeFunction(double avg) {\nif (avg >= 90) return 'A';\nelse if (avg >= 80) return 'B';\nelse if (avg >= 70) return 'C';\nelse if (avg >= 60) return 'D';\nelse return 'F';\n}\nint main() {\nint count; // Number of grades the user wants to enter\ndouble sum = 0, grade; \n    // Sum stores total grades, grade holds each input\n// Ask the \n    user to enter total grades between 1 to 5\ncout << \"How many \n    grades (1 to 5)? \";\ncin >> count;\n// \n    Validate that count is between 1 and 5\nif (count < 1 || \n    count > 5) {\ncout << \"Invalid number. You must enter \n    between 1 and 5 grades.\\n\";\nreturn 1;\u00a0 // Exit\n}\n// Loop to collect each grade\nfor (int i = 1; i <= count; i++) {\ncout << \"Enter grade \" << i << \": \";\ncin >> grade;\nsum += grade;\n}\n// Calculate the average score\ndouble avg = sum / count;\n// Display numeric average\ncout << \"Average: \" << avg << \"\\n\";\n// Display letter grade\ncout << \"Letter grade: \" << \n    gradeFunction(avg) << \"\\n\";\nreturn 0;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_129",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

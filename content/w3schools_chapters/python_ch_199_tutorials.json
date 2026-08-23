@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 199,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "KNN is a simple, supervised machine learning (ML) algorithm that can be used for classification or regression tasks - and is also frequently used in missing value imputation. It is based on the idea that the observations closest to a given data point are the most \"similar\" observations in a data set, and we can therefore classify unforeseen points based on the values of the closest existing points. By choosingK, the user can select the number of nearby observations to use in the algorithm.\n\nHere, we will show you how to implement the KNN algorithm for classification, and show how different values ofKaffect the results.\n\nKis the number of nearest neighbors to use. \nFor classification, a majority vote is used to determined which class a new observation should fall into. \nLarger values ofKare often more robust to outliers and produce more stable decision boundaries than\nvery small values (K=3would be better thanK=1, which might produce undesirable results.\n\nNow we fit the KNN algorithm with K=1:\n\nAnd use it to classify a new data point:\n\nNow we do the same thing, but with a higher K value which changes the prediction:\n\nImport the modules you need.\n\nYou can learn about the Matplotlib module in our\"Matplotlib Tutorial.\n\nscikit-learn is a popular library for machine learning in Python.\n\nCreate arrays that resemble variables in a dataset. \nWe have two input features (xandy) and then a target class (class). The input features that are pre-labeled with our target class will be used to predict the class of new data. Note that while we only use two input features here, this method will work with any number of variables:\n\nTurn the input features into a set of points:\n\nUsing the input features and target class, we fit a KNN model on the model using 1 nearest neighbor:\n\nThen, we can use the same KNN object to predict the class of new, \nunforeseen data points. First we create new x and y features, and then callknn.predict()on the new data point to get a class of 0 or 1:\n\nWhen we plot all the data along with the new point and class, we can see it's been labeled blue with the1class. The text annotation is just to highlight the location of the new point:\n\nHowever, when we changes the number of neighbors to 5, the number of points used to classify our new point changes. As a result, so does the classification of the new point:\n\nWhen we plot the class of the new point along with the older points, we note that the color has changed based on the associated class label:\n\n### Code Snippets\n\n```\nimport matplotlib.pyplot as plt\nx = [4, 5, 10, 4, 3, 11, 14 , 8, 10, 12]\ny = [21, 19, 24, 17, 16, 25, 24, 22, 21, 21]\nclasses = [0, 0, 1, 0, 0, 1, 1, 0, 1, 1]\nplt.scatter(x, y, c=classes)\nplt.show()\n\n---\n\nnew_x = 8\nnew_y = 21\nnew_point = [(new_x, new_y)]\nprediction = knn.predict(new_point)\nplt.scatter(x + [new_x], y + [new_y], c=classes + [prediction[0]])\nplt.text(x=new_x-1.7, y=new_y-0.7, s=f\"new point, class: {prediction[0]}\")\nplt.show()\n\n---\n\nknn = KNeighborsClassifier(n_neighbors=5)\nknn.fit(data, classes)\nprediction = knn.predict(new_point)\nplt.scatter(x + [new_x], y + [new_y], c=classes + [prediction[0]])\nplt.text(x=new_x-1.7, y=new_y-0.7, s=f\"new point, class: {prediction[0]}\")\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_198",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

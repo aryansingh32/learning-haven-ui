@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 168,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A JavaScript can be executed when an event occurs, like when a user clicks on an HTML element.\n\nTo execute code when a user clicks on an element, add JavaScript code to an HTML event attribute:\n\nExamples of HTML events:\n\nIn this example, the content of the<h1>element is changed when a user clicks on it:\n\nIn this example, a function is called from the event handler:\n\nTo assign events to HTML elements you can use event attributes.\n\nIn the example above, a function nameddisplayDatewill be executed \nwhen the button is clicked.\n\nThe HTML DOM allows you to assign events to HTML elements using JavaScript:\n\nIn the example above, a function nameddisplayDateis assigned to \nan HTML element with theid=\"myBtn\".\n\nThe function will be executed \nwhen the button is clicked.\n\nTheonloadandonunloadevents are triggered when the user enters or leaves the page.\n\nTheonloadevent can be used to check the visitor's browser type and browser version, and load the proper version of the web page based on the information.\n\nTheonloadandonunloadevents can be used to deal with cookies.\n\nTheoninputevent is often to some action while the user input data.\n\nBelow is an example of how to use the oninput to change the content of an input field.\n\nTheonchangeevent is often used in combination with validation of input fields.\n\nBelow is an example of how to use the onchange. TheupperCase()function will be called when a user changes the content of an input field.\n\nTheonmouseoverandonmouseoutevents can be used to trigger a function when the user mouses \nover, or out of, an HTML element:\n\nTry it Yourself \u00bb\n\nTheonmousedown,onmouseup, andonclickevents are all parts of a \nmouse-click. First when a mouse-button is clicked, the onmousedown event is \ntriggered, then, when the mouse-button \nis released, the onmouseup event is triggered, finally, when the mouse-click is completed, the onclick event is triggered.\n\nTry it Yourself \u00bb\n\nonmousedown and onmouseupChange an image when a user holds down the mouse button.\n\nonloadDisplay an alert box when the page has finished loading.\n\nonfocusChange the background-color of an input field when it gets focus.\n\nMouse EventsChange the color of an element when the cursor moves over it.\n\nFor a list of all HTML DOM events, look at our completeHTML DOM Event Object Reference.\n\n### Code Snippets\n\n```\nonclick=\nJavaScript\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1 onclick=\"this.innerHTML = 'Ooops!'\">Click on this text!</h1>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<body>\n<h1 onclick=\"changeText(this)\">Click on this text!</h1>\n<script>\nfunction changeText(id) {\nid.innerHTML = \"Ooops!\";\n}\n</script>\n</body>\n</html>\n\n---\n\n<button onclick=\"displayDate()\">Try it</button>\n\n---\n\n<script>\ndocument.getElementById(\"myBtn\").onclick = displayDate;\n</script>\n\n---\n\n<body onload=\"checkCookies()\">\n\n---\n\n<input type=\"text\" id=\"fname\"\noninput=\"upperCase()\">\n\n---\n\n<input type=\"text\" id=\"fname\"\nonchange=\"upperCase()\">\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_167",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

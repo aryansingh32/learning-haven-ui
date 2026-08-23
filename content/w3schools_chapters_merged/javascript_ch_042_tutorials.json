@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 42,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTime zones and daylight saving time (DST) can cause serious bugs when using JavaScriptDate.\n\nZonedDateTime solves this by always storing the time zone together with the date and time.\n\nATemporal.ZonedDateTimeis a timezone and calendar-aware\ndate/time object that represents a real time event from the perspective of a particular\nregion on Earth.\n\nThe Temporal.ZonedDateTime object is optimized for cases that\nrequire a time zone,DST-safe arithmeticand interoperability with anRFC 5545 calendar.\n\nExample: December 7th, 1995 at 3:24 AM in US Pacific time (in Gregorian calendar).\n\nYou can also create a ZonedDateTime from a string that includes a time zone.\n\nTheTemporal.Now.zonedDateTimeISO()method returns your system's current date, time,\nand time zone as aTemporal.ZonedDateTimeobject.\n\nYou can convert a ZonedDateTime to another time zone.\n\nAdding days across a daylight saving change can break withJavascript Date.\n\nTemporal.ZonedDateTimehandles this correctly.\n\nThesince()method calculates the duration between two temporal dates.\n\nAll temporal date objectshave their ownsince() method:\n\nAll temporal objectshave their ownuntil() method:\n\nThewith()method creates a new zoned date-time with specified field(s) replaced.\n\nAnInstantrepresents a UTC moment.\n\nYou can convert it to a ZonedDateTime in a specific time zone.\n\n### Code Examples\n\n```\nconst zonedDate = Temporal.ZonedDateTime.from({\ntimeZone: 'Europe/Oslo',\nyear: 2026,\nmonth: 5,\nday: 17,\nhour: 14,\nminute: 30,\nsecond: 0,\nmillisecond: 0,\nmicrosecond: 0,\nnanosecond: 500\n});\n\n---\n\nconst zdt = Temporal.ZonedDateTime.from\n(\"2026-02-17T14:30:00[Europe/Oslo]\");\n\n---\n\nconst now = Temporal.Now.zonedDateTimeISO();\n\n---\n\nconst oslo = Temporal.ZonedDateTime.from\n(\"2026-05-17T14:30:00+01:00[Europe/Oslo]\");\nconst newYork = oslo.withTimeZone(\"America/New_York\");\n\n---\n\nconst start = Temporal.ZonedDateTime.from\n(\"2026-03-29T00:00:00+01:00[Europe/Oslo]\");\nconst nextDay = start.add({ days: 1 });\n\n---\n\nconst start = Temporal.ZonedDateTime.from(\n\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");\nconst end = Temporal.ZonedDateTime.from(\n\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");\nconst duration = end.since(start);\n\n---\n\n// Create a ZonedDateTime\nconst date = Temporal.ZonedDateTimr.from(\"2026-05-17T14:30:00[Europe/Oslo]\");\n// Replace month and day\nconst customDate = date.with({ month:12, day:25 });\n\n---\n\nconst instant = Temporal.Now.instant();\nconst zoned = instant.toZonedDateTimeISO(\"Europe/Oslo\");\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00[Europe/Oslo]\");\n```\n\n## Tutorials\n\nTemporal.now is aNamespace object. Like the Math object, it is a container for methods.\n\nThese methods providethe current time in various formats(Instant, ZonedDateTime, PlainDateTime, etc) in nanoseconds precision .\n\nTemporal.Now is static. It cannot be instantiated. You cannot use the new keyword to create a Temporal-Now.\nnew Temporal.Now() will throw an error.\n\nInstead, you call the methods directly on the namespace, such as Temporal.Now.instant().\n\nTheTemporal.Now.instant()method returns aTemporal.Instantobject\nrepresenting the current date and time.\n\nAnInstantrepresents an exact moment in time (UTC). It is similar to a timestamp.\n\nTheTemporal.Now.plainDateISO()method is used to get the current date.\n\nIt returns aPlainDateobject with the (year, month, day)\nin the ISO 8601 calendar, ignoring time zones and times.\n\nAPlainDateobject is ideal for calendar-based applications like birthdays,\nanniversaries, and scheduling, where the time of day does not matter.\n\nUse theplainTimeISO()method fortime only.\n\nIt returns aPlainTimeobject with the current time in the ISO calendar.\n\nUse theplainDateTimeISO()fordate and time only.\n\nIt returns aPlainDateTimeobject in the ISO 8601 calendar,\nspecifically ignoring time zones.\n\nAPlainDateTimeobject is useful when the date and time for local\nscheduling, calendar elements, and date-time arithmetic where\na time zone is not required.\n\nUse thezonedDateTimeISO()method when you need both date and time zone information.\n\nIt returns aTemporal.ZonedDateTimeobject that includes your system's time zone.\n\nThetimeZoneId()method returns a time zone identifier representing\nthe system's current time zone.\n\n### Code Examples\n\n```\nlet now = Temporal.Now.instant();\n\n---\n\nlet today = Temporal.Now.plainDateISO();\n\n---\n\nlet today = Temporal.Now.plainTimeISO();\n\n---\n\nlet dateTime = Temporal.Now.plainDateTimeISO();\n\n---\n\nlet zoned = Temporal.Now.zonedDateTimeISO();\n\n---\n\nlet text = Temporal.Now.timeZoneId();\n```\n\n## Tutorials\n\nAll temporal objectshave their ownadd() method:\n\nAll temporal objectshave their ownsubtract() method:\n\nTheadd()method accepts aduration objectas input.\n\nExample:{ days: 10 }.\n\nIt returns a new temporal date object moved forward by the duration.\n\nThesubtract()method accepts aduration objectas input.\n\nExample:{ days: 10 }.\n\nIt returns a new temporal date object moved backward by the duration.\n\nBoth add and subtracthandle date boundaries:\n\nAdding one day to March 31st is April 1st.\n\nTemporal automatically handles different month lengths.\n\nAdding years works correctly, even for leap years.\n\nTheadd()andsubtract()methods accept aduration objectas input.\n\nExample:{ months: 2, days: 7, hours: 1 }.\n\nThe followingduration unitsare supported:\n\nYou can safely add or subtract time.\n\nThe original value does not change.\n\nFrom aTemporal.Instantyou can only add or subtract time durations\n(hours, minutes, seconds) but not calendar durations like months or years,\nas their length can vary depending on the time zone and the calendar.\n\nZonedDateTime handles daylight saving time (DST) safely.\n\nIf a DST change occurs, Temporal adjusts automatically.\n\nThe JavaScriptDate objectcorrectly implements leap year rules, but calendar calculations involving leap years\ncan producesurprising resultsbecause invalid dates are automatically adjusted instead of reported as errors.\n\nTemporal lets you choose what should happen when a date becomes invalid.\n\nFor example: February 29, 2024 + 1 year becomes invalid, because 2025 has no February 29.\n\nTheoverflowoption controls what happens when a date calculation produces an invalid date.\n\nWithoverflow: \"constrain\", Temporal changes the result to the nearest valid date.\n\nWithoverflow: \"reject\", Temporal throws an error instead of changing the date.\n\n### Code Examples\n\n```\ntemporal\n.add(\nduration\n)\n\n---\n\n// Create a Temporal object\nconst myDate = Temporal.PlainDate.from(\"2026-05-17\");\n// Add a duration\nconst newDate = myDate.add({ days: 10 });\n\n---\n\ntemporal\n.subtract(\nduration\n)\n\n---\n\n// Create a Temporal object\nconst myDate = Temporal.PlainDate.from(\"2026-05-17\");\n// Subtract a duration\nconst newDate = myDate.subtract({ days: 10 });\n\n---\n\n// Create a Temporal object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\nconst result = date.add({ months: 1 });\n\n---\n\n// Create a Temporal object\nconst date = Temporal.PlainDate.from(\"2024-02-29\");\nconst result = date.add({ years: 1 });\n\n---\n\n// Create any Temporal object\nconst myDate = Temporal.PlainDate.from('2026-05-17');\n// Add multiple units\nconst newDate = myDate.add({ years: 1, months: 2, days: 15 });\n\n---\n\n// Create a PlainDateTime object\nconst date = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\n// Add and subtract time\nconst earlier = dateTime.subtract({ minutes: 30 });\nconst later = dateTime.add({ hours: 2 });\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n// Add and subtract time\nconst earlier = date.subtract({ months: 3 });\nconst later = date.add({ days: 10 });\n\n---\n\n// Create a Temporal.Instant object\nconst now = Temporal.Instant.fromEpochMilliseconds(Date.now());\n// Subtract 5 hours and 30 minutes\nconst fiveHalfHoursAgo = now.subtract({ hours: 5, minutes: 30 });\n\n---\n\n// Create a Temporal object\nconst today = Temporal.Now.plainDateISO();\n// Add a duration\nconst nextWeek = today.add({ days: 7 });\n\n---\n\nconst start = Temporal.ZonedDateTime.from\n(\"2026-03-29T00:00:00+01:00[Europe/Oslo]\");\nconst nextDay = start.add({ days: 1 });\n\n---\n\n// Create a Date object\nlet d = new Date(\"2024-02-29\");\n// Add one year\nd.setFullYear(d.getFullYear() + 1);\n\n---\n\n// Create a Date object\nlet d = new Date(\"2024-02-29\");\n// Add one year\nd.setDate(d.getDate() + 365);\n\n---\n\n// Create a Date object\nlet d = new Date(2025, 1, 29);\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\nconst nextYear = d.add({ years: 1 });\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\nconst nextYear = d.add(\n{ years: 1 },\n{ overflow: \"constrain\" }\n);\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\ntry {\nconst nextYear = d.add(\n{ years: 1 },\n{ overflow: \"reject\" }\n);\ntext = nextYear.toString();\n} catch (err) {\ntext = err.name;\n}\n```\n\n## Tutorials\n\nAll temporal date objectshave their ownsince() method:\n\nAll temporal objectshave their ownuntil() method:\n\nThesince()method calculates the duration between two temporal dates.\n\nTheuntil()method calculates the duration between two temporal dates.\n\nTheuntil()method is effectively the inverse of thesince()method.Syntaxt1.until(t2, options)MeaningAt time t1, how much time is ituntil t2?Exampleconst start = Temporal.PlainDate.from(\"2026-05-01\");const end = Temporal.PlainDate.from(\"2026-05-17\");const duration = start.until(end);Try it Yourself \u00bbTemporal since() vs until()The methods are opposites.MethodMeaninga.since(b)time from b \u2192 aa.until(b)time from a \u2192 bExampleconst start = Temporal.PlainDate.from(\"2026-05-01\");const end = Temporal.PlainDate.from(\"2026-05-17\");const duration1 = start.since(end);const duration2 = start.until(end);Try it Yourself \u00bbThink:since = past (since yesterday)until = future (until tomorrow)The Options ParametersExampleconst wedding = Temporal.PlainDate.from(\"2000-05-17\");const today = Temporal.Now.plainDateISO();const duration = today.since(wedding);Try it Yourself \u00bbThesince()method returns the total number of days,\nbut you can use the largestUnit option to break it down into years and months:Exampleconst wedding = Temporal.PlainDate.from(\"2000-05-17\");const today = Temporal.Now.plainDateISO();const duration = today.since(wedding, {largestUnit:'years'});Try it Yourself \u00bbPlainTime since()Example: Plain Timeconst start = Temporal.PlainTime.from(\"09:00\");const end = Temporal.PlainTime.from(\"17:30\");const duration = end.since(start);Try it Yourself \u00bbZonedDateTime since()Thesince()method calculates the duration between two temporal dates.Syntaxt1.since(t2, options)Example: ZonedDateTimeconst start = Temporal.ZonedDateTime.from(\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");const end = Temporal.ZonedDateTime.from(\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");const duration = end.since(start);Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nt1\n.since(\nt2, options\n)\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration = start.since(end);\n\n---\n\nt1\n.until(\nt2, options\n)\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration = start.until(end);\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst duration1 = start.since(end);\nconst duration2 = start.until(end);\n\n---\n\nconst wedding = Temporal.PlainDate.from(\"2000-05-17\");\nconst today = Temporal.Now.plainDateISO();\nconst duration = today.since(wedding);\n\n---\n\nconst wedding = Temporal.PlainDate.from(\"2000-05-17\");\nconst today = Temporal.Now.plainDateISO();\nconst duration = today.since(wedding, {largestUnit:'years'});\n\n---\n\nconst start = Temporal.PlainTime.from(\"09:00\");\nconst end = Temporal.PlainTime.from(\"17:30\");\nconst duration = end.since(start);\n\n---\n\nt1\n.since(\nt2, options\n)\n\n---\n\nconst start = Temporal.ZonedDateTime.from(\n\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");\nconst end = Temporal.ZonedDateTime.from(\n\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");\nconst duration = end.since(start);\n```\n\n## Tutorials\n\nAll temporal objectshave their owncompare() method:\n\nThe compare() methodreturns:\n\nTemporal objects are objects, not primitive numbers.\n\nWhen you write (a < b), JavaScript tries to convert both objects to primitives.\n\nFor Temporal objects, this does not produce a numeric timestamp like Dates.\n\nThe code above fails and throws a RangeError because d2 contains a calendar unit (months),\nwhich has an uneven and variable length.\n\nWithout a specific starting point on the calendar, the JavaScript runtime cannot determine\nexactly how many days are in \"1 month\" to perform the comparison.\n\nFor example, 1 month starting in February could be 28 or 29 days, while 1 month starting in\nJanuary is 31 days.\n\nTo fix this, you must pass a relativeTo option as the third argument to Temporal.Duration.compare().\nThis provides a concrete date context to calculate the exact lengths.\n\nBy altering the relativeTo reference point, the execution context dictates different evaluation results:\n\nFebruary 1st Start: d1 (30 days) is longer than d2 (1 month / 28 days), returning 1.\n\nApril 1st Start: d1 (30 days) is exactly equal to d2 (1 month / 30 days), returning 0.\n\nJanuary 1st Start: d1 (30 days) is shorter than d2 (1 month / 31 days), returning -1.\n\nThecompare()method is designed to be passed directly into the JavaScript Array.sort() method:\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nTheequals()method returnstrueif both dates are equal.\n\nYou cancomparePlaneDateTime values using theequals()method.\n\n### Code Examples\n\n```\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from(\"2026-05-17\");\nconst date2 = Temporal.PlainDate.from(\"2024-12-25\");\n// Compare the dates\nresult = Temporal.PlainDate.compare(date1, date2);\n\n---\n\n// Create two Temporal objects\nconst a = Temporal.PlainDate.from(\"2026-02-17\");\nconst b = Temporal.PlainDate.from(\"2026-03-01\");\n// Compare the dates\nconsole.log(a < b);  // \u274c Error\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ minutes:90 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ hours:1, minutes:30 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ days:30 });\nconst d2 = Temporal.Duration.from({ months: 1 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\nconst d1 = Temporal.Duration.from({ days: 30 });\nconst d2 = Temporal.Duration.from({ months: 1 });\n// Provide a start date (e.g., January 1st, 2026)\nconst startPoint = Temporal.PlainDate.from(\"2026-01-01\");\n// Compare the Durations using the reference date\nlet result = Temporal.Duration.compare(d1, d2, { relativeTo: startPoint });\n// Returns -1 (January has 31 days. 30 days is SHORTER than 1 month.)\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// compare()\nlet x1 = Temporal.Instant.compare(i1, i2));\nlet x2 = Temporal.Instant.compare(i1, i3));\nlet x3 = Temporal.Instant.compare(i3, i1));\n\n---\n\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from(\"2026-05-17\");\nconst date2 = Temporal.PlainDate.from(\"2024-12-25\");\n// Compare the dates\nresult = Temporal.PlainDate.compare(date1, date2);\n\n---\n\n// Create an Array of dates\nconst dates = [\nTemporal.PlainDate.from(\"2026-05-17\"),\nTemporal.PlainDate.from(\"2022-01-01\"),\nTemporal.PlainDate.from(\"2024-12-25\")\n];\n// Sort chronologically\ndates.sort(Temporal.PlainDate.compare);\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// equals()\nlet x1 = i1.equals(i2); // true\nlet x2 = i1.equals(i3); // false\n\n---\n\n// Create two Temporal objects\nconst date1 = Temporal.PlainDate.from('2026-05-17');\nconst date2 = Temporal.PlainDate.from('2026-05-17');\nlet result = date1.equals(date2);\n\n---\n\nconst d1 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nconst d2 = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\nlet result = d1.equals(d2)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_42",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_42",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

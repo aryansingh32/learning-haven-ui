@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 320,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "\u276e Output Methods\n\nNote:You will find more \"Try it Yourself\" examples at the bottom of this page.\n\nTheprintf()method outputs a formatted string.\n\nData from the additional arguments is formatted and written into placeholders \nin the formatted string, which are marked by a%symbol. The way in which arguments \nare formatted depends on the sequence of characters that follows the%symbol.\n\nThe placeholders have the form%[arg$][flags][width][.precision]conversion. The components in [square brackets] are optional.\n\nAn explanation of each of the components:\n\n### Code Snippets\n\n```\nExample\nPrint some formatted text to the console.\nThe\n%s\ncharacter is a placeholder for the string \"World\":\nSystem.out.printf(\"Hello %s!\", \"World\");\nTry it Yourself \u00bb\n\n---\n\nExample\nPrint a formatted text containing a string and an integer:\nSystem.out.printf(\"Hello %s! One kilobyte is %,d bytes.\", \"World\", 1024);\nTry it Yourself \u00bb\n\n---\n\nExample\nFormat a floating point number in different ways:\n// Default\nSystem.out.printf(\"%f%n\", 123456.78);\n\n// Two decimal digits\nSystem.out.printf(\"%.2f%n\", 123456.78);\n\n// No decimal digits\nSystem.out.printf(\"%.0f%n\", 123456.78);\n\n// No decimal digits but keep the decimal point\nSystem.out.printf(\"%#.0f%n\", 123456.78);\n\n// Group digits\nSystem.out.printf(\"%,.2f%n\", 123456.78);\n\n// Scientific notation with two digits of precision\nSystem.out.printf(\"%.2e\", 123456.78);\nTry it Yourself \u00bb\n\n---\n\nExample\nA placeholder which uses all of the components:\nSystem.out.printf(\"%2$,3.2f %1$s\", \"meters\", 1260.5052);\nThis is how each part of the placeholder\n%2$,3.2f\nworks:\n2$\nindicates that the value of the second argument is used\n,\nindicates that digits should be grouped (usually by thousands)\n3\nindicates that the representation of the data should be at least 3 characters long\n.2\nindicates that there should be two digits after the decimal point\nf\nindicates that the data is being represented as a floating point number\nTry it Yourself \u00bb\n\n---\n\nExample\nUse arguments in a different order:\nSystem.out.printf(\"%3$c %2$c %1$c\", 'a', 'b', 'c');\nTry it Yourself \u00bb\n\n---\n\nExample\nFormat a date from a Unix timestamp:\nlong date = 1711638903488L; // Unix timestamp (number of milliseconds since January 1, 1970)\n\n// Time\nSystem.out.printf(\"%tl:%<tM %<tp%n\", date);\n\n// Month and day\nSystem.out.printf(\"%tB %<te%n\", date);\n\n// Full date representation\nSystem.out.printf(\"%tc%n\", date);\nTry it Yourself \u00bb\n\n---\n\nExample\nRepresent characters from their unicode code points:\n// Represent characters from their unicode code points\nSystem.out.printf(\"%c%c%c%c%c%n\", 72, 101, 108, 108, 111);\n\n// Force unicode characters to uppercase\nSystem.out.printf(\"%C%C%C%C%C\", 72, 101, 108, 108, 111);\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_319",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

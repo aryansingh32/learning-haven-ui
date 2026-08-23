@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 293,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheW3Schools CSS Tutorialis comprehensive and beginner-friendly.\n\nIt will give you a fundamental knowledge of CSS.\n\nIt is designed for beginners and requires no prior experience with programming.\n\nThe content has been carefully made to be bite-sized, simple, and easy to understand.\n\nThe content has been proven by millions of users over the years. It is updated and improved frequently.\n\nThe syllabus outline and its sequence are structured so you can learn CSS step by step, from the introduction to creating your first application with CSS.\n\nGet Started With CSS \u00bb\n\nGet Started\n\nIn this tutorial we offer different activities for you to learn CSS for free:\n\nYou can also create an account to track your progress.\n\nAs a signed-in user, you get access to features such as:\n\nSign Up\n\nCSS, like any other coding language, is best learned by working hands-on with code.\n\nEasily try code with our \"Try it Yourself\" editor.\n\nHere, you can edit CSS code and view the result:\n\nIf you want to explore more and host your project, we have a feature calledSpacesthat allows you to build, test and deploy static websites.\n\nHere you get a secure sandbox environment called Spaces, where you can practice coding and test projects in real-time.\n\nSpaces allow you to test, build, and deploy code. This includes a W3Schools subdomain, hosting, and secure SSL certificates.\n\nSpaces require no installation and run directly in the browser.\n\nFeatures include:\n\nCreate a Spaces Account\n\nW3Schools offers an end-of-pathway certification program.\n\nHere you can take exams to get certified.\n\nThe CSS exam is a test that summarizes the W3Schools CSS syllabus.\n\nAfter passing the exam you get the \"Certified CSS Developer\" Certification.\n\nThere are two different types of certifications:\n\nThe non-adaptive is pass or no pass.\n\nThe adaptive certification is adaptive and graded; students will get a grade from intermediate, advanced to professional.\n\nBuy Certificate \u00bb\n\nAre you interested in learning how you can useW3Schools Academyto Teach \nCSS?\n\nWatch a demo ofW3Schools Academy. You'll see how it works, and discover how it can make teaching programming easier and more engaging.\n\nWatch Demo \u00bb\n\n### Code Snippets\n\n```\nbody\n{\nbackground-color: lightblue;\n}\nh1\n{\ncolor: white;\ntext-align: center;\n}\np\n{\nfont-family: verdana;\nfont-size: 20px;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_292",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

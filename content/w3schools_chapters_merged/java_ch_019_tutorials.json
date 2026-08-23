@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 19,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nDataabstractionis the process of hiding certain details and showing only essential information to the user.Abstraction can be achieved with eitherabstract classesorinterfaces(which you will learn more about in the next chapter).\n\nTheabstractkeyword is a non-access modifier, used for classes and methods:Abstract class:is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class).Abstract method:can only be used in an abstract class, and it does not have a body. The body is provided by the subclass (inherited from).An abstract class can have both abstract and regular methods:abstract class Animal {\n\u00a0 public abstract void animalSound();\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}From the example above, it is not possible to create an object of the Animal class:Animal myObj = new Animal(); // will generate an errorTo access the abstract class, it must be inherited from another class. Let's convert the Animal class we used in thePolymorphismchapter to an abstract class:Remember from theInheritance chapterthat we use theextendskeyword to inherit from a class.Example// Abstract class\nabstract class Animal {\n\u00a0 // Abstract method (does not have a body)\n\u00a0 public abstract void animalSound();\n\u00a0 // Regular method\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}\n\n// Subclass (inherit from Animal)\nclass Pig extends Animal {\n\u00a0 public void animalSound() {\n\u00a0\u00a0\u00a0 // The body of animalSound() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"The pig says: wee wee\");\n\u00a0 }\n}\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Pig myPig = new Pig(); // Create a Pig object\n\u00a0\u00a0\u00a0 myPig.animalSound();\n\u00a0\u00a0\u00a0 myPig.sleep();\n\u00a0 }\n}Try it Yourself \u00bbWhy And When To Use Abstract Classes and Methods?To achieve security - hide certain details and only show the important \ndetails of an object.Note:Abstraction can also be achieved withInterfaces, which you will learn more about in the next chapter.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nabstract class Animal {\n\u00a0 public abstract void animalSound();\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}\n\n---\n\nAnimal myObj = new Animal(); // will generate an error\n\n---\n\nExample\n// Abstract class\nabstract class Animal {\n\u00a0 // Abstract method (does not have a body)\n\u00a0 public abstract void animalSound();\n\u00a0 // Regular method\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}\n\n// Subclass (inherit from Animal)\nclass Pig extends Animal {\n\u00a0 public void animalSound() {\n\u00a0\u00a0\u00a0 // The body of animalSound() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"The pig says: wee wee\");\n\u00a0 }\n}\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Pig myPig = new Pig(); // Create a Pig object\n\u00a0\u00a0\u00a0 myPig.animalSound();\n\u00a0\u00a0\u00a0 myPig.sleep();\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAnother way to achieveabstractionin Java, is with interfaces.\n\nAninterfaceis a completely \"abstract class\" \nthat is used to group related methods with empty bodies:\n\nTo access the interface methods, the interface must be \"implemented\" \n(kinda like inherited) by another class with theimplementskeyword (instead ofextends). The body of the \ninterface method is provided by the \"implement\" class:\n\nTo implement multiple interfaces, separate them with a comma:\n\n### Code Examples\n\n```\nExample\n// interface\ninterface Animal {\n\u00a0 public void animalSound(); // interface method (does not have a body)\n\u00a0 public void run(); // interface method (does not have a body)\n}\n\n---\n\nExample\n// Interface\ninterface Animal {\n\u00a0 public void animalSound(); // interface method (does not have a body)\n\u00a0 public void sleep(); // interface method (does not have a body)\n}\n\n// Pig \"implements\" the Animal interface\nclass Pig implements Animal {\n\u00a0 public void animalSound() {\n\u00a0\u00a0\u00a0 // The body of animalSound() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"The pig says: wee wee\");\n\u00a0 }\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 // The body of sleep() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Pig myPig = new Pig();\u00a0 // Create a Pig object\n\u00a0\u00a0\u00a0 myPig.animalSound();\n\u00a0\u00a0\u00a0 myPig.sleep();\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\ninterface FirstInterface {\n\u00a0 public void myMethod(); // interface method\n}\n\ninterface SecondInterface {\n\u00a0 public void myOtherMethod(); // interface method\n}\n\nclass DemoClass implements FirstInterface, SecondInterface {\n\u00a0 public void myMethod() {\n\u00a0\u00a0\u00a0 System.out.println(\"Some text..\");\n\u00a0 }\n\u00a0 public void myOtherMethod() {\n\u00a0\u00a0\u00a0 System.out.println(\"Some other text...\");\n\u00a0 }\n}\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 DemoClass myObj = new DemoClass();\n\u00a0\u00a0\u00a0 myObj.myMethod();\n\u00a0\u00a0\u00a0 myObj.myOtherMethod();\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAnanonymous classis a class without a name. It is created and used at the same time.\n\nYou often use anonymous classes tooverride methodsof an existing class or interface, without writing a separate class file.\n\nHere, we create an anonymous class that extends another class and overrides its method:\n\nYou can also use an anonymous class to implement an interface on the fly:\n\n### Code Examples\n\n```\n// Normal class\nclass Animal {\n  public void makeSound() {\n    System.out.println(\"Animal sound\");\n  }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    // Anonymous class that overrides makeSound()\n    Animal myAnimal = new Animal() {\n      public void makeSound() {\n        System.out.println(\"Woof woof\");\n      }\n    }; // semicolon is required to end the line of code that creates the object\n\n    myAnimal.makeSound();\n  }\n}\nThe output will be:\nWoof woof\nTry it Yourself \u00bb\n\n---\n\n// Interface\ninterface Greeting {\n  void sayHello();\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    // Anonymous class that implements Greeting\n    Greeting greet = new Greeting() {\n      public void sayHello() {\n        System.out.println(\"Hello, World!\");\n      }\n    };\n\n    greet.sayHello();\n  }\n}\nThe output will be:\nHello, World!\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nAnenumis a special \"class\" that represents a group ofconstants(unchangeable variables, likefinalvariables).\n\nTo create anenum, use theenumkeyword (instead of class or interface), and separate \nthe constants with a comma. Note that they should be in uppercase letters:\n\nYou can also have anenuminside a class:\n\nEnums are often used inswitchstatements to check for corresponding values:\n\nThe enum type has avalues()method, which returns an array of all enum constants. This method is useful when you want to loop through the constants of an enum:\n\n### Code Examples\n\n```\nLevel myVar = Level.MEDIUM;\n```\n\n## Tutorials\n\nAnenumcan also have aconstructorjust like a class.\n\nThe constructor is called automatically when the constants are created. You cannot call it yourself.\n\nHere, each constant in the enum has a value (a string) that is set through the constructor:\n\nNote:The constructor for an enummust be private. If you don't writeprivate, Java adds it automatically.\n\nYou can also loop through the constants and print their values using thevalues()method:\n\n### Code Examples\n\n```\nenum Level {\n  // Enum constants (each has its own description)\n  LOW(\"Low level\"),\n  MEDIUM(\"Medium level\"),\n  HIGH(\"High level\");\n\n  // Field (variable) to store the description text\n  private String description;\n\n  // Constructor (runs once for each constant above)\n  private Level(String description) {\n    this.description = description;\n  }\n\n  // Getter method to read the description\n  public String getDescription() {\n    return description;\n  }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Level myVar = Level.MEDIUM; // Pick one enum constant\n    System.out.println(myVar.getDescription()); // Prints \"Medium level\"\n  }\n}\nThe output will be:\nMedium level\nTry it Yourself \u00bb\n\n---\n\nfor (Level myVar : Level.values()) {\n  System.out.println(myVar + \": \" + myVar.getDescription());\n}\nThe output will be:\nLOW: Low level\nMEDIUM: Medium level\nHIGH: High level\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_19",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

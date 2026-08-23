@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 57,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Traveling Salesman Problem states that you are a salesperson and you must visit a number of cities or towns.\n\nExcept for the Held-Karp algorithm (which is quite advanced and time consuming, (\\(O(2^n n^2)\\)), and will not be described here), there is no other way to find the shortest route than to check all possible routes.\n\nThis means that the time complexity for solving this problem is \\(O(n!)\\), which means 720 routes needs to be checked for 6 cities, 40,320 routes must be checked for 8 cities, and if you have 10 cities to visit, more than 3.6 million routes must be checked!\n\nThe Traveling Salesman Problem (TSP) is a problem that is interesting to study because it is very practical, but so time consuming to solve, that it becomes nearly impossible to find the shortest route, even in a graph with just 20-30 vertices.\n\nIf we had an effective algorithm for solving The Traveling Salesman Problem, the consequences would be very big in many sectors, like for example chip design, vehicle routing, telecommunications, and urban planning.\n\nTo find the optimal solution to The Traveling Salesman Problem, we will check all possible routes, and every time we find a shorter route, we will store it, so that in the end we will have the shortest route.\n\nGood:Finds the overall shortest route.\n\nBad:Requires an awful lot of calculation, especially for a large amount of cities, which means it is very time consuming.\n\nSuch a way of finding the solution to a problem is calledbrute force.\n\nBrute force is not really an algorithm, it just means finding the solution by checking all possibilities, usually because of a lack of a better way to do it.\n\nThe reason why the brute force approach of finding the shortest route (as shown above) is so time consuming is that we are checking all routes, and the number of possible routes increases really fast when the number of cities increases.\n\nSince checking every possible route to solve the Traveling Salesman Problem (like we did above) is so incredibly time consuming, we can instead find a short route by just going to the nearest unvisited city in each step, which is much faster.\n\nGood:Finds a solution to the Traveling Salesman Problem much faster than by checking all routes.\n\nBad:Does not find the overall shortest route, it just finds a route that is much shorter than an average random route.\n\nThis way of finding an approximation to the shortest route in the Traveling Salesman Problem, by just going to the nearest unvisited city in each step, is called agreedy algorithm.\n\nAs you can see by running this simulation a few times, the routes that are found are not completely unreasonable. Except for a few times when the lines cross perhaps, especially towards the end of the algorithm, the resulting route is a lot shorter than we would get by choosing the next city at random.\n\nIn addition to using a greedy algorithm to solve the Traveling Salesman Problem, there are also other algorithms that can find approximations to the shortest route.\n\nThese algorithms are popular because they are much more effective than to actually check all possible solutions, but as with the greedy algorithm above, they do not find the overall shortest route.\n\nAlgorithms used to find a near-optimal solution to the Traveling Salesman Problem include:\n\nTo get a near-optimal solution fast, we can use a greedy algorithm that just goes to the nearest unvisited city in each step, like in the second simulation on this page.\n\nSolving The Traveling Salesman Problem in a greedy way like that, means that at each step, the distances from the current city to all other unvisited cities are compared, and that gives us a time complexity of \\(O(n^2) \\).\n\nBut finding the shortest route of them all requires a lot more operations, and the time complexity for that is \\(O(n!)\\), like mentioned earlier, which means that for 4 cities, there are 4! possible routes, which is the same as \\(4 \\cdot 3 \\cdot 2 \\cdot 1 = 24\\). And for just 12 cities for example, there are \\(12! = 12 \\cdot 11 \\cdot 10 \\cdot \\; ... \\; \\cdot 2 \\cdot 1 = 479,001,600\\) possible routes!\n\nSee the time complexity for the greedy algorithm \\(O(n^2)\\), versus the time complexity for finding the shortest route by comparing all routes \\(O(n!)\\), in the image below.\n\nBut there are two things we can do to reduce the number of routes we need to check.\n\nIn the Traveling Salesman Problem, the route starts and ends in the same place, which makes a cycle. This means that the length of the shortest route will be the same no matter which city we start in. That is why we have chosen a fixed city to start in for the simulation above, and that reduces the number of possible routes from \\(n!\\) to \\((n-1)!\\).\n\nAlso, because these routes go in cycles, a route has the same distance if we go in one direction or the other, so we actually just need to check the distance of half of the routes, because the other half will just be the same routes in the opposite direction, so the number of routes we need to check is actually \\( \\frac{(n-1)!}{2}\\).\n\nBut even if we can reduce the number of routes we need to check to \\( \\frac{(n-1)!}{2}\\), the time complexity is still \\( O(n!)\\), because for very big \\(n\\), reducing \\(n\\) by one and dividing by 2 does not make a significant change in how the time complexity grows when \\(n\\) is increased.\n\nTo better understand how time complexity works, go tothis page.\n\nThe edge weight in a graph in this context of The Traveling Salesman Problem tells us how hard it is to go from one point to another, and it is the total edge weight of a route we want to minimize.\n\nSo far on this page, the edge weight has been the distance in a straight line between two points. And that makes it much easier to explain the Traveling Salesman Problem, and to display it.\n\nBut in the real world there are many other things that affects the edge weight:\n\nAs you can see, just using the straight line distances as the edge weights, might be too simple compared to the real problem. And solving the Traveling Salesman Problem for such a simplified problem model would probably give us a solution that is not optimal in a practical sense.\n\nIt is not easy to visualize a Traveling Salesman Problem when the edge length is not just the straight line distance between two points anymore, but the computer handles that very well.\n\n### Code Snippets\n\n```\nExample\nFinding the optimal solution to the Traveling Salesman Problem by checking all possible routes (brute force):\nfrom itertools import permutations\n\ndef calculate_distance(route, distances):\n    total_distance = 0\n    for i in range(len(route) - 1):\n        total_distance += distances[route[i]][route[i + 1]]\n    total_distance += distances[route[-1]][route[0]]\n    return total_distance\n\ndef brute_force_tsp(distances):\n    n = len(distances)\n    cities = list(range(1, n))\n    shortest_route = None\n    min_distance = float('inf')\n    \n    for perm in permutations(cities):\n        current_route = [0] + list(perm)\n        current_distance = calculate_distance(current_route, distances)\n        \n        if current_distance < min_distance:\n            min_distance = current_distance\n            shortest_route = current_route\n    \n    shortest_route.append(0)\n    return shortest_route, min_distance\n\ndistances = [\n    [0, 2, 2, 5, 9, 3],\n    [2, 0, 4, 6, 7, 8],\n    [2, 4, 0, 8, 6, 3],\n    [5, 6, 8, 0, 4, 9],\n    [9, 7, 6, 4, 0, 10],\n    [3, 8, 3, 9, 10, 0]\n]\n\nroute, total_distance = brute_force_tsp(distances)\nprint(\"Route:\", route)\nprint(\"Total distance:\", total_distance)\nTry it Yourself \u00bb\n\n---\n\nExample\nFinding a near-optimal solution to the Traveling Salesman Problem using the nearest-neighbor algorithm (greedy):\ndef nearest_neighbor_tsp(distances):\n    n = len(distances)\n    visited = [False] * n\n    route = [0]\n    visited[0] = True\n    total_distance = 0\n\n    for _ in range(1, n):\n        last = route[-1]\n        nearest = None\n        min_dist = float('inf')\n        for i in range(n):\n            if not visited[i] and distances[last][i] < min_dist:\n                min_dist = distances[last][i]\n                nearest = i\n        route.append(nearest)\n        visited[nearest] = True\n        total_distance += min_dist\n\n    total_distance += distances[route[-1]][0]\n    route.append(0)\n    return route, total_distance\n\ndistances = [\n    [0, 2, 2, 5, 9, 3],\n    [2, 0, 4, 6, 7, 8],\n    [2, 4, 0, 8, 6, 3],\n    [5, 6, 8, 0, 4, 9],\n    [9, 7, 6, 4, 0, 10],\n    [3, 8, 3, 9, 10, 0]\n]\n\nroute, total_distance = nearest_neighbor_tsp(distances)\nprint(\"Route:\", route)\nprint(\"Total distance:\", total_distance)\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_56",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

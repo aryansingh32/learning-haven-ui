@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nImages can improve the design and the appearance of a web page.\n\nThe HTML<img>tag is used to embed an \nimage in a web page.\n\nImages are not technically inserted into a web page; images are linked to web \npages. The<img>tag creates a holding \nspace for the referenced image.\n\nThe<img>tag\u00a0is empty, it contains attributes only, and does not \nhave a closing tag.\n\nThe<img>tag has two required \nattributes:\n\nThe requiredsrcattribute specifies the path (URL) to the image.\n\nNote:When a web page loads, it is the browser, at that \nmoment, that gets the image from a web server and inserts it into the page. \nTherefore, make sure that the image actually stays in the same spot in relation \nto the web page, otherwise your visitors will get a broken link icon. The broken \nlink icon and thealttext are shown if the browser cannot find the image.\n\nThe requiredaltattribute provides an alternate text for an image, if the user for \nsome reason cannot view it (because of slow connection, an error in the src \nattribute, or if the user uses a screen reader).\n\nThe value of thealtattribute should describe the image:\n\nIf a browser cannot find an image, it will display the value of thealtattribute:\n\nYou can use thestyleattribute to specify the width and \nheight of an image.\n\nAlternatively, you can use thewidthandheightattributes:\n\nThewidthandheightattributes always define the width and height of the \nimage in pixels.\n\nThewidth,height, andstyleattributes are \nall valid in HTML.\n\nHowever, we suggest using thestyleattribute. It prevents styles sheets from changing \nthe size of images:\n\nIf you have your images in a sub-folder, you must include the folder \nname in thesrcattribute:\n\nSome web sites point to an image on another server.\n\nTo point to an image on another server, you must specify an absolute (full) \nURL in thesrcattribute:\n\nNotes on external images:External images might be under \ncopyright. If you do not get permission to use it, you may be in violation of \ncopyright laws. In addition, you cannot control external images; they can suddenly \nbe removed or changed.\n\nHTML allows animated GIFs:\n\nTo use an image as a link, put the<img>tag inside the<a>tag:\n\nUse the CSSfloatproperty to let the image float to the right or to the left of a text:\n\nHere are the most common image file types, which are supported in all browsers \n(Chrome, Edge, Firefox, Safari, Opera):\n\n### Code Examples\n\n```\n<img src=\"pic_trulli.jpg\" \nalt=\"Italian Trulli\">\n\n---\n\n<img src=\"img_girl.jpg\" \nalt=\"Girl in a jacket\">\n\n---\n\n<img src=\"img_chania.jpg\" \nalt=\"Flowers in Chania\">\n\n---\n\n<img src=\"\nurl\n\" alt=\"\nalternatetext\n\">\n\n---\n\n<img src=\"img_chania.jpg\" alt=\"Flowers \n  in Chania\">\n\n---\n\n<img src=\"img_chania.jpg\" alt=\"Flowers \n  in Chania\">\n\n---\n\n<img src=\"wrongname.gif\" alt=\"Flowers \n  in Chania\">\n\n---\n\n<img src=\"img_girl.jpg\" alt=\"Girl in a jacket\" style=\"width:500px;height:600px;\">\n\n---\n\n<img src=\"img_girl.jpg\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<style>\nimg {\nwidth: 100%;\n}\n</style>\n</head>\n<body>\n<img src=\"html5.gif\" alt=\"HTML5 Icon\" width=\"128\" height=\"128\">\n<img src=\"html5.gif\" alt=\"HTML5 Icon\" style=\"width:128px;height:128px;\">\n</body>\n</html>\n\n---\n\n<img src=\"/images/html5.gif\" \nalt=\"HTML5 Icon\" style=\"width:128px;height:128px;\">\n\n---\n\n<img src=\"https://www.w3schools.com/images/w3schools_green.jpg\" alt=\"W3Schools.com\">\n\n---\n\n<img src=\"programming.gif\" alt=\"Computer Man\" style=\"width:48px;height:48px;\">\n\n---\n\n<a href=\"default.asp\">\n<img src=\"smiley.gif\" alt=\"HTML tutorial\" \nstyle=\"width:42px;height:42px;\">\n</a>\n\n---\n\n<p><img src=\"smiley.gif\" alt=\"Smiley face\"\nstyle=\"float:right;width:42px;height:42px;\">\nThe image will float to the right of \nthe text.</p>\n<p><img src=\"smiley.gif\" alt=\"Smiley face\"\nstyle=\"float:left;width:42px;height:42px;\">\nThe image will float to the left of \nthe text.</p>\n```\n\n## Tutorials\n\nWith HTML image maps, you can create clickable areas on an image.\n\nThe HTML<map>tag defines an image map. An image map is an image with \nclickable areas. The areas are defined with one or more<area>tags.\n\nTry to click on the computer, phone, or the cup of coffee in the image below:\n\nThe idea behind an image map is that you should be able to perform different \nactions depending on where in the image you click.\n\nTo create an image map you need an image, and some HTML code that describes the clickable areas.\n\nThe image is inserted using the<img>tag. \nThe only difference from other images is that you must \nadd ausemapattribute:\n\nTheusemapvalue starts with a hash tag#followed by the name of the image map, and is used to create a relationship \nbetween the image and the image map.\n\nThen, add a<map>element.\n\nThe<map>element is used to create an image map, and is linked to the image by using the \nrequirednameattribute:\n\nThenameattribute must have the same value as the<img>'susemapattribute .\n\nThen, add the clickable areas.\n\nA clickable area is defined using an<area>element.\n\nYou must define the shape of the clickable area, and you can choose one of these \nvalues:\n\nYou must also define some coordinates to be able to place the clickable area onto \nthe image.\n\nThe coordinates forshape=\"rect\"come in pairs, one for the x-axis and one for the y-axis.\n\nSo, the coordinates34,44is located 34 pixels \nfrom the left margin and 44 pixels from the top:\n\nThe coordinates270,350is located 270 \npixels from the left margin and 350 pixels from the top:\n\nNow we have enough data to create a clickable rectangular area:\n\nThis is the area that becomes clickable and will send the user to the page \"computer.htm\":\n\nTo add a circle area, first locate the coordinates of the center of the circle:\n\n337,300\n\nThen specify the radius of the circle:\n\n44pixels\n\nNow you have enough data to create a clickable circular area:\n\nThis is the area that becomes clickable and will send the user to the page \"coffee.htm\":\n\nTheshape=\"poly\"contains several coordinate \npoints, which creates a shape formed with straight lines (a polygon).\n\nThis can be used to create any shape.\n\nLike maybe a croissant shape!\n\nHow can we make the croissant in the image below become a clickable link?\n\nWe have to find the x and y coordinates for all edges of the \ncroissant:\n\nThe coordinates come in pairs, one for the x-axis and one for the y-axis:\n\nThis is the area that becomes clickable and will send the user to the page \"croissant.htm\":\n\nA clickable area can also \ntrigger a JavaScript function.\n\nAdd aclickevent to the<area>element\nto execute a JavaScript function:\n\n### Code Examples\n\n```\n<img src=\"workplace.jpg\" alt=\"Workplace\" usemap=\"#workmap\">\n<map name=\"workmap\">\n<area shape=\"rect\" coords=\"34,44,270,350\" \n  alt=\"Computer\" href=\"computer.htm\">\n<area shape=\"rect\" coords=\"290,172,333,250\" \n  alt=\"Phone\" href=\"phone.htm\">\n<area shape=\"circle\" coords=\"337,300,44\" \n  alt=\"Coffee\" href=\"coffee.htm\">\n</map>\n\n---\n\n<img src=\"workplace.jpg\" alt=\"Workplace\" usemap=\"#workmap\">\n\n---\n\n<map name=\"workmap\">\n\n---\n\n<area shape=\"rect\" coords=\"34, 44, 270, 350\" href=\"computer.htm\">\n\n---\n\n<area shape=\"circle\" coords=\"337, 300, 44\" href=\"coffee.htm\">\n\n---\n\n<area shape=\"poly\" coords=\"140,121,181,116,204,160,204,222,191,270,140,329,85,355,58,352,37,322,40,259,103,161,128,147\" href=\"croissant.htm\">\n\n---\n\n<map name=\"workmap\">\n<area shape=\"circle\" coords=\"337,300,44\" \n  href=\"coffee.htm\" onclick=\"myFunction()\">\n</map>\n<script>\nfunction \n  myFunction() {\nalert(\"You clicked the coffee cup!\");\n}\n</script>\n```\n\n## Tutorials\n\nA background image can be specified for almost any HTML element.\n\nTo add a background image on an HTML element, use the HTMLstyleattribute \nand the CSSbackground-imageproperty:\n\nYou can also specify the background image in the<style>element, in the<head>section:\n\nIf you want the entire page to have a background image, you must \nspecify the background image on the<body>element:\n\nIf the background image is smaller than the element, the image will repeat itself, \nhorizontally and vertically, until it reaches the end of the element:\n\nTo avoid the background image from repeating itself, set thebackground-repeatproperty \ntono-repeat.\n\nIf you want the background image to cover the entire element, you \ncan set thebackground-sizeproperty tocover.\n\nAlso, to make sure the entire element is always covered, set thebackground-attachmentproperty tofixed:\n\nThis way, the background image will cover the entire element, with no stretching (the image will \nkeep its original proportions):\n\nIf you want the background image to stretch to fit the entire element, you \ncan set thebackground-sizeproperty to100% 100%:\n\nTry resizing the browser window, and you will see that the image will stretch, but always cover the entire element.\n\nFrom the examples above you have learned that background images can be styled by using the CSS background properties.\n\nTo learn more about CSS background properties, study ourCSS Background Tutorial.\n\n### Code Examples\n\n```\n<p style=\"background-image: url('img_girl.jpg');\">\n\n---\n\n<style>\np {\nbackground-image: url('img_girl.jpg');\n}\n</style>\n\n---\n\n<style>\nbody {\nbackground-image: url('img_girl.jpg');\n}\n</style>\n\n---\n\n<style>\nbody {\nbackground-image: url('example_img_girl.jpg');\n}\n</style>\n\n---\n\n<style>\nbody {\nbackground-image: url('example_img_girl.jpg');\nbackground-repeat: no-repeat;\n}\n</style>\n\n---\n\n<style>\nbody {\nbackground-image: url('img_girl.jpg');\nbackground-repeat: no-repeat;\nbackground-attachment: fixed;\nbackground-size: cover;\n}\n</style>\n\n---\n\n<style>\nbody {\nbackground-image: url('img_girl.jpg');\nbackground-repeat: no-repeat;\nbackground-attachment: fixed;\nbackground-size: 100% 100%;\n}\n</style>\n```\n\n## Tutorials\n\nThe HTML<picture>element allows \nyou to display different pictures for \ndifferent devices or screen sizes.\n\nThe HTML<picture>element gives web \ndevelopers more flexibility in \nspecifying image resources.\n\nThe<picture>element contains one or \nmore<source>elements, each referring \nto different images through thesrcsetattribute. This way the browser can choose the image that best \nfits the current view and/or device.\n\nEach<source>element has amediaattribute that defines when the image is the \nmost suitable.\n\nThere are two main purposes for the<picture>element:\n\nIf you have a small screen or device, it is not necessary to load a large \nimage file. The browser will use the first<source>element with matching attribute values, and ignore any of the following \nelements.\n\nSome browsers or devices may not support all image formats. By using the<picture>element, you can add images of all \nformats, and the browser will use the first format it recognizes, and ignore any \nof the following elements.\n\n### Code Examples\n\n```\n<picture>\n<source media=\"(min-width: 650px)\" srcset=\"img_food.jpg\">\n<source media=\"(min-width: 465px)\" srcset=\"img_car.jpg\">\n<img src=\"img_girl.jpg\">\n</picture>\n\n---\n\n<picture>\n<source srcset=\"img_avatar.png\">\n<source srcset=\"img_girl.jpg\">\n<img src=\"img_beatles.gif\" \n  alt=\"Beatles\" style=\"width:auto;\">\n</picture>\n```\n\n## Tutorials\n\nTest what you have learned about HTML images.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

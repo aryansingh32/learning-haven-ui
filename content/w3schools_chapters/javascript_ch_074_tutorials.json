@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 74,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In 2015, JavaScript introduced an important new keyword:const.\n\nIt has become a common practice to declare arrays usingconst:\n\nAn array declared withconstcannot be reassigned:\n\nThe keywordconstis a little misleading.\n\nIt does NOT define a constant array. It defines a constant reference to an array.\n\nBecause of this, we can still change the elements of a constant array.\n\nYou can change the elements of a constant array:\n\nJavaScriptconstvariables must be assigned a value when they are declared:Meaning: An array declared withconstmust be initialized when it is declared.Usingconstwithout initializing the array is a syntax \nerror:ExampleThis will not work:const cars;cars = [\"Saab\", \"Volvo\", \"BMW\"];Arrays declared withvarcan be initialized at any time.You can even use the array before it is declared:ExampleThis is OK:cars = [\"Saab\", \"Volvo\", \"BMW\"];var cars;Try it Yourself \u00bbConst Block ScopeAn array declared withconsthasBlock Scope.An array declared in a block is not the same as an array declared outside the block:Exampleconst cars = [\"Saab\", \"Volvo\", \"BMW\"];// Here cars[0] is \"Saab\"{const cars = [\"Toyota\", \"Volvo\", \"BMW\"];// Here cars[0] is \"Toyota\"}// Here cars[0] is\"Saab\"Try it Yourself \u00bbAn array declared withvardoes not have block scope:Examplevar cars = [\"Saab\", \"Volvo\", \"BMW\"];// Here cars[0] is \"Saab\"{var cars = [\"Toyota\", \"Volvo\", \"BMW\"];// Here cars[0] is \"Toyota\"}// Here cars[0] is\"Toyota\"Try it Yourself \u00bbYou can learn more about Block Scope in the chapter:JavaScript Scope.Redeclaring ArraysRedeclaring an array declared withvaris allowed anywhere in a program:Examplevar cars = [\"Volvo\", \"BMW\"]; \u00a0\u00a0// Allowedvar cars = [\"Toyota\", \"BMW\"]; \u00a0// Allowedcars = [\"Volvo\", \"Saab\"]; \u00a0\u00a0\u00a0\u00a0\u00a0// AllowedRedeclaring or reassigning an array toconst, in the same scope, or in \nthe same block, is not allowed:Examplevar cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0// Allowedconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowed{var cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowedconst cars = [\"Volvo\", \"BMW\"];\u00a0// Not allowed}Redeclaring or reassigning an existingconstarray, in the same scope, or in \nthe same block, is not allowed:Exampleconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowedconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowedvar cars = [\"Volvo\", \"BMW\"];\u00a0 \u00a0\u00a0\u00a0// Not allowedcars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed{const cars = [\"Volvo\", \"BMW\"];\u00a0// Allowedconst cars = [\"Volvo\", \"BMW\"];\u00a0// Not allowedvar cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowedcars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed}Redeclaring an array withconst, in another scope, or in another block, is allowed:Exampleconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowed{const cars = [\"Volvo\", \"BMW\"];\u00a0// Allowed}{const cars = [\"Volvo\", \"BMW\"];\u00a0// Allowed}Complete Array ReferenceFor a complete Array reference, go to our:Complete JavaScript Array ReferenceThe reference contains descriptions and examples of all Array \nproperties and methods.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\ncars = [\"Toyota\", \"Volvo\", \"Audi\"];\u00a0\u00a0\u00a0 // ERROR\n\n---\n\n// You can create a constant array:\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// You can change an element:\ncars[0] = \"Toyota\";\n// You can add an element:\ncars.push(\"Audi\");\n\n---\n\nconst cars;\ncars = [\"Saab\", \"Volvo\", \"BMW\"];\n\n---\n\ncars = [\"Saab\", \"Volvo\", \"BMW\"];\nvar cars;\n\n---\n\nconst cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// Here cars[0] is \"Saab\"\n{\nconst cars = [\"Toyota\", \"Volvo\", \"BMW\"];\n// Here cars[0] is \"Toyota\"\n}\n// Here cars[0] is\n\"Saab\"\n\n---\n\nvar cars = [\"Saab\", \"Volvo\", \"BMW\"];\n// Here cars[0] is \"Saab\"\n{\nvar cars = [\"Toyota\", \"Volvo\", \"BMW\"];\n// Here cars[0] is \"Toyota\"\n}\n// Here cars[0] is\n\"Toyota\"\n\n---\n\nvar cars = [\"Volvo\", \"BMW\"]; \u00a0\u00a0// Allowed\nvar cars = [\"Toyota\", \"BMW\"]; \u00a0// Allowed\ncars = [\"Volvo\", \"Saab\"]; \u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\n\n---\n\nvar cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0// Allowed\nconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowed\n{\nvar cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowed\nconst cars = [\"Volvo\", \"BMW\"];\u00a0// Not allowed\n}\n\n---\n\nconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowed\nconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowed\nvar cars = [\"Volvo\", \"BMW\"];\u00a0 \u00a0\u00a0\u00a0// Not allowed\ncars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\n{\nconst cars = [\"Volvo\", \"BMW\"];\u00a0// Allowed\nconst cars = [\"Volvo\", \"BMW\"];\u00a0// Not allowed\nvar cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Not allowed\ncars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Not allowed\n}\n\n---\n\nconst cars = [\"Volvo\", \"BMW\"];\u00a0\u00a0\u00a0// Allowed\n{\nconst cars = [\"Volvo\", \"BMW\"];\u00a0// Allowed\n}\n{\nconst cars = [\"Volvo\", \"BMW\"];\u00a0// Allowed\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_73",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

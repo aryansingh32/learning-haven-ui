@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 14,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of HTML tables by completing this coding challenge.\n\n## Tutorials\n\nHTML lists allow web developers to group a set of related items in lists.\n\nAn unordered list starts with the<ul>tag. Each list item starts with the<li>tag.\n\nThe list items will be marked with bullets (small black circles) by default:\n\nAn ordered list starts with the<ol>tag. Each list item starts with the<li>tag.\n\nThe list items will be marked with numbers by default:\n\nHTML also supports description lists.\n\nA description list is a list of terms, with a description of each term.\n\nThe<dl>tag defines the description list, the<dt>tag defines the term (name), and the<dd>tag describes each term:\n\n### Code Examples\n\n```\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<dl>\n<dt>Coffee</dt>\n<dd>- black hot drink</dd>\n<dt>Milk</dt>\n<dd>- white cold drink</dd>\n</dl>\n```\n\n## Tutorials\n\nThe HTML<ul>tag defines an unordered \n(bulleted) list.\n\nAn unordered list starts with the<ul>tag. Each list item starts with the<li>tag.\n\nThe list items will be marked with bullets (small black circles) by default:\n\nThe CSSlist-style-typeproperty is used to define the style of the \nlist item marker. It can have one of the following values:\n\nLists can be nested (list inside list):\n\nHTML lists can be styled in many different ways with CSS.\n\nOne popular way is to style a list horizontally, to create a navigation menu:\n\n### Code Examples\n\n```\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ul style=\"list-style-type:disc;\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ul style=\"list-style-type:circle;\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ul style=\"list-style-type:square;\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ul style=\"list-style-type:none;\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<ul>\n<li>Coffee</li>\n<li>Tea\n<ul>\n<li>Black tea</li>\n<li>Green tea</li>\n</ul>\n</li>\n<li>Milk</li>\n</ul>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<style>\nul {\nlist-style-type: none;\nmargin: 0;\npadding: 0;\noverflow: hidden;\nbackground-color: #333333;\n}\nli {\nfloat: left;\n}\nli a {\ndisplay: block;\ncolor: white;\ntext-align: center;\npadding: 16px;\ntext-decoration: none;\n}\nli a:hover {\nbackground-color: #111111;\n}\n</style>\n</head>\n<body>\n<ul>\n<li><a href=\"#home\">Home</a></li>\n<li><a href=\"#news\">News</a></li>\n<li><a href=\"#contact\">Contact</a></li>\n<li><a href=\"#about\">About</a></li>\n</ul>\n</body>\n</html>\n```\n\n## Tutorials\n\nThe HTML<ol>tag defines an ordered list. An \nordered list can be numerical or alphabetical.\n\nAn ordered list starts with the<ol>tag. Each list item starts with the<li>tag.\n\nThe list items will be marked with numbers by default:\n\nThetypeattribute of the<ol>tag, defines the type of the \nlist item marker:\n\nBy default, an ordered list will start counting from 1. If you want to start counting from a specified number, you can use thestartattribute:\n\nLists can be nested (list inside list):\n\n### Code Examples\n\n```\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol type=\"1\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol type=\"A\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol type=\"a\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol type=\"I\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol type=\"i\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol start=\"50\">\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>\n\n---\n\n<ol>\n<li>Coffee</li>\n<li>Tea\n<ol>\n<li>Black tea</li>\n<li>Green tea</li>\n</ol>\n</li>\n<li>Milk</li>\n</ol>\n```\n\n## Tutorials\n\nHTML also supports description lists.\n\nA description list is a list of terms, with a description of each term.\n\nThe<dl>tag defines the description list, the<dt>tag defines the term (name), and the<dd>tag describes each term:\n\n### Code Examples\n\n```\n<dl>\n<dt>Coffee</dt>\n<dd>- black hot drink</dd>\n<dt>Milk</dt>\n<dd>- white cold drink</dd>\n</dl>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_14",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_14",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

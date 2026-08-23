@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 54,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS 12-Column Grid layouts by completing a small coding challenge.\n\n## Tutorials\n\nThe@supportsrule lets you \ncheck if the browser supports a specific CSS property or value, and to define fallback styles if the feature is not supported.\n\nThis is useful for applying styles only when the browser can handle them.\n\nYou can combine@supportswith regular CSS to provide fallback styling.\n\nHere, if the browser supports display: flex, the CSS inside the @supports rule will \n  be applied. If not, the .container class outside the @supports rule will be \n  applied:\n\nHere, if the browser supports display: grid, the CSS inside the @supports rule will \n  be applied. If not, the .container class outside the @supports rule will be \n  applied:\n\nYou can usenotto apply styles only when a feature isnotsupported:\n\nYou can useand,or, andnotfor multiple conditions:\n\n### Code Examples\n\n```\n@supports (property: value) {\n  /* CSS rules to apply if condition is true */\n}\n\n---\n\n/* use this CSS if the browser does not support display: flex */\n.container {\nfloat: left;\nwidth: 100%;\n}\n/* use this CSS if the browser supports display: flex */\n@supports (display: flex) {\n.container {\ndisplay: flex;\n}\n}\n\n---\n\n/* use this CSS if the browser does not support display: grid */\n.container \n    {\ndisplay: table;\nwidth: 90%;\nbackground-color: \n    #2196F3;\npadding: 10px;\n}\n/* use this CSS if the browser \n    supports display: grid */\n@supports (display: grid) {\n.container \n    {\ndisplay: grid;\ngrid: auto;\ngrid-gap: 10px;\nbackground-color: #2196F3;\npadding: 10px;\n}\n}\n\n---\n\n@supports not (display: grid) {\n.warning {\nbackground-color: pink;\npadding: 10px;\nborder: 1px solid red;\n}\n}\n\n---\n\n@supports (display: grid) and (gap: 10px) {\n.container {\ndisplay: grid;\ngap: 10px;\n}\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS @supports by completing a small coding challenge.\n\n## Tutorials\n\nResponsive web design is about creating web pages that look good on all \ndevices!\n\nA responsive web design will automatically adjust for different screen sizes \nand viewports.\n\nWeb pages can be viewed with many different devices: desktops, tablets, and mobile phones.\n\nYour web page should look good, and be easy to use, regardless of the device.\n\nResponsive web design is about using HTML and CSS to automatically resize, \nhide, shrink, or enlarge a website, to make it look good on all devices.\n\nKey components in responsive web design are:\n\n## Tutorials\n\nTest your understanding of Responsive Web Design basics by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_54",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_54",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

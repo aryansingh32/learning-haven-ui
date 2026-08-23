@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 155,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "documentis theHTML document.\n\ngetElementById()is adocument method.\n\nmyPara = getElementById(\"demo\")retrieves the \"demo\" element.\n\ninnerHTMLis anelement property.\n\nmyPara.innerHTML = \"Hello World!\"changes the property.HTML DOM API AbilitiesThe DOM API provides us with the ability to:Find and select elementsChange element content and attributesAdd, remove, or modify elementsChange CSS stylesAdd event listeners to react to user inputJavaScript is the LanguageTheDOM APIis a standard for how to get, change, add, or delete HTML DOM elements.JavaScript is the languageused in browsers to access the DOM through the API.API Methods and PropertiesDevelopers use global objects likedocumentandwindowas entry points to any API.If you want to access any element in an HTML page, you always start with accessing the \ndocument object. Thedocument objectrepresents yourweb page.To manipulate HTML with JavaScript, you first need toselect an element.Below are some examples of how you can use the document object to access HTML:Selecting HTML ElementsMethodDescriptiondocument.getElementById(id)Find an element by element iddocument.getElementsByTagName(name)Find elements by tag namedocument.getElementsByClassName(name)Find elements by class namedocument.querySelector(selector)Find the first element that matches a CSS selectordocument.querySelectorAll(selector)Find all elements that match a CSS selectorThedocument object is the ownerof all other objects in your web page.Accessing Element ContentPropertyDescriptionelement.innerHTMLThe HTML content of an elementelement.textContentThe text content of an elementAccessing Element AttributesPropertyDescriptionelement.attributeChange the attribute value of an HTML elementelement.style.propertyThe style of an HTML elementChanging Element AttributesMethodDescriptionelement.setAttribute()Create or set a new attributeManipulating StructureMethodDescriptiondocument.createElement()Creates a new HTML elementdocument.removeChild()Remove an HTML elementdocument.appendChild()Add an HTML elementdocument.replaceChild()Replace an HTML elementAdding Event HandlersMethodDescriptiondocument.getElementById(id).onclick = function(){code}Adding event handler code to an onclick event\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n<html>\n<body>\n<p id=\"demo\"></p>\n<script>\n// Access a paragraph Element\nconst myPara = document.getElementById(\"demo\");\n// Change the content of the Element\nmyPara.innerHTML = \"Hello World!\";\n</script>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_154",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

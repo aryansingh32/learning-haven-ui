@@ -1,0 +1,510 @@
+Video URL: https://www.youtube.com/watch?v=CyRlWlaJnTY
+Video Title: SEO and Core Web Vitals in HTML | Sigma Web Development Course - Tutorial #6
+--------------------------------------------------
+
+00:00:00.000
+In today's video, we will learn about Core Web Vitals and why they are important.
+00:00:05.200
+Like this video and keep your energy high.
+00:00:07.920
+The thing is that your website should run on all devices in iPad, iPhone, Android, Surface Pro 4.
+00:00:16.040
+Because we have to give a good experience to all users through our website.
+00:00:20.080
+In this video, we will also learn that there is a hidden tool in Chrome called Lighthouse.
+00:00:24.600
+And how you can use it to enhance your website.
+00:00:28.420
+So write in the comment section below
+00:00:29.960
+Sigma batch OP
+00:00:31.160
+Let's go to the computer screen
+00:00:32.659
+Let's roll the intro
+00:00:34.000
+Intro
+00:00:43.000
+So guys I have come here to my computer screen
+00:00:44.880
+and now I will make a new folder whose name is video 6
+00:00:48.000
+video 6 and here in video 6 I will open the VS code as always and the thing I am going to tell you today is very important from the aspect of SEO
+00:00:59.000
+First of all, I want to tell you what is SEO, SEO stands for search engine optimization If you see any website, it has SEO
+00:01:06.000
+Let's take the example of Amazon.in
+00:01:08.000
+I opened Amazon.in
+00:01:09.000
+So Amazon.in wants to load this website as soon as possible
+00:01:13.000
+So that their products can come in search
+00:01:16.000
+Google is a search engine
+00:01:17.000
+Google's responsibility is to show the best pages to the users
+00:01:21.000
+So Google will only want to show those pages that will be fast
+00:01:24.000
+Present very good information, and have good user experience.
+00:01:31.000
+For example, let's say there are two pages, one page has told about dog food, the other page has also told about dog food.
+00:01:37.000
+But the page 2 of these two is loaded very fast, so Google will give it more preference.
+00:01:42.000
+Along with that, there are core web vitals
+00:01:45.000
+which google considers to rank two pages
+00:01:48.000
+first of all content is important
+00:01:51.000
+if your content is good then maybe your website can rank without core web vitals
+00:01:55.000
+but if you are competing with a page which has similar quality content
+00:02:01.000
+then your core web vitals will be seen
+00:02:04.000
+and if your core web vitals are good then you will be given preference
+00:02:08.000
+so in core web vitals first comes your cls
+00:02:11.000
+you see this video here which I have run from web.dev website
+00:02:14.000
+you will see that someone comes to your website and he is trying to cancel the order here and by mistake the time he canceled
+00:02:20.000
+this thing above became visible and he shifted the layout and the order was completed but the user wanted the order to be completed
+00:02:26.000
+and he wanted to click on no
+00:02:28.000
+in this case the user experience is very bad
+00:02:30.000
+and as you have seen in this video, it should not be like this
+00:02:32.000
+that's why our CLS should be minimum
+00:02:34.000
+now what is the definition of CLS?
+00:02:36.000
+Cumulative Layout Shift means
+00:02:38.000
+how much is shifting while the page is loading
+00:02:40.000
+suppose you have loaded the page and first of all
+00:02:42.000
+you get to see this
+00:02:44.000
+it was above and after that when this key term part was loaded
+00:02:46.520
+then everything was shifted down
+00:02:48.140
+the layout should not be shifted
+00:02:49.380
+if you put width and height in images then the layout will not be shifted
+00:02:52.260
+the next metric we are going to talk about is LCP
+00:02:55.100
+and LCP stands for Largest Contextual Paint
+00:02:57.460
+this means that if the user is viewing a page
+00:02:59.940
+then the biggest element on it
+00:03:01.300
+for example, the biggest part in this is this image
+00:03:03.780
+how long is it loading means the whole page will be loaded but the biggest element is loaded in how much time.
+00:03:05.200
+The whole page will be loaded but the biggest element
+00:03:08.480
+which is the most important is loaded in how much time.
+00:03:11.280
+According to web.dev and google, a good LCP score should be 2.5 seconds.
+00:03:15.400
+That is, the biggest element of the page should be loaded in 2.5 seconds.
+00:03:18.600
+After this comes the third metric which is FID
+00:03:21.080
+which stands for first input delay.
+00:03:23.080
+First input delay means that if any user clicks on any input element
+00:03:27.000
+Like a button or any type of input on a page
+00:03:30.000
+So how long does that input process
+00:03:32.000
+For example, if you click on a button, how long does that button click browser process
+00:03:36.000
+And according to google and web.dev, your input should start processing in less than 100 milliseconds
+00:03:42.000
+So these were the three core web vitals which are very important
+00:03:44.000
+For your information, these core web vitals are updated but these 3 are very important
+00:03:49.000
+Now I will show you what is a lighthouse report and why it is generated and how to get the value of these 3 core web vitals
+00:03:57.000
+So I will tell you here, if you will inspect by right clicking and inspect it and you may have it on the right side so you can click here and bring it down
+00:04:05.500
+by clicking here you can bring it here again
+00:04:07.500
+and by clicking here you can bring it down
+00:04:09.500
+I prefer it below because I am used to
+00:04:11.500
+looking at it from the starting
+00:04:13.500
+now you can see the option of lighthouse
+00:04:15.500
+Lighthouse basically generates a report for you
+00:04:17.500
+and tells you what can be improved
+00:04:19.500
+in your html page
+00:04:21.500
+for example if I want to see
+00:04:23.500
+in mobile how mobile users see my if I want to see in mobile
+00:04:25.280
+how mobile users are seeing my website
+00:04:27.760
+so I will click on mobile
+00:04:29.280
+or I will click on desktop
+00:04:31.280
+I will close this tab
+00:04:32.280
+I will click on mobile
+00:04:33.280
+and here I will click on analyze page load
+00:04:35.080
+so it will generate a report for me
+00:04:36.360
+Lighthouse
+00:04:37.280
+you can see here that a report has been generated
+00:04:39.280
+in this performance, accessibility, best practices, SE and PWA
+00:04:42.880
+all these things are being shown
+00:04:44.080
+now here you can see some things are shown in red
+00:04:47.000
+that is, the scope of improvement is in the page
+00:04:49.000
+now here you are telling that size your images properly
+00:04:52.000
+your website can be loaded 2.7 seconds fast
+00:04:55.000
+so all these suggestions are given to you by Lighthouse
+00:04:59.000
+and if you incorporate these suggestions
+00:05:01.000
+then your website will be loaded very well
+00:05:04.000
+and will give a good user experience.
+00:05:06.000
+Now you can see here that image elements do not have explicit width and height.
+00:05:10.000
+So you should give width and height, the width and height attribute of the image that we read in the last video,
+00:05:14.000
+should be used so that your browser has space.
+00:05:18.000
+When we set width and height in HTML, then space is reserved in the browser.
+00:05:22.000
+Otherwise, if we do not set height and and width then what will happen is that the browser
+00:05:26.000
+will not know how much space to reserve
+00:05:28.000
+and as long as the CSS will load
+00:05:30.000
+the whole page will shift from the bottom
+00:05:32.000
+so we don't want our page to shift
+00:05:34.000
+in the loading time, if our page starts
+00:05:36.000
+shifting then if we are going to click here
+00:05:38.000
+then by mistake when it shifts
+00:05:40.000
+it may be possible that we click here
+00:05:42.000
+suppose an image was going to come here
+00:05:44.000
+I am going to click here
+00:05:46.000
+and while I clicked
+00:05:48.000
+this image loaded and all the content shifted down
+00:05:50.000
+and instead of clicking here by mistake
+00:05:52.000
+I will click on the image
+00:05:54.000
+this is called cumulative layout shift
+00:05:56.000
+this kind of shift is not preferred
+00:05:58.000
+google does not prefer it at all
+00:06:00.000
+and it should be minimum
+00:06:02.000
+you can see that the space is very less
+00:06:04.000
+so we have to keep the cumulative layout shift minimum so that our user can get a very good experience.
+00:06:07.000
+Here we get a lot of suggestions and this is for our mobile.
+00:06:11.000
+Now we can generate a desktop report.
+00:06:14.000
+So as you can see that it has generated a report.
+00:06:17.000
+92 marks in performance, 100 out of 82 in accessibility, 75 in best practices, 75 in SEO.
+00:06:23.000
+Now you see here that the good things that have been told here
+00:06:26.420
+And the scope of improvement that Lighthouse tells you
+00:06:28.880
+So this is a hidden tool that we should all use
+00:06:31.920
+Now I want to tell you about meta tags and meta description
+00:06:34.920
+So what I will do here is that I will make a new file
+00:06:37.000
+I will name it index.html
+00:06:38.840
+And after making an html file
+00:06:40.680
+The first SEO element I want to tell you is title
+00:06:43.880
+If your title is reflecting the content of your page, then it is a good SEO practice.
+00:06:49.000
+Whenever your page is changing, make the title so that it reflects the content of your page.
+00:06:53.000
+Because if you want your website on Google, then it will come according to the title.
+00:06:57.000
+The index of Google, like you guys write here, Code with Harry.
+00:07:01.000
+And you write like this, so this thing is the title of the page.
+00:07:04.000
+And this is the title of the page, which is put by the YouTube people. This is the title of the page and this is the title of the page which is put by youtube
+00:07:06.000
+this is the title of the page which is put by instagram
+00:07:08.000
+this is the title of the page which is put by github
+00:07:10.000
+so if the title is put on the page
+00:07:12.000
+and the title actually reflects the content of the page
+00:07:16.000
+then your website will rank very well
+00:07:20.000
+now here let's say I put content
+00:07:22.000
+and I put h1 and write here harry
+00:07:24.000
+and after this let's and I write here Harry and then I write a paragraph here and I write lorem 45 here.
+00:07:30.800
+Now why did I write lorem 45, I will do view word wrap, why did I write 45, this is a very good question.
+00:07:36.000
+I wrote 45 because I am lazy and 4 and 5 are around, so I doubled 4 and 5. I also write 23 because they are also around, okay?
+00:07:42.800
+So there is no other reason. Now I will quickly preview it here, I will open in browser, so see it looks like this.
+00:07:47.960
+Now this document is written, if I leave it like this, then it will not be a good SEO practice.
+00:07:51.760
+I will write here about Harry and here I will write code with Harry, which is also my website.
+00:07:56.760
+And what will happen by doing this, my title will be reflected here, as you can see.
+00:08:01.480
+So what will happen by doing this kind of work, that my website will have more chances of my website appearing in google will increase.
+00:08:07.000
+I will inspect and take out its lighthouse report and see what are the scope of improvements.
+00:08:11.000
+Right now, its lighthouse report will be very good because there is nothing in it that I should improve.
+00:08:16.000
+But when I put images, I will get suggestions like put width, put height.
+00:08:20.000
+Along with that, I will tell you one more trick so that that you can see your website in any mobile.
+00:08:28.000
+You can click on the computer and if you choose responsive, then you can see your website in any device.
+00:08:38.000
+You can see if your website is responsive or not.
+00:08:41.000
+If you go to a specific device, like iPhone 12 Pro, Your website will look like this in the iPhone 12 Pro resolution.
+00:08:48.000
+Now don't say why there is no 15 or 16 in it.
+00:08:51.000
+12 Pro means a big iPhone device.
+00:08:53.000
+Understand, okay.
+00:08:54.000
+In such a big device,
+00:08:57.000
+How will your website look?
+00:08:58.000
+This is simply being told to you.
+00:09:00.000
+So now you can see here
+00:09:02.000
+How will it look in Surface Pro 7?
+00:09:04.000
+By clicking here
+00:09:05.680
+You can also see how it will look in Google phones
+00:09:08.960
+And if you want to take a general view
+00:09:11.960
+How will my website look in a responsive device
+00:09:15.560
+Like in iPad
+00:09:17.560
+Now if you don't have a device, then choose responsive and take out the approximate bit of your device
+00:09:21.560
+In total, your website should look good in all the bit devices
+00:09:24.880
+I will also tell you how this happens in this course In short, your website should look good in all the devices of width.
+00:09:25.000
+I will tell you how this happens in this course.
+00:09:27.000
+Now if you click here again, it will close.
+00:09:30.000
+The responsive view is closed.
+00:09:31.000
+And as soon as it closes, your website looks like this.
+00:09:34.000
+I will close it.
+00:09:35.000
+I will come back here and tell you about the meta text.
+00:09:38.000
+Here I will write like meta, so look here meta desc is coming.
+00:09:42.000
+I will click on meta desc and here I can give the description of my page here.
+00:09:45.600
+Suppose I give this is the page, this is a page about, this is a page which contains description about Harry.
+00:09:55.600
+And here you can write whatever page content you want, like I show you, then you write what is SEO and here you can see the meta description
+00:10:08.000
+SEO stands for this in simple terms
+00:10:10.000
+now it is not necessary that a search engine will parse your meta DESC
+00:10:13.000
+if it likes it, then it will keep your meta DESC here
+00:10:17.000
+if you have not put meta DESC, then it can be generated from your content
+00:10:20.000
+so this is the responsibility of the search engine
+00:10:23.000
+we don't know what Bing will do, what Google will do but from our side, our this is the responsibility of the search engine, what will Bing do, what will Google do, we don't know
+00:10:25.000
+But from our side, our page should be absolutely to the point, especially if we are writing a blog and we want our page to rank organically
+00:10:32.000
+So here you can see that I have put MetaDESC, now a meta keyword used to work a lot before, but now the meta keyword
+00:10:39.000
+It has been deprecated, meta keyword is not used at all the code of meta keywords looks like this
+00:10:45.800
+but it is believed that meta keywords do not rank in SEO
+00:10:49.800
+because people abuse it more
+00:10:51.300
+suppose you have written a page about pets
+00:10:53.300
+and you have written what is SEO in meta keyword
+00:10:55.300
+so it is not that your page will be ranked
+00:10:57.300
+I will correct these double quotes here
+00:10:59.300
+so if I put meta keyword here
+00:11:01.300
+then it is not necessary that the search engine will consider it
+00:11:03.300
+some search engines do not believe in meta keywords they say that we do not want to see put meta keywords, it is not necessary that the search engine will consider it. Some search engines do not believe in meta keywords.
+00:11:06.340
+They say that we do not want to see your meta keywords.
+00:11:08.680
+Meta keywords used to work a lot before, but not now.
+00:11:11.180
+Now the content of your page is being parsed.
+00:11:13.100
+And now the time of AI is coming, so your content will be understood.
+00:11:16.900
+According to the value of your content, it will be ranked.
+00:11:20.180
+Now if you want to know exactly about these core web vitals,
+00:11:23.360
+for example, if I right-click and inspect
+00:11:25.600
+and go to Lighthouse and take out the Lighthouse report for the desktop, then some Core Web Vitals come
+00:11:30.400
+like LCP comes, then FCP comes, First Contextual Paint, now you can see here everything is 100, 100, 100, 100
+00:11:37.600
+Look here, there was not much in this content, but here you can see that it is saying that
+00:11:41.760
+what are you doing, pages with Websocket cannot enter back forward cache.
+00:11:45.480
+It has websocket because we are using this extension.
+00:11:48.280
+Live preview.
+00:11:49.560
+Otherwise, this is absolutely correct.
+00:11:50.760
+Accessibility is also 100.
+00:11:51.560
+Everything is 100.
+00:11:52.120
+This is a very good page.
+00:11:53.040
+PWA is Progressive Web Apps.
+00:11:55.360
+We will not make it now.
+00:11:56.680
+But you can see here that first contextual paint, largest contextual paint, total blocking time, cumulative layout shift, speed index.
+00:12:03.200
+If you want to know about all this,
+00:12:04.720
+like what is first contextual paint? That what the user is going to see, how long has it been painted on the browser. Total blocking time, cumulative layout shift, speed index If you want to know about all these things
+00:12:05.000
+Like what is first contextual paint?
+00:12:07.000
+How long will the user see the paint on the browser?
+00:12:09.000
+So if you want to see this thing
+00:12:11.000
+You will have to go to web.dev
+00:12:13.000
+Web.dev is a very good website
+00:12:15.000
+Which talks about all these things
+00:12:17.000
+And you can see here
+00:12:19.000
+They keep talking about it
+00:12:21.000
+You can learn about all these things here
+00:12:23.000
+If you want to learn PWA, you can learn PWA.
+00:12:25.000
+About all these things
+00:12:27.000
+There is a lot of good content here.
+00:12:29.000
+But we are in this course
+00:12:31.000
+HTML, CSS, JavaScript and websites
+00:12:33.000
+Will focus on making.
+00:12:34.000
+This thing should have come to you according to me.
+00:12:36.000
+Because of which I told you about it.
+00:12:38.000
+If you have not yet accessed the Sigma Web Development series
+00:12:41.000
+Then definitely access it.
+00:12:43.000
+Access the playlist and bookmark it.
+00:12:45.000
+Or click on the star and click here to save.
+00:12:48.000
+That's it for now, guys.
+00:12:49.000
+Thank you so much for watching this video.

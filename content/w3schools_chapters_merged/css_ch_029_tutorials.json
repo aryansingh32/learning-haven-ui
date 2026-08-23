@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 29,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nCSS units are used to define the length and size of several properties.\n\nSeveral CSS properties take \"length\" values, such asfont-size,width,margin,padding,border, etc.\n\nCSS has two types of units:\n\nAbsolute units are fixed, and the length expressed in any of these will appear exactly that size.\n\nAbsolute units do NOT change when the screen size change, and are not recommended for websites. \nHowever, they can be used if the output medium is known, such \nas for print layout.\n\nThe most used absolute unit ispx(pixels).\n\nRelative units specify a length relative to another length property (like parent \nelement, root element, or viewport).\n\nRelative length units scale better between different screen sizes, making them ideal for responsive web design.\n\nThe two most used relative units areemandrem.\n\n## Tutorials\n\nAbsolute units are fixed, and the length expressed in any of these will appear exactly that size.\n\nAbsolute units do not change when the screen size change, and are not recommended for websites. \nHowever, they can be used if the output medium is known, such \nas for print layout.\n\nThe most used absolute unit ispx(pixels).\n\nSetting the text size withpx(pixels) gives you full control over the text size.\n\nIf you use pixels, the web page may not scale very well on different screen sizes and the users cannot adjust the text size in their browser settings. However, users can still use the zoom tool to resize the entire page.\n\nNote:A whitespace cannot appear between the number and the unit. However, if the value is0, the unit can be omitted.\n\nAbsolute units can be used when:\n\n### Code Examples\n\n```\nh1 {\nfont-size: 40px;\n}\nh2 {\nfont-size: 30px;\n}\np {\nfont-size: 17px;\n}\n```\n\n## Tutorials\n\nRelative units specify a length relative to another length property (like parent element, root element, or viewport).\n\nRelative length units scale better between different screen sizes.\n\n* Viewport = the browser window size. 1vw = 1% of the current width of the browser's viewport. So, if the viewport is 500px wide, 1vw is 5px.\n\nTheemunit is relative to the font size of \nthe parent element. So, if the parent element has a font size of 16px, then 2.5em \nwould result in 40px.\n\nIn the following example, the text size inemis the same as the previous example \nin pixels. However, theemunit allows the user to adjust the text size \nin the browser settings.\n\nTheremunit is relative to the font size of \nthe root HTML element (<html>).\n\nUnlikeem, which is relative to the font-size of its parent element,remalways refers to the font-size of the <html> element, regardless of its position \nin the document tree. This makesremvery useful for creating scalable and responsive \ndesigns. By changing the font-size of the <html> element, all elements sized \nwithremunits will scale proportionally throughout the entire page.\n\nThe default font-size of the <html> element in most browsers, is 16px. \nSo, by default, 1rem equals 16px unless explicitly overridden in the CSS.\n\n### Code Examples\n\n```\nbody {\nfont-size: 16px; /* Base font size */\n}\nh1 {\nfont-size: 2.5em; /* 2.5 * 16 = 40px */\n}\nh2 {\nfont-size: 1.875em; /* 1.875 * 16 = 30px */\n}\np {\nfont-size: 1em; /* 1 * 16 = 16px */\n}\n\n---\n\nhtml {\nfont-size: 16px; /* Set the root font size */\n}\nh1 {\nfont-size: 2.5rem; /* 2.5 * 16 = 40px */\n}\nh2 {\nfont-size: 1.875rem; /* 1.875 * 16 = 30px */\n}\np {\nfont-size: 1rem; /* 1 * 16 = 16px */\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nCSS inheritance is about what happens if no value is specified for a \nproperty on an element.\n\nIf no value is specified for a property, the value can either be inherited \nfrom the parent element, or be set to its initial (default) value.\n\nFor CSS inheritance, properties are categorized in two types:\n\nInherited properties are, by default, set to the computed value of the parent element.\n\nProperties related to text, such ascolor,font-family,font-size,line-height, andtext-align, are typically \ninherited. This ensures consistent text styling throughout a document.\n\nIn the following example, the text inside the <strong> element will appear in 20px and in blue, since the \n<strong> element inherits thecolorand thefont-sizevalue from the parent (<p>) element.\n\nIf there is not set a value for a non-inherited property, \nthe value is set to the initial (default) value of that property.\n\nProperties related to the box model or layout, likeborder,background,margin,padding,width, andheight, are typically not \ninherited.\n\nIn the following example, the <strong> element, inside the <p> element, will not have an \nadditional border (since the initial \nvalue ofborder-styleis none).\n\nTheinheritkeyword \nis used to explicitly specify inheritance. It \nworks on both inherited and non-inherited properties.\n\nIn the following example, the <strong> element, inside the <p> element, will have an additional border, since \nwe have used theinheritkeyword to explicitly specify that the border value should be inherit.\n\n### Code Examples\n\n```\n<style>\np {\ncolor: blue;\nfont-size: 20px;\n}\n</style>\n<body>\n<p>This \n  is a paragraph with some <strong>important</strong> text.</p>\n</body>\n\n---\n\n<style>\np {\nborder: 1px solid red;\n}\n</style>\n<body>\n<p>This \n  is a paragraph with some <strong>important</strong> text.</p>\n</body>\n\n---\n\n<style>\np {\nborder: 1px solid red;\n}\nstrong {\nborder: inherit;\n}\n</style>\n<body>\n<p>This \n  is a paragraph with some <strong>strong</strong> text.</p>\n</body>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_29",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_29",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

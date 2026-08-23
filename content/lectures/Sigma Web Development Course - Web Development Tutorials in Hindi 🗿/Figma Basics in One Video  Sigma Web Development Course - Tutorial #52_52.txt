@@ -1,0 +1,1118 @@
+Video URL: https://www.youtube.com/watch?v=mpJb9GNxdYI
+Video Title: Figma Basics in One Video | Sigma Web Development Course - Tutorial #52
+--------------------------------------------------
+
+00:00:00.000
+When I started my web development journey, I didn't know what Figma was.
+00:00:05.200
+I thought that I should write HTML, CSS, JavaScript and make a website.
+00:00:10.200
+But it doesn't work like that.
+00:00:11.480
+Designing is very important.
+00:00:13.280
+And designing is the work of a designer.
+00:00:15.240
+I used to get frustrated seeing that my website's design is not as good as people make.
+00:00:21.400
+And this is where Figma comes in handy.
+00:00:23.080
+You guys design your website in a way that it looks good
+00:00:26.000
+because yes you guys will bring fonts, you guys will make navbars
+00:00:29.000
+you guys will make your website responsive
+00:00:32.000
+but that look and feel you guys will have to think of it separately
+00:00:35.000
+and this is where Figma comes in handy
+00:00:38.000
+I was introduced to Figma when I went to Loveborough University
+00:00:41.000
+and after learning Figma there my web development journey
+00:00:44.000
+changed forever.
+00:00:45.000
+Because now I used to focus on design.
+00:00:47.000
+Instead of only focusing on code, and this changes a lot of things,
+00:00:51.000
+I will tell you about Figma, how it unlocks new possibilities,
+00:00:55.000
+and how many powers you get just by learning a little bit of Figma.
+00:00:59.000
+You just like this video and write Sigma Batchop in the comment section below.
+00:01:04.000
+Let's go to the computer screen.
+00:01:05.379
+Let's roll the intro.
+00:01:15.260
+So guys, this video might come as a surprise but Figma is a very important tool
+00:01:19.000
+and it is very important for us to understand it.
+00:01:21.380
+What is Figma?
+00:01:22.500
+If I tell you what is Figma?
+00:01:24.620
+And if you write on Google know what is Figma if I tell you what is Figma and if you type on google
+00:01:26.000
+what is Figma
+00:01:28.000
+then you will see here
+00:01:30.000
+Figma is a leading collaborative design tool for building meaningful products
+00:01:32.000
+suppose I am making a website
+00:01:34.000
+I told you to make a website for lens card
+00:01:36.000
+or flip card
+00:01:38.000
+or amazon
+00:01:40.000
+you are hired to make any website
+00:01:42.000
+now what will you do
+00:01:44.000
+you will not start writing code
+00:01:46.000
+it doesn't happen, if you start writing
+00:01:48.000
+there is a very less chance
+00:01:50.000
+that you can make a good website
+00:01:52.000
+because to make a good website your design
+00:01:54.000
+should be good, designing
+00:01:56.000
+and developing are two different things
+00:01:58.000
+first of all you understand this
+00:02:00.000
+I understood this thing very late in my career
+00:02:02.000
+I will be very honest with you
+00:02:04.000
+designing means to make something that looks good.
+00:02:06.900
+And develop means to make the design complete in the code.
+00:02:11.800
+So this is our development.
+00:02:13.300
+That is, you have to achieve exactly what is designed by writing HTML, CSS.
+00:02:17.600
+Before making HTML, CSS in JavaScript, people used to make it in Photoshop.
+00:02:22.800
+And you will get to see a lot
+00:02:26.000
+so what used to happen, there were freelancing jobs
+00:02:29.000
+of psd to html, so what they used to do
+00:02:32.000
+they used to make it on psd, means in photoshop file
+00:02:35.000
+and after that they used to say that this is our photoshop file
+00:02:38.000
+convert it to html
+00:02:41.000
+so people who used to work on psd to html used to earn money from good places
+00:02:44.000
+because the work was all about development
+00:02:45.500
+But now things are getting modern
+00:02:48.000
+And Figma came, Figma is such a tool
+00:02:50.500
+Which is made for this exact thing
+00:02:52.500
+That you collaborate with people
+00:02:54.500
+And put your designs in front
+00:02:56.500
+Now if you see here that Figma is a leading collaborative design tool
+00:03:00.500
+For building meaningful products
+00:03:02.500
+Websites are written, so this thing is not only for websites
+00:03:06.000
+This is used to make products
+00:03:08.000
+What does it mean? You can draw with this
+00:03:10.000
+You can make vectors with this
+00:03:12.000
+You can make icons with this
+00:03:14.000
+You can make icons with this
+00:03:16.000
+You can make logo with this
+00:03:18.000
+You can understand how good this tool is
+00:03:20.000
+You can do all the work with this
+00:03:22.000
+When you use Figma, then you have a community of Figma
+00:03:24.000
+You get instant access to the things made by people.
+00:03:27.000
+You can go to Figma and create designs.
+00:03:31.000
+You can use designs that people have made and kept in the community.
+00:03:35.000
+You can make those open source designs with different people.
+00:03:39.000
+You can make a team of 5 people.
+00:03:41.000
+You can work on one design.
+00:03:43.000
+And that design can start with a design
+00:03:46.000
+which someone else has already made, I will show you
+00:03:49.000
+so what you can do here, as soon as you come to figma.com
+00:03:52.000
+you will get to see this, now let's say I search figma
+00:03:55.000
+I will write figma and I will write blog
+00:03:58.000
+so you will get a lot of things in figma's community
+00:04:01.000
+I will write blog design here and you will get
+00:04:04.000
+files in figma's community will get files in figma community
+00:04:05.560
+so in figma.com community
+00:04:07.900
+i will get some free files which i can make
+00:04:10.920
+so here someone has made a blog app
+00:04:13.640
+and if i open it
+00:04:16.600
+so you can see it like this
+00:04:18.980
+so this is our blog app, if i want to see it i will click here
+00:04:21.959
+and i can zoom by pressing ctrl
+00:04:24.880
+and you can see how it looks
+00:04:26.000
+so someone has designed it and he has decided
+00:04:29.000
+that the homepage of the blog will look like this
+00:04:32.000
+and here my name will come, here the blog will come, project
+00:04:35.000
+he has made this whole design and here everything is light and dark
+00:04:38.000
+and he has given me all these resources, copy it from here
+00:04:41.000
+and I will show you one thing very interesting about figma
+00:04:44.000
+that how easy it is to make
+00:04:46.000
+This is your home page, this is your light theme
+00:04:49.000
+This is your dark theme, everything is here
+00:04:52.000
+Now you have to convert it in code
+00:04:55.000
+This is not a photoshop file, this is not an image file
+00:04:58.000
+I will show you one thing, if I click on open with figma
+00:05:01.000
+And if I log in to my account
+00:05:04.000
+I can log in and go straight to my Figma account.
+00:05:05.000
+So after logging in, you will see that I have come here, now I will open Figma,
+00:05:08.000
+so I can use it as a web app, I can also download its desktop app if I want,
+00:05:14.000
+so it is your choice, see when you open Figma, it looks like this,
+00:05:18.000
+you don't get haunted by its interface at all, if you zoom by pressing ctrl,
+00:05:21.000
+then you will be able to zoom, otherwise you will only be able to scroll,
+00:05:24.000
+so control will zoom by scroll, only scroll will scroll like this
+00:05:28.000
+so let's say we want to make this page, so what we will do is
+00:05:30.000
+we will come here and as soon as we click here
+00:05:32.000
+we will know a lot about it
+00:05:34.000
+a new thing has been added in figma and that is development mode
+00:05:38.000
+as soon as you click it, you see here that it will give you the code directly
+00:05:42.000
+of all these things, but I will not use it now because it is experimental and
+00:05:46.840
+many things are going to be updated in it, so I will say that you watch for it
+00:05:50.680
+it may be updated very well
+00:05:53.160
+but you see here, you get to see all the gaps here
+00:05:56.400
+they are saying that make this navbar
+00:05:58.120
+put all this, your work will be done, okay
+00:06:01.320
+then I will show you one more thing
+00:06:03.320
+that you can click here
+00:06:06.000
+and open with code
+00:06:08.000
+and you can make it using
+00:06:10.000
+the VS Code extension of Figma
+00:06:12.000
+right into VS Code, but I am not going to tell that
+00:06:14.000
+in this video, I will quickly cover
+00:06:16.000
+only those things about Figma which
+00:06:18.000
+will be most useful for you.
+00:06:20.000
+So the most useful property
+00:06:22.000
+I will say feature, sorry not property
+00:06:24.000
+feature of Figma is that if you press C,
+00:06:26.400
+you pressed C or you are seeing this comment,
+00:06:28.800
+you can click on this and put a comment anywhere.
+00:06:31.000
+Suppose we five people are making this website together,
+00:06:33.400
+and we five people are deciding the design of this website,
+00:06:36.600
+that how it is going to be.
+00:06:37.800
+Suppose there is a boy named Vaibhav,
+00:06:40.000
+I want to tell him that brother,
+00:06:41.200
+you have written the blog here, it is looking very bad,
+00:06:43.400
+an image could have come here, then remove it.
+00:06:45.400
+So I will write, this large image is not looking good.
+00:06:52.600
+Large text is not looking good.
+00:06:55.000
+I can say something like this, either replace it with an image,
+00:06:58.000
+either replace it with an image or remove it altogether.
+00:07:03.000
+Okay, remove it altogether. Okay ok so I can talk like this
+00:07:08.000
+I have put my comment by clicking and this comment has come, so whenever web app will open
+00:07:12.000
+it will say ok so here it is written this large text is not looking ok, ok this is a good thing
+00:07:20.000
+so it will say ok I will remove it, so what it will do it will remove it and here
+00:07:24.000
+it will mark this comment as resolved
+00:07:26.000
+so the comment here is resolved, now it will not be seen here
+00:07:29.000
+but still if you want to see your resolved comments
+00:07:32.000
+then you can click on the filter and see the show resolved comments
+00:07:35.000
+the comments that have been resolved, you will get to see them here
+00:07:39.000
+so what webhub can do is
+00:07:41.000
+I remove the show resolved comments here so that the result comments are removed
+00:07:45.500
+and you can add as many comments as you want here, so webhub will fix it, it will say yes, let's fix it
+00:07:51.500
+so it will delete it from here, so it will say ok, let's delete this the blog, so it will come in the hero section
+00:07:59.000
+and in the container, it will delete the blog and it will also remove this container, it will delete it and this container will also remove it
+00:08:06.000
+sorry not this container, this container will remove it
+00:08:10.000
+it will remove it, so it can do this kind of work
+00:08:15.000
+I will do ctrl z like everything was there, you can use ctrl z in your word
+00:08:21.000
+so this is over rolled, I will close it now because I want to show you from scratch.
+00:08:26.000
+One more thing I want to show you
+00:08:28.000
+but I will show you that by making a new file.
+00:08:32.000
+So I will write here figma.com
+00:08:34.000
+Got it, figma.com
+00:08:39.000
+And as soon as I write figma.com,
+00:08:41.000
+the website of figma will open.
+00:08:43.000
+And here you can see some interface like this,
+00:08:45.000
+you can make anything here if you want, now here you can see this plus design file,
+00:08:50.000
+you click on it and you will get a new design file, here it is written Untitled figma,
+00:08:55.000
+there are two ways to use figma, either you use a web app or you install figma's desktop app,
+00:09:01.000
+the benefit of using figma's desktop app is that if you live in a place where there is no internet,
+00:09:05.000
+or you want to use Figma in flight, then you can do it, otherwise I prefer my own web app.
+00:09:12.000
+Now you see here that you are getting to see a lot of things in it, like all the icons in Photoshop are here,
+00:09:19.000
+all the tools are on your toolbar, if you want you can double click and change the name
+00:09:27.000
+suppose I am making a website
+00:09:29.000
+and that website is of whirlpool
+00:09:31.000
+whirlpool website
+00:09:33.000
+suppose I am making a website for whirlpool
+00:09:35.000
+so I have written whirlpool website
+00:09:37.000
+and after writing whirlpool website
+00:09:39.000
+the first thing I will do here
+00:09:41.000
+is that I will make a frame here
+00:09:43.000
+and by making a frame I can choose
+00:09:46.000
+what is the size of my frame
+00:09:49.000
+so I always choose desktop in most of the cases
+00:09:52.000
+or if you don't want to choose desktop
+00:09:55.000
+so what you can do is
+00:09:58.000
+if you want to choose 1080p monitor
+00:10:01.000
+so what you will do is you will come here on presentation and choose 1920x1080
+00:10:04.000
+but in most of the cases, if you choose Macbook Pro,
+00:10:06.800
+then your work is done, or you can also choose this desktop,
+00:10:09.600
+so if you choose desktop, then also your work will be done.
+00:10:11.200
+So now see, I have chosen desktop,
+00:10:13.200
+now what I can do after this, I will tell you the tools one by one,
+00:10:16.200
+there is a move tool and a scale tool,
+00:10:18.000
+what happens with the scale tool is that all your elements will be scaled together,
+00:10:22.000
+I will show you in a while, but let's say I want to make a navbar, so I will come here on rectangle
+00:10:26.000
+and I want to make a navbar here, which will look like this
+00:10:30.000
+and I want my navbar to be black, so I can use fill here
+00:10:33.000
+I can make it black, I made it black
+00:10:35.000
+now let's say I want to add some text, so I will use this text tool
+00:10:38.000
+and let's say I want to write here whirlpool, okay
+00:10:42.000
+and I want to resize this whirlpool, so if I resize it like this then then I can't do it, you are seeing that I can't resize it, so here our scale tool comes in handy,
+00:10:51.000
+if I come to the scale tool and resize it, then this text will also increase, so in short, why did we use figma, we used it because if we sit to write this thing in code,
+00:11:00.000
+then we will show that person who is consuming it to our client client will say that it's not looking good
+00:11:05.000
+so I wrote so much code and then he didn't like it
+00:11:08.000
+that's why we need a system like drag and drop
+00:11:10.000
+that the design should be ready
+00:11:12.000
+and then we can talk
+00:11:13.000
+so here I wrote a pull like this
+00:11:15.000
+as you can see
+00:11:16.000
+and now I will show you one more thing
+00:11:18.000
+which is amazing
+00:11:19.000
+that when I go to community
+00:11:21.000
+I search here
+00:11:22.000
+I write icons
+00:11:24.000
+I wrote icons only so here I will get some icons that people have already made.
+00:11:29.000
+And you will see here that someone has prepared a UI toolkit which is paid.
+00:11:35.000
+But let's do one thing, we are going to get a lot of free things here.
+00:11:39.000
+We will see only free resources here and we will say that we only want free for now I will tell you that people do good work, make good icons, make paid too, you can also earn money
+00:11:51.000
+I just want to tell you, now I will show you one thing, suppose I have to use this icon
+00:11:56.000
+suppose I have to use this icon in word pool, suppose I will not use this
+00:12:02.000
+but suppose I have to use this, so I will double click until it is selected,
+00:12:05.000
+I will do ctrl c, I will also do ctrl v, it will come here, okay.
+00:12:08.000
+Now what can I do here, what I have to do is change its color,
+00:12:11.000
+so how will I change its color,
+00:12:13.000
+it is black now, so how will I make it white,
+00:12:16.000
+so first of all I will bring it here,
+00:12:18.000
+I will do bring to front so that it comes up,
+00:12:21.000
+bring to front and I have to make it white,
+00:12:23.000
+so if you click on design then you can see
+00:12:26.000
+I will make the selection colors white
+00:12:29.000
+I will make the selection colors white and I will put it here
+00:12:32.000
+this is my logo, now it is looking good or not
+00:12:35.000
+that is a different thing, I will find out while designing
+00:12:38.000
+if it is looking good or not and then after that
+00:12:41.000
+I will make a rectangle
+00:12:44.000
+like this and inside this rectangle
+00:12:48.000
+I will write home, about and all those things
+00:12:52.000
+so you can do all these things or you can also put different text here
+00:12:55.000
+if you are starting out, I will write here home
+00:12:58.000
+and then I will write about by replicating it
+00:13:01.000
+and like this I will use the scale tool and make it smaller so in total I want to tell you that you can make your design prototypes through figma
+00:13:09.000
+and you can replicate it to about, contact us
+00:13:12.500
+see I am leaving space of 44, so I will write about us
+00:13:18.500
+then what I will do is
+00:13:21.500
+I will take this selection tool and move tool and select both of them
+00:13:26.000
+and I will drag them here, I will drag them on the space of 44
+00:13:30.000
+so this is the space of 50, I have made the space of 44, I will also keep this on the space of 44
+00:13:34.000
+and whatever I want to do here, I will do it, okay, so I can make this whole website like this
+00:13:40.000
+now pen tool comes here, pen tool is very useful. Suppose I want to make a circle here,
+00:13:45.200
+so what I will do is go to the shape section from here
+00:13:47.800
+I can make an arrow, I can make an ellipse.
+00:13:50.000
+If I press shift here and remove it,
+00:13:52.600
+then it will become my circle.
+00:13:54.000
+But if I don't press shift,
+00:13:55.400
+I select it directly here and make it like this,
+00:13:57.400
+then I can make any shape.
+00:13:59.000
+Suppose I want to make some kind of shape like this
+00:14:01.000
+and I want to fill it with let us say,
+00:14:03.400
+with grey color or suppose I want to fill it with let us say with grey color
+00:14:05.000
+or let's say I want to do it with green color
+00:14:07.000
+I know it's not looking good but let's do it
+00:14:09.000
+okay, I can do it as I wish
+00:14:11.000
+okay, like this
+00:14:12.000
+and after that let's say I want
+00:14:14.000
+a rectangle which is here
+00:14:18.000
+and I want to keep a copy of it here
+00:14:20.000
+and here you can see a point
+00:14:22.000
+this point, by doing this I can give
+00:14:24.000
+a border radius like this the this I can give some border radius
+00:14:26.000
+which we used to do with border radius, it can be done easily
+00:14:29.000
+and if I want to keep another image here
+00:14:32.000
+so I can keep that, so in total you can use figma
+00:14:35.000
+to make this kind of websites, you can take many things from the community
+00:14:39.000
+you can make components
+00:14:42.000
+so what you will do by making components that you can use them
+00:14:46.000
+now one more thing which i like about figma
+00:14:48.000
+is that you can assume
+00:14:50.000
+you want to export it as an image
+00:14:52.000
+so here you click on export
+00:14:54.000
+and whatever format you want
+00:14:56.000
+be it pdf, jpg or svg
+00:14:58.000
+you can export it
+00:15:00.000
+and how much size png you want to export
+00:15:02.000
+it will be your wish
+00:15:04.000
+so you can export it like you soon as you do export ellipse 1
+00:15:06.000
+and preview it, it has been exported as an image
+00:15:09.000
+means any community design and if there is anything in it
+00:15:12.000
+then you can do that
+00:15:15.000
+you can export it as an image, means from your figma design
+00:15:18.000
+the images you have, you can take them out and use them in your website
+00:15:21.000
+which is a very good thing in my opinion
+00:15:24.000
+things become very easy, now you can make it in your website. Which is a very good thing in my opinion.
+00:15:26.000
+Now you can make multiple pages here.
+00:15:29.000
+Like I have made page 2 after page 1.
+00:15:32.000
+Suppose I want to make page 2.
+00:15:35.000
+Suppose about page. Some people make it in different frames.
+00:15:38.000
+Means if I zoom out by pressing ctrl.
+00:15:41.000
+So what we can do is we can use another frame.
+00:15:44.000
+We can say I want to show it on the phone, how will it look?
+00:15:46.000
+So I will say iPhone 14 and 15 Pro Max.
+00:15:48.000
+I took this here and zoomed
+00:15:50.000
+here, how will it look in 14 and 15?
+00:15:52.000
+I will show you this. So let's make it different
+00:15:54.000
+like we saw in the block example.
+00:15:56.000
+So all these tools to be very honest,
+00:15:58.000
+are very self-explanatory. I don't want to tell you one by one
+00:16:00.000
+what is polygon, ellipse,
+00:16:02.000
+what is star. This is place image
+00:16:04.000
+and video, but I will tell you about place image and video
+00:16:06.000
+but before that I will do one thing
+00:16:09.000
+I will make a rectangle here
+00:16:12.000
+and what I will do by keeping it like this
+00:16:15.000
+I will fill it with black like I did in my previous desktop layout
+00:16:18.000
+so I put it like this
+00:16:21.000
+now what I can do is I can make it an auto layout
+00:16:24.000
+and after this I want to tell you
+00:16:25.600
+what happens with the place image and video tool.
+00:16:28.400
+So see here I have an image
+00:16:30.600
+whose name is this.
+00:16:33.600
+I have already selected this image here.
+00:16:37.400
+And what I will do here now
+00:16:38.800
+that I will keep it like this.
+00:16:40.800
+So this image of mine is automatically resizing.
+00:16:44.000
+So you will see here that I can rotate this image, I can resize it
+00:16:49.000
+and if I resize it, you can see it is coming like this
+00:16:52.000
+you can see, your image is coming like this
+00:16:55.000
+so I can put the image like this
+00:16:58.000
+and I can also change its image, I will show you here
+00:17:01.000
+and with that I can do some basic color correction in this image, you are seeing, I have increased the contrast, played with saturation, played with tint,
+00:17:09.000
+all these things that are done with CSS filters, I can do it here only,
+00:17:12.000
+if I would have written the code for this, then I would have to use CSS filters,
+00:17:15.000
+after this I will show you here that you can also change its image,
+00:17:20.000
+so in order to change the image, you can click here and click on choose image
+00:17:24.000
+and change this image, can click here and by clicking on choose image you can change the image
+00:17:26.000
+this is the option you have for all the time
+00:17:28.000
+whenever you want you can put another image here
+00:17:30.000
+after this one more tool which I like a lot is the slice tool
+00:17:33.000
+so as soon as you click on slice, its shortcut is written S
+00:17:36.000
+while working you remember these shortcuts
+00:17:39.000
+and then you will press S on the keyboard directly and work
+00:17:42.000
+so one thing is done, press S directly
+00:17:44.000
+and let us say I am doing control zoom out
+00:17:46.000
+and let us say that I want to export
+00:17:48.000
+this part of the work pool
+00:17:50.000
+for some reason.
+00:17:52.000
+I want this much image.
+00:17:54.000
+So what I will do is I will select this and export it
+00:17:56.000
+and I can preview it. So see
+00:17:58.000
+this image will be exported
+00:18:00.000
+and I can use this image.
+00:18:02.000
+Which is a very good thing and in my
+00:18:04.000
+favorite format. So if I export it in SVG
+00:18:06.820
+then it is exported in SVG and I can view it in SVG
+00:18:10.620
+as simple as that, if you want to see its code in SVG, then this is the code
+00:18:14.620
+so in total you can do all these things with the help of Figma
+00:18:19.020
+then I will say you to explore all these tools yourself
+00:18:22.100
+this is your hand tool, it helps in moving something like this.
+00:18:26.000
+Then after this comes your
+00:18:28.000
+components which you can make, you can download
+00:18:30.000
+some plugins, like there is a plugin
+00:18:32.000
+called Locofy which tries
+00:18:34.000
+to convert your design into code through AI.
+00:18:36.000
+So you can explore all those things.
+00:18:38.000
+There are many plugins which are Figma
+00:18:40.000
+to HTML, they do it for you to a great extent.
+00:18:42.000
+And there are some plugins which
+00:18:44.000
+make it easy for you to do this.
+00:18:45.500
+So you can do that.
+00:18:46.700
+So Figma is a very good thing.
+00:18:48.700
+After that, you get a pen tool.
+00:18:50.400
+You can run the pencil like this, as you want.
+00:18:53.400
+It doesn't work that much, to be honest.
+00:18:55.400
+But the pen tool is very useful.
+00:18:57.000
+You can make shapes with the pen tool.
+00:18:59.000
+Suppose I want to make a shape here,
+00:19:00.700
+which looks like a leaf.
+00:19:01.900
+So I will do this, then I will do this,
+00:19:04.400
+then I will do this, I will do this, then I will do this, then I will do this,
+00:19:05.000
+I will do this and this. Now whenever my shape
+00:19:07.000
+will be complete, I will click on done.
+00:19:09.000
+But if my shape is not
+00:19:12.000
+complete, then what I will do
+00:19:15.000
+is I will click here and
+00:19:18.000
+after clicking here, I will click on these points.
+00:19:20.000
+And as soon as I click on these points,
+00:19:22.000
+you can see that a leaf has been created.
+00:19:24.000
+And I can bend the point like this or I can make this point a little pointed
+00:19:31.000
+so that it looks like a leaf
+00:19:33.000
+then after this I will use another pen tool and click on pen again
+00:19:38.000
+and I can make it like this from here to here so that it looks like a leaf
+00:19:42.000
+and let's say I do something like this and I click here and do this
+00:19:46.000
+and let's say I bend it a little
+00:19:48.000
+like this so that
+00:19:50.000
+it looks a little natural
+00:19:52.000
+and see it looks like a leaf
+00:19:54.000
+after making this shape what I can do
+00:19:56.000
+is I can fill this shape
+00:19:58.000
+I can fill this shape with my
+00:20:00.000
+favorite color
+00:20:02.000
+so I filled this shape
+00:20:04.000
+I will fill this shape with my favorite color so So I filled this shape, I will fill this shape also with my favorite color.
+00:20:06.600
+So if I fill it with green, I can make it green. So it becomes a little easier for you to make green.
+00:20:13.200
+Now this line, I should have made it in the same shape, but again, if you want to do this, you can do that too.
+00:20:19.400
+Now suppose I want to make it a component, so I right click on it and click on create component.
+00:20:25.000
+And you see here, it will come in assets and it is component 1.
+00:20:29.000
+So whenever I want to use it, I can use the leaf here.
+00:20:32.000
+Suppose I want to make a lot of leaves, so I will use my component.
+00:20:36.000
+It happens many times that people want to make a lot of buttons and suppose I want to make a period type
+00:20:42.000
+and I want to show a lot of leaves, I want to show falling leaves here and I want to make them small too.
+00:20:49.000
+Make sure that you use the scale tool here when you are making it small,
+00:20:54.000
+then whatever will be selected will be small if you select it like this and scale it down.
+00:21:00.000
+And after that you can bring as many components as you want here
+00:21:03.000
+and in this way you can rotate them and make your design
+00:21:06.600
+so many times we have to make such things
+00:21:09.000
+that this design is not looking good
+00:21:10.800
+but I am just demonstrating how to use Figma here
+00:21:13.000
+then after this there is a blend mode
+00:21:15.000
+which we have many options
+00:21:16.800
+if you have used Photoshop then you know what is blend mode
+00:21:19.200
+and if you don't know then there is no problem
+00:21:21.200
+blend mode means
+00:21:22.400
+when we put one color on another color
+00:21:24.600
+then how it is blending
+00:21:26.000
+so if i put light in here
+00:21:28.000
+if i put color in it will be like this
+00:21:30.000
+that it is fully blended in
+00:21:32.000
+if i put darker it will be like this
+00:21:34.000
+if i put soft light it will be like this
+00:21:36.000
+in hard light it will be like this, in difference it will be like this
+00:21:38.000
+in exclusion it will be like this, then in hue saturation
+00:21:40.000
+color luminosity is there, you can use that
+00:21:42.000
+so use whatever you like
+00:21:44.000
+and after that you give it to your developer and then the developer will design it, once it is approved
+00:21:50.000
+if this design is approved, so figma is used so that you know beforehand that this is my design, when my website is ready, it will look like this whether to make it or not, okay. Now let's say I want the leaves to go behind it, okay,
+00:22:06.000
+so I will right click and do bring back
+00:22:08.000
+bring to back
+00:22:10.000
+move to page
+00:22:12.000
+no, bring to, send to back
+00:22:14.000
+okay, so I have done send to back, now
+00:22:16.000
+what I will do here, I will send this to back
+00:22:18.000
+and the leaf and this will come in between,
+00:22:20.000
+see, the leaf is here first,
+00:22:22.000
+then the leaf and then this, okay, so you
+00:22:24.000
+can stack things according to this,
+00:22:25.400
+very easily by writing it simply.
+00:22:27.400
+So Figma is made so that
+00:22:29.400
+there is no need to write code, but look
+00:22:31.400
+there is a need to write code, because
+00:22:33.400
+you can use any Figma plugin,
+00:22:35.400
+you can use anything,
+00:22:37.400
+if you want to write clean code,
+00:22:39.400
+then you will have to write from scratch from the starting,
+00:22:41.400
+you will have to export images like this and
+00:22:43.400
+write and we will come back to Figma, we will use a lot of such things,
+00:22:47.000
+which will be from the community of Figma, like some images,
+00:22:50.000
+some designs from which we will take inspiration and recreate them,
+00:22:54.000
+so we will know from the beginning that we are going to make this thing,
+00:22:57.000
+and we will make it by looking at Figma, like if you come to the community of Figma,
+00:23:01.000
+and you search here, let's say i search food delivery
+00:23:06.000
+so many people have done food delivery
+00:23:09.000
+and i will make it free
+00:23:12.000
+so you can see food delivery related UI's
+00:23:15.000
+now if i make this with html css
+00:23:18.000
+obviously it will look good
+00:23:21.000
+but if i make it randomly
+00:23:24.000
+it will look good I have randomly made it, now see how it looks, is it good or bad, but if I try to make this, I mean I put all my effort, I open it in figma first, and after this I start coding, and do something like this, that my final product is coming out like this now what all do i need for this i need images for this
+00:23:46.000
+now it is loading
+00:23:48.000
+so what i have to do
+00:23:50.000
+first of all i will unlock it, the layers are locked
+00:23:52.000
+and after this i will understand
+00:23:54.000
+how they have made this
+00:23:56.000
+this is actually a single image
+00:23:58.000
+no one has done a good job
+00:24:00.000
+of putting this as a single image
+00:24:02.000
+but even after that you can take inspiration from this and design it
+00:24:04.000
+i don't think you need
+00:24:06.000
+a lot of things, you can
+00:24:08.000
+bring a bowl image like this, you can make
+00:24:10.000
+this, you can write are you starving, you can write
+00:24:12.000
+this, you can also put delivery pickup
+00:24:14.000
+and you can make this website,
+00:24:16.000
+you won't have any problem here, but
+00:24:18.000
+I just want to tell you that if you
+00:24:20.000
+come here and
+00:24:22.000
+if you open this,
+00:24:24.000
+then you will see a lot of things here
+00:24:27.000
+and a lot of people have given their links here, but let's do one thing,
+00:24:32.000
+let's open it in Figma and after opening it in Figma, we will see
+00:24:36.000
+whether all its assets are present or not to make it
+00:24:39.000
+and if they are there, it will be very easy for us to make it, so see
+00:24:42.000
+I guess this is a good example because you can see here that it is broken
+00:24:46.000
+into components and it is made in figma
+00:24:48.000
+which is a very good thing, okay
+00:24:50.000
+this is one image, this is one image, this is one image
+00:24:52.000
+this is one image, okay
+00:24:54.000
+and they have made a very simple minimal
+00:24:56.000
+website
+00:24:58.000
+so by looking at this you can take inspiration
+00:25:00.000
+here we have very good designs
+00:25:02.000
+of figma which you
+00:25:04.000
+can use and
+00:25:06.000
+make it exactly as if
+00:25:09.000
+I want to use this UI
+00:25:12.000
+or I want to use another UI from Lettuce, so I can open it
+00:25:15.000
+and use it, designers have designed it
+00:25:18.000
+and made it here, you can also make prototypes of app
+00:25:21.000
+and what is going to look like
+00:25:24.000
+you can use F here and what is going to look like you can use
+00:25:26.000
+figma to preview it
+00:25:28.000
+and we have collaboration
+00:25:30.000
+with pen tool
+00:25:32.000
+but i will come here for icons
+00:25:34.000
+and whenever we use
+00:25:36.000
+figma file then you know
+00:25:38.000
+why i came here and why
+00:25:40.000
+we are using figma
+00:25:42.000
+and whenever a developer
+00:25:44.000
+will give you a freelancing job,
+00:25:45.000
+then he will tell you that I am sending Figma file and if you say there
+00:25:48.000
+that we don't know what is Figma, then you will face a problem.
+00:25:52.000
+I don't want you to face a situation that you are saying that
+00:25:56.000
+we don't know what is Figma. So I hope you are understanding
+00:26:00.000
+what is the role of Figma. Why I put it it in Sigma web development course and let me tell you this was
+00:26:06.000
+not Figma's comprehensive tutorial
+00:26:08.000
+as much as Figma is required
+00:26:10.000
+we will learn here, we will move forward
+00:26:12.000
+with knowledge towards web development
+00:26:14.000
+so if you have not accessed the playlist
+00:26:16.000
+you can access it quickly
+00:26:18.000
+and along with that bookmark it
+00:26:20.000
+and save it, we have already hit
+00:26:22.000
+1 million views on the playlist which means
+00:26:24.000
+course is going great. In the first video
+00:26:26.000
+you guys must put the initial review of the course
+00:26:29.000
+so that those people get to know about the course
+00:26:32.000
+who are new and are planning to do this course. Do me this
+00:26:35.000
+favor, please go. And this is a free course
+00:26:38.000
+Sigma Web Development. So many people are thinking that there is nothing much in this course
+00:26:41.000
+but I want all of you who have seen this course
+00:26:44.000
+go to the first video and tell people I know you guys are thinking that this course is not that much but I want all of you who have watched this course till here
+00:26:45.900
+go to the first video and tell people how much this course is worth
+00:26:48.800
+and I will feel good if you do this
+00:26:51.960
+so that's it for this video

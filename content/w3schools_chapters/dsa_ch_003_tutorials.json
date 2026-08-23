@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 3,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Fibonacci numbers are very useful for introducing algorithms, so before we continue, here is a short introduction to Fibonacci numbers.\n\nThe Fibonacci numbers are named after a 13th century Italian mathematician known as Fibonacci.\n\nThe two first Fibonacci numbers are 0 and 1, and the next Fibonacci number is always the sum of the two previous numbers, so we get 0, 1, 1, 2, 3, 5, 8, 13, 21, ...\n\nThis tutorial will use loops and recursion a lot. So before we continue, let's implement three different versions of the algorithm to create Fibonacci numbers, just to see the difference between programming with loops and programming with recursion in a simple way.\n\nTo generate a Fibonacci number, all we need to do is to add the two previous Fibonacci numbers.\n\nThe Fibonacci numbers is a good way of demonstrating what an algorithm is. We know the principle of how to find the next number, so we can write an algorithm to create as many Fibonacci numbers as possible.\n\nBelow is the algorithm to create the 20 first Fibonacci numbers.\n\nTo show the difference between loops and recursion, we will implement solutions to find Fibonacci numbers in three different ways:\n\nIt can be a good idea to list what the code must contain or do before programming it:\n\nUsing the list above, it is easier to write the program:\n\nRecursion is when a function calls itself.\n\nTo implement the Fibonacci algorithm we need most of the same things as in the code example above, but we need to replace the for loop with recursion.\n\nTo replace the for loop with recursion, we need to encapsulate much of the code in a function, and we need the function to call itself to create a new Fibonacci number as long as the produced number of Fibonacci numbers is below, or equal to, 19.\n\nOur code looks like this:\n\nTo find the \\(n\\)th Fibonacci number we can write code based on the mathematic formula for Fibonacci number \\(n\\):\n\n\\[F(n) = F(n-1) + F(n-2) \\]\n\nThis just means that for example the 10th Fibonacci number is the sum of the 9th and 8th Fibonacci numbers.\n\nWhen using this concept with recursion, we can let the function call itself as long as \\(n\\) is less than, or equal to, 1. If \\(n \\le 1\\) it means that the code execution has reached one of the first two Fibonacci numbers 1 or 0.\n\nThe code looks like this:\n\nNotice that this recursive method calls itself two times, not just one. This makes a huge difference in how the program will actually run on our computer. The number of calculations will explode when we increase the number of the Fibonacci number we want. To be more precise, the number of function calls will double every time we increase the Fibonacci number we want by one.\n\nJust take a look at the number of function calls for \\(F(5)\\):\n\nTo better understand the code, here is how the recursive function calls return values so that \\(F(5)\\) returns the correct value in the end:\n\nThere are two important things to notice here: The amount of function calls, and the amount of times the function is called with the same arguments.\n\nSo even though the code is fascinating and shows how recursion work, the actual code execution is too slow and ineffective to use for creating large Fibonacci numbers.\n\nBefore we continue, let's look at what we have seen so far:\n\nIt is time to move on to the first data structure we will look at, the array.\n\nClick the \"Next\" button to continue.\n\n### Code Snippets\n\n```\nExample\nprev2 = 0\nprev1 = 1\n\nprint(prev2)\nprint(prev1)\nfor fibo in range(18):\n    newFibo = prev1 + prev2\n    print(newFibo)\n    prev2 = prev1\n    prev1 = newFibo\nTry it Yourself \u00bb\n\n---\n\nExample\nprint(0)\nprint(1)\ncount = 2\n\ndef fibonacci(prev1, prev2):\n    global count\n    if count <= 19:\n        newFibo = prev1 + prev2\n        print(newFibo)\n        prev2 = prev1\n        prev1 = newFibo\n        count += 1\n        fibonacci(prev1, prev2)\n    else:\n        return\n\nfibonacci(1,0)\nTry it Yourself \u00bb\n\n---\n\nExample\ndef F(n):\n    if n <= 1:\n        return n\n    else:\n        return F(n - 1) + F(n - 2)\n\nprint(F(19))\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_2",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

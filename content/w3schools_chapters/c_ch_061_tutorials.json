@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 61,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "To demonstrate a practical example of the while loop, we have created a simple \"countdown\" program:\n\nIn this example, we create a program that only print even numbers between 0 and 10 (inclusive):\n\nIn this example we use a while loop to reverse some numbers:\n\nTo demonstrate a practical example of the while loop combined with an if else statement, let's say we play a game of Yatzy:\n\nIf the loop passes the values ranging from 1 to 5, it prints \"No Yatzy\". Whenever it passes the value 6, it prints \"Yatzy!\".\n\n### Code Snippets\n\n```\nint countdown = 3;\nwhile (countdown > 0) {\ncout << countdown \n  << \"\\n\";\ncountdown--;\n}\ncout << \"Happy New Year!!\\n\";\n\n---\n\nint i = 0;\nwhile (i <= 10) {\ncout << i << \"\\n\";\ni \n  += 2;\n}\n\n---\n\n// A variable with some specific numbers\nint numbers = 12345;\n// A \n  variable to store the reversed number\nint revNumbers = 0;\n// Reverse \n  and reorder the numbers\nwhile (numbers) {\n// Get the last number \n  of 'numbers' and add it to 'revNumbers'\nrevNumbers = revNumbers * 10 \n  + numbers % 10;\n// Remove the last number of 'numbers'\nnumbers /= 10;\n}\ncout << \"Reversed numbers: \" << revNumbers << \"\\n\";\n\n---\n\nint dice = 1;\nwhile (dice <= 6) {\nif (dice < 6) {\ncout << \"No Yatzy\\n\";\n} else {\ncout << \n  \"Yatzy!\\n\";\n}\ndice = dice + 1;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_60",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 25,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheBETWEENoperator is used in theWHEREclause to select values within a specified range.\n\nThe range isinclusive- the beginning and end values of the range are included in the results.\n\nThe values can be numbers, text, or dates.\n\nBelow is a selection from theProductstable used in the examples:\n\nTheNOT BETWEENoperator is used in theWHEREclause to select values outside a specified range.\n\nThe following SQL returns all products with a price NOT between 10 and 20:\n\nThe following SQL returns all products with a price between 10 and \n20. In addition, the CategoryID must be either 1, 2 or 3:\n\nThe following SQL selects all products with a ProductName alphabetically between \n'Geitost' and 'Louisiana Hot Spiced Okra':\n\nThe following SQL selects all products with a ProductName NOT \nbetween 'Geitost' and 'Louisiana Hot Spiced Okra':\n\nTheBETWEENoperator is useful for filtering records within a specific date or time period.\nEnsure the date format matches the database (e.g. 'YYYY-MM-DD').\n\nThe following SQL selects all orders placed in July, 1996:\n\nBelow is a selection from theOrderstable used in the example \nabove:\n\n### Code Snippets\n\n```\nSELECT * FROM Products\nWHERE Price BETWEEN 10 AND 20;\n\n---\n\nSELECT * FROM Products\nWHERE Price NOT BETWEEN 10 AND 20;\n\n---\n\nSELECT * FROM Products\nWHERE Price BETWEEN 10 AND 20\nAND CategoryID IN (1,2,3);\n\n---\n\nSELECT * FROM Products\nWHERE ProductName BETWEEN 'Geitost' AND 'Louisiana Hot Spiced Okra'\nORDER BY ProductName;\n\n---\n\nSELECT * FROM Products\nWHERE ProductName NOT BETWEEN 'Geitost' AND \n  'Louisiana Hot Spiced Okra'\nORDER BY ProductName;\n\n---\n\nSELECT * FROM Orders\nWHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_24",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

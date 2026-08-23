@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 267,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "When multiple threads (for example, the main thread and one or more workers)\naccess the same data, you can getrace conditions. Atomics helps avoid\nthese race conditions by providing operations that:Work on shared typed arraysAre performed atomically (cannot be interrupted halfway)Return the previous value of the elementTheAtomicsobject is a global object (likeMath)\nwith static methods such asAtomics.load(),Atomics.store(),Atomics.add(), and more.Atomics are an advanced feature.You typically use Atomics when you work with:Web WorkersWorker ThreadsShared memoryRequirementsTo use Atomics you need:ASharedArrayBufferA typed array that uses the shared buffer (e.g.Int32Array)One or more workers (or threads) that share the same bufferSecurity:Browsers may require special headers (like COOP/COEP) forSharedArrayBufferto be enabled on the web.Basic Atomics UsageExample: Creating a Shared Typed ArrayCreate a shared buffer and a shared integer array:const buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);// Shared integer array with 4 elementsconst sharedArray = new Int32Array(buffer);// Initialize the arraysharedArray[0] = 10;sharedArray[1] = 20;sharedArray[2] = 30;sharedArray[3] = 40;Try it Yourself \u00bbAtomic Read and WriteUseAtomics.load()toreadandAtomics.store()towritean element in a sharedtyped array.Example: Atomics.load() and Atomics.store()var buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);var sharedArray = new Int32Array(buffer);// Store a value atomicallyAtomics.store(sharedArray, 0, 123);// Load the value atomicallyvar value = Atomics.load(sharedArray, 0);console.log(\"Value:\", value); // Value: 123Atomics.store()returns the value you stored.Atomics.load()returns the current value of the element.Atomic Add and SubtractAtomics.add()andAtomics.sub()change a value and\n  return theoldvalue.Example: Atomics.add()var buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);var sharedArray = new Int32Array(buffer);sharedArray[0] = 5;var oldValue = Atomics.add(sharedArray, 0, 3);console.log(\"Old:\", oldValue);  // Old: 5console.log(\"New:\", sharedArray[0]);// New: 8Example: Atomics.sub()var buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);var sharedArray = new Int32Array(buffer);sharedArray[0] = 10;var oldValue = Atomics.sub(sharedArray, 0, 4);console.log(\"Old:\", oldValue);  // Old: 10console.log(\"New:\", sharedArray[0]);// New: 6Atomic Exchange and CompareExchangeAtomics.exchange()sets a new value and returns the old one.Atomics.compareExchange()only sets a new value if the current\nvalue is equal to a given expected value.Example: Atomics.exchange()var buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);var sharedArray = new Int32Array(buffer);sharedArray[0] = 1;var oldValue = Atomics.exchange(sharedArray, 0, 99);console.log(\"Old:\", oldValue);   // Old: 1console.log(\"New:\", sharedArray[0]); // New: 99Example: Atomics.compareExchange()var buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);var sharedArray = new Int32Array(buffer);sharedArray[0] = 10;// Only replace 10 with 20 if the current value is 10var oldValue = Atomics.compareExchange(sharedArray, 0, 10, 20);console.log(\"Old:\", oldValue);   // Old: 10console.log(\"New:\", sharedArray[0]); // New: 20// Now it will NOT change because the expected value does not matcholdValue = Atomics.compareExchange(sharedArray, 0, 10, 30);console.log(\"Old:\", oldValue);   // Old: 20console.log(\"New:\", sharedArray[0]); // New: 20Atomics.wait() and Atomics.notify()Atomics.wait()(in workers) can put a thread to sleep until the\nvalue at a position changes, andAtomics.notify()wakes up one\nor more sleeping threads.Important:Atomics.wait()can only be used in\nworker contexts (not on the main thread) in browsers.Example: Worker Waiting for a ValueMain thread (simplified):// main.jsvar buffer = new SharedArrayBuffer(4);var sharedArray = new Int32Array(buffer);sharedArray[0] = 0;var worker = new Worker(\"worker.js\");// Send the shared buffer to the workerworker.postMessage(buffer);// Simulate some work, then set the value and notify the workersetTimeout(function() {Atomics.store(sharedArray, 0, 1);Atomics.notify(sharedArray, 0, 1); // wake 1 worker}, 1000);Worker (worker.js):// worker.jsonmessage = function(e) {var buffer = e.data;var sharedArray = new Int32Array(buffer);console.log(\"Worker waiting...\");var result = Atomics.wait(sharedArray, 0, 0); // wait while value is 0console.log(\"Worker woken, result =\", result);console.log(\"New value:\", Atomics.load(sharedArray, 0));};Complete Atomics ReferenceRevised December 2025MethodDescriptionload(typedArray, index)Reads and returns the value at index.store(typedArray, index, value)Stores value at index and returns it.add(typedArray, index, value)Adds value to the element and returns the old value.sub(typedArray, index, value)Subtracts value and returns the old value.and(typedArray, index, value)Performs bitwise AND with value and returns the old value.or(typedArray, index, value)Performs bitwise OR with value and returns the old value.xor(typedArray, index, value)Performs bitwise XOR with value and returns the old value.exchange(typedArray, index, value)Replaces the value at index and returns the old value.compareExchange(typedArray, index, expected, value)Replaces the value at index with value if the\ncurrent value is expected. Returns the old value.wait(typedArray, index, value, timeout?)(Worker only) Blocks the calling thread until the element changes or timeout.notify(typedArray, index, count)Wakes up sleeping threads that are waiting on index.Atomics are for communication between threads using shared memoryYou use them with SharedArrayBuffer and Typed ArraysAtomics operations can not be interrupted by other threadsUse Atomics only when you need low-level synchronizationMost JavaScript code does not need AtomicsLearn More:Typed Array TutorialTyped Array MethodsTyped Array ReferenceArray BuffersDataViews\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nconst buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\n// Shared integer array with 4 elements\nconst sharedArray = new Int32Array(buffer);\n// Initialize the array\nsharedArray[0] = 10;\nsharedArray[1] = 20;\nsharedArray[2] = 30;\nsharedArray[3] = 40;\n\n---\n\nvar buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\nvar sharedArray = new Int32Array(buffer);\n// Store a value atomically\nAtomics.store(sharedArray, 0, 123);\n// Load the value atomically\nvar value = Atomics.load(sharedArray, 0);\nconsole.log(\"Value:\", value); // Value: 123\n\n---\n\nvar buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\nvar sharedArray = new Int32Array(buffer);\nsharedArray[0] = 5;\nvar oldValue = Atomics.add(sharedArray, 0, 3);\nconsole.log(\"Old:\", oldValue);  // Old: 5\nconsole.log(\"New:\", sharedArray[0]);// New: 8\n\n---\n\nvar buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\nvar sharedArray = new Int32Array(buffer);\nsharedArray[0] = 10;\nvar oldValue = Atomics.sub(sharedArray, 0, 4);\nconsole.log(\"Old:\", oldValue);  // Old: 10\nconsole.log(\"New:\", sharedArray[0]);// New: 6\n\n---\n\nvar buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\nvar sharedArray = new Int32Array(buffer);\nsharedArray[0] = 1;\nvar oldValue = Atomics.exchange(sharedArray, 0, 99);\nconsole.log(\"Old:\", oldValue);   // Old: 1\nconsole.log(\"New:\", sharedArray[0]); // New: 99\n\n---\n\nvar buffer = new SharedArrayBuffer(4 * Int32Array.BYTES_PER_ELEMENT);\nvar sharedArray = new Int32Array(buffer);\nsharedArray[0] = 10;\n// Only replace 10 with 20 if the current value is 10\nvar oldValue = Atomics.compareExchange(sharedArray, 0, 10, 20);\nconsole.log(\"Old:\", oldValue);   // Old: 10\nconsole.log(\"New:\", sharedArray[0]); // New: 20\n// Now it will NOT change because the expected value does not match\noldValue = Atomics.compareExchange(sharedArray, 0, 10, 30);\nconsole.log(\"Old:\", oldValue);   // Old: 20\nconsole.log(\"New:\", sharedArray[0]); // New: 20\n\n---\n\n// main.js\nvar buffer = new SharedArrayBuffer(4);\nvar sharedArray = new Int32Array(buffer);\nsharedArray[0] = 0;\nvar worker = new Worker(\"worker.js\");\n// Send the shared buffer to the worker\nworker.postMessage(buffer);\n// Simulate some work, then set the value and notify the worker\nsetTimeout(function() {\nAtomics.store(sharedArray, 0, 1);\nAtomics.notify(sharedArray, 0, 1); // wake 1 worker\n}, 1000);\n\n---\n\n// worker.js\nonmessage = function(e) {\nvar buffer = e.data;\nvar sharedArray = new Int32Array(buffer);\nconsole.log(\"Worker waiting...\");\nvar result = Atomics.wait(sharedArray, 0, 0); // wait while value is 0\nconsole.log(\"Worker woken, result =\", result);\nconsole.log(\"New value:\", Atomics.load(sharedArray, 0));\n};\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_266",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

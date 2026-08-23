@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 87,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Scanner Methods\n\nTheuseDelimiter()method changes the delimiter used by the scanner. A delimiter is the sequence of characters which separates tokens in the data being scanned. It is described by a regular expression given by a string or aPatternobject.\n\nLearn more about regular expressions in ourJava RegEx tutorial.\n\nOne of the following:\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nRead comma separated items:\n// Create a scanner object\nScanner myObj = new Scanner(\"Item 1,Item 2,Item 3\");\n\n// Change delimiter\nmyObj.useDelimiter(\",\");\n\n// Read the contents of the scanner\nwhile (myObj.hasNext()) {\n  System.out.println(myObj.next());\n}\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nTheuseLocale()method changes the locale used by the scanner. The locale determines how numbers are interpreted by deciding how digits are grouped, which character serves as a decimal point, etc.\n\nTheuseLocale()method requires aLocaleobject as an argument.Localeobjects represent a language or country and they are used by a variety of Java classes to handle formatting and interpreting data.\n\nThe easiest way to get aLocaleobject is by using one of the objects provided by attributes of theLocaleclass.\n\nA list of available language and country attributes is shown below.\n\nIf the country or language you need is not in the list then you can create a newLocaleobject using a language code and an optional country code. Most codes are two or three characters long and each code represents a language or a country.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nRead numbers from a different locale:\n// Create a scanner object\nScanner myObj = new Scanner(\"1.500.000\");\n\n// Change delimiter\nmyObj.useLocale(new Locale(\"es\"));\n\n// Read and display the number\nSystem.out.println(myObj.nextInt());\n```\n\n## Tutorials\n\n\u276e Scanner Methods\n\nTheuseRadix()method changes the radix used by the scanner. The radix specifies how many different symbols can be used to represent each digit in a number. For example, a radix of 16 would allow the symbols 0 to 9 and A to F to be used as digits.\n\n\u276e Scanner Methods\n\n### Code Examples\n\n```\nExample\nRead a hexadecimal number:\n// Create a scanner object\nScanner myObj = new Scanner(\"FFAD01\");\n\n// Change radix\nmyObj.useRadix(16);\n\n// Read and display the number\nSystem.out.println(myObj.nextInt());\n```\n\n## Tutorials\n\nTheFileclass (fromjava.io) is used to work with file and directory paths.  \nIt lets you create, delete, and get information about files and folders - but it doesnotread or write the contents.\n\nJava File Handling Tutorial\n\n## Tutorials\n\nTheFileInputStreamclass provides methods to read data (as bytes) from a file:\n\nJava I/O Streams Tutorial\n\nJava FileInputStream Tutorial\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_87",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_87",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

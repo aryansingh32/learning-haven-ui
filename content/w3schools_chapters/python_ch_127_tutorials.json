@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 127,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A RegEx, or Regular Expression, is a sequence of characters that forms a search pattern.\n\nRegEx can be used to check if a string contains the specified search pattern.\n\nPython has a built-in package calledre, which can be used to work with \nRegular Expressions.\n\nImport theremodule:\n\nWhen you have imported theremodule, you \ncan start using regular expressions:\n\nTheremodule offers a set of functions that allows \nus to search a string for a match:\n\nMetacharacters are characters with a special meaning:\n\nYou can add flags to the pattern when using regular expressions.\n\nA special sequence is a\\followed by one of the characters in the list below, and has a special meaning:\n\nA set is a set of characters inside a pair of square brackets[]with a special meaning:\n\nThefindall()function returns a list containing all matches.\n\nThe list contains the matches in the order they are found.\n\nIf no matches are found, an empty list is returned:\n\nThesearch()function searches the string \nfor a match, and returns aMatch objectif there is a \nmatch.\n\nIf there is more than one match, \nonly the first occurrence of the match will be returned:\n\nIf no matches are found, the valueNoneis returned:\n\nThesplit()function returns a list where \nthe string has been split at each match:\n\nYou can control the number of occurrences by specifying themaxsplitparameter:\n\nThesub()function replaces the matches with \nthe text of your choice:\n\nYou can control the number of replacements by specifying thecountparameter:\n\nA Match Object is an object containing information \nabout the search and the result.\n\nThe Match object has properties and methods used to retrieve information \nabout the search, and the result:\n\n.span()returns a tuple containing the start-, and end positions of the match..stringreturns the string passed into the function.group()returns the part of the string where there was a match\n\n### Code Snippets\n\n```\nimport re\n\n---\n\nimport \n    re\ntxt = \"The rain in Spain\"\nx = re.search(\"^The.*Spain$\", txt)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.findall(\"ai\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.findall(\"Portugal\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"\\s\", \n  txt)\nprint(\"The first white-space character is located in \n  position:\", x.start())\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"Portugal\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.split(\"\\s\", \n  txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.split(\"\\s\", \n  txt, \n  1)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.sub(\"\\s\", \n  \"9\", txt)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.sub(\"\\s\", \n  \"9\", txt, 2)\nprint(x)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(\"ai\", \n  txt)\nprint(x) #this will print an object\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.span()\n)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.string\n)\n\n---\n\nimport re\ntxt = \"The rain in Spain\"\nx = re.search(r\"\\bS\\w+\", txt)\nprint(\nx.group()\n)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_126",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 134,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "With CSS, you can style most of the different input types, like text fields, \npassword fields, checkboxes, radio buttons, and file inputs. You can also style \ninput labels and form buttons.\n\nSome commonly used CSS properties for styling input fields, are:\n\nThewidthproperty \nis used to set the width of an input field.\n\nTip:The default width of an HTML input text field, is 20 characters.\n\nHere we set the width to 100%:\n\nThe example above applies to all <input> elements. If you only want to \nstyle a specific input type, you can useattribute selectors:\n\nThepaddingproperty \nis used to add some space inside the text field.\n\nTip:When you have several input fields after each other, you might \nalso want to add somemargin, to add more space \naround them:\n\nTheborderproperty \nis used to change the border size and color, and \ntheborder-radiusproperty \ncan be used to add rounded corners:\n\nIf you only want a bottom border, use theborder-bottomproperty:\n\nThebackground-colorproperty \nis used to add a background color to the input, and \nthecolorproperty \nis used to change the text color:\n\n### Code Snippets\n\n```\ninput\n{\nwidth: 100%;\n}\n\n---\n\ninput[type=text]\n{\nwidth: 100%;\npadding: 12px;\nmargin: 10px 0;\nbox-sizing: border-box;\n}\n\n---\n\ninput[type=text]\n{\nborder: 2px solid red;\nborder-radius: 8px;\n}\n\n---\n\ninput[type=text]\n{\nborder: none;\nborder-bottom: 1px solid red;\n}\n\n---\n\ninput[type=text]\n{\nbackground-color: #3CBC8D;\ncolor: white;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_133",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

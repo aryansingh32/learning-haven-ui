@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 51,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Seethis pagefor a general explanation of what time complexity is.\n\nTheMerge Sort algorithmbreaks the array down into smaller and smaller pieces.\n\nThe array becomes sorted when the sub-arrays are merged back together so that the lowest values come first.\n\nThe array that needs to be sorted has \\(n\\) values, and we can find the time complexity by start looking at the number of operations needed by the algorithm.\n\nThe main operations Merge Sort does is to split, and then merge by comparing elements.\n\nTo split an array from start until the sub-arrays only consists of one value, Merge Sort does a total of \\(n-1\\) splits. Just imaging an array with 16 values. It is split one time into sub-arrays of length 8, split again and again, and the size of the sub-arrays reduces to 4, 2 and finally 1. The number of splits for an array of 16 elements is \\(1+2+4+8=15\\).\n\nThe image below shows that 15 splits are needed for an array of 16 numbers.\n\nThe number of merges is actually also \\(n-1\\), the same as the number of splits, because every split needs a merge to build the array back together. And for each merge there is a comparison between values in the sub-arrays so that the merged result is sorted.\n\nDuring merging of two sub-arrays, the worst case scenario that generates the most comparisons, is if the sub-arrays are equally big. Just consider merging [1,4,6,9] and [2,3,7,8]. In this case the following comparisons are needed:\n\nAt the end of the merge, only the value 9 is left in one array, the other array is empty, so no comparison is needed to put the last value in, and the resulting merged array is [1,2,3,4,6,7,8,9]. We see that we need 7 comparisons to merge 8 values (4 values in each of the initial sub-arrays). In general, in a worst case scenario, \\(n-1\\) comparisons are needed to get a merged array of \\(n\\) values.\n\nFor simplicity, let's say that we need \\(n\\) comparisons instead of \\(n-1\\) when merging \\(n\\) values. This is an ok assumption when \\(n\\) is large and we want to calculate an upper bound using Big O notation.\n\nSo, at each level merging happens, \\(n\\) comparisons are needed, but how many levels are there? Well, for \\(n=16\\) we have \\(n=16=2^4\\), so 4 levels of merging. For \\(n=32=2^5\\) there are 5 levels of merging, and at each level, \\(n\\) comparisons are needed. For \\(n=1024=2^{10}\\) 10 levels of merging is needed. To find out what power of 2 gives us 1024, we use a base-2 logarithm. The answer is 10. Mathematically it looks like this: \\( \\log_{2}1024=10\\).\n\nAs we can see from the figure above, \\(n\\) comparisons are needed on each level, and there are \\( \\log_{2}n\\) levels, so there are \\( n \\cdot \\log_{2}n\\) comparison operations in total.\n\nTime complexity can be calculated based on the number of split operations and the number of merge operations:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\nO( (n-1) + n \\cdot \\log_{2}n) {} & = O( n \\cdot \\log_{2}n )\n\\end{aligned}\n\\end{equation}\n\\]\n\nThe number of splitting operations \\((n-1)\\) can be removed from the Big O calculation above because \\( n \\cdot \\log_{2}n\\) will dominate for large \\( n\\), and because of how we calculate time complexity for algorithms.\n\nThe figure below shows how the time increases when running Merge Sort on an array with \\(n\\) values.\n\nThe difference between best and worst case scenarios for Merge Sort is not as big as for many other sorting algorithms.\n\nRun the simulation for different number of values in an array, and see how the number of operations Merge Sort needs on an array of \\(n\\) elements is \\(O(n \\log n)\\):\n\nIf we hold the number of values \\(n\\) fixed, the number of operations needed for the \"Random\", \"Descending\" and \"Ascending\" is almost the same.\n\nMerge Sort performs almost the same every time because the array is split, and merged using comparison, both if the array is already sorted or not.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_50",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

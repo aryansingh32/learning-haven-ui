@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 206,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Time zones and daylight saving time (DST) can cause serious bugs when using JavaScriptDate.\n\nZonedDateTime solves this by always storing the time zone together with the date and time.\n\nATemporal.ZonedDateTimeis a timezone and calendar-aware\ndate/time object that represents a real time event from the perspective of a particular\nregion on Earth.\n\nThe Temporal.ZonedDateTime object is optimized for cases that\nrequire a time zone,DST-safe arithmeticand interoperability with anRFC 5545 calendar.\n\nExample: December 7th, 1995 at 3:24 AM in US Pacific time (in Gregorian calendar).\n\nYou can also create a ZonedDateTime from a string that includes a time zone.\n\nTheTemporal.Now.zonedDateTimeISO()method returns your system's current date, time,\nand time zone as aTemporal.ZonedDateTimeobject.\n\nYou can convert a ZonedDateTime to another time zone.\n\nAdding days across a daylight saving change can break withJavascript Date.\n\nTemporal.ZonedDateTimehandles this correctly.\n\nThesince()method calculates the duration between two temporal dates.\n\nAll temporal date objectshave their ownsince() method:\n\nAll temporal objectshave their ownuntil() method:\n\nThewith()method creates a new zoned date-time with specified field(s) replaced.\n\nAnInstantrepresents a UTC moment.\n\nYou can convert it to a ZonedDateTime in a specific time zone.\n\n### Code Snippets\n\n```\nconst zonedDate = Temporal.ZonedDateTime.from({\ntimeZone: 'Europe/Oslo',\nyear: 2026,\nmonth: 5,\nday: 17,\nhour: 14,\nminute: 30,\nsecond: 0,\nmillisecond: 0,\nmicrosecond: 0,\nnanosecond: 500\n});\n\n---\n\nconst zdt = Temporal.ZonedDateTime.from\n(\"2026-02-17T14:30:00[Europe/Oslo]\");\n\n---\n\nconst now = Temporal.Now.zonedDateTimeISO();\n\n---\n\nconst oslo = Temporal.ZonedDateTime.from\n(\"2026-05-17T14:30:00+01:00[Europe/Oslo]\");\nconst newYork = oslo.withTimeZone(\"America/New_York\");\n\n---\n\nconst start = Temporal.ZonedDateTime.from\n(\"2026-03-29T00:00:00+01:00[Europe/Oslo]\");\nconst nextDay = start.add({ days: 1 });\n\n---\n\nconst start = Temporal.ZonedDateTime.from(\n\"2026-02-17T09:00:00+01:00[Europe/Oslo]\");\nconst end = Temporal.ZonedDateTime.from(\n\"2026-02-17T17:30:00+01:00[Europe/Oslo]\");\nconst duration = end.since(start);\n\n---\n\n// Create a ZonedDateTime\nconst date = Temporal.ZonedDateTimr.from(\"2026-05-17T14:30:00[Europe/Oslo]\");\n// Replace month and day\nconst customDate = date.with({ month:12, day:25 });\n\n---\n\nconst instant = Temporal.Now.instant();\nconst zoned = instant.toZonedDateTimeISO(\"Europe/Oslo\");\n\n---\n\nconst zoned = Temporal.ZonedDateTime.from(\"2026-05-17T14:30:00[Europe/Oslo]\");\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_205",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 62,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Math Methods\n\nThescalb()method returns the result of the formulax\u00b72yfor a floating point numberxand an integery.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nReturn numbers multiplied by powers of 2:\nSystem.out.println(Math.scalb(1.5, 4));\nSystem.out.println(Math.scalb(1.0, 5));\nSystem.out.println(Math.scalb(1.2, 0));\nSystem.out.println(Math.scalb(1.85, 10));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThesignum()method returns the sign of a number. A number's sign tells whether it is positive or negative. This method returns 1 for positive numbers, -1 for negative numbers and 0 for the number 0.\n\n### Code Examples\n\n```\nExample\nReturn the sign of different numbers:\nSystem.out.println(Math.signum(12));\nSystem.out.println(Math.signum(0.5));\nSystem.out.println(Math.signum(0));\nSystem.out.println(Math.signum(-0.25));\nSystem.out.println(Math.signum(-6));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThesin()method returns the sine of an angle.\n\nNote:Angles are measured in radians.\n\nTip:You can use the constantMath.PIto make fractions of PI for angles.\n\n### Code Examples\n\n```\nExample\nReturn the sine of different angles:\nSystem.out.println(Math.sin(3));\nSystem.out.println(Math.sin(-3));\nSystem.out.println(Math.sin(0));\nSystem.out.println(Math.sin(Math.PI));\nSystem.out.println(Math.sin(Math.PI/2));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThesinh()method returns the hyperbolic sine of a number.\n\nThe hyperbolic sine is equivalent to(Math.exp(number) - Math.exp(-number)) / 2.\n\n### Code Examples\n\n```\nExample\nReturn the hyperbolic sine of different numbers:\nSystem.out.println(Math.sinh(3));\nSystem.out.println(Math.sinh(-3));\nSystem.out.println(Math.sinh(0));\nSystem.out.println(Math.sinh(1));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThesqrt()method returns the square root of a number.\n\n### Code Examples\n\n```\nExample\nReturn the square root of different numbers:\nSystem.out.println(Math.sqrt(0));\nSystem.out.println(Math.sqrt(1));\nSystem.out.println(Math.sqrt(9));\nSystem.out.println(Math.sqrt(0.64));\nSystem.out.println(Math.sqrt(-9));\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_62",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_62",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

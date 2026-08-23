@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 20,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Hash Table is a data structure designed to be fast to work with.\n\nThe reason Hash Tables are sometimes preferred instead of arrays or linked lists is because searching for, adding, and deleting data can be done really quickly, even for large amounts of data.\n\nIn aLinked List, finding a person \"Bob\" takes time because we would have to go from one node to the next, checking each node, until the node with \"Bob\" is found.\n\nAnd finding \"Bob\" in anArraycould be fast if we knew the index, but when we only know the name \"Bob\", we need to compare each element (like with Linked Lists), and that takes time.\n\nWith a Hash Table however, finding \"Bob\" is done really fast because there is a way to go directly to where \"Bob\" is stored, using something called a hash function.\n\nTo get the idea of what a Hash Table is, let's try to build one from scratch, to store unique first names inside it.\n\nWe will build the Hash Set in 5 steps:\n\nUsing an array, we could store names like this:\n\nTo find \"Bob\" in this array, we need to compare each name, element by element, until we find \"Bob\".\n\nIf the array was sorted alphabetically, we could use Binary Search to find a name quickly, but inserting or deleting names in the array would mean a big operation of shifting elements in memory.\n\nTo make interacting with the list of names really fast, let's use a Hash Table for this instead, or a Hash Set, which is a simplified version of a Hash Table.\n\nTo keep it simple, let's assume there is at most 10 names in the list, so the array must be a fixed size of 10 elements. When talking about Hash Tables, each of these elements is called abucket.\n\nNow comes the special way we interact with the Hash Set we are making.\n\nWe want to store a name directly into its right place in the array, and this is where thehash functioncomes in.\n\nA hash function can be made in many ways, it is up to the creator of the Hash Table. A common way is to find a way to convert the value into a number that equals one of the Hash Set's index numbers, in this case a number from 0 to 9. In our example we will use the Unicode number of each character, summarize them and do a modulo 10 operation to get index numbers 0-9.\n\nThe character \"B\" has Unicode code point 66, \"o\" has 111, and \"b\" has 98. Adding those together we get 275. Modulo 10 of 275 is 5, so \"Bob\" should be stored as an array element at index 5.\n\nThe number returned by the hash function is called thehash code.\n\nAfter storing \"Bob\" where the hash code tells us (index 5), our array now looks like this:\n\nWe can use the hash function to find out where to store the other names \"Pete\", \"Jones\", \"Lisa\", and \"Siri\" as well.\n\nAfter using the hash function to store those names in the correct position, our array looks like this:\n\nWe have now established a super basic Hash Set, because we do not have to check the array element by element anymore to find out if \"Pete\" is in there, we can just use the hash function to go straight to the right element!\n\nTo find out if \"Pete\" is stored in the array, we give the name \"Pete\" to our hash function, we get back hash code 8, we go directly to the element at index 8, and there he is. We found \"Pete\" without checking any other elements.\n\nWhen deleting a name from our Hash Set, we can also use the hash function to go straight to where the name is, and set that element value toNone.\n\nLet's also add \"Stuart\" to our Hash Set.\n\nWe give \"Stuart\" to our hash function, and we get the hash code 3, meaning \"Stuart\" should be stored at index 3.\n\nTrying to store \"Stuart\" creates what is called acollision, because \"Lisa\" is already stored at index 3.\n\nTo fix the collision, we can make room for more elements in the same bucket, and solving the collision problem in this way is called chaining. We can give room for more elements in the same bucket by implementing each bucket as a linked list, or as an array.\n\nAfter implementing each bucket as an array, to give room for potentially more than one name in each bucket, \"Stuart\" can also be stored at index 3, and our Hash Set now looks like this:\n\nSearching for \"Stuart\" in our Hash Set now means that using the hash function we end up directly in bucket 3, but then be must first check \"Lisa\" in that bucket, before we find \"Stuart\" as the second element in bucket 3.\n\nTo complete our very basic Hash Set code, let's have functions for adding and searching for names in the Hash Set, which is now a two dimensional array.\n\nRun the code example below, and try it with different values to get a better understanding of how a Hash Set works.\n\nThe next two pages show better and more detailed implementations of Hast Sets and Hash Tables.\n\nTry the Hash Set simulation below to get a better idea of how a Hash Set works in principle.\n\nHash Tables are great for:\n\nThe most important reason why Hash Tables are great for these things is that Hash Tables are very fast compared Arrays and Linked Lists, especially for large sets. Arrays and Linked Lists have time complexity \\(O(n)\\) for search and delete, while Hash Tables have just \\(O(1)\\) on average! Read more about time complexityhere.\n\nA Hash Table can be a Hash Set or a Hash Map. The next two pages describe these data structures in more detail.\n\nHere's how Hash Sets and Hash Maps are different and similar:\n\nHash Table elements are stored in storage containers calledbuckets.\n\nEvery Hash Table element has a part that is unique that is called thekey.\n\nAhash functiontakes the key of an element to generate ahash code.\n\nThe hash code says what bucket the element belongs to, so now we can go directly to that Hash Table element: to modify it, or to delete it, or just to check if it exists. Specific hash functions are explained in detail on the next two pages.\n\nAcollisionhappens when two Hash Table elements have the same hash code, because that means they belong to the samebucket. A collision can be solved in two ways.\n\nChainingis the way collisions are solved in this tutorial, by using arrays or linked lists to allow more than one element in the same bucket.\n\nOpen Addressingis another way to solve collisions. With open addressing, if we want to store an element but there is already an element in that bucket, the element is stored in the next available bucket. This can be done in many different ways, but we will not explain open addressing any further here.\n\nHash Tables are powerful tools in programming, helping you to manage and access data efficiently.\n\nWhether you use a Hash Set or a Hash Map depends on what you need: just to know if something is there, or to find detailed information about it.\n\n### Code Snippets\n\n```\nmy_array = ['Pete', 'Jones', 'Lisa', 'Bob', 'Siri']\n\n---\n\nmy_hash_set = [None,None,None,None,None,None,None,None,None,None]\n\n---\n\nExample\ndef hash_function(value):\n    sum_of_chars = 0\n    for char in value:\n        sum_of_chars += ord(char)\n\n    return sum_of_chars % 10\n\nprint(\"'Bob' has hash code:\",hash_function('Bob'))\nTry it Yourself \u00bb\n\n---\n\nmy_hash_set = [None,None,None,None,None,'Bob',None,None,None,None]\n\n---\n\nmy_hash_set = [None,'Jones',None,'Lisa',None,'Bob',None,'Siri','Pete',None]\n\n---\n\nExample\nmy_hash_set = [None,'Jones',None,'Lisa',None,'Bob',None,'Siri','Pete',None]\n\ndef hash_function(value):\n    sum_of_chars = 0\n    for char in value:\n        sum_of_chars += ord(char)\n\n    return sum_of_chars % 10\n    \ndef contains(name):\n    index = hash_function(name)\n    return my_hash_set[index] == name\n\nprint(\"'Pete' is in the Hash Set:\",contains('Pete'))\nTry it Yourself \u00bb\n\n---\n\nmy_hash_set = [\n    [None],\n    ['Jones'],\n    [None],\n    ['Lisa', 'Stuart'],\n    [None],\n    ['Bob'],\n    [None],\n    ['Siri'],\n    ['Pete'],\n    [None]\n]\n\n---\n\nExample\nmy_hash_set = [\n    [None],\n    ['Jones'],\n    [None],\n    ['Lisa'],\n    [None],\n    ['Bob'],\n    [None],\n    ['Siri'],\n    ['Pete'],\n    [None]\n]\n\ndef hash_function(value):\n    return sum(ord(char) for char in value) % 10\n    \ndef add(value):\n    index = hash_function(value)\n    bucket = my_hash_set[index]\n    if value not in bucket:\n        bucket.append(value)\n        \ndef contains(value):\n    index = hash_function(value)\n    bucket = my_hash_set[index]\n    return value in bucket\n\nadd('Stuart')\n\nprint(my_hash_set)\nprint('Contains Stuart:',contains('Stuart'))\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

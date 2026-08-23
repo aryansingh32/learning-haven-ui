@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 82,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The HTMLidattribute is used \nto specify a unique id for an HTML element.\n\nYou cannot have more than one element with the same id in an \nHTML document.\n\nTheidattribute specifies a unique id \nfor an HTML element. The value of theidattribute must be unique within the HTML document.\n\nTheidattribute is used to point \nto a specific style declaration in a style sheet. It is also used by JavaScript to access and \nmanipulate the element with the specific id.\n\nThe syntax for id is: write a hash character (#), followed by an id name. \nThen, define the CSS properties within curly braces {}.\n\nIn the following example we have an<h1>element that points to the \nid name \n\"myHeader\". This<h1>element will be styled according to the#myHeaderstyle definition in the head section:\n\nA \nclass name can be used by multiple HTML elements, while an id name must only be \nused by one HTML element \nwithin the page:\n\nHTML bookmarks are used to allow readers to jump to specific parts of a webpage.\n\nBookmarks can be useful if your page is very long.\n\nTo use a bookmark, you must first create it, and then add a link \nto it.\n\nThen, when the link is clicked, the page will scroll to the location with the \nbookmark.\n\nFirst, create a bookmark with theidattribute:\n\nThen, add a link to the bookmark (\"Jump to Chapter 4\"), from within the same page:\n\nOr, add a link to the bookmark (\"Jump to Chapter 4\"), from another page:\n\nTheidattribute can also be used by JavaScript to perform \nsome tasks for that specific element.\n\nJavaScript can access an element with a specific id with thegetElementById()method:\n\n### Code Snippets\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<style>\n#myHeader {\nbackground-color: lightblue;\ncolor: black;\npadding: 40px;\ntext-align: center;\n}\n</style>\n</head>\n<body>\n<h1 id=\"myHeader\">My \n  Header</h1>\n</body>\n</html>\n\n---\n\n<style>\n/* Style the element with the id \"myHeader\" \n  */\n#myHeader\n{\nbackground-color: lightblue;\ncolor: black;\npadding: \n  40px;\ntext-align: center;\n}\n/* Style all \n  elements with the class name \"city\" */\n.city\n{\nbackground-color: tomato;\ncolor: white;\npadding: 10px;\n}\n</style>\n<!-- An element with a unique id -->\n<h1 id=\"myHeader\">My \n  Cities</h1>\n<!-- Multiple elements with same class -->\n<h2 class=\"city\">London</h2>\n<p>London is the capital of England.</p>\n<h2 class=\"city\">Paris</h2>\n<p>Paris is the capital of France.</p>\n<h2 class=\"city\">Tokyo</h2>\n<p>Tokyo is the capital of Japan.</p>\n\n---\n\n<h2 id=\"C4\">Chapter 4</h2>\n\n---\n\n<a href=\"#C4\">Jump to Chapter 4</a>\n\n---\n\n<a href=\"html_demo.html#C4\">Jump to Chapter 4</a>\n\n---\n\n<script>\nfunction displayResult() {\ndocument.getElementById(\"myHeader\").innerHTML = \"Have a nice day!\";\n}\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_81",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 184,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A JSON object is enclosed incurly braces { }.\n\nA JSON object contains one or moreproperties.\n\nProperties comes inname/value pairs.\n\nNames must be strings enclosed indouble quotes.\n\nValues can be any validJSON value:\n\nProperty values can be objects.\n\nProperty values can be arrays:\n\nA JSON array is enclosed insquare brackets [ ].\n\nAn array contains an ordered list ofvalues.\n\nArray values can be any validJSON value.\n\nObjects and arrays can contain other objects and arrays.\n\nNested objects and arrays make it possible to represent complex data structures.\n\nA JSON string value is a sequence of zero or more Unicode characters enclosed in double quotes.\n\nJSON strings represent special characters using a backslash (\\) escape syntax:\n\nJSON number values can be integers or floating-point numbers.\n\nJSON does not distinguish between different numeric types.\nIt treats integers and floating-point decimals under a single \"number\" category.\n\nJSON numbers requires absolute structural precision.\n\nMany formats allowed in standard programming languages will break a JSON parser:\n\nJSON supports the Boolean valuestrueandfalse.\n\nThe valuenullrepresents an empty value.\n\nJSON supportsnull, but notundefined.\n\nJSON has a small, strict syntax.\n\nThese JavaScript values cannot be represented in JSON:\n\nDate objects are not allowed in JSON.\n\nIf you need to include a date, write it as a string.\n\nYou can convert it back into a date object later:\n\nIf you need to save a function, save it as a string.\n\nYou can convert it back into a function later.\n\n### Code Snippets\n\n```\n{\n\"name\": \"John\",\n\"age\": 30,\n\"city\": \"New York\"\n}\n\n---\n\n{\n\"employee\":{\"name\":\"John\", \"age\":30, \"city\":\"New York\"}\n}\n\n---\n\n{\n\"employees\":[\"John\", \"Anna\", \"Peter\"]\n}\n\n---\n\n[\n\"Ford\",\n\"Volvo\",\n\"BMW\"\n]\n\n---\n\n{\n\"name\": \"John\",\n\"age\": 30,\n\"address\": {\n\"city\": \"New York\",\n\"country\": \"USA\"\n},\n\"hobbies\": [\n\"Reading\",\n\"Cycling\",\n\"Photography\"\n]\n}\n\n---\n\n\"\"\n\"Hello World!\"\n\"He said, \\\"Hello!\\\"\"\n\"\\u00A9 2026\"\n\n---\n\n{\n\"name\": \"John\"\n\"city\" : \"New York\"\n}\n\n---\n\n{\n\"age\": 30,\n\"height\": 1.82\n\"speed_of_light\": 2.997e8\n}\n\n---\n\n{\n\"member\": true,\n\"student\": false\n}\n\n---\n\n{\n\"middleName\": null\n}\n\n---\n\n{\n\"city\": undefined\n}\n\n---\n\n{\n\"city\": null\n}\n\n---\n\nconst text = '{\"name\":\"John\", \"birth\":\"1986-12-14\"}';\n\n---\n\n{\n\"greet\": function() {return \"Hello\"}\n}\n\n---\n\nconst text = '{\"name\":\"John\", \"age\":\"function () {return 30;}';\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_183",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

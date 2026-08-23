@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 37,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Bellman-Ford algorithm is best suited to find the shortest paths in a directed graph, with one or more negative edge weights, from the source vertex to all other vertices.\n\nIt does so by repeatedly checking all the edges in the graph for shorter paths, as many times as there are vertices in the graph (minus 1).\n\nThe Bellman-Ford algorithm can also be used for graphs with positive edges (both directed and undirected), like we can with Dijkstra's algorithm, but Dijkstra's algorithm is preferred in such cases because it is faster.\n\nUsing the Bellman-Ford algorithm on a graph with negative cycles will not produce a result of shortest paths because in a negative cycle we can always go one more round and get a shorter path.\n\nA negative cycle is a path we can follow in circles, where the sum of the edge weights is negative.\n\nLuckily, the Bellman-Ford algorithm can be implemented to safely detect and report the presence of negative cycles.\n\nThe animation of the Bellman-Ford algorithm above only shows us when checking of an edge leads to an updated distance, not all the other edge checks that do not lead to updated distances.\n\nThe Bellman-Ford algorithm is actually quite straight forward, because it checks all edges, using the adjacency matrix. Each check is to see if a shorter distance can be made by going from the vertex on one side of the edge, via the edge, to the vertex on the other side of the edge.\n\nAnd this check of all edges is done \\(V - 1\\) times, with \\(V\\) being the number of vertices in the graph.\n\nThis is how the Bellman-Ford algorithm checks all the edges in the adjacency matrix in our graph 5-1=4 times:\n\nThe first four edges that are checked in our graph are A->C, A->E, B->C, and C->A. These first four edge checks do not lead to any updates of the shortest distances because the starting vertex of all these edges has an infinite distance.\n\nAfter the edges from vertices A, B, and C are checked, the edges from D are checked. Since the starting point (vertex D) has distance 0, the updated distances for A, B, and C are the edge weights going out from vertex D.\n\nThe next edges to be checked are the edges going out from vertex E, which leads to updated distances for vertices B and C.\n\nThe Bellman-Ford algorithm have now checked all edges 1 time. The algorithm will check all edges 3 more times before it is finished, because Bellman-Ford will check all edges as many times as there are vertices in the graph, minus 1.\n\nThe algorithm starts checking all edges a second time, starting with checking the edges going out from vertex A. Checking the edges A->C and A->E do not lead to updated distances.\n\nThe next edge to be checked is B->C, going out from vertex B. This leads to an updated distance from vertex D to C of 5-4=1.\n\nChecking the next edge C->A, leads to an updated distance 1-3=-2 for vertex A.\n\nThe check of edge C->A in round 2 of the Bellman-Ford algorithm is actually the last check that leads to an updated distance for this specific graph. The algorithm will continue to check all edges 2 more times without updating any distances.\n\nChecking all edges \\(V-1\\) times in the Bellman-Ford algorithm may seem like a lot, but it is done this many times to make sure that the shortest distances will always be found.\n\nImplementing the Bellman-Ford algorithm is very similar tohow we implemented Dijkstra's algorithm.\n\nWe start by creating theGraphclass, where the methods__init__,add_edge, andadd_vertexwill be used to create the specific graph we want to run the Bellman-Ford algorithm on to find the shortest paths.\n\nThebellman_fordmethod is also placed inside theGraphclass. It is this method that runs the Bellman-Ford algorithm.\n\nLine 18-19:At the beginning, all vertices are set to have an infinite long distance from the starting vertex, except for the starting vertex itself, where the distance is set to 0.\n\nLine 21:All edges are checked \\(V-1\\) times.\n\nLine 22-23:A double for-loop checks all the edges in the adjacency matrix. For every vertexu, check edges going to verticesv.\n\nLine 24-26:If the edge exist, and if the calculated distance is shorter than the existing distance, update the distance to that vertexv.\n\nThe complete code, including the initialization of our specific graph and code for running the Bellman-Ford algorithm, looks like this:\n\nTo say that the Bellman-Ford algorithm finds the \"shortest paths\" is not intuitive, because how can we draw or imagine distances that are negative? So, to make it easier to understand we could instead say that it is the \"cheapestpaths\" that are found with Bellman-Ford.\n\nIn practice, the Bellman-Ford algorithm could for example help us to find delivering routes where the edge weights represent the cost of fuel and other things, minus the money to be made by driving that edge between those two vertices.\n\nWith this interpretation in mind, the -3 weight on edge C->A could mean that the fuel cost is $5 driving from C to A, and that we get paid $8 for picking up packages in C and delivering them in A. So we end up earning $3 more than we spend. Therefore, a total of $2 can be made by driving the delivery route D->E->B->C->A in our graph above.\n\nIf we can go in circles in a graph, and the sum of edges in that circle is negative, we have a negative cycle.\n\nBy changing the weight on edge C->A from -3 to -9, we get two negative cycles: A->C->A and A->E->C->A. And every time we check these edges with the Bellman-Ford algorithm, the distances we calculate and update just become lower and lower.\n\nThe problem with negative cycles is that a shortest path does not exist, because we can always go one more round to get a path that is shorter.\n\nThat is why it is useful to implement the Bellman-Ford algorithm with detection for negative cycles.\n\nAfter running the Bellman-Ford algorithm, checking all edges in a graph \\(V-1\\) times, all the shortest distances are found.\n\nBut, if the graph contains negative cycles, and we go one more round checking all edges, we will find at least one shorter distance in this last round, right?\n\nSo to detect negative cycles in the Bellman-Ford algorithm, after checking all edges \\(V-1\\) times, we just need to check all edges one more time, and if we find a shorter distance this last time, we can conclude that a negative cycle must exist.\n\nBelow is thebellman_fordmethod, with negative cycle detection included, running on the graph above with negative cycles due to the C->A edge weight of -9:\n\nLine 30-33:All edges are checked one more time to see if there are negative cycles.\n\nLine 34:ReturningTrueindicates that a negative cycle exists, andNoneis returned instead of the shortest distances, because finding the shortest distances in a graph with negative cycles does not make sense (because a shorter distance can always be found by checking all edges one more time).\n\nLine 36:ReturningFalsemeans that there is no negative cycles, and thedistancescan be returned.\n\nWe are currently finding the total weight of the the shortest paths, so that for example \"Distance from D to A: -2\" is a result from running the Bellman-Ford algorithm.\n\nBut by recording the predecessor of each vertex whenever an edge is relaxed, we can use that later in our code to print the result including the actual shortest paths. This means we can give more information in our result, with the actual path in addition to the path weight: \"D->E->B->C->A, Distance: -2\".\n\nThis last code example is the complete code for the Bellman-Ford algorithm, with everything we have discussed up until now: finding the weights of shortest paths, detecting negative cycles, and finding the actual shortest paths:\n\nLine 19:Thepredecessorsarray holds each vertex' predecessor vertex in the shortest path.\n\nLine 28:Thepredecessorsarray gets updated with the new predecessor vertex every time an edge is relaxed.\n\nLine 40-49:Theget_pathmethod uses thepredecessorsarray to generate the shortest path string for each vertex.\n\nThe time complexity for the Bellman-Ford algorithm mostly depends on the nested loops.\n\nThe outer for-loopruns \\(V-1\\) times, or \\(V\\) times in case we also have negative cycle detection. For graphs with many vertices, checking all edges one less time than there are vertices makes little difference, so we can say that the outer loop contributes with \\(O(V)\\) to the time complexity.\n\nThe two inner for-loopschecks all edges in the graph. If we assume a worst case scenario in terms of time complexity, then we have a very dense graph where every vertex has an edge to every other vertex, so for all vertex \\(V\\) the edge to all other vertices \\(V\\) must be checked, which contributes with \\(O(V^2)\\) to the time complexity.\n\nSo in total, we get the time complexity for the Bellman-Ford algorithm:\n\n\\[ O(V^3) \\]\n\nHowever, in practical situations and especially for sparse graphs, meaning each vertex only has edges to a small portion of the other vertices, time complexity of the two inner for-loops checking all edges can be approximated from \\(O(V^2)\\) to \\(O(E)\\), and we get the total time complexity for Bellman-Ford:\n\n\\[ O(V \\cdot E) \\]\n\nThe time complexity for the Bellman-Ford algorithm is slower than for Dijkstra's algorithm, but Bellman-Ford can find the shortest paths in graphs with negative edges and it can detect negative cycles, which Dijkstra's algorithm cannot do.\n\n### Code Snippets\n\n```\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = weight\n            #self.adj_matrix[v][u] = weight  # For undirected graph\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n---\n\ndef bellman_ford(self, start_vertex_data):\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        distances = [float('inf')] * self.size\n        distances[start_vertex] = 0\n\n        for i in range(self.size - 1):\n            for u in range(self.size):\n                for v in range(self.size):\n                    if self.adj_matrix[u][v] != 0:\n                        if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                            distances[v] = distances[u] + self.adj_matrix[u][v]\n                            print(f\"Relaxing edge {self.vertex_data[u]}-{self.vertex_data[v]}, Updated distance to {self.vertex_data[v]}: {distances[v]}\")\n\n        return distances\n\n---\n\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = weight\n            #self.adj_matrix[v][u] = weight  # For undirected graph\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def bellman_ford(self, start_vertex_data):\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        distances = [float('inf')] * self.size\n        distances[start_vertex] = 0\n\n        for i in range(self.size - 1):\n            for u in range(self.size):\n                for v in range(self.size):\n                    if self.adj_matrix[u][v] != 0:\n                        if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                            distances[v] = distances[u] + self.adj_matrix[u][v]\n                            print(f\"Relaxing edge {self.vertex_data[u]}-{self.vertex_data[v]}, Updated distance to {self.vertex_data[v]}: {distances[v]}\")\n\n        return distances\n\ng = Graph(5)\n\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\n\ng.add_edge(3, 0, 4)  # D -> A, weight 4\ng.add_edge(3, 2, 7)  # D -> C, weight 7\ng.add_edge(3, 4, 3)  # D -> E, weight 3\ng.add_edge(0, 2, 4)  # A -> C, weight 4\ng.add_edge(2, 0, -3) # C -> A, weight -3\ng.add_edge(0, 4, 5)  # A -> E, weight 5\ng.add_edge(4, 2, 3)  # E -> C, weight 3\ng.add_edge(1, 2, -4) # B -> C, weight -4\ng.add_edge(4, 1, 2)  # E -> B, weight 2\n\n# Running the Bellman-Ford algorithm from D to all vertices\nprint(\"\\nThe Bellman-Ford Algorithm starting from vertex D:\")\ndistances = g.bellman_ford('D')\nfor i, d in enumerate(distances):\n    print(f\"Distance from D to {g.vertex_data[i]}: {d}\")\nTry it Yourself \u00bb\n\n---\n\nExample\nPython:\ndef bellman_ford(self, start_vertex_data):\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        distances = [float('inf')] * self.size\n        distances[start_vertex] = 0\n\n        for i in range(self.size - 1):\n            for u in range(self.size):\n                for v in range(self.size):\n                    if self.adj_matrix[u][v] != 0:\n                        if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                            distances[v] = distances[u] + self.adj_matrix[u][v]\n                            print(f\"Relaxing edge {self.vertex_data[u]}->{self.vertex_data[v]}, Updated distance to {self.vertex_data[v]}: {distances[v]}\")\n\n        # Negative cycle detection\n        for u in range(self.size):\n            for v in range(self.size):\n                if self.adj_matrix[u][v] != 0:\n                    if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                        return (True, None)  # Indicate a negative cycle was found\n\n        return (False, distances)  # Indicate no negative cycle and return distances\nTry it Yourself \u00bb\n\n---\n\nExample\nPython:\nclass Graph:\n    def __init__(self, size):\n        self.adj_matrix = [[0] * size for _ in range(size)]\n        self.size = size\n        self.vertex_data = [''] * size\n\n    def add_edge(self, u, v, weight):\n        if 0 <= u < self.size and 0 <= v < self.size:\n            self.adj_matrix[u][v] = weight\n            #self.adj_matrix[v][u] = weight  # For undirected graph\n\n    def add_vertex_data(self, vertex, data):\n        if 0 <= vertex < self.size:\n            self.vertex_data[vertex] = data\n\n    def bellman_ford(self, start_vertex_data):\n        start_vertex = self.vertex_data.index(start_vertex_data)\n        distances = [float('inf')] * self.size\n        predecessors = [None] * self.size\n        distances[start_vertex] = 0\n\n        for i in range(self.size - 1):\n            for u in range(self.size):\n                for v in range(self.size):\n                    if self.adj_matrix[u][v] != 0:\n                        if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                            distances[v] = distances[u] + self.adj_matrix[u][v]\n                            predecessors[v] = u\n                            print(f\"Relaxing edge {self.vertex_data[u]}->{self.vertex_data[v]}, Updated distance to {self.vertex_data[v]}: {distances[v]}\")\n\n        # Negative cycle detection\n        for u in range(self.size):\n            for v in range(self.size):\n                if self.adj_matrix[u][v] != 0:\n                    if distances[u] + self.adj_matrix[u][v] < distances[v]:\n                        return (True, None, None)  # Indicate a negative cycle was found\n\n        return (False, distances, predecessors)  # Indicate no negative cycle and return distances\n    \n    def get_path(self, predecessors, start_vertex, end_vertex):\n        path = []\n        current = self.vertex_data.index(end_vertex)\n        while current is not None:\n            path.insert(0, self.vertex_data[current])\n            current = predecessors[current]\n            if current == self.vertex_data.index(start_vertex):\n                path.insert(0, start_vertex)\n                break\n        return '->'.join(path)\n\ng = Graph(5)\n\ng.add_vertex_data(0, 'A')\ng.add_vertex_data(1, 'B')\ng.add_vertex_data(2, 'C')\ng.add_vertex_data(3, 'D')\ng.add_vertex_data(4, 'E')\n\ng.add_edge(3, 0, 4)  # D -> A, weight 4\ng.add_edge(3, 2, 7)  # D -> C, weight 7\ng.add_edge(3, 4, 3)  # D -> E, weight 3\ng.add_edge(0, 2, 4)  # A -> C, weight 4\ng.add_edge(2, 0, -3) # C -> A, weight -3\ng.add_edge(0, 4, 5)  # A -> E, weight 5\ng.add_edge(4, 2, 3)  # E -> C, weight 3\ng.add_edge(1, 2, -4) # B -> C, weight -4\ng.add_edge(4, 1, 2)  # E -> B, weight 2\n\n# Running the Bellman-Ford algorithm from D to all vertices\nprint(\"\\nThe Bellman-Ford Algorithm starting from vertex D:\")\nnegative_cycle, distances, predecessors = g.bellman_ford('D')\nif not negative_cycle:\n    for i, d in enumerate(distances):\n        if d != float('inf'):\n            path = g.get_path(predecessors, 'D', g.vertex_data[i])\n            print(f\"{path}, Distance: {d}\")\n        else:\n            print(f\"No path from D to {g.vertex_data[i]}, Distance: Infinity\")\nelse:\n    print(\"Negative weight cycle detected. Cannot compute shortest paths.\")\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_36",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

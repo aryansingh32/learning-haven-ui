@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 7,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAs withcomparison operators, you can also test fortrue(1) orfalse(0) values withlogical operators.\n\nLogical operators are used to determine the logic between variables or \nvalues:\n\n## Tutorials\n\nWhen a calculation contains more than one operator, C++ followsorder of operationsrules to decide which part to calculate first.\n\nFor example, multiplication happens before addition:\n\nIn2 + 3 * 4, the multiplication is done first, so the answer is14.\n\nIf you want the addition to happen first, you must use parentheses:(2 + 3) * 4, which gives20.\n\nHere are some common operators in C++, from highest to lowest priority:\n\nSubtraction and addition are done from left to right, unless you add parentheses:\n\n### Code Examples\n\n```\nExample\nint result1 = 2 + 3 * 4;     // 2 + 12 = 14\nint result2 = (2 + 3) * 4;   // 5 * 4 = 20\n\ncout << result1 << \"\\n\";\ncout << result2 << \"\\n\";\nTry it Yourself \u00bb\n\n---\n\nExample\nint result1 = 10 - 2 + 5;    // (10 - 2) + 5 = 13\nint result2 = 10 - (2 + 5);  // 10 - 7 = 3\n\ncout << result1 << \"\\n\";\ncout << result2 << \"\\n\";\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTest your understanding ofC++ operatorsby completing a small coding challenge.\n\n## Tutorials\n\nStrings are used for storing text/characters.\n\nFor example, \"Hello World\" is a string.\n\nAstringvariable contains a collection of characters surrounded by double quotes (\"\"):\n\nTo use strings, you must include an additional header file in the source \ncode, the<string>library:\n\nNote:Strings can contain multiple words, spaces, and punctuation:\n\n### Code Examples\n\n```\nstring greeting = \"Hello\";\n\n---\n\n// Include the string library\n#include <string>\n// Create a string variable\nstring greeting = \"Hello\";\n// Print the string\ncout << greeting;\n\n---\n\nstring greeting = \"Hello and welcome!\";\ncout << greeting;\n```\n\n## Tutorials\n\nThe+operator can be used between strings to add them together to make a new \nstring. This is calledconcatenation:\n\nIn the example above, we added a space after firstName to create a space \nbetween John and Doe on output. However, you could also add a space with quotes (\" \"or' '):\n\nA string in C++ is actually an object, which contain functions that can perform certain operations on strings. For example, you can also concatenate strings with theappend()function:\n\nTip:A list of other useful string functions, can be found in ourString Functions Reference.\n\n### Code Examples\n\n```\nstring firstName = \"John \";\nstring lastName = \"Doe\";\nstring fullName = \n  firstName + lastName;\ncout << fullName;\n\n---\n\nstring firstName = \"John\";\nstring lastName = \"Doe\";\nstring fullName = \n  firstName + \" \" + lastName;\ncout << fullName;\n\n---\n\nstring firstName = \"John \";\nstring lastName = \"Doe\";\nstring fullName = \n  firstName.append(lastName);\ncout << fullName;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_7",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

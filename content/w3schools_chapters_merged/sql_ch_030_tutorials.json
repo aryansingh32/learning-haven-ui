@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 30,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheUNIQUEconstraint ensures that all \nvalues in a column are unique.\n\nThe following SQL creates a UNIQUE constraint on the \"ID\" column when the \"Persons\" table is created:\n\nSQL Server / Oracle / MS Access:\n\nMySQL:\n\nTo name a UNIQUE constraint, and to define a UNIQUE constraint on multiple columns, use the following SQL syntax:\n\nMySQL / SQL Server / Oracle / MS Access:\n\nTo create a UNIQUE constraint on the \"ID\" column when the table is already created, use the following SQL:\n\nMySQL / SQL Server / Oracle / MS Access:\n\nTo name a UNIQUE constraint, and to define a UNIQUE constraint on multiple columns, use the following SQL syntax:\n\nMySQL / SQL Server / Oracle / MS Access:\n\nTo drop a UNIQUE constraint, use the following SQL:\n\nMySQL:\n\nSQL Server / Oracle / MS Access:\n\n### Code Examples\n\n```\nCREATE TABLE Persons\n(\nID int NOT NULL UNIQUE,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int\n);\n\n---\n\nCREATE TABLE Persons\n(\nID int NOT NULL,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int,\nUNIQUE (ID)\n);\n\n---\n\nCREATE TABLE Persons\n(\nID int NOT NULL,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int,\nCONSTRAINT UC_Person UNIQUE (ID,LastName)\n);\n\n---\n\nALTER TABLE Persons\nADD UNIQUE (ID);\n\n---\n\nALTER TABLE Persons\nADD CONSTRAINT UC_Person UNIQUE (ID,LastName);\n\n---\n\nALTER TABLE Persons\nDROP INDEX UC_Person;\n\n---\n\nALTER TABLE Persons\nDROP CONSTRAINT UC_Person;\n```\n\n## Tutorials\n\nTheUPDATEcommand is used to update existing rows in a table.\n\nThe following SQL statement updates the first customer (CustomerID = 1) with a new contact personanda new city.\n\nThe following SQL statement will \nupdate the contactname to \"Juan\" for all records where country is \"Mexico\":\n\n### Code Examples\n\n```\nUPDATE Customers\nSET ContactName = 'Alfred Schmidt', City= 'Frankfurt'\nWHERE CustomerID = 1;\n\n---\n\nUPDATE Customers\nSET ContactName='Juan'\nWHERE Country='Mexico';\n```\n\n## Tutorials\n\nTheVALUEScommand specifies the values of an INSERT INTO statement.\n\nThe following SQL inserts a new record in the \"Customers\" table:\n\nThe following SQL will insert a new record, but only insert data in the \"CustomerName\", \n\"City\", and \"Country\" columns (CustomerID will \nbe updated automatically):\n\n### Code Examples\n\n```\nINSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)\nVALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');\n\n---\n\nINSERT INTO Customers (CustomerName, City, Country)\nVALUES ('Cardinal', 'Stavanger', 'Norway');\n```\n\n## Tutorials\n\nIn SQL, a view is a virtual table based on the result set of an SQL statement.\n\nTheCREATE VIEWcommand creates a view.\n\nThe following SQL creates a view that selects all customers from Brazil:\n\nWe can query the view above as follows:\n\nTheCREATE OR REPLACE VIEWcommand updates a view.\n\nThe following SQL adds the \"City\" column to the \"Brazil Customers\" view:\n\nTheDROP VIEWcommand deletes a view.\n\nThe following SQL drops the \"Brazil Customers\" view:\n\n### Code Examples\n\n```\nCREATE VIEW [Brazil \n  Customers] AS\nSELECT \n  CustomerName, ContactName\nFROM Customers\nWHERE \n  Country = \"Brazil\";\n\n---\n\nSELECT * FROM [Brazil \n  Customers];\n\n---\n\nCREATE OR REPLACE VIEW [Brazil Customers] AS\nSELECT CustomerName, ContactName, City\nFROM Customers\nWHERE Country = \"Brazil\";\n\n---\n\nDROP VIEW [Brazil Customers];\n```\n\n## Tutorials\n\nTheWHEREcommand filters a result set to include only records that fulfill a specified condition.\n\nThe following SQL statement selects all the customers from  \n\"Mexico\" in the \"Customers\" table:\n\nSQL requires single quotes around text values (most database systems will \nalso allow double quotes).\n\nHowever, numeric fields should not be enclosed in quotes:\n\nNote:The WHERE clause is not only used in SELECT statement, it is also used in UPDATE,\nDELETE statement, etc.!\n\nThe following operators can be used in the WHERE clause:\n\n### Code Examples\n\n```\nSELECT * FROM Customers\nWHERE Country='Mexico';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerID=1;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_30",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_30",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

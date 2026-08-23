@@ -1,0 +1,274 @@
+Video URL: https://www.youtube.com/watch?v=chYx6vVzWVw
+Video Title: Exercise 8: Solution & Shoutouts | Sigma Web Development Course - Tutorial #51
+--------------------------------------------------
+
+00:00:00.000
+Guys, in exercise 8, I gave you a bounce animation.
+00:00:03.520
+Many of you made it, some made it wrong.
+00:00:06.720
+In today's video, I will give you the solution to it.
+00:00:09.560
+And after that, I will give a shoutout to all those who solved it or wrote challenge accepted.
+00:00:14.480
+You guys like this video and write Sigma Batch O in the comment section below.
+00:00:18.680
+Let's go to the computer screen.
+00:00:20.200
+Let's roll the intro.
+00:00:22.000
+let's roll the intro
+00:00:32.000
+so guys i am here in my computer screen and i am going to create a new folder
+00:00:34.000
+so i will go to new folder
+00:00:36.000
+and i will create a folder named video 51
+00:00:38.000
+ok
+00:00:40.000
+so the exercise 8 i gave you
+00:00:42.000
+i gave you that in
+00:00:44.000
+video number 48
+00:00:45.420
+so I will do one thing, I will bring the video number 48 index.html here
+00:00:50.120
+and after this, I will click on shift right and open with code
+00:00:54.320
+and yes, I agree that somewhere there was a little exercise to be done in this
+00:00:58.620
+so yes, if you solve it properly
+00:01:01.320
+then I know that you know CSS HTML very well
+00:01:06.000
+but now we have to make this ball bounce
+00:01:08.000
+once like this and once like this
+00:01:10.000
+now we will put two animations
+00:01:12.000
+so the first animation I am going to make
+00:01:14.000
+using keyframes
+00:01:16.000
+with the name animate x
+00:01:18.000
+and the second one I will make with the name animate y
+00:01:20.000
+and I will put form here
+00:01:22.000
+and I will put to here
+00:01:24.000
+so from where to where I will also put form here and I will put 2 here, so from where to where
+00:01:26.000
+I will write what all things are going on here
+00:01:29.000
+so I have made an animation, animate x, I have made an animate y
+00:01:32.000
+in animate x I have made left from 0 to left 100%
+00:01:35.000
+and in animate y I will do
+00:01:38.000
+bottom from 0 to bottom 100%
+00:01:41.000
+so if I put animation here and I write here
+00:01:44.000
+that I just want to see the animate x
+00:01:46.520
+that how it is and let's say I write 3 seconds
+00:01:48.960
+that I want to put it for 3 seconds
+00:01:51.160
+so what I will do
+00:01:52.280
+that I will write it linear
+00:01:55.240
+and along with linear I will want it to repeat infinite times
+00:01:59.640
+so now I will show you this animation, so see how it will keep repeating
+00:02:03.920
+so it will keep going like this and it will keep repeating now I will show you this animation see how it will repeat it will go like this
+00:02:06.000
+and it will repeat
+00:02:08.000
+now i will remove this animation
+00:02:10.000
+and i will say i want
+00:02:12.000
+this animation but i want it in y
+00:02:14.000
+now the y animation
+00:02:16.000
+i will ease out
+00:02:18.000
+i will not make it linear
+00:02:20.000
+because when ball goes i will ease out
+00:02:22.000
+when you throw the ball towards over
+00:02:24.000
+it will ease out and i will throw the ball to the upper side it will ease out, and I will reduce the time
+00:02:25.560
+so that the ball will bounce, I did animate y
+00:02:28.520
+1 second, ease out, infinite
+00:02:31.480
+and I will also alternate it so that it will keep moving one after the other
+00:02:34.460
+and now I will see here, so see
+00:02:37.440
+the ball is bouncing like this, I have alternated it
+00:02:40.420
+once back, once front, once back, once front
+00:02:43.420
+and this ease out function goes exactly like this
+00:02:46.800
+what does ease out mean?
+00:02:48.200
+it slows down at the time of bar
+00:02:49.800
+and what will happen by alternating?
+00:02:51.400
+it will come as it was gone
+00:02:54.200
+so this ball is bouncing like this
+00:02:56.400
+I don't have to do anything
+00:02:57.600
+now put both the animations together
+00:02:59.000
+that's about it
+00:03:00.000
+so I will uncomment this
+00:03:01.400
+and here I will put a comma
+00:03:02.800
+you can put a comma and put multiple animations and here our ball put a comma by putting a comma we can put multiple animations
+00:03:05.300
+and here our ball has bounced
+00:03:07.300
+you are seeing, it has become completely realistic
+00:03:09.300
+this ball is bouncing, you are seeing
+00:03:11.300
+see this
+00:03:12.300
+and see this ball is bouncing
+00:03:14.800
+ok, so this is what we had to make
+00:03:16.300
+if you want it to bounce once, twice
+00:03:18.300
+or how many times it will bounce, then you will have to do some calculation
+00:03:20.300
+I have a video of projectile motion
+00:03:22.300
+anyway leave it
+00:03:24.300
+you can see if you want, but leave it now on projectile motion, you can watch it if you want, but let's leave projectile motion for now.
+00:03:27.000
+And this is a very simple thing, if you know physics, then if you don't know physics, then it can be a little complicated for you.
+00:03:36.000
+But again, you have learned animations, you have learned to alternate animation, put it separately in Y and put it separately in X.
+00:03:41.000
+I don't think if you don't know physics, you will have a problem.
+00:03:45.000
+Now what I will do is I will give you a shoutout, I am going to give a shoutout to those who have solved this question.
+00:03:52.000
+And I will open the video for that and I will give a shoutout to those who have commented on it.
+00:03:57.000
+And along with that, I do one thing that I close my own so that you can see when I give shoutout. Shoutout to Rishabh, but brother, you have to attempt also, you don't have to write only the solution.
+00:04:08.500
+After this, shoutout to Zubair Khan, then Rishabh wrote the challenge accepted.
+00:04:12.000
+Shoutout to Harry Dohale, then shoutout to Yash Nagrale, shoutout to Arpit, shoutout to Amish,
+00:04:18.500
+shoutout to Hina Naaz, then shoutout to Vivaan Yadav, Navneet, actually there are no spaces in the user names, so I am having a problem reading it.
+00:04:30.000
+But that's fine, shoutout to Code with Krish, shoutout to Har Har Mahadev, shoutout to Jameel, shoutout to The Great Navid Khan, Ali Hamza, StormXPlays, User DC,
+00:04:51.000
+whatever their name is, oops I clicked it, Aman Kumar got a shoutout, I have to come down again, I am coming,
+00:04:59.000
+shoutout to Tech Gaming with Nitin, shoutout to Madhav, shoutout to Amish, shoutout to MVP, then after this shoutout to Abdul, I have seen in this exercise that very few people have solved it. So that's not a problem. You guys understand the solution and try again.
+00:05:06.000
+You try to make a similar animation.
+00:05:09.000
+A lot of things can be done.
+00:05:12.000
+You can do it and your skills will only increase.
+00:05:15.000
+So I hope you understood this question.
+00:05:18.000
+If you have any questions, then you can ask me in the comments.
+00:05:21.000
+I will try to answer as much as I can.
+00:05:24.000
+So I will see you in the next video. try to make similar animation many things can be done you can do it
+00:05:26.000
+and your skills will only increase
+00:05:28.000
+so i hope you understood this question
+00:05:30.000
+and you clearly understood
+00:05:32.000
+how to put animations in X and Y
+00:05:34.000
+and achieve this kind of animation
+00:05:36.000
+so if you have not yet
+00:05:38.000
+accessed the playlist of SIGMA web development course
+00:05:40.000
+then you must access it
+00:05:42.000
+1 million views have already been done in the playlist
+00:05:44.000
+which is a very good thing, you can click here to bookmark or click here to save
+00:05:47.400
+and as soon as your feedback is coming, many people are saying that why didn't we get the sigma course earlier
+00:05:51.400
+we bought this and that, so I will tell you that I have made it
+00:05:55.800
+and kept this thing in mind that this is going to be the best course for web development
+00:05:59.800
+even if you see it after years from today, I don't think the front end has changed that much
+00:06:05.300
+and this is going to be the best course out there
+00:06:07.300
+and I am not saying this, these are the people who have given feedback
+00:06:10.000
+who have done this course
+00:06:11.000
+and one more thing I will tell you, I will not praise the course much
+00:06:14.000
+because the course speaks for itself
+00:06:16.300
+and the best is yet to come
+00:06:18.000
+there are still many things like this
+00:06:19.500
+which I am going to put in it
+00:06:21.000
+which will tell you the worth of this course
+00:06:23.800
+if it is a free course, then don't take it lightly
+00:06:26.000
+I will add a lot of things in it
+00:06:28.000
+And I know that the last videos have very few views
+00:06:31.000
+The videos below
+00:06:32.000
+But it doesn't matter to me
+00:06:34.000
+I will put that much energy
+00:06:36.000
+In fact, I will put more energy and make this course the best course
+00:06:40.000
+So remember this, I don't want to say much about this
+00:06:43.000
+Time will tell that how good this web development will teach you
+00:06:47.400
+and my goal will be that you have to make job ready, okay, and I want as many people as possible to access it and become job ready for free.

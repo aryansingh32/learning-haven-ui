@@ -1,0 +1,426 @@
+Video URL: https://www.youtube.com/watch?v=1dkfuga2_Ps
+Video Title: Introduction to CSS | Sigma Web Development Course - Tutorial #14
+--------------------------------------------------
+
+00:00:00.000
+Guys, we are going to start CSS from today's video.
+00:00:03.280
+We have progressed a lot in this course.
+00:00:05.280
+We have finished the whole HTML.
+00:00:07.280
+And many of you showed a lot of enthusiasm.
+00:00:10.600
+Don't decline your interest in this video.
+00:00:13.280
+Like this video and with high energy,
+00:00:15.760
+write Sigma Batch OP in the comment section below.
+00:00:18.840
+We have to maintain such high energy throughout the course.
+00:00:21.720
+CSS stands for Cascading Style Sheets.
+00:00:24.320
+And with the help of Cascading Style Sheets,
+00:00:26.000
+we supplement HTML with some styles.
+00:00:29.000
+HTML was never intended to create styled pages.
+00:00:33.000
+That is, the work of HTML was always to
+00:00:36.000
+create a basic website structure.
+00:00:38.000
+And after that, CSS takes the responsibility
+00:00:40.000
+to style the page.
+00:00:42.000
+CSS has selectors that help in selecting any element.
+00:00:45.600
+I will tell you in this video
+00:00:47.080
+what is a selector?
+00:00:48.400
+How is CSS written?
+00:00:50.080
+And in the coming videos
+00:00:51.360
+we are going to raise the bar like anything.
+00:00:53.320
+We will make real-world websites
+00:00:55.360
+and such websites like
+00:00:57.040
+Amazon, Flipkart, Netflix, YouTube
+00:00:59.560
+all these websites
+00:01:00.800
+you will be capable of making.
+00:01:02.680
+So, I am very excited.
+00:01:04.680
+Let's go to the computer screen.
+00:01:06.400
+Let's roll the intro.
+00:01:08.400
+Intro
+00:01:15.600
+So, I have come to my computer screen.
+00:01:17.600
+As always, I will make a folder here too.
+00:01:19.600
+And I will make a folder in the name of video 14.
+00:01:22.800
+I am having a lot of fun in this course.
+00:01:24.800
+Because honestly speaking, I have never made a course of this level
+00:01:28.120
+Now here I will tell you about CSS first
+00:01:31.480
+Why will you use CSS
+00:01:34.080
+HTML was never made to style web pages
+00:01:37.520
+HTML was always made to create a skeleton
+00:01:40.720
+There were many tags in HTML which were deprecated
+00:01:44.000
+Like font tag.
+00:01:45.000
+Because HTML was responsible for creating a skeletal website.
+00:01:49.000
+That's about it.
+00:01:50.000
+After that, the work was to handle all the CSS.
+00:01:53.000
+Now in this video, we will make real-world websites.
+00:01:56.000
+And if you have not accessed the playlist, do that too.
+00:01:58.000
+The source code is coming here.
+00:02:00.000
+If you go to codewithhari.com.
+00:02:03.000
+Then you can download the HTML notes.
+00:02:06.000
+You will get additional things to see.
+00:02:08.000
+So as soon as you click on the PDF notes, you will get the PDF notes of HTML.
+00:02:12.000
+These are handwritten notes written by me in my handwriting.
+00:02:16.000
+I have written with a lot of hard work, so everyone must download it.
+00:02:19.000
+And I will put a link in the description.
+00:02:22.000
+I told you one thing, That if the HTML is the body of the car,
+00:02:26.500
+That is, the body of the car,
+00:02:28.500
+Then CSS is the paint, decoration, designs,
+00:02:31.500
+Seeds, interior, all these things.
+00:02:34.500
+And what is JavaScript?
+00:02:35.500
+Engine and internal logic.
+00:02:37.500
+Anyway, we will talk about engine and internal logic later.
+00:02:40.500
+We have completed HTML, now we are talking about CSS.
+00:02:44.500
+Now I will tell you some more examples,
+00:02:47.000
+like your human body,
+00:02:49.000
+the human body has a skeleton,
+00:02:50.000
+you can consider the skeleton as HTML,
+00:02:52.000
+skin, hair,
+00:02:54.000
+you can consider all this as CSS,
+00:02:56.000
+and our brain, our nerves, our neurons,
+00:02:59.500
+all that constitutes our JavaScript.
+00:03:02.500
+So I hope this thing is clear
+00:03:06.000
+so in total html was never intended to style websites
+00:03:09.000
+this was taken by css
+00:03:12.000
+css said html is enough for you
+00:03:15.000
+now i am here and i will help you in styling
+00:03:18.000
+so css took the responsibility of styling the pages
+00:03:21.000
+so download the html notes
+00:03:24.000
+spoiler alert, css has great notes Download the notes of index.html Spoiler alert CSS notes are also very good
+00:03:26.000
+But listen to me first
+00:03:28.000
+I have given the spoiler
+00:03:30.000
+But don't download it now
+00:03:32.000
+I have taken a lot of time
+00:03:34.000
+So see
+00:03:36.000
+I have never made a course of this level
+00:03:38.000
+So this is the thing
+00:03:40.000
+So if I click on shift right
+00:03:42.000
+And click on open with code
+00:03:44.000
+So here this video 14 folder
+00:03:46.000
+is opened in my VS code, now if I make a file
+00:03:49.000
+index.html and hit exclamation mark
+00:03:52.000
+and here some boilerplate code like
+00:03:55.000
+we were doing in our HTML course, similarly
+00:03:58.000
+if we do like HTML videos and here
+00:04:01.000
+I write CSS in title and in body I write
+00:04:04.000
+div and write in it and here i will write css in title and in body i will write div
+00:04:05.000
+hey i am harry and today i am in css mood
+00:04:11.000
+ok, now i have written this and i will preview
+00:04:13.000
+so here as soon as i click on preview you can see
+00:04:15.000
+hey i am harry and today i am in css mood
+00:04:17.000
+so what is css
+00:04:19.000
+basically you can add css
+00:04:21.000
+by using style tag
+00:04:23.000
+there are two more ways which i will tell you in the coming videos
+00:04:27.000
+I will tell you a lot of things
+00:04:28.500
+now see here if I say that see bro
+00:04:31.500
+the div, the div
+00:04:33.500
+color it red
+00:04:36.000
+suppose I say this
+00:04:37.000
+what did I say
+00:04:38.000
+color the div red
+00:04:40.000
+so inside this div, this div is a selector
+00:04:43.500
+and this is our declaration.
+00:04:45.200
+So selector and declaration.
+00:04:47.200
+What is a selector? It is a div, that is, the color of all the divs of this page,
+00:04:51.300
+which is our key, this is our value, this is our property, this is the value of that property,
+00:04:55.800
+make the color red, okay?
+00:04:57.800
+So this is our declaration and this is our selector.
+00:05:01.400
+I hope you understood this.
+00:05:02.800
+So here now if I show you the page so see the color of this page is red
+00:05:06.800
+because I said that whatever div is there in this page
+00:05:08.800
+make the color of it red, so if
+00:05:10.800
+I make another div here and
+00:05:12.800
+if I write I am good
+00:05:14.800
+so the color of I am good will also be red
+00:05:16.800
+as you can see and if I
+00:05:18.800
+put one more declaration in this
+00:05:20.800
+and I write here background yellow
+00:05:22.800
+so here its background
+00:05:24.800
+is also yellow, its background also become yellow
+00:05:26.000
+and whatever matches this selector
+00:05:29.000
+that element's background will become yellow
+00:05:32.000
+like you see here i said div
+00:05:35.000
+and here this was div and this was div
+00:05:38.000
+if i make a span here and i write here i am also good
+00:05:41.000
+so what will happen, will this also be red
+00:05:44.000
+no its color will not be red
+00:05:45.760
+because this selector and these declarations are not applicable on these elements,
+00:05:52.480
+any element which is not div, if I put a paragraph here and put lorem 435 here,
+00:06:00.000
+oops, I think 435 is too much, 43 is enough. I have put a very big lorem here,
+00:06:06.000
+because it will make our page very big.
+00:06:08.000
+This declaration was not applied in this,
+00:06:11.000
+it was not applied in this either.
+00:06:13.000
+I just said div, that's why all these conditions
+00:06:16.000
+have been applied in div.
+00:06:18.000
+Now I can also select multiple elements
+00:06:21.000
+by putting a comma here.
+00:06:22.000
+I can say, do this in both div and span.
+00:06:24.000
+So the color will turn red in both div and span both have red color
+00:06:26.000
+and background color will be yellow
+00:06:28.000
+div and span are my
+00:06:30.000
+selectors, so I have applied
+00:06:32.000
+these declarations in multiple selectors
+00:06:34.000
+this is property
+00:06:36.000
+background color is a property whose value is yellow
+00:06:38.000
+color is a property whose value is red
+00:06:40.000
+ok, so here you can see
+00:06:42.000
+wherever div will be
+00:06:44.000
+wherever span will be there, wherever span will be there
+00:06:45.940
+this thing will be applied there
+00:06:48.440
+and that's pretty much how css works
+00:06:51.220
+that's it, now what we will learn in the coming videos
+00:06:54.600
+that this happens with this property
+00:06:56.460
+and this happens with this selector
+00:06:58.460
+I will be telling you about different types of selectors
+00:07:01.240
+that's it, that's about it, it's as simple as that
+00:07:04.240
+and by using these selectors That's about it It's as simple as that
+00:07:06.000
+And by using these selectors
+00:07:08.000
+We can make websites like amazon, flipkart
+00:07:10.000
+Facebook
+00:07:12.000
+And instagram
+00:07:14.000
+And nowadays
+00:07:16.000
+There are so many technologies in the market
+00:07:18.000
+By which you can
+00:07:20.000
+Make mobile apps
+00:07:22.000
+We will explore all these things
+00:07:24.000
+It's going to be a very extensive Level course and make mobile apps we will explore all those things
+00:07:26.000
+it will be an extensive course
+00:07:29.000
+we will be touching so many things
+00:07:32.000
+i gave you an exercise in video 12
+00:07:35.000
+if you didn't post your answer, do it now
+00:07:38.000
+i will give shoutout to those who will post their answer
+00:07:41.000
+so make sure you go to video 12
+00:07:44.000
+and solve the pure HTML player exercise.
+00:07:46.920
+Because it will be fun if there is two-way interaction.
+00:07:49.440
+There will be talks from both sides.
+00:07:50.880
+I will give you a shout out from here.
+00:07:52.760
+You will have fun when you solve from there.
+00:07:55.360
+So do solve this.
+00:07:56.840
+Now I want to tell you about Replit.
+00:07:58.920
+Many people say that we have a phone,
+00:08:00.480
+we don't have a laptop.
+00:08:01.560
+Many people have problems.
+00:08:03.040
+So Replit is an amazing platform which you can try out.
+00:08:06.500
+You just have to sign up here and you will be able to write HTML, CSS and JavaScript.
+00:08:12.500
+And it works very well. I have used it for my production grade projects.
+00:08:17.500
+And I have also made many videos on this channel and shown you on replit.
+00:08:21.000
+So, in fact, we did 100 days of code on replit.
+00:08:24.000
+So, you can use this if you don't have a laptop.
+00:08:26.000
+You can code on your phone.
+00:08:28.000
+It will be a very good experience for you.
+00:08:30.000
+So you guys write in the comment section below
+00:08:32.000
+that if you are enjoying this course or not.
+00:08:34.000
+Because I want your comment in the comment section below
+00:08:36.000
+that are you enjoying it.
+00:08:38.000
+Do access this playlist.
+00:08:40.000
+Also access the source code.
+00:08:42.000
+I have updated the source code of all the videos.
+00:08:44.000
+And name the land of your village and town. That's code of this video I have updated the source code of all the videos and also name the land of your village and town
+00:08:46.000
+That's all for this video guys
+00:08:48.000
+Thank you so much for watching this video

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 265,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Usenew ArrayBuffer()to create a new ArrayBuffer.\n\nThe ArrayBuffer does not have methods toreadandwritedata.\n\nYou must always use aviewto access the data.\n\nTyped ArraysandDataViewsprovide a way to read and write numeric values to an\nArrayBuffer.\n\nCommon typed arrays are:\n\nADataViewis a more flexible view for an ArrayBuffer.\n\nADataViewlets you read and write values of different types (Int8, Uint16, Float32, etc.).\n\nADataViewalso lets you read and write values at any byte offset.\n\nYou can make a copy of a part of anArrayBufferusing\ntheslice()method. It returns a newArrayBufferwith bytes from the specified range.\n\nAnArrayBufferis not shared between threads by default.\n\nTo share memory between workers, JavaScript providesSharedArrayBuffer.\n\nIt behaves likeArrayBuffer, but its contents can be shared and\nused withAtomics.\n\n### Code Snippets\n\n```\n// Create an ArrayBuffer\nconst myBuf = new ArrayBuffer(16);\n// Get the length in bytes\nlet len = myBuf.byteLength;\n\n---\n\n// Create an ArrayBuffer\nconst myBuf = new ArrayBuffer(8);\n// Create a Uint8Array view\nconst view = new Uint8Array(myBuf);\n// Write max 8 values\nview[0] = 10;\nview[2] = 128;\nview[1] = 255;\n// Read values\nlet v0 = view[0];\nlet v1 = view[1];\nlet v2 = view[2];\n\n---\n\n// Create an ArrayBuffer\nconst myBuf = new ArrayBuffer(12);\n// Create an Int32Array view\nconst view = new Int32Array(myBuf);\n// 12 bytes = max 3 Int32 values\nview[0] = 100000;\nview[1] = 200000;\nview[2] = 300000;\n// Read values\nlet v0 = view[0];\nlet v1 = view[1];\nlet v2 = view[2];\n\n---\n\n// Create an ArrayBuffer\nconst myBuf = new ArrayBuffer(8);\n// Create a DataView\nconst view = new DataView(myBuf);\n// Write a 32-bit integer at byte offset 0\nview.setInt32(0, 123456);\n// Write a 16-bit integer at byte offset 4\nview.setInt16(4, 32000);\n// Read the values\nlet v1 view.getInt32(0);\nlet v2 = view.getInt16(4);\n\n---\n\n// Create an ArrayBuffer\nconst myBuf = new ArrayBuffer(8);\n// Create a Uint8Array\nconst view = new Uint8Array(myBuf);\n// Fill with values 0 to 7\nfor (let i = 0; i < view.length; i++) {\nview[i] = i;\n}\n// Create a copy of bytes from 2 to 5 (not including 5)\nconst sliced = myBuf.slice(2, 5);\nconst slicedView = new Uint8Array(sliced);\n\n---\n\nfunction stringToArrayBuffer(str) {\nconst encoder = new TextEncoder();\nreturn encoder.encode(str).buffer;\n}\nconst myBuf = stringToArrayBuffer(\"Hello\");\nlet len1 = myBuf.byteLength;\n\n---\n\nfunction arrayBufferToString(buffer) {\nconst decoder = new TextDecoder();\nreturn decoder.decode(new Uint8Array(buffer));\n}\nconst encoder = new TextEncoder();\nconst myBuf = encoder.encode(\"Hello ArrayBuffer\").buffer;\nlet text = arrayBufferToString(myBuf);\n\n---\n\nif (Window.crossOriginIsolated) {\nbuffer = new SharedArrayBuffer(16);\n} else {\nbuffer = new ArrayBuffer(16);\n}\nconst sharedView = new Int32Array(buffer);\nbuffer[0] = 42;\nlet numb = sharedView[0];\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_264",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

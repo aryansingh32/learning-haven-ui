@@ -20,7 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { GripVertical, Pencil, Trash2 } from 'lucide-react';
 
-type TabKey = 'overview' | 'stages' | 'languages' | 'preview' | 'analytics';
+type TabKey = 'overview' | 'stages' | 'languages' | 'vibe_config' | 'preview' | 'analytics';
 
 function SortableStageRow({
   stage,
@@ -92,6 +92,11 @@ export default function BuildChallengesPage() {
     prerequisites_content: '',
     duration_days: 30,
     price_inr: 0,
+    // Dual-mode
+    available_modes: ['traditional'] as string[],
+    default_mode: 'traditional',
+    reference_demo_url: '',
+    product_contract: '',
   });
   const [stageItems, setStageItems] = useState<any[]>([]);
   const [stageForm, setStageForm] = useState({
@@ -110,6 +115,9 @@ export default function BuildChallengesPage() {
     docs_url: '',
     concepts_content: '',
     estimated_minutes: 30,
+    // Vibe mode
+    verification_type: 'docker_test',
+    acceptance_contract_json: '{}',
   });
   const [editingStageId, setEditingStageId] = useState<string | null>(null);
   const [languageForm, setLanguageForm] = useState({
@@ -159,6 +167,10 @@ export default function BuildChallengesPage() {
         duration_days: Number(form.duration_days) || 30,
         price_inr: Number(form.price_inr) || 0,
         supported_languages: form.supported_languages.split(',').map((v) => v.trim()).filter(Boolean),
+        available_modes: form.available_modes,
+        default_mode: form.default_mode,
+        reference_demo_url: form.reference_demo_url || null,
+        product_contract: form.product_contract || null,
       }),
     onSuccess: async (data: any) => {
       toast.success('Challenge created');
@@ -176,6 +188,10 @@ export default function BuildChallengesPage() {
         duration_days: Number(form.duration_days) || 30,
         price_inr: Number(form.price_inr) || 0,
         supported_languages: form.supported_languages.split(',').map((v) => v.trim()).filter(Boolean),
+        available_modes: form.available_modes,
+        default_mode: form.default_mode,
+        reference_demo_url: form.reference_demo_url || null,
+        product_contract: form.product_contract || null,
       }),
     onSuccess: async () => {
       toast.success('Saved');
@@ -202,6 +218,12 @@ export default function BuildChallengesPage() {
       } catch {
         throw new Error('success_criteria must be valid JSON');
       }
+      let acceptance_contract: Record<string, unknown> = {};
+      try {
+        acceptance_contract = JSON.parse(stageForm.acceptance_contract_json || '{}');
+      } catch {
+        throw new Error('acceptance_contract must be valid JSON');
+      }
       return buildHavenAdminApi.createStage(selectedId, {
         stage_number: Number(stageForm.stage_number) || 1,
         title: stageForm.title,
@@ -218,6 +240,8 @@ export default function BuildChallengesPage() {
         docs_url: stageForm.docs_url || null,
         concepts_content: stageForm.concepts_content || null,
         estimated_minutes: Number(stageForm.estimated_minutes) || 30,
+        verification_type: stageForm.verification_type as 'docker_test' | 'contract',
+        acceptance_contract,
       });
     },
     onSuccess: async () => {
@@ -251,6 +275,12 @@ export default function BuildChallengesPage() {
       } catch {
         throw new Error('success_criteria must be valid JSON');
       }
+      let acceptance_contract: Record<string, unknown> = {};
+      try {
+        acceptance_contract = JSON.parse(stageForm.acceptance_contract_json || '{}');
+      } catch {
+        throw new Error('acceptance_contract must be valid JSON');
+      }
       return buildHavenAdminApi.updateStage(editingStageId, {
         stage_number: Number(stageForm.stage_number) || 1,
         title: stageForm.title,
@@ -267,6 +297,8 @@ export default function BuildChallengesPage() {
         docs_url: stageForm.docs_url || null,
         concepts_content: stageForm.concepts_content || null,
         estimated_minutes: Number(stageForm.estimated_minutes) || 30,
+        verification_type: stageForm.verification_type as 'docker_test' | 'contract',
+        acceptance_contract,
       });
     },
     onSuccess: async () => {
@@ -338,6 +370,8 @@ export default function BuildChallengesPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const [selectedChallengeIds, setSelectedChallengeIds] = useState<string[]>([]);
+
   const archiveMutation = useMutation({
     mutationFn: (id: string) => buildHavenAdminApi.deleteChallenge(id),
     onSuccess: async () => {
@@ -345,6 +379,29 @@ export default function BuildChallengesPage() {
       await qc.invalidateQueries({ queryKey: ['admin-build-challenges'] });
       setSelectedId('');
       setTab('overview');
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const hardDeleteMutation = useMutation({
+    mutationFn: (id: string) => buildHavenAdminApi.hardDeleteChallenge(id),
+    onSuccess: async () => {
+      toast.success('Challenge permanently deleted');
+      await qc.invalidateQueries({ queryKey: ['admin-build-challenges'] });
+      setSelectedId('');
+      setTab('overview');
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const bulkDeleteMutation = useMutation({
+    mutationFn: ({ ids, permanent }: { ids: string[]; permanent: boolean }) =>
+      buildHavenAdminApi.bulkDeleteChallenges(ids, permanent),
+    onSuccess: async (data: any) => {
+      toast.success(data?.message || 'Bulk operation completed');
+      await qc.invalidateQueries({ queryKey: ['admin-build-challenges'] });
+      setSelectedChallengeIds([]);
+      setSelectedId('');
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -380,6 +437,8 @@ export default function BuildChallengesPage() {
       docs_url: stage.docs_url || '',
       concepts_content: stage.concepts_content || '',
       estimated_minutes: stage.estimated_minutes ?? 30,
+      verification_type: stage.verification_type || 'docker_test',
+      acceptance_contract_json: JSON.stringify(stage.acceptance_contract || {}, null, 2),
     });
     setTab('stages');
   };
@@ -399,6 +458,31 @@ export default function BuildChallengesPage() {
     </button>
   );
 
+  // Populate form when a challenge is selected
+  const populateForm = (challenge: any) => {
+    setForm({
+      title: challenge.title || '',
+      slug: challenge.slug || '',
+      description: challenge.description || '',
+      short_tagline: challenge.short_tagline || '',
+      thumbnail_url: challenge.thumbnail_url || '',
+      difficulty_level: challenge.difficulty_level || 'beginner',
+      status: challenge.status || 'draft',
+      is_free: Boolean(challenge.is_free),
+      supported_languages: (challenge.supported_languages || []).join(','),
+      what_you_build: challenge.what_you_build || '',
+      what_you_learn: challenge.what_you_learn || '',
+      why_build: challenge.why_build || '',
+      prerequisites_content: challenge.prerequisites_content || '',
+      duration_days: challenge.duration_days ?? 30,
+      price_inr: challenge.price_inr ?? 0,
+      available_modes: challenge.available_modes || ['traditional'],
+      default_mode: challenge.default_mode || 'traditional',
+      reference_demo_url: challenge.reference_demo_url || '',
+      product_contract: challenge.product_contract || '',
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -408,12 +492,37 @@ export default function BuildChallengesPage() {
 
       <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
         <Card className="h-fit">
-          <CardHeader>
-            <CardTitle>Programs</CardTitle>
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle>Programs</CardTitle>
+              {filteredChallenges.length > 0 && (
+                <label className="flex items-center gap-1.5 text-xs text-muted-foreground cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    className="h-3.5 w-3.5 rounded"
+                    checked={
+                      selectedChallengeIds.length > 0 &&
+                      selectedChallengeIds.length === filteredChallenges.length
+                    }
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedChallengeIds(filteredChallenges.map((c: any) => c.id));
+                      } else {
+                        setSelectedChallengeIds([]);
+                      }
+                    }}
+                  />
+                  Select All
+                </label>
+              )}
+            </div>
             <select
               className="mt-2 w-full rounded-md border bg-background px-3 py-2 text-sm"
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
+              onChange={(e) => {
+                setFilterStatus(e.target.value);
+                setSelectedChallengeIds([]);
+              }}
             >
               <option value="all">All (except archived)</option>
               <option value="active">Active</option>
@@ -422,51 +531,109 @@ export default function BuildChallengesPage() {
               <option value="draft">Draft</option>
               <option value="archived">Archived</option>
             </select>
+
+            {selectedChallengeIds.length > 0 && (
+              <div className="mt-3 p-2 rounded-lg border bg-amber-500/10 border-amber-500/30 space-y-2">
+                <div className="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                  {selectedChallengeIds.length} selected
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-xs justify-start"
+                    disabled={bulkDeleteMutation.isPending}
+                    onClick={() => {
+                      if (confirm(`Archive ${selectedChallengeIds.length} selected challenge(s)?`)) {
+                        bulkDeleteMutation.mutate({ ids: selectedChallengeIds, permanent: false });
+                      }
+                    }}
+                  >
+                    Archive Selected
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="h-7 text-xs justify-start"
+                    disabled={bulkDeleteMutation.isPending}
+                    onClick={() => {
+                      if (
+                        confirm(
+                          `PERMANENTLY DELETE ${selectedChallengeIds.length} selected challenge(s)? This cannot be undone!`
+                        )
+                      ) {
+                        bulkDeleteMutation.mutate({ ids: selectedChallengeIds, permanent: true });
+                      }
+                    }}
+                  >
+                    <Trash2 className="mr-1.5 h-3 w-3" />
+                    Delete Permanently
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-2">
-            {(filteredChallenges || []).map((challenge: any) => (
-              <div key={challenge.id} className="group relative flex items-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                  setSelectedId(challenge.id);
-                  setForm({
-                    title: challenge.title || '',
-                    slug: challenge.slug || '',
-                    description: challenge.description || '',
-                    short_tagline: challenge.short_tagline || '',
-                    thumbnail_url: challenge.thumbnail_url || '',
-                    difficulty_level: challenge.difficulty_level || 'beginner',
-                    status: challenge.status || 'draft',
-                    is_free: Boolean(challenge.is_free),
-                    supported_languages: (challenge.supported_languages || []).join(','),
-                    what_you_build: challenge.what_you_build || '',
-                    what_you_learn: challenge.what_you_learn || '',
-                    why_build: challenge.why_build || '',
-                    prerequisites_content: challenge.prerequisites_content || '',
-                    duration_days: challenge.duration_days ?? 30,
-                    price_inr: challenge.price_inr ?? 0,
-                  });
-                  setTab('overview');
-                  setEditingStageId(null);
-                }}
-                className={`w-full rounded-lg border p-3 text-left ${selectedId === challenge.id ? 'border-primary' : 'border-border'}`}
-              >
-                <div className="font-medium">{challenge.title}</div>
-                <div className="text-xs text-muted-foreground">{challenge.slug} - {challenge.status}</div>
-              </button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100"
-                onClick={() => {
-                  if (confirm('Archive this challenge?')) archiveMutation.mutate(challenge.id);
-                }}
-              >
-                <Trash2 className="h-4 w-4 text-muted-foreground hover:text-destructive" />
-              </Button>
-            </div>
-            ))}
+            {(filteredChallenges || []).map((challenge: any) => {
+              const isSelected = selectedChallengeIds.includes(challenge.id);
+              const isArchived = challenge.status === 'archived';
+              return (
+                <div key={challenge.id} className="group relative flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 rounded shrink-0 cursor-pointer"
+                    checked={isSelected}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedChallengeIds((prev) => [...prev, challenge.id]);
+                      } else {
+                        setSelectedChallengeIds((prev) => prev.filter((id) => id !== challenge.id));
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedId(challenge.id);
+                      populateForm(challenge);
+                      setTab('overview');
+                      setEditingStageId(null);
+                    }}
+                    className={`w-full min-w-0 rounded-lg border p-2.5 text-left transition-colors ${
+                      selectedId === challenge.id ? 'border-primary bg-primary/5' : 'border-border bg-card'
+                    }`}
+                  >
+                    <div className="font-medium text-sm truncate">{challenge.title}</div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                      <span>{challenge.slug}</span>
+                      <span>•</span>
+                      <Badge variant={isArchived ? 'destructive' : 'secondary'} className="text-[10px] px-1 py-0 capitalize">
+                        {challenge.status}
+                      </Badge>
+                    </div>
+                  </button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title={isArchived ? 'Permanently Delete' : 'Archive / Delete'}
+                    onClick={() => {
+                      if (isArchived) {
+                        if (confirm(`PERMANENTLY DELETE challenge "${challenge.title}"? This cannot be undone!`)) {
+                          hardDeleteMutation.mutate(challenge.id);
+                        }
+                      } else {
+                        if (confirm(`Archive challenge "${challenge.title}"? (You can permanently delete it from the Archived tab)`)) {
+                          archiveMutation.mutate(challenge.id);
+                        }
+                      }
+                    }}
+                  >
+                    <Trash2 className={`h-4 w-4 ${isArchived ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'}`} />
+                  </Button>
+                </div>
+              );
+            })}
           </CardContent>
         </Card>
 
@@ -475,6 +642,7 @@ export default function BuildChallengesPage() {
             {tabBtn('overview', 'Overview')}
             {tabBtn('stages', 'Stages')}
             {tabBtn('languages', 'Languages')}
+            {tabBtn('vibe_config', '⚡ Vibe Config')}
             {tabBtn('preview', 'Preview')}
             {tabBtn('analytics', 'Analytics')}
           </div>
@@ -571,6 +739,65 @@ export default function BuildChallengesPage() {
                     <option value="archived">archived</option>
                   </select>
                 </div>
+
+                {/* ── Available Build Modes ──────────────────────── */}
+                <div className="rounded-lg border bg-card/60 p-4 space-y-3">
+                  <p className="text-sm font-semibold">Available Build Modes</p>
+                  <div className="flex flex-wrap gap-6">
+                    <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded"
+                        checked={form.available_modes.includes('traditional')}
+                        onChange={(e) =>
+                          setForm((s) => ({
+                            ...s,
+                            available_modes: e.target.checked
+                              ? [...new Set([...s.available_modes, 'traditional'])]
+                              : s.available_modes.filter((m) => m !== 'traditional'),
+                          }))
+                        }
+                      />
+                      🛠 Traditional
+                      <span className="text-xs text-muted-foreground">(GitHub + Docker tests)</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded"
+                        checked={form.available_modes.includes('vibe')}
+                        onChange={(e) =>
+                          setForm((s) => ({
+                            ...s,
+                            available_modes: e.target.checked
+                              ? [...new Set([...s.available_modes, 'vibe'])]
+                              : s.available_modes.filter((m) => m !== 'vibe'),
+                          }))
+                        }
+                      />
+                      ⚡ Vibe Coded
+                      <span className="text-xs text-muted-foreground">(AI tools + proof gates)</span>
+                    </label>
+                  </div>
+                  {form.available_modes.length > 1 && (
+                    <div className="flex items-center gap-3">
+                      <p className="text-xs text-muted-foreground shrink-0">Default mode:</p>
+                      <select
+                        className="rounded-md border bg-background px-3 py-1.5 text-sm"
+                        value={form.default_mode}
+                        onChange={(e) => setForm((s) => ({ ...s, default_mode: e.target.value }))}
+                      >
+                        {form.available_modes.includes('traditional') && (
+                          <option value="traditional">Traditional</option>
+                        )}
+                        {form.available_modes.includes('vibe') && (
+                          <option value="vibe">Vibe Coded</option>
+                        )}
+                      </select>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex flex-wrap gap-2">
                   <Button onClick={() => createMutation.mutate()} disabled={createMutation.isPending}>
                     Create
@@ -653,44 +880,120 @@ export default function BuildChallengesPage() {
                     value={stageForm.hintsText}
                     onChange={(e) => setStageForm((s) => ({ ...s, hintsText: e.target.value }))}
                   />
-                  <div className="grid gap-3 md:grid-cols-2">
-                    <Input
-                      placeholder="test_command"
-                      value={stageForm.test_command}
-                      onChange={(e) => setStageForm((s) => ({ ...s, test_command: e.target.value }))}
-                    />
-                    <Input
-                      placeholder="docker_test_image (optional override)"
-                      value={stageForm.docker_test_image}
-                      onChange={(e) => setStageForm((s) => ({ ...s, docker_test_image: e.target.value }))}
-                    />
+                  {/* ── Verification type ──────────────────────── */}
+                  <div className="rounded-lg border bg-card/60 p-4 space-y-3">
+                    <p className="text-sm font-semibold">Verification Type</p>
+                    <div className="flex flex-wrap gap-6">
+                      <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                        <input
+                          type="radio"
+                          name="verification_type"
+                          value="docker_test"
+                          checked={stageForm.verification_type === 'docker_test'}
+                          onChange={() => setStageForm((s) => ({ ...s, verification_type: 'docker_test' }))}
+                        />
+                        🛠 Docker Test
+                        <span className="text-xs text-muted-foreground">(Traditional — run a command, check exit code)</span>
+                      </label>
+                      <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                        <input
+                          type="radio"
+                          name="verification_type"
+                          value="contract"
+                          checked={stageForm.verification_type === 'contract'}
+                          onChange={() => setStageForm((s) => ({ ...s, verification_type: 'contract' }))}
+                        />
+                        ⚡ Acceptance Contract
+                        <span className="text-xs text-muted-foreground">(Vibe — Playwright proof gates)</span>
+                      </label>
+                    </div>
                   </div>
-                  <div className="grid gap-3 md:grid-cols-3">
-                    <Input
-                      type="number"
-                      placeholder="timeout_seconds"
-                      value={stageForm.timeout_seconds}
-                      onChange={(e) => setStageForm((s) => ({ ...s, timeout_seconds: Number(e.target.value) || 120 }))}
-                    />
-                    <Input
-                      type="number"
-                      placeholder="expected_exit_code"
-                      value={stageForm.expected_exit_code}
-                      onChange={(e) => setStageForm((s) => ({ ...s, expected_exit_code: Number(e.target.value) }))}
-                    />
-                    <Input
-                      type="number"
-                      placeholder="estimated_minutes"
-                      value={stageForm.estimated_minutes}
-                      onChange={(e) => setStageForm((s) => ({ ...s, estimated_minutes: Number(e.target.value) || 30 }))}
-                    />
-                  </div>
-                  <Textarea
-                    placeholder='success_criteria JSON e.g. {"output_contains":"PASS","next_hint_on_fail":"Try X"}'
-                    className="min-h-[100px] font-mono text-xs"
-                    value={stageForm.success_criteria_json}
-                    onChange={(e) => setStageForm((s) => ({ ...s, success_criteria_json: e.target.value }))}
-                  />
+
+                  {/* ── Traditional: docker fields ─────────────── */}
+                  {stageForm.verification_type === 'docker_test' && (
+                    <>
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <Input
+                          placeholder="test_command"
+                          value={stageForm.test_command}
+                          onChange={(e) => setStageForm((s) => ({ ...s, test_command: e.target.value }))}
+                        />
+                        <Input
+                          placeholder="docker_test_image (optional override)"
+                          value={stageForm.docker_test_image}
+                          onChange={(e) => setStageForm((s) => ({ ...s, docker_test_image: e.target.value }))}
+                        />
+                      </div>
+                      <div className="grid gap-3 md:grid-cols-3">
+                        <Input
+                          type="number"
+                          placeholder="timeout_seconds"
+                          value={stageForm.timeout_seconds}
+                          onChange={(e) => setStageForm((s) => ({ ...s, timeout_seconds: Number(e.target.value) || 120 }))}
+                        />
+                        <Input
+                          type="number"
+                          placeholder="expected_exit_code"
+                          value={stageForm.expected_exit_code}
+                          onChange={(e) => setStageForm((s) => ({ ...s, expected_exit_code: Number(e.target.value) }))}
+                        />
+                        <Input
+                          type="number"
+                          placeholder="estimated_minutes"
+                          value={stageForm.estimated_minutes}
+                          onChange={(e) => setStageForm((s) => ({ ...s, estimated_minutes: Number(e.target.value) || 30 }))}
+                        />
+                      </div>
+                      <Textarea
+                        placeholder='{"output_contains":"PASS","next_hint_on_fail":"Try X"}'
+                        className="min-h-[100px] font-mono text-xs"
+                        value={stageForm.success_criteria_json}
+                        onChange={(e) => setStageForm((s) => ({ ...s, success_criteria_json: e.target.value }))}
+                      />
+                    </>
+                  )}
+
+                  {/* ── Vibe: acceptance contract ─────────────── */}
+                  {stageForm.verification_type === 'contract' && (
+                    <div className="rounded-lg border border-violet-500/20 bg-violet-500/5 p-4 space-y-3">
+                      <div>
+                        <p className="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-1">⚡ Acceptance Contract JSON</p>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Define proof gates as journeys. Each journey has steps the Playwright runner will execute.
+                          Set <code className="font-mono bg-muted px-1 rounded">public: true</code> to show the journey to learners;
+                          add <code className="font-mono bg-muted px-1 rounded">admin_only: true</code> per step to hide specific assertions.
+                        </p>
+                        <Textarea
+                          className="min-h-[240px] font-mono text-xs"
+                          placeholder={`{
+  "journeys": [
+    {
+      "id": "create_task",
+      "label": "User can create a task",
+      "public": true,
+      "steps": [
+        { "action": "goto", "target": "/" },
+        { "action": "click", "target": "Add Task" },
+        { "action": "fill", "target": "Task title", "value": "Learn Spring Boot" },
+        { "action": "click", "target": "Save" },
+        { "action": "expect_visible", "target": "Learn Spring Boot" }
+      ]
+    }
+  ],
+  "api_checks": [],
+  "visual_checks": []
+}`}
+                          value={stageForm.acceptance_contract_json}
+                          onChange={(e) => setStageForm((s) => ({ ...s, acceptance_contract_json: e.target.value }))}
+                        />
+                      </div>
+                      <div className="text-xs text-muted-foreground space-y-0.5">
+                        <p className="font-semibold text-violet-600 dark:text-violet-400">Supported actions:</p>
+                        <p><code className="font-mono bg-muted px-1 rounded">goto</code> · <code className="font-mono bg-muted px-1 rounded">click</code> · <code className="font-mono bg-muted px-1 rounded">fill</code> · <code className="font-mono bg-muted px-1 rounded">expect_visible</code> · <code className="font-mono bg-muted px-1 rounded">expect_hidden</code> · <code className="font-mono bg-muted px-1 rounded">reload</code> · <code className="font-mono bg-muted px-1 rounded">wait</code> · <code className="font-mono bg-muted px-1 rounded">screenshot</code></p>
+                      </div>
+                    </div>
+                  )}
+
                   <Input
                     placeholder="docs_url (optional external link)"
                     value={stageForm.docs_url}
@@ -835,6 +1138,48 @@ export default function BuildChallengesPage() {
                       ))}
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          ) : null}
+
+          {tab === 'vibe_config' && selectedId ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>⚡ Vibe Coding Configuration</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-1">Reference / Golden Demo URL</p>
+                  <p className="text-xs text-muted-foreground mb-2">Live URL of your canonical reference build that learners can view before submitting.</p>
+                  <Input
+                    placeholder="https://demo.yourdomain.com/task-manager"
+                    value={form.reference_demo_url}
+                    onChange={(e) => setForm((s) => ({ ...s, reference_demo_url: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-medium mb-1">Product Contract (markdown)</p>
+                  <p className="text-xs text-muted-foreground mb-2">Public spec shown to vibe learners. Tell them WHAT must work, not HOW to build it.</p>
+                  <Textarea
+                    className="min-h-[200px] font-mono text-xs"
+                    placeholder={`## Your app must allow a user to:\n\n1. Create a task\n2. Edit a task\n3. Complete a task\n4. Delete a task\n5. Tasks must persist after page refresh`}
+                    value={form.product_contract}
+                    onChange={(e) => setForm((s) => ({ ...s, product_contract: e.target.value }))}
+                  />
+                </div>
+                <div className="rounded-lg border border-violet-500/20 bg-violet-500/5 p-3 text-xs text-muted-foreground">
+                  <p className="font-semibold text-violet-600 dark:text-violet-400 mb-1">⚡ Vibe Mode — How it works</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Learner reads the Product Contract and builds using any tool (Claude, Cursor, Lovable, etc.)</li>
+                    <li>Learner submits a GitHub repo URL or live deployment URL</li>
+                    <li>Platform runs Playwright journeys (from contract-type stages) to verify the product works</li>
+                    <li>Result shown as per-gate pass/fail with evidence</li>
+                    <li>Premium: "Fix with AI" available to paid users only</li>
+                  </ul>
+                </div>
+                <Button onClick={() => updateMutation.mutate()} disabled={!selectedId || updateMutation.isPending}>
+                  Save Vibe Config
+                </Button>
               </CardContent>
             </Card>
           ) : null}

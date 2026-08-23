@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 109,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ThetoLocaleString()method is available for many JavaScript datatypes / objects:\n\nYou canspecify a languageand country code to format a value for a specific locale.\n\nWith options,toLocaleString()can format numbers as currency.\n\nThestyle:\"percent\"option formats a number as a percentage.\n\nYou can control the number of decimal digits withminimumFractionDigitsandmaximumFractionDigits.\n\nDates can also be formatted withtoLocaleString().\n\nMany options can be used to control how dates are displayed.\n\nA clever use oftoLocaleString()is to make file sizes easier to read.\n\nFor arrays, thetoLocaleString()methods converts each array element.\n\n### Code Snippets\n\n```\nlet num = 1234567.89;\nlet text = num.toLocaleString();\n\n---\n\nlet num = 1234567.89;\nlet us = num.toLocaleString(\"en-US\");\nlet de = num.toLocaleString(\"de-DE\");\nlet no = num.toLocaleString(\"no-NO\");\n\n---\n\nlet price = 1299.95;\nlet dollars = price.toLocaleString(\"en-US\",\n{style:\"currency\", currency:\"USD\"});\nlet euros = price.toLocaleString(\"de-DE\",\n{style:\"currency\", currency:\"EUR\"});\nlet kroner = price.toLocaleString(\"no-NO\",\n{style:\"currency\", currency:\"NOK\"});\n\n---\n\nlet score = 0.875;\nlet result = score.toLocaleString(\"en-US\", {style:\"percent\"});\n\n---\n\nlet num = 3.14159;\nlet text = num.toLocaleString(\"en-US\", {\nminimumFractionDigits: 2,\nmaximumFractionDigits: 2\n});\n\n---\n\nlet date = new Date();\nlet text = date.toLocaleString(\"en-US\");\n\n---\n\nlet date = new Date();\nlet text = date.toLocaleString(\"en-US\", {\nweekday: \"long\",\nyear: \"numeric\",\nmonth: \"long\",\nday: \"numeric\"\n});\n\n---\n\nfunction fileSize(bytes) {\nif (bytes < 1024) return bytes + \" bytes\";\nif (bytes < 1024 * 1024) return (bytes / 1024).toLocaleString(\"en-US\", {maximumFractionDigits: 1}) + \" KB\";\nreturn (bytes / 1024 / 1024).toLocaleString(\"en-US\", {maximumFractionDigits: 1}) + \" MB\";\n}\nlet size = 1536000;\nlet text = fileSize(size);\n\n---\n\nconst dates = [\nnew Date(\"2026-01-01\"),\nnew Date(\"2026-12-24\")\n];\nlet text = dates.toLocaleString(\"en-US\");\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_108",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

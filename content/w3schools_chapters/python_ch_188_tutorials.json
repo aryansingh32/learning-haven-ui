@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 188,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "In Machine Learning we create models to predict the outcome of certain events,\nlike in the previous chapter where we predicted the CO2 emission of a car when we knew\nthe weight and engine size.\n\nTo measure if the model is good enough, we can use a method called Train/Test.\n\nTrain/Test is a method to measure the accuracy of your model.\n\nIt is called Train/Test because you split the data set into two sets: a training set and a testing set.\n\nYoutrainthe model using the training set.\n\nYoutestthe model using the testing set.\n\nStart with a data set you want to test.\n\nOur data set illustrates 100 customers in a shop, and their shopping habits.\n\nThetrainingset should be a random selection of 80% of the original data.\n\nThetestingset should be the remaining 20%.\n\nDisplay the same scatter plot with the training set:\n\nTo make sure the testing set is not completely different, we will take a look at the testing set as well.\n\nWhat does the data set look like? In my opinion I think the best fit would be \napolynomial regression, so let us draw a line of polynomial regression.\n\nTo draw a line through the data points, we use theplot()method of the matplotlib module:\n\nThe result can back my suggestion of the data set fitting a polynomial \nregression, even though it would give us some weird results if we try to predict \nvalues outside of the data set. Example: the line indicates that a customer \nspending 6 minutes in the shop would make a purchase worth 200. That is probably \na sign of overfitting.\n\nBut what about the R-squared score? The R-squared score is a good indicator \nof how well my data set is fitting the model.\n\nRemember R2, also known as R-squared?\n\nIt measures the relationship between the x axis and the y \naxis, and the value ranges from 0 to 1, where 0 means no relationship, and 1 \nmeans totally related.\n\nThe sklearn module has a method calledr2_score()that will help us find this relationship.\n\nIn this case we would like to measure the relationship  \nbetween the minutes a customer stays in the shop and how much money they spend.\n\nNow we have made a model that is OK, at least when it comes to training data.\n\nNow we want to test the model with the testing data as well, to see if gives us the \nsame result.\n\nNow that we have established that our model is OK, we can start predicting \nnew values.\n\nThe example predicted the customer to spend 22.88 dollars, as seems to correspond to the diagram:\n\n### Code Snippets\n\n```\nimport numpy\nimport matplotlib.pyplot as plt\nnumpy.random.seed(2)\nx = numpy.random.normal(3, 1, 100)\ny = numpy.random.normal(150, 40, \n  100) / x\nplt.scatter(x, y)\nplt.show()\n\n---\n\nplt.scatter(train_x, \n  train_y)\nplt.show()\n\n---\n\nplt.scatter(test_x, \n  test_y)\nplt.show()\n\n---\n\nimport numpy\nimport \n  matplotlib.pyplot as plt\nnumpy.random.seed(2)\nx = \n  numpy.random.normal(3, 1, 100)\ny = numpy.random.normal(150, 40, 100) / x\ntrain_x = x[:80]\ntrain_y = y[:80]\ntest_x = x[80:]\ntest_y = \n  y[80:]\nmymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))\nmyline = numpy.linspace(0, 6, 100)\nplt.scatter(train_x, train_y)\nplt.plot(myline, mymodel(myline))\nplt.show()\n\n---\n\nimport numpy\nfrom sklearn.metrics import r2_score\nnumpy.random.seed(2)\nx = numpy.random.normal(3, 1, 100)\ny = numpy.random.normal(150, 40, \n  100) / x\ntrain_x = x[:80]\ntrain_y = y[:80]\ntest_x = x[80:]\ntest_y = y[80:]\nmymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, \n  4))\nr2 = r2_score(train_y, mymodel(train_x))\nprint(r2)\n\n---\n\nimport numpy\nfrom sklearn.metrics import r2_score\nnumpy.random.seed(2)\nx = numpy.random.normal(3, 1, 100)\ny = numpy.random.normal(150, 40, \n  100) / x\ntrain_x = x[:80]\ntrain_y = y[:80]\ntest_x = x[80:]\ntest_y = y[80:]\nmymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, \n  4))\nr2 = r2_score(test_y, mymodel(test_x))\nprint(r2)\n\n---\n\nprint(mymodel(5))\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_187",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

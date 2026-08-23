@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 208,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "All temporal objectshave their ownadd() method:\n\nAll temporal objectshave their ownsubtract() method:\n\nTheadd()method accepts aduration objectas input.\n\nExample:{ days: 10 }.\n\nIt returns a new temporal date object moved forward by the duration.\n\nThesubtract()method accepts aduration objectas input.\n\nExample:{ days: 10 }.\n\nIt returns a new temporal date object moved backward by the duration.\n\nBoth add and subtracthandle date boundaries:\n\nAdding one day to March 31st is April 1st.\n\nTemporal automatically handles different month lengths.\n\nAdding years works correctly, even for leap years.\n\nTheadd()andsubtract()methods accept aduration objectas input.\n\nExample:{ months: 2, days: 7, hours: 1 }.\n\nThe followingduration unitsare supported:\n\nYou can safely add or subtract time.\n\nThe original value does not change.\n\nFrom aTemporal.Instantyou can only add or subtract time durations\n(hours, minutes, seconds) but not calendar durations like months or years,\nas their length can vary depending on the time zone and the calendar.\n\nZonedDateTime handles daylight saving time (DST) safely.\n\nIf a DST change occurs, Temporal adjusts automatically.\n\nThe JavaScriptDate objectcorrectly implements leap year rules, but calendar calculations involving leap years\ncan producesurprising resultsbecause invalid dates are automatically adjusted instead of reported as errors.\n\nTemporal lets you choose what should happen when a date becomes invalid.\n\nFor example: February 29, 2024 + 1 year becomes invalid, because 2025 has no February 29.\n\nTheoverflowoption controls what happens when a date calculation produces an invalid date.\n\nWithoverflow: \"constrain\", Temporal changes the result to the nearest valid date.\n\nWithoverflow: \"reject\", Temporal throws an error instead of changing the date.\n\n### Code Snippets\n\n```\ntemporal\n.add(\nduration\n)\n\n---\n\n// Create a Temporal object\nconst myDate = Temporal.PlainDate.from(\"2026-05-17\");\n// Add a duration\nconst newDate = myDate.add({ days: 10 });\n\n---\n\ntemporal\n.subtract(\nduration\n)\n\n---\n\n// Create a Temporal object\nconst myDate = Temporal.PlainDate.from(\"2026-05-17\");\n// Subtract a duration\nconst newDate = myDate.subtract({ days: 10 });\n\n---\n\n// Create a Temporal object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\nconst result = date.add({ months: 1 });\n\n---\n\n// Create a Temporal object\nconst date = Temporal.PlainDate.from(\"2024-02-29\");\nconst result = date.add({ years: 1 });\n\n---\n\n// Create any Temporal object\nconst myDate = Temporal.PlainDate.from('2026-05-17');\n// Add multiple units\nconst newDate = myDate.add({ years: 1, months: 2, days: 15 });\n\n---\n\n// Create a PlainDateTime object\nconst date = Temporal.PlainDateTime.from(\"2026-05-17T14:30:00\");\n// Add and subtract time\nconst earlier = dateTime.subtract({ minutes: 30 });\nconst later = dateTime.add({ hours: 2 });\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n// Add and subtract time\nconst earlier = date.subtract({ months: 3 });\nconst later = date.add({ days: 10 });\n\n---\n\n// Create a Temporal.Instant object\nconst now = Temporal.Instant.fromEpochMilliseconds(Date.now());\n// Subtract 5 hours and 30 minutes\nconst fiveHalfHoursAgo = now.subtract({ hours: 5, minutes: 30 });\n\n---\n\n// Create a Temporal object\nconst today = Temporal.Now.plainDateISO();\n// Add a duration\nconst nextWeek = today.add({ days: 7 });\n\n---\n\nconst start = Temporal.ZonedDateTime.from\n(\"2026-03-29T00:00:00+01:00[Europe/Oslo]\");\nconst nextDay = start.add({ days: 1 });\n\n---\n\n// Create a Date object\nlet d = new Date(\"2024-02-29\");\n// Add one year\nd.setFullYear(d.getFullYear() + 1);\n\n---\n\n// Create a Date object\nlet d = new Date(\"2024-02-29\");\n// Add one year\nd.setDate(d.getDate() + 365);\n\n---\n\n// Create a Date object\nlet d = new Date(2025, 1, 29);\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\nconst nextYear = d.add({ years: 1 });\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\nconst nextYear = d.add(\n{ years: 1 },\n{ overflow: \"constrain\" }\n);\n\n---\n\n// Create a PlainDate object\nconst d = Temporal.PlainDate.from(\"2024-02-29\");\n// Add one year\ntry {\nconst nextYear = d.add(\n{ years: 1 },\n{ overflow: \"reject\" }\n);\ntext = nextYear.toString();\n} catch (err) {\ntext = err.name;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_207",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

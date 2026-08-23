@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 55,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Euclidean algorithm finds the greatest common divisor (gcd) of two numbers \\(a\\) and \\(b\\).\n\nThe greatest common divisor is the largest number that divides both \\(a\\) and \\(b\\) without leaving a remainder.\n\nThe algorithm uses division with remainder. It takes the remainder from the previous step to set up the calculation in the next step.\n\nContinue reading to see how the Euclidean algorithm can be done by hand, with programming, and to understand how and why the algorithm actually works.\n\nBelow are words used to describe the Euclidean Algorithm that you need to know to understand the explanations on this page.\n\nDivisor:A number we can use to divide a number by, without leaving a remainder. We say that 3 is a divisor of 6 because \\(6/3=2\\), without leaving a remainder (the remainder is 0).\n\nRemainder:The part you are left with after dividing a number with another number. Dividing 7 by 3 is 2, with a remainder of 1. (So 3 is not a divisor of 7.)\n\nCommon divisor:For numbers \\(a\\) and \\(b\\), a common divisor is a number that can divide both \\(a\\) and \\(b\\) without leaving a remainder. The common divisors of 18 and 12 are 2, 3, and 6, because both 18 and 12 can be divided by 2, 3, and 6 without producing a remainder.\n\nGreatest common divisor:The largest of the common divisors. The greatest common divisor of 18 and 12 is 6 because that is the largest of the common divisors 2, 3, and 6.\n\nThe greatest common divisor is used in the mathematical field of Number Theory, and in cryptography for encrypting messages.\n\nTo understand how the Euclidean algorithm works, and to write the code for it, let's first run it manually to find the greatest common divisor of \\(120\\) and \\(25\\).\n\nTo do this we use division with remainder.\n\nStep 1:We start with dividing \\(120\\) with \\(25\\):\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n120 & = 4 \\cdot 25 + 20\n\\end{aligned}\n\\end{equation}\n\\]\n\nHow many times can we fit \\(25\\) inside \\(120\\)? It is \\(4\\) times, right? \\(4 \\cdot 25\\) is \\(100\\). We get the remainder \\(20\\) by subtracting \\(100\\) from \\(120\\).\n\nStep 2:We use the previous remainder \\(20\\) in the next step to divide \\(25\\):\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n25 & = 1 \\cdot 20 + 5\n\\end{aligned}\n\\end{equation}\n\\]\n\nWe can fit \\(20\\) inside \\(25\\) one time. We get the remainder \\(5\\) by subtracting \\(20\\) from \\(25\\).\n\nStep 3:In the next calculation we divide \\(20\\) with the previous remainder \\(5\\):\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n20 & = 4 \\cdot 5 + 0\n\\end{aligned}\n\\end{equation}\n\\]\n\nWe get \\(0\\) as the remainder, and that means that we are done with the calculations.\n\nThe greatest common divisor of \\(120\\) and \\(25\\) is \\(5\\).\n\nTo find the greatest common divisor using division, we continue running the algorithm until the remainder calculated is \\(0\\).\n\nThis is the same as saying we continue to run the algorithm as long as \\(b\\) is not \\(0\\). That is whyb != 0is the condition in thewhileloop below.\n\nInstead of using division like we did above, the original Euclidean algorithm as described in the book \"Elements\" over 2000 years ago uses subtraction.\n\nUsing subtraction instead of division is not as fast, but both the division method and the subtraction method uses the same mathematical principle:\n\nThis can be shown in just a few lines.\n\nNumbers \\(a\\) and \\(b\\) have a greatest common divisor \\(x\\).\n\nThis means that both \\(a\\) and \\(b\\) can be factorized like this:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\na & = k \\cdot x \\\\\nb & = l \\cdot x \n\\end{aligned}\n\\end{equation}\n\\]\n\nAfter factorization, subtracting \\(b\\) from \\(a\\) gives us a very interesting result:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\na-b & = k \\cdot x - l \\cdot x \\\\\n    & = (k-l) \\cdot x\n\\end{aligned}\n\\end{equation}\n\\]\n\nWe can see that the greatest common divisor (\\(x\\)) of \\(a\\) and \\(b\\) is also the greatest common divisor of the difference between \\(a\\) and \\(b\\)!\n\nThis principle is why the Euclidean algorithm works, it is what makes it possible.\n\nUsing the principle described above, that the difference between \\(a\\) and \\(b\\) also shares the same greatest common divisor, we can use subtraction to find the greatest common divisor, like Euclid's original algorithm does.\n\nLet's find the greatest common divisor of \\(120\\) from \\(25\\) using subtraction.\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n120 - 25 & = 95 \n\\end{aligned}\n\\end{equation}\n\\]\n\nAccording to the mathematical principle already described, the numbers \\(120\\), \\(25\\), and \\(95\\) all share the same greatest common divisor.\n\nThis means we can further reduce our problem by subtracting \\(25\\) from \\(95\\):\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n95 - 25 & = 70 \n\\end{aligned}\n\\end{equation}\n\\]\n\nIf we continue like this, always taking the two lowest numbers from the previous step and finding the difference between them, we get these calculations:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n70 - 25   & = 45 \\\\\n45 - 25   & = 20 \\\\\n25 - 20   & = 5 \\\\\n20 - 5    & = 15 \\\\\n15 - 5    & = 10 \\\\\n10 - 5    & = \\underline{\\textbf{5}} \\\\\n5 - 5     & = 0\n\\end{aligned}\n\\end{equation}\n\\]\n\nThe Euclidean algorithm using subtraction is done when the difference is \\(0\\).\n\nThe greatest common divisor of \\(120\\) and \\(25\\) can be found in the previous step, it is \\(5\\).\n\nNow that we can calculate the greatest common divisor using subtraction by hand, it is easier to implement it in a programming language.\n\nTo find the greatest common divisor using subtraction, we continue running the algorithm until the difference between \\(a\\) and \\(b\\) is \\(0\\), like we have just seen.\n\nThis is the same as saying we continue running the algorithm as long as \\(a\\) and \\(b\\) are different values. That is whya != bis the condition in thewhileloop below.\n\nTo see how good the division method can be to find the greatest common divisor, and how the methods are similar, we will:\n\nFinding the greatest common divisor of \\(120\\) and \\(25\\) using subtraction:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n120 - 25  & = 95 \\\\\n95 - 25   & = 70 \\\\\n70 - 25   & = 45 \\\\\n45 - 25   & = 20 \\\\\n25 - 20   & = 5 \\\\\n20 - 5    & = 15 \\\\\n15 - 5    & = 10 \\\\\n10 - 5    & = \\underline{\\textbf{5}} \\\\\n5 - 5     & = 0\n\\end{aligned}\n\\end{equation}\n\\]\n\nUsing subtraction, the algorithm is finished when the difference is \\(0\\).\n\nIn the second last calculation we see that the greatest common divisor of \\(120\\) and \\(25\\) is \\(5\\).\n\nNotice how \\(25\\) and \\(5\\) must be subtracted many times, until finding the GCD.\n\nFinding the greatest common divisor of \\(120\\) and \\(25\\) using division with remainder looks like this:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n120  & = 4 \\cdot 25 + 20 \\\\\n25   & = 1 \\cdot 20 + \\underline{\\textbf{5}} \\\\\n20   & = 4 \\cdot 5 + 0\n\\end{aligned}\n\\end{equation}\n\\]\n\nUsing division, the Euclidean algorithm is finished when the remainder is \\(0\\).\n\nThe previous remainder \\(5\\) is the greatest common divisor of \\(120\\) and \\(25\\).\n\nTake a look at the subtraction and division methods above.\n\nTo easier see that the division calculations are basically the same as the subtraction calculations, we can write the division with remainder calculations like this:\n\n\\[\n\\begin{equation}\n\\begin{aligned}\n120 - 4 \\cdot 25  & = 20 \\\\\n25 - 1 \\cdot 20   & = \\underline{\\textbf{5}} \\\\\n20 - 4 \\cdot 5    & = 0\n\\end{aligned}\n\\end{equation}\n\\]\n\nUsing subtraction, \\(25\\) is subtracted from \\(120\\) a total of \\(4\\) times, while the division method does this in just one step.\n\nSimilarly, the subtraction method subtracts \\(5\\) a total of \\(4\\) times, while the division method does the same in just one calculation.\n\nAs you can see, the methods do the same thing, the division method just does many subtractions in the same calculation, so that it finds the greatest common divisor faster.\n\n### Code Snippets\n\n```\nExample\nFinding the greatest common divisor of 120 and 25 using the Euclidean algorithm:\ndef gcd_division(a, b):\n    while b != 0:\n        remainder = a % b\n        print(f\"{a} = {a//b} * {b} + {remainder}\")\n        a = b\n        b = remainder\n    return a\n\na = 120\nb = 25\nprint(\"The Euclidean algorithm using division:\\n\")\nprint(f\"The GCD of {a} and {b} is: {gcd_division(a, b)}\")\nTry it Yourself \u00bb\n\n---\n\nExample\nFinding the greatest common divisor of 120 and 25 using the Euclidean algorithm with subtraction:\ndef gcd_subtraction(a, b):\n    while a != b:\n        if a > b:\n            print(f\"{a} - {b} = {a-b}\")\n            a = a - b\n        else:\n            print(f\"{b} - {a} = {b-a}\")\n            b = b - a\n    return a\n\na = 120\nb = 25\nprint(\"The Euclidean algorithm using subtraction:\\n\")\nprint(f\"The GCD of {a} and {b} is: {gcd_subtraction(a, b)}\")\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_54",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

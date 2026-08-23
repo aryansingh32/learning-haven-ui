@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 136,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Create a form with four fields and an error message under each field.\n\nYou must create an object for each field.\n\nYou need a function to diplay errors.\n\nYou need a function to clear the error field.\n\nYou need a function to validate the form.\n\nYou need the code to validate the form.\n\nTo validate the form, you must stop the page from reloading.\n\nCreate one function per field.\n\nThis example shows the finished project.\n\nAdd a rule that the password must contain at least one number.\n\nValidate fields while the user is typing (use the input event).\n\nShow a green message next to fields that are valid.\n\n### Code Snippets\n\n```\n<form id=\"signupForm\">\n<div class=\"field\">\n<label>Name:</label><br>\n<input id=\"name\" type=\"text\" placeholder=\"Your name\">\n<p id=\"nameError\" class=\"error\"></p>\n</div>\n<form>\n\n---\n\n<style>\ninput {\npadding: 8px;\nwidth: 260px;\nmargin-bottom: 4px;\n}\n.error {\ncolor: red;\nmargin: 0;\n}\n.ok {\ncolor: green;\nmargin: 0;\n}\n.field {\nmargin-bottom: 12px;\n}\n</style>\n\n---\n\n// Create an Object for each Field\nconst form = document.getElementById(\"signupForm\");\nconst nameInput = document.getElementById(\"name\");\nconst emailInput = document.getElementById(\"email\");\nconst passInput = document.getElementById(\"password\");\nconst confirmInput = document.getElementById(\"confirm\");\nconst nameError = document.getElementById(\"nameError\");\nconst emailError = document.getElementById(\"emailError\");\nconst passError = document.getElementById(\"passwordError\");\nconst confirmError = document.getElementById(\"confirmError\");\nconst result = document.getElementById(\"result\");\n\n---\n\n// Function to Display Error\nfunction showError(el, message) {\nel.innerHTML = message;\n}\n\n---\n\n// Function to Clear the Error\nfunction clearError(el) {\nel.innerHTML = \"\";\n}\n\n---\n\n// Function to Validate Form\nfunction validateForm() {\nreturn false;\n}\n\n---\n\n// Prevent Default Reloading\nform.addEventListener(\"submit\", function (event) {\nevent.preventDefault();\n// Clear Result\nresult.innerHTML = \"\";\n// Validate Form\nif (validateForm()) {\nresult.innerHTML = \"Form is valid!\";\nresult.className = \"ok\";\n} else {\nresult.innerHTML = \"Please fix the errors.\";\nresult.className = \"error\";\n}\n});\n\n---\n\n// Function to Validate Name\nfunction validateName() {\nlet value = nameInput.value.trim();\nif (value.length < 2) {\nshowError(nameError, \"Name must be at least 2 characters.\");\nreturn false;\n}\nclearError(nameError);\nreturn true;\n}\n// Function to Validate Form\nfunction validateForm() {\nlet okName = validateName();\nreturn okName;\n}\n\n---\n\n// Function to Validate Email\nfunction validateEmail() {\nlet value = emailInput.value.trim();\nif (!(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value))) {\nshowError(emailError, \"Enter a valid email address.\");\nreturn false;\n}\nclearError(emailError);\nreturn true;\n}\n// Function to Validate Form\nfunction validateForm() {\nlet okName = validateName();\nlet okEmail = validateEmail();\nreturn okName && okEmail;\n}\n\n---\n\n// Function to Validate Password\nfunction validatePassword() {\nlet value = passInput.value;\nif (value.length < 8) {\nshowError(passError, \"Password must be at least 8 characters.\");\nreturn false;\n}\nclearError(passError);\nreturn true;\n}\n// Function to Validate Form\nfunction validateForm() {\nlet okName = validateName();\nlet okEmail = validateEmail();\nlet okPass = validatePassword();\nreturn okName && okEmail && okPass;\n}\n\n---\n\n// Function to Validate Confirm\nfunction validateConfirm() {\nlet pass = passInput.value;\nlet confirm = confirmInput.value;\nif (confirm === \"\") {\nshowError(confirmError, \"Please confirm your password.\");\nreturn false;\n}\nif (confirm !== pass) {\nshowError(confirmError, \"Passwords do not match.\");\nreturn false;\n}\nclearError(confirmError);\nreturn true;\n}\n// Function to Validate Form\nfunction validateForm() {\nlet okName = validateName();\nlet okEmail = validateEmail();\nlet okPass = validatePassword();\nlet okConfirm = validateConfirm();\nreturn okName && okEmail && okPass && okConfirm;\n}\n\n---\n\n<style>\ninput {\npadding: 8px;\nwidth: 260px;\nmargin-bottom: 4px;\n}\n.error {\ncolor: red;\nmargin: 0;\n}\n.ok {\ncolor: green;\nmargin: 0;\n}\n.field {\nmargin-bottom: 12px;\n}\n</style>\n\n---\n\n<!DOCTYPE html>\n<html>\n<style>\n... CSS goes here\n</style>\n<body>\n<h2>Sign Up</h2>\n<form id=\"signupForm\">\n<div class=\"field\">\n<label>Name:</label><br>\n<input id=\"name\" type=\"text\" placeholder=\"Your name\">\n<p id=\"nameError\" class=\"error\"></p>\n</div>\n<div class=\"field\">\n<label>Email:</label><br>\n<input id=\"email\" type=\"text\" placeholder=\"name@example.com\">\n<p id=\"emailError\" class=\"error\"></p>\n</div>\n<div class=\"field\">\n<label>Password:</label><br>\n<input id=\"password\" type=\"password\" placeholder=\"Min 8 characters\">\n<p id=\"passwordError\" class=\"error\"></p>\n</div>\n<div class=\"field\">\n<label>Confirm Password:</label><br>\n<input id=\"confirm\" type=\"password\" placeholder=\"Repeat password\">\n<p id=\"confirmError\" class=\"error\"></p>\n</div>\n<p><button type=\"submit\">Create Account</button></p>\n</form>\n<p id=\"result\"></p>\n<script>\n// JavaScript goes here\n</script>\n</body>\n</html>\n\n---\n\n// Create an Object for each Field\nconst form = document.getElementById(\"signupForm\");\nconst nameInput = document.getElementById(\"name\");\nconst emailInput = document.getElementById(\"email\");\nconst passInput = document.getElementById(\"password\");\nconst confirmInput = document.getElementById(\"confirm\");\nconst nameError = document.getElementById(\"nameError\");\nconst emailError = document.getElementById(\"emailError\");\nconst passError = document.getElementById(\"passwordError\");\nconst confirmError = document.getElementById(\"confirmError\");\nconst result = document.getElementById(\"result\");\n// Function to Display Error\nfunction showError(el, message) {\nel.innerHTML = message;\n}\n// Function to Clear Error\nfunction clearError(el) {\nel.innerHTML = \"\";\n}\n// Function to Validate Name\nfunction validateName() {\nlet value = nameInput.value.trim();\nif (value.length < 2) {\nshowError(nameError, \"Name must be at least 2 characters.\");\nreturn false;\n}\nclearError(nameError);\nreturn true;\n}\n// Function to Validate Email\nfunction validateEmail() {\nlet value = emailInput.value.trim();\nif (!(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value))) {\nshowError(emailError, \"Enter a valid email address.\");\nreturn false;\n}\nclearError(emailError);\nreturn true;\n}\n// Function to Validate Password\nfunction validatePassword() {\nlet value = passInput.value;\nif (value.length < 8) {\nshowError(passError, \"Password must be at least 8 characters.\");\nreturn false;\n}\nclearError(passError);\nreturn true;\n}\n// Function to Validate Confirm\nfunction validateConfirm() {\nlet pass = passInput.value;\nlet confirm = confirmInput.value;\nif (confirm === \"\") {\nshowError(confirmError, \"Please confirm your password.\");\nreturn false;\n}\nif (confirm !== pass) {\nshowError(confirmError, \"Passwords do not match.\");\nreturn false;\n}\nclearError(confirmError);\nreturn true;\n}\n// Function to Validate Form\nfunction validateForm() {\nlet okName = validateName();\nlet okEmail = validateEmail();\nlet okPass = validatePassword();\nlet okConfirm = validateConfirm();\nreturn okName && okEmail && okPass && okConfirm;\n}\n// Prevent Default Reloading\nform.addEventListener(\"submit\", function (event) {\nevent.preventDefault();\n// Clear Result\nresult.innerHTML = \"\";\n// Validate Form\nif (validateForm()) {\nresult.innerHTML = \"Form is valid!\";\nresult.className = \"ok\";\n} else {\nresult.innerHTML = \"Please fix the errors.\";\nresult.className = \"error\";\n}\n});\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_135",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 11,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Merge Sort algorithm is a divide-and-conquer algorithm that sorts an array by first breaking it down into smaller arrays, and then building the array back together the correct way so that it is sorted.\n\nDivide:The algorithm starts with breaking up the array into smaller and smaller pieces until one such sub-array only consists of one element.\n\nConquer:The algorithm merges the small pieces of the array back together by putting the lowest values first, resulting in a sorted array.\n\nThe breaking down and building up of the array to sort the array is done recursively.\n\nIn the animation above, each time the bars are pushed down represents a recursive call, splitting the array into smaller pieces. When the bars are lifted up, it means that two sub-arrays have been merged together.\n\nThe Merge Sort algorithm can be described like this:\n\nTake a look at the drawing below to see how Merge Sort works from a different perspective. As you can see, the array is split into smaller and smaller pieces until it is merged back together. And as the merging happens, values from each sub-array are compared so that the lowest value comes first.\n\nLet's try to do the sorting manually, just to get an even better understanding of how Merge Sort works before actually implementing it in a programming language.\n\nStep 1:We start with an unsorted array, and we know that it splits in half until the sub-arrays only consist of one element. The Merge Sort function calls itself two times, once for each half of the array. That means that the first sub-array will split into the smallest pieces first.\n\nStep 2:The splitting of the first sub-array is finished, and now it is time to merge. 8 and 9 are the first two elements to be merged. 8 is the lowest value, so that comes before 9 in the first merged sub-array.\n\nStep 3:The next sub-arrays to be merged is [ 12] and [ 8, 9]. Values in both arrays are compared from the start. 8 is lower than 12, so 8 comes first, and 9 is also lower than 12.\n\nStep 4:Now the second big sub-array is split recursively.\n\nStep 5:3 and 11 are merged back together in the same order as they are shown because 3 is lower than 11.\n\nStep 6:Sub-array with values 5 and 4 is split, then merged so that 4 comes before 5.\n\nStep 7:The two sub-arrays on the right are merged. Comparisons are done to create elements in the new merged array:\n\nStep 8:The two last remaining sub-arrays are merged. Let's look at how the comparisons are done in more detail to create the new merged and finished sorted array:\n\n3 is lower than 8:\n\nStep 9:4 is lower than 8:\n\nStep 10:5 is lower than 8:\n\nStep 11:8 and 9 are lower than 11:\n\nStep 12:11 is lower than 12:\n\nThe sorting is finished!\n\nRun the simulation below to see the steps above animated:\n\nWe see that the algorithm has two stages: first splitting, then merging.\n\nAlthough it is possible to implement the Merge Sort algorithm without recursion, we will use recursion because that is the most common approach.\n\nWe cannot see it in the steps above, but to split an array in two, the length of the array is divided by two, and then rounded down to get a value we call \"mid\". This \"mid\" value is used as an index for where to split the array.\n\nAfter the array is split, the sorting function calls itself with each half, so that the array can be split again recursively. The splitting stops when a sub-array only consists of one element.\n\nAt the end of the Merge Sort function the sub-arrays are merged so that the sub-arrays are always sorted as the array is built back up. To merge two sub-arrays so that the result is sorted, the values of each sub-array are compared, and the lowest value is put into the merged array. After that the next value in each of the two sub-arrays are compared, putting the lowest one into the merged array.\n\nTo implement the Merge Sort algorithm we need:\n\nThe resulting code looks like this:\n\nOn line 6, arr[:mid] takes all values from the array up until, but not including, the value on index \"mid\".\n\nOn line 7, arr[mid:] takes all values from the array, starting at the value on index \"mid\" and all the next values.\n\nOn lines 26-27, the first part of the merging is done. At this this point the values of the two sub-arrays are compared, and either the left sub-array or the right sub-array is empty, so the result array can just be filled with the remaining values from either the left or the right sub-array. These lines can be swapped, and the result will be the same.\n\nSince Merge Sort is a divide and conquer algorithm, recursion is the most intuitive code to use for implementation. The recursive implementation of Merge Sort is also perhaps easier to understand, and uses less code lines in general.\n\nBut Merge Sort can also be implemented without the use of recursion, so that there is no function calling itself.\n\nTake a look at the Merge Sort implementation below, that does not use recursion:\n\nYou might notice that the merge functions are exactly the same in the two Merge Sort implementations above, but in the implementation right above here the while loop inside the mergeSort function is used to replace the recursion. The while loop does the splitting and merging of the array in place, and that makes the code a bit harder to understand.\n\nTo put it simply, the while loop inside the mergeSort function uses short step lengths to sort tiny pieces (sub-arrays) of the initial array using the merge function. Then the step length is increased to merge and sort larger pieces of the array until the whole array is sorted.\n\nFor a general explanation of what time complexity is, visitthis page.\n\nFor a more thorough and detailed explanation of Merge Sort time complexity, visitthis page.\n\nThe time complexity for Merge Sort is\n\n\\[ O( n \\cdot \\log n ) \\]\n\nAnd the time complexity is pretty much the same for different kinds of arrays. The algorithm needs to split the array and merge it back together whether it is already sorted or completely shuffled.\n\nThe image below shows the time complexity for Merge Sort.\n\nRun the simulation below for different number of values in an array, and see how the number of operations Merge Sort needs on an array of \\(n\\) elements is \\(O(n \\log n)\\):\n\nIf we hold the number of values \\(n\\) fixed, the number of operations needed for the \"Random\", \"Descending\" and \"Ascending\" is almost the same.\n\nMerge Sort performs almost the same every time because the array is split, and merged using comparison, both if the array is already sorted or not.\n\n### Code Snippets\n\n```\n[ 12, 8, 9, 3, 11, 5, 4]\n[ 12, 8, 9] [ 3, 11, 5, 4]\n[ 12] [ 8, 9] [ 3, 11, 5, 4]\n[ 12] [ 8] [ 9] [ 3, 11, 5, 4]\n\n---\n\n[ 12] [\n8\n,\n9\n] [ 3, 11, 5, 4]\n\n---\n\n[\n8\n,\n9\n,\n12\n] [ 3, 11, 5, 4]\n\n---\n\n[ 8, 9, 12] [ 3, 11, 5, 4]\n[ 8, 9, 12] [ 3, 11] [ 5, 4]\n[ 8, 9, 12] [ 3] [ 11] [ 5, 4]\n\n---\n\n[ 8, 9, 12] [\n3\n,\n11\n] [ 5, 4]\n\n---\n\n[ 8, 9, 12] [ 3, 11] [\n5\n] [\n4\n]\n[ 8, 9, 12] [ 3, 11] [\n4\n,\n5\n]\n\n---\n\n[ 8, 9, 12] [\n3\n,\n4\n,\n5\n,\n11\n]\n\n---\n\nBefore [\n8\n, 9, 12] [\n3\n, 4, 5, 11]\nAfter: [\n3\n,\n8\n, 9, 12] [ 4, 5, 11]\n\n---\n\nBefore [ 3,\n8\n, 9, 12] [\n4\n, 5, 11]\nAfter: [ 3,\n4\n,\n8\n, 9, 12] [ 5, 11]\n\n---\n\nBefore [ 3, 4,\n8\n, 9, 12] [\n5\n, 11]\nAfter: [ 3, 4,\n5\n,\n8\n, 9, 12] [ 11]\n\n---\n\nBefore [ 3, 4, 5,\n8\n,\n9\n, 12] [\n11\n]\nAfter: [ 3, 4, 5,\n8\n,\n9\n, 12] [\n11\n]\n\n---\n\nBefore [ 3, 4, 5, 8, 9,\n12\n] [\n11\n]\nAfter: [ 3, 4, 5, 8, 9,\n11\n,\n12\n]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

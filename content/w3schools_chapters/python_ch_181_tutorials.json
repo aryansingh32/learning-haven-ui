@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 181,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Earlier in this tutorial we have worked with very small amounts of data in our examples, just to \nunderstand the different concepts.\n\nIn the real world, the data sets are much bigger, but it can be difficult to \ngather real world data, at least at an early stage of a project.\n\nTo create big data sets for testing, we use the Python module NumPy, which \ncomes with a number of methods to create random data sets, of any size.\n\nTo visualize the data set we can draw a histogram with the data we collected.\n\nWe will use the Python module Matplotlib to draw a histogram.\n\nLearn about the Matplotlib module in ourMatplotlib Tutorial.\n\nWe use the array from the example above to draw a histogram with 5 bars.\n\nThe first bar represents how many values in the array are between 0 and 1.\n\nThe second bar represents how many values are between 1 and 2.\n\nEtc.\n\nWhich gives us this result:\n\nAn array containing 250 values is not considered very big, but now you know how to create a random set of values, and by changing the parameters, you can create the data set \nas big as you want.\n\n### Code Snippets\n\n```\nimport numpy\nx = numpy.random.uniform(0.0, 5.0, 250)\nprint(x)\n\n---\n\nimport numpy\nimport matplotlib.pyplot as plt\nx = \n  numpy.random.uniform(0.0, 5.0, 250)\nplt.hist(x, 5)\nplt.show()\n\n---\n\nimport numpy\nimport matplotlib.pyplot as plt\nx = \n  numpy.random.uniform(0.0, 5.0, 100000)\nplt.hist(x, 100)\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_180",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

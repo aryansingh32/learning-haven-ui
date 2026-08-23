@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 62,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe QUOTENAME() function returns a Unicode string with delimiters added to \nmake the string a valid SQL Server delimited identifier.\n\n### Code Examples\n\n```\nSELECT QUOTENAME('abcdef');\n\n---\n\nQUOTENAME(\nstring, quote_char\n)\n\n---\n\nSELECT QUOTENAME('abcdef', '()');\n```\n\n## Tutorials\n\nThe REPLACE() function replaces all occurrences of a substring within a string, with a new substring.\n\nNote:The search is case-insensitive.\n\nTip:Also look at theSTUFF()function.\n\n### Code Examples\n\n```\nSELECT REPLACE('SQL Tutorial', 'T', 'M');\n\n---\n\nREPLACE(\nstring\n,\nold_string\n,\nnew_string\n)\n\n---\n\nSELECT REPLACE('SQL Tutorial', 'SQL', 'HTML');\n\n---\n\nSELECT REPLACE('ABC ABC ABC', 'a', 'c');\n```\n\n## Tutorials\n\nThe REPLICATE() function repeats a string a specified number of times.\n\n### Code Examples\n\n```\nSELECT REPLICATE('SQL Tutorial', 5);\n\n---\n\nREPLICATE(\nstring, integer\n)\n\n---\n\nSELECT REPLICATE(CustomerName, 2)\nFROM Customers;\n```\n\n## Tutorials\n\nThe REVERSE() function reverses a string and returns the result.\n\n### Code Examples\n\n```\nSELECT REVERSE('SQL Tutorial');\n\n---\n\nREVERSE(\nstring\n)\n\n---\n\nSELECT REVERSE(CustomerName)\nFROM Customers;\n```\n\n## Tutorials\n\nThe RIGHT() function extracts a number of characters from a string (starting from right).\n\n### Code Examples\n\n```\nSELECT RIGHT('SQL Tutorial', 3) AS ExtractString;\n\n---\n\nRIGHT(\nstring\n,\nnumber_of_chars\n)\n\n---\n\nSELECT RIGHT(CustomerName, 5) AS ExtractString\nFROM Customers;\n\n---\n\nSELECT RIGHT('SQL Tutorial', 100) AS ExtractString;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_62",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_62",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

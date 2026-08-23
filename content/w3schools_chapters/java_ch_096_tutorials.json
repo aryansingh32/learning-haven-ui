@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 96,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheScannerclass is used to get \nuser input, and it is found in thejava.utilpackage.\n\nTo use theScannerclass, create an object of the class and use any of the available methods found in theScannerclass documentation. \nIn our example, we will use thenextLine()method, which is used to read Strings:\n\nIn the example above, we used thenextLine()method, which is used to read Strings. To read other types, look at the table below:\n\nIn the example below, we use different methods to read data of various types:\n\n### Code Snippets\n\n```\nExample\nimport java.util.Scanner;\u00a0 // Import the Scanner class\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Scanner myObj = new Scanner(System.in);\u00a0 // Create a Scanner object\n\u00a0\u00a0\u00a0 System.out.println(\"Enter username\");\n\n\u00a0\u00a0\u00a0 String userName = myObj.nextLine();\u00a0 // Read user input\n\u00a0\u00a0\u00a0 System.out.println(\"Username is: \" + userName);\u00a0 // Output user input\n\u00a0 }\n}\nRun Example \u00bb\n\n---\n\nExample\nimport java.util.Scanner;\n\nclass Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Scanner myObj = new Scanner(System.in);\n\n\u00a0\u00a0\u00a0 System.out.println(\"Enter name, age and salary:\");\n\n\u00a0\u00a0\u00a0 // String input\n\u00a0\u00a0\u00a0 String name = myObj.nextLine();\n\n\u00a0\u00a0\u00a0 // Numerical input\n\u00a0\u00a0\u00a0 int age = myObj.nextInt();\n\u00a0\u00a0\u00a0 double salary = myObj.nextDouble();\n\n\u00a0\u00a0\u00a0 // Output input by user\n\u00a0\u00a0\u00a0 System.out.println(\"Name: \" + name);\n\u00a0\u00a0\u00a0 System.out.println(\"Age: \" + age);\n\u00a0\u00a0\u00a0 System.out.println(\"Salary: \" + salary);\n\u00a0 }\n}\nRun Example \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_95",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

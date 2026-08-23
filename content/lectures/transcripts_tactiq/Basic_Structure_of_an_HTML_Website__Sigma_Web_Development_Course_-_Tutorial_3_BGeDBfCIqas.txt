@@ -1,0 +1,516 @@
+Video URL: https://www.youtube.com/watch?v=BGeDBfCIqas
+Video Title: Basic Structure of an HTML Website | Sigma Web Development Course - Tutorial #3
+--------------------------------------------------
+
+00:00:00.000
+What's up guys, you are back to the Sigma web development course.
+00:00:03.720
+I'm really very happy that you guys have given so much love to this course.
+00:00:07.320
+Like this course with high energy.
+00:00:09.360
+Because for a Sigma free course, you need to be like the Sigma chads.
+00:00:13.120
+In today's video, I'll explain you the basic structure of a website.
+00:00:17.560
+Along with that, I'll tell you a mobile trick
+00:00:20.720
+which will help you know how to preview your website on your phone
+00:00:26.000
+I have a request from you all, write in the comment section if you know HTML or not
+00:00:31.000
+That will help me structure this course better
+00:00:33.000
+In this video, I will tell you the impact of chat gpt
+00:00:36.000
+Because there are a lot of talks going on about chat gpt
+00:00:39.000
+In the coming videos, I am going to make you do quizzes
+00:00:41.000
+So understand this video very carefully and learn all the concepts
+00:00:44.000
+Let's go to the computer screen.
+00:00:46.000
+Let's roll the intro.
+00:00:47.000
+Intro
+00:00:56.000
+So guys, I have come to my computer screen.
+00:00:58.000
+And now we will talk about
+00:01:00.000
+how to open text, close text,
+00:01:02.000
+structure basic, a website lay.
+00:01:04.000
+So here is my folder I will make a folder named video3
+00:01:08.000
+new folder, video3
+00:01:10.360
+and in video3, I will open with code by right clicking
+00:01:13.720
+and here you can see that my theme is of blue color
+00:01:17.640
+and many people said that blue theme is not good
+00:01:19.840
+see, the theme is our own choice
+00:01:22.160
+if you want to change the color theme
+00:01:24.160
+so you can change your color theme,
+00:01:27.000
+I want to use the dark one of Github, so I can use the dark one of Github,
+00:01:30.000
+it's your choice.
+00:01:31.000
+To make a new file, I will put index.html here.
+00:01:34.000
+We had already talked about that if I write the title of the page here,
+00:01:38.000
+and write the content here, and then using the link tag here,
+00:01:42.000
+I can use Emmet here and link Emmet to link style.css
+00:01:46.360
+I am doing it so fast because we have already talked about it in the last video
+00:01:49.520
+and if I write script.js here
+00:01:52.800
+and if I write let us say alert hello
+00:01:55.360
+then I will not tell you again and again that if I put a script tag here
+00:01:59.480
+just before the body and after that
+00:02:01.720
+I put script colon src and did script.js and then I clicked put script.js
+00:02:05.500
+and then I will click here and open with browser
+00:02:08.500
+and then this hello will come
+00:02:09.500
+and if I change the background to red then it will be red
+00:02:12.500
+I will not tell you all this
+00:02:14.000
+because I have already told you all this
+00:02:16.500
+I will tell you now
+00:02:18.500
+that what is the meaning of this structure
+00:02:20.500
+why did I write so big
+00:02:21.500
+this is a doubt for a beginner
+00:02:23.500
+that we can't write this title and content directly
+00:02:26.000
+What is the need to write so much?
+00:02:28.000
+So I will tell you what is the need to write so much?
+00:02:30.000
+I will reload it, see the content that was here
+00:02:33.000
+It came and it became red here
+00:02:35.000
+Now here you saw that I needed to reload the page
+00:02:38.000
+Many of you will ask why did I need to reload?
+00:02:41.000
+When it already reloads live
+00:02:43.000
+So see I changed the CSS file
+00:02:45.000
+when I change the CSS file, at times we need to reload
+00:02:48.000
+if you are using HTML file and making changes
+00:02:51.000
+you don't need to reload the changes of HTML file
+00:02:54.000
+now here what I will do
+00:02:57.000
+I will come back and explain to you
+00:02:59.000
+this is a basic structure of any HTML website
+00:03:02.000
+first we write doc type HTML
+00:03:04.000
+then we write HTML tag. Now see
+00:03:06.000
+this is the opening tag of HTML tag, this is the closing tag. This is the opening tag of body,
+00:03:09.000
+this is the closing tag. This is the opening tag of head,
+00:03:12.000
+this is the closing tag. Means whatever is inside it is the content of head.
+00:03:15.000
+Whatever is inside HTML is the content of HTML.
+00:03:18.000
+Accordingly, whatever is inside title is the content of title.
+00:03:21.000
+Now you will say what is the content of meta?
+00:03:24.000
+So meta is a self is the title content. Now you will ask what is the content of meta?
+00:03:25.000
+So meta is a self-closing tag.
+00:03:27.000
+There are two types of tags in HTML.
+00:03:29.000
+One is self-closing tag and the other is pair tag.
+00:03:31.000
+What happens in pair tag is that your opening tag is a closing tag.
+00:03:35.000
+So this is the basic structure of the HTML website.
+00:03:37.000
+Now here you saw that the background has turned red.
+00:03:39.000
+Who is the reason for this background red?
+00:03:41.000
+This is happening because of CSS.
+00:03:43.000
+If I remove CSS from here and tell CSS to move away
+00:03:46.000
+what will I say to CSS
+00:03:48.000
+move away quickly
+00:03:50.000
+and as soon as I tell CSS to move away
+00:03:52.000
+it will have to move away, I will reload the page
+00:03:54.000
+so you can see it has moved
+00:03:56.000
+similarly I can also tell JavaScript
+00:03:58.000
+move away quickly
+00:04:00.000
+now see if I say from here, the alert will also stop
+00:04:02.000
+so you see now if I reload
+00:04:04.000
+the alert has also stopped, So now you see, when I reload, the alert has also stopped.
+00:04:05.000
+So the CSS and JavaScript I added to the HTML content,
+00:04:09.000
+This is additionally CSS and JavaScript functionalities
+00:04:13.000
+We used to link with this HTML page.
+00:04:16.000
+Now I have already told you about the title tag.
+00:04:18.000
+This page is used to set the title.
+00:04:20.000
+Now the only purpose of this is that you see the title above.
+00:04:23.000
+The search engines also use this
+00:04:26.440
+That is, the search engines are Google
+00:04:28.240
+If you write here Code with Harry HTML
+00:04:31.720
+So I have put all the titles of Code with Harry's HTML introduction, HTML working on the page
+00:04:36.680
+You see here above
+00:04:37.720
+HTML introduction is the title of the page
+00:04:39.920
+So these titles of the page are used by the search engines and are parsed
+00:04:44.640
+Now if I change the page here,
+00:04:46.600
+So here the HTML title is working.
+00:04:48.600
+Now if I change the page again,
+00:04:50.600
+You can see that the HTML title has been installed here.
+00:04:52.600
+So the titles keep changing.
+00:04:54.600
+With that, as I keep changing it,
+00:04:56.600
+It will keep changing,
+00:04:58.600
+As you can see.
+00:05:00.600
+So the title of HTML pages doesn't mean that you can see this here
+00:05:05.700
+It is also very useful in SEO
+00:05:07.700
+And it tells what is the content inside the page
+00:05:10.700
+So it describes the page content
+00:05:12.700
+Like I am getting to know what is HTML execution
+00:05:15.200
+HTML execution means how HTML is being executed
+00:05:17.700
+I am being told about this page
+00:05:19.700
+So changing the title of the page is a very good SEO practice
+00:05:21.700
+So we will make a website from any framework
+00:05:23.700
+We will keep changing the title of the page.
+00:05:26.000
+Now here is the head section,
+00:05:27.000
+in the head section, there is a page metadata,
+00:05:29.000
+like the title,
+00:05:30.000
+and which script you want to link,
+00:05:34.000
+along with that, there are other meta tags,
+00:05:37.000
+about which I will tell you later.
+00:05:38.000
+Meta tags basically mean
+00:05:40.000
+that how is the HTML document,
+00:05:42.000
+it is told about it,
+00:05:43.000
+keywords are added,
+00:05:44.000
+descriptions are added, meta description is is told, keywords are added, description is added
+00:05:45.400
+meta description is a very important keyword for SEO
+00:05:49.600
+that is, you can write about what this page is about
+00:05:52.000
+if you go to my website, then you will get to see here in view page source
+00:05:55.600
+that meta description tag is there
+00:05:58.200
+this is compressed html, so don't be confused by this
+00:06:00.400
+but here you can see that meta description tag is there
+00:06:03.000
+which describes this page
+00:06:04.400
+if we talk about google then
+00:06:06.000
+meta description is shown here
+00:06:08.000
+now i want to show you
+00:06:09.000
+that dog type, html
+00:06:11.000
+what happens inside the head
+00:06:13.000
+key, page, meta tags, title tags, script tags
+00:06:16.000
+link tags are also there
+00:06:18.000
+so the script tag you can put it
+00:06:20.000
+just before the body and above
+00:06:22.000
+and what is the difference
+00:06:23.000
+we will talk about it in the next course But here you can see
+00:06:26.000
+I used the link and added CSS again
+00:06:28.000
+Then after this, the body is the main content of the website
+00:06:31.000
+Which you can see on this page
+00:06:33.000
+So what you will see on this page
+00:06:35.000
+That will be the body
+00:06:37.000
+Whatever you put inside the body, you will see it here
+00:06:40.000
+And whatever script you put, it will be executed
+00:06:42.000
+Now by putting a script here
+00:06:44.000
+And by putting a script and by putting script in head
+00:06:45.800
+what will happen I will tell you in the course
+00:06:48.400
+but this is a basic structure of HTML website
+00:06:51.400
+lang is equal to en is an attribute
+00:06:53.200
+it is inside any tag
+00:06:55.200
+lang is equal to en
+00:06:56.600
+so lang is an attribute whose value is en
+00:06:58.400
+so these key value pairs are used
+00:07:00.200
+which tell about this tag
+00:07:02.000
+like in meta tag name is equal to description is used
+00:07:04.600
+so name is equal to description is an attribute
+00:07:07.000
+and if you hover in VS code
+00:07:09.000
+it will tell you many things about it
+00:07:11.000
+see I hovered on name so it is telling about this attribute
+00:07:13.000
+that why this attribute is used and how
+00:07:16.000
+now most of the content inside the body
+00:07:19.000
+mostly you will copy the HTML raw
+00:07:21.000
+mostly from websites like codewithari.com
+00:07:23.000
+you will come here and copy the source code
+00:07:26.000
+like if I talk about forms, then you will come to this page of HTML forms
+00:07:29.400
+and you will copy it from here and you will start making your form
+00:07:32.000
+and you will modify it, so copying and pasting is very important
+00:07:35.600
+according to me, as a senior developer you should know
+00:07:38.000
+that from where to copy and paste and when to do it
+00:07:40.600
+and I am not saying this sarcastically, okay, I am not saying sarcastically
+00:07:43.600
+this thing will always be same
+00:07:46.000
+now you can type it or copy paste it
+00:07:48.000
+obviously you will prefer to copy paste it
+00:07:50.000
+because it's not going to change
+00:07:52.000
+and if you copy paste it
+00:07:54.000
+then your time will be saved
+00:07:56.000
+then innovation is to put your mind where it can't be copied
+00:07:58.000
+so you can consider it as a sigma rule
+00:08:00.000
+that you will copy paste
+00:08:02.000
+that thing which
+00:08:04.000
+has to be copied and where you have to copy paste
+00:08:05.000
+and where you have to think, it can't be copied
+00:08:08.000
+so you will save time and think there
+00:08:10.000
+The most important part of being a senior software developer
+00:08:15.000
+is to where to copy paste from
+00:08:17.000
+which stack overflow question to copy paste from
+00:08:19.000
+and how to paste it from where
+00:08:21.000
+Copyright Code Ve Dayari, 2026, whatever you understand
+00:08:25.000
+I have said my copyright statement, but this statement is very strong
+00:08:29.000
+Now I will tell you about a technique, with which you can see this website
+00:08:33.000
+Whatever we will develop here, you will be able to see it in this mobile
+00:08:36.000
+Now listen to the steps carefully, right click, open terminal
+00:08:40.000
+And write ipconfig, if you are in the old version, then you can open command prompt or powershell after writing ipconfig, as soon as you enter
+00:08:46.500
+you will see ipv4 address 192.168.1.199
+00:08:51.700
+now the ip address we have got here, I will copy it
+00:08:55.040
+so I will copy this ipv4 address
+00:08:57.280
+and in my settings, I will write live preview
+00:09:00.780
+this local IP host address to host your files on is written
+00:09:04.080
+I will write my ip address in its place and on This is written I will write my IP address instead of this
+00:09:07.000
+And after doing this
+00:09:08.000
+I will restart my VS code
+00:09:10.000
+You have to ensure one more thing
+00:09:12.000
+That you go to your Wi-Fi settings
+00:09:15.000
+Make your network a private network
+00:09:17.000
+It should not be a public network
+00:09:18.000
+It should be a private network
+00:09:19.000
+Network and internet
+00:09:20.000
+Wi-Fi
+00:09:21.000
+Whichever Wi-Fi you are connected to
+00:09:22.000
+Make it a private network
+00:09:23.000
+And now you will right click and click on show preview
+00:09:26.000
+and you will see your ip address
+00:09:29.000
+I can use this on my phone as well
+00:09:32.000
+so I will quickly enter my ip address
+00:09:35.000
+so I have entered 192.168.1.199
+00:09:38.000
+colon 5000, you can also enter 3000
+00:09:41.000
+whatever your port is, you can enter that
+00:09:44.000
+and you can see my website has been previewed on the mobile.
+00:09:46.000
+This trick is very useful when we want to preview on our mobile.
+00:09:50.000
+Because nowadays most of the websites are seen on the phone.
+00:09:53.000
+So we want our phone users to be able to enjoy our website.
+00:09:59.000
+And we are developing in the computer, so that testing will be done.
+00:10:02.000
+Now if you have not put your review in the first video,
+00:10:05.000
+then I will request you to come to the first video and review your course.
+00:10:09.000
+I told you in the last video, please review it.
+00:10:11.000
+Put an initial review, how did you feel after seeing so much course?
+00:10:14.000
+Now write initial review there.
+00:10:15.000
+As soon as you write the initial review, people will know what is the initial review of this course.
+00:10:19.000
+You give me 5 stars, along with that,
+00:10:21.000
+do access it from the playlist description.
+00:10:24.000
+Click here and bookmark it.
+00:10:26.000
+Or click on the star and it will be bookmarked.
+00:10:28.000
+And it will start showing in your bookmarks.
+00:10:30.000
+I have bookmarked it here.
+00:10:33.000
+Click here and save it.
+00:10:35.000
+Very few people have accessed the playlist.
+00:10:36.000
+So I want everyone to access this playlist.
+00:10:38.000
+Bookmark and save this playlist.
+00:10:40.000
+So access the playlist.
+00:10:42.000
+Like the video.
+00:10:43.000
+Give your village and your uncle land to me.

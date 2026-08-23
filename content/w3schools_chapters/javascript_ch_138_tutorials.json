@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 138,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Math.sumPrecise()fixes the classic\n0.1 + 0.2 === 0.30000000000000004 floating-point problem when summing lists of numbers.\n\nComputers do not think in base-10 decimals like humans; they think in binary bits, which causes\nstructural math flaws in programming.\n\nThe Problem:In JavaScript, 0.1 + 0.2 has historically equaled 0.30000000000000004 due to floating-point rounding errors.\nThis is dangerous for financial apps.\n\nThe Fix:Math.sumPrecise changes how the underlying language engine calculates a list of decimals,\nbypassing the system's structural limitation to deliver a perfect sum.\n\nMap.prototype.getOrInsertremoves the boilerplate of checking if a key exists before adding\nan item to a Map structure.\n\nA data structure (like an Array or a Map) holds your information. Previously, JavaScript's built-in structures\nlacked common-sense shortcuts found in other languages.\n\nThe Problem:If you wanted to update a dictionary (Map), you had to write an if statement to check if the \nkey existed, create it if missing, and then update it.\n\nThe Fix:Map.prototype.getOrInsert lets you find or create data in one quick move.\nIt expands what the data structure can do natively.\n\nJSON.rawJSON preserves large numbers (like ID strings from databases) without losing digits due to internal rounding.\n\nError.isError()is a static method to reliably check if a value is an Error object,\nimproving error handling and debugging.\n\nError.isError()reliably detects error objects even if they originated from inside an\n<iframe> or a separate runtime sandbox.\n\nRealm-safe error check:An Error from an iframe verifies withError.isError()and fails withinstanceof.\n\nError.isError()is already supported in many browsers:\n\nArray.fromAsync()is a feature that allows developers to create a new Array instance from\nasynchronous iterables, array-like objects, or Promises, streamlining the handling of data from async sources.\n\nArray.fromAsync()is supported in all major browsers:\n\nBase64 and Hexadecimal Encodings for Uint8Array.\n\nThese new static methods facilitate working with binary data by adding direct conversion between\nUint8Array objects and Base64 or hexadecimal strings.\n\nThis eliminates the need for external buffer modules or hacky window methods\nlike btoa() and atob().\n\nto/fromBase64()is supported in all major browsers:\n\nto/fromHex()is supported in all major browsers:\n\nTheMath.sumPrecise()Method fixes the classic 0.1 + 0.2 === 0.30000000000000004\nfloating-point problem when summing lists of numbers.\n\nMath.sumPrecise()is supported in all major browsers:\n\n### Code Snippets\n\n```\nconst userRoles = new Map();\n// Old Way: Multi-line checks\nif (!userRoles.has(\"admin\")) {\nuserRoles.set(\"admin\", []);\n}\nuserRoles.get(\"admin\").push(\"Alice\");\n// New ES2026 Way: Single-line default insertion\nuserRoles.getOrInsert(\"admin\", []).push(\"Bob\");\nuserRoles.getOrInsert(\"admin\", []).push(\"Charlie\");\nconsole.log(userRoles.get(\"admin\")); // ['Bob', 'Charlie']\n\n---\n\nconst precisionLossJSON = '{\"id\": 9223372036854775807}';\n// New ES2026 Reviver: Accesses the raw source string before rounding\nconst data = JSON.parse(precisionLossJSON, (key, value, context) => {\nif (key === 'id') {\nreturn context.source; // \"9223372036854775807\" as a string\n}\nreturn value;\n});\n// New ES2026 Stringify: Outputs the unrounded big integer safely\nconst output = JSON.stringify({\nid: JSON.rawJSON(\"9223372036854775807\")\n});\n\n---\n\nError.isError(new TypeError());   // true\nError.isError({ name: \"Error\" }); // false\n\n---\n\ntry {\nthrow new TypeError(\"Invalid format\");\n} catch (err) {\n// Old Way: Could fail across different window contexts\nconsole.log(err instanceof Error);\n// New ES2026 Way: Globally reliable\nconsole.log(Error.isError(err)); // true\n}\n\n---\n\n// An async generator simulating a paginated API\nasync function* fetchPages() {\nyield;\nyield;\n}\n// New ES2026 Way: Resolves and flattens natively\nconst allData = await Array.fromAsync(fetchPages(), flatMap => flatMap);\nconsole.log(allData); // [1, 2, 3, 4]\n\n---\n\nasync function* asyncGenerator() {\nyield Promise.resolve(1);\nyield Promise.resolve(2);\nyield Promise.resolve(3);\n}\nasync function processAsyncData() {\nconst arr = await Array.fromAsync(asyncGenerator());\n}\nprocessAsyncData();\n\n---\n\n// Creating raw binary data\nconst bytes = new Uint8Array([72, 101, 108, 108, 111]); // \"Hello\"\n// New ES2026: Direct string conversions\nconst base64String = bytes.toBase64();\nconsole.log(base64String); // \"SGVsbG8=\"\nconst hexString = bytes.toHex();\nconsole.log(hexString); // \"48656c6c6f\"\n// Reversing the operation\nconst restoredBytes = Uint8Array.fromBase64(\"SGVsbG8=\");\n\n---\n\nlet string = 'W3Schools 123';\nconst arr = Uint8Array.fromBase64(string);\n\n---\n\nconst arr = new Uint8Array([91,116,156,134,138,37,179,93,183]);\nlet text = arr.toBase64();\n\n---\n\nlet text = '5b749c868a25b35db7';\nconst arr = Uint8Array.fromHex(text);\n\n---\n\nconst arr = new Uint8Array([91,116,156,134,138,37,179,93,183]);\nlet text = arr.toHex();\n\n---\n\n// Old Way: Inaccuracies accumulate\nconst items = [0.1, 0.2, 0.3];\nconst badSum = items.reduce((a, b) => a + b, 0);\nmyDisplayer(badSum);\n// New ES2026 Way: Perfectly precise\nconst preciseSum = Math.sumPrecise(items);\nmyDisplayer(preciseSum);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_137",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 203,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A modal image gives a user the ability to display a larger version of an \nimage, without navigating away from the current page. When a user clicks on a \nmodal image, it shows a popup window that appears on top of the main content of \nthe webpage, often with a semi-transparent background. The modal must be closed \nby the user, typically with a \"close\" button or an \"X\" sign in top-right corner.\n\nThis example demonstrates how to use HTML, CSS and JavaScript together, to create a responsive modal image gallery.\n\nWe use CSS to create a modal window (dialog box), and hide it by default.\n\nThen, we use a JavaScript to show the modal window with the correct image inside, when a user clicks on the image:\n\n### Code Snippets\n\n```\n<html>\n<head>\n<meta name=\"viewport\" content=\"width=device-width, \n  initial-scale=1.0\">\n<style>\n* {\nmargin: 0;\npadding: 0;\nbox-sizing: border-box;\n}\nh1 {\ntext-align: center;\npadding: \n  20px;\n}\n.gallery {\ndisplay: flex;\nflex-wrap: wrap;\njustify-content: flex-start;\npadding: 0 15px;\n}\n.gallery-item {\nposition: relative;\nwidth: calc(25% - 20px);\nheight: auto;\nmargin: \n  10px;\ncursor: pointer;\ntransition: transform 0.5s ease;\n}\n.gallery-item:hover {\ntransform: scale(1.1);\n}\n/* The Modal \n  (background) */\n.modal {\ndisplay: none;\nposition: fixed;\nz-index: \n  1000;\nleft: 0;\ntop: 0;\nwidth: 100%;\nheight: 100%;\nbackground-color: rgba(0, 0, 0, 0.8);\nalign-items: center;\njustify-content: center;\ntransition: opacity 0.5s ease;\n}\n/* \n  Modal content (image) */\n.modal-content {\nposition: relative;\nwidth: \n  90%;\nheight: auto;\nmax-width: 90%;\nmax-height: 90%;\nborder-radius: \n  5px;\noverflow: hidden;\nanimation: zoomIn 0.5s;\n}\n@keyframes \n  zoomIn {\nfrom {transform: scale(0.6);}\nto {transform: scale(1);}\n}\n.modal.show {\ndisplay: flex;\nopacity: 1;\n}\n/* Close button \n  */\n.close {\nposition: absolute;\ntop: 10px;\nright: 15px;\ncolor: \n  #ffffff;\nfont-size: 35px;\nfont-weight: bold;\ncursor: pointer;\ntransition: transform 0.3s;\n}\n/* Caption of modal image */\n.caption {\nposition: absolute;\nbottom: 15px;\nwidth: 100%;\ntext-align: center;\ncolor: #ffffff;\nfont-size: 24px;\n}\n@media \n  screen and (max-width: 768px) {\n.gallery-item {\nwidth: calc(50% - 20px);\n}\n}\n@media screen and (max-width: 480px) {\n.gallery-item {\nwidth: calc(100% - 20px);\n}\n}\n</style>\n</head>\n<body>\n<h1>Responsive Modal Images</h1>\n<div class=\"gallery\">\n<img \n  src=\"img_5terre.jpg\" alt=\"Cinque Terre\" class=\"gallery-item\" \n  onclick=\"openModal('modal1', 'Cinque Terre')\">\n<img src=\"img_forest.jpg\" alt=\"Forest\" class=\"gallery-item\" \n  onclick=\"openModal('modal2', 'Forest')\">\n<img \n  src=\"img_lights.jpg\" alt=\"Northern Lights\" class=\"gallery-item\" \n  onclick=\"openModal('modal3', 'Nothern Lights')\">\n<img src=\"img_mountains.jpg\" alt=\"Mountains\" class=\"gallery-item\" \n  onclick=\"openModal('modal4', 'Mountains')\">\n</div>\n<div id=\"modal1\" class=\"modal\">\n<span class=\"close\" \n  onclick=\"closeModal('modal1')\">&times;</span>\n<img src=\"img_5terre.jpg\" \n  alt=\"Cinque Terre\" class=\"modal-content\">\n<div \n  class=\"caption\"></div>\n</div>\n<div id=\"modal2\" class=\"modal\">\n<span class=\"close\" onclick=\"closeModal('modal2')\">&times;</span>\n<img \n  src=\"img_forest.jpg\" alt=\"Forest\" class=\"modal-content\">\n<div class=\"caption\"></div>\n</div>\n<div id=\"modal3\" \n  class=\"modal\">\n<span class=\"close\" \n  onclick=\"closeModal('modal3')\">&times;</span>\n<img src=\"img_lights.jpg\" \n  alt=\"Northern Lights\" class=\"modal-content\">\n<div \n  class=\"caption\"></div>\n</div>\n<div id=\"modal4\" class=\"modal\">\n<span class=\"close\" onclick=\"closeModal('modal4')\">&times;</span>\n<img \n  src=\"img_mountains.jpg\" alt=\"Mountains\" class=\"modal-content\">\n<div class=\"caption\"></div>\n</div>\n<script>\nfunction openModal(modalId, caption) {\nlet modal = \n  document.getElementById(modalId);\nmodal.style.display = \"flex\";\nmodal.classList.add(\"show\");\nlet message = modal.querySelector(\".caption\");\nmessage.innerText = caption;\n}\nfunction closeModal(modalId) {\nlet \n  modal = document.getElementById(modalId);\nmodal.classList.remove(\"show\");\nsetTimeout(function () {\nmodal.style.display = \"none\";\nmodal.querySelector(\".caption\").innerText = \"\";\n}, 300);\n}\n</script>\n</body>\n</html>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_202",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

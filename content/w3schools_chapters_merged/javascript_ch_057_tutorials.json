@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 57,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheresponseTextproperty returns the server response as a \nJavaScript string, and you can use it accordingly:\n\nThe XMLHttpRequest object has an in-built XML parser.\n\nTheresponseXMLproperty returns the server response as an XML DOM object.\n\nUsing this property you can parse the response as an XML DOM object:\n\nThegetAllResponseHeaders()method returns all header information from the server response.\n\nThegetResponseHeader()method returns specific header information from the server response.\n\n### Code Examples\n\n```\ndocument.getElementById(\"demo\").innerHTML = xhttp.responseText;\n\n---\n\nconst xmlDoc = xhttp.responseXML;\nconst x = xmlDoc.getElementsByTagName(\"ARTIST\");\nlet txt = \"\";\nfor (let i = 0; i < x.length; i++) {\ntxt += x[i].childNodes[0].nodeValue + \"<br>\";\n}\ndocument.getElementById(\"demo\").innerHTML = txt;\nxhttp.open(\"GET\", \n \"cd_catalog.xml\");\nxhttp.send();\n\n---\n\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\ndocument.getElementById(\"demo\").innerHTML =\nthis.getAllResponseHeaders();\n}\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n\n---\n\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\ndocument.getElementById(\"demo\").innerHTML =\nthis.getResponseHeader(\"Last-Modified\");\n}\nxhttp.open(\"GET\", \"ajax_info.txt\");\nxhttp.send();\n```\n\n## Tutorials\n\nAJAX can be used for interactive communication with an XML file.\n\nThe following example will demonstrate how a web page can fetch information \nfrom an XML file with AJAX:\n\nWhen a user clicks on the \"Get CD info\" button above, theloadDoc()function is executed.\n\nTheloadDoc()function creates anXMLHttpRequestobject, adds the function \nto be executed when the server response is ready, and sends the request off to the server.\n\nWhen the server response is ready, an HTML \ntable is built, nodes (elements) are extracted from the XML file, and it finally updates the \nelement \"demo\" with the HTML table filled with XML data:\n\nThe XML file used in the example above looks like this: \"cd_catalog.xml\".\n\n### Code Examples\n\n```\nfunction loadDoc() {\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {myFunction(this);}\nxhttp.open(\"GET\", \"cd_catalog.xml\");\nxhttp.send();\n}\nfunction myFunction(xml) {\nconst xmlDoc = xml.responseXML;\nconst x = xmlDoc.getElementsByTagName(\"CD\");\nlet table=\"<tr><th>Artist</th><th>Title</th></tr>\";\nfor (let i = 0; i <x.length; \n i++) {\ntable += \"<tr><td>\" +\nx[i].getElementsByTagName(\"ARTIST\")[0].childNodes[0].nodeValue \n +\n\"</td><td>\" +\nx[i].getElementsByTagName(\"TITLE\")[0].childNodes[0].nodeValue \n +\n\"</td></tr>\";\n}\ndocument.getElementById(\"demo\").innerHTML = table;\n}\n```\n\n## Tutorials\n\nAJAX is used to create more interactive applications.\n\nThe following example demonstrates how a web page can communicate with a \nweb server while a user types characters in an input field:\n\nIn the example above, when a user types a character in the input field, a function \ncalledshowHint()is executed.\n\nThe function is triggered by theonkeyupevent.\n\nHere is the code:\n\nCode explanation:\n\nFirst, check if the input field is empty (str.length == 0). If it is, clear the \ncontent of the txtHint placeholder and exit the function.\n\nHowever, if the input field is not empty, do the following:\n\nThe PHP file checks an array of names, and returns the corresponding name(s) to the \nbrowser:\n\n### Code Examples\n\n```\n<p>Start typing a name in the input field below:</p>\n<p>Suggestions: <span id=\"txtHint\"></span></p>\n<form>\nFirst name: <input type=\"text\" onkeyup=\"showHint(this.value)\">\n</form>\n<script>\nfunction showHint(str) {\nif (str.length == 0) {\ndocument.getElementById(\"txtHint\").innerHTML = \"\";\nreturn;\n} else {\nconst xmlhttp = new XMLHttpRequest();\nxmlhttp.onload = function() {\ndocument.getElementById(\"txtHint\").innerHTML = this.responseText;\n}\nxmlhttp.open(\"GET\", \"gethint.php?q=\" + str);\nxmlhttp.send();\n}\n}\n</script>\n\n---\n\n<?php\n// Array with names\n$a[] = \"Anna\";\n$a[] = \"Brittany\";\n$a[] = \"Cinderella\";\n$a[] = \"Diana\";\n$a[] = \"Eva\";\n$a[] = \"Fiona\";\n$a[] = \"Gunda\";\n$a[] = \"Hege\";\n$a[] = \"Inga\";\n$a[] = \"Johanna\";\n$a[] = \"Kitty\";\n$a[] = \"Linda\";\n$a[] = \"Nina\";\n$a[] = \"Ophelia\";\n$a[] = \"Petunia\";\n$a[] = \"Amanda\";\n$a[] = \"Raquel\";\n$a[] = \"Cindy\";\n$a[] = \"Doris\";\n$a[] = \"Eve\";\n$a[] = \"Evita\";\n$a[] = \"Sunniva\";\n$a[] = \"Tove\";\n$a[] = \"Unni\";\n$a[] = \"Violet\";\n$a[] = \"Liza\";\n$a[] = \"Elizabeth\";\n$a[] = \"Ellen\";\n$a[] = \"Wenche\";\n$a[] = \"Vicky\";\n// get the q parameter from URL\n$q = $_REQUEST[\"q\"];\n$hint = \"\";\n// lookup all hints from array if $q is different from \"\"\nif ($q !== \"\") {\n$q = strtolower($q);\n$len=strlen($q);\nforeach($a as $name) {\nif (stristr($q, substr($name, 0, $len))) {\nif ($hint === \"\") {\n$hint = $name;\n} else {\n$hint .= \", $name\";\n}\n}\n}\n}\n// Output \"no suggestion\" if no hint was found or output correct values\necho $hint === \"\" ? \"no suggestion\" : $hint;\n?>\n```\n\n## Tutorials\n\nAJAX is used to create more interactive applications.\n\nThe following example will demonstrate how a web page can communicate with a \nweb server while a user type characters in an input field:\n\nIn the example above, when a user types a character in the input field, a function \ncalledshowHint()is executed.\n\nThe function is triggered by theonkeyupevent.\n\nHere is the code:\n\nCode explanation:\n\nFirst, check if the input field is empty (str.length == 0). If it is, clear the \ncontent of the txtHint placeholder and exit the function.\n\nHowever, if the input field is not empty, do the following:\n\nThe ASP file checks an array of names, and returns the corresponding name(s) to the \nbrowser:\n\n### Code Examples\n\n```\n<p>Start typing a name in the input field below:</p>\n<p>Suggestions: <span id=\"txtHint\"></span></p>\n<form>\nFirst name: <input type=\"text\" onkeyup=\"showHint(this.value)\">\n</form>\n<script>\nfunction showHint(str) {\nif (str.length == 0) {\ndocument.getElementById(\"txtHint\").innerHTML = \"\";\nreturn;\n} else {\nconst xmlhttp = new XMLHttpRequest();\nxmlhttp.onload = function() {\ndocument.getElementById(\"txtHint\").innerHTML = this.responseText;\n}\nxmlhttp.open(\"GET\", \"gethint.asp?q=\" + str);\nxmlhttp.send();\n}\n}\n</script>\n\n---\n\n<%\nresponse.expires=-1\ndim a(30)\n'Fill up array with names\na(1)=\"Anna\"\na(2)=\"Brittany\"\na(3)=\"Cinderella\"\na(4)=\"Diana\"\na(5)=\"Eva\"\na(6)=\"Fiona\"\na(7)=\"Gunda\"\na(8)=\"Hege\"\na(9)=\"Inga\"\na(10)=\"Johanna\"\na(11)=\"Kitty\"\na(12)=\"Linda\"\na(13)=\"Nina\"\na(14)=\"Ophelia\"\na(15)=\"Petunia\"\na(16)=\"Amanda\"\na(17)=\"Raquel\"\na(18)=\"Cindy\"\na(19)=\"Doris\"\na(20)=\"Eve\"\na(21)=\"Evita\"\na(22)=\"Sunniva\"\na(23)=\"Tove\"\na(24)=\"Unni\"\na(25)=\"Violet\"\na(26)=\"Liza\"\na(27)=\"Elizabeth\"\na(28)=\"Ellen\"\na(29)=\"Wenche\"\na(30)=\"Vicky\"\n'get the q parameter from URL\nq=ucase(request.querystring(\"q\"))\n'lookup all hints from array if length of q>0\nif len(q)>0 then\nhint=\"\"\nfor i=1 to 30\nif q=ucase(mid(a(i),1,len(q))) then\nif hint=\"\" then\nhint=a(i)\nelse\nhint=hint & \" , \" & a(i)\nend if\nend if\nnext\nend if\n'Output \"no suggestion\" if no hint were found\n'or output the correct values\nif hint=\"\" then\nresponse.write(\"no suggestion\")\nelse\nresponse.write(hint)\nend if\n%>\n```\n\n## Tutorials\n\nAJAX can be used for interactive communication with a database.\n\nThe following example will demonstrate how a web page can fetch \ninformation from a database with AJAX:\n\nWhen a user selects a customer in the dropdown list above, a function calledshowCustomer()is executed. The \nfunction is triggered by theonchangeevent:\n\nTheshowCustomer()function does the following:\n\nThe page on the server called by the JavaScript above is a PHP file called \"getcustomer.php\".\n\nThe source code in \"getcustomer.php\" runs a query against a database, and returns the result in an HTML \ntable:\n\n### Code Examples\n\n```\nfunction showCustomer(str) {\nif (str == \"\") {\ndocument.getElementById(\"txtHint\").innerHTML = \"\";\nreturn;\n}\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\ndocument.getElementById(\"txtHint\").innerHTML = this.responseText;\n}\nxhttp.open(\"GET\", \"getcustomer.php?q=\"+str);\nxhttp.send();\n}\n\n---\n\n<?php\n$mysqli = new mysqli(\"\nservername\n\", \"\nusername\n\", \n  \"\npassword\n\", \"\ndbname\n\");\nif($mysqli->connect_error) {\nexit('Could not connect');\n}\n$sql = \"SELECT customerid, companyname, \n  contactname, address, city, postalcode, country\nFROM customers WHERE \n  customerid = ?\";\n$stmt = $mysqli->prepare($sql);\n$stmt->bind_param(\"s\", $_GET['q']);\n$stmt->execute();\n$stmt->store_result();\n$stmt->bind_result($cid, \n  $cname, $name, $adr, $city, $pcode, $country);\n$stmt->fetch();\n$stmt->close();\necho \"<table>\";\necho \"<tr>\";\necho \"<th>CustomerID</th>\";\necho \n  \"<td>\" . $cid . \"</td>\";\necho \"<th>CompanyName</th>\";\necho \"<td>\" . $cname \n  . \"</td>\";\necho \"<th>ContactName</th>\";\necho \"<td>\" . $name . \"</td>\";\necho \"<th>Address</th>\";\necho \"<td>\" . \n  $adr . \"</td>\";\necho \"<th>City</th>\";\necho \"<td>\" . $city . \"</td>\";\necho \"<th>PostalCode</th>\";\necho \"<td>\" . \n  $pcode . \"</td>\";\necho \"<th>Country</th>\";\necho \"<td>\" . $country . \n  \"</td>\";\necho \"</tr>\";\necho \"</table>\";\n?>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_57",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_57",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

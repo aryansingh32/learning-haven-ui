@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 160,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Theborder-radiusproperty defines\nthe radius of an element's corners.\n\nThis property can be applied to all elements with abackground-color, aborder, \nor abackground-image.\n\nHere are three examples:\n\n1. Rounded corners for an element with a background color:\n\nRounded corners!\n\n2. Rounded corners for an element with a border:\n\nRounded corners!\n\n3. Rounded corners for an element with a background image:\n\nRounded corners!\n\nHere is the code:\n\nTheborder-radiusproperty can have from one \nto four values. Here are the rules:\n\nFour values - border-radius: 15px 50px 30px 5px;(first \nvalue applies to top-left corner, second value applies to top-right corner, \nthird value applies to bottom-right corner, and fourth value applies to \nbottom-left corner):\n\nThree values - border-radius: 15px 50px 30px;(first value \napplies to top-left corner, second value applies to top-right and bottom-left \ncorners, and third value applies to bottom-right corner):\n\nTwo values - border-radius: 15px 50px;(first value applies \nto top-left and bottom-right corners, and the second value applies to top-right \nand bottom-left corners):\n\nOne value - border-radius: 15px;(the value applies to all \nfour corners, which are rounded equally:\n\nHere is the code:\n\nTo create elliptical corners, you must specify two values for each radius, \nseparated by a slash /. The first value defines the horizontal radius, and the \nsecond value defines the vertical radius.\n\nTo create a oval shape (for a rectangular element), or to create a circular \nshape (for a square element) setborder-radiusto 50%.\n\n### Code Snippets\n\n```\n#div1 {\nborder-radius: 25px;\nbackground-color: #73AD21;\npadding: 20px;\nwidth: 200px;\nheight: 150px;\n}\n#div2 {\nborder-radius: 25px;\nborder: 2px solid #73AD21;\npadding: 20px;\nwidth: 200px;\nheight: 150px;\n}\n#div3 {\nborder-radius: 25px;\nbackground-image: url(paper.gif);\nbackground-position: left top;\nbackground-repeat: \nrepeat;\npadding: 20px;\nwidth: \n200px;\nheight: 150px;\n}\n\n---\n\n#div1 {\nborder-radius: 15px 50px 30px 5px; /* four values */\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div2 {\nborder-radius: 15px 50px 30px; /* \n   three values */\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div3 {\nborder-radius: 15px 50px; /* two values */\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div4 {\nborder-radius: 15px; /* one value */\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n\n---\n\n#div1 {\nborder-radius: 70px / 30px;\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div2 {\nborder-radius: 15px / 50px;\nbackground: \n   #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div3 {\nborder-radius: 50%;\nbackground: #04AA6D;\nwidth: 200px;\nheight: 150px;\n}\n#div4 {\nborder-radius: 50%;\nbackground: #04AA6D;\nwidth: 200px;\nheight: 200px;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_159",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

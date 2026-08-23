@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 127,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "AnIteratoris an object that can be used to loop throughcollections, likeArrayListandHashSet.\n\nIt is called an \"iterator\" because \"iterating\" is the technical term for looping.\n\nTo use an Iterator, you must import it from thejava.utilpackage.\n\nTheiterator()method can be used to get anIteratorfor any collection:\n\nTo loop through a collection, use thehasNext()andnext()methods of theIterator:\n\nIterators are designed to easily change the collections that they loop through. Theremove()method can remove items from a collection while looping.\n\nYou can also use thevarkeyword with iterators.  \nThis avoids repeating the long type nameIterator<String>, since the compiler already knows the type from the collection.\n\nThis makes code shorter,but many developers still use the full type for clarity.  \nSincevaris valid from Java version 10, you may see it in other code, so it's good to know that it exists:\n\nHere,varmakes the iterator declaration shorter,  \nbut the actual type is stillIterator<String>.\n\n### Code Snippets\n\n```\nExample\n// Import the ArrayList class and the Iterator class\nimport java.util.ArrayList;\nimport java.util.Iterator;\n\npublic class Main {\n  public static void main(String[] args) {\n\n    // Make a collection\n    ArrayList<String> cars = new ArrayList<String>();\n    cars.add(\"Volvo\");\n    cars.add(\"BMW\");\n    cars.add(\"Ford\");\n    cars.add(\"Mazda\");\n\n    // Get the iterator\n    Iterator<String> it = cars.iterator();\n\n    // Print the first item\n    System.out.println(it.next());\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nwhile(it.hasNext()) {\n  System.out.println(it.next());\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nUse an iterator to remove numbers less than 10 from a collection:\nimport java.util.ArrayList;\nimport java.util.Iterator;\n\npublic class Main {\n  public static void main(String[] args) {\n    ArrayList<Integer> numbers = new ArrayList<Integer>();\n    numbers.add(12);\n    numbers.add(8);\n    numbers.add(2);\n    numbers.add(23);\n    Iterator<Integer> it = numbers.iterator();\n    while(it.hasNext()) {\n      Integer i = it.next();\n      if(i < 10) {\n        it.remove();\n      }\n    }\n    System.out.println(numbers);\n  }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\n// Without var\nIterator<String> it = cars.iterator();\n\n// With var\nvar it = cars.iterator();\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_126",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

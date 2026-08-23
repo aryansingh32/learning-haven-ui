@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nStructures (also called structs) are a way to group several related variables into one place.\n\nEach variable in the structure is \nknown as amemberof the structure.\n\nUnlike anarray, a structure can contain many \ndifferent data types:int,string,bool, etc.\n\nTo create a structure, use thestructkeyword and declare each of its members inside curly braces.\n\nAfter the declaration, specify the name of the structure variable (myStructurein the example below):\n\nTo access members of a structure, use the dot syntax (.):\n\nYou can use a comma (,) to use one structure in many variables:\n\nThis example shows how to use a structure in two different variables:\n\nBy giving a name to the structure, you can treat it as a data type. This means that you can create variables with this structure anywhere in the program at any time.\n\nTo create a named structure, put the name of the structure right after thestructkeyword:\n\nTo declare a variable that uses the structure, use the name of the structure as the data type of the variable:\n\nNow the structure can be reused anywhere by usingcaras the data type:\n\nCreate a structure to represent a student. It should have the following members:\n\nThen:\n\n### Code Examples\n\n```\nstruct {\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Structure declaration\nint myNum;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Member (int \n  variable)\nstring myString;\u00a0\u00a0 // Member (string variable)\n} \n  myStructure;\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 // Structure variable\n\n---\n\n// Create a structure variable called myStructure\nstruct {\nint myNum;\nstring myString;\n} myStructure;\n// Assign values to members of myStructure\nmyStructure.myNum = 1;\nmyStructure.myString = \"Hello World!\";\n// Print members of myStructure\ncout << myStructure.myNum << \"\\n\";\ncout << myStructure.myString << \"\\n\";\n\n---\n\nstruct {\nint myNum;\nstring myString;\n} myStruct1, myStruct2, myStruct3; // Multiple structure variables separated with commas\n\n---\n\nstruct {\nstring brand;\nstring model;\nint year;\n} myCar1, myCar2;  // We can add variables by separating them with a comma here\n// Put data into the first structure\nmyCar1.brand = \"BMW\";\nmyCar1.model = \"X5\";\nmyCar1.year = 1999;\n// Put data into the second structure\nmyCar2.brand = \"Ford\";\nmyCar2.model = \"Mustang\";\nmyCar2.year = 1969;\n// Print the structure members\ncout << myCar1.brand << \" \" << myCar1.model << \" \" << myCar1.year << \"\\n\";\ncout << myCar2.brand << \" \" << myCar2.model << \" \" << myCar2.year << \"\\n\";\n\n---\n\nstruct car {\u00a0 // This structure is now named \"car\"\nstring \n  brand;\nstring model;\nint year;\n};\n\n---\n\ncar myCar1;\n\n---\n\n// Declare a structure named \"car\"\nstruct car {\nstring brand;\nstring model;\nint year;\n};\nint main() {\n// Create a car structure and store it in myCar1;\ncar myCar1;\nmyCar1.brand = \"BMW\";\nmyCar1.model = \"X5\";\nmyCar1.year = 1999;\n// Create another car structure and store it in myCar2;\ncar myCar2;\nmyCar2.brand = \"Ford\";\nmyCar2.model = \"Mustang\";\nmyCar2.year = 1969;\n// Print the structure members\ncout << myCar1.brand << \" \" << myCar1.model << \" \" << myCar1.year << \"\\n\";\ncout << myCar2.brand << \" \" << myCar2.model << \" \" << myCar2.year << \"\\n\";\nreturn 0;\n}\n\n---\n\nName: Liam\nAge: 35\nGrade: A\n\n---\n\n#include <iostream>\n#include <string>\nusing namespace std;\nstruct student {\nstring name;\nint age;\nchar grade;\n};\nint main() {\nstudent s1;\ns1.name = \"John\";\ns1.age = 35;\ns1.grade = 'A';\ncout << \"Name: \" << s1.name << \"\\n\";\ncout << \"Age: \" << s1.age << \"\\n\";\ncout << \"Grade: \" << s1.grade << \"\\n\";\nreturn 0;\n}\n```\n\n## Tutorials\n\nAnenumis a special type that represents a group of constants (unchangeable values).\n\nTo create an enum, use theenumkeyword, \nfollowed by the name of the enum, and separate the enum items with a comma:\n\nTo access the enum, you must create a variable of it.\n\nInside themain()method, specify theenumkeyword, followed by the name \nof the enum (Level) and then the name of the enum variable (myVarin this \nexample):\n\nNow that you have created an enum variable (myVar), you can assign \na value to it.\n\nThe assigned value must be one of the items inside the enum (LOW,MEDIUMorHIGH):\n\nBy default, the first item (LOW) has the value0, the second \n(MEDIUM) has the value1, etc.\n\nIf you now try to print myVar, it will output1, which representsMEDIUM:\n\nAs you know, the first item of an enum has the value 0. The second has the value 1, and so on.\n\nTo make more sense of the values, you can easily change them:\n\nNote that if you assign a value to one specific item, the next items will update their numbers accordingly:\n\nEnums are often used in switch statements to check for corresponding values:\n\n### Code Examples\n\n```\nenum Level {\nLOW,\nMEDIUM,\nHIGH\n};\n\n---\n\nenum Level myVar;\n\n---\n\nenum Level myVar = MEDIUM;\n\n---\n\nint main() {\n// Create an enum variable and assign a value to it\nenum Level myVar \n  = MEDIUM;\n// Print the enum variable\ncout << myVar;\nreturn 0;\n}\n\n---\n\nenum Level {\nLOW = 25,\nMEDIUM = 50,\nHIGH = 75\n};\n\n---\n\nint main() {\nenum Level myVar = MEDIUM;\ncout << myVar;\u00a0 // Now outputs 50\nreturn 0;\n}\n\n---\n\nenum Level {\nLOW = 5,\nMEDIUM,\u00a0// Now 6\nHIGH\u00a0// Now 7\n};\n\n---\n\nenum Level {\nLOW = 1,\nMEDIUM,\nHIGH\n};\nint main() {\nenum Level myVar = MEDIUM;\nswitch (myVar) \n  {\ncase 1:\ncout << \"Low \n  Level\";\nbreak;\ncase 2:\ncout << \"Medium level\";\nbreak;\ncase 3:\ncout << \"High level\";\nbreak;\n}\nreturn 0;\n}\n```\n\n## Tutorials\n\nA reference variable is analiasfor an existing variable. It is created using the&operator:\n\nNow, you can use eitherfoodormealto refer to the same value:\n\nNote:Bothfoodandmealrefer to the same memory location. Changing one affects the other.\n\nIf you change the value of a reference variable, the original variable will \nalso change (and vice versa), because they both refer to the same memory \nlocation:\n\n### Code Examples\n\n```\nstring food = \"Pizza\";\u00a0 // food variable\nstring &meal = food;\u00a0\u00a0\u00a0 \n  // reference to food\n\n---\n\nstring food = \"Pizza\";\nstring &meal = food;\ncout << food << \"\\n\";\u00a0 \n  // Outputs Pizza\ncout << meal << \"\\n\";\u00a0 // \n  Outputs Pizza\n\n---\n\nstring food = \"Pizza\"; // food variable\nstring &meal = food;\u00a0\u00a0 // \n  reference to food\nmeal = \"Burger\"; // changes both meal and food\ncout << \n  food << \"\\n\"; // Outputs Burger\ncout << meal << \"\\n\"; // Outputs Burger\n```\n\n## Tutorials\n\nIn the example from the previous page, the&operator was used to create a reference variable. \nBut it can also be used to get the memory address of a variable; which is the \nlocation of where the variable is stored on the computer.\n\nWhen a variable is created in C++, a memory address is assigned to the variable. \nAnd when we assign a value to the variable, it is stored in this memory \naddress.\n\nTo access it, use the&operator, and the result will represent where the variable is stored:\n\nNote:The memory address is in hexadecimal form (0x..). Note \nthat \nyou may not get the same result in your program.\n\n### Code Examples\n\n```\nstring food = \"Pizza\";\ncout << &food; // Outputs 0x6dfed4\n```\n\n## Tutorials\n\nYou learned from the previous chapter, that we can get thememory \naddressof a variable by using the&operator:\n\nApointerhowever, is a variable thatstores the memory address as its value.\n\nA pointer variable points to a data type (likeintorstring) of the same \ntype, and is created with the*operator. The address of the variable you're working with is assigned to the pointer:\n\nCreate a pointer variable with the nameptr, thatpoints toastringvariable, by using the \nasterisk sign*(string* ptr). \nNote that the type of the pointer has to match the type of the variable you're \nworking with.\n\nUse the&operator to store the memory address of the \nvariable calledfood, and assign it to the pointer.\n\nNow,ptrholds the value offood's memory address.\n\n### Code Examples\n\n```\nstring food = \"Pizza\"; \n    // A food variable of type string\ncout << \n    food;\u00a0 // Outputs the value of food (Pizza)\ncout << &food; // Outputs the memory address of food (\n0x6dfed4\n)\n\n---\n\nstring food = \"Pizza\";\u00a0 // A food variable \n    of type string\nstring* ptr = \n    &food;\n// A pointer variable, with the name \n    ptr, that stores the \n    address of food\n// Output the value of food (Pizza)\ncout << food << \"\\n\";\n// Output \n    the memory address of food (0x6dfed4)\ncout << &food << \"\\n\";\n// \n    Output the memory address of food with the pointer (0x6dfed4)\ncout << \n    ptr << \"\\n\";\n\n---\n\nstring* mystring; // Preferred\nstring *mystring;\nstring * mystring;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

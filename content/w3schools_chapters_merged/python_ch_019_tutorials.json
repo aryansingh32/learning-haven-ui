@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 19,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheelifkeyword is Python's way of saying \"if the previous conditions were not true, then \ntry this condition\".\n\nTheelifkeyword allows you to check multiple expressions forTrueand execute a block of code as soon as one of the conditions evaluates toTrue.\n\nIn this exampleais equal tob, so the first condition is not true, but theelifcondition is true, so we print to screen that \"a and b are equal\".\n\nYou can have as manyelifstatements as you need. Python will check each condition in order and execute the first one that is true.\n\nIn this example, the program checks each condition in order. Sincescoreis 75, it prints \"Grade: C\" (the first condition that evaluates to true).\n\nWhen you useelif, Python evaluates the conditions from top to bottom. As soon as it finds a condition that is true, it executes that block and skips all remaining conditions.\n\nUseelifwhen you have multiple mutually exclusive conditions to check. This is more efficient than using multiple separateifstatements because Python stops checking once it finds a true condition.\n\n### Code Examples\n\n```\na = 33\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelif a == b:\nprint(\"a and b are equal\")\n\n---\n\nscore = 75\nif score >= 90:\nprint(\"Grade: A\")\nelif score >= 80:\nprint(\"Grade: B\")\nelif score >= 70:\nprint(\"Grade: C\")\nelif score >= 60:\nprint(\"Grade: D\")\n\n---\n\nage = 25\nif age < 13:\nprint(\"You are a child\")\nelif age < 20:\nprint(\"You are a teenager\")\nelif age < 65:\nprint(\"You are an adult\")\nelif age >= 65:\nprint(\"You are a senior\")\n\n---\n\nday = 3\nif day == 1:\nprint(\"Monday\")\nelif day == 2:\nprint(\"Tuesday\")\nelif day == 3:\nprint(\"Wednesday\")\nelif day == 4:\nprint(\"Thursday\")\nelif day == 5:\nprint(\"Friday\")\nelif day == 6:\nprint(\"Saturday\")\nelif day == 7:\nprint(\"Sunday\")\n```\n\n## Tutorials\n\nTheelsekeyword catches anything which isn't caught by the preceding conditions.\n\nTheelsestatement is executed when theifcondition (and anyelifconditions) evaluate toFalse.\n\nIn this exampleais greater thanb,\nso the first condition is not true, also theelifcondition is not true,\nso we go to theelsecondition and print to screen that \"a is greater than b\".\n\nYou can also have anelsewithout theelif:\n\nThis creates a simple two-way choice: if the condition is true, execute one block; otherwise, execute the else block.\n\nTheelsestatement provides a default action when none of the previous conditions are true. Think of it as a \"catch-all\" for any scenario not covered by yourifandelifstatements.\n\nYou can combineif,elif, andelseto create a comprehensive decision-making structure.\n\nTheelsestatement acts as a fallback that executes when none of the preceding conditions are true. This makes it useful for error handling, validation, and providing default values.\n\n### Code Examples\n\n```\na = 200\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelif a == b:\nprint(\"a and b are equal\")\nelse:\nprint(\"a is greater than b\")\n\n---\n\na = 200\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelse:\nprint(\"b is not greater than a\")\n\n---\n\nnumber = 7\nif number % 2 == 0:\nprint(\"The number is even\")\nelse:\nprint(\"The number is odd\")\n\n---\n\ntemperature = 22\nif temperature > 30:\nprint(\"It's hot outside!\")\nelif temperature > 20:\nprint(\"It's warm outside\")\nelif temperature > 10:\nprint(\"It's cool outside\")\nelse:\nprint(\"It's cold outside!\")\n\n---\n\nusername = \"Emil\"\nif len(username) > 0:\nprint(f\"Welcome, {username}!\")\nelse:\nprint(\"Error: Username cannot be empty\")\n```\n\n## Tutorials\n\nIf you have only one statement to execute, you can put it on the same line as theifstatement.\n\nIf you have one statement forifand one forelse, you can put them on the same line using a conditional expression:\n\nYou can also use a one-lineif/elseto choose a value and assign it to a variable:\n\nThe syntax follows this pattern:\n\nYou can chain conditional expressions, but keep it short so it stays readable:\n\nTernary operators are particularly useful for simple assignments and return statements.\n\nShorthand if statements and ternary operators should be used when:\n\n### Code Examples\n\n```\na = 5\nb = 2\nif a > b: print(\"a is greater than b\")\n\n---\n\na = 2\nb = 330\nprint(\"A\") if a > b else print(\"B\")\n\n---\n\na = 10\nb = 20\nbigger = a if a > b else b\nprint(\"Bigger is\", bigger)\n\n---\n\nvariable = value_if_true if condition else value_if_false\n\n---\n\na = 330\nb = 330\nprint(\"A\") if a > b else print(\"=\") if a == b else print(\"B\")\n\n---\n\nx = 15\ny = 20\nmax_value = x if x > y else y\nprint(\"Maximum value:\", max_value)\n\n---\n\nusername = \"\"\ndisplay_name = username if username else \"Guest\"\nprint(\"Welcome,\", display_name)\n```\n\n## Tutorials\n\nLogical operators are used to combine conditional statements. Python has three logical operators:\n\nTheandkeyword is a logical operator, and \nis used to combine conditional statements. Both conditions must be true for the entire expression to be true.\n\nTheorkeyword is a logical operator, and \nis used to combine conditional statements. At least one condition must be true for the entire expression to be true.\n\nThenotkeyword is a logical operator, and \nis used to reverse the result of the conditional statement.\n\nYou can combine multiple logical operators in a single expression. Python evaluatesnotfirst, thenand, thenor.\n\nUnderstanding how logical operators work with different values:\n\nWhen combining multiple logical operators, use parentheses to make your intentions clear and control the order of evaluation.\n\n### Code Examples\n\n```\na = 200\nb = 33\nc = 500\nif a > b and c > a:\nprint(\"Both conditions are True\")\n\n---\n\na = 200\nb = 33\nc = 500\nif a > b or a > c:\nprint(\"At least one of the conditions is True\")\n\n---\n\na = 33\nb = 200\nif not a > b:\nprint(\"a is NOT greater than b\")\n\n---\n\nage = 25\nis_student = False\nhas_discount_code = True\nif (age < 18 or age > 65) and not is_student or has_discount_code:\nprint(\"Discount applies!\")\n\n---\n\ntemperature = 25\nis_raining = False\nis_weekend = True\nif (temperature > 20 and not is_raining) or is_weekend:\nprint(\"Great day for outdoor activities!\")\n\n---\n\nusername = \"Tobias\"\npassword = \"secret123\"\nis_verified = True\nif username and password and is_verified:\nprint(\"Login successful\")\nelse:\nprint(\"Login failed\")\n\n---\n\nscore = 85\nif score >= 0 and score <= 100:\nprint(\"Valid score\")\nelse:\nprint(\"Invalid score\")\n```\n\n## Tutorials\n\nYou can haveifstatements insideifstatements. This is callednestedifstatements.\n\nIn this example, the innerifstatement only runs if the outer condition (x > 10) is true.\n\nEach level of nesting creates a deeper level of decision-making. The code evaluates from the outermost condition inward.\n\nYou can nest as many levels deep as needed, but keep in mind that too many levels can make code harder to read.\n\nSometimes nested if statements can be simplified using logical operators likeand. The choice depends on your logic.\n\nBoth approaches produce the same result. Use nested if statements when the inner logic is complex or depends on the outer condition. Useandwhen both conditions are simple and equally important.\n\n### Code Examples\n\n```\nx = 41\nif x > 10:\nprint(\"Above ten,\")\nif x > 20:\nprint(\"and also above 20!\")\nelse:\nprint(\"but not above 20.\")\n\n---\n\nage = 25\nhas_license = True\nif age >= 18:\nif has_license:\nprint(\"You can drive\")\nelse:\nprint(\"You need a license\")\nelse:\nprint(\"You are too young to drive\")\n\n---\n\nscore = 85\nattendance = 90\nsubmitted = True\nif score >= 60:\nif attendance >= 80:\nif submitted:\nprint(\"Pass with good standing\")\nelse:\nprint(\"Pass but missing assignment\")\nelse:\nprint(\"Pass but low attendance\")\nelse:\nprint(\"Fail\")\n\n---\n\ntemperature = 25\nis_sunny = True\nif temperature > 20:\nif is_sunny:\nprint(\"Perfect beach weather!\")\n\n---\n\ntemperature = 25\nis_sunny = True\nif temperature > 20 and is_sunny:\nprint(\"Perfect beach weather!\")\n\n---\n\nusername = \"Emil\"\npassword = \"python123\"\nis_active = True\nif username:\nif password:\nif is_active:\nprint(\"Login successful\")\nelse:\nprint(\"Account is not active\")\nelse:\nprint(\"Password required\")\nelse:\nprint(\"Username required\")\n\n---\n\nscore = 92\nextra_credit = 5\nif score >= 90:\nif extra_credit > 0:\nprint(\"A+ grade\")\nelse:\nprint(\"A grade\")\nelif score >= 80:\nprint(\"B grade\")\nelse:\nprint(\"C grade or below\")\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_19",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_19",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

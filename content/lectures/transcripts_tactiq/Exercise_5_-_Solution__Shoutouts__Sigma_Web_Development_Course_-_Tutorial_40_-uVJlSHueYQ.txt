@@ -1,0 +1,646 @@
+Video URL: https://www.youtube.com/watch?v=-uVJlSHueYQ
+Video Title: Exercise 5 - Solution & Shoutouts | Sigma Web Development Course - Tutorial #40
+--------------------------------------------------
+
+00:00:00.000
+So many of you guys have solved exercise 5
+00:00:02.960
+In today's video, I will tell you the solution of exercise 5
+00:00:06.340
+Then I will give a shoutout to all of you who have solved this question
+00:00:09.300
+Like with high energy and write Sigma patch up in the comment section below
+00:00:13.300
+Let's go to the computer screen
+00:00:14.600
+Let's roll the intro
+00:00:15.800
+Intro
+00:00:24.600
+So guys, I have made a folder named video 41 here and the first thing I will do is open it in VS code and tell you how we can design this layout.
+00:00:35.000
+So I will name it layout and this is going to be the solution of our exercise.
+00:00:41.000
+I will toggle the word wrap and screencast mode for you so that you can see what keys I am pressing
+00:00:46.800
+now you see carefully that we have to make this layout
+00:00:50.040
+and we can also use these colors
+00:00:52.280
+so the first thing I will do is make a navbar
+00:00:54.840
+I will say that my body has a header
+00:00:58.960
+and there will be a footer in my body
+00:01:01.280
+there will be a main content and a footer
+00:01:03.480
+I am using HTML's
+00:01:05.379
+semantic tags
+00:01:07.380
+and in my header there will be a
+00:01:09.380
+navbar, ok? and the
+00:01:11.380
+navbar, now see here
+00:01:13.380
+I won't use flexbox because when I
+00:01:15.380
+gave you this exercise, I didn't tell you
+00:01:17.380
+about flexbox at all, but
+00:01:19.380
+I will tell you
+00:01:21.380
+how we will do
+00:01:23.380
+by pinging background color and make the height to 133 pixels
+00:01:29.000
+I am going to do one more thing here, I have already told you that you go to settings and go to the live preview extension
+00:01:38.000
+I don't want to open it in the new tab, I want to open it in the external browser. So whenever I click here, I will open it directly in the external browser.
+00:01:47.800
+I will do one more thing here,
+00:01:49.800
+first of all, I will make it 83 pixels
+00:01:52.400
+and by applying a universal selector,
+00:01:55.200
+I will make it M0 and P0 here.
+00:01:58.200
+What will happen with this? Margin will be 0, padding will be 0
+00:02:01.200
+and the spacing that was visible will not be visible.
+00:02:03.400
+So here you saw that the pink color layout
+00:02:06.000
+I made it. After this, what I will do below
+00:02:08.000
+I will make a container and in that container
+00:02:10.000
+I will give padding. My main content
+00:02:12.000
+in that I will make a container.
+00:02:14.000
+So div.container
+00:02:16.000
+I will write here.
+00:02:18.000
+Now what I will do in this container
+00:02:20.000
+inside the .container
+00:02:22.000
+I
+00:02:24.000
+will give a background color red. Now you willcontainer I will give background color red
+00:02:26.000
+you will say who gives red background color
+00:02:29.000
+I give it for testing and I will remove it
+00:02:32.000
+and I will do margin
+00:02:35.000
+from top bottom 12px
+00:02:38.000
+and from left right 34px
+00:02:41.000
+so you see here
+00:02:44.000
+it didn't come, I see what the problem is.
+00:02:45.000
+It will take the div.container. Ok, so it's not the height of the container.
+00:02:48.000
+So I will make its height 233 pixels. And you can see here that I have given
+00:02:52.000
+a little more than left and right. And from the top and bottom, I have given
+00:02:55.000
+something like this. What is the idea? The idea is to make this layout
+00:02:58.000
+green. I don't give it green. By the way, why didn't I give it green?
+00:03:01.000
+I should have given it green. i will make it's background green
+00:03:06.200
+and you can see it's looking like this
+00:03:08.200
+and it has two boxes
+00:03:10.200
+one is pink
+00:03:12.200
+and one is blue
+00:03:14.200
+so i will write
+00:03:16.200
+div.box1
+00:03:18.200
+and
+00:03:20.200
+along with that i will make box2
+00:03:22.200
+so this one
+00:03:24.200
+is pink box1 and i will give c 2 so this is pink color box 1
+00:03:25.600
+and I will give css to this box 1
+00:03:27.600
+and I will remove the height of container
+00:03:29.600
+because it will be automatic
+00:03:31.600
+so there is a box 1 and a box 2
+00:03:35.600
+so in box 1
+00:03:37.600
+what I will do is
+00:03:39.600
+that
+00:03:41.600
+the color of box 1 will be pink
+00:03:43.600
+background color pink ok, let's take this pink and along with that that box 1 color will be pink
+00:03:45.000
+ok, so let's take this pink
+00:03:48.000
+and along with that let's make it blue
+00:03:50.000
+let's make background color blue
+00:03:53.000
+and obviously it will be visible in new tab
+00:03:57.000
+sorry, it will be visible in new line
+00:04:00.000
+and I have to do something about it
+00:04:02.000
+so now if you see here
+00:04:04.000
+I have also removed its height
+00:04:05.320
+so I give height to box1 and box2
+00:04:07.160
+and I will give height to it
+00:04:09.440
+say 240 or I will do one thing
+00:04:12.960
+I will give it a height of 70vh
+00:04:15.160
+70vh
+00:04:16.959
+and I will give it a height of 70vh to box2
+00:04:20.160
+so there can be many ways to make this layout
+00:04:23.760
+and I will make its width I will make its width 50%.
+00:04:27.280
+So we will make the width 50% and as soon as we make the width 50%
+00:04:32.640
+Now see what came here, this is my container, there is a box 1 and a box 2 inside the container
+00:04:40.080
+And the width of box 1 is 50% and the height is 70bh
+00:04:45.080
+now the problem is that
+00:04:46.800
+the two boxes are inside the box
+00:04:49.200
+the pink box and this one
+00:04:51.520
+so what I have to do to bring it in the same line
+00:04:54.880
+one way to bring it in the same line is to make both the boxes inline
+00:04:58.360
+but this is not a good practice
+00:05:00.840
+I am trying to avoid the just flex box
+00:05:04.880
+I could have used float and clear
+00:05:06.000
+In fact I will block it inline so that it will obey the width
+00:05:09.000
+and now you can see how it looks
+00:05:12.000
+and it looks like this because of margin padding
+00:05:15.000
+I will have to reduce the width
+00:05:18.000
+so I will make it 45-45
+00:05:21.000
+instead of 50-50
+00:05:24.000
+and you can see it
+00:05:26.000
+and I have to give padding in this
+00:05:29.000
+so I will do one thing, I will give padding in both
+00:05:32.000
+and I will write padding top bottom
+00:05:35.000
+0 and sorry not padding
+00:05:38.000
+I had to give margin
+00:05:41.000
+and you can see
+00:05:44.000
+it is it like this
+00:05:45.280
+can you see it like this? yes it is visible
+00:05:47.280
+now I can increase this margin so that it can be pulled more
+00:05:51.480
+so I can set it from here
+00:05:53.480
+and to set it what I will do
+00:05:57.080
+I will come here in box 2, I will come in box 1
+00:05:59.680
+in fact I can also give padding in the container, this is also an option
+00:06:02.920
+this is also an option
+00:06:06.240
+to give padding in container
+00:06:08.860
+so that it looks like this
+00:06:11.860
+and to center it I will give text align center
+00:06:15.320
+so that it will come in the center
+00:06:18.320
+I have to do one more thing
+00:06:21.600
+that the margin I have given in the container
+00:06:24.600
+I should also give padding in the container is fine, I should also give a padding in the container
+00:06:27.500
+which will be 0 pixels from top bottom and 23 pixels from top bottom
+00:06:34.500
+and I also need it from the left and right, so it should look like this
+00:06:38.500
+in fact I will increase it a little from here, I will make it 55 pixels
+00:06:42.500
+so that a little more comes from the top bottom
+00:06:44.500
+and you see our layout is almost designed
+00:06:46.000
+after this I have to add welcome to sigma web development express
+00:06:50.000
+and after that I have to give footer
+00:06:52.000
+so I will finish my footer first
+00:06:54.000
+and the height of the footer I will do 100 pixels
+00:06:59.000
+and I will do its background color
+00:07:03.000
+what will I do, I will do this background color I will change the background color to... what I will do is... I will change the background color to this one,
+00:07:06.500
+I will change it to bisque, okay?
+00:07:08.000
+Now see here, this is my footer, okay?
+00:07:10.500
+This is my footer, and...
+00:07:12.500
+here I told you that
+00:07:14.500
+you have to make this one sticky, okay?
+00:07:17.500
+And your navbar should also be sticky,
+00:07:19.500
+I told you when you will scroll up, okay?
+00:07:22.000
+So I will add this too,
+00:07:23.500
+Welcome to Sigma Web Dev Express, up so I will add this too welcome to sigma web dev express
+00:07:26.000
+so here I will add a box
+00:07:28.000
+and div.textbox
+00:07:30.000
+and inside this
+00:07:32.000
+what I will do is
+00:07:34.000
+I will put a paragraph and write
+00:07:36.000
+welcome to sigma web
+00:07:38.000
+development express
+00:07:40.000
+ok and after writing this
+00:07:42.000
+what I will do is
+00:07:44.000
+text box text box
+00:07:46.640
+text box
+00:07:50.020
+padding 34px
+00:07:53.080
+and border
+00:07:56.080
+2px solid white
+00:07:59.080
+and my container
+00:08:02.080
+background black I will give the background color of the main container black
+00:08:06.000
+so I have given the background color of the main container black
+00:08:11.000
+and text white
+00:08:13.000
+the color will be white
+00:08:16.000
+let's see what I have made
+00:08:18.000
+so I have made this
+00:08:20.000
+and it looks like this
+00:08:21.000
+welcome to sigma web dev express
+00:08:23.000
+so I will definitely have to give margin in this from left to right so dev express I have to give margin from left to right
+00:08:26.000
+so how will I give margin in text box
+00:08:29.000
+I will say margin and little more margin
+00:08:32.000
+so if I give margin of 34vw
+00:08:35.000
+it will look like this, little more margin
+00:08:38.000
+I know that, so I will make margin 0 in top and bottom
+00:08:41.000
+I will give margin of 34vw in left and right so that it will be center
+00:08:44.000
+then I will give margin of 34px in left and right so that it will be center then I will give border radius
+00:08:45.280
+and the font size
+00:08:47.840
+I will make it 2m
+00:08:50.480
+and border radius will be 13px
+00:08:54.480
+let's see where we are
+00:08:56.240
+so here we have made it to a large extent
+00:08:59.440
+now I have to give margin in top and bottom
+00:09:02.000
+which I had made to 0 so I will make it 10px
+00:09:04.880
+I need margin in top and bottom so I had set to 0 so I will set it to 10 pixels
+00:09:06.000
+I need margin in top and bottom
+00:09:08.000
+so I have set it to 10 pixels
+00:09:10.000
+but I have to see what is the problem
+00:09:12.000
+so this is my paragraph
+00:09:14.000
+this is my text box
+00:09:16.000
+if I increase the margin
+00:09:18.000
+then why it is not taking the black background
+00:09:20.000
+I have to see this
+00:09:22.000
+so I have given the black background in mean
+00:09:24.000
+I have given it in not taking this background, I have to see this so the black background I have given in main ok, I have given that in main
+00:09:26.000
+and this is
+00:09:28.000
+margin, ok, so margin is coming
+00:09:30.000
+out, in total this is
+00:09:32.000
+ok, so I will give padding in main
+00:09:34.000
+basically, I have to give padding in main
+00:09:36.000
+if I want that from inside
+00:09:38.000
+I
+00:09:40.000
+get black color, so I have to
+00:09:42.000
+give padding in main so that it comes here like this
+00:09:44.000
+ok, so now here ok I can increase this margin if I want, so something like this,
+00:09:49.200
+so I will make the margin 50 pixels, which is the margin of my text box, I will make it 50 pixels,
+00:09:53.400
+I am telling you again, I am not making it responsive, I am intentionally mentioning this,
+00:09:58.200
+because I am making just this layout, maybe I will make it responsive later,
+00:10:03.400
+you can do this, that you have done this now maybe I will make it responsive later you can do like this, now you have done like this
+00:10:05.580
+later you make it responsive
+00:10:07.580
+and later you can do a lot by making it responsive
+00:10:10.580
+but for now you can understand it like this
+00:10:12.580
+that we are making just this layout
+00:10:14.580
+then after this
+00:10:16.580
+footer is done, everything is done
+00:10:18.580
+we have to make our navbar sticky
+00:10:20.580
+so in the navbar
+00:10:22.580
+we will say position
+00:10:24.580
+sticky just type position sticky
+00:10:26.000
+ok
+00:10:27.400
+just type position sticky
+00:10:30.400
+and it didn't work
+00:10:33.400
+we have to type top 0
+00:10:36.360
+ok top 0
+00:10:39.200
+now position sticky is not working
+00:10:42.200
+because i didn't put it in my parent
+00:10:45.280
+I should put it on the header
+00:10:47.480
+Now I will tell you that what is one more workaround to do this
+00:10:51.400
+that my header is on my nav
+00:10:53.200
+If I target the header here
+00:10:55.000
+If I say this thing here
+00:10:57.000
+Position sticky top 0
+00:10:59.880
+Then you see here that this position is sticky
+00:11:03.200
+of my header
+00:11:04.000
+So my header is sticky Andky so my header is sticky
+00:11:05.200
+and after this I have to make this circle of orange color
+00:11:08.200
+and I have to fix its position
+00:11:10.200
+so what I will do here is
+00:11:11.200
+I will write div.orangebox
+00:11:15.200
+and after this I can set the orange box
+00:11:20.200
+so I will do one thing
+00:11:21.200
+I will come here
+00:11:22.200
+so where is my orange box
+00:11:23.800
+here is my orange box, here it is my orange box, in this first of all I will give
+00:11:26.000
+height 12 pixels
+00:11:28.000
+and width 12 pixels
+00:11:30.000
+background will give
+00:11:32.000
+orange and
+00:11:34.000
+where is it, it is somewhere down here
+00:11:36.000
+it is here, position will give it
+00:11:38.000
+fixed and bottom
+00:11:40.000
+will give 12 pixels
+00:11:42.000
+and right
+00:11:44.000
+will give 23px
+00:11:46.240
+and border radius will be 13px
+00:11:50.880
+and if you want you can increase the height and width
+00:11:53.760
+it depends on you
+00:11:55.360
+let's say I give it 32x32
+00:11:57.600
+and see it is like this
+00:12:00.000
+and I have to increase the border radius a little
+00:12:02.000
+if I want a perfect circle
+00:12:04.000
+so I will increase the border radius also if I want a perfect circle so I will increase the border radius also
+00:12:07.000
+maybe I will increase the border radius to 60
+00:12:10.000
+so I have to add this thing here and my work is done here also
+00:12:14.000
+it is fixed here, how much ever I scroll, it is fixed here
+00:12:17.000
+so what I was saying, what I was talking about making
+00:12:20.000
+that is done
+00:12:22.000
+and orange box, I guess it was name orange box
+00:12:26.000
+not orange dash box, it was orange box, I guess orange dash box is better
+00:12:31.000
+it is readable a little more, so that layout is done,
+00:12:35.000
+you see here what I talked about, now specifically how much font size is there,
+00:12:40.000
+you have to match all that, and I should have done white color
+00:12:45.200
+you can do white
+00:12:46.800
+but again, you can make your layouts according to your requirements
+00:12:51.000
+and it is very fun to make layouts
+00:12:53.800
+writing CSS has become my hobby
+00:12:56.600
+it will become yours too
+00:12:57.800
+when things start happening exactly, it becomes a hobby
+00:13:00.600
+making websites has become my hobby
+00:13:03.000
+now I want to give a shoutout to all those people who accepted this challenge and solved it.
+00:13:08.000
+So I will scroll down here.
+00:13:10.000
+I know a lot of people must have solved it and also it's not possible to shout everyone out.
+00:13:15.000
+But I try to give a shoutout randomly.
+00:13:18.000
+Shoutout to Lakshraj Das, MD Maru, A.N.I Factual Films, Digital Connect, SKSK, Rao Mase, Elmort XM, Developer Pankaj, Nikhil, Stonic, Arna Verma, Maharaj Sagarwal, Shubh 409, Abhishek Singh, Rathan Veer Arts, RRC Gaming, Shakti, Chandan Singh, Jack Order, Kuldeep Sharma, Oma Ali, SXM, Mansoor Ali, Maulik Digwal, RAF GDN, Crazy Neha, Pranjal Barman, Rana Tariq, Nishant, American Nightmare, Ram Kumbar
+00:14:06.500
+Now I want to tell you that when you are solving the exercise, then solve it well
+00:14:12.000
+And when you solve it, you will get satisfaction
+00:14:15.000
+You should not get that much difference by giving or not giving my shoutout
+00:14:18.500
+Because you have come here to learn
+00:14:20.500
+My effort is always to do everything on my own
+00:14:23.500
+I try to make such a video that you guys
+00:14:26.000
+understand. I made a flexbox video
+00:14:29.000
+I tried the same in that video. I tried the same in the grade video
+00:14:32.000
+that how can I take the least time to explain you
+00:14:35.000
+so I will not take much time from you
+00:14:38.000
+all the people who have solved here, shoutout to all of you
+00:14:41.000
+and remember one thing, the hard work you are doing will bring this color
+00:14:44.000
+and will give a big contribution to make your life better.
+00:14:47.200
+So keep your hard work continuous like this
+00:14:49.200
+and if you have not accessed this playlist yet,
+00:14:51.700
+then do access it and bookmark it.
+00:14:53.700
+If you want to get a shoutout after that too,
+00:14:55.700
+then you turn on the channel notifications
+00:14:58.200
+so that the exercise comes next, then you comment.
+00:15:00.200
+If you comment first,
+00:15:01.700
+chances of getting a shoutout will be more.
+00:15:03.700
+But again, as I said, your hard as i said your hard work is more important
+00:15:08.000
+these things are not that important
+00:15:10.000
+my try is always to take minimum time to teach you
+00:15:14.000
+with the help of my limited knowledge
+00:15:17.000
+so do access the playlist
+00:15:19.000
+and i am updating the source code
+00:15:21.000
+that's all for now guys
+00:15:23.000
+thank you so much for watching this video
+00:15:26.000
+And I will see you next time

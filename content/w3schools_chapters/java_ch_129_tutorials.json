@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 129,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Wrapper classes provide a way to use primitive data types (int,boolean, \netc..) as objects.\n\nThe table below shows the primitive type and the equivalent wrapper class:\n\nSometimes you must use wrapper classes, for example when working with Collection objects, such \nasArrayList, where primitive types cannot be \nused (the list can only store objects):\n\nTo create a wrapper object, use the wrapper class instead of the primitive \ntype. To get the value, you can just print the object:\n\nSince you're now working with objects, you can use certain methods to get \ninformation about the specific object.\n\nFor example, the following methods are used to get the value associated with \nthe corresponding wrapper object:intValue(),byteValue(),shortValue(),longValue(),floatValue(),doubleValue(),charValue(),booleanValue().\n\nThis example will output the same result as the example above:\n\nAnother useful method is thetoString()method, which is used to convert wrapper objects to strings.\n\nIn the following example, we convert anIntegerto aString, and use thelength()method of theStringclass to output the length of the \"string\":\n\n### Code Snippets\n\n```\nExample\nArrayList<int> myNumbers = new ArrayList<int>(); // Invalid\nArrayList<Integer> myNumbers = new ArrayList<Integer>(); // Valid\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Integer myInt = 5;\n\u00a0\u00a0\u00a0 Double myDouble = 5.99;\n\u00a0\u00a0\u00a0 Character myChar = 'A';\n\u00a0\u00a0\u00a0 System.out.println(myInt);\n\u00a0\u00a0\u00a0 System.out.println(myDouble);\n\u00a0\u00a0\u00a0 System.out.println(myChar);\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Integer myInt = 5;\n\u00a0\u00a0\u00a0 Double myDouble = 5.99;\n\u00a0\u00a0\u00a0 Character myChar = 'A';\n\u00a0\u00a0\u00a0 System.out.println(myInt.intValue());\n\u00a0\u00a0\u00a0 System.out.println(myDouble.doubleValue());\n\u00a0\u00a0\u00a0 System.out.println(myChar.charValue());\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Integer myInt = 100;\n\u00a0\u00a0\u00a0 String myString = myInt.toString();\n\u00a0\u00a0\u00a0 System.out.println(myString.length());\n\u00a0 }\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_128",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

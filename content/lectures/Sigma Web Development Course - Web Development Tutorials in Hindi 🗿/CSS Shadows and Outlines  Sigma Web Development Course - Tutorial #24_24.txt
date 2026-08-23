@@ -1,0 +1,588 @@
+Video URL: https://www.youtube.com/watch?v=BZJcNU648Tc
+Video Title: CSS Shadows and Outlines | Sigma Web Development Course - Tutorial #24
+--------------------------------------------------
+
+00:00:00.000
+Guys we saw about margin and padding
+00:00:03.000
+In today's video, I will tell you about outline
+00:00:06.000
+and how you can add shadows in CSS
+00:00:09.000
+I will tell you about this
+00:00:12.000
+We understood everything from the CSS box model
+00:00:15.000
+that what is border, margin, padding and actual content
+00:00:18.000
+In this video, we will explore shadows and outlines
+00:00:21.000
+It's fun throughout the course
+00:00:24.000
+You guys keep writing sigma patch op in the comment section
+00:00:26.000
+Let's go to the computer screen
+00:00:27.000
+Let's roll the intro
+00:00:37.000
+So guys I have come to my computer screen
+00:00:39.000
+As you can see
+00:00:40.000
+Here I will do the same thing that I have been doing
+00:00:43.000
+From the last 23 videos I will make a folder in the name of video 24 to organize things
+00:00:48.600
+and I will open it in VS code
+00:00:50.000
+and today's topic is shadows
+00:00:53.200
+how shadows are given
+00:00:55.200
+you can give shadows to any element
+00:00:57.800
+I will quickly make index.html here
+00:01:02.400
+and along with that you can also give outlines
+00:01:04.800
+to give outlines what you have to do is
+00:01:07.600
+you have to use outline property
+00:01:09.800
+now how is this outline different from border
+00:01:12.600
+why we will use outline
+00:01:14.200
+so let's start with box shadow
+00:01:16.000
+first of all we will talk about shadows
+00:01:17.600
+what is inside CSS
+00:01:18.800
+so in CSS shadows are used
+00:01:21.600
+to give a visual shadow to any element
+00:01:24.400
+so here if I show you an example
+00:01:26.800
+so it will look like this
+00:01:28.200
+i will make a div here
+00:01:29.800
+div.box
+00:01:31.800
+and i will write i am a box
+00:01:35.000
+and here i will simply
+00:01:37.000
+put style tag
+00:01:39.000
+and i will write dot box
+00:01:41.000
+and i will write simply here
+00:01:43.000
+border 2px solid black let us say
+00:01:47.000
+and that's about it yeah that's about it
+00:01:50.000
+I will give a little padding 34px
+00:01:52.000
+and here you can see that it will look like this
+00:01:56.000
+where is my preview button
+00:01:59.000
+I will open it in browser
+00:02:01.000
+and see it will look like this
+00:02:02.000
+no surprises whatsoever
+00:02:04.000
+we have done this much and you all know about it
+00:02:06.000
+now if i want to give
+00:02:08.000
+shadow in this box then i will
+00:02:10.000
+use box shadow and the syntax of box shadow
+00:02:12.000
+is like this, here you put
+00:02:14.000
+horizontal offset, here you put
+00:02:16.000
+vertical offset, here you put blur
+00:02:18.000
+here you put spread
+00:02:20.000
+then you put color
+00:02:22.000
+then you put insert
+00:02:24.000
+now what is this, horizontal and vertical offset means how far the shadow will be
+00:02:27.920
+after this there is blur, what does blur do
+00:02:29.920
+the more value you give here
+00:02:31.920
+the more blur will be, okay
+00:02:33.920
+then after this you see
+00:02:35.920
+expands and shrinks the shadow size
+00:02:37.920
+if you increase the spread then your shadow size will be big or small
+00:02:42.120
+then you can define the color of the shadow here
+00:02:44.440
+and after that how much
+00:02:46.000
+you want to keep the shadow inside
+00:02:48.000
+that is defined by your inside. So if I copy this
+00:02:50.000
+and paste it here
+00:02:52.000
+I will show you by pasting it here
+00:02:54.000
+the shadow
+00:02:56.000
+so you can see here
+00:02:58.000
+box shadow, box shadow
+00:03:00.000
+you can see here
+00:03:02.000
+5 pixels, 15 pixels
+00:03:04.000
+5 pixels and I have given the color here
+00:03:07.000
+If I make this color red or green then it will be green
+00:03:11.000
+If I show you here then this is how the box shadow looks
+00:03:15.000
+Now what I will do here and I will request you too
+00:03:17.000
+Whenever you want to preview changes in CSS
+00:03:20.000
+Then what you have to do is inspect
+00:03:22.000
+And here I will move my face
+00:03:26.360
+so that you can see this
+00:03:27.760
+and focus here
+00:03:30.240
+now you want to see inside this particular element
+00:03:33.600
+that how to handle the box shadow
+00:03:37.040
+now you can see here
+00:03:39.680
+you can change the values
+00:03:42.400
+and you can see the shadow is outset, inset and all and see, by changing these, your shadow is changing you can see here
+00:03:45.560
+and what I have done here is
+00:03:47.560
+I have given a lot of Y offset and X offset
+00:03:50.560
+now see, if I do this, it will go here
+00:03:52.560
+if I do this, it will go here
+00:03:54.560
+now it's your choice where you want to put the shadow
+00:03:56.560
+now when does the shadow appear?
+00:03:58.560
+the shadow appears when
+00:04:00.560
+our light is coming from one direction
+00:04:02.560
+that is, if the light source is here
+00:04:04.560
+and this is my object, then shadow will be here
+00:04:08.560
+so if you want something like that
+00:04:11.400
+then to see the shadow here
+00:04:14.320
+you have to adjust these values
+00:04:16.399
+don't confuse the shadow, you are from the border
+00:04:18.720
+you are here, I don't want it all around
+00:04:20.560
+you keep it like this so that it looks like a shadow
+00:04:23.800
+shadow means shadow, okay hope you are getting it
+00:04:27.000
+now if you come here on insert value, you can change it
+00:04:30.000
+if you want a shadow inside, you can do it like this
+00:04:35.000
+now as you do it, the syntax will change
+00:04:39.000
+you wrote here insert, 10px, 8px, 5px and this color
+00:04:43.000
+so usually you can increase or decrease blur from here
+00:04:48.000
+and this syntax will change and by increasing spread it will spread more
+00:04:52.000
+ideally you will keep spread less because
+00:04:56.000
+shadow is not natural if you make spread unnatural
+00:05:00.000
+so you don't need to keep this syntax
+00:05:04.000
+so this syntax was horizontal offset, vertical offset
+00:05:08.000
+blur, spread, color, and inset, so this was about box shadow, you can
+00:05:12.000
+write this syntax like this, this is the way to write the syntax, now
+00:05:16.000
+along with box shadow, you can also give text shadow, the way you have given box shadow
+00:05:20.000
+you can also give text shadow, and here if I do text shadow
+00:05:24.000
+in any text element, I will copy it
+00:05:26.000
+and in fact I will
+00:05:28.000
+copy this whole css and here I will show you
+00:05:30.000
+that if I have a paragraph
+00:05:32.000
+and I say text shadow
+00:05:34.000
+ok, and I will write
+00:05:36.000
+lorem 34, and I
+00:05:38.000
+will write this css here
+00:05:40.000
+so what will happen here, text shadow will come
+00:05:42.000
+so text-shadow
+00:05:44.000
+I have made a class, I wanted to make a class named text element
+00:05:46.000
+I made it with the name of text shadow
+00:05:48.000
+no problem, I will fix it
+00:05:50.000
+and here see, text has a shadow
+00:05:52.000
+I will make this color red so that you can understand
+00:05:54.000
+what happens with text shadow
+00:05:56.000
+see, our shadow has come in text
+00:05:58.000
+sometimes we want visually that our shadow
+00:06:00.000
+comes in text and definitely if you want to change
+00:06:02.000
+it, then you can change it from here
+00:06:04.000
+and after that you can put it in your syntax again for example, if you want to change it then you can change it from here and then put it in your syntax
+00:06:05.860
+for example, if i want my text shadow
+00:06:08.860
+to be purple
+00:06:11.860
+and along with that
+00:06:14.860
+along with the purple shade
+00:06:17.860
+my text shadow should be a little bit down
+00:06:20.860
+like this, you can see it looks like a shadow
+00:06:23.860
+and let's say
+00:06:26.000
+I want to increase the blur
+00:06:28.000
+or I want to keep it so that it is visible
+00:06:30.000
+so I can set the value from here
+00:06:32.000
+and whatever synetix google chrome
+00:06:34.000
+will generate, I will take it back
+00:06:36.000
+by copying here
+00:06:38.000
+I never focus on writing
+00:06:40.000
+neither I have ever done it
+00:06:42.000
+I want to tell you that google chrome
+00:06:44.000
+is a tool.
+00:06:46.000
+In the future, whoever will learn to use tools
+00:06:49.000
+will become a good web developer. Whether it is chat gbd, github copilot
+00:06:52.000
+or raplet's AI, whatever it is.
+00:06:55.000
+You should know when and which tool to use
+00:06:58.000
+and how to do it in the least time.
+00:07:01.000
+That will define your value. AI will never replace.
+00:07:04.000
+Many people ask if AI replace you, it won't
+00:07:06.080
+AI will replace those who don't know the tools, use them and indirectly AI will replace them
+00:07:13.280
+I want to end this debate
+00:07:15.280
+AI will not replace directly, it will indirectly replace smart people
+00:07:20.000
+AI will help smart people so much that those who are not smart
+00:07:24.080
+their work will be finished.
+00:07:27.000
+I am just telling you the reality, what is there is there.
+00:07:30.000
+AI is not going to replace anyone, AI is not a human,
+00:07:33.000
+AI will roam here and there, this has not happened yet by the way,
+00:07:36.000
+it will happen sometime, we will see.
+00:07:38.000
+Now here you see lorem ipsum $setemat,
+00:07:40.000
+this has a text shadow,
+00:07:42.000
+if I want the text shadow that I have text shadow which I did with purple color, so I can do it like this, that's it
+00:07:49.600
+and here I can use the syntax that is being generated,
+00:07:52.600
+now here if I want to increase this a little and I want to increase the blur,
+00:07:57.800
+I can do all this, text shadow to be very honest is not used that much,
+00:08:01.800
+yes I have seen that people use it visually it looks good, it looks a little modern
+00:08:06.000
+this website, but yes
+00:08:08.000
+I have not seen so much usage in
+00:08:10.000
+simple websites, to be very honest
+00:08:12.000
+but you should know about this property.
+00:08:14.000
+Now after this, last but not the least, outline
+00:08:16.000
+what does outline mean? You put
+00:08:18.000
+width, you put style, you put color
+00:08:20.000
+just like we say to make a border
+00:08:22.000
+2 pixels solid red
+00:08:24.000
+you give an outline.
+00:08:25.400
+Now what is the difference between an outline and a border?
+00:08:27.800
+Assume this is my element, I will give an outline here.
+00:08:30.600
+I will say outline 2 pixels solid black.
+00:08:34.000
+Means it looks like a border. What is this?
+00:08:36.400
+What is going on?
+00:08:38.000
+I will also put a border, 2 pixels solid green.
+00:08:41.200
+So see, the border will be inside and the outline be outside there is a basic difference between border and outline
+00:08:48.160
+what is it?
+00:08:48.960
+outline doesn't take up your space, it doesn't become a part of the box model
+00:08:54.160
+but here the border is there
+00:08:56.320
+after this you can use outline offset property
+00:08:59.520
+outline offset
+00:09:01.120
+ok, so in this way you can do
+00:09:03.760
+you can increase the outline offset in this way
+00:09:08.000
+so that the distance of the outline will increase, ok
+00:09:12.000
+but you can't increase the distance of the border directly, yes there is margin, padding
+00:09:16.000
+that will affect the box model of the element, but in this way
+00:09:20.000
+with the outline, the way I am playing, you can't play with the border
+00:09:24.000
+you can't make it less or more, you can't make it inside and outside
+00:09:28.000
+here you can make it inside and outside with outline, so sometimes
+00:09:32.000
+you have to use outline to cover an element, so
+00:09:36.000
+these are the basic differences, outline is given in extra, that if you have
+00:09:40.000
+border, everything is set, and after that you want an outline
+00:09:44.000
+so you can use outline
+00:09:47.000
+then after this here borders can have varying widths on different sizes
+00:09:50.160
+outlines have uniform width
+00:09:51.720
+you can't change the width of the outline
+00:09:53.480
+then with this you can
+00:09:55.000
+put border radius in the border
+00:09:57.160
+like if I use border radius property in this
+00:10:00.000
+which is a property
+00:10:01.000
+border radius
+00:10:03.160
+let's say I do 34 pixels, so you can see
+00:10:06.000
+as soon as I put border radius
+00:10:08.000
+it got curvy, you can see
+00:10:10.000
+borders got curvy, you can't
+00:10:12.000
+directly curve outlines, outline
+00:10:14.000
+will follow border, as soon as you put
+00:10:16.000
+border radius, outline will
+00:10:18.000
+take the same curve
+00:10:20.000
+so I hope you understood this
+00:10:22.000
+very basic concept
+00:10:24.000
+of box shadow, text shadow and outline, I hope you understood this thing, it was a very basic concept of box shadow, text shadow and outline
+00:10:27.200
+I hope you understood, if you have not yet accessed the sigma web development playlist
+00:10:32.200
+So do access it and if you are not accessing the source code, then I will recommend you
+00:10:39.200
+that you write together, if you are coding together, nothing can be better than that. But if you need code or if nothing is working, then definitely you can visit this repository.
+00:10:48.920
+And it will help you a lot.
+00:10:50.440
+You know, since I started this course, a lot of people from the industry,
+00:10:55.400
+what should I say, they have felt bad.
+00:10:58.120
+A lot of people approached me to make it paid from the middle.
+00:11:01.400
+But I am never going to do that.
+00:11:02.720
+This Sigma course will be free so don't worry about that.
+00:11:06.000
+But yes, I want to tell you one thing
+00:11:08.000
+that we are going to raise the bar like anything.
+00:11:10.000
+And once we start
+00:11:12.000
+making projects,
+00:11:14.000
+you will enjoy it a lot.
+00:11:16.000
+And I can proudly say based on your feedback
+00:11:18.000
+and the people of the industry
+00:11:20.000
+also contacted me that what have you made
+00:11:22.000
+and our sales were stopped.
+00:11:24.000
+See, I am not against paid courses. If I am able to get this course free The people of the industry also contacted me that what have you made, our sales were stopped due to this,
+00:11:25.560
+see I am not against paid courses,
+00:11:27.560
+if I am able to bring this course for free today,
+00:11:29.560
+then it is my good luck,
+00:11:31.560
+and I will say that if anyone in the industry is giving you 99% paid and 1% free,
+00:11:36.280
+then respect them,
+00:11:38.280
+I want to give a shoutout to everyone,
+00:11:40.280
+whoever is providing a little quality education for free or at an affordable price,
+00:11:43.920
+you should actually be supportive
+00:11:46.000
+You should support them instead of saying
+00:11:48.000
+If he is giving for free then you should also do it for free
+00:11:50.000
+Everything can't be free, we all should understand this
+00:11:53.000
+But Sigma web development course is free
+00:11:55.000
+And we are going to raise the bar like anything
+00:11:57.000
+We are going to make amazing projects and it will be free till the end
+00:11:59.000
+This is my promise, I will not break my promise
+00:12:01.000
+Because I had promised from the first video
+00:12:03.000
+That this course is free So that is my promise, I can't break that promise If Because I had promised from the first video that this course is free. So that is my promise,
+00:12:05.800
+I can't break that promise.
+00:12:07.000
+If I break that, it is wrong.
+00:12:08.200
+But I am telling you again
+00:12:10.800
+that if anyone is giving paid course,
+00:12:12.400
+then nothing wrong in that,
+00:12:14.400
+in my opinion.
+00:12:15.400
+I hope you guys think the same.
+00:12:17.400
+So that's it for this video guys.
+00:12:19.400
+In the coming videos,
+00:12:20.200
+we are going to see a lot more things.
+00:12:22.200
+And the best is yet to come.
+00:12:23.800
+We have not raised our bar yet
+00:12:26.000
+We will do it, we will make good projects
+00:12:28.000
+I will tell you new things
+00:12:30.000
+Which I have learned from years of experience
+00:12:32.000
+I wish someone would have told me, I wasted so many years
+00:12:34.000
+I had to do it like this
+00:12:36.000
+I will tell you in this course
+00:12:38.000
+How much time and effort will be left
+00:12:40.000
+You can guess this yourself
+00:12:42.000
+So that's it for this video
+00:12:44.000
+Thank you so much for watching this video

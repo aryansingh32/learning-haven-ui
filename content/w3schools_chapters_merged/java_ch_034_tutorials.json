@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 34,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nGo through the array and keep track of the highest and lowest values:\n\nExplanation:Start by assuming the first element is both the maximum and minimum. As you loop through the array, updatemaxif you find a larger number andminif you find a smaller number.\n\n### Code Examples\n\n```\nExample\nint[] numbers = {45, 12, 98, 33, 27};\n\nint max = numbers[0];\nint min = numbers[0];\n\nfor (int n : numbers) {\n  if (n > max) {\n    max = n;\n  }\n  if (n < min) {\n    min = n;\n  }\n}\n\nSystem.out.println(\"Max: \" + max);\nSystem.out.println(\"Min: \" + min);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nCombine twointarrays into a single array:\n\n### Code Examples\n\n```\nExample\nint[] a = {1, 2, 3};\nint[] b = {4, 5};\n\nint[] merged = new int[a.length + b.length];\n\nint idx = 0;\nfor (int n : a) merged[idx++] = n;\nfor (int n : b) merged[idx++] = n;\n\nfor (int n : merged) {\n  System.out.print(n + \" \");\n}\n// Output: 1 2 3 4 5\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nConvert an array into aSetto remove duplicates:\n\n### Code Examples\n\n```\nExample\nimport java.util.Arrays;\nimport java.util.HashSet;\nimport java.util.Set;\n\npublic class Main {\n  public static void main(String[] args) {\n    Integer[] numbers = {1, 2, 2, 3, 4, 4, 5};\n    Set<Integer> unique = new HashSet<>(Arrays.asList(numbers));\n\n    System.out.println(unique);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nPrint which elements appear more than once:\n\nExplanation:We go through the array one element at a time.- The outer loop picks a number (like the first1).- The inner loop compares it with all the numbers that come after it.- If a match is found, we print it as a duplicate.In this example, the program finds2twice and1twice, so it prints them as duplicates.\n\n### Code Examples\n\n```\nExample\nint[] nums = {1, 2, 3, 2, 4, 5, 1};\n\nfor (int i = 0; i < nums.length; i++) {\n  for (int j = i + 1; j < nums.length; j++) {\n    if (nums[i] == nums[j]) {\n      System.out.println(\"Duplicate: \" + nums[i]);\n    }\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nRandomly change the order of elements in an array usingCollections.shuffle():\n\n### Code Examples\n\n```\nExample\nimport java.util.Arrays;\nimport java.util.Collections;\nimport java.util.List;\n\npublic class Main {\n  public static void main(String[] args) {\n    String[] fruits = {\"Apple\", \"Banana\", \"Cherry\", \"Mango\"};\n    List<String> list = Arrays.asList(fruits);\n\n    Collections.shuffle(list);\n\n    System.out.println(list);\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_34",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_34",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 47,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Git hooksare scripts that run automatically when certain Git events happen, like making a commit or pushing code.\n\nHooks help you automate repetitive tasks, enforce coding standards, and catch problems early.\n\nFor example, you can:\n\nHooks are stored in.git/hooksinside your repository.\n\nBy default, you'll see sample scripts ending with.sample.\n\nTo enable a hook, remove the.sampleextension and make the script executable.\n\nFor example, to enablepre-commit:\n\nOn Windows, just rename the file topre-commitand make sure it can be run by your shell (e.g. use.bator.ps1if needed).\n\nThere are many types of hooks, but the most common are:\n\nThepre-commithook runs before you make a commit.\n\nYou can use it to check code style, run tests, or stop a commit if something is wrong.\n\nThecommit-msghook checks or edits the commit message.\n\nFor example, it can block commits without a ticket number.\n\nThepre-pushhook runs before you push code to a remote.\n\nYou can use it to run tests or checks before sharing code.\n\nSome hooks (likepre-receive) run on the Git server, not your computer.\n\nThese can enforce rules for everyone who pushes to the repository.\n\nYou can write any custom script as a hook.\n\nJust put it in.git/hooksand make it executable.\n\nNote:Hooks are powerful for automating checks (like linting or tests) and enforcing team standards. Client-side hooks run on your computer. Server-side hooks run on the Git server.\n\n### Code Snippets\n\n```\n#!/bin/sh\n# Stop commit if any .js file has \"console.log\"\ngrep -r 'console.log' *.js && {\n  echo \"Remove console.log before committing!\"\n  exit 1\n}\n\n---\n\n#!/bin/sh\n# Block commit if message does not contain a ticket number\nif ! grep -qE 'JIRA-[0-9]+' \"$1\"; then\n  echo \"Commit message must have a ticket number (e.g. JIRA-123)\"\n  exit 1\nfi\n\n---\n\n#!/bin/sh\nnpm test || exit 1\n\n---\n\n#!/bin/sh\n# Block pushes to main branch\ngrep refs/heads/main || exit 1\n\n---\n\n#!/bin/sh\necho \"Hello from my custom hook!\"\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

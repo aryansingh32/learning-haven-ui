@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 4,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nMake small, frequent commits to capture your progress.\n\nThis makes it easier to track changes and find bugs.\n\nUse descriptive messages that explainwhya change was made, not just what changed.\n\nGood commit messages help you and your team understand the history of the project.\n\nCreate branches for features, fixes, and experiments to keep your main branch stable.\n\nThis way, you can work on new ideas without affecting the main codebase.\n\nAlwaysgit pullbefore pushing.\n\nThis updates your local branch with changes from others, helps you avoid conflicts, and ensures your push will succeed.\n\nWhy?If someone else has pushed changes since your last pull, your push may be rejected or cause conflicts.\n\nPulling first lets you fix any issues locally.\n\nUsegit statusandgit diffto review your changes before you commit.\n\nThis helps you catch mistakes early.\n\nAvoid adding large files or unnecessary dependencies.\n\nThis keeps your repository fast and easy to clone.\n\nExclude files that shouldn't be tracked (like build artifacts, log files, or secrets) by adding them to a.gitignorefile.\n\nNote:.gitignoreonly prevents new files from being tracked.\n\nFiles already tracked by Git will remain in the repository until you remove them withgit rm --cached <file>.\n\nUse tags to mark release points (likev1.0) so you can easily find and reference important versions.\n\nThis helps you keep track of your project's history and make it easier to roll back to previous versions if needed.\n\nNote:Good Git habits make it easier for your team (and your future self) to understand and build on your work.\n\n### Code Examples\n\n```\nExample\ngit add .\ngit commit -m \"Add user authentication logic\"\n\n---\n\nExample\ngit commit -m \"Fix bug in user login validation\"\n\n---\n\nExample\ngit checkout -b feature/login-form\n\n---\n\nExample\ngit pull origin main\ngit push origin main\n\n---\n\nExample\ngit status\ngit diff\n\n---\n\nExample: .gitignore\n# .gitignore\nnode_modules/\n*.log\n.env\n\n---\n\nExample\ngit tag v1.0\ngit push origin v1.0\n```\n\n## Tutorials\n\nThis glossary covers common Git terms and concepts. Use it as a handy reference while learning and working with Git.\n\nA branch is a parallel version of your repository. Used to develop features independently.\n\nLearn more on our Git Branch page\n\nSwitch to a different branch or commit.\n\nLearn more on our Git Checkout page\n\nCreate a local copy of a remote repository.\n\nLearn more on our Git Clone page\n\nA snapshot of your changes in the repository.\n\nLearn more on our Git Commit page\n\nWhen Git can't automatically merge changes from different commits or branches. You must resolve the differences manually.\n\nLearn more on our Git Branch Merge page\n\nDownload changes from a remote repository without merging.\n\nLearn more on our Git Pull from Remote page\n\nA personal copy of someone else's repository, usually on a platform like GitHub.\n\nLearn more on our Git Remote Fork page\n\nThe Index (also called the Staging Area) is where changes are prepared before committing.\n\nLearn more on our Git Staging Area page\n\nCombine changes from different branches.\n\nLearn more on our Git Merge page\n\nThe default name for your main remote repository. You can rename or have multiple remotes if needed.\n\nLearn more on our Git Remote page\n\nFetch and merge changes from a remote repository.\n\nLearn more on our Git Pull from Remote page\n\nUpload your commits to a remote repository.\n\nLearn more on our Git Push to Remote page\n\nMove or combine a sequence of commits to a new base commit.\n\nLearn more on our Git Rebase page\n\nA version of your repository hosted on the internet or network.\n\nLearn more on our Git Set Remote page\n\nThe database where your project's history is stored.\n\nLearn more on our Git Get Started page\n\nTemporarily save changes that aren't ready to commit.\n\nLearn more on our Git Stash page\n\nMark a specific commit as important, usually for releases.\n\nLearn more on our Git Tag page\n\nNote:Refer to this glossary whenever you encounter an unfamiliar Git term!\n\nHEAD is a reference to the current commit your working directory is based on. Usually points to the latest commit on your current branch.\n\nAn \"upstream\" branch is the default branch that your branch tracks and pulls from, usually on a remote repository.\n\n### Code Examples\n\n```\nExample\ngit branch feature/login\n\n---\n\nExample\ngit checkout main\n\n---\n\nExample\ngit clone https://github.com/user/repo.git\n\n---\n\nExample\ngit commit -m \"Add login feature\"\n\n---\n\nExample\n# Example: Merge conflict message\n# CONFLICT (content): Merge conflict in file.txt\n\n---\n\nExample\ngit fetch origin\n\n---\n\nExample\n# Use the GitHub interface to fork a repo\n\n---\n\nExample\ngit add file.txt\n\n---\n\nExample\ngit merge feature/login\n\n---\n\nExample\ngit remote add origin https://github.com/user/repo.git\n\n---\n\nExample\ngit pull origin main\n\n---\n\nExample\ngit push origin main\n\n---\n\nExample\ngit rebase main\n\n---\n\nExample\ngit remote -v\n\n---\n\nExample\ngit init\n\n---\n\nExample\ngit stash\n\n---\n\nExample\ngit tag v1.0\n\n---\n\nExample\ngit log --oneline\n# The top entry is HEAD\n\n---\n\nExample\ngit push --set-upstream origin main\n```\n\n## Tutorials\n\n\n\n## Tutorials\n\nSSH(Secure Shell) is a way to connect securely to remote computers and services, like Git repositories.\n\nSSH uses a pair of keys (public and private) to make sure only you can access your code.\n\nSSH keys come in pairs: apublic key(like a lock) and aprivate key(like your own key).\n\nYou share the public key with the server (like GitHub or Bitbucket), but keep the private key safe on your computer.\n\nOnly someone with the private key can access what's locked by the public key.\n\nIf you've never used SSH keys before, follow this step to enable the SSH agent on your operating system:\n\nTo create a new SSH key pair, use this command in the terminal (Linux, macOS, or Git Bash for Windows):\n\nFollow the prompts to choose a file location (press Enter to use the default) and set a passphrase (optional, but recommended for extra security).\n\nAfter creating your key, add it to the SSH agent so Git can use it:\n\nTo use SSH with Git hosting services, you need to copy your public key and add it to your account settings on GitHub, GitLab, or Bitbucket.\n\nSee which keys are loaded in your SSH agent:\n\nTo remove a key from the agent:\n\nTip:Never share your private key with anyone. Use a passphrase for extra security.\n\nIf your private key is ever exposed, generate a new key pair and update your Git host immediately.\n\n### Code Examples\n\n```\nExample: Enable SSH Agent\neval $(ssh-agent -s)\n\n---\n\nExample: Generate SSH Key\nssh-keygen -t rsa -b 4096 -C \"your@email.com\"\n\n---\n\nExample: Add Key to SSH Agent\nssh-add ~/.ssh/id_rsa\n\n---\n\nExample: List Loaded SSH Keys\nssh-add -l\n\n---\n\nExample: Remove SSH Key from Agent\nssh-add -d ~/.ssh/id_rsa\n```\n\n## Tutorials\n\n\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_4",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_4",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

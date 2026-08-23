@@ -1,0 +1,160 @@
+Video URL: https://www.youtube.com/watch?v=4aBolpJoutw
+Video Title: Exercise 2 - CSS Challenge | Sigma Web Development Course - Tutorial #20
+--------------------------------------------------
+
+00:00:00.000
+I gave you exercise 1, many of you solved it.
+00:00:03.400
+I also gave you a shoutout.
+00:00:05.000
+Now it's time for exercise 2.
+00:00:07.320
+And in this, we will do a challenge of CSS.
+00:00:10.000
+Irrespective of how many people are going to solve it,
+00:00:12.600
+you guys write Challenge Accepted in the comment section below.
+00:00:15.720
+Maintain high energy like this.
+00:00:17.800
+And listen to the question carefully and comment your answers.
+00:00:21.400
+Whoever writes Challenge Accepted first, I will give a heart.
+00:00:24.720
+And whoever solves the question, will get a heart to the first one who write the challenge accepted and the one who will solve the question
+00:00:26.000
+will get a shoutout in the coming videos.
+00:00:28.000
+I am very excited.
+00:00:30.000
+Let's go to the computer screen.
+00:00:32.000
+Let's roll the intro.
+00:00:42.000
+So guys, I have come inside the computer screen
+00:00:44.000
+and I am going to give you an exercise now
+00:00:45.600
+So here I will do the first thing that I will make a folder in the name of video 20
+00:00:50.120
+So I will make a folder here in the name of video 20 and here I will simply open it by right-clicking and opening it with code
+00:00:57.760
+Now listen to me carefully, see I am giving you an exercise of exercise in which you have to do that if you are going to get any paragraph
+00:01:08.000
+then if there is a first paragraph in any div
+00:01:12.000
+then you have to make the background yellow and the color red
+00:01:15.000
+and you have to make 5 divs like this
+00:01:18.000
+and you have to make a CSS class in which you have to give this styling
+00:01:22.000
+so I frame this question
+00:01:24.000
+so here I have written the question
+00:01:26.000
+write HTML and CSS code to style a paragraph inside a div
+00:01:28.000
+such that
+00:01:30.000
+first paragraph must have background color yellow
+00:01:32.000
+and text color red
+00:01:34.000
+so here you have seen that
+00:01:36.000
+the first paragraph should have background color yellow
+00:01:38.000
+and text color red
+00:01:40.000
+and the other paragraphs
+00:01:42.000
+must have
+00:01:44.000
+background color background color blue and text color white
+00:01:51.560
+ok
+00:01:52.060
+so let me comment this out so that it does not interfere with our code
+00:01:56.800
+and here I am going to write html code
+00:01:58.800
+so this is for you guys
+00:02:00.800
+lorem 23 and along with that here
+00:02:04.000
+I am another para
+00:02:08.000
+and I have written like this and I will make two divs
+00:02:12.000
+and I will write p here I am also another para
+00:02:16.000
+and here I will make two divs like this
+00:02:20.000
+and here you can see that we have to write some CSS rules like this
+00:02:24.000
+such that the first paragraph of your div should have a different styling
+00:02:32.200
+and the styling of these paragraphs should be different
+00:02:34.880
+you don't have to put class in the paragraph
+00:02:37.120
+don't say that I will put class in this paragraph
+00:02:39.120
+no, you don't have to do any mess in the HTML
+00:02:42.760
+do not touch the HTML
+00:02:44.760
+I will write here do not touch the html
+00:02:45.000
+let me write here
+00:02:47.000
+do not change this html
+00:02:49.000
+this html should not be changed
+00:02:51.000
+this is our condition
+00:02:53.000
+i hope you understood the question
+00:02:55.000
+so if i preview this html
+00:02:57.000
+you can see
+00:02:59.000
+it is very simple html
+00:03:01.000
+and this question is very basic
+00:03:03.000
+in last video what happened that very few people answered
+00:03:06.500
+I would like to tell you one thing that you must write challenge accepted in the comment section below
+00:03:11.000
+And if anyone is solving this question, then you put a hashtag of solution
+00:03:15.500
+What hashtag will you put? Write hashtag solution like this
+00:03:21.500
+Write like this so that I can search by hashtag solution
+00:03:24.500
+And write challenge accepted then write this mandatory for all
+00:03:27.840
+if you have not accessed the playlist yet, then access it
+00:03:31.280
+along with that I have given the source code here
+00:03:33.600
+for notes you can go to this website
+00:03:36.000
+and by clicking on notes you can access the notes
+00:03:39.120
+I have put all the notes here
+00:03:41.120
+you can download the pdf of html and css
+00:03:44.000
+and you can also download chapter wise
+00:03:46.000
+I need solution for all
+00:03:48.000
+I hope you are enjoying this course
+00:03:51.000
+so that's it for this video
+00:03:53.000
+thank you so much for watching this video

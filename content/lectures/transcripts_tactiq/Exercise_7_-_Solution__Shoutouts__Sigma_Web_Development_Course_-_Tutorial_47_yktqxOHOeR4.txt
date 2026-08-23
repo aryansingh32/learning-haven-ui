@@ -1,0 +1,1710 @@
+Video URL: https://www.youtube.com/watch?v=yktqxOHOeR4
+Video Title: Exercise 7 - Solution & Shoutouts | Sigma Web Development Course - Tutorial #47
+--------------------------------------------------
+
+00:00:00.000
+Guys, I gave you a layout with the help of CSS Grid.
+00:00:04.260
+Many of you solved it.
+00:00:06.460
+Now we will see its solution.
+00:00:07.960
+And after that, I will give a shoutout to those who solved it.
+00:00:11.680
+So like the video and write Sigma Batch OP in the comment section below.
+00:00:15.720
+Let's go to the computer screen.
+00:00:17.260
+Let's roll the intro.
+00:00:18.760
+ðŸŽ¶MusicðŸŽ¶
+00:00:27.000
+Alright guys, so this is the solution of design the grid.
+00:00:30.000
+First of all, let's open the link which you have to design the grid.
+00:00:33.000
+And I have opened this folder in my VS Code.
+00:00:36.000
+So first of all, I will make a video in the name of 47.
+00:00:39.000
+Oops, I am making the folder in the wrong place.
+00:00:42.000
+But I will make it here.
+00:00:43.000
+Then I will pull it out.
+00:00:44.000
+Okay, I will pull it out. Now I will put index.html in it, I have put it in the video 47 folder like this, now many people be the same. So in total, there is no difference.
+00:01:06.000
+But now what I will do here is that I will go to Github
+00:01:10.000
+And the solution I made you with the flexbox
+00:01:13.000
+With which we made the navbar, the solution of exercise 6
+00:01:16.000
+Which was video number 43, I made you a navbar in it
+00:01:20.000
+First of all, I will grab the same navbar which was mine
+00:01:23.000
+So I will take this index.html from here
+00:01:26.000
+infact how about i copy the content of this
+00:01:29.000
+and then i will paste it here in my index.html
+00:01:32.000
+so i am not able to copy and paste it here
+00:01:35.000
+so i will do one thing, i will copy the file from here
+00:01:38.000
+so this is the same navbar which we made
+00:01:41.000
+if you don't know, and i will
+00:01:44.000
+replace it and I will show you by replacing it
+00:01:46.000
+and show you by making this
+00:01:48.000
+what I will show you, with the help of grid
+00:01:50.000
+I will show you the rest of the content, so we made a nav
+00:01:52.000
+the nav was very good, if I click here
+00:01:54.000
+and show you, then our nav bar was visible like this
+00:01:56.000
+now what I will do here
+00:01:58.000
+that the main content was the header
+00:02:00.000
+now I will make the main content
+00:02:02.000
+and as I told you that
+00:02:04.000
+I will make a section under main
+00:02:06.000
+and in that section
+00:02:08.000
+this portion will be there
+00:02:10.000
+so i will copy all of this
+00:02:12.000
+directly i will copy it like this
+00:02:14.000
+if i come in copy mode
+00:02:17.000
+i mean i will come in such a mode that i have to print
+00:02:19.000
+so what i will do, i will right click
+00:02:21.000
+i will inspect and i will print it from here
+00:02:23.000
+but i don't want to do that at this point
+00:02:25.200
+Because I want to design it
+00:02:27.200
+This is an image, so we will copy and address it
+00:02:30.200
+And we will put this image here as IMG
+00:02:32.200
+So one line is this and one line is this
+00:02:34.200
+So in span I will write download ultra edit for windows
+00:02:37.200
+So I will write this in span
+00:02:39.200
+And after this I will put an IMG
+00:02:42.200
+And put this src
+00:02:44.200
+And I will put width here, so I will put an img and put this src and I will put width in it, so I will put width equal to 34
+00:02:47.600
+and I will put this download ultra edit for windows in span
+00:02:51.100
+let's see how it is looking now
+00:02:53.100
+it is looking like this, I know it is not looking good
+00:02:55.500
+but what I have to do is put all of this in div
+00:02:58.400
+so I will make a div and I will call this div replicate
+00:03:01.600
+if you want I can toggle the word wrap and screen cast mode
+00:03:07.200
+that is not at all a problem for me
+00:03:09.300
+command palette toggle screen cast mode
+00:03:11.500
+and here I will put this in one div, which I have written here
+00:03:14.600
+or I can put it in paragraph too
+00:03:17.000
+but just in case I need to do something with it
+00:03:19.800
+so I will put it in div only
+00:03:21.800
+and here I will use button tag
+00:03:27.680
+I will put it inside div and here I will use button tag I will do like this and yes, it is looking better now
+00:03:30.080
+but what I will do is
+00:03:31.080
+I will center it using max width property
+00:03:34.680
+or I can also use flexbox
+00:03:36.680
+so here section and class is equal to first
+00:03:41.680
+and I will say that my first section
+00:03:43.680
+my first section oops
+00:03:48.000
+i will give display to first section
+00:03:52.000
+so i gave display to first section
+00:03:54.000
+so it became a flex box and came to row
+00:03:58.000
+and i will give flex direction to column
+00:04:00.000
+and i will give flex direction to column
+00:04:02.000
+and i will also show you by adding background color
+00:04:06.000
+you don't need to add background color
+00:04:08.000
+but i am teaching you so i am adding background color
+00:04:10.000
+so this is my flex box
+00:04:12.000
+now i will add flex direction
+00:04:14.000
+to column
+00:04:16.000
+and i have added flex direction to column
+00:04:20.000
+so it will fall down
+00:04:22.000
+and center align item
+00:04:24.000
+to center both are center I will do justify content and center align item also
+00:04:25.000
+center, both are centered
+00:04:28.000
+it came to the center
+00:04:30.000
+so I came here to a great extent
+00:04:31.000
+now I will see the font size exactly
+00:04:33.000
+and I will do it here
+00:04:35.000
+you see here my span
+00:04:37.000
+I will
+00:04:39.000
+what I will do, I will give font size
+00:04:41.000
+and I will give 34 pixels
+00:04:43.000
+something like this I see how big it is, yes it is 40 pixels
+00:04:49.000
+so the span of dot first
+00:04:52.000
+let's give font size 40 pixels
+00:04:57.000
+ok so I gave font size 40 pixels
+00:05:00.000
+and the font size of this will be 40 pixels
+00:05:03.000
+after this I want that my
+00:05:06.320
+this thing which I have put image
+00:05:08.660
+that comes inside the span
+00:05:10.460
+ok
+00:05:11.280
+because I want that this particular
+00:05:14.160
+our row should be made, so what I can do
+00:05:16.840
+I can cut the image and put it inside the span
+00:05:21.560
+something like this, so see it came like this
+00:05:24.240
+and from top to bottom i can give gap
+00:05:26.000
+using gap property
+00:05:29.000
+so i will use gap property in flexbox
+00:05:32.000
+so i will say gap 23 pixels
+00:05:35.000
+let's see how much difference 23 pixels will give
+00:05:38.000
+no we will have to use more gap
+00:05:41.000
+in dot first
+00:05:44.000
+we will have to give padding to that
+00:05:46.000
+so I have given gap of 23 pixels
+00:05:48.000
+I will make it 63 pixels
+00:05:50.000
+I guess it is little more gap
+00:05:52.000
+but I have to give padding to that
+00:05:54.000
+or margin, so I will give margin
+00:05:56.000
+so I will give margin
+00:05:58.000
+34 pixels, and I will tell you a ninja technique
+00:06:01.000
+in fact ninja technique is very simple
+00:06:03.000
+but I call it ninja technique that what in fact, ninja technique is very simple, but I call it ninja technique
+00:06:05.000
+that what you do here, because it is very useful, see it with an arrow key, how big do you want
+00:06:11.000
+how much margin do I want, how much distance do I want, I want more distance, see this distance
+00:06:16.000
+and this distance, it will increase, the gap will increase a little, I guess the gap is absolutely right
+00:06:21.000
+and below this button
+00:06:26.000
+we have to increase margin
+00:06:29.000
+so i will increase margin to 70px
+00:06:32.000
+and remove this background
+00:06:35.000
+white will blend
+00:06:38.000
+now ultra edit is bold
+00:06:41.000
+so what i will do
+00:06:44.000
+i can use the bold HTML tag
+00:06:46.240
+browsers support it
+00:06:47.800
+but I will say do it with CSS
+00:06:49.480
+always do it with CSS
+00:06:51.000
+but most of the browsers support this B tag
+00:06:54.080
+so you can use it
+00:06:55.400
+I use B tag and run my work
+00:06:57.400
+now what I will do is
+00:06:58.200
+I will change the font family of this section
+00:07:02.440
+which font family is the best
+00:07:06.000
+it's not monospace, it's sans serif
+00:07:08.000
+ok, sans serif
+00:07:10.000
+yes, it's sans serif, so I will change it to sans serif
+00:07:12.000
+so in the dot first
+00:07:14.000
+I will change the font family
+00:07:16.000
+to sans serif
+00:07:18.000
+now you will say that you didn't do the main thing
+00:07:20.000
+so let me make this
+00:07:22.000
+this is also important
+00:07:24.000
+and at the same time how about I make this image a little bigger
+00:07:27.000
+so that if I make its width 45 pixels
+00:07:32.000
+like this and if I give margin in it
+00:07:37.000
+0 pixels from top bottom and 23 pixels from left right
+00:07:40.000
+so I think this image will be very good
+00:07:42.000
+so the image in the span of our section
+00:07:47.440
+the image in the span of my section
+00:07:53.440
+I want to put this in it, I will do the format document so that it is correct
+00:07:58.160
+and you see here, now many people were telling me to use chat gpt
+00:08:01.600
+I will not do it now, chat gpt
+00:08:03.600
+will you learn, I have to use chat gbd, I will not do it now will you learn it, I am using chat gbd only
+00:08:06.500
+now I will increase font size of this so that it comes up to text editor
+00:08:10.500
+so what I will do is, I will increase font size
+00:08:14.500
+right click inspect, I am coming to grid part, don't worry
+00:08:19.500
+I will increase font size, I have made it more than 40 pixels
+00:08:23.500
+now you can do one thing, the max width of this
+00:08:26.300
+container, the span
+00:08:28.980
+you can give the max width of this
+00:08:31.980
+but what I will do is, I will make it 19 pixels
+00:08:34.919
+and along with that, I will give the width of this div
+00:08:38.580
+let us say 34bw
+00:08:41.120
+and I will give the text line
+00:08:43.179
+center, so see text editor is down
+00:08:46.000
+and this is a guess, this is a guess that it is in the center
+00:08:49.000
+it is not that I have memorized that how to bring the editor to the center
+00:08:52.000
+this is looking good, this is looking good
+00:08:55.000
+increase the width of this a little
+00:08:58.000
+I will do exactly the same as it is here, version of the text editor
+00:09:01.000
+should be down
+00:09:04.000
+version of the text editor should come down version of the text editor should come down
+00:09:06.000
+yes ok now it's ok
+00:09:08.000
+so what I have to put here, which element is selected here
+00:09:11.000
+first of all I will copy its styles
+00:09:14.000
+this is our
+00:09:16.000
+this element div
+00:09:18.000
+which div is this, in which this download is written
+00:09:21.000
+download and try ok
+00:09:23.000
+so this is the div, so let me do one thing, I will
+00:09:26.000
+paragraph it, I will paragraph it
+00:09:29.000
+the download and is written, I will
+00:09:32.000
+paragraph it, now you will know how to use div
+00:09:35.000
+use p, what to use, so see
+00:09:38.000
+it is known that your site should be maintainable
+00:09:41.000
+if I do something like this and
+00:09:44.000
+document the format here
+00:09:46.000
+and reload
+00:09:48.000
+then yes it is fine
+00:09:50.000
+and the size of this image
+00:09:52.000
+is little more
+00:09:54.000
+for windows reviews
+00:09:56.000
+it should be for windows
+00:09:58.000
+not reviews
+00:10:00.000
+so let's fix this
+00:10:02.000
+so you will take time to make it
+00:10:04.000
+so you will make it exactly but
+00:10:06.000
+I am just doing this much that it will be perfect
+00:10:08.000
+I am not taking much tension in this
+00:10:10.000
+and I am not
+00:10:12.000
+working hard
+00:10:14.000
+to be very honest, I am not working hard
+00:10:16.000
+in this, I am trying to
+00:10:18.000
+clone it simple
+00:10:20.000
+so where gap was 63, I will do 43
+00:10:22.000
+I think gap is little more
+00:10:24.000
+is it ok now? I think it is too much
+00:10:26.000
+So let's do it, 23
+00:10:28.000
+Was 23 less or gap?
+00:10:30.000
+No, 23 is good enough gap
+00:10:32.000
+See this, we have
+00:10:34.000
+cloned it to a good extent
+00:10:36.000
+And after this, the download mac and linux
+00:10:38.000
+version is written
+00:10:40.000
+I want to see the color, I need the color code, I got it
+00:10:42.000
+I will copy this color code
+00:10:44.000
+Now I will make my button here So I will say, the color code, I got it I will copy this color code Now I will make my button here
+00:10:45.160
+So I will say, the background of this button
+00:10:48.160
+The background will be this, ok
+00:10:50.680
+And after this I will give padding
+00:10:52.680
+2 pixels, 4 pixels
+00:10:54.920
+It won't work with this much, I will have to increase it
+00:10:57.440
+A little from top and bottom
+00:10:58.920
+I will have to increase it, is the color inside white?
+00:11:01.640
+Yes, it is white
+00:11:02.840
+Change the color to white, Yes, it is white. Change the color to white. Good.
+00:11:05.000
+And the border of this,
+00:11:08.000
+change it to none, there is no border in it.
+00:11:11.000
+Good. Now, border radius,
+00:11:14.000
+change the border radius to 3 pixels.
+00:11:17.000
+Is there a border radius in it? Yes, there is.
+00:11:20.000
+How much is it? 3, 6 pixels,
+00:11:22.000
+my work is done, so I changed it to 6 pixels.
+00:11:24.000
+Now what I will do is
+00:11:26.000
+I will make font weight
+00:11:29.000
+bold
+00:11:31.500
+ok
+00:11:32.500
+here I will do one thing
+00:11:33.500
+I will make it 700
+00:11:35.500
+if I increase font weight
+00:11:38.000
+then
+00:11:39.500
+in how much my work will work?
+00:11:41.500
+will it work in 900?
+00:11:42.500
+it will work in 700
+00:11:43.500
+it will work done in 700
+00:11:46.000
+so let's go
+00:11:48.000
+the button in .first
+00:11:52.000
+see
+00:11:54.000
+don't think this as an exercise solution
+00:11:56.000
+think of it as
+00:11:58.000
+we are cloning a website
+00:12:00.000
+take it as a project
+00:12:02.000
+some people might have tried this
+00:12:04.000
+and those who have tried it, they have to give me a solution.
+00:12:06.000
+So please don't tell me that you said this and now you are sitting to do this.
+00:12:10.000
+Now see the title is also important, so what I will do is go to the view page source
+00:12:14.000
+I will paste the title tag as it is, copy paste
+00:12:20.000
+So I left the title tag 11 because I can't see it sometimes
+00:12:25.000
+I can't see things so I took the title tag
+00:12:29.000
+now you see my second section, I will make that
+00:12:33.000
+section.second
+00:12:36.000
+which I told you to make in exercise
+00:12:39.000
+and this section.second is going to be this
+00:12:43.000
+the bottom part, so nothing we have to make a div
+00:12:48.000
+so i will do one thing
+00:12:49.200
+i will write div.flex
+00:12:51.600
+and i will make a class named dot flex
+00:12:54.000
+because i am using it again and again
+00:12:56.000
+and it will give display flex
+00:12:58.800
+wherever i will put dot flex, i will get display flex
+00:13:01.600
+so here i have put flex
+00:13:03.200
+what i have to do in this flex box, I have to write this
+00:13:06.000
+ok, I have to write in one font size till ultra edit
+00:13:09.000
+and after that what I have to write
+00:13:12.000
+I will put div here and I will say
+00:13:15.000
+that what is written here, I have to write in small font size
+00:13:18.000
+ok, now I will write div here and
+00:13:21.000
+I will put this here, so the font size of this will be different
+00:13:24.000
+and the font size of this will be different and the font size of this will be different
+00:13:26.000
+so let's do one thing
+00:13:28.000
+let's give class=&quot;small&quot;, and we will say
+00:13:30.000
+in the second, the font size of
+00:13:32.000
+the small should be
+00:13:34.000
+or I can define only dot small
+00:13:36.000
+what should be the font size of this
+00:13:38.000
+we will see what should be
+00:13:40.000
+for now we will do 12px
+00:13:42.000
+yes 12px should do
+00:13:44.000
+and we have to make it 12 pixels? yes, 12 pixels should do
+00:13:45.000
+and we have to make it bigger
+00:13:47.000
+and before that we have to bring it to the center
+00:13:50.000
+so we have to make our second section a flex box
+00:13:56.000
+so what I will do here
+00:13:59.000
+either I will give it a flex class or I will do one thing
+00:14:02.000
+I will not give it dot second
+00:14:04.000
+I will keep the side consistent and I will say display flex
+00:14:08.680
+flex direction column
+00:14:11.200
+column and after that we will see justify
+00:14:15.400
+center and align
+00:14:18.400
+center, it understands, VS code understands what you want to do
+00:14:22.480
+but I don't want to center it but i don't want to center it
+00:14:26.000
+i don't want to center it, i want to bring it in starting
+00:14:29.000
+so maybe i will make a grid below it
+00:14:32.000
+or my work can be done without centering it
+00:14:35.000
+by using spans, i would have used one image and two spans
+00:14:38.000
+so there is no need for it
+00:14:41.000
+you can use it like this, i want to do live
+00:14:44.000
+brainstorming, i don i want to do live brainstorming
+00:14:46.660
+i don't want to edit this portion
+00:14:49.300
+i am changing my mind
+00:14:52.260
+i change my mind
+00:14:55.140
+sometimes google shows in map
+00:14:58.100
+that both the ways can be done at same time
+00:15:01.100
+so you can say let's go here
+00:15:04.100
+so i will name it div class is equal to
+00:15:06.060
+download, ok so in second
+00:15:09.020
+download
+00:15:10.280
+you can give it
+00:15:13.280
+font size
+00:15:14.700
+so if I show you, it will go here
+00:15:17.780
+so I guess the second one
+00:15:19.880
+I removed it, I didn't need to remove it
+00:15:23.020
+so what I will do here
+00:15:26.060
+dot second display flex
+00:15:29.140
+and flex direction
+00:15:32.960
+I will give column
+00:15:35.220
+rest justify will be seen
+00:15:38.380
+align item center
+00:15:42.060
+now you will ask why I did't do align items
+00:15:46.000
+because this is a flex box and it has a column
+00:15:50.000
+so it will not be justified by align
+00:15:52.000
+horizontal center will be in align
+00:15:54.000
+because it has a flex direction column
+00:15:56.000
+so it will be upside down when it has a flex direction column
+00:15:58.000
+go and watch the video of flex box if you haven't seen it
+00:16:00.000
+along with that i will put a background
+00:16:02.000
+so i will design it very easily
+00:16:05.600
+and I will show you the exact process
+00:16:07.600
+when I do my
+00:16:09.600
+any design like this
+00:16:12.600
+so I will write this and then I will make a grid
+00:16:14.600
+so I will name it div.grid
+00:16:16.600
+ok, I will keep div.grid
+00:16:18.600
+so here in the section I will keep div.grid
+00:16:21.600
+and here I will keep div.item
+00:16:23.600
+and the item that is going to be mine
+00:16:26.020
+in that first language will be written
+00:16:28.860
+so here it will be div.item
+00:16:31.820
+lang
+00:16:33.740
+like if it is written in english
+00:16:35.920
+then after this we will make two buttons
+00:16:38.820
+button.btn.green
+00:16:41.820
+button.btn.green
+00:16:44.520
+and one more will be
+00:16:47.000
+blue btn and one more
+00:16:50.000
+green btn, so the one i gave on button
+00:16:53.000
+i will put dot btn here
+00:16:57.000
+that dot btn class should be in it
+00:17:00.000
+so let's do one thing
+00:17:09.000
+in dot btn they give all the things in .btn which we have to give to a button because sometimes we have to make small buttons
+00:17:12.000
+so I will put all these things in .btn
+00:17:15.000
+ok and after this
+00:17:19.000
+I will put the rest of the styles here by making btn small
+00:17:24.000
+so I will put the rest of the styles here, by making btn small
+00:17:25.000
+I will do format document
+00:17:28.000
+I will have to put .btn here also, the button I have used below
+00:17:31.000
+Where have I used it? I have used it here
+00:17:34.000
+Has the site got spoiled somewhere?
+00:17:37.000
+The site should not get spoiled
+00:17:39.000
+No, it has not got spoiled. Now see here I have put two buttons
+00:17:41.000
+What is written in one?
+00:17:43.000
+One says download 32 bit
+00:17:45.000
+and the other says download 62 bit
+00:17:47.000
+Let's write it
+00:17:49.000
+Download 32 bit
+00:17:51.000
+and one says 64 bit
+00:17:53.000
+Ok
+00:17:55.000
+So we have used these two buttons
+00:17:57.000
+So here if I show you
+00:17:59.000
+Download 32 bit, download 62 bit
+00:18:01.000
+These two buttons have come
+00:18:02.000
+And I think we are good
+00:18:03.000
+Now what I have to do is
+00:18:04.000
+The green class I have to make the green class and in that I have to simply
+00:18:09.600
+make the background green, I think I am good, I am good
+00:18:14.600
+but this is not exactly the color, so it is important to take the exact color
+00:18:18.600
+whenever you clone, do it in such a way that the person is not able to recognize
+00:18:21.600
+that he is on the real ultra edit site or on the clone, ok
+00:18:24.600
+so see here the color is heredit site or on the clone, ok, so see here the color has come
+00:18:26.000
+see, you get the color and all, ok, no tension
+00:18:29.000
+now here I got the color too, now after this
+00:18:32.000
+I have to keep all the items in a grid, I have to put media query
+00:18:35.000
+that's it, my work is done, ok, I wrote here in English
+00:18:38.000
+and wrote this, my card is also almost ready
+00:18:41.000
+what will I do with my card, that my dot item
+00:18:44.000
+in my dot item what I will do to my card that my dot item
+00:18:45.520
+I will come here
+00:18:48.520
+here is my dot item
+00:18:51.520
+in dot item I will give padding
+00:18:53.520
+say I gave 23 pixels
+00:18:55.520
+I will give background, say I gave grey
+00:18:58.020
+I will give border radius, say I gave 12 pixels
+00:19:01.520
+ok, and with that what I will give
+00:19:04.520
+I think there is no need to give anything else,
+00:19:08.000
+in the English written, in item lang, first of all, I will copy what I have written in the item,
+00:19:16.000
+and I think I need to lighten it a little, now see you can mix the exact color, ok, I am telling you again,
+00:19:21.000
+mix the exact color, I am using a very approximate color, ok, I know that you want, mix the exact color, I am using approximate color
+00:19:25.000
+I know you want to use exact color, but I am using approximate color
+00:19:31.000
+I have copied and I will put it in dot item
+00:19:33.000
+Here is my CSS and at this point
+00:19:38.000
+I will format the document and take my CSS
+00:19:42.000
+Because it has is too big
+00:19:46.000
+i keep css file separate
+00:19:49.000
+when i am doing small things
+00:19:51.120
+then i stop you from making separate style sheet
+00:19:54.120
+because it becomes a burden
+00:19:57.120
+so this is our css, this is our html
+00:20:00.120
+this is our site, now see our card is made
+00:20:03.160
+it is looking good, the English which is our itemlang
+00:20:06.520
+for that we will write a class
+00:20:07.880
+we will say itemlang
+00:20:09.400
+dot itemlang
+00:20:11.880
+dot itemlang
+00:20:13.880
+so font weight will be 700
+00:20:16.440
+ok
+00:20:17.800
+along with that text line will be center
+00:20:20.600
+now see here text line is center
+00:20:23.560
+I will give padding top bottom both or only center I will give padding bottom
+00:20:26.000
+I will give padding bottom
+00:20:29.000
+padding
+00:20:32.000
+what am I doing
+00:20:35.000
+padding bottom
+00:20:38.000
+I will give 23 pixels, let me see how much it is
+00:20:41.000
+23 pixels is a little less, let's increase it a little
+00:20:44.000
+because it is at a distance
+00:20:46.000
+And along with this, the item
+00:20:49.000
+First I will make it 36px
+00:20:52.000
+And the item
+00:20:55.000
+Its font size will be 20px
+00:20:58.000
+And its font family
+00:21:01.000
+I will make it cogyi or serif
+00:21:06.000
+let me see how it looks
+00:21:08.000
+yes it looks like this, we are very close
+00:21:10.000
+was it necessary
+00:21:12.000
+yes it was a little bit, I didn't make it too thick
+00:21:14.000
+let me do one thing
+00:21:16.000
+300
+00:21:18.000
+not even 300, 400
+00:21:20.000
+500, let me try 500, 500 is good
+00:21:22.000
+but
+00:21:24.000
+the 700 I gave is also fine
+00:21:26.200
+yes it is fine, it is a little thick
+00:21:28.600
+now its color is more faded, if I show you
+00:21:31.400
+now I will go towards perfection, it will take me time, all these things are easy, that's why I am not going towards perfection
+00:21:36.400
+see it is a little light and I will remove this color from here
+00:21:39.800
+and I will style this download ultra edit, I will bring this image here too, okay
+00:21:43.200
+but before that I will make some more items
+00:21:46.000
+Because when I will add more items
+00:21:48.000
+It will break, why it will break
+00:21:50.000
+Because this is CSS grid, we have not written anything in it yet
+00:21:52.000
+Let's make some more items
+00:21:54.000
+And see what happens, see
+00:21:56.000
+We are going down, everyone is going down
+00:21:58.000
+So first of all what I will do is my grid
+00:22:00.000
+So the class I have made here
+00:22:02.000
+I will make dot grid
+00:22:04.000
+And I will write display grid here
+00:22:08.300
+and what I will use here
+00:22:10.160
+I will use grid template columns
+00:22:12.360
+and I will say here 1fr 1fr 1fr
+00:22:16.860
+and if I show you now
+00:22:18.640
+so see it came like this
+00:22:19.900
+will I use gap
+00:22:21.160
+yes I will do it
+00:22:22.660
+how much I will do
+00:22:23.860
+I will do 12 pixels will 12 pixels be removed yes of course how much? 12 pixels
+00:22:25.200
+will 12 pixels be removed? yes
+00:22:29.440
+grid is ready
+00:22:31.440
+we just have to style this
+00:22:33.440
+so how will I style this? I have made a flex box
+00:22:38.400
+so how will I do it? I will show you
+00:22:40.400
+so see here I have made display flex
+00:22:45.000
+suppose i didn't make display flex
+00:22:47.000
+so i do one thing
+00:22:50.000
+i don't get into flex
+00:22:52.000
+remove flex from .second
+00:22:54.000
+remove flex from .second
+00:22:56.000
+remove all this
+00:22:58.000
+give max width
+00:23:00.000
+70bw
+00:23:02.000
+now what happens with max width
+00:23:04.000
+that your maximum width will be 70bw now what happens with max width that your maximum width will be 70bw
+00:23:06.000
+and along with that
+00:23:08.000
+I will auto margin
+00:23:10.000
+if I auto margin then
+00:23:12.000
+it will be center as you can see
+00:23:14.000
+and I will remove this background
+00:23:16.000
+where did I put background
+00:23:18.000
+it is looking so bad
+00:23:20.000
+and I have to take this exact color
+00:23:22.000
+because that perfection is not coming
+00:23:24.000
+from where I have to pick this exact color because that perfection is not coming from where I have to pick up
+00:23:26.000
+this color, from here or
+00:23:28.000
+from here, I will get it
+00:23:30.000
+somewhere, I got the background yellow
+00:23:32.000
+and tell me, oops, ctrl c
+00:23:34.000
+ctrl v
+00:23:36.000
+where was it
+00:23:38.000
+yes, it was here
+00:23:40.000
+ctrl v
+00:23:42.000
+and it should not be hashed twice
+00:23:44.000
+it should be hashed once
+00:23:45.000
+and you can see, I have taken it exactly from here
+00:23:49.000
+as you can see, I have taken it exactly, but still our exact is not made
+00:23:54.000
+why it is not made, because we have not kept max width very strange
+00:23:58.000
+max width we have to take it in such a way that it matches with this
+00:24:01.000
+it is smaller here, it is smaller here
+00:24:03.000
+so what we will do, we will make it smaller, should I make it 5, here it is smaller so what we will do is
+00:24:06.000
+make it smaller, should i make it 46 or not, i will make it 50
+00:24:09.000
+max width 50bw
+00:24:11.700
+where did i use max width
+00:24:15.160
+50bw, ok so this is 50bw
+00:24:18.560
+very good, now i can increase more items
+00:24:21.560
+in this
+00:24:22.740
+and one more thing we talked about
+00:24:25.280
+you have to do ultra edit, download and link
+00:24:28.180
+you have to give it like this
+00:24:30.900
+click and download ultra edit from your local
+00:24:34.160
+so for that what i will do
+00:24:36.660
+here first i will do this
+00:24:39.620
+then i will talk to you
+00:24:41.020
+how i will style this
+00:24:44.020
+the span i have given here, the first span in my download
+00:24:46.000
+so here i will
+00:24:49.000
+dot download, first i will put dot download
+00:24:52.000
+download
+00:24:55.000
+and after this i will do nth child
+00:24:58.000
+and i will say one
+00:25:01.000
+font size i will do 23 pixels
+00:25:04.000
+so see, the first child of this will be 23 pixels
+00:25:07.000
+and what will happen by doing this, and with this I also need this image
+00:25:12.000
+so what is this image, maybe it is just an image, inspect, what is this image, maybe it is just an image
+00:25:18.000
+it should be an image, it is not an image, why? what is this?
+00:25:26.000
+let me see and tell you what is this?
+00:25:31.000
+this should be an image, this is a dev
+00:25:34.000
+is there any background in this?
+00:25:37.000
+yes, see where is it hidden?
+00:25:40.000
+where are you hiding sir?
+00:25:42.000
+we were looking for you
+00:25:44.000
+you are sitting as background
+00:25:46.000
+Ok, here I will write img
+00:25:48.000
+I will come here
+00:25:50.000
+and write img
+00:25:52.000
+But by doing this, it will break
+00:25:54.000
+What will break? This is not first child anymore, it is second child
+00:25:56.000
+Can you see?
+00:25:58.000
+This thing will break, this is second child
+00:26:00.000
+No problem, we will make it nchild2
+00:26:02.000
+What is going on?
+00:26:04.000
+Ok, that's why I don't like this property much, nchild
+00:26:08.000
+then i can do one more thing, i can display flex this .download
+00:26:12.000
+i can do many things, now i have to center it vertically
+00:26:15.000
+how will i do it vertically centered
+00:26:17.000
+i will display flex .download
+00:26:20.000
+see, flexbox is such a good thing and I don't take load, I just put align, item, center and justify without thinking
+00:26:31.000
+I won't lie to you, I put it without thinking
+00:26:35.000
+because I say ok, I have to do center only, I have done center so I have done it wrong
+00:26:39.000
+so maybe here that thing will be wrong but I put it in both
+00:26:44.000
+because in most of the cases
+00:26:45.780
+both justify and line have to be done
+00:26:48.800
+then if I use the gap property
+00:26:51.940
+then it will be more
+00:26:53.900
+if I use the gap property then give 10px gap
+00:26:57.900
+just remove justify content
+00:27:00.120
+give gap
+00:27:02.340
+how much? 10px that's it
+00:27:06.000
+that's it done
+00:27:08.000
+done
+00:27:10.000
+and here give font family serif
+00:27:16.000
+give serif
+00:27:20.000
+here also
+00:27:22.000
+senserif
+00:27:24.000
+ui senserif is also fine
+00:27:26.000
+which one did they use? they used sensorif
+00:27:29.000
+let's do sensorif, same thing
+00:27:31.000
+ok, same thing
+00:27:34.000
+see, this is how it is looking
+00:27:37.000
+ok, it happens a little bit
+00:27:40.000
+now it is like this
+00:27:42.000
+now these two should be hidden
+00:27:44.000
+so I can do one thing, this image
+00:27:46.120
+I can do something like this, that the image in the download
+00:27:52.720
+Give it padding
+00:27:55.440
+0 pixels in the top bottom
+00:27:57.320
+12 pixels in the left right, so it will make a little distance from the image
+00:28:01.240
+Are you seeing friends?
+00:28:02.720
+How well I made it
+00:28:04.800
+Now the talk about putting media query it now the thing about media query
+00:28:08.000
+what was the thing about media query
+00:28:12.000
+when I will resize it, then things will start getting spoiled
+00:28:16.000
+it is not responsive yet, when I will resize it, then things will start getting spoiled
+00:28:20.000
+so our thing was that the grid, when we will put media query
+00:28:24.000
+what should this grid do do this grid should change itself in such a way that it comes below one, are you understanding
+00:28:32.000
+so for that what I have to do, my grid which is here
+00:28:36.000
+which is here, I will make it 1fr, I will say that I need a column of 1fr
+00:28:42.480
+I will say that I need a column of 1fr I will say that I need a column of 1fr
+00:28:46.000
+like this and then
+00:28:48.000
+I will have to do center
+00:28:50.000
+like I will say
+00:28:52.000
+justify content center
+00:28:54.000
+align item center
+00:28:56.000
+nothing is happening let me see what's wrong
+00:28:58.000
+actually I will have to do this on item
+00:29:00.000
+I will have to do this on item
+00:29:02.000
+so on item can I
+00:29:04.000
+put text align center yes can I put text align center
+00:29:06.000
+yes I can put text align center
+00:29:08.000
+everything will be centered, so on item I will put text align center
+00:29:10.000
+can't I put
+00:29:12.000
+text align center on item
+00:29:14.000
+is it center aligned? yes
+00:29:16.000
+so first of all let's put text align center on item
+00:29:20.000
+ok text align center
+00:29:22.000
+now I will put a media query
+00:29:26.000
+I will put media query and
+00:29:28.000
+media screen
+00:29:30.000
+and
+00:29:32.000
+and max width
+00:29:34.000
+max width
+00:29:38.000
+i will put 45 pixels
+00:29:40.000
+or 145 pixels
+00:29:42.000
+and here i will do
+00:29:44.000
+that the dot download no the grid, I will see
+00:29:48.000
+what I have to do, I have to make it 1fr
+00:29:51.000
+first of all, you know what I do, I put the background color
+00:29:55.000
+red, that tells me whether my media is firing or not
+00:29:59.000
+like if I do this, my background should be red
+00:30:02.000
+it's not happening, it's not working It means my media quality is not good
+00:30:06.000
+If I make it 100%
+00:30:08.000
+and now
+00:30:10.000
+I will make it smaller
+00:30:12.000
+and my width is going
+00:30:14.000
+I will say when my width
+00:30:16.000
+is going, where is it breaking
+00:30:18.000
+I will have to
+00:30:20.000
+make it smaller
+00:30:22.000
+Assume that
+00:30:24.000
+when my it is 800
+00:30:27.100
+900, I will make it 900
+00:30:30.400
+945, after 945
+00:30:33.280
+it should be red, see it is done, it means it is working
+00:30:36.640
+I will do it like this
+00:30:39.620
+so my media query should be done and it should be 1FR
+00:30:42.800
+If I have done it then it will be done
+00:30:46.000
+display grid is there, gap is there
+00:30:49.000
+everything is there
+00:30:52.000
+i did it like this and it is 1fr
+00:30:55.000
+now i will put padding top in dot btn
+00:30:58.000
+because it does not have padding
+00:31:01.000
+it needs padding from top bottom
+00:31:04.000
+sorry it does not have margin I need padding from top bottom sorry there is no margin
+00:31:05.740
+from top bottom
+00:31:07.280
+I am not giving margin from left and right
+00:31:10.220
+so I did this and it came out like this
+00:31:13.600
+then I want that as soon as
+00:31:16.160
+800 hits, in fact it is not 800
+00:31:19.140
+let's increase it
+00:31:21.120
+not 900, it is 1145
+00:31:24.480
+I made it small and so it will look like this
+00:31:26.000
+so you can make it responsive like this
+00:31:29.000
+so our grid is working perfectly
+00:31:32.000
+I hope you understood, I will increase the items
+00:31:34.000
+so you will like it more
+00:31:36.000
+so as soon as it will come to 1100px
+00:31:38.000
+it will look like this
+00:31:40.000
+now what you have to do, I will add one more thing in .btn
+00:31:42.000
+that is cursor pointer
+00:31:44.000
+ok cursor pointer
+00:31:48.880
+ok, cursor pointer and along with that, if anyone clicks on it
+00:31:51.880
+i will put an href
+00:31:54.880
+href is equal to slash
+00:31:56.760
+file.txt
+00:31:59.680
+and here the closing a
+00:32:02.680
+i will put this closing A here
+00:32:05.440
+let's see what happens
+00:32:06.720
+see here it is a little bit wrong
+00:32:08.720
+so what I have to do is
+00:32:10.160
+the A in .btn
+00:32:12.640
+in the A in .btn
+00:32:17.120
+text decoration none
+00:32:18.560
+I told you what happens
+00:32:20.080
+color it white
+00:32:21.680
+I also told you what happens
+00:32:23.440
+so see here it is like this so I will click i told you so here it is
+00:32:26.000
+so i will click on it and see here it is asking for file
+00:32:28.000
+so i will download the file
+00:32:30.000
+so i will click on english 32 bit
+00:32:32.000
+and this file will be downloaded
+00:32:34.000
+and as soon as i get this file
+00:32:36.000
+i will locate this file and put it in the folder
+00:32:38.000
+i will wait for it to download
+00:32:40.000
+this is downloaded, i have kept it as ueenglish.exe
+00:32:42.000
+so
+00:32:44.000
+the file i have written i will as ueenglish.exe So the file I have written
+00:32:46.800
+I will say ueenglish.exe
+00:32:49.760
+And I will do the same thing here
+00:32:52.760
+I will replicate it and make it 64
+00:32:55.820
+Now for different versions
+00:32:58.800
+I have to work hard, I have to keep the length of the video short
+00:33:01.760
+I don't want to increase the length of the video
+00:33:04.760
+Because I have realized that your time is very important
+00:33:06.000
+So the things which are obvious
+00:33:09.000
+There is no point in telling that. So you see here
+00:33:12.000
+I will click here, I should download
+00:33:15.000
+Why is it not downloading?
+00:33:18.000
+I have not done it in all, so I should delete all the items
+00:33:21.000
+And only this item should be replicated
+00:33:24.000
+Now see it will work, I have done a lot of items All items should be deleted and only this item should be replicated
+00:33:29.960
+Now see it will work, I have done a lot of items, my grid has become very big, you are seeing
+00:33:31.520
+I will click anywhere
+00:33:34.840
+So it will be downloaded, now see it is downloaded
+00:33:38.560
+Actually I have put AHRF in the lower one
+00:33:42.080
+Still why is it not downloading, when I am downloading 64 bit, is it happening?
+00:33:44.120
+Yes it is happening
+00:33:46.000
+So see I have put a lot of downloads I will cancel it
+00:33:48.000
+I have put a lot of downloads, I will have to cancel it
+00:33:50.000
+oops, so in total you have understood
+00:33:52.000
+how to do it
+00:33:54.000
+write different languages here
+00:33:56.000
+I will not change it one by one
+00:33:58.000
+I hope you will do it yourself
+00:34:00.000
+and the colors of it
+00:34:02.000
+I have made it exact
+00:34:04.000
+you see it is exact
+00:34:06.000
+I have given more border radius
+00:34:08.000
+the developer chose this much
+00:34:10.000
+I have made it more
+00:34:12.000
+if you want to make exact clone then you can do it
+00:34:14.000
+now see this clone is
+00:34:16.000
+running in 1920p
+00:34:18.000
+and in most of the cases it works
+00:34:20.000
+1920p
+00:34:22.000
+so I just wanted to tell you how to approach all these things
+00:34:24.000
+I hope you liked this clone
+00:34:26.000
+Tell me in the comment section
+00:34:28.000
+If you liked it, then do tell me
+00:34:30.000
+Now we will
+00:34:32.000
+Sort the comments by newest first
+00:34:34.000
+And after this
+00:34:36.000
+I will
+00:34:38.000
+Scroll down
+00:34:40.000
+So that the first one
+00:34:42.000
+Who did it, gets a shoutout and I will give a shoutout in between
+00:34:44.000
+Like I want to give a shoutout and I will give shoutout in between
+00:34:46.000
+like I want to give shoutout to MJT gaming
+00:34:49.000
+along with that I want to give shoutout to Vedant, YT100xpoint
+00:34:52.000
+Punea Aman Ocha
+00:34:55.000
+Dipesh Paul Del
+00:34:58.000
+now I want to tell you one more thing that in the coming exercise
+00:35:01.000
+you should solve it because I may make such videos in the coming time
+00:35:04.000
+where I will give shoutouts to old solvers
+00:35:05.920
+to new solvers
+00:35:08.900
+because those who are watching later should also get a chance to get a shoutout
+00:35:11.860
+so i am going to give that too
+00:35:14.820
+so let's scroll down and i will come back
+00:35:17.740
+so shoutout to grand gamers, shoutout to coder A.K
+00:35:20.900
+shoutout to fearless journey, shoutout to ajay bairba
+00:35:24.100
+shoutout to subhansher, shoutout to devless Journey, Ajay Bairwa, Subhanshir, Devendra Dhamyalay, Awais Mughal Fan, Uttam730
+00:35:29.500
+Then the first solution is from Priyanshu, but I want to give shoutout to Hindi Social Sheikh Khalil, Coder A, Cutke, Uttam730
+00:35:39.000
+And here you can see that they have given a little compression given which is fine because there is a limit here you can see
+00:35:46.000
+they have done exactly what I have done
+00:35:48.000
+they have made a CSS grid and
+00:35:50.000
+they have given individual links
+00:35:52.000
+he is doing a good job
+00:35:54.000
+they have worked very hard
+00:35:56.000
+and after that
+00:35:58.000
+you can see
+00:36:00.000
+Vijwal Gupta
+00:36:02.000
+Manas Agarwal, Muhammad Qasim
+00:36:04.000
+Wasim Muhammad
+00:36:05.960
+and Vicky Shukla, User
+00:36:08.960
+Mahesh Ramteke, Cooking Street
+00:36:11.960
+and after this, Sabah Sahar
+00:36:14.960
+Vicky, Moinuddin Qureshi
+00:36:17.960
+Kuldeep Nakum
+00:36:20.960
+Clickhair
+00:36:22.460
+S.Mohit Bardwaj Animein Gamer
+00:36:26.000
+Nish C
+00:36:28.000
+U Code Zone
+00:36:30.000
+Developer Pankaj
+00:36:32.000
+and along with that
+00:36:34.000
+Vivaan Yadav
+00:36:36.000
+Deepak Gupta
+00:36:38.000
+Mahadi Faruqi
+00:36:40.000
+Saksham Singh
+00:36:42.000
+Vedant Alon
+00:36:44.000
+Chaitanya Zonzorkar
+00:36:46.000
+shoutout to anirudhya yadav
+00:36:49.000
+shoutout to tirtharaturkar
+00:36:52.000
+shoutout to kontenor
+00:36:55.000
+shoutout to ajay bairava, shoutout to lakshya avyaz
+00:36:58.000
+shoutout to codex bug, shoutout to fahad aftab
+00:37:01.000
+shoutout to vivek pal, and i hope you liked this video
+00:37:04.000
+we made a clone in this video
+00:37:06.000
+I was thinking that I will solve only exercise
+00:37:08.000
+but I love front end so much
+00:37:10.000
+that I made a complete clone
+00:37:12.000
+and I want to work on it more
+00:37:14.000
+I feel like why I didn't write this
+00:37:16.000
+I should have done it
+00:37:18.000
+so it is fun, the lower parts are
+00:37:20.000
+easier, accepting the challenge
+00:37:22.000
+do this and the footer here
+00:37:24.000
+is very easy and here in the footer is very easy
+00:37:26.000
+and in the footer, I have to put display flex
+00:37:29.000
+and max width
+00:37:32.000
+or you can put space between
+00:37:35.000
+it is simple
+00:37:38.000
+pretty clean website
+00:37:41.000
+put resume also
+00:37:44.000
+fill your resume it will be done very easily put it in resume what are you doing
+00:37:46.000
+fill your resume with this kind of websites
+00:37:48.000
+fill it with your github link
+00:37:50.000
+so that any recruiter can see
+00:37:52.000
+that you have so many websites
+00:37:54.000
+why not mine
+00:37:56.000
+this is how job selection works
+00:37:58.000
+so if you haven't accessed this playlist yet
+00:38:00.000
+then access it
+00:38:02.000
+it's enough
+00:38:04.000
+click here and bookmark it
+00:38:06.000
+and save it here, otherwise i am coming to your house
+00:38:08.000
+then don't say why did you come here
+00:38:10.000
+ok, that's it for this video
+00:38:12.000
+guys, thank you so much for watching this video

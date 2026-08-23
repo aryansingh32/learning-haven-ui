@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 53,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nLearn how to remove duplicates from a List in Python.\n\nFirst we have a List that contains duplicates:\n\nCreate a dictionary, \nusing the List items as keys. This will automatically remove any duplicates \nbecause dictionaries cannot have duplicate keys.\n\nThen, convert the dictionary back into a list:\n\nNow we have a List without any duplicates, and it has the same order as the \noriginal List.\n\nPrint the List to demonstrate the result\n\nIf you like to have a function where you can send your lists, and get them \nback without duplicates, you can create a function and insert the code from the \nexample above.\n\nCreate a function that takes a List as an argument.\n\nCreate a dictionary, using this List items as keys.\n\nConvert the dictionary into a list.\n\nReturn the list\n\nCall the function, with a list as a parameter:\n\nPrint the result:\n\n### Code Examples\n\n```\nmylist = [\"a\", \"b\", \"a\", \"c\", \"c\"]\nmylist = list(dict.fromkeys(mylist))\nprint(mylist)\n\n---\n\nmylist = [\"a\", \"b\", \"a\", \"c\", \"c\"]\nmylist = list(dict.fromkeys(mylist))\nprint(mylist)\n\n---\n\nmylist = [\"a\", \"b\", \"a\", \"c\", \"c\"]\nmylist = list(\ndict.fromkeys(mylist)\n)\nprint(mylist)\n\n---\n\nmylist = [\"a\", \"b\", \"a\", \"c\", \"c\"]\nmylist = list(\ndict.fromkeys(mylist)\n)\nprint(mylist)\n\n---\n\nmylist = [\"a\", \"b\", \"a\", \"c\", \"c\"]\nmylist = list(dict.fromkeys(mylist))\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn list(dict.fromkeys(x))\nmylist = \n  my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn list(dict.fromkeys(x))\nmylist = \n  my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn list(\ndict.fromkeys(x)\n)\nmylist = \n  my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn\nlist(\ndict.fromkeys(x)\n)\nmylist = \n  my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn\nlist(dict.fromkeys(x))\nmylist = \n  my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn list(dict.fromkeys(x))\nmylist = my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n\n---\n\ndef my_function(x):\nreturn list(dict.fromkeys(x))\nmylist = my_function([\"a\", \"b\", \"a\", \"c\", \"c\"])\nprint(mylist)\n```\n\n## Tutorials\n\nLearn how to reverse a String in Python.\n\nThere is no built-in function to reverse a String in Python.\n\nThe fastest (and easiest?) way is to use a slice that steps backwards,-1.\n\nWe have a string, \"Hello World\", which we want to reverse:\n\nCreate a slice that starts at the end of the string, and moves backwards.\n\nIn this particular example, the slice statement[::-1]means start at \nthe end of the string and end at position 0, move with the \nstep-1,negativeone, which means one step backwards.\n\nNow we have a stringtxtthat reads \"Hello \nWorld\" backwards.\n\nPrint the String to demonstrate the result\n\nIf you like to have a function where you can send your strings, and return \nthem \nbackwards, you can create a function and insert the code from the \nexample above.\n\nCreate a function that takes a String as an argument.\n\nSlice the string starting at the end of the string and move backwards.\n\nReturn the backward String\n\nCall the function, with a string as a parameter:\n\nPrint the result:\n\n### Code Examples\n\n```\ntxt = \"Hello World\"[::-1]\nprint(txt)\n\n---\n\ntxt =\n\"Hello World\"\n[::-1]\nprint(txt)\n\n---\n\ntxt = \"Hello World\"\n[::-1]\nprint(txt)\n\n---\n\ntxt = \"Hello World\"[::-1]\nprint(txt)\n\n---\n\ndef my_function(x):\nreturn x[::-1]\nmytxt = \n  my_function(\"I wonder how this text looks like backwards\")\nprint(mytxt)\n\n---\n\ndef my_function(x):\nreturn x[::-1]\nmytxt = \n  my_function(\"I wonder how this text looks like backwards\")\nprint(mytxt)\n\n---\n\ndef my_function(x):\nreturn x\n[::-1]\nmytxt = \n  my_function(\"I wonder how this text looks like backwards\")\nprint(mytxt)\n\n---\n\ndef my_function(x):\nreturn\nx[::-1]\nmytxt = \n  my_function(\"I wonder how this text looks like backwards\")\nprint(mytxt )\n\n---\n\ndef my_function(x):\nreturn \n  x[::-1]\nmytxt = my_function(\"I \n  wonder how this text looks like backwards\")\nprint(mytxt)\n\n---\n\ndef my_function(x):\nreturn \n  x[::-1]\nmytxt = my_function(\"I wonder how this text looks like backwards\")\nprint(mytxt)\n```\n\n## Tutorials\n\nLearn how to add two numbers in Python.\n\nUse the+operator to add two numbers:\n\nIn this example, the user must input two numbers. Then we print the sum by calculating (adding) the two numbers:\n\n### Code Examples\n\n```\nx = 5\ny = 10\nprint(x + y)\n\n---\n\nx = input(\"Type a number: \")\ny = input(\"Type another number: \")\nsum \n  = int(x) + int(y)\nprint(\"The sum is: \", sum)\n```\n\n## Tutorials\n\nSyntax Explained\n\nVariables Explained\n\nNumbers Explained\n\nCasting Explained\n\nStrings Explained\n\nOperators Explained\n\nLists Explained\n\nTuples Explained\n\nSets Explained\n\nDictionaries Explained\n\nIf ... Else Explained\n\nWhile Loop Explained\n\nFor Loop Explained\n\nFunctions Explained\n\nLambda Explained\n\nArrays Explained\n\nClasses/Objects Explained\n\nIterators Explained\n\nModules Explained\n\nDates Explained\n\nMath Explained\n\nJSON Explained\n\nRegEx Explained\n\nPIP Explained\n\nTry Except Explained\n\nFile Handling Explained\n\nMySQL Explained\n\nMongoDB Explained\n\n## Tutorials\n\nWith our online Python compiler, you can edit Python code, and view the result in your browser.\n\nClick on the \"Try it Yourself\" button to see how it works.\n\nIf you want to create your own Python applications,W3Schools Spacesgives you an easy place to write, run, manage, and publish code online.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_53",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_53",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

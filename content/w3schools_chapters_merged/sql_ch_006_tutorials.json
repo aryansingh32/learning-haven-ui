@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAn alias is created with theASkeyword, and \nis often used to make a column name more readable.\n\nAn alias only exists for the duration of that query.\n\nThe following SQL creates two aliases, one for the CustomerID \ncolumn and one for the CustomerName column:\n\nAlias for column:\n\nAlias for table:\n\nBelow is a selection from theCustomerstable used in the examples:\n\nIf you want your alias to contain one or more spaces, like \"My Great Products\",\nsurround the aliasname with square brackets or double quotes:\n\nOR:\n\nThe following SQL creates an alias named \"Address\" that combine four columns (Address, PostalCode, \nCity and Country):\n\nNote:To get the SQL statement above to work in MySQL use the following:\n\nNote:To get the SQL statement above to work in Oracle use the following:\n\nThe same rules applies when you want to use an alias for a table.\n\nIt might seem useless to use aliases on tables, but when you are joining tables,\nit makes sense.\n\nIn the following example, c is the alias for customers and o is for orders, making the query shorter and easier to read:\n\nYou will learn more aboutSQL Joinsin the next chapters.\n\nAliases are useful when:\n\n### Code Examples\n\n```\nSELECT CustomerID AS ID, CustomerName AS Customer\nFROM Customers;\n\n---\n\nSELECT ProductName AS [My Great Products]\nFROM Products;\n\n---\n\nSELECT ProductName AS \"My Great Products\"\nFROM Products;\n\n---\n\nSELECT CustomerName, Address + ', ' + PostalCode + ' ' + City + ', ' + Country \n  AS Address\nFROM Customers;\n\n---\n\nSELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address\nFROM Customers;\n\n---\n\nSELECT CustomerName, (Address || ', ' || PostalCode || ' ' || City || ', ' || \n  Country) AS Address\nFROM Customers;\n\n---\n\nSELECT * FROM Customers AS Persons;\n\n---\n\nSELECT c.CustomerName, o.OrderID\nFROM customers AS c\nJOIN orders AS o ON c.customerID = o.customerID;\n```\n\n## Tutorials\n\nTheJOINclause is used to combine rows from two or more tables, based on a related column between them.\n\nHere are the different types of JOINs in SQL:\n\nLook at an order in \"Orders\" table:\n\nThen, look at a customer in the \"Customers\" table:\n\nHere we see that the \"CustomerID\" column in the \"Orders\" table refers to the\n\"CustomerID\" in the \"Customers\" table. The relationship between the two tables above\nis the \"CustomerID\" column.\n\nThen, we can create the following SQL statement (that contains anINNER JOIN), \nthat selects records that have matching values in both tables:\n\nand it will produce something like this:\n\n### Code Examples\n\n```\nSELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate\nFROM Orders\nINNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;\n```\n\n## Tutorials\n\nTheINNER JOINreturns only rows that havematching valuesin both tables.\n\nTip:You can use justJOINinstead ofINNER JOIN, asINNERis the default join type.\n\nNote:The syntax combines two tables based on arelated column, \nand theONkeyword is used to specify the matching condition.\n\nLook at a product in theProductstable:\n\nAnd look at a row in theCategoriestable:\n\nHere we see that therelated columnbetween the two tables above, is the \"CategoryID\" column.\n\nNow we create anINNER JOINon the \"Products\" table and the \"Categories\" table, via the CategoryID field:\n\nIt is a good practice to also include the table name when specifying columns in SQL \njoins:\n\nThe example above works without specifying table names, because none of the \nspecified column names are present in both tables.\nHowever, if you add the CategoryID column in theSELECTstatement, an error occurs, if you do not specify the table name. \nThis is because the CategoryID column is present in both tables.\n\nJOINandINNER JOINwill return the same result.\n\nINNERis the default join type forJOIN,\nso when you writeJOINthe parser actually writesINNER JOIN.\n\nYou can join more than two tables by adding multipleINNER JOINclauses in your query.\n\nThe following SQL selects all orders with customer and shipper information:\n\nHere is theShipperstable:\n\n### Code Examples\n\n```\nSELECT ProductID, ProductName, CategoryName\nFROM Products\nINNER JOIN \n  Categories ON Products.CategoryID = Categories.CategoryID;\n\n---\n\nSELECT Products.ProductID, Products.ProductName, Categories.CategoryName\nFROM Products\nINNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;\n\n---\n\nSELECT Products.ProductID, Products.ProductName, Categories.CategoryName\nFROM Products\nJOIN Categories ON Products.CategoryID = Categories.CategoryID;\n\n---\n\nSELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName\nFROM \n  Orders\nINNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID\nINNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID;\n```\n\n## Tutorials\n\nTheLEFT JOINreturnsall rows from the left table(table1), and only the matched rows from the right table (table2).\n\nIf there is no match in the right table, the result for the columns from the right table will be NULL.\n\nTheLEFT JOINandLEFT OUTER JOINkeywords are equal - theOUTERkeyword is optional.\n\nNote:The syntax combines two tables based on arelated column, \nand theONkeyword is used to specify the matching condition.\n\nBelow is a selection from the \"Customers\" table:\n\nAnd a selection from the \"Orders\" table:\n\nHere we see that therelated columnbetween the two tables above, is the \"CustomerID\" column.\n\nThe following SQL returns all customers and their orders, including customers who have not placed any orders:\n\nTip:To find only the customers who have not placed any order, add aWHEREclause to filter for NULL values on the right table:\n\n### Code Examples\n\n```\nSELECT\ncolumn_name(s)\nFROM\ntable1\nLEFT JOIN\ntable2\nON\ntable1.column_name\n=\ntable2.column_name\n;\n\n---\n\nSELECT Customers.CustomerName, Orders.OrderID\nFROM Customers\nLEFT JOIN Orders\n ON Customers.CustomerID = Orders.CustomerID\nORDER BY Customers.CustomerName;\n\n---\n\nSELECT Customers.CustomerName, Orders.OrderID\nFROM Customers\nLEFT JOIN Orders\nON Customers.CustomerID = Orders.CustomerID\nWHERE Orders.CustomerID IS NULL;\n```\n\n## Tutorials\n\nTheRIGHT JOINreturnsall rows from the right table(table2), and only the matched rows from the left table (table1).\n\nIf there is no match in the left table, the result for the columns from the left table will be NULL.\n\nTheRIGHT JOINandRIGHT OUTER JOINkeywords are equal - theOUTERkeyword is optional.\n\nNote:The syntax combines two tables based on arelated column, \nand theONkeyword is used to specify the matching condition.\n\nBelow is a selection from the \"Orders\" table:\n\nAnd a selection from the \"Employees\" table:\n\nHere we see that the related column between the two tables above, is the \"EmployeeID\" column.\n\nThe following SQL will return all employees, and any orders they might have placed:\n\nNote:TheRIGHT JOINkeyword returns all records from the \nright table (Employees), even if there are no matches in the left table \n(Orders).\n\n### Code Examples\n\n```\nSELECT\ncolumn_name(s)\nFROM\ntable1\nRIGHT JOIN\ntable2\nON\ntable1.column_name\n=\ntable2.column_name\n;\n\n---\n\nSELECT Orders.OrderID, Employees.LastName, Employees.FirstName\nFROM Orders\nRIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID\nORDER BY Orders.OrderID;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

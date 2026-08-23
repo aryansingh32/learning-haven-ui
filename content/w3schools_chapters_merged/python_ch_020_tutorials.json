@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 20,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nifstatements cannot be empty, but if you \nfor some reason have anifstatement with no content, put in thepassstatement to avoid getting an error.\n\nThepassstatement is a null operation - nothing happens when it executes. It serves as a placeholder.\n\nThepassstatement is useful in several situations:\n\nDuring development, you might want to sketch out your program structure before implementing the details. Thepassstatement allows you to do this without syntax errors.\n\nA comment is ignored by Python, butpassis an actual statement that gets executed (though it does nothing). You needpasswhere Python expects a statement, not just a comment.\n\nYou can usepassin any branch of an if-elif-else statement.\n\nWhile we focus onpasswith if statements here, it's also commonly used with loops, functions, and classes.\n\n### Code Examples\n\n```\na = 33\nb = 200\nif b > a:\npass\n\n---\n\nage = 20\nif age < 18:\npass  # TODO: Add underage logic later\nelse:\nprint(\"Access granted\")\n\n---\n\nscore = 85\nif score > 90:\n# This is excellent\n# This will raise an IndentationError\n\n---\n\nscore = 85\nif score > 90:\npass  # This is excellent\nprint(\"Score processed\")\n\n---\n\nvalue = 50\nif value < 0:\nprint(\"Negative value\")\nelif value == 0:\npass  # Zero case - no action needed\nelse:\nprint(\"Positive value\")\n\n---\n\ndef calculate_discount(price):\npass  # TODO: Implement discount logic\n# Function exists but doesn't do anything yet\n```\n\n## Tutorials\n\nTest your understanding of if, elif, else, and shorthand if statements.\n\n## Tutorials\n\nThematchstatement is used to perform different actions based on different conditions.\n\nInstead of writingmanyif..elsestatements, you can use thematchstatement.\n\nThematchstatement selects one of many code blocks to be executed.\n\nThis is how it works:\n\nThe example below uses the weekday number to print the weekday name:\n\nUse the underscore character_as the last \ncase value if you want a code block to execute when there are not other matches:\n\nThe value_will always match, so it is important to place it as thelastcaseto make it \nbehave as a defaultcase.\n\nUse the pipe character|as an or operator in thecaseevaluation to check \nfor more than one value match in onecase:\n\nYou can addifstatements in the case evaluation as an extra condition-check:\n\n### Code Examples\n\n```\nmatch\nexpression\n:\ncase x:\ncode block\ncase y:\ncode block\ncase z:\ncode block\n\n---\n\nday = 4\nmatch day:\ncase 1:\nprint(\"Monday\")\ncase 2:\nprint(\"Tuesday\")\ncase 3:\nprint(\"Wednesday\")\ncase 4:\nprint(\"Thursday\")\ncase 5:\nprint(\"Friday\")\ncase 6:\nprint(\"Saturday\")\ncase 7:\nprint(\"Sunday\")\n\n---\n\nday = 4\nmatch day:\ncase 6:\nprint(\"Today is Saturday\")\ncase 7:\nprint(\"Today is Sunday\")\ncase _:\nprint(\"Looking forward to the Weekend\")\n\n---\n\nday = 4\nmatch day:\ncase 1 | 2 | 3 | 4 | 5:\nprint(\"Today is a weekday\")\ncase 6 | 7:\nprint(\"I love \n  weekends!\")\n\n---\n\nmonth = 5\nday = 4\nmatch day:\ncase 1 | 2 | 3 | 4 | 5 if month == 4:\nprint(\"A weekday in April\")\ncase 1 | 2 | 3 | 4 | 5 if month == 5:\nprint(\"A weekday in May\")\ncase _:\nprint(\"No match\")\n```\n\n## Tutorials\n\nTest your understanding of Python match by completing a small coding challenge.\n\n## Tutorials\n\nPython has two primitive loop commands:\n\nWith thewhileloop we can execute a set of statements as long as a condition is true.\n\nThewhileloop requires relevant variables to be ready, in this example we need to define an indexing variable,i, \nwhich we set to 1.\n\nWith thebreakstatement we can stop the loop even if the \nwhile condition is true:\n\nWith thecontinuestatement we can stop the \ncurrent iteration, and continue with the next:\n\nWith theelsestatement we can run a block of code once when the \ncondition no longer is true:\n\n### Code Examples\n\n```\ni = 1\nwhile i < 6:\nprint(i)\ni += 1\n\n---\n\ni = 1\nwhile i < 6:\nprint(i)\nif i == 3:\nbreak\ni += 1\n\n---\n\ni = 0\nwhile i < 6:\ni += 1\nif i == 3:\ncontinue\nprint(i)\n\n---\n\ni = 1\nwhile i < 6:\nprint(i)\ni += 1\nelse:\nprint(\"i is no longer less than 6\")\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_20",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

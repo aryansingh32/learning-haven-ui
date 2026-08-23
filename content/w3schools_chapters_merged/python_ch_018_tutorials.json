@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 18,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nA dictionary can contain dictionaries, this is called nested \ndictionaries.\n\nOr, if you want to add three dictionaries into a new \ndictionary:\n\nTo access items from a nested dictionary, you use the name of the dictionaries, starting with the \nouter dictionary:\n\nYou can loop through a dictionary by using theitems()method like this:\n\n### Code Examples\n\n```\nmyfamily = {\n\"child1\" : {\n\"name\" : \"Emil\",\n\"year\" : 2004\n},\n\"child2\" : {\n\"name\" : \"Tobias\",\n\"year\" : 2007\n},\n\"child3\" : {\n\"name\" : \"Linus\",\n\"year\" : 2011\n}\n}\n\n---\n\nchild1 = {\n\"name\" : \"Emil\",\n\"year\" : 2004\n}\nchild2 = {\n\"name\" : \"Tobias\",\n\"year\" : 2007\n}\nchild3 = {\n\"name\" : \"Linus\",\n\"year\" : 2011\n}\nmyfamily = {\n\"child1\" : child1,\n\"child2\" : child2,\n\"child3\" : child3\n}\n\n---\n\nprint(myfamily[\"child2\"][\"name\"])\n\n---\n\nfor x, obj in myfamily.items():\nprint(x)\nfor y in obj:\nprint(y + ':', obj[y])\n```\n\n## Tutorials\n\nPython has a set of built-in methods that you can use on dictionaries.\n\n## Tutorials\n\nNow you have learned a lot about dictionaries, and how to use them in Python.\n\nAre you ready for a test?\n\nTest your Python Dictionary skills with exercises from all categories:\n\nThe exercises are a mix of \"multiple choice\" and \"fill in the blanks\" questions.\n\nThere are between 3 and 9 questions in each category.\n\nThe answer can be found in the corresponding tutorial chapter.\n\nIf you're stuck, or answer wrong, you can try again or hit the \"Show Answer\" button to see the correct answer.\n\nFind a complete collection of Python Exercises for each chapter in this tutorial in ourPython Exercisespage:\n\n## Tutorials\n\nTest your understanding of creating, accessing, changing, adding, and removing dictionary items.\n\n## Tutorials\n\nPython supports the usual logical conditions from mathematics:\n\nThese conditions can be used in several ways, most commonly in \"if statements\" and loops.\n\nAn \"if statement\" is written by using theifkeyword.\n\nIn this example we use two variables,aandb,\nwhich are used as part of the if statement to test whetherbis greater thana.\nAsais33, andbis200,\nwe know that 200 is greater than 33, and so we print to screen that \"b is greater than a\".\n\nThe if statement evaluates a condition (an expression that results inTrueorFalse). If the condition is true, the code block inside the if statement is executed. If the condition is false, the code block is skipped.\n\nPython relies on indentation (whitespace at the beginning of a line) to define scope in the code. Other programming languages often use curly-brackets for this purpose.\n\nYou can have multiple statements inside an if block. All statements must be indented at the same level.\n\nBoolean variables can be used directly in if statements without comparison operators.\n\nPython can evaluate many types of values asTrueorFalsein an if statement.\n\nZero (0), empty strings (\"\"),None, and empty collections are treated asFalse. Everything else is treated asTrue.\n\nThis includes positive numbers (5), negative numbers (-3), and any non-empty string (even\"False\"is treated asTruebecause it's a non-empty string).\n\n### Code Examples\n\n```\na = 33\nb = 200\nif b > a:\nprint(\"b is greater than a\")\n\n---\n\nnumber = 15\nif number > 0:\nprint(\"The number is positive\")\n\n---\n\na = 33\nb = 200\nif b > a:\nprint(\"b is greater than a\")\n# you will get an error\n\n---\n\nage = 20\nif age >= 18:\nprint(\"You are an adult\")\nprint(\"You can vote\")\nprint(\"You have full legal rights\")\n\n---\n\nis_logged_in = True\nif is_logged_in:\nprint(\"Welcome back!\")\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_18",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

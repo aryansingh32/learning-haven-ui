@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 175,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A histogram is a graph showingfrequencydistributions.\n\nIt is a graph showing the number of observations within each given interval.\n\nExample: Say you ask for the height of 250 people, you \nmight end up with a histogram like this:\n\nYou can read from the histogram that there are approximately:\n\n2 people from 140 to 145cm5 people from 145 to 150cm15 people from \n151 to 156cm31 people from 157 to 162cm46 people from 163 to 168cm53 \npeople from 168 to 173cm45 people from 173 to 178cm28 people from 179 to \n184cm21 people from 185 to 190cm4 people from 190 to 195cm\n\nIn Matplotlib, we use thehist()function to \ncreate histograms.\n\nThehist()function will use an array of \nnumbers to create a histogram, the array is sent into the function as an \nargument.\n\nFor simplicity we use NumPy to randomly generate an array with 250 values, \nwhere the values will concentrate around 170, and the standard deviation is 10. \nLearn more aboutNormal Data \nDistributionin ourMachine Learning \nTutorial.\n\nThehist()function will read the array and produce a histogram:\n\n### Code Snippets\n\n```\nimport numpy as np\nx = \n  np.random.normal(170, 10, 250)\nprint(x)\n\n---\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = \n  np.random.normal(170, 10, 250)\nplt.hist(x)\nplt.show()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_174",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

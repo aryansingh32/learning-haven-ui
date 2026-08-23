@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 4,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of HTML headings by completing this coding challenge.\n\n## Tutorials\n\nA paragraph always starts on a new line, and is usually a block of text.\n\nThe HTML<p>element defines a paragraph.\n\nA paragraph always starts on a new line, and browsers automatically add some white space (a margin) before and after a paragraph.\n\nYou cannot be sure how HTML will be displayed.\n\nLarge or small screens, and resized windows will create different results.\n\nWith HTML, you cannot change the display by adding extra spaces or extra lines in your HTML code.\n\nThe browser will automatically remove any extra spaces and lines when the page is \ndisplayed:\n\nThe<hr>tag defines a thematic break in an HTML page, and is most often \ndisplayed as a horizontal rule.\n\nThe<hr>element is used to separate content (or define a change) in an HTML \npage:\n\nThe<hr>tag is an empty tag, which means that it has no end tag.\n\nThe HTML<br>element defines a line break.\n\nUse<br>if you want a line break (a new line) without starting a new paragraph:\n\nThe<br>tag is an empty tag, which means that it has no end tag.\n\nThis poem will display on a single line:\n\nThe HTML<pre>element defines preformatted text.\n\nThe text inside a<pre>element is displayed in a fixed-width font (usually \nCourier), and it preserves both spaces and line breaks:\n\nW3Schools' tag reference contains additional information about HTML elements and their attributes.\n\n### Code Examples\n\n```\n<p>This is a paragraph.</p>\n<p>This is another paragraph.</p>\n\n---\n\n<p>\nThis paragraph\ncontains a lot of lines\nin the source code,\nbut \n the browser\nignores it.\n</p>\n<p>\nThis paragraph\ncontains\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n a lot of spaces\nin the source\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \n code,\nbut the\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 browser\nignores \n it.\n</p>\n\n---\n\n<h1>This is heading 1</h1>\n<p>This is some text.</p>\n<hr>\n<h2>This is heading 2</h2>\n<p>This is some other text.</p>\n<hr>\n\n---\n\n<p>This is<br>a paragraph<br>with line breaks.</p>\n\n---\n\n<p>\nMy Bonnie lies over \n the ocean.\nMy Bonnie lies over the sea.\nMy Bonnie \n lies over the ocean.\nOh, bring back my Bonnie to me.\n</p>\n\n---\n\n<pre>\nMy Bonnie lies over the ocean.\nMy Bonnie lies over the sea.\nMy Bonnie lies over the \nocean.\nOh, bring back my Bonnie to me.\n</pre>\n```\n\n## Tutorials\n\nTest what you have learned about HTML paragraphs.\n\n## Tutorials\n\nTest your understanding of HTML paragraphs by completing this coding challenge.\n\n## Tutorials\n\nThe HTMLstyleattribute is used to add styles to an element, such as color, font, size, and more.\n\nSetting the style of an HTML element, can be done with thestyleattribute.\n\nThe HTMLstyleattribute has the following syntax:\n\nThepropertyis a CSS property. Thevalueis a CSS value.\n\nThe CSSbackground-colorproperty defines the background color \nfor an HTML element.\n\nThe CSScolorproperty defines the text color for \nan HTML element:\n\nThe CSSfont-familyproperty defines the font to be used  \nfor an HTML element:\n\nThe CSSfont-sizeproperty defines the text size for \nan HTML element:\n\nThe CSStext-alignproperty defines the horizontal text alignment for an HTML element:\n\n### Code Examples\n\n```\n<\ntagname\nstyle=\"\nproperty\n:\nvalue;\n\">\n\n---\n\n<body style=\"background-color:powderblue;\">\n<h1>This is a heading</h1>\n<p>This is a paragraph.</p>\n</body>\n\n---\n\n<body>\n<h1 style=\"background-color:powderblue;\">This is a heading</h1>\n<p \n  style=\"background-color:tomato;\">This is a paragraph.</p>\n</body>\n\n---\n\n<h1 style=\"color:blue;\">This is a heading</h1>\n<p style=\"color:red;\">This is a paragraph.</p>\n\n---\n\n<h1 style=\"font-family:verdana;\">This is a heading</h1>\n<p style=\"font-family:courier;\">This is a paragraph.</p>\n\n---\n\n<h1 style=\"font-size:300%;\">This is a heading</h1>\n<p \nstyle=\"font-size:160%;\">This is a paragraph.</p>\n\n---\n\n<h1 style=\"text-align:center;\">Centered Heading</h1>\n<p style=\"text-align:center;\">Centered paragraph.</p>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_4",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_4",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 57,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Variables declaredGlobally(outside any block or function) haveGlobal Scope.\n\nGlobalvariables can be accessed from anywhere in a JavaScript program.\n\nVariables declared withvar,letandconstare \nquite similar when declared outside a block.\n\nThey all haveGlobal Scope:\n\nAll JavaScript functions have their own scope.\n\nVariables defined inside a function are not accessible (visible) from outside the \nfunction.\n\nVariables declared withvar,letandconstare \nquite similar when declared inside a function.\n\nThey all haveFunction Scope:\n\nBeforeES6, JavaScript variables could only haveGlobal ScopeorFunction Scope.\n\nES6 introduced two important new JavaScript keywords:letandconst.\n\nThese two keywords provideBlock Scopein JavaScript.\n\nVariables declared withletandconstinside a code block are \"block-scoped,\" meaning they are only accessible within that block.\n\nThis helps prevent unintended variable overwrites and promotes better code organization:\n\nVariables declared with thevarkeyword can NOT have block scope.\n\nVariables declared with thevarkeyword,\ninside a { } block, can be accessed from outside the block.\n\nIf you assign a value to a variable that hasnot been declared, it will become aGLOBALvariable.\n\nThis code example will declare a global variablecarName, even if \nthe value is assigned inside a function.\n\nAll modern browsers support running JavaScript in \"Strict Mode\".\n\nWith JavaScript, the global scope is the JavaScript environment.\n\nIn HTML, the global scope is the window object.\n\nGlobal variables defined with thevarkeyword belong to the window object:\n\nGlobal variables defined with theletkeyword do not belong to the window object:\n\nThe lifetime of a JavaScript variable starts when it is declared.\n\nFunction (local) variables are deleted when the function is completed.\n\nIn a web browser, global variables are deleted when you close the browser \nwindow (or tab).\n\n### Code Snippets\n\n```\nvar x = 1;\u00a0\u00a0\u00a0\u00a0// Global scope\nlet y = 2;\u00a0\u00a0\u00a0\u00a0// Global scope\nconst z = 3;\u00a0\u00a0// Global scope\n\n---\n\nlet carName = \"Volvo\";\n// code here can use carName\nfunction myFunction() {\n// code here can also use carName\n}\n\n---\n\nfunction myFunction1() {\nvar carName = \"Volvo\";\u00a0 // Function Scope\n}\nfunction myFunction2() {\nlet carName = \"Volvo\";\u00a0 // Function Scope\n}\nfunction myFunction3() {\nconst carName = \"Volvo\";\u00a0 // Function Scope\n}\n\n---\n\n// code here can NOT use carName\nfunction myFunction() {\nlet carName = \"Volvo\";\n// code here CAN use carName\n}\n// code here can NOT use carName\n\n---\n\n{\nlet x = 2;\n}\n// x can NOT be used here\n\n---\n\n{\nvar x = 2;\n}\n// x CAN be used here\n\n---\n\nmyFunction();\n// code here can use carName\nfunction myFunction() {\ncarName = \"Volvo\";\n}\n\n---\n\nvar carName = \"Volvo\";\n// code here \ncan use window.carName\n\n---\n\nlet carName = \"Volvo\";\n// code here can NOT use window.carName\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_56",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

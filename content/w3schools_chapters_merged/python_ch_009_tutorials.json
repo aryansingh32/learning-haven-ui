@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 9,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nLogical operators are used to combine conditional statements:\n\n### Code Examples\n\n```\nx = 5\nprint(x > 0 and x < 10)\n\n---\n\nx = 5\nprint(x < 5 or x > 10)\n\n---\n\nx = 5\nprint(not(x > 3 and x < 10))\n```\n\n## Tutorials\n\nIdentity operators are used to compare the objects, not if they are equal, but if they are actually the same object, with the same memory location:\n\n### Code Examples\n\n```\nx = [\"apple\", \"banana\"]\ny = [\"apple\", \"banana\"]\nz = x\nprint(x is z)\nprint(x is y)\nprint(x == y)\n\n---\n\nx = [\"apple\", \"banana\"]\ny = [\"apple\", \"banana\"]\nprint(x is not y)\n\n---\n\nx = [1, 2, 3]\ny = [1, 2, 3]\nprint(x == y)\nprint(x is y)\n```\n\n## Tutorials\n\nMembership operators are used to test if a sequence is presented in an object:\n\nThe membership operators also work with strings:\n\n### Code Examples\n\n```\nfruits = [\"apple\", \"banana\", \"cherry\"]\nprint(\"banana\" in fruits)\n\n---\n\nfruits = [\"apple\", \"banana\", \"cherry\"]\nprint(\"pineapple\" not in fruits)\n\n---\n\ntext = \"Hello World\"\nprint(\"H\" in text)\nprint(\"hello\" in text)\nprint(\"z\" not in text)\n```\n\n## Tutorials\n\nBitwise operators are used to compare (binary) numbers:\n\n### Code Examples\n\n```\nprint(6 & 3)\n\n---\n\nprint(6 | 3)\n\n---\n\nprint(6 ^ 3)\n```\n\n## Tutorials\n\nOperator precedence describes the order in which operations are performed.\n\nThe precedence order is described in the table below, starting with the highest precedence at the top:\n\nIf two operators have the same precedence, the expression is evaluated from left to right.\n\n### Code Examples\n\n```\nprint((6 + 3) - (6 + 3))\n\n---\n\nprint(100 + 5 * 3)\n\n---\n\nprint(5 + 4 - 7 + 3)\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_9",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

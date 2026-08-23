@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 13,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in DSA.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in DSA."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Understanding Tutorials and more in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nDynamic Programming is a method for designing algorithms.\n\nAn algorithm designed with Dynamic Programming divides the problem into subproblems, finds solutions to the subproblems, and puts them together to form a complete solution to the problem we want to solve.\n\nWe have already seen Dynamic Programming in this tutorial, in thememoizationandtabulationtechniques, and for solving problems like the0/1 Knapsack Problem, or to findthe shortest pathwiththe Bellman-Ford algorithm.\n\nLet's say we want an algorithm that finds the \\(n\\)th Fibonacci number. We don't know how to find the \\(n\\)th Fibonacci number yet, except that we want to use Dynamic Programming to design the algorithm.\n\nSo how can we use Dynamic Programming to design an algorithm that finds the \\(n\\)th Fibonacci number?\n\nThere is no exact rule for how to design an algorithm using Dynamic Programming, but here is a suggestion that should work in most cases:\n\nLet's do it.\n\nBefore trying to find an algorithm using Dynimaic Programming, we must first check if the problem has the two properties \"overlapping subproblems\" and \"optimal substructure\".\n\nOverlapping subproblems?\n\nYes. The \\(6\\)th Fibonacci number is a combination of the \\(5\\)th and \\(4\\)th Fibonacci number: \\(8=5+3\\). And this rule holds for all other Fibonacci numbers as well. This shows that the problem of finding the \\(n\\)th Fibonacci number can be broken into subproblems.\n\nAlso, the subproblems overlap because \\(F(5)\\) is based on \\(F(4)\\) and \\(F(3)\\), and \\(F(6)\\) is based on \\(F(5)\\) and \\(F(4)\\).\n\n\\[\n  \\begin{equation}\n  \\begin{aligned}\nF(5) {} & =\\underline{F(4)}+F(3) \\\\\n5       & =\\underline{3}+2 \\\\\\\\\n        & and \\\\\\\\\nF(6)    & =F(5)+\\underline{F(4)} \\\\\n8       & =5+\\underline{3}\n\\end{aligned}\n\\end{equation}\n\\]\n\nYou see? Both solutions to subproblems \\(F(5)\\) and \\(F(6)\\) are created using the solution to \\(F(4)\\), and there are many cases like that, so the subproblems overlap as well.\n\nOptimal substructure?\n\nYes, the Fibonacci number sequence has a very clear structure, because the two previous numbers are added to create the next Fibonacci number, and this holds for all Fibonacci numbers except for the two first. This means we knowhowto put together a solution by combining the solutions to the subproblems.\n\nWe can conclude that the problem of finding the \\(n\\)th Fibonacci number satisfies the two requirements, which means that we can use Dynamic Programming to find an algorithm that solves the problem.\n\nWe can now start trying to find an algorithm using Dynamic Programming.\n\nSolving the most basic subproblems first is a good place to start to get an idea of how the algorithm should run.\n\nIn our problem of finding the \\(n\\)th Fibonacci number, finding the most basic subproblems is not that hard, because we already know that\n\n\\[\nF(0)=0 \\\\\nF(1)=1 \\\\ \nF(2)=1 \\\\ \nF(3)=2 \\\\ \nF(4)=3 \\\\ \nF(5)=5 \\\\ \nF(6)=8 \\\\\n...\n\\]\n\nIn this step, for our problem, how the subproblems are put together is quite straightforward, we just need to add the two previous Fibonacci numbers to find the next one.\n\nSo for example, the \\(2\\)nd Fibonacci number is created by adding the two previous numbers \\(F(2)=F(1)+F(0)\\), and that is the general rule as well, like mentioned earlier: \\(F(n)=F(n-1)+F(n-2)\\).\n\nInstead of writing the text for the algorithm straight away, it might be wise to try to write a procedure to solve a specific problem first, like finding the \\(6\\)th Fibonacci number.\n\nFor reference, the 8 first Fibonacci numbers are: \\(0,\\; 1,\\; 1,\\; 2,\\; 3,\\; 5,\\; \\underline{8},\\; 13\\).\n\nFinding the \\(6\\)th Fibonacci number, we could start with the two first numbers \\(0\\) and \\(1\\), which appear in place 0 and 1 in the sequence, and put them in an array, at index 0 and 1. Then we could add the two first numbers in the array to generate the next number, and push that new number as a new element to the array. If we continue like this until the array is 7 elements long we would stop and returnF[6]. That would work, right?\n\nAfter solving the specific problem above, it is now easier to write the actual algorithm.\n\nThe algorithm for finding the \\(n\\)th Fibonacci number, using Dynamic Programming as a design method, can be described like this:\n\nTo implement the algorithm above, we assume that the argumentnto the function is a positive number (the \\(n\\)th Fibonacci number), we use aforloop to create new Fibonacci numbers, and we return the base casesF[0]andF[1]straight away if the function is called with0or1as an argument.\n\nImplementing the algorithm also means that we can check if it works.\n\nThere it is!\n\nWe have used Dynamic Programming as a design method to create an algorithm that finds the \\(n\\)th Fibonacci number.\n\nWe have also implemented the algorithm to demonstrate that it works, and in doing so we have unintentionally used a well established technique within Dynamic Programming calledtabulation, where the solution is found by solving subproblems bottom-up, using some kind of table.\n\nFurthermore, we have avoided calculating the same overlapping subproblems many times, likeF[3]for example, that we could potentially have ended up doing otherwise, with abrute force recursive approachfor example.\n\nAnother technique used in Dynamic Programming is calledmemoization. In this case, using memoization essentially solves the problem recursively with brute force, but stores the subproblem solutions for later as the algorithm runs to avoid doing the same calculations more than once.\n\nIt might be difficult to design an algorithm using Dynamic Programming, but the concept of Dynamic Programming is actually not that hard: Solve the problem, but since the subproblems are overlapping, do it in a smart way so that a specific subproblem only needs to be solved once.\n\nTo be able to use solutions to previously solved subproblems in Dynamic Programming, the previously found solutions must be stored somehow, and that can be done usingmemoizationortabulation.\n\nMemoizationis a technique used in Dynamic Programming, where the solution is found recursively. As the algorithm runs, solutions to subproblems are stored, and before trying to compute the solution to a subproblem, it checks first to see if that solution has already been computed, to avoid doing the same computation more than once.\n\nThe memoization technique is called \"top-down\" because the initial function call is for the main problem, and it results in new function calls for solving smaller and smaller subproblems.\n\nTabulationis a technique used in Dynamic Programming, where solutions to the overlapping subproblems are stored in a table (array), starting with the most basic subproblems.\n\nThe tabulation technique is not recursive, and it is called \"bottom-up\" because of the way the final solution is built up by solving the most basic subproblems first. Since the most basic subproblem solutions are stored in the table first, when solving a subproblem later that relies on previous subproblems, the algorithm can just pick these solutions right from the table, no need to compute them again.\n\nTo get a better sense of how memoization works, and is considered \"top-down\", and how tabulation works, and is \"bottom-up\", take a look at the two images below.\n\nAs you can see in the images above, the tabulation approach starts at the bottom by solvingF(0)first, while the memoization approach start at the top withF(10)and breaking it into smaller and smaller subproblems from there.\n\n### Code Examples\n\n```\nExample\nFinding the 6th Fibonacci number with our new algorithm:\ndef nth_fibo(n):\n    if n==0: return 0\n    if n==1: return 1\n\n    F = [None] * (n + 1)\n    F[0] = 0\n    F[1] = 1\n\n    for i in range(2, n + 1):\n        F[i] = F[i - 1] + F[i - 2]\n\n    return F[n]\n\nn = 6\nresult = nth_fibo(n)\nprint(f\"The {n}th Fibonacci number is {result}\")\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nA greedy algorithm decides what to do in each step, only based on the current situation, without a thought of how the total problem looks like.\n\nIn other words, a greedy algorithm makes the locally optimal choice in each step, hoping to find the global optimum solution in the end.\n\nInDijkstra's algorithmfor example, the next vertex to be visited is always the next unvisited vertex with the currently shortest distance from the source, as seen from the current group of visited vertices.\n\nSo Dijkstra's algorithm is greedy because the choice of which vertex to visit next is only based on the currently available information, without considering the overall problem or how this choice might affect future decisions or the shortest paths in the end.\n\nChoosing a greedy algorithm is a design choice, just likeDynamic Programmingis another algorithm design choice.\n\nMost of the problems in this tutorial, like sorting an array, orfinding the shortest pathsin a graph, have these properties, and those problems can therefore be solved by greedy algorithms likeSelection sortorDijkstra's algorithm.\n\nBut problems likeThe Traveling Salesman, or the0/1 Knapsack Problem, do not have these properties, and so a greedy algorithm can not be used to solve them. These problems are discussed further down.\n\nIn addition, even if a problem can be solved by a greedy algorithm, it can also be solved by non-greedy algorithms.\n\nBelow are algorithms that are not greedy, meaning they do not only rely on doing locally optimal choices in each step:\n\nThe0/1 Knapsack Problemcannot be solved by a greedy algorithm because it does not fulfill the greedy choice property, and the optimal substructure property, as mentioned earlier.\n\nThis problem cannot be solved by a greedy algorithm, because choosing the item with the highest value, the lowest weight, or the highest value to weight ratio, in each step (local optimal solution, greedy), does not guarantee the optimal solution (global optimum).\n\nLet's say your backpack's limit is 10 kg, and you have these three treasures in front of you:\n\nMaking the greedy choice by taking the most valuable thing first, the horse figure with value $600, means that you can not bring any of the other things without breaking the weight limit.\n\nSo by trying to solve this problem in a greedy way you end up with a metal horse with value $600.\n\nBut the best solution in this case is taking the shield and the pot, maximizing the total value in the backpack to be $800, while still being under the weight limit.\n\nWhat about always taking the treasure with the lowest weight? Or always taking the treasure with the highest value to weight ratio?\n\nWhile following those principles would actually lead us to the best solution in this specific case, we could not guarantee that those principles would work if the values and weights in this example were changed.\n\nThis means that The 0/1 Knapsack Problem cannot be solved with a greedy algorithm.\n\nRead more about The 0/1 Knapsack Problemhere.\n\nThe Traveling Salesman Problemis a famous problem that also cannot be solved by a greedy algorithm, because it does not fulfill the greedy choice property, and the optimal substructure property, as mentioned earlier.\n\nThe Traveling Salesman Problem states that you are a salesperson with a number of cities or towns you must visit to sell your things.\n\nUsing a greedy algorithm here, you would always go to the next unvisited city that is closest to the city you are currently in. But this would in most cases not lead you to the optimal solution with the shortest total path.\n\nThe simulation below shows how it looks like when a greedy algorithm tries to solve The Traveling Salesman Problem.\n\nRunning the simulation, it might not always be obvious that the algorithm is flawed, but you might notice how sometimes the lines are crossing, creating a longer total distance, when that is clearly not necessary.\n\nWhile running a greedy approach to The Traveling Salesman Problem sometimes gives us a pretty good approximation to the shortest possible route, a greedy algorithm will not be able to solve The Traveling Salesman Problem in general.\n\nThe Traveling Salesman Problem does not fulfill the properties needed so that it can be solved by a greedy algorithm.\n\nRead more about the Traveling Salesman Problemhere.\n\n## Tutorials\n\n\n\n## Tutorials\n\nYou can test your Data Structures and Algorithms skills with W3Schools' Exercises.\n\nWe have gathered a variety of DSA exercises (with answers) for each DSA Chapter.\n\nTry to solve an exercise by filling in the blanks, or show the answer to see what you've done wrong.\n\nYou will get 1 point for\neach correct answer. Your score and total score will always be displayed.\n\n## Tutorials\n\nYou can test your skills in Data Structures and Algorithms with W3Schools' Quiz.\n\nThe test contains 25 questions and there is no time limit.\n\nThe test is not official, it's just a nice way to see how much you know about \nDSA.\n\nYou will get 1 point for each correct answer. At the end of the Quiz,\nyour total score will be displayed. Maximum score is 25 points.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_13",
+            "prompt": "Try implementing the concepts from Tutorials in DSA.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_13",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in DSA?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in DSA that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

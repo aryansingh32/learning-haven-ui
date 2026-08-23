@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nCI/CDstands forContinuous IntegrationandContinuous Deployment/Delivery.\n\nIt means your code is automatically tested and deployed every time you push.\n\nThis helps you catch bugs early and deliver features faster, with less manual work.\n\nCI/CD automates the process of testing and deploying your code. This means:\n\nEvery time you push code to your Git repository:\n\nHere are some important terms:\n\nAjobis a group of steps that run together. Each job runs on a runner (a server).\n\nEachstepis a single task, like checking out code or running tests.\n\nArunneris the computer/server that runs your jobs.\n\nYou can use the service's runners or set up your own for more control.\n\nAtriggerdecides when your workflow runs.\n\nCommon triggers arepush(every push) andpull_request(when a pull request is opened or updated).\n\nUseenvironment variablesfor settings, andsecretsfor passwords or API keys.\n\nNever hardcode secrets in your code!\n\nCI/CD tools show logs for every job and step. Check logs to see what happened or to debug failures.\n\nIn GitHub Actions, click on a workflow run and see logs for each job/step.\n\nYou can skip CI/CD for a commit by adding[skip ci]to your commit message.\n\nThis is useful for documentation or minor changes.\n\nAdd a badge to your README to show CI/CD status.\n\nThis lets others see if your latest build passed.\n\nNote:CI/CD helps catch bugs early and speeds up delivery. Even small projects can benefit from automation!\n\n### Code Examples\n\n```\n[Developer] --push--> [Git Repository] --triggers--> [CI/CD Pipeline: Test, Build, Deploy]\n\n---\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      # steps go here\n\n---\n\nsteps:\n  - uses: actions/checkout@v3\n  - name: Run tests\n    run: npm test\n\n---\n\nruns-on: ubuntu-latest\n\n---\n\non:\n  push:\n  pull_request:\n\n---\n\nenv:\n  NODE_ENV: production\n  API_KEY: ${{ secrets.API_KEY }}\n\n---\n\ngit commit -m \"Update docs [skip ci]\"\n\n---\n\n![CI](https://github.com/username/repo/actions/workflows/ci.yml/badge.svg)\n\n---\n\n# .github/workflows/ci.yml\n# This file tells GitHub Actions how to run CI for your project\n\nname: CI                 # The name of the workflow (shows up in GitHub)\non: [push]               # Trigger: run this workflow on every push\njobs:\n  build:                 # Job name (can be anything)\n    runs-on: ubuntu-latest   # Runner: use the latest Ubuntu server\n    steps:\n      - uses: actions/checkout@v3  # Step: check out your code from the repo\n      - name: Run tests            # Step: give this step a name\n        run: npm test              # Step: run your project's tests\n```\n\n## Tutorials\n\nGit hooksare scripts that run automatically when certain Git events happen, like making a commit or pushing code.\n\nHooks help you automate repetitive tasks, enforce coding standards, and catch problems early.\n\nFor example, you can:\n\nHooks are stored in.git/hooksinside your repository.\n\nBy default, you'll see sample scripts ending with.sample.\n\nTo enable a hook, remove the.sampleextension and make the script executable.\n\nFor example, to enablepre-commit:\n\nOn Windows, just rename the file topre-commitand make sure it can be run by your shell (e.g. use.bator.ps1if needed).\n\nThere are many types of hooks, but the most common are:\n\nThepre-commithook runs before you make a commit.\n\nYou can use it to check code style, run tests, or stop a commit if something is wrong.\n\nThecommit-msghook checks or edits the commit message.\n\nFor example, it can block commits without a ticket number.\n\nThepre-pushhook runs before you push code to a remote.\n\nYou can use it to run tests or checks before sharing code.\n\nSome hooks (likepre-receive) run on the Git server, not your computer.\n\nThese can enforce rules for everyone who pushes to the repository.\n\nYou can write any custom script as a hook.\n\nJust put it in.git/hooksand make it executable.\n\nNote:Hooks are powerful for automating checks (like linting or tests) and enforcing team standards. Client-side hooks run on your computer. Server-side hooks run on the Git server.\n\n### Code Examples\n\n```\n#!/bin/sh\n# Stop commit if any .js file has \"console.log\"\ngrep -r 'console.log' *.js && {\n  echo \"Remove console.log before committing!\"\n  exit 1\n}\n\n---\n\n#!/bin/sh\n# Block commit if message does not contain a ticket number\nif ! grep -qE 'JIRA-[0-9]+' \"$1\"; then\n  echo \"Commit message must have a ticket number (e.g. JIRA-123)\"\n  exit 1\nfi\n\n---\n\n#!/bin/sh\nnpm test || exit 1\n\n---\n\n#!/bin/sh\n# Block pushes to main branch\ngrep refs/heads/main || exit 1\n\n---\n\n#!/bin/sh\necho \"Hello from my custom hook!\"\n```\n\n## Tutorials\n\nGit submoduleslet you include one Git repository inside another as a subdirectory.\n\nThis is useful for adding libraries or dependencies managed in separate repositories, while keeping their commit history separate.\n\nSubmodules are helpful when you want to:\n\nTo add a submodule to your project, use:\n\nThis creates a subdirectorylibs/libraryand updates.gitmoduleswith the submodule info.\n\nWhen you clone a repository with submodules, you need to fetch their contents separately:\n\nOr do it all at once when cloning:\n\nTo see the current commit and state of your submodules, use:\n\nYou can run a command in every submodule. For example, to check their status:\n\nTo update submodules to the latest commit from their remote repository:\n\nTo remove a submodule:\n\nThe.gitmodulesfile keeps track of all submodules and their paths. Edit this file if you move or remove submodules.\n\nNote:Submodules are powerful, but can be tricky to manage.\n\nOnly use them if you really need to track another project at a specific commit.\n\n### Code Examples\n\n```\n[submodule \"libs/library\"]\n  path = libs/library\n  url = https://github.com/example/library.git\n```\n\n## Tutorials\n\nRemotesare references to remote repositories.\n\nThey let you collaborate, fetch, and push code to shared projects on services like GitHub, GitLab, or Bitbucket.\n\nYou can add more than one remote to your project. This is useful for:\n\nTo add a new remote repository:\n\nTo remove a remote repository:\n\nTo change the name of an existing remote (for example, renamingorigintomain-origin):\n\nSee all remotes and their URLs:\n\nGet detailed information about a specific remote (such as fetch/push URLs and tracked branches):\n\nFetch changes from any remote:\n\nPush your local branch to a specific remote repository:\n\nTo set up a local branch to track a branch from a remote:\n\nNote:Managing multiple remotes is common in open source projects (e.g.,originfor your fork,upstreamfor the main project).\n\n### Code Examples\n\n```\nExample: Add a Remote\ngit remote add upstream https://github.com/other/repo.git\n\n---\n\nExample: Remove a Remote\ngit remote remove upstream\n\n---\n\nExample: Rename a Remote\ngit remote rename origin main-origin\n\n---\n\nExample: List Remotes\ngit remote -v\n\n---\n\nExample: Show Remote Info\ngit remote show upstream\n\n---\n\nExample: Fetch from Upstream\ngit fetch upstream\n\n---\n\nExample: Push to a Remote\ngit push upstream main\n\n---\n\nExample: Track a Remote Branch\ngit checkout -b new-feature upstream/new-feature\n```\n\n## Tutorials\n\nPrepare online at your own pace, take the exam when you are ready, and add a verified credential to your CV, LinkedIn profile, and portfolio.\n\nDesigned for students, developers, and professionals who want a practical way to document their knowledge.\n\nAny student or professional working in digital fields can benefit from documenting their skills with a certificate.\n\nCertifications help demonstrate knowledge to current or future employers, clients, and collaborators in an increasingly competitive market.\n\nW3Schools has more than two decades of experience teaching coding online.\n\nOur certificates provide a practical and professional way to show your skills in a format that is easy to verify and share.\n\nThe price is a small fraction of the cost of traditional education.\n\nYou can prepare on your own schedule and take the exam when you are ready.\n\nEach certificate includes a unique verification link that can be shared with employers, clients, and your network.\n\nDownload your certificate to showcase it, and validate it using the unique link or QR code.\n\nSee how it looks in thisexample.\n\nHave any questions? Send us an e-mail:sales@w3schools.com\n\nGetting a certificate shows your commitment to improving your skills.\n\nYou can add the certificate to your CV, resume, LinkedIn profile, and other professional platforms.\n\nIt can help support career growth by making it easier to show your knowledge when applying for jobs, freelance work, or larger projects.\n\nGetting a certificate shows initiative, helps you build credibility, and gives you a professional way to present yourHTMLknowledge.\n\nAre you an educator, manager, or business owner looking for courses or certifications for a group?\n\nWe work with schools, companies, and organizations around the world.\n\nSend us an e-mail:sales@w3schools.com\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

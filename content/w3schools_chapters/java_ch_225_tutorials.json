@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 225,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "\u276e Java Keywords\n\nThetransientkeyword is a modifier that tells Java to ignore an attribute when serializing an object.\n\nRead more about modifiers in ourJava Modifiers Tutorial.\n\n\u276e Java Keywords\n\n### Code Snippets\n\n```\nExample\nThe\ntransient\nkeyword prevents an attribute from being serialized:\nimport java.io.*;\n\npublic class Main {\n  public static void main(String[] args) {\n  \tPerson person = new Person();\n    person.fname = \"John\";\n    person.lname = \"Doe\";\n    person.age = 24;\n    person.accessCode = 5044;\n  \n    // Serialize the object\n  \tByteArrayOutputStream output = new ByteArrayOutputStream();\n  \ttry {\n      ObjectOutputStream objOut = new ObjectOutputStream(output);\n      objOut.writeObject(person);\n    } catch (IOException e) {}\n    \n    // Deserialize the object\n    Person person2 = new Person();\n    try {\n    ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(output.toByteArray()));  \n    person2 = (Person)objIn.readObject();  \n  \t} catch(Exception e) {}\n    \n    // Print the deseralized object\n    System.out.println(\"First name: \" + person2.fname);\n    System.out.println(\"Last name: \" + person2.lname);\n    System.out.println(\"Age: \" + person2.age);\n    System.out.println(\"Access code: \" + person2.accessCode);\n  }\n}\n\nclass Person implements Serializable {\n  String fname = \"John\";\n  String lname = \"Doe\";\n  int age = 24;\n  transient int accessCode = 0;\n}\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_224",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

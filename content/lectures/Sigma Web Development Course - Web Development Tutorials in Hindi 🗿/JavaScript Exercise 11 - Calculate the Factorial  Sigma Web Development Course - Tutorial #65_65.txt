@@ -1,0 +1,134 @@
+Video URL: https://www.youtube.com/watch?v=ccfq9yW-dYU
+Video Title: JavaScript Exercise 11 - Calculate the Factorial | Sigma Web Development Course - Tutorial #65
+--------------------------------------------------
+
+00:00:00.000
+In Mathematics, factorial means that from one number to all the small numbers,
+00:00:04.960
+multiplication with it until 1 comes.
+00:00:07.760
+That means if I talk about 5's factorial, then 5 into 4 into 3 into 2 into 1.
+00:00:11.640
+If I talk about 6, then 6 into 5 into 4 into 3 into 2 into 1.
+00:00:14.320
+I have to show you this type of factorial calculation.
+00:00:18.080
+In this exercise, I am going to give you a question to calculate factorial.
+00:00:22.520
+If you accept this challenge, then like this video first
+00:00:25.980
+and then write Challenge Accepted in the comment section
+00:00:29.020
+Let's go to the computer screen
+00:00:30.520
+Let's roll the intro
+00:00:40.520
+So guys, today's question is very simple
+00:00:43.520
+So I will quickly make a folder named video 65
+00:00:47.500
+and I will make a folder named video 65
+00:00:51.500
+and here I will make a folder named video 65
+00:00:54.500
+and I will open it in VS code
+00:00:56.500
+I will put index.html here
+00:00:58.500
+and after putting index.html
+00:01:00.500
+I will give you a question here
+00:01:03.500
+and that question is very simple
+00:01:05.000
+write a program to calculate factorial of a number
+00:01:12.000
+so you have to find out the factorial of that number
+00:01:15.000
+using reduce and using for loops
+00:01:20.000
+so what you have to do here
+00:01:23.000
+you have to find any number's factorial
+00:01:26.400
+using reduce and using for loops
+00:01:29.000
+how will you find it?
+00:01:30.000
+suppose I have given you 6
+00:01:32.000
+so how will you find 6's factorial?
+00:01:33.600
+6's factorial will be
+00:01:35.200
+by the way if you don't know what factorial is
+00:01:37.200
+let me tell you
+00:01:38.000
+6's factorial will be equal to
+00:01:39.800
+6 multiplied by 5 multiplied by 4 multiplied by 3 multiplied by 2 multiplied by 1 this will be our 6's factorial 6 x 5 x 4 x 3 x 2 x 1
+00:01:46.160
+this will be our 6 factorial
+00:01:48.160
+so one thing you can do is
+00:01:50.160
+you can make an array of 1 to 6 or 6 to 1
+00:01:53.560
+and you can put a multiplication reduce on it
+00:01:56.560
+the value will be factorial
+00:01:58.560
+another way is you can put a for loop
+00:02:00.560
+and by putting a for loop
+00:02:02.560
+you can find out
+00:02:04.560
+what is the multiple of it so you can find out what is the
+00:02:06.000
+multiple of this, so you can make a product name
+00:02:08.000
+variable and in a
+00:02:10.000
+for loop you will
+00:02:12.000
+decrement the values or increment
+00:02:14.000
+that you can see how to do it
+00:02:16.000
+you will find the value of final factorial
+00:02:18.000
+by two methods
+00:02:20.000
+one is reduce and other is for loop
+00:02:22.000
+ok, so ball is in your court
+00:02:24.000
+you guys write challenge accepted
+00:02:26.000
+in the comment section below, if you haven't written yet
+00:02:29.000
+and along with that you need a solution
+00:02:32.000
+that is the most important, more important than challenge accepted
+00:02:35.000
+if you write challenge accepted then i get to know that
+00:02:38.000
+you are pumped up, you are going to do this thing
+00:02:41.000
+and when you post the actual solution, then it comes, then it will be done
+00:02:44.000
+so that's why you guys write challenge accepted and solve it.
+00:02:48.800
+I want the solution of everyone.
+00:02:50.300
+if you haven't accessed the playlist of sigma, then do it.
+00:02:53.000
+that's it for now, guys.
+00:02:54.300
+see you in the solution of this video.
+00:02:56.300
+Thank you so much guys for watching this video.
+00:02:58.300
+and I will see you next time.

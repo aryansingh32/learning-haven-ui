@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 179,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "CSS has some properties to handle text overflow, word wrapping, line breaking rules and writing modes.\n\nIn this chapter you will learn about the following properties:\n\nThe CSStext-overflowproperty \nspecifies how overflowed content that is not displayed should be signaled to the \nuser. It can be clipped or rendered with ellipsis (...).\n\nBoth of the following properties are required fortext-overflowto take effect:\n\nHere, the overflowed content is clipped:\n\nThis is some long text that will not fit in the box\n\nHere, the overflowed content is rendered with ellipsis (...):\n\nThis is some long text that will not fit in the box\n\nThe CSS code is as follows:\n\nThe following example shows how you can display the overflowed content when hovering over the element:\n\nThe CSSword-wrapproperty allows long words to be able to be broken and wrap onto the next line.\n\nIf a word is too long to fit within an area, it expands outside:\n\nThis paragraph contains a very long word: thisisaveryveryveryveryveryverylongword. The long word will break and wrap to the next line.\n\nTheword-wrapproperty allows you to force the \ntext to wrap - even if it means splitting it in the middle of a word:\n\nThis paragraph contains a very long word: thisisaveryveryveryveryveryverylongword. The long word will break and wrap to the next line.\n\nThe CSS code is as follows:\n\nThe CSSword-breakproperty \nspecifies how words should break when reaching the end of a line.\n\nThis property can take one of the following values:\n\nHere, we usenormal:\n\nThis paragraph contains some text. This line will-break-at-hyphens.\n\nHere, we usebreak-all:\n\nThis paragraph contains some text. The lines will break at any character.\n\nThe CSS code is as follows:\n\nThe CSSwriting-modeproperty specifies \nwhether lines of text are laid out horizontally or vertically.\n\nThis property can take one of the following values:\n\nHere is a text with a span element with avertical-rlwriting-mode.\n\nThe following example shows some different writing modes:\n\nThe following table lists the CSS text effect properties:\n\n### Code Snippets\n\n```\np.test1 {\nwidth: 200px;\nborder: 1px solid #000000;\nwhite-space: nowrap;\noverflow: hidden;\ntext-overflow: clip;\n}\np.test2 {\nwidth: 200px;\nborder: 1px solid #000000;\nwhite-space: nowrap;\noverflow: hidden;\ntext-overflow: ellipsis;\n}\n\n---\n\np:hover {\noverflow: visible;\n}\n\n---\n\np {\nword-wrap: break-word;\n}\n\n---\n\np.test1 {\nword-break: \n   normal;\n}\np.test2 {\nword-break: \nbreak-all;\n}\n\n---\n\np.test1 {\nwriting-mode: horizontal-tb;\n}\nspan {\nwriting-mode: vertical-rl;\n}\np.test2 {\nwriting-mode: \n   vertical-rl;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_178",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

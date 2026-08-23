@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 28,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nBy default, a <textarea> can be resized with a \"grabber\" in the bottom right \ncorner. To remove the grabber, set theresizeproperty tonone:\n\nForm buttons of type \"button\", \"submit\" and \"reset\" can also be styled with \nCSS:\n\nTip:For more information about how to style buttons, read ourCSS Buttons Tutorial.\n\nThe following example usesCSS media queriesto create a responsive form. You will learn more about \nmedia queries in a later chapter.\n\nWhen the screen is less than 600px wide, we make the labels and input fields stack on top of each other, instead of next to each other.\n\nResize the screen to see the form layout change!\n\n### Code Examples\n\n```\ntextarea\n{\nwidth: 100%;\nheight: 150px;\npadding: 12px 20px;\nbox-sizing: border-box;\nborder: 2px solid #ccc;\nborder-radius: 4px;\nbackground-color: #f8f8f8;\nresize: none;\n}\n\n---\n\nselect\n{\nwidth: 100%;\npadding: 16px 20px;\nborder: none;\nborder-radius: 4px;\nbackground-color: #f1f1f1;\n}\n\n---\n\ninput[type=button], input[type=submit], input[type=reset]\n{\nbackground-color: #04AA6D;\nborder: \nnone;\ncolor: white;\npadding: \n16px 32px;\ntext-decoration: none;\nmargin: 4px 2px;\ncursor: pointer;\n}\n/* Tip: use\nwidth: 100%\nfor full-width buttons */\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nWith CSS counters, you can create dynamic numbering of elements (like \nheadings, sections, or list items) without using JavaScript.\n\nCSS counters are \"variables\" maintained by CSS, and their values can \nbe incremented (or decremented) by CSS rules.\n\nCSS counters are like \"variables\". The variable values can be incremented \n(or decremented) by CSS rules.\n\nTo work with CSS counters we will use the following properties:\n\nTo use a CSS counter, it must first be created with thecounter-resetproperty.\n\nThe following example creates a counter for the page (in the body selector), \nthen it increments the counter value by 1 for each <h2> element:\n\nThecounter-incrementproperty has a second parameter. The default value is 1. To decrease the counter value, you can set it to \n-1.\n\nYou can increment the counter by any value. Here we increment by 2:\n\n### Code Examples\n\n```\nbody {\ncounter-reset: section;\n}\nh2::before {\ncounter-increment: section;\ncontent: \"Section \" counter(section) \": \";\n}\n\n---\n\nbody {\ncounter-reset: section;\n}\nh2::before {\ncounter-increment: section \n  -1;\ncontent: \"Section \" counter(section) \": \";\n}\n\n---\n\nbody {\ncounter-reset: section;\n}\nh2::before {\ncounter-increment: section \n  2;\ncontent: \"Section \" counter(section) \": \";\n}\n```\n\n## Tutorials\n\nYou can create multiple counters for different levels of numbering. The following example creates one counter for the page (named \"section\") and one \ncounter for each <h1> element (named \"subsection\"):\n\nThecounters()function returns the current values of the named and nested counters, as a \nstring.\n\nHere we use thecounters()function to \ninsert a string between different levels of nested counters:\n\n### Code Examples\n\n```\nbody {\ncounter-reset: section;\n}\nh1 {\ncounter-reset: subsection;\n}\nh1::before {\ncounter-increment: \nsection;\ncontent: \"Section \" counter(section) \". \";\n}\nh2::before {\ncounter-increment: subsection;\ncontent: \ncounter(section) \".\" counter(subsection) \" \";\n}\n\n---\n\nol {\ncounter-reset: section;\nlist-style-type: none;\n}\nli::before {\ncounter-increment: section;\ncontent: counters(section,\".\") \" \";\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_28",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_28",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

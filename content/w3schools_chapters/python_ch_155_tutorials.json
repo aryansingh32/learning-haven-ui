@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 155,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An inner class is a class defined inside another class. The inner class can access the properties and methods of the outer class.\n\nInner classes are useful for grouping classes that are only used in one place, making your code more organized.\n\nTo access the inner class, create an object of the outer class, and then create an object of the inner class:\n\nInner classes in Python do not automatically have access to the outer class instance.\n\nIf you want the inner class to access the outer class, you need to pass the outer class instance as a parameter:\n\nInner classes are useful for creating helper classes that are only used within the context of the outer class:\n\nA class can have multiple inner classes:\n\n### Code Snippets\n\n```\nclass Outer:\ndef __init__(self):\nself.name = \"Outer Class\"\nclass Inner:\ndef __init__(self):\nself.name = \"Inner Class\"\ndef display(self):\nprint(\"This is the inner class\")\nouter = Outer()\nprint(outer.name)\n\n---\n\nclass Outer:\ndef __init__(self):\nself.name = \"Outer\"\nclass Inner:\ndef __init__(self):\nself.name = \"Inner\"\ndef display(self):\nprint(\"Hello from inner class\")\nouter = Outer()\ninner = outer.Inner()\ninner.display()\n\n---\n\nclass Outer:\ndef __init__(self):\nself.name = \"Emil\"\nclass Inner:\ndef __init__(self, outer):\nself.outer = outer\ndef display(self):\nprint(f\"Outer class name: {self.outer.name}\")\nouter = Outer()\ninner = outer.Inner(outer)\ninner.display()\n\n---\n\nclass Car:\ndef __init__(self, brand, model):\nself.brand = brand\nself.model = model\nself.engine = self.Engine()\nclass Engine:\ndef __init__(self):\nself.status = \"Off\"\ndef start(self):\nself.status = \"Running\"\nprint(\"Engine started\")\ndef stop(self):\nself.status = \"Off\"\nprint(\"Engine stopped\")\ndef drive(self):\nif self.engine.status == \"Running\":\nprint(f\"Driving the {self.brand} {self.model}\")\nelse:\nprint(\"Start the engine first!\")\ncar = Car(\"Toyota\", \"Corolla\")\ncar.drive()\ncar.engine.start()\ncar.drive()\n\n---\n\nclass Computer:\ndef __init__(self):\nself.cpu = self.CPU()\nself.ram = self.RAM()\nclass CPU:\ndef process(self):\nprint(\"Processing data...\")\nclass RAM:\ndef store(self):\nprint(\"Storing data...\")\ncomputer = Computer()\ncomputer.cpu.process()\ncomputer.ram.store()\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_154",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

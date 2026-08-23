@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 292,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JSONP is a method for sending JSON data without worrying about cross-domain issues.\n\nJSONP does not use theXMLHttpRequestobject.\n\nJSONP uses the<script>tag instead.\n\nRequesting a file from another domain can cause problems, due to cross-domain policy.\n\nRequesting an externalscriptfrom another domain does not have this problem.\n\nJSONP uses this advantage, and request files using the script tag \ninstead of theXMLHttpRequestobject.\n\nThe file on the server wraps the result inside a \nfunction call:\n\nThe result returns a call to a function named \"myFunc\" with the JSON data as \na parameter.\n\nMake sure that the function exists on the client.\n\nThe function named \"myFunc\" is located on the client, and ready to handle \nJSON data:\n\nThe example above will execute the \"myFunc\" function when the page is \nloading, based on where you put the script tag, which is not very satisfying.\n\nThe script tag should only be created when needed:\n\nThe examples above are still very static.\n\nMake the example dynamic by sending JSON to the php file, and let the php file return a JSON object based on \nthe information it gets.\n\nWhen you have no control over the server file, how do you get the server file \nto call the correct function?\n\nSometimes the server file offers a callback function as \na parameter:\n\n### Code Snippets\n\n```\n<script src=\"demo_jsonp.php\">\n\n---\n\n<?php\n$myJSON = '{ \"name\":\"John\", \"age\":30, \"city\":\"New York\" }';\necho \"myFunc(\".$myJSON.\");\";\n?>\n\n---\n\nfunction myFunc(myObj) \n  {\ndocument.getElementById(\"demo\").innerHTML = \n  myObj.name;\n}\n\n---\n\nfunction clickButton() {\nlet s = document.createElement(\"script\");\ns.src = \"demo_jsonp.php\";\ndocument.body.appendChild(s);\n}\n\n---\n\n<?php\nheader(\"Content-Type: application/json; charset=UTF-8\");\n$obj = \n  json_decode($_GET[\"x\"], false);\n$conn = new mysqli(\"myServer\", \"myUser\", \"myPassword\", \"Northwind\");\n$result = $conn->query(\"SELECT name FROM \n  \".$obj->$table.\" LIMIT \".$obj->$limit);\n$outp = array();\n$outp = $result->fetch_all(MYSQLI_ASSOC);\necho \"myFunc(\".json_encode($outp).\")\";\n?>\n\n---\n\nconst obj = { table: \"products\", limit: 10 };\nlet s = document.createElement(\"script\");\ns.src = \"jsonp_demo_db.php?x=\" + JSON.stringify(obj);\ndocument.body.appendChild(s);\nfunction myFunc(myObj) {\nlet txt = \"\";\nfor (let x in myObj) \n  {\ntxt += myObj[x].name + \"<br>\";\n}\ndocument.getElementById(\"demo\").innerHTML = txt;\n}\n\n---\n\nlet s = document.createElement(\"script\");\ns.src = \"jsonp_demo_db.php?callback=\nmyDisplayFunction\n\";\ndocument.body.appendChild(s);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_291",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

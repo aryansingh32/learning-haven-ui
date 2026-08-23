@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 4,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An array is a data structure used to store multiple elements.\n\nArrays are used by many algorithms.\n\nFor example, an algorithm can be used to look through an array to find the lowest value, like the animation below shows:\n\nIn Python, an array can be created like this:\n\nArrays are indexed, meaning that each element in the array has an index, a number that says where in the array the element is located. The programming languages in this tutorial (Python, Java, and C) use zero-based indexing for arrays, meaning that the first element in an array can be accessed at index 0.\n\nIn Python, this code use index 0 to write the first array element (value 7) to the console:\n\nLet's create our first algorithm using the array data structure.\n\nBelow is the algorithm to find the lowest number in an array.\n\nTry the simulation below to see how the algorithm for finding the lowest value works (the animation is the same as the one on the top of this page):\n\nThis next simulation also finds the lowest value in an array, just like the simulation above, but here we can see how the numbers inside the array are checked to find the lowest value:\n\nBefore implementing the algorithm using an actual programming language, it is usually smart to first write the algorithm as a step-by-step procedure.\n\nIf you can write down the algorithm in something between human language and programming language, the algorithm will be easier to implement later because we avoid drowning in all the details of the programming language syntax.\n\nYou can also write the algorithm in a way that looks more like a programming language if you want to, like this:\n\nAfter we have written down the algorithm, it is much easier to implement the algorithm in a specific programming language:\n\nWhen exploring algorithms, we often look at how much time an algorithm takes to run relative to the size of the data set.\n\nIn the example above, the time the algorithm needs to run is proportional, or linear, to the size of the data set. This is because the algorithm must visit every array element one time to find the lowest value. The loop must run 5 times since there are 5 values in the array. And if the array had 1000 values, the loop would have to run 1000 times.\n\nTry the simulation below to see this relationship between the number of compare operations needed to find the lowest value, and the size of the array.\n\nSeethis pagefor a more thorough explanation of what time complexity is.\n\nEach algorithm in this tutorial will be presented together with its time complexity.\n\n### Code Snippets\n\n```\nmy_array = [7, 12, 9, 4, 11]\n\n---\n\nExample\nPython:\nmy_array = [7, 12, 9, 4, 11]\nprint( my_array[0] )\nTry it Yourself \u00bb\n\n---\n\nCreate a variable 'minVal' and set it equal to the first value of the array.\nGo through every element in the array.\nIf the current element has a lower value than 'minVal', update 'minVal' to this value.\nAfter looking at all the elements in the array, the 'minVal' variable now contains the lowest value.\n\n---\n\nVariable 'minVal' = array[0]\nFor each element in the array\nIf current element < minVal\nminVal = current element\n\n---\n\nExample\nPython:\nmy_array = [7, 12, 9, 4, 11]\nminVal = my_array[0]    # Step 1\n\nfor i in my_array:      # Step 2\n    if i < minVal:      # Step 3\n        minVal = i\n        \nprint('Lowest value: ',minVal) # Step 4\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_3",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

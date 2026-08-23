@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 40,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The.gitignorefile tells Git which files and folders to ignore (not track).\n\nThis is useful for keeping log files, temporary files, build artifacts, or personal files out of your repository.\n\nThe.gitignorefile itselfistracked by Git, so everyone using the repository ignores the same files.\n\nTo ignore a folder and everything inside it, use a trailing slash:\n\nThis ignores any folder namedtempanywhere in your project.\n\nWildcards let you match many files or folders at once:\n\nUse!tonotignore something that would otherwise be ignored. This is called an exception:\n\nThis ignores all.logfiles exceptimportant.log.\n\nLines starting with#are comments and are ignored by Git. Blank lines are also ignored. Use comments to explain your rules:\n\nIf you want to ignore files only for yourself (not for everyone who uses the repository), add them to.git/info/exclude. This works just like.gitignorebut is not shared.\n\nYou can set up a global.gitignorefile for all your projects. This is great for ignoring OS or editor files everywhere (like.DS_StoreorThumbs.db):\n\nThen add your patterns to~/.gitignore_global.\n\nIf you add a file to.gitignorebut Git is still tracking it, you need to tell Git to stop:\n\nThis removes the file from the repository but keeps it on your computer. Next time you commit, Git will ignore it.\n\nHere are some common patterns and how they match:\n\n### Code Snippets\n\n```\ntemp/\n\n---\n\n*.tmp      # all .tmp files\nmy?ile.txt # matches my1ile.txt, myAile.txt, etc.\nlog[0-9].txt # log1.txt, log2.txt, ... log9.txt\n\n---\n\n*.log\n!important.log\n\n---\n\n# Ignore log files\n*.log\n\n# Ignore temp folders\ntemp/\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_39",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

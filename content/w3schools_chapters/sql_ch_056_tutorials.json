@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 56,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ThePRIMARY KEYconstraint uniquely identifies each record in a database table.\n\nAPRIMARY KEYconstraint ensures unique values, and cannot contain NULL values \n(it is a combination of both aUNIQUEconstraint and aNOT NULLconstraint).\n\nA table can have only ONEPRIMARY KEYconstraint. The primary key can either be a single column, or a combination of columns.\n\nTip:The primary key is the target forFOREIGN KEYconstraints in other tables (which enforces referential integrity between data in two tables).\n\nThe following SQL creates aPRIMARY KEYon the \"ID\" column \nupon creation of the \"Persons\" table:\n\nTo define anun-namedPRIMARY KEYconstraint on multiple columns, use the following SQL syntax:\n\nNote:In the example above, thePRIMARY KEYvalue is made up of two columns (ID + LastName).\n\nTo define anamedPRIMARY KEYconstraint on multiple columns, use the following SQL syntax:\n\nNote:In the example above, thePRIMARY KEYis named \"PK_Person\", and the value is made up of two columns (ID + LastName).\n\nTo create aPRIMARY KEYconstraint on the \"ID\" column when the table already \nhas been created, use the following SQL:\n\nTo define a \nnamedPRIMARY KEYconstraint on multiple columns, use the following SQL syntax:\n\nNote:When usingALTER TABLEto add a primary key, the primary key column(s) must\nhave been declared with NOT NULL upon creation of the table.\n\nTo drop aPRIMARY KEYconstraint, use the following SQL:\n\n### Code Snippets\n\n```\nCREATE TABLE Persons\n(\nID int PRIMARY KEY,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAge int\n);\n\n---\n\nCREATE TABLE Persons\n(\nID int,\nLastName varchar(255),\nFirstName varchar(255),\nAge int,\nPRIMARY KEY (ID, LastName)\n);\n\n---\n\nCREATE TABLE Persons\n(\nID int,\nLastName varchar(255),\nFirstName varchar(255),\nAge int,\nCONSTRAINT PK_Person PRIMARY KEY (ID, LastName)\n);\n\n---\n\nALTER TABLE Persons\nADD PRIMARY KEY (ID);\n\n---\n\nALTER TABLE Persons\nADD CONSTRAINT PK_Person PRIMARY KEY (ID, LastName);\n\n---\n\nALTER TABLE Persons\nDROP CONSTRAINT PK_Person;\n\n---\n\nALTER TABLE Persons\nDROP PRIMARY KEY;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_55",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 45,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Comments are used to explain SQL code, or to temporarily prevent execution of SQL code (for debugging).\n\nComments are ignored by the database engine.\n\nSQL supports single-line comments--, and multi-line comments/* \n*/.\n\nNote:Comments are not supported in Microsoft Access databases.\n\nSingle-line comments start with--and \ncontinue to the end of line.\n\nAny text after--and to the end of the line will be ignored.\n\nThe following example uses a single-line comment as an explanation:\n\nThe following example uses a single-line comment to comment away the end of a line:\n\nThe following example uses a single-line comment to temporarily prevent \nexecution of an SQL statement:\n\nMulti-line comments start with/*and end with*/.\n\nAny text between/*and*/will be ignored.\n\nThe following example uses a multi-line comment as an explanation:\n\nThe following example uses a multi-line comment to ignore many SQL statements:\n\nTo ignore just a part of an SQL code, you can also use multi-line comment:\n\nThe following example uses a multi-line comment to ignore part of an SQL statement:\n\n### Code Snippets\n\n```\n-- Selects all German \n  customers\nSELECT * FROM Customers\nWHERE Country = 'Germany';\n\n---\n\nSELECT * FROM Customers -- WHERE City='Berlin';\n\n---\n\n-- SELECT * FROM Customers;\nSELECT * FROM Products;\n\n---\n\n/* Selects all German customers\nfrom Berlin */\nSELECT * FROM Customers\nWHERE Country = 'Germany' AND City = 'Berlin';\n\n---\n\n/* SELECT * FROM Customers;\nSELECT * FROM Products;\nSELECT * FROM Orders;\nSELECT * FROM Categories; */\nSELECT * FROM Suppliers;\n\n---\n\nSELECT CustomerName, /*City,*/ Country FROM Customers;\n\n---\n\nSELECT * FROM Customers WHERE (CustomerName LIKE 'L%'\nOR CustomerName LIKE 'R%' /*OR CustomerName LIKE 'S%'\nOR CustomerName LIKE 'T%'*/ OR CustomerName LIKE 'W%')\nAND Country='USA'\nORDER BY CustomerName;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_44",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -50,12 +50,17 @@ export const buildHavenService = {
     unwrap<{ workspace: BuildWorkspace }>(api.get(`${BASE}/challenges/${slug}/workspace`, { params })),
   getLeaderboard: (slug: string, params?: { language?: string }) =>
     unwrap<{ leaderboard: BuildLeaderboardEntry[] }>(api.get(`${BASE}/challenges/${slug}/leaderboard`, { params })),
-  startChallenge: (slug: string, language: string) =>
-    unwrap<{ enrollment: BuildEnrollment; repository: BuildRepository; clone_command: string }>(
-      api.post(`${BASE}/challenges/${slug}/start`, { language }, {
-        headers: {
-          'Idempotency-Key': crypto.randomUUID()
-        }
+  startChallenge: (slug: string, language: string, buildMode: 'traditional' | 'vibe' = 'traditional') =>
+    unwrap<{ enrollment: BuildEnrollment; repository: BuildRepository | null; clone_command: string | null }>(
+      api.post(`${BASE}/challenges/${slug}/start`, { language, build_mode: buildMode }, {
+        headers: { 'Idempotency-Key': crypto.randomUUID() }
+      })
+    ),
+  vibeSubmitStage: (enrollmentId: string, stageId: string, submissionRef: string, submissionSource: 'github_push' | 'live_url' = 'github_push') =>
+    unwrap<{ result: Record<string, unknown> }>(
+      api.post(`${BASE}/enrollments/${enrollmentId}/stages/${stageId}/vibe-submit`, {
+        submission_ref: submissionRef,
+        submission_source: submissionSource,
       })
     ),
   celebrateStage: (slug: string, stageNumber: number) =>

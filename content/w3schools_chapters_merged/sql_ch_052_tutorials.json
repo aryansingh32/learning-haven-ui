@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 52,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe STR_TO_DATE() function returns a date based on a string and a format.\n\n### Code Examples\n\n```\nSELECT \n  STR_TO_DATE(\"August 10 2017\", \"%M %d %Y\");\n\n---\n\nSTR_TO_DATE(\nstring\n,\nformat\n)\n\n---\n\nSELECT STR_TO_DATE(\"August,5,2017\", \"%M %e %Y\");\n\n---\n\nSELECT STR_TO_DATE(\"Monday, August 14, 2017\", \"%W %M %e %Y\");\n\n---\n\nSELECT STR_TO_DATE(\"2017,8,14 10,40,10\", \"%Y,%m,%d %h,%i,%s\");\n```\n\n## Tutorials\n\nThe SUBDATE() function subtracts a time/date interval from a date and then returns the date.\n\nOR:\n\n### Code Examples\n\n```\nSELECT SUBDATE(\"2017-06-15\", INTERVAL 10 DAY);\n\n---\n\nSUBDATE(\ndate\n, INTERVAL\nvalue unit\n)\n\n---\n\nSUBDATE(\ndate\n,\ndays\n)\n\n---\n\nSELECT SUBDATE(\"2017-06-15 09:34:21\", INTERVAL 15 MINUTE);\n\n---\n\nSELECT SUBDATE(\"2017-06-15 09:34:21\", INTERVAL 3 HOUR);\n\n---\n\nSELECT SUBDATE(\"2017-06-15\", INTERVAL -2 MONTH);\n```\n\n## Tutorials\n\nThe SUBTIME() function subtracts time from a time/datetime expression and then returns the \nnew time/datetime.\n\n### Code Examples\n\n```\nSELECT SUBTIME(\"2017-06-15 10:24:21.000004\", \"5.000001\");\n\n---\n\nSUBTIME(\ndatetime\n,\ntime_interval\n)\n\n---\n\nSELECT SUBTIME(\"2017-06-15 10:24:21.000004\", \"3:2:5.000001\");\n\n---\n\nSELECT SUBTIME(\"10:24:21\", \"5\");\n\n---\n\nSELECT SUBTIME(\"10:24:21\", \"300\");\n\n---\n\nSELECT SUBTIME(\"10:24:21\", \"-3:2:5\");\n```\n\n## Tutorials\n\nThe SYSDATE() function returns the current date and time.\n\nNote:The date and time is returned as \"YYYY-MM-DD HH:MM:SS\" \n(string) or as YYYYMMDDHHMMSS (numeric).\n\n### Code Examples\n\n```\nSELECT SYSDATE();\n\n---\n\nSYSDATE()\n\n---\n\nSELECT SYSDATE() + 1;\n```\n\n## Tutorials\n\nThe TIME() function extracts the time part from a given time/datetime.\n\nNote:This function returns \"00:00:00\" ifexpressionis not a \ndatetime/time, or NULL ifexpressionis NULL.\n\n### Code Examples\n\n```\nSELECT TIME(\"19:30:10\");\n\n---\n\nTIME(\nexpression\n)\n\n---\n\nSELECT TIME(\"2017-08-15 19:30:10\");\n\n---\n\nSELECT TIME(\"2017-08-15 19:30:10.000001\");\n\n---\n\nSELECT TIME(NULL);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_52",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_52",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

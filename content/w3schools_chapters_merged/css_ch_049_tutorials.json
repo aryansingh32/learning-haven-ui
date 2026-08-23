@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 49,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nMedia queries are a popular technique for delivering a tailored style sheet to different devices.\n\nTo demonstrate a simple example, we can change the background color for different devices:\n\nA common use of media queries, is to create a flexible layout. In this example, we create a layout that varies between four, two and full-width columns, depending on different screen sizes:\n\nHere, we use media queries to create a responsive navigation menu, that varies in design on different screen sizes.\n\nHere, we use media queries to hide an element on small screens:\n\nHere, we use media queries to change the font size of an element on different viewport widths:\n\nMedia queries can also be used to change the layout of a page depending on the orientation of the screen.\n\nHere, we change the background-color of the body, if the screen orientation is in landscape mode:\n\nSome users have motion sensitivity and prefer websites with less animation.\n\nTheprefers-reduced-motionmedia feature lets you check if\n   a user has asked to reduce motion, such as animations or transitions. Use \nthis feature to turn off animations \nand transitions for the users who has activated this setting on their computer:\n\nHere, we use media queries together with flexbox to create a responsive image gallery:\n\nHere, we use media queries together with flexbox to create a responsive website:\n\nTo learn more about responsive web design, read ourResponsive Web Design Tutorial.\n\n### Code Examples\n\n```\n/* Base style for mobile devices */\nbody {\nbackground-color: \n  olive;\ncolor: white;\n}\n/* For devices with a minimum width \n  of 768px (Medium) */\n@media screen and (min-width: 768px) {\nbody \n  {\nbackground-color: blue;\ncolor: \n  white;\n}\n}\n/* For devices with a minimum width of 992px \n  (Large) */\n@media screen and (min-width: 992px) {\nbody {\nbackground-color: tan;\ncolor: black;\n}\n}\n\n---\n\n* {\nbox-sizing: border-box;\n}\n/* Container for flexboxes */\n.container {\ndisplay: flex;\nflex-wrap: wrap;\n}\n/* Create four equal columns */\n.column {\nflex: 25%;\npadding: 20px;\n}\n/* On screens that are 992px wide or less, go from \n  four columns to two columns */\n@media screen and (max-width: 992px) {\n.column {\nflex: 50%;\n}\n}\n/* On screens that are 600px wide or less, make \n  the columns stack on top of each other instead of next to each other */\n@media screen and (max-width: 600px) {\n.container {\nflex-direction: column;\n}\n}\n\n---\n\nul {\nlist-style-type: none;\nmargin: 0;\npadding: \n   0;\nbackground-color: #333333;\ndisplay: flex;\n}\nul li a {\ndisplay: block;\ncolor: white;\npadding: 14px 16px;\ntext-decoration: none;\n}\nul li \n   a:hover {\nbackground-color: #111111;\n}\n/* For viewport \n   width 600px or less, make the menu links stack on top of each other */\n@media screen and (max-width: 600px) {\nul {flex-direction: column;}\n}\n\n---\n\n/* Hide element if the viewport width is 600px or less */\n@media \n  screen and (max-width: 600px) {\n#div1 {\ndisplay: none;\n}\n}\n\n---\n\n/* If viewport width is 600px or more, set font-size to 80px */\n@media screen and (min-width: \n  600px) {\n#div1 {\nfont-size: 80px;\n}\n}\n\n---\n\n@media only screen and (orientation: \nlandscape) {\nbody {\nbackground-color: lightblue;\n}\n}\n\n---\n\n@media (prefers-reduced-motion: reduce) {\n* {\nanimation: none !important;\ntransition: none !important;\n}\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS Media Queries by completing a small coding challenge.\n\n## Tutorials\n\nCSS Flexbox is short for the CSS Flexible Box Layout module.\n\nFlexbox is a layout model for arranging items (horizontally or \nvertically) within a container, in a flexible and responsive way.\n\nFlexbox makes it easy to design a \nflexible and responsive layout, without usingfloator positioning.\n\nTry it Yourself \u00bb\n\nA flexbox always consists of:\n\nThe element below represents aflex container(the blue area) with threeflex items.\n\n### Code Examples\n\n```\n<html>\n<head>\n<style>\n.container {\ndisplay: flex;\nbackground-color: DodgerBlue;\n}\n.container div {\nbackground-color: #f1f1f1;\nmargin: 10px;\npadding: 20px;\nfont-size: 30px;\n}\n</style>\n</head>\n<body>\n<div \n  class=\"container\">\n<div>Item 1</div>\n<div>Item 2</div>\n<div>Item 3</div>\n</div>\n</body>\n</html>\n```\n\n## Tutorials\n\nTest your understanding of CSS Flexbox basics by completing a small coding challenge.\n\n## Tutorials\n\nThe flex container element can have the following properties:\n\nTheflex-directionproperty specifies the display-direction of flex items in the flex container.\n\nThis property can have one of the following values:\n\nTheflex-wrapproperty specifies whether the flex items should wrap or not, \nif there is not enough room for them on one flex line.\n\nThis property can have one of the following values:\n\nTheflex-flowproperty is a shorthand property for setting both theflex-directionandflex-wrapproperties.\n\nContinue learning about flex container properties:\n\n### Code Examples\n\n```\n.flex-container {\ndisplay: flex;\nflex-direction: row;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-direction: column;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-direction: row-reverse;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-direction: column-reverse;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-wrap: nowrap;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-wrap: wrap;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-wrap: wrap-reverse;\n}\n\n---\n\n.flex-container {\ndisplay: flex;\nflex-flow: row wrap;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_49",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_49",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

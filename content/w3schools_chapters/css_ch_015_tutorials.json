@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 15,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An RGB color value represents RED, GREEN, and BLUE light sources.\n\nIn CSS, a color can be specified as an RGB value, using this formula:\n\nrgb(red,green,blue)\n\nEach parameter (red, green, and \nblue) defines the intensity of the color between 0 and 255.\n\nFor example, rgb(255, 0, 0) is displayed as red, \nbecause red is set to its highest value (255) and the others are \nset to 0.\n\nTo display black, set all color parameters to 0, like this: rgb(0, 0, 0).\n\nTo display white, set all color parameters to 255, like \nthis: rgb(255, 255, 255).\n\nExperiment by mixing the RGB values below:\n\nShades of gray are often defined using equal values for all the 3 light sources:\n\nRGBA color values are an extension of RGB color values with an alpha channel \n- which specifies the opacity for a color.\n\nAn RGBA color value is \nspecified with:\n\nrgba(red,green,blue, \nalpha)\n\nThe alpha parameter is a number \nbetween 0.0 (fully transparent) and 1.0 (not transparent at all):\n\nExperiment by mixing the RGBA values below:\n\n### Code Snippets\n\n```\nExample\nrgb(255, 0, 0)\nrgb(0, 0, 255)\nrgb(60, 179, 113)\nrgb(238, 130, 238)\nrgb(255, 165, 0)\nrgb(106, 90, 205)\nTry it Yourself \u00bb\n\n---\n\nExample\nrgb(60, 60, 60)\nrgb(90, 90, 90)\nrgb(120, 120, 120)\nrgb(180, 180, 180)\nrgb(210, 210, 210)\nrgb(240, 240, 240)\nTry it Yourself \u00bb\n\n---\n\nExample\nrgba(255, 99, 71, 0)\nrgba(255, 99, 71, 0.2)\nrgba(255, 99, 71, 0.4)\nrgba(255, 99, 71, 0.6)\nrgba(255, 99, 71, 0.8)\nrgba(255, 99, 71, 1)\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_14",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

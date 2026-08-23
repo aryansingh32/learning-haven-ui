@@ -1,0 +1,772 @@
+Video URL: https://www.youtube.com/watch?v=Xrxd6cEajhM
+Video Title: CSS Box Model - Margin, Padding & Borders | Sigma Web Development Course - Tutorial #18
+--------------------------------------------------
+
+00:00:00.000
+Guys, in today's video we are going to talk about the box model in CSS.
+00:00:04.200
+In any element, there is a content which is itself, then margin, then border and padding.
+00:00:10.600
+This border, margin and padding are the concept of box model in CSS.
+00:00:15.000
+In this video, we will understand all these things and see how margin, border, padding are set in CSS.
+00:00:22.400
+So let's go to the computer screen.
+00:00:24.000
+I am really very excited
+00:00:25.400
+Let's roll the intro
+00:00:26.800
+Intro
+00:00:35.560
+So guys I have come inside my computer screen
+00:00:37.880
+and the first thing I will do here
+00:00:40.080
+I will show you this playlist
+00:00:41.480
+and you guys click on the star here
+00:00:43.400
+which you don't do
+00:00:44.200
+and you don't even click here to access it, you will not do that either,
+00:00:47.320
+do it, click on the star here and click here to access it
+00:00:50.320
+and I have also put the source code for you, access it too,
+00:00:52.820
+I want you to enjoy it too, okay, so what you do while enjoying it,
+00:00:56.820
+the way I have made this folder here, what will I do by right-clicking shift,
+00:01:00.320
+I will open it with code, as you can see, and this will also open in code,
+00:01:04.819
+if your open with code option is you can see, and it will open in my VS code.
+00:01:05.000
+If you don't have an open with code option, which many people tell me that we don't have an open with code option,
+00:01:10.000
+So I have a suggestion for you guys, what should you do?
+00:01:14.000
+To install VS code again, run its setup again and see which options I have checked.
+00:01:20.000
+Now I will come in the video and here I will make a file by the name of index.html
+00:01:24.000
+I will keep a boilerplate template and here I will write css box model
+00:01:27.340
+after writing css box model, I will make a style tag here
+00:01:30.560
+with the help of which I will make you
+00:01:32.540
+oops, see how I made a style tag
+00:01:34.700
+is it too fast guys?
+00:01:38.220
+no, it's not fast, okay, it's fine
+00:01:40.460
+so here while making style tag, what I will do is I will put styles here
+00:01:43.700
+and I will tell you how the box model works in CSS
+00:01:47.000
+So first of all, let's understand the concept of box model in CSS
+00:01:50.000
+What is the concept of box model in CSS
+00:01:53.000
+Look, everything in CSS is a box
+00:01:56.000
+Whatever HTML elements we have made, they are all a box
+00:01:59.000
+Whether we make a container, whether we make a div, whether we make a span
+00:02:03.000
+They are all a box in our CSS
+00:02:06.000
+and inside that box there are some things which I want to show you
+00:02:10.000
+so if you can see in the computer screen then you will see
+00:02:13.000
+that here I have explained the concept of CSS box model
+00:02:16.000
+CSS box model means that outside your content there is padding
+00:02:20.000
+outside it is border and outside it is margin
+00:02:23.000
+so you should know this concept
+00:02:25.000
+one more thing i want to tell you is
+00:02:27.000
+like i made a div.box here
+00:02:30.000
+i will write i am a box
+00:02:32.000
+and if i show you the preview
+00:02:34.000
+so this box is made by i am a box
+00:02:37.000
+outside of this box there is some margin and padding already
+00:02:39.000
+which you will know when i will put a background on it
+00:02:43.000
+so what i will do is
+00:02:44.000
+i will write here dot box
+00:02:46.000
+which means class selector, I selected the box
+00:02:49.000
+and I will say background color is let us say aqua
+00:02:52.000
+so the background color of this box will be aqua, we can do the format
+00:02:55.000
+document by doing it rightly so that we will get good formatting.
+00:02:58.000
+Now you see here some margin padding is already put in it.
+00:03:01.000
+What I will do is using a universal selector
+00:03:04.000
+it happens that our browser
+00:03:06.000
+plays smartly
+00:03:08.000
+it says that this developer doesn't have a brain
+00:03:10.000
+so i will use my brain
+00:03:12.000
+and it adds margin padding
+00:03:14.000
+and many more styles
+00:03:16.000
+and that's why we need to
+00:03:18.000
+reset css sometimes
+00:03:20.000
+so i wrote star here
+00:03:22.000
+and wrote m-0
+00:03:24.000
+sorry m colon 0 so margin is 0
+00:03:26.000
+p-0 so padding is 0
+00:03:28.000
+these were emmet shortcuts
+00:03:30.000
+and by doing this it will stick
+00:03:32.000
+like here spacing was coming
+00:03:34.000
+so I wrote I am a box
+00:03:36.000
+so let's do one thing
+00:03:38.000
+and here I wrote div.box
+00:03:40.000
+and here I can add multiple classes
+00:03:42.000
+by doing box1 and box2
+00:03:44.000
+so I made one box and one box1
+00:03:47.600
+and in this I have made one box and one box2
+00:03:50.240
+so whatever I will select the box and put the properties
+00:03:53.440
+it will be applied to this element and it will be applied to this too
+00:03:55.440
+because we can give multiple classes to one element
+00:03:57.840
+I told you before
+00:03:59.200
+one element can be given multiple classes
+00:04:01.200
+and here you can see I have given it box and box1
+00:04:04.000
+I have given it box and box2 I have given it box and box2
+00:04:06.000
+and I will simply write here I am another box
+00:04:08.000
+this is our box2
+00:04:10.000
+this was box1 and this is our box2
+00:04:12.000
+now what I will do inside box2
+00:04:14.000
+I will say dot box2 and dot box1
+00:04:16.000
+now you understand what I have done here
+00:04:18.000
+see first I will write that property
+00:04:20.000
+which I want to give to both boxes or
+00:04:22.000
+suppose I have 10 boxes
+00:04:24.000
+so I want to give in 10th of or if I have 10 boxes I want to give it to 10th of 10
+00:04:26.000
+I will write it as .box
+00:04:29.000
+and some properties will be like this which I want to give individually
+00:04:32.000
+in box1 and box2
+00:04:35.000
+so I will give box1 class to this and box2 class to this
+00:04:38.000
+and if any element has to give more than one class then we will give space
+00:04:41.000
+can we give more than one id to any element
+00:04:44.000
+tell me in the comment section below, Let me see how much understanding you got.
+00:04:46.000
+Make two way interaction. Tell me in the comment section.
+00:04:49.000
+Can we give more than one id to an element?
+00:04:52.000
+Tell me in the comment section. We can give classes in the comment section. I'll confirm it.
+00:04:55.000
+I'll tell you. Everyone should comment. I don't know.
+00:04:58.000
+Now here you see, I wrote .box1. So what can I do?
+00:05:01.000
+Assume I made the color yellow.
+00:05:04.000
+What will happen by making the color yellow
+00:05:06.000
+by making the color yellow, and I will make the color red
+00:05:09.000
+the font color will be yellow and the font color will be red
+00:05:12.000
+I will show you, see here the font color is yellow and here the font color is red
+00:05:15.000
+now what does the box model say, the box model says that
+00:05:18.000
+the content of your CSS will be here, outside it will be padding
+00:05:21.000
+outside it will be border and outside it will be margin
+00:05:24.000
+and the total height or width of any element will be added to it
+00:05:29.000
+means this much space will be covered by the element, total height and width, I didn't say height and width
+00:05:32.000
+remember, total height means how much space it will cover
+00:05:35.000
+so this thing you should know, in CSS box model
+00:05:38.000
+we have seen only this much, so I have put different classes here
+00:05:42.000
+now what I will do, I will say that inside box1
+00:05:45.160
+I will give some padding
+00:05:47.160
+and I want to give 10 pixel padding
+00:05:49.560
+so if I give 10 pixel padding then 10 pixel padding will come from all sides
+00:05:54.240
+and to see this you can inspect by right clicking, see this carefully
+00:05:57.520
+see this carefully
+00:05:59.280
+you see here
+00:06:00.560
+that I inspected by right clicking, so I hope you can see below, I have removed my mask for a while I hope you can see here, I have inspected it by right clicking so you can see it below I have removed my mask for a while
+00:06:06.000
+I hope you can see it
+00:06:08.000
+box and box 1
+00:06:10.000
+so here you can see box and box 1
+00:06:12.000
+if I hover on box 1
+00:06:14.000
+then only this element is selected, see above
+00:06:16.000
+see above, see here
+00:06:18.000
+see it is selected
+00:06:20.000
+if I hover on it then only box 2 is selected
+00:06:22.000
+so by clicking on box 1
+00:06:24.000
+this element is selected, I can come here.
+00:06:26.000
+See, I removed it like this.
+00:06:28.000
+Now I can come here and see everything about it.
+00:06:30.000
+Color yellow, if I want, I can change this color
+00:06:32.000
+temporarily, I will only change it temporarily
+00:06:34.000
+because its source code is written here.
+00:06:36.000
+So whatever I change here will be permanent.
+00:06:38.000
+Whatever I change here will be temporary.
+00:06:40.000
+So now I will not do it, as I am telling you
+00:06:42.000
+that I can do temporary changes and preview
+00:06:44.000
+that how it will look if my box's color is white
+00:06:48.000
+If I reload it, it will be fine again
+00:06:50.000
+And after selecting this box, I will come back to computed
+00:06:52.000
+Now as soon as I come to computed, I can see a box
+00:06:55.000
+And this box is exactly the same box that I have shown on codebedhari.com
+00:06:59.000
+So from this kind of box you will know that
+00:07:01.000
+The width and height of this particular element of your box 1 What is the width and height
+00:07:06.000
+After this, what is the padding in it
+00:07:08.000
+I have given padding of 10 from all four sides
+00:07:10.000
+There is no border
+00:07:12.000
+There is no margin
+00:07:14.000
+So in this way we have given
+00:07:16.000
+All these things in this element
+00:07:18.000
+Let's put a border in it
+00:07:20.000
+So far I have put padding of 10
+00:07:22.000
+I am working in box 1 only
+00:07:24.000
+Remember that I am working only in box 1 Remember, I'm only working in box 1
+00:07:25.780
+Coming back a little
+00:07:28.780
+I'll put margin of 5px
+00:07:31.780
+And as soon as I put margin of 5px
+00:07:34.780
+It will be outside the element
+00:07:37.700
+So the background of the element is not retained
+00:07:40.700
+What does it mean?
+00:07:43.700
+If I put pink color on you
+00:07:45.820
+suppose i put pink color on you, so you will be pink
+00:07:48.860
+but if i put pink color on you, then it won't be pink
+00:07:52.220
+so this was a very strange example
+00:07:55.180
+but i will tell you that padding is outside the content
+00:07:58.220
+so if i give padding, then the background color comes in the padding area
+00:08:01.340
+because padding is inside the content
+00:08:04.320
+and margin is outside the content
+00:08:06.000
+outside the element
+00:08:08.000
+content is inside the element
+00:08:10.000
+this is the content of element, padding is here, margin is here
+00:08:12.000
+so the background
+00:08:14.000
+our color will be in padding area
+00:08:16.000
+it will not be in margin area
+00:08:18.000
+you have to keep this in mind, so here i have given margin
+00:08:20.000
+so you see margin of 5, now i will tell you
+00:08:22.000
+how to add border, if i write here
+00:08:24.000
+border, and i will tell you about the border later,
+00:08:26.400
+but for now,
+00:08:28.700
+understand that if I write like this,
+00:08:30.100
+border 2 pixels solid blue,
+00:08:31.400
+then the 2-pixel border is here.
+00:08:33.200
+And here you see that I have given a 2-pixel border here.
+00:08:37.000
+You can see that the border is here.
+00:08:40.000
+So you can see this border here,
+00:08:42.299
+and you can see that this is my content here,
+00:08:44.900
+and this is border
+00:08:45.760
+so what happens here is that there is a DPI factor in our display
+00:08:48.400
+because of which the actual border will be seen separately here
+00:08:51.000
+but this is pretty much how you can see margin, border and padding in real time of your element
+00:08:57.040
+so I hope you understood this thing
+00:08:59.040
+now I tell you here how to calculate the width of the element
+00:09:05.360
+now suppose I have given the width of this element
+00:09:08.960
+or I give the height of this element
+00:09:12.000
+200 pixels, so I gave the height of this element 200 pixels
+00:09:15.200
+and its height is 200 pixels, now I will inspect and show you something
+00:09:18.640
+and I will take you to the computed values
+00:09:21.600
+so see its height is 200 pixels
+00:09:24.640
+and you see as soon as I put an it on computed values So its height is 200 pixels And you can see
+00:09:26.000
+The content is showing
+00:09:28.000
+Padding is showing
+00:09:30.000
+Border is showing
+00:09:32.000
+Margin is showing
+00:09:34.000
+Now you can see
+00:09:36.000
+The actual height of this element
+00:09:38.000
+Is 200 pixels
+00:09:40.000
+Then 10 will be added to it and 10 will be added from below
+00:09:42.000
+It will become 220, then borders will be added
+00:09:44.000
+Then margin will be added So as soon 10 will be added from below, it will become 220 then after this the borders will be added then after this the margin will be added, okay
+00:09:46.000
+so as soon as I will add all these things to it
+00:09:48.160
+so all this space will come out here
+00:09:51.040
+but how much is the height of a particular element
+00:09:54.000
+or how much is the width
+00:09:55.120
+so total width and total height is taken out from this formula
+00:09:57.600
+that what we do is we will add both left and right padding to the width
+00:10:00.480
+both left and right border
+00:10:01.920
+and both left and right margin
+00:10:03.520
+this is total width, that is, how much space will be covered by margin and element
+00:10:08.000
+I hope you are getting this, and if I talk about element only
+00:10:12.000
+how much space is covered by border, then you can add this whole thing
+00:10:16.000
+but now I want to tell you one thing, that if I put a CSS property here
+00:10:20.000
+which I can directly add from here, I can add it in styles
+00:10:24.000
+I will show you this too
+00:10:25.280
+if I make the background red
+00:10:26.160
+then its background will be red
+00:10:27.200
+temporarily until I reload
+00:10:28.560
+okay, but I will apply it here now
+00:10:30.240
+okay, what I will do here
+00:10:32.000
+I will write box sizing here
+00:10:34.000
+and I will write border box here
+00:10:35.760
+as soon as I write box sizing here
+00:10:37.360
+border box
+00:10:38.400
+you guys see here
+00:10:39.600
+that its actual width
+00:10:41.320
+sorry height is 176
+00:10:43.240
+176.8 is because because 176.8 is because
+00:10:46.280
+176.8 plus 20 is 196.8
+00:10:49.280
+and after that the border is added
+00:10:52.280
+and the total is 200, we don't include margin here
+00:10:55.280
+because margin is outside
+00:10:58.280
+margin is not included when we set a height
+00:11:01.280
+and give box sizing property, try to understand
+00:11:04.280
+when i say
+00:11:06.000
+its height is 200 or width is 200
+00:11:09.000
+so with width 200 if i didn't put this
+00:11:12.000
+box sizing border box, listen to this carefully
+00:11:15.000
+if i didn't put box sizing border box
+00:11:18.000
+then what will happen, then the content
+00:11:21.000
+of that height or width
+00:11:24.000
+will be 200, i will explain you with the height of the content or if I talk about the width then it will be 200, I will explain you from the height example
+00:11:26.000
+200 will be the height of the content
+00:11:28.000
+of the content
+00:11:30.000
+then if you talk about the total space
+00:11:32.000
+then padding will be added
+00:11:34.000
+then border will be added
+00:11:36.000
+on top and bottom
+00:11:38.000
+but if I say box sizing border box
+00:11:40.000
+so basically I am saying that the 200 height I have told
+00:11:42.000
+this is including border and padding
+00:11:44.000
+but not margin
+00:11:46.000
+I am telling 200 including border and padding
+00:11:49.000
+where I have done box sizing border box
+00:11:51.000
+it means that the height of my element
+00:11:54.000
+the height I have written here
+00:11:56.000
+this height is my border and padding
+00:11:59.000
+I have written both of them together
+00:12:01.000
+means by combining both of them
+00:12:03.000
+content plus border plus padding should be 200
+00:12:05.980
+When I say box sizing border box, I am saying this
+00:12:08.980
+So tell me in the comment, if we write box sizing border box
+00:12:11.980
+What am I saying? I am saying to csh
+00:12:14.980
+Hey csh, I am giving you this height
+00:12:17.980
+I am giving this height by combining padding and border
+00:12:20.980
+Content plus border
+00:12:23.980
+Plus padding, that's 200 I am giving the height and the border Content plus border plus padding
+00:12:26.000
+That is 200
+00:12:29.000
+So in a way, box sizing border box changes the height
+00:12:32.000
+What is the definition of height?
+00:12:35.000
+It is that padding will not be included in this
+00:12:38.000
+This will be the height of this element
+00:12:41.000
+You can see here, this is 176, I will remove this
+00:12:44.000
+I can also it from here also temporarily
+00:12:46.000
+if I uncheck box sizing border box, then see it's height is 200
+00:12:49.000
+and then I added this, then I added this
+00:12:52.000
+okay, so after adding both of them, the total height will be 200 plus 20, 220
+00:12:58.000
+plus all the borders that are calculated, that will be the sum, okay
+00:13:01.000
+but here I want to tell you one thing
+00:13:04.000
+that if I said
+00:13:06.000
+box sizing border box then what happens
+00:13:09.000
+as soon as you write box sizing border box
+00:13:12.000
+here its height will be reduced from 200 and it will be adjusted in this way
+00:13:15.000
+that padding and border will be 200
+00:13:18.000
+I hope that makes a lot of sense, I hope I have explained you
+00:13:21.000
+so this was a very important concept
+00:13:24.000
+which I wanted to tell you all.
+00:13:26.000
+And the concept which I am going to tell you now,
+00:13:29.000
+you will enjoy it because in that I will tell you
+00:13:32.000
+about margin collapse.
+00:13:35.000
+And this concept you should know.
+00:13:38.000
+So I will take you again to the computer screen.
+00:13:41.000
+This was our code. How much margin did I give here?
+00:13:44.000
+5 pixels margin.
+00:13:46.000
+Let's say I give the same thing in border 2.
+00:13:49.000
+Let's increase margin.
+00:13:52.000
+25px margin.
+00:13:55.000
+And let's say I give same to same thing.
+00:13:58.000
+I'll just keep the color red.
+00:14:01.000
+I'll also black the border.
+00:14:04.000
+Rest of the values are same
+00:14:06.000
+Now you tell me honestly
+00:14:09.000
+That margin of this box is 10 10 10
+00:14:12.000
+And margin of this box is 10 10 10
+00:14:15.000
+So here this space should have been double of this space
+00:14:18.000
+Or not? Think again
+00:14:21.000
+That margin of this box
+00:14:24.000
+If i of this element is 25, why not 50
+00:14:46.000
+the upper element should also have a margin and the lower element should also have a margin
+00:14:49.000
+here comes the concept of margin collapse
+00:14:52.000
+what is this concept of margin collapse
+00:14:54.000
+the concept of margin collapse says that if the margin of two elements is overlapping
+00:14:59.000
+then the maximum margin will be applied only once
+00:15:02.000
+like if I have given a margin of 25 here like if i give 25 margin in this and 25 margin in this
+00:15:06.000
+what is the max of 25 and 25?
+00:15:09.000
+both are equal so 25 margin will be applied only once
+00:15:12.000
+if i make one of them 35 then 25 will be applied
+00:15:15.000
+so this difference will be 35
+00:15:18.000
+so this is called margin collapse
+00:15:21.000
+so if i show you a good example
+00:15:24.000
+of margin collapse in images, i hope i will you a good example of margin collapse in images
+00:15:25.400
+I hope I will get a good image
+00:15:27.400
+from which I can explain margin collapse
+00:15:30.400
+basically what happens is that suppose I have a box A and a box B
+00:15:34.400
+I think this image is very good to explain this concept
+00:15:37.400
+suppose I have a box A and a box B
+00:15:39.400
+I have given a margin of 30 pixels in box A and 20 pixels in box B
+00:15:43.400
+so it will not look like this
+00:15:46.000
+Because the most space will be in the middle of both
+00:15:48.000
+So in between both
+00:15:50.000
+So this is how
+00:15:52.000
+The margin will be
+00:15:54.000
+You can call it margin collapse
+00:15:56.000
+So I hope you understood this concept
+00:15:58.000
+What is margin collapse
+00:16:00.000
+What is CSS box model
+00:16:02.000
+How does the box model work
+00:16:04.000
+And I have tried to explain you very well How is the box model of CSS work? And I tried to explain it to you very well.
+00:16:06.000
+What is the concept of margin collapse?
+00:16:09.000
+Which troubles a lot of CSS developers.
+00:16:12.000
+I know people like this.
+00:16:15.000
+Who say to me that is CSS bad?
+00:16:18.000
+Why is my margin looking wrong?
+00:16:21.000
+Without saying all this, understand the concept of margin collapse.
+00:16:24.000
+And once you understand the concept of margin collapse Once you understand the concept of margin collapse, you will enjoy it
+00:16:28.000
+Then your development will be so smooth
+00:16:30.000
+When you have to put the box sizing border box
+00:16:32.000
+What will happen if you put it or not
+00:16:34.000
+You have to see all this
+00:16:36.000
+Especially when we convert the Figma files in HTML, CSS, JavaScript
+00:16:40.000
+Then you will get this work a lot
+00:16:42.000
+Whether to put box sizing or not
+00:16:44.000
+I hope you are enjoying this course And I hope you are understanding all these things well.
+00:16:49.000
+If you have not accessed this playlist yet, then do access it.
+00:16:53.000
+And click here to bookmark and click here to save.
+00:16:56.000
+I am updating the source code, so you will get the source code.
+00:17:00.000
+I hope you are enjoying the source code too, it is being updated from time to time.
+00:17:04.000
+So like the video, access the playlist
+00:17:06.099
+subscribe to the channel, share the channel
+00:17:08.599
+and by giving me your land in the name of your village and uncle
+00:17:11.599
+prepare to meet me in the next video
+00:17:14.000
+Thank you so much guys for watching this video
+00:17:15.800
+and I will see you next time Thanks for watching!

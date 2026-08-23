@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 90,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your Java skills with exercises from all categories:\n\nThe exercises are a mix of \"multiple choice\" and \"fill in the blanks\" questions.\n\nThere are between 3 and 9 questions in each category.\n\nThe answer can be found in the corresponding tutorial chapter.\n\nIf you're stuck, or answer wrong, you can try again or hit the \"Show Answer\" button to see the correct answer.\n\n## Tutorials\n\nYou can test your Java skills with W3Schools' Quiz.\n\nThe test contains 25 questions and there is no time limit.\n\nThe test is not official, it's just a nice way to see how much you know, or don't know, about \nJava.\n\nYou will get 1 point for each correct answer. At the end of the Quiz,\nyour total score will be displayed. Maximum score is 25 points.\n\n## Tutorials\n\nTest your Java skills with code challenges from all categories:\n\nCode challenges are interactive coding exercises where you write Java code to achieve a specific result.\n\nEach challenge presents you with a goal and lets you practice writing real Java code.\n\n## Tutorials\n\nImprove your skills by solving real Java coding problems.\n\nWrite code, submit, and get instant feedback.\n\nEach challenge gives you starter code in Java. Your program reads input and prints the correct output.\n\nWhen you submit, your code is tested againstmultiple hidden test caseswith different inputs.\n\nYour score is based on how many tests pass. Partial credit is given for partially correct solutions.\n\n## Tutorials\n\nCoding Skills\n\nAI Tutor\n\nProjects\n\nSecurely\n\nBy subscribing to a plan you support the W3Schools mission to makelearning available to everyone - no matter their background.\n\nYou can also buy a domain or connect an existing one.\n\nJust landed inSpaces\n\nLearn to code more effectivelyand intelligently with kAI - AI tutor\n\nHi! I'm kAI, W3Schools AI Tutor...\n\nFeel free to ask me any coding-related questions, and I'll do my best to assist you.\n\nI can help you checking your code for errors, improving your code's structure, explaining coding concepts in a clear and understandable way, and more...\n\nI can even create complete websites for you based on your input, so what are you waiting for?\n\nCloud-based\n\nTerminal & Log\n\nHow To Libraries\n\nDatabase\n\nFile Navigator\n\nPackage Manager\n\nAnalytics\n\nEnvironment Manager\n\nWith Basic Spaces, you can build frontend websites. Whereas with Fullstack Spaces, you can build frontend and backend websites.\n\nBasic Spaces include HTML, CSS, and Javascript. Full Stack Spaces include everything in Basic Spaces plus PHP, Python, React.js, Vue.js, Node.js, Handlebars, and Django.\n\nYour subscription will be automatically renewed every month.\n\nYour access to all the benefits for the paid period of time will continue. However, the subscription will not be renewed automatically.\n\nTo subscribe W3Schools accounts for multiple users, you can contact sales@w3schools.com\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_90",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_90",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

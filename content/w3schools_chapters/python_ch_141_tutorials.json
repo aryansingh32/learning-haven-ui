@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 141,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "All classes have a built-in method called__init__(), which is always executed when the class is being initiated.\n\nThe__init__()method is used to assign values to object properties, or to perform operations that are necessary when the object is being created.\n\nWithout the__init__()method, you would need to set properties manually for each object:\n\nUsing__init__()makes it easier to create objects with initial values:\n\nYou can also set default values for parameters in the__init__()method:\n\nThe__init__()method can have as many parameters as you need:\n\n### Code Snippets\n\n```\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Emil\", 36)\nprint(p1.name)\nprint(p1.age)\n\n---\n\nclass Person:\npass\np1 = Person()\np1.name = \"Tobias\"\np1.age = 25\nprint(p1.name)\nprint(p1.age)\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Linus\", 28)\nprint(p1.name)\nprint(p1.age)\n\n---\n\nclass Person:\ndef __init__(self, name, age=18):\nself.name = name\nself.age = age\np1 = Person(\"Emil\")\np2 = Person(\"Tobias\", 25)\nprint(p1.name, p1.age)\nprint(p2.name, p2.age)\n\n---\n\nclass Person:\ndef __init__(self, name, age, city, country):\nself.name = name\nself.age = age\nself.city = city\nself.country = country\np1 = Person(\"Linus\", 30, \"Oslo\", \"Norway\")\nprint(p1.name)\nprint(p1.age)\nprint(p1.city)\nprint(p1.country)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_140",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

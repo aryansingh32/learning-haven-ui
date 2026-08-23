@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 10,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Radix Sort algorithm sorts an array by individual digits, starting with the least significant digit (the rightmost one).\n\nThe radix (or base) is the number of unique digits in a number system. In the decimal system we normally use, there are 10 different digits from 0 till 9.\n\nRadix Sort uses the radix so that decimal values are put into 10 different buckets (or containers) corresponding to the digit that is in focus, then put back into the array before moving on to the next digit.\n\nRadix Sort is a non comparative algorithm that only works with non negative integers.\n\nThe Radix Sort algorithm can be described like this:\n\nRadix Sort must sort the elements in a stable way for the result to be sorted correctly.\n\nA stable sorting algorithm is an algorithm that keeps the order of elements with the same value before and after the sorting. Let's say we have two elements \"K\" and \"L\", where \"K\" comes before \"L\", and they both have value \"3\". A sorting algorithm is considered stable if element \"K\" still comes before \"L\" after the array is sorted.\n\nIt makes little sense to talk about stable sorting algorithms for the previous algorithms we have looked at individually, because the result would be same if they are stable or not. But it is important for Radix Sort that the the sorting is done in a stable way because the elements are sorted by just one digit at a time.\n\nSo after sorting the elements on the least significant digit and moving to the next digit, it is important to not destroy the sorting work that has already been done on the previous digit position, and that is why we need to take care that Radix Sort does the sorting on each digit position in a stable way.\n\nIn the simulation below it is revealed how the underlying sorting into buckets is done. And to get a better understanding of how stable sorting works, you can also choose to sort in an unstable way, that will lead to an incorrect result. The sorting is made unstable by simply putting elements into buckets from the end of the array instead of from the start of the array.\n\nLet's try to do the sorting manually, just to get an even better understanding of how Radix Sort works before actually implementing it in a programming language.\n\nStep 1:We start with an unsorted array, and an empty array to fit values with corresponding radices 0 till 9.\n\nStep 2:We start sorting by focusing on the least significant digit.\n\nStep 3:Now we move the elements into the correct positions in the radix array according to the digit in focus. Elements are taken from the start of myArray and pushed into the correct position in the radixArray.\n\nStep 4:We move the elements back into the initial array, and the sorting is now done for the least significant digit. Elements are taken from the end radixArray, and put into the start of myArray.\n\nStep 5:We move focus to the next digit. Notice that values 45 and 25 are still in the same order relative to each other as they were to start with, because we sort in a stable way.\n\nStep 6:We move elements into the radix array according to the focused digit.\n\nStep 7:We move elements back into the start of myArray, from the back of radixArray.\n\nThe sorting is finished!\n\nRun the simulation below to see the steps above animated:\n\nWe see that values are moved from the array and placed in the radix array according to the current radix in focus. And then the values are moved back into the array we want to sort.\n\nThis moving of values from the array we want to sort and back again must be done as many times as the maximum number of digits in a value. So for example if 437 is the highest number in the array that needs to be sorted, we know we must sort three times, once for each digit.\n\nWe also see that the radix array needs to be two-dimensional so that more than one value on a specific radix, or index.\n\nAnd, as mentioned earlier, we must move values between the two arrays in a way that keeps the order of values with the same radix in focus, so the the sorting is stable.\n\nTo implement the Radix Sort algorithm we need:\n\nThe resulting code looks like this:\n\nOn line 7, we use floor division (\"//\") to divide the maximum value 802 by 1 the first time the while loop runs, the next time it is divided by 10, and the last time it is divided by 100. When using floor division \"//\", any number beyond the decimal point are disregarded, and an integer is returned.\n\nOn line 11, it is decided where to put a value in the radixArray based on its radix, or digit in focus. For example, the second time the outer while loop runs exp will be 10. Value 170 divided by 10 will be 17. The \"%10\" operation divides by 10 and returns what is left. In this case 17 is divided by 10 one time, and 7 is left. So value 170 is placed in index 7 in the radixArray.\n\nRadix Sort can actually be implemented together with any other sorting algorithm as long as it is stable. This means that when it comes down to sorting on a specific digit, any stable sorting algorithm will work, such as counting sort or bubble sort.\n\nThis is an implementation of Radix Sort that uses Bubble Sort to sort on the individual digits:\n\nFor a general explanation of what time complexity is, visitthis page.\n\nFor a more thorough and detailed explanation of Radix Sort time complexity, visitthis page.\n\nThe time complexity for Radix Sort is:\n\n\\[ \\underline{\\underline{O(n \\cdot k)}} \\]\n\nThis means that Radix Sort depends both on the values that need to be sorted \\(n\\), and the number of digits in the highest value \\(k\\).\n\nA best case scenario for Radix Sort is if there are lots of values to sort, but the values have few digits. For example if there are more than a million values to sort, and the highest value is 999, with just three digits. In such a case the time complexity \\(O(n \\cdot k)\\) can be simplified to just \\(O(n)\\).\n\nA worst case scenario for Radix Sort would be if there are as many digits in the highest value as there are values to sort. This is perhaps not a common scenario, but the time complexity would be \\(O(n^2)\\)in this case.\n\nThe most average or common case is perhaps if the number of digits \\(k\\) is something like \\(k(n)= \\log n\\). If so, Radix Sort gets time complexity \\(O(n \\cdot \\log n )\\). An example of such a case would be if there are 1000000 values to sort, and the values have 6 digits.\n\nSee different possible time complexities for Radix Sort in the image below.\n\nRun different simulations of Radix Sort to see how the number of operations falls between the worst case scenario \\(O(n^2)\\) (red line) and best case scenario \\(O(n)\\) (green line).\n\nThe bars representing the different values are scaled to fit the window, so that it looks ok. This means that values with 7 digits look like they are just 5 times bigger than values with 2 digits, but in reality, values with 7 digits are actually 5000 times bigger than values with 2 digits!\n\nIf we hold \\(n\\) and \\(k\\) fixed, the \"Random\", \"Descending\" and \"Ascending\" alternatives in the simulation above results in the same number of operations. This is because the same thing happens in all three cases.\n\n### Code Snippets\n\n```\nmyArray = [ 33, 45, 40, 25, 17, 24]\nradixArray = [ [], [], [], [], [], [], [], [], [], [] ]\n\n---\n\nmyArray = [ 3\n3\n, 4\n5\n, 4\n0\n, 2\n5\n, 1\n7\n, 2\n4\n]\nradixArray = [ [], [], [], [], [], [], [], [], [], [] ]\n\n---\n\nmyArray = [ ]\nradixArray = [ [4\n0\n], [], [], [3\n3\n], [2\n4\n], [4\n5\n, 2\n5\n], [], [1\n7\n], [], [] ]\n\n---\n\nmyArray = [ 4\n0\n, 3\n3\n, 2\n4\n, 4\n5\n, 2\n5\n, 1\n7\n]\nradixArray = [ [], [], [], [], [], [], [], [], [], [] ]\n\n---\n\nmyArray = [\n4\n0,\n3\n3,\n2\n4,\n4\n5,\n2\n5,\n1\n7 ]\nradixArray = [ [], [], [], [], [], [], [], [], [], [] ]\n\n---\n\nmyArray = [ ]\nradixArray = [ [], [\n1\n7], [\n2\n4,\n2\n5], [\n3\n3], [\n4\n0,\n4\n5], [], [], [], [], [] ]\n\n---\n\nmyArray = [\n1\n7,\n2\n4,\n2\n5,\n3\n3,\n4\n0,\n4\n5 ]\nradixArray = [ [], [], [], [], [], [], [], [], [], [] ]\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

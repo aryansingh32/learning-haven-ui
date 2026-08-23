@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nPython has a set of built-in methods that you can use on sets.\n\n## Tutorials\n\nNow you have learned a lot about sets, and how to use them in Python.\n\nAre you ready for a test?\n\nTest your Python Set skills with exercises from all categories:\n\nThe exercises are a mix of \"multiple choice\" and \"fill in the blanks\" questions.\n\nThere are between 3 and 9 questions in each category.\n\nThe answer can be found in the corresponding tutorial chapter.\n\nIf you're stuck, or answer wrong, you can try again or hit the \"Show Answer\" button to see the correct answer.\n\nFind a complete collection of Python Exercises for each chapter in this tutorial in ourPython Exercisespage:\n\n## Tutorials\n\nTest your understanding of creating, adding, removing, and checking set items.\n\n## Tutorials\n\nDictionaries are used to store data values in key:value pairs.\n\nA dictionary is a collection which is ordered*, changeable and do not \nallow duplicates.\n\nDictionaries are written with curly brackets, and have keys and values:\n\nDictionary items are ordered, changeable, and do not allow duplicates.\n\nDictionary items are presented in key:value pairs, and can be referred to by \nusing the key name.\n\nWhen we say that dictionaries are ordered, it means that the items have a defined order, and that order will not change.\n\nUnordered means that the items do not \nhave a defined order, you cannot refer to an item by using an index.\n\nDictionaries are changeable, meaning that we can change, add or remove items after the \ndictionary has been created.\n\nDictionaries cannot have two items with the same key:\n\nTo determine how many items a dictionary has, use thelen()function:\n\nThe values in dictionary items can be of any data type:\n\nFrom Python's perspective, dictionaries are defined as objects with the data type 'dict':\n\nIt is also possible to use thedict()constructor to make a dictionary.\n\nThere are four collection data types in the Python programming language:\n\nWhen choosing a collection type, it is useful to understand the properties of that type. Choosing the right type for a particular data set could mean retention of meaning, and, it could mean an increase in efficiency or security.\n\n### Code Examples\n\n```\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nprint(thisdict)\n\n---\n\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nprint(thisdict[\"brand\"])\n\n---\n\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964,\n\"year\": 2020\n}\nprint(thisdict)\n\n---\n\nprint(len(thisdict))\n\n---\n\nthisdict =\t{\n\"brand\": \"Ford\",\n\"electric\": False,\n\"year\": 1964,\n\"colors\": [\"red\", \"white\", \"blue\"]\n}\n\n---\n\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nprint(type(thisdict))\n\n---\n\nthisdict = \n  dict(name = \"John\", age = 36, country = \"Norway\")\nprint(thisdict)\n```\n\n## Tutorials\n\nYou can access the items of a dictionary by referring to its key name, inside \nsquare brackets:\n\nThere is also a method calledget()that will give you the same result:\n\nThekeys()method will return a list of all the keys in the dictionary.\n\nThe list of the keys is aviewof the dictionary, meaning that any \nchanges done to the dictionary will be reflected in the keys list.\n\nThevalues()method will return a list of all the values in the dictionary.\n\nThe list of the values is aviewof the dictionary, meaning that any \nchanges done to the dictionary will be reflected in the values list.\n\nTheitems()method will return each item in a dictionary, as tuples in a list.\n\nThe returned list is aviewof the items of the dictionary, meaning that any \nchanges done to the dictionary will be reflected in the items list.\n\nTo determine if a specified key is present in a dictionary use theinkeyword:\n\n### Code Examples\n\n```\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = thisdict[\"model\"]\n\n---\n\nx = thisdict.get(\"model\")\n\n---\n\nx = thisdict.keys()\n\n---\n\ncar = {\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = car.keys()\nprint(x) #before the change\ncar[\"color\"] = \n  \"white\"\nprint(x) #after the change\n\n---\n\nx = thisdict.values()\n\n---\n\ncar = {\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = car.values()\nprint(x) #before the change\ncar[\"year\"] \n  = 2020\nprint(x) #after the change\n\n---\n\ncar = {\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = car.values()\nprint(x) #before the change\ncar[\"color\"] \n  = \"red\"\nprint(x) #after the change\n\n---\n\nx = thisdict.items()\n\n---\n\ncar = {\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = car.items()\nprint(x) #before the change\ncar[\"year\"] \n  = 2020\nprint(x) #after the change\n\n---\n\ncar = {\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nx = car.items()\nprint(x) #before the change\ncar[\"color\"] \n  = \"red\"\nprint(x) #after the change\n\n---\n\nthisdict =\t{\n\"brand\": \"Ford\",\n\"model\": \"Mustang\",\n\"year\": 1964\n}\nif \"model\" in thisdict:\nprint(\"Yes, 'model' is \n  one of the keys in the thisdict dictionary\")\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

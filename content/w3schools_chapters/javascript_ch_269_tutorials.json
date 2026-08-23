@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 269,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Adding and Removing Nodes (HTML Elements)\n\nTo add a new element to the HTML DOM, you must create the element (element node) first, \nand then append it to an existing element.\n\nThis code creates a new<p>element:\n\nTo add text to the<p>element, you must create a text node first. This code creates a text node:\n\nThen you must append the text node to the<p>element:\n\nFinally you must append the new element to an existing element.\n\nThis code finds an existing element:\n\nThis code appends the new element to the existing element:\n\nTheappendChild()method in the previous example, appended the new element as \nthe last child of the parent.\n\nIf you don't want that you can use theinsertBefore()method:\n\nTo remove an HTML element, use theremove()method:\n\nThe HTML document contains a<div>element with two child nodes (two<p>elements):\n\nFind the element you want to remove:\n\nThen execute the remove() method on that element:\n\nFor browsers that does not support theremove()method, you have to find the \nparent node to remove an element:\n\nThis HTML document contains a<div>element with two child nodes (two<p>elements):\n\nFind the element withid=\"div1\":\n\nFind the<p>element withid=\"p1\":\n\nRemove the child from the parent:\n\nHere is a common workaround: Find the child you want to remove, and use itsparentNodeproperty to find the parent:\n\nTo replace an element to the HTML DOM, use thereplaceChild()method:\n\n### Code Snippets\n\n```\n<div id=\"div1\">\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n<script>\nconst para = document.createElement(\"p\");\nconst node = document.createTextNode(\"This is new.\");\npara.appendChild(node);\nconst element = document.getElementById(\"div1\");\nelement.appendChild(para);\n</script>\n\n---\n\nconst para = document.createElement(\"p\");\n\n---\n\nconst node = document.createTextNode(\"This is a new paragraph.\");\n\n---\n\npara.appendChild(node);\n\n---\n\nconst element = document.getElementById(\"div1\");\n\n---\n\nelement.appendChild(para);\n\n---\n\n<div id=\"div1\">\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n<script>\nconst para = document.createElement(\"p\");\nconst node = document.createTextNode(\"This is new.\");\npara.appendChild(node);\nconst element = document.getElementById(\"div1\");\nconst child = document.getElementById(\"p1\");\nelement.insertBefore(para, child);\n</script>\n\n---\n\n<div>\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n<script>\nconst elmnt = document.getElementById(\"p1\");\nelmnt.remove();\n</script>\n\n---\n\n<div>\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n\n---\n\nconst elmnt = document.getElementById(\"p1\");\n\n---\n\nelmnt.remove();\n\n---\n\n<div id=\"div1\">\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n<script>\nconst parent = document.getElementById(\"div1\");\nconst child = document.getElementById(\"p1\");\nparent.removeChild(child);\n</script>\n\n---\n\n<div id=\"div1\">\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n\n---\n\nconst parent = document.getElementById(\"div1\");\n\n---\n\nconst child = document.getElementById(\"p1\");\n\n---\n\nparent.removeChild(child);\n\n---\n\nconst child = document.getElementById(\"p1\");\nchild.parentNode.removeChild(child);\n\n---\n\n<div id=\"div1\">\n<p id=\"p1\">This is a paragraph.</p>\n<p id=\"p2\">This is another paragraph.</p>\n</div>\n<script>\nconst para = document.createElement(\"p\");\nconst node = document.createTextNode(\"This is new.\");\npara.appendChild(node);\nconst parent = document.getElementById(\"div1\");\nconst child = document.getElementById(\"p1\");\nparent.replaceChild(para, child);\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_268",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

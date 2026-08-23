@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 81,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thedisplayproperty is \nan important CSS property for controlling layout. It specifies whether an HTML \nelement is treated as a block or an inline element.\n\nEvery HTML element has a default display value, depending on what type of element it is. The default display value for most elements isblockorinline.\n\nThedisplayproperty is used to change the default display behavior of HTML elements.\n\nA block-level element ALWAYS starts on a new line and takes up the full width available \n(stretches out to the left and right as far as it can).\n\nExamples of block-level elements:\n\nAn inline element DOES NOT start on a new line and only takes up as much width as necessary.\n\nThis isan inline <span> element \ninsidea paragraph.\n\nExamples of inline elements:\n\nThe CSSdisplayproperty has many values. \nThe following table lists the most commonly used:\n\nThedisplayproperty is used to change the default display behavior of HTML elements.\n\nChanging an inline element to a block element, or vice versa, can be useful for making the page look a specific way, and still follow the web standards.\n\nA common example is to change<li>elements \nto inline, to create a horizontal menu:\n\nThe following example displays <span> elements as block elements:\n\nThe following example displays <a> elements as block elements:\n\nThe following example demonstrates some more display values:\n\n### Code Snippets\n\n```\nli {\ndisplay: inline;\n}\n\n---\n\nspan {\ndisplay: block;\n}\n\n---\n\na {\ndisplay: block;\n}\n\n---\n\np.ex1 {display: none;}\np.ex2 {display: inline;}\np.ex3 {display: block;}\np.ex4 {display: inline-block;}\np.ex5 {display: flex;}\np.ex6 {display: \n  grid;}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_80",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

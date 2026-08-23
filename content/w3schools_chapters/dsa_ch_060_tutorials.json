@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 60,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Tabulation is a technique used to solve problems.\n\nTabulation uses a table where the results to the most basic subproblems are stored first. The table then gets filled with more and more subproblem results until we find the result to the complete problem that we are looking for.\n\nThe tabulation technique is said to solve problems \"bottom-up\" because of how it solves the most basic subproblems first.\n\nTabulation is a technique used inDynamic Programming, which means that to use tabulation, the problem we are trying to solve must consist of overlapping subproblems.\n\nThe Fibonacci numbersare great for demonstrating different programming techniques, also when demonstrating how tabulation works.\n\nTabulation uses a table that is filled with the lowest Fibonacci numbers \\(F(0)=0\\) and \\(F(1)=1\\) first (bottom-up). The next Fibonacci number to be stored in the table is \\(F(2)=F(1)+F(0)\\).\n\nThe next Fibonacci number is always the sum of the two previous numbers:\n\n\\[\nF(n)=F(n-1)+F(n-2)\n\\]\n\nIn this way, the table continues to get filled with next Fibonacci numbers until we find the \\(n\\)th Fibonacci number that we are looking for.\n\nOther ways to find the \\(n\\)th Fibonacci number includerecursion, or the improved version of it usingmemoization.\n\nSee the drawings below to get a better idea of why tabulation is called a \"bottom up\" approach.\n\nAs a reference to compare with, see the drawing of the\"top-down\" recursion approachto finding the \\(n\\)th Fibonacci number.\n\nThe tabulation approach starts building the table bottom up to find the 10th Fibonacci number, starting with \\(F(0)\\) and \\(F(1)\\).\n\nThe recursive approach start by trying to find \\(F(10)\\), but to find that it must call \\(F(9)\\) and \\(F(8)\\), and so it goes all the way down to \\(F(0)\\) and \\(F(1)\\) before the function calls start returning values that can be put together to the final answer.\n\nJust like finding the \\(n\\)th Fibonacci number, tabulation can also be used to find the solution to other problems:\n\nAs mentioned in the top, tabulation (just like memoization) is a technique used in something calledDynamic Programming.\n\nDynamic Programming is a way of designing algorithms to solve problems.\n\nFor Dynamic Programming to work, the problem we want to solve must have these two properties:\n\nRead more about Dynamic Programming on thenext page.\n\n### Code Snippets\n\n```\nExample\nFinding the 10th Fibonacci number using tabulation:\ndef fibonacci_tabulation(n):\n    if n == 0: return 0\n    elif n == 1: return 1\n\n    F = [0] * (n + 1)\n    F[0] = 0 \n    F[1] = 1\n\n    for i in range(2, n + 1):\n        F[i] = F[i - 1] + F[i - 2]\n    \n    print(F)\n    return F[n]\n  \nn = 10\nresult = fibonacci_tabulation(n)\nprint(f\"\\nThe {n}th Fibonacci number is {result}\")\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_59",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

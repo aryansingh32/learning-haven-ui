@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 181,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The CSS@font-facerule allows you to \ndefine and load custom fonts for use on a webpage.\n\nThe font does not have to be installed on the user's computer.\n\nWhen you have found/bought the font you want to use, just include the font \nfile on your web server, and it will be automatically downloaded to the user when needed.\n\nThe most widely used font formats are WOFF/WOFF2 for web pages and TTF/OTF \nfor desktop.\n\nWOFF/WOFF2 are optimized to reduce file size and are the ideal font format for use in web pages. It was developed in 2009, and is \nnow a W3C Recommendation. WOFF/WOFF2 are supported by all major browsers.\n\nTTF was developed in the late 1980s, by Apple. OTF was developed by Apple and Microsoft. \nTTF is the most common font format for both the Mac OS and Microsoft \nWindows operating systems. OTF is built on TTF, as a more advanced, scalable format\nthat supports rich typesetting features.\nBoth types are popular because of their accessibility and quality, but they are \nnot optimized for web use.\n\nIn the@font-facerule; first \nspecify a name for the custom font (e.g. \"myFont\") in the font-family \ndescriptor, then point to the font file in the src descriptor.\n\nThen, to use the custom font in an HTML element, refer to the name of the font (\"myFont\") through thefont-familyproperty:\n\nYou must add another@font-facerule containing descriptors for bold text:\n\nThe file \"sansation_bold.woff\" is another font file, that contains the bold characters for the Sansation font.\n\nBrowsers will use this file whenever a piece of text with the font-family \"myFont\" should render as bold.\n\nTip:This way you can have many@font-facerules for the same font.\n\nThe following table lists the font descriptors that can be defined inside the@font-facerule:\n\n### Code Snippets\n\n```\n@font-face\n{\nfont-family: myFont; /* set name */\nsrc: url(sansation_light.woff); /* url of the font */\n}\np\n{\nfont-family: myFont; /* use font */\n}\n\n---\n\n@font-face\n{\nfont-family: myFont;\nsrc: url(sansation_bold.woff);\nfont-weight: bold;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_180",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

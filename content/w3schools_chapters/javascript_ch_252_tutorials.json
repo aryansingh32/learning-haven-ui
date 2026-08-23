@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 252,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Promise is always in one of three states.\n\nThePromise()constructor creates a new Promise object.\n\nA new Promise object.\n\nThethen()method registers functions to handle a Promise result.\n\nThe method is called immediately and returns a new Promise.\n\nThe registered handler runs asynchronously after the original Promise settles.\n\nA new Promise.\n\nThecatch()method registers a function to handle a rejected Promise.\n\nIt returns a new Promise.\n\nA new Promise.\n\nThefinally()method registers a function that runs when a Promise settles.\n\nThe handler runs whether the Promise is fulfilled or rejected.\n\nIt receives no arguments.\n\nA new Promise.\n\nThePromise.resolve()method returns a Promise resolved with a value.\n\nA Promise resolved with the specified value.\n\nThePromise.reject()method returns a Promise rejected with a reason.\n\nA rejected Promise.\n\nThePromise.all()method waits for all input Promises to fulfill.\n\nIt rejects when one of the input Promises rejects.\n\nA Promise fulfilled with an array of values when all input Promises fulfill.\n\nThePromise.allSettled()method waits for all input Promises to settle.\n\nIt returns information about both fulfilled and rejected Promises.\n\nA Promise fulfilled with an array of result objects.\n\nEach result has astatusproperty and either avalueor areasonproperty.\n\nPromise.allSettled()is an ES2020 feature.\n\nES2020is fully supported in all modern browsers sinceSeptember 2020:\n\nThePromise.any()method fulfills when the first input Promise fulfills.\n\nRejected Promises are ignored unless every input Promise rejects.\n\nA Promise fulfilled with the value of the first fulfilled input Promise.\n\nIf every input Promise rejects, the returned Promise rejects with anAggregateError.\n\nThePromise.race()method settles when the first input Promise settles.\n\nThe first Promise may fulfill or reject.\n\nA Promise settled with the value or reason of the first settled input Promise.\n\nThePromise.withResolvers()method creates a Promise and returns its resolving functions.\n\nAn object with three properties:\n\n### Code Snippets\n\n```\nnew Promise(executor)\n\n---\n\nconst promise = new Promise(function(resolve, reject) {\nconst success = true;\nif (success) {\nresolve(\"Done\");\n} else {\nreject(\"Failed\");\n}\n});\npromise\n.then(function(value) {\nmyDisplayer(value);\n})\n.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\npromise.then(onFulfilled)\npromise.then(onFulfilled, onRejected)\n\n---\n\nconst promise1 = Promise.resolve(\"Hello\");\nconst promise2 = promise1.then(function(value) {\nreturn value + \" World\";\n});\npromise2.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\npromise.catch(onRejected)\n\n---\n\nconst promise = Promise.reject(\"Something went wrong\");\npromise.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\npromise.finally(onFinally)\n\n---\n\nPromise.resolve(\"Done\")\n.then(function(value) {\nmyDisplayer(value);\n})\n.finally(function() {\nconsole.log(\"Promise settled\");\n});\n\n---\n\nPromise.resolve(value)\n\n---\n\nconst promise = Promise.resolve(\"Resolved OK\");\npromise.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nPromise.reject(reason)\n\n---\n\nconst promise = Promise.reject(\"Something went wrong\");\npromise.catch(function(error) {\nmyDisplayer(error);\n});\n\n---\n\nPromise.all(iterable)\n\n---\n\nconst p1 = Promise.resolve(\"A\");\nconst p2 = Promise.resolve(\"B\");\nPromise.all([p1, p2])\n.then(function(values) {\nmyDisplayer(values);\n});\n\n---\n\nPromise.allSettled(iterable)\n\n---\n\nconst p1 = Promise.resolve(\"A\");\nconst p2 = Promise.reject(\"X\");\nPromise.allSettled([p1, p2])\n.then(function(results) {\nmyDisplayer(JSON.stringify(results));\n});\n\n---\n\nPromise.any(iterable)\n\n---\n\nconst p1 = Promise.reject(\"Failed\");\nconst p2 = new Promise(function(resolve) {\nsetTimeout(function() {\nresolve(\"First success\");\n}, 500);\n});\nconst p3 = new Promise(function(resolve) {\nsetTimeout(function() {\nresolve(\"Second success\");\n}, 1000);\n});\nPromise.any([p1, p2, p3])\n.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nPromise.race(iterable)\n\n---\n\nconst p1 = new Promise(function(resolve) {\nsetTimeout(function() {\nresolve(\"First\");\n}, 500);\n});\nconst p2 = new Promise(function(resolve) {\nsetTimeout(function() {\nresolve(\"Second\");\n}, 1000);\n});\nPromise.race([p1, p2])\n.then(function(value) {\nmyDisplayer(value);\n});\n\n---\n\nPromise.withResolvers()\n\n---\n\nconst {promise, resolve, reject} = Promise.withResolvers();\nsetTimeout(function() {\nresolve(\"Operation completed\");\n}, 1000);\npromise\n.then(function(value) {\nmyDisplayer(value);\n})\n.catch(function(error) {\nmyDisplayer(error);\n});\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_251",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

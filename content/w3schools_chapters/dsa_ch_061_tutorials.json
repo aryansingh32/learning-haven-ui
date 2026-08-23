@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 61,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Dynamic Programming is a method for designing algorithms.\n\nAn algorithm designed with Dynamic Programming divides the problem into subproblems, finds solutions to the subproblems, and puts them together to form a complete solution to the problem we want to solve.\n\nWe have already seen Dynamic Programming in this tutorial, in thememoizationandtabulationtechniques, and for solving problems like the0/1 Knapsack Problem, or to findthe shortest pathwiththe Bellman-Ford algorithm.\n\nLet's say we want an algorithm that finds the \\(n\\)th Fibonacci number. We don't know how to find the \\(n\\)th Fibonacci number yet, except that we want to use Dynamic Programming to design the algorithm.\n\nSo how can we use Dynamic Programming to design an algorithm that finds the \\(n\\)th Fibonacci number?\n\nThere is no exact rule for how to design an algorithm using Dynamic Programming, but here is a suggestion that should work in most cases:\n\nLet's do it.\n\nBefore trying to find an algorithm using Dynimaic Programming, we must first check if the problem has the two properties \"overlapping subproblems\" and \"optimal substructure\".\n\nOverlapping subproblems?\n\nYes. The \\(6\\)th Fibonacci number is a combination of the \\(5\\)th and \\(4\\)th Fibonacci number: \\(8=5+3\\). And this rule holds for all other Fibonacci numbers as well. This shows that the problem of finding the \\(n\\)th Fibonacci number can be broken into subproblems.\n\nAlso, the subproblems overlap because \\(F(5)\\) is based on \\(F(4)\\) and \\(F(3)\\), and \\(F(6)\\) is based on \\(F(5)\\) and \\(F(4)\\).\n\n\\[\n  \\begin{equation}\n  \\begin{aligned}\nF(5) {} & =\\underline{F(4)}+F(3) \\\\\n5       & =\\underline{3}+2 \\\\\\\\\n        & and \\\\\\\\\nF(6)    & =F(5)+\\underline{F(4)} \\\\\n8       & =5+\\underline{3}\n\\end{aligned}\n\\end{equation}\n\\]\n\nYou see? Both solutions to subproblems \\(F(5)\\) and \\(F(6)\\) are created using the solution to \\(F(4)\\), and there are many cases like that, so the subproblems overlap as well.\n\nOptimal substructure?\n\nYes, the Fibonacci number sequence has a very clear structure, because the two previous numbers are added to create the next Fibonacci number, and this holds for all Fibonacci numbers except for the two first. This means we knowhowto put together a solution by combining the solutions to the subproblems.\n\nWe can conclude that the problem of finding the \\(n\\)th Fibonacci number satisfies the two requirements, which means that we can use Dynamic Programming to find an algorithm that solves the problem.\n\nWe can now start trying to find an algorithm using Dynamic Programming.\n\nSolving the most basic subproblems first is a good place to start to get an idea of how the algorithm should run.\n\nIn our problem of finding the \\(n\\)th Fibonacci number, finding the most basic subproblems is not that hard, because we already know that\n\n\\[\nF(0)=0 \\\\\nF(1)=1 \\\\ \nF(2)=1 \\\\ \nF(3)=2 \\\\ \nF(4)=3 \\\\ \nF(5)=5 \\\\ \nF(6)=8 \\\\\n...\n\\]\n\nIn this step, for our problem, how the subproblems are put together is quite straightforward, we just need to add the two previous Fibonacci numbers to find the next one.\n\nSo for example, the \\(2\\)nd Fibonacci number is created by adding the two previous numbers \\(F(2)=F(1)+F(0)\\), and that is the general rule as well, like mentioned earlier: \\(F(n)=F(n-1)+F(n-2)\\).\n\nInstead of writing the text for the algorithm straight away, it might be wise to try to write a procedure to solve a specific problem first, like finding the \\(6\\)th Fibonacci number.\n\nFor reference, the 8 first Fibonacci numbers are: \\(0,\\; 1,\\; 1,\\; 2,\\; 3,\\; 5,\\; \\underline{8},\\; 13\\).\n\nFinding the \\(6\\)th Fibonacci number, we could start with the two first numbers \\(0\\) and \\(1\\), which appear in place 0 and 1 in the sequence, and put them in an array, at index 0 and 1. Then we could add the two first numbers in the array to generate the next number, and push that new number as a new element to the array. If we continue like this until the array is 7 elements long we would stop and returnF[6]. That would work, right?\n\nAfter solving the specific problem above, it is now easier to write the actual algorithm.\n\nThe algorithm for finding the \\(n\\)th Fibonacci number, using Dynamic Programming as a design method, can be described like this:\n\nTo implement the algorithm above, we assume that the argumentnto the function is a positive number (the \\(n\\)th Fibonacci number), we use aforloop to create new Fibonacci numbers, and we return the base casesF[0]andF[1]straight away if the function is called with0or1as an argument.\n\nImplementing the algorithm also means that we can check if it works.\n\nThere it is!\n\nWe have used Dynamic Programming as a design method to create an algorithm that finds the \\(n\\)th Fibonacci number.\n\nWe have also implemented the algorithm to demonstrate that it works, and in doing so we have unintentionally used a well established technique within Dynamic Programming calledtabulation, where the solution is found by solving subproblems bottom-up, using some kind of table.\n\nFurthermore, we have avoided calculating the same overlapping subproblems many times, likeF[3]for example, that we could potentially have ended up doing otherwise, with abrute force recursive approachfor example.\n\nAnother technique used in Dynamic Programming is calledmemoization. In this case, using memoization essentially solves the problem recursively with brute force, but stores the subproblem solutions for later as the algorithm runs to avoid doing the same calculations more than once.\n\nIt might be difficult to design an algorithm using Dynamic Programming, but the concept of Dynamic Programming is actually not that hard: Solve the problem, but since the subproblems are overlapping, do it in a smart way so that a specific subproblem only needs to be solved once.\n\nTo be able to use solutions to previously solved subproblems in Dynamic Programming, the previously found solutions must be stored somehow, and that can be done usingmemoizationortabulation.\n\nMemoizationis a technique used in Dynamic Programming, where the solution is found recursively. As the algorithm runs, solutions to subproblems are stored, and before trying to compute the solution to a subproblem, it checks first to see if that solution has already been computed, to avoid doing the same computation more than once.\n\nThe memoization technique is called \"top-down\" because the initial function call is for the main problem, and it results in new function calls for solving smaller and smaller subproblems.\n\nTabulationis a technique used in Dynamic Programming, where solutions to the overlapping subproblems are stored in a table (array), starting with the most basic subproblems.\n\nThe tabulation technique is not recursive, and it is called \"bottom-up\" because of the way the final solution is built up by solving the most basic subproblems first. Since the most basic subproblem solutions are stored in the table first, when solving a subproblem later that relies on previous subproblems, the algorithm can just pick these solutions right from the table, no need to compute them again.\n\nTo get a better sense of how memoization works, and is considered \"top-down\", and how tabulation works, and is \"bottom-up\", take a look at the two images below.\n\nAs you can see in the images above, the tabulation approach starts at the bottom by solvingF(0)first, while the memoization approach start at the top withF(10)and breaking it into smaller and smaller subproblems from there.\n\n### Code Snippets\n\n```\nExample\nFinding the 6th Fibonacci number with our new algorithm:\ndef nth_fibo(n):\n    if n==0: return 0\n    if n==1: return 1\n\n    F = [None] * (n + 1)\n    F[0] = 0\n    F[1] = 1\n\n    for i in range(2, n + 1):\n        F[i] = F[i - 1] + F[i - 2]\n\n    return F[n]\n\nn = 6\nresult = nth_fibo(n)\nprint(f\"The {n}th Fibonacci number is {result}\")\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_60",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

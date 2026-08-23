@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 31,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nCSS math functions allow mathematical expressions to be used as property values.\n\nIn this chapter, we will explain the following math functions:\n\nThecalc()function performs a \nmathematical calculation that will be used as the property value.\n\nThecalc()function supports addition (+), \nsubtraction (-), multiplication (*), and division (/), and can combine different \nunits, like pixels and percentages.\n\nLet us look at an example:\n\nThemax()function takes a comma-separated list of values, \nand uses the largest value from the list as the property value.\n\nLet us look at an example:\n\nThemin()function \ntakes a comma-separated list of values, and uses the smallest value from the \nlist as the property value.\n\nLet us look at an example:\n\nTheclamp()function is used to set a \nvalue that will adjust responsively between a minimum value, a preffered value, and a maximum value \ndepending on the size of the viewport.\n\nTheclamp()function has three parameters: a minimum value, a preferred \nvalue, and a maximum value:\n\nLet us look at an example:\n\n### Code Examples\n\n```\ncalc(\nexpression\n)\n\n---\n\n#div1 {\nmargin: auto;\nwidth: calc(100% - 100px);\nheight: calc(30vh + 50px);\nborder: 1px solid black;\npadding: 10px;\n}\n\n---\n\nmax(\nvalue1\n,\nvalue2\n, ...)\n\n---\n\n#div1 {\nheight: 100px;\nwidth: max(50%, 300px);\nborder: 1px solid black;\npadding: 10px;\n}\n\n---\n\nmin(\nvalue1\n,\nvalue2\n, ...)\n\n---\n\n#div1 {\nheight: 100px;\nwidth: min(50%, 300px);\nborder: 1px solid black;\npadding: \n  10px;\n}\n\n---\n\nclamp(\nmin\n,\npreferred\n,\nmax\n)\n\n---\n\nh2 {\nfont-size: clamp(1.5rem, 5vw, 3rem);\n}\ndiv {\nborder: 1px solid green;\npadding: 10px;\nfont-size: clamp(1rem, 2.5vw, 2rem);\nwidth: \n  clamp(200px, 50%, 600px);\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nOptimizing CSS makes your website load faster and run more smoothly; which \nalso results in a better user experience.\n\nHere are some tips for optimizing CSS:\n\nUse simple selectors when possible. Complex selectors increase the parsing \ntime.\n\nAvoid the universal selector (*) when not strictly necessary. The universal \nselector (*) affects every element and can slow down page rendering.\n\nAvoid inline styles when not necessary. Inline styles make your HTML heavier and are harder to manage.\n\nAvoid using@importfor loading \nexternal CSS, as it delays stylesheet loading.\n\nAdd external CSS with the<link>tag in the \nhead section, so it loads before the page is rendered.\n\nUse shorthand properties when possible. It saves space and is faster to parse.\n\nA high number of animations and large animations require more processing \npower to handle, which degrades performance. So, remove unnecessary animations.\n\nAnimation performance relies also on what properties you are animating.\n\nSome properties (like width, height, left, top), trigger a layout \nrecalculation when animated, and should be avoided.\n\nIf possible, use animation properties that do not cause repaint, like \ntransforms, opacity and filter.\n\nUse one CSS file when possible, and remove spaces and comments to reduce file size.\n\nYou can use tools like:\n\nMake sure your CSS file is cached by the browser by giving it a long expiration time in your server settings. This reduces how often users need to re-load it.\n\n### Code Examples\n\n```\nbody #navlist\nul li a.button:hover {\nbackground-color: blue;\n}\n\n---\n\n.button:hover {\nbackground-color: blue;\n}\n\n---\n\n* {\nmargin: 0;\npadding: 0;\nfont-size: 16px;\n}\n\n---\n\n<div style=\"color: red; font-size: 18px;\">Hello</div>\n<p style=\"color: \n    blue; font-size: 16px;\">Test</p>\n\n---\n\n<link rel=\"stylesheet\" href=\"style.css\">\n\n---\n\n/* Long version */\nmargin-top: 10px;\nmargin-right: 20px;\nmargin-bottom: 10px;\nmargin-left: 20px;\n/* Shorthand version */\nmargin: 10px 20px;\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_31",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_31",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

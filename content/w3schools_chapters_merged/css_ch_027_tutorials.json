@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 27,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAdvanced attribute selectors match elements based on partial attribute values using special operators.\n\nThe[attribute^=\"value\"]selector \nis used to select elements with the specific attribute, whose valuestarts witha specific value.\n\nThe following example selects all elements with a class attribute value that \nstarts with \"top\":\n\nThe[attribute$=\"value\"]selector is used to select elements whose attribute \nvalueends witha specific value.\n\nThe following example selects all elements with a class attribute value that \nends with \"test\":\n\nThe[attribute*=\"value\"]selector is used to select elements whose attribute \nvaluecontainsa specific value.\n\nThe following example selects all elements with a class attribute value that \ncontains \"te\":\n\nThe CSS attribute selectors can be useful for styling form elements, based on \ninput type:\n\nTip:Visit ourCSS Forms Tutorialfor more examples on how to style forms with CSS.\n\n### Code Examples\n\n```\n[class^=\"top\"] {\nbackground: yellow;\n}\n\n---\n\n[class$=\"test\"] {\nbackground: yellow;\n}\n\n---\n\n[class*=\"te\"] {\nbackground: yellow;\n}\n\n---\n\ninput[type=\"text\"] {\nwidth: 150px;\npadding: 6px;\nmargin-bottom: 10px;\nbackground-color: pink;\n}\ninput[type=\"button\"] {\nwidth: 100px;\npadding: 6px;\nbackground-color: lightgreen;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nCSS is used to style HTML forms. The look of an HTML form can be greatly improved with CSS:\n\nWith CSS, you can style most of the different input types, like text fields, \npassword fields, checkboxes, radio buttons, and file inputs. You can also style \ninput labels and form buttons.\n\nSome commonly used CSS properties for styling input fields, are:\n\n## Tutorials\n\nWith CSS, you can style most of the different input types, like text fields, \npassword fields, checkboxes, radio buttons, and file inputs. You can also style \ninput labels and form buttons.\n\nSome commonly used CSS properties for styling input fields, are:\n\nThewidthproperty \nis used to set the width of an input field.\n\nTip:The default width of an HTML input text field, is 20 characters.\n\nHere we set the width to 100%:\n\nThe example above applies to all <input> elements. If you only want to \nstyle a specific input type, you can useattribute selectors:\n\nThepaddingproperty \nis used to add some space inside the text field.\n\nTip:When you have several input fields after each other, you might \nalso want to add somemargin, to add more space \naround them:\n\nTheborderproperty \nis used to change the border size and color, and \ntheborder-radiusproperty \ncan be used to add rounded corners:\n\nIf you only want a bottom border, use theborder-bottomproperty:\n\nThebackground-colorproperty \nis used to add a background color to the input, and \nthecolorproperty \nis used to change the text color:\n\n### Code Examples\n\n```\ninput\n{\nwidth: 100%;\n}\n\n---\n\ninput[type=text]\n{\nwidth: 100%;\npadding: 12px;\nmargin: 10px 0;\nbox-sizing: border-box;\n}\n\n---\n\ninput[type=text]\n{\nborder: 2px solid red;\nborder-radius: 8px;\n}\n\n---\n\ninput[type=text]\n{\nborder: none;\nborder-bottom: 1px solid red;\n}\n\n---\n\ninput[type=text]\n{\nbackground-color: #3CBC8D;\ncolor: white;\n}\n```\n\n## Tutorials\n\nBy default, some browsers will add a blue outline around the input when it gets \nfocus (clicked on). You can remove this behavior by addingoutline: none;to the input.\n\nUse the:focusselector to do something with the input field when it gets focus:\n\nIf you want an icon inside the input, use thebackground-imageproperty and \nposition it with thebackground-positionproperty. Also notice that we \nadd a \nlarge left padding to reserve the space of the icon:\n\nIn this example we use the CSStransitionproperty to animate \nthe width of the search input when it gets focus. You will learn more about thetransitionproperty later, in ourCSS Transitionschapter.\n\n### Code Examples\n\n```\ninput[type=text]:focus\n{\nbackground-color: lightblue;\n}\n\n---\n\ninput[type=text]:focus\n{\nborder: 3px solid #555;\n}\n\n---\n\ninput[type=text]\n{\nbackground-color: white;\nbackground-image: url('searchicon.png');\nbackground-position: 10px 10px;\nbackground-repeat: \nno-repeat;\npadding-left: 40px;\n}\n\n---\n\ninput[type=text] {\ntransition: width 0.4s ease-in-out;\n}\ninput[type=text]:focus {\nwidth: 100%;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_27",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_27",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

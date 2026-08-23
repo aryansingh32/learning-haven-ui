@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 15,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn theprevious page, we used thevoidkeyword in all examples (likestaticvoidmyMethod(int x)), which indicates that the method should not return a value.\n\nIf you want the method to return a value, you can use a primitive data type (such asint,char, etc.) instead ofvoid, and use thereturnkeyword inside the method:\n\nThis example returns the sum of a method'stwo parameters:\n\nYou can also store the result in a variable (recommended, as it is easier to read and maintain):\n\nHere is a simple and fun \"game example\" using a method that returns a value, \nto show the double of the numbers 1 through 5 (using aforloop):\n\n### Code Examples\n\n```\nExample\npublic class Main {\n\u00a0 static\nint\nmyMethod(int x) {\nreturn\n5 + x;\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 System.out.println(myMethod(3));\n\u00a0 }\n}\n// Outputs 8 (5 + 3)\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 static int myMethod(int x, int y) {\n\u00a0\u00a0\u00a0 return x + y;\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 System.out.println(myMethod(5, 3));\n\u00a0 }\n}\n// Outputs 8 (5 + 3)\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0 static int myMethod(int x, int y) {\n\u00a0\u00a0\u00a0 return x + y;\n\u00a0 }\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 int z = myMethod(5, 3);\n\u00a0\u00a0\u00a0 System.out.println(z);\n\u00a0 }\n}\n// Outputs 8 (5 + 3)\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n  // Method that doubles the number\n  static int doubleGame(int x) {\n    return x * 2;\n  }\n\n  public static void main(String[] args) {\n    for (int i = 1; i <= 5; i++) {\n      System.out.println(\"Double of \" + i + \" is \" + doubleGame(i));\n    }\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nTest your understanding ofJava Method Parametersby completing a small coding challenge.\n\n## Tutorials\n\nWithmethod overloading, multiple methods can have the same name with different\nparameters:\n\nConsider the following example, which has two methods that add numbers of different type:\n\nInstead of defining two methods that should do the same thing, it is better to overload one.\n\nIn the example below, we overload theplusMethodmethod to work for bothintanddouble:\n\n### Code Examples\n\n```\nExample\nint myMethod(int x)\nfloat myMethod(float x)\ndouble myMethod(double x, double y)\n\n---\n\nExample\nstatic int plusMethodInt(int x, int y) {\n  return x + y;\n}\n\nstatic double plusMethodDouble(double x, double y) {\n  return x + y;\n}\n\npublic static void main(String[] args) {\n  int myNum1 = plusMethodInt(8, 5);\n  double myNum2 = plusMethodDouble(4.3, 6.26);\n  System.out.println(\"int: \" + myNum1);\n  System.out.println(\"double: \" + myNum2);\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nstatic int plusMethod(int x, int y) {\n  return x + y;\n}\n\nstatic double plusMethod(double x, double y) {\n  return x + y;\n}\n\npublic static void main(String[] args) {\n  int myNum1 = plusMethod(8, 5);\n  double myNum2 = plusMethod(4.3, 6.26);\n  System.out.println(\"int: \" + myNum1);\n  System.out.println(\"double: \" + myNum2);\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nIn Java, variables are only accessible inside the region where they are created. This is calledscope.\n\nVariables declared directly inside a method are available anywhere in the method following the line of code in which they were declared:\n\nA block of code refers to all of the code between curly braces{ }.\n\nVariables declared inside a block of code are only accessible by the code between the curly braces, and only after the line in which the variable was declared:\n\nVariables declared inside aforloop only exist inside the loop:\n\nLoop variables are not available outside the loop.\n\nYou can safely reuse the same variable name (i,j, etc.) in different loops in the same method:\n\n### Code Examples\n\n```\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0int x = 100;\n\n\u00a0\u00a0\u00a0\u00a0// Code here CAN use x\n\u00a0\u00a0\u00a0\u00a0System.out.println(x);\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0{ // This is a block\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0int x = 100;\n\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0// Code here CAN use x\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(x);\n\n\u00a0\u00a0\u00a0\u00a0} // The block ends here\n\n\u00a0\u00a0\u00a0\u00a0// Code here CANNOT use x\n\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 5; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(i); // i is accessible here\n\u00a0\u00a0\u00a0\u00a0}\n\n\u00a0\u00a0\u00a0\u00a0// i is NOT accessible here\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0public static void main(String[] args) {\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 3; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(\"Loop 1: \" + i);\n\u00a0\u00a0\u00a0\u00a0}\n\n\u00a0\u00a0\u00a0\u00a0for (int i = 0; i < 2; i++) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.println(\"Loop 2: \" + i);\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nRecursion is the technique of making a function call itself. This technique provides a way\nto break complicated problems down into simpler problems which are easier to solve.\n\nRecursion may be a bit difficult to understand. The\nbest way to figure out how it works is to experiment with it.\n\nAdding two numbers together is easy to do, but adding a range of numbers is more\ncomplicated. In the following example, recursion is used to add a range of numbers\ntogether by breaking it down into the simple task of adding two numbers:\n\nWhen thesum()method is called, it adds parameterkto the sum of all numbers smaller\nthankand returns the result. Whenkbecomes 0, the method just returns 0. When\nrunning, the program follows these steps:\n\nSince the method does not call itself whenkis 0, the program stops there and returns the\nresult.\n\nJust as loops can run into the problem of infinite looping, recursive methods can run into\nthe problem of infinite recursion. Infinite recursion is when the method never stops calling\nitself. Every recursive method should have a halting condition, which is the condition\nwhere the method stops calling itself. In the previous example, the halting condition is\nwhen the parameterkbecomes 0.\n\nIt is helpful to see a variety of different examples to better understand the concept. In this\nexample, the method adds a range of numbers between a start and an end. The halting\ncondition for this recursive method is whenendis not greater thanstart:\n\nThis example demonstrates how to use recursion to create a countdown function:\n\nThe method calls itself withn - 1untilnbecomes0.\n\nThis example uses a recursive method to calculate the factorial of 5:\n\n### Code Examples\n\n```\nExample\nUse recursion to add all numbers from 1 to 10.\npublic class Main {\n\u00a0\u00a0public static int sum(int k) {\n\u00a0\u00a0\u00a0\u00a0if (k > 0) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return k + sum(k - 1);\n\u00a0\u00a0\u00a0\u00a0} else {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return 0;\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n\n\u00a0\u00a0public static void main(String[] args) {\n\u00a0\u00a0\u00a0\u00a0int result = sum(10);\n\u00a0\u00a0\u00a0\u00a0System.out.println(result);\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\nUse recursion to add all numbers from 5 to 10 (5+6+7+8+9+10):\npublic class Main {\n\u00a0\u00a0public static int sum(int start, int end) {\n\u00a0\u00a0\u00a0\u00a0if (end > start) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return end + sum(start, end - 1);\n\u00a0\u00a0\u00a0\u00a0} else {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return end;\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n\n\u00a0\u00a0public static void main(String[] args) {\n\u00a0\u00a0\u00a0\u00a0int result = sum(5, 10);\n\u00a0\u00a0\u00a0\u00a0System.out.println(result);\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\nExample\npublic class Main {\n\u00a0\u00a0static void countdown(int n) {\n\u00a0\u00a0\u00a0\u00a0if (n > 0) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0System.out.print(n + \" \");\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0countdown(n - 1);\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n\n\u00a0\u00a0public static void main(String[] args) {\n\u00a0\u00a0\u00a0\u00a0countdown(5);\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n\n---\n\npublic class Main {\n\u00a0\u00a0static int factorial(int n) {\n\u00a0\u00a0\u00a0\u00a0if (n > 1) {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return n * factorial(n - 1);\n\u00a0\u00a0\u00a0\u00a0} else {\n\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0return 1;\n\u00a0\u00a0\u00a0\u00a0}\n\u00a0\u00a0}\n\n\u00a0\u00a0public static void main(String[] args) {\n\u00a0\u00a0\u00a0\u00a0System.out.println(\"Factorial of 5 is \" + factorial(5));\n\u00a0\u00a0}\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_15",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_15",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

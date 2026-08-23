@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nPass an array to thenew Set()constructor:\n\nIf you add equal elements, only the first will be saved:\n\nYou can list all Set elements (values) with afor..ofloop:\n\nThehas()method returnstrueif a specified value exists in a set.\n\nTheforEach()method invokes a function for each Set element:\n\nThevalues()method returns an Iterator object with the values in a Set:\n\nThekeys()method returns an Iterator object with the values in a Set:\n\nTheentries()method returns an Iterator with [value,value] pairs from a Set.\n\n### Code Examples\n\n```\n// Create a new Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n\n---\n\nletters.add(\"d\");\nletters.add(\"e\");\n\n---\n\nletters.add(\"a\");\nletters.add(\"b\");\nletters.add(\"c\");\nletters.add(\"c\");\nletters.add(\"c\");\nletters.add(\"c\");\nletters.add(\"c\");\nletters.add(\"c\");\n\n---\n\n// Create a new Set\nconst mySet = new Set([\"a\",\"b\",\"c\"]);\n// The number of elements are\nmySet.size;\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// List all Elements\nlet text = \"\";\nfor (const x of letters) {\ntext += x;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// Does the Set contain \"d\"?\nanswer = letters.has(\"d\");\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// List all entries\nlet text = \"\";\nletters.forEach (function(value) {\ntext += value;\n})\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// Get all Values\nconst myIterator = letters.values();\n// List all Values\nlet text = \"\";\nfor (const entry of myIterator) {\ntext += entry;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// List all Values\nlet text = \"\";\nfor (const entry of letters.values()) {\ntext += entry;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// Create an Iterator\nconst myIterator = letters.keys();\n// List all Elements\nlet text = \"\";\nfor (const x of myIterator) {\ntext += x;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// List all Elements\nlet text = \"\";\nfor (const x of letters.keys()) {\ntext += x;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// Get all Entries\nconst myIterator = letters.entries();\n// List all Entries\nlet text = \"\";\nfor (const entry of myIterator) {\ntext += entry;\n}\n\n---\n\n// Create a Set\nconst letters = new Set([\"a\",\"b\",\"c\"]);\n// List all Entries\nlet text = \"\";\nfor (const entry of letters.entries()) {\ntext += entry;\n}\n```\n\n## Tutorials\n\nSet Logicis an ECMAScript 2025 feature.\n\nJavaScript 2025is fully supported in all modern browsers sinceMay 2025:\n\nTheunion()method returns the union of two sets.\n\nTheunion()method returns a new set containing the elements which are in this set,\nor in the argument set, or in both:\n\nTheintersection()method returns the intersection of two sets.\n\nTheintersection()method returns a new set containing the elements which are in this set\nand in the argument set:\n\nThedifference()method returns the difference between two sets.\n\nThedifference()method returns a new set containing elements which are in this set\nbut not in the argument set:\n\nThesymmetricDifference()method returns the symmetric difference between to sets.\n\nThesymmetricDifference()method returns a new set containing elements which are in this set\nor in the argument set, but not in both:\n\nTheisSubsetOf()method returnstrueif all elements in this set\nis also elements in the argument set:\n\nTheisSupersetOf()method returnstrueif all elements in the argument set are also in this set:\n\nTheisDisjointFrom()method returnstrueif this set has no elements in common with the argument set:\n\n### Code Examples\n\n```\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.union(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.intersection(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.difference(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nconst C = A.symmetricDifference(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isSubsetOf(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isSupersetOf(B);\n\n---\n\nconst A = new Set(['a','b','c']);\nconst B = new Set(['b','c','d']);\nlet answer = A.isDisjointFrom(B);\n```\n\n## Tutorials\n\nJavaScript employs a memory management mechanism known asGarbage Collection.\n\nThe primary functions are:Ensuring efficient use of memory resourcesReclaim memory occupied by variables that are no longer in usePreventing memory leaksWeak ReferencesUnlike a regular Set, a WeakSet does not prevent its values from being garbage collected.If a value (an object) has no references in a program, it becomes eligible for garbage collection.When the value is garbage collected, its is removed from the WeakSet.Example// Create a WeakSetlet mySet = new WeakSet();// Create an Objectlet myObj = {fname:\"John\", lname:\"Doe\"};// Add the ObjectmySet.add(myObj);// Remove the Object from memorymyObj = null;// Now myObj in mySet will be garbage collectedValues Must Be ObjectsPrimitive values cannot be values in a WeakSet.Thevalues must be objects.This restriction is tied to the garbage collection mechanism;\nprimitives are not garbage collected in the same way as objects.Tracking ObjectsA WeakSet is similar to a Set, but it only stores objects,\nand holds them weakly. If there are no other references to an object,\nit gets garbage collected automatically.This makes it handy for tracking objects without storing extra data (like counts).Tracking Visitors:let text = \"\";// Create a WeakSet to track personsconst persons = new WeakSet();// Visitor Objectsconst John = {name:\"John\", age:40};const Paul = {name:\"Paul\", age:41};const Ringo = {name:\"Ringo\", age:42};const George = {name:\"George\", age:43};// Track visitstrack(Paul);track(Ringo);track(Paul);// Function to track visitorsfunction track(visitor) {if (persons.has(visitor)) {text += visitor.name + \" is visiting again.<br>\";} else {persons.add(visitor);text += visitor.name + \", age\" + visitor.age +\", is visiting for the first time<br>\";}}Try it Yourself \u00bbIf you want to count the visits as well:Try to use a WeakMap instead.Automatic CleanupIf you remove all references to a visitor object:Tracking Visitors:John = null;// The entry for John is now removed from the WeakMap (persons)Not IterableWeakSets arenot enumerable.Youcannot iterateover the values with for loops, forEach(), or values().You cannot access the size. WeakSets haveno size property.Limited MethodsA WeakSet is minimal, memory-safe, and purpose-built for tracking objects privately and efficiently.WeakSet provides a limited set of methods:new WeakSet()Creates a new WeakSet objectadd(object)Adds an Object to a WeakSetdelete(object)Removes a WeakSet objecthas(object)Returns true if an object exists in a WeakSetWeakSetdoes not have:A size propertyA spread operator (...)A clear() methodAny logic methods (union, difference, intersection)Any iteration methods (forEach, keys, values, entries)The above is by design: Objects may disappear in garbage collection,\nit makes no sense to iterate over or count them.Learn More:JavaScript SetsJavaScript Set MethodsJavaScript Set LogicJavaScript Set ReferenceJavaScript MapsBrowser SupportWeakSetis anES6  feature.ES6 is fully supported in all modern browsers since June 2017:Chrome51Edge15Firefox54Safari10Opera38May 2016Apr 2017Jun 2017Sep 2016Jun 2016\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\n// Create a WeakSet\nlet mySet = new WeakSet();\n// Create an Object\nlet myObj = {fname:\"John\", lname:\"Doe\"};\n// Add the Object\nmySet.add(myObj);\n// Do I have myObj in the mySet?\nlet answer = mySet.has(myObj);\n\n---\n\n// Create a WeakSet\nlet mySet = new WeakSet();\n// Create an Object\nlet myObj = {fname:\"John\", lname:\"Doe\"};\n// Add the Object\nmySet.add(myObj);\n// Delete the Object\nmySet.delete(myObj);\n// Do I have myObj in the mySet?\nlet answer = mySet.has(myObj);\n\n---\n\n// Create a WeakSet\nlet mySet = new WeakSet();\n// Create an Object\nlet myObj = {fname:\"John\", lname:\"Doe\"};\n// Add the Object\nmySet.add(myObj);\n// Remove the Object from memory\nmyObj = null;\n// Now myObj in mySet will be garbage collected\n\n---\n\nlet text = \"\";\n// Create a WeakSet to track persons\nconst persons = new WeakSet();\n// Visitor Objects\nconst John = {name:\"John\", age:40};\nconst Paul = {name:\"Paul\", age:41};\nconst Ringo = {name:\"Ringo\", age:42};\nconst George = {name:\"George\", age:43};\n// Track visits\ntrack(Paul);\ntrack(Ringo);\ntrack(Paul);\n// Function to track visitors\nfunction track(visitor) {\nif (persons.has(visitor)) {\ntext += visitor.name + \" is visiting again.<br>\";\n} else {\npersons.add(visitor);\ntext += visitor.name + \", age\" + visitor.age +\", is visiting for the first time<br>\";\n}\n}\n\n---\n\nJohn = null;\n// The entry for John is now removed from the WeakMap (persons)\n```\n\n## Tutorials\n\nSets have only one property:\n\nJavaScript Sets\n\nJavaScript Set Methods\n\nJavaScript Set Logic\n\nJavaScript Weak Sets\n\nJavaScript Maps\n\n## Tutorials\n\nYou create a JavaScript Map by:\n\nYou can add elements to a Map with theset()method:\n\nTheset()method can also be used to change existing Map values:\n\nTheget()method gets the value of a key in a Map:\n\ninstanceofMap returns true:\n\nMapis anES6  feature.\n\nES6 is fully supported in all modern browsers since June 2017:\n\n### Code Examples\n\n```\n// Create an empty Map\nconst fruits = new Map();\n// Set Map Values\nfruits.set(\"apples\", 500);\nfruits.set(\"bananas\", 300);\nfruits.set(\"oranges\", 200);\n\n---\n\n// Create a Map\nconst fruits = new Map([\n[\"apples\", 500],\n[\"bananas\", 300],\n[\"oranges\", 200]\n]);\n\n---\n\nfruits.set(\"mangos\", 100);\n\n---\n\nfruits.set(\"apples\", 200);\n\n---\n\nfruits.get(\"apples\");\u00a0\u00a0\u00a0\u00a0// Returns 500\n\n---\n\n// Returns object:\ntypeof fruits;\n\n---\n\n// Returns true:\nfruits instanceof Map;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

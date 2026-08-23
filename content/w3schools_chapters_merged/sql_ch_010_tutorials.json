@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 10,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSQL operators are keywords and symbols used to perform operations with data values.\n\nSQL operators are used in SQL statements likeSELECT,WHERE,LIKE, etc.\n\nSQL operators is categorized into the following types:\n\n## Tutorials\n\nTheCREATE DATABASEstatement is used to create a new SQL database.\n\nThe following SQL statement creates a database called \"testDB\":\n\nOnce a database is created, you can check it in the list of databases with the following SQL command:\n\n### Code Examples\n\n```\nCREATE DATABASE\ndatabase_name\n;\n\n---\n\nCREATE DATABASE testDB;\n\n---\n\nSELECT name FROM sys.databases;\n\n---\n\nSHOW DATABASES;\n```\n\n## Tutorials\n\nTheDROP DATABASEstatement is used to permanently delete an existing SQL database.\n\nThe following SQL statement drops an existing database named \"testDB\":\n\nTip:Once a database is dropped, you can check that it is removed from the list of\ndatabases with:SHOW DATABASES;(MySQL)\norSELECT name FROM sys.databases;(SQL Server).\n\n### Code Examples\n\n```\nDROP DATABASE\ndatabasename\n;\n\n---\n\nDROP DATABASE testDB;\n```\n\n## Tutorials\n\nTheBACKUP DATABASEstatement is used in SQL Server to create a full backup of an existing SQL database.\n\nThe following SQL creates a full backup of the existing database \"testDB\" \nto the D drive:\n\nA differential backup only captures the data that has changed since the last full backup.\n\nA differential backup requires at least one prior full backup!\n\nThe following SQL creates a differential backup of the database \"testDB\":\n\n### Code Examples\n\n```\nBACKUP DATABASE\ndatabasename\nTO DISK = '\nfilepath\n';\n\n---\n\nBACKUP DATABASE testDB\nTO DISK = 'D:\\backups\\testDB.bak';\n\n---\n\nBACKUP DATABASE\ndatabasename\nTO DISK = '\nfilepath\n'\nWITH \n  DIFFERENTIAL;\n\n---\n\nBACKUP DATABASE testDB\nTO DISK = 'D:\\backups\\testDB.bak'\nWITH \n  DIFFERENTIAL;\n```\n\n## Tutorials\n\nTheCREATE TABLEstatement is used to create a new table in a database.\n\nThetable_nameparameter specifies the name of the new table.\n\nThecolumn1,column2, ... parameters specify the names of the columns \nwithin the table.\n\nThedatatypeparameter specifies the data type of each column (e.g. varchar, int, date, etc.).\n\nTheconstraintparameter is optional, and specifies rules for data \nintegrity (e.g. primary key, not null, etc.).\n\nTip:Learn more about constraints in ourSQL Constraintschapter.\n\nTip:For an overview of the available data types, \ngo to our completeData Types Reference.\n\nThe following example creates a table named \"Persons\" with five columns:\n\nThe empty \"Persons\" table will now look like this:\n\nTip:The empty \"Persons\" table can now be filled with data, with the \nSQLINSERT INTOstatement.\n\nTheCREATE TABLEstatement can also be used \nto create a new table that copies some/all data from an existing table.\n\nIf you create a new table from an existing table, the new table will be \nfilled with the values from the existing table.\n\nThe following SQL creates a new table called \"GermanCustomers\" (which is \na copy of the \"Customers\" table):\n\n### Code Examples\n\n```\nCREATE TABLE\ntable_name\n(\ncolumn1 datatype constraint\n,\ncolumn2 datatype constraint\n,\ncolumn3 datatype constraint\n,\n....\n);\n\n---\n\nCREATE TABLE Persons\n(\nPersonID int PRIMARY KEY,\nLastName varchar(255) NOT NULL,\nFirstName varchar(255),\nAddress varchar(255),\nCity varchar(255)\n);\n\n---\n\nCREATE TABLE\nnew_table\nAS\nSELECT\ncolumn1, column2,...\nFROM\nexisting_table\nWHERE ....;\n\n---\n\nCREATE TABLE \n  GermanCustomers AS\nSELECT * FROM Customers\nWHERE Country = 'Germany';\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_10",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_10",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

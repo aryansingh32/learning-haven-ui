@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 137,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "JavaScript 2026 added two keywords to automatically manage and dispose resources\n(like file handles or database connections) when they go out of scope,\nreducing the need for explicit try...finally blocks.\n\nTheusingkeyword is an addition to JavaScript 2026.\nIt provides a mechanism for managing resources that require explicit disposal.\n\nItdeclares a block-scoped variable, similar toconst, but with the difference that\nit guarantees synchronous disposal of the used resource when the variable goes out of scope.\n\nTheusingkeyword simplifies resource management by automatically\nhandling the cleanup process, reducing the risk of resource leaks and improving code readability\ncompared to manualtry...finallyblocks for disposal.\n\nusingis already supported in many browsers:\n\nInspired by other languages, JavaScript 2026 introducesusingblocks for automatic cleanup\nof resources like file handles, database connections, or network streams.\n\nThis is especially beneficial for asynchronous operations:\n\nawait usingis already supported in many browsers:\n\n### Code Snippets\n\n```\nclass MyResource {\nconstructor(name) {\nthis.name = name;\nmyDisplay(`Resource ${this.name} acquired.`);\n}\n[Symbol.dispose]() {\nmyDisplay(`Resource ${this.name} disposed.`);\n}\n}\nfunction manageResource() {\nusing resource = new MyResource(\"Database Connection\");\n// Use the resource here\nmyDisplay(`Using resource: ${resource.name}`);\n}\n\n---\n\nasync function processFile() {\nusing fileHandle = await openFile('data.txt');\n// Work with fileHandle here\n} // fileHandle is automatically closed here\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_136",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

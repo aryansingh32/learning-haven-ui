@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 285,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "AJAX can be used for interactive communication with a database.\n\nThe following example will demonstrate how a web page can fetch \ninformation from a database with AJAX:\n\nWhen a user selects a customer in the dropdown list above, a function calledshowCustomer()is executed. The \nfunction is triggered by theonchangeevent:\n\nTheshowCustomer()function does the following:\n\nThe page on the server called by the JavaScript above is a PHP file called \"getcustomer.php\".\n\nThe source code in \"getcustomer.php\" runs a query against a database, and returns the result in an HTML \ntable:\n\n### Code Snippets\n\n```\nfunction showCustomer(str) {\nif (str == \"\") {\ndocument.getElementById(\"txtHint\").innerHTML = \"\";\nreturn;\n}\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\ndocument.getElementById(\"txtHint\").innerHTML = this.responseText;\n}\nxhttp.open(\"GET\", \"getcustomer.php?q=\"+str);\nxhttp.send();\n}\n\n---\n\n<?php\n$mysqli = new mysqli(\"\nservername\n\", \"\nusername\n\", \n  \"\npassword\n\", \"\ndbname\n\");\nif($mysqli->connect_error) {\nexit('Could not connect');\n}\n$sql = \"SELECT customerid, companyname, \n  contactname, address, city, postalcode, country\nFROM customers WHERE \n  customerid = ?\";\n$stmt = $mysqli->prepare($sql);\n$stmt->bind_param(\"s\", $_GET['q']);\n$stmt->execute();\n$stmt->store_result();\n$stmt->bind_result($cid, \n  $cname, $name, $adr, $city, $pcode, $country);\n$stmt->fetch();\n$stmt->close();\necho \"<table>\";\necho \"<tr>\";\necho \"<th>CustomerID</th>\";\necho \n  \"<td>\" . $cid . \"</td>\";\necho \"<th>CompanyName</th>\";\necho \"<td>\" . $cname \n  . \"</td>\";\necho \"<th>ContactName</th>\";\necho \"<td>\" . $name . \"</td>\";\necho \"<th>Address</th>\";\necho \"<td>\" . \n  $adr . \"</td>\";\necho \"<th>City</th>\";\necho \"<td>\" . $city . \"</td>\";\necho \"<th>PostalCode</th>\";\necho \"<td>\" . \n  $pcode . \"</td>\";\necho \"<th>Country</th>\";\necho \"<td>\" . $country . \n  \"</td>\";\necho \"</tr>\";\necho \"</table>\";\n?>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_284",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

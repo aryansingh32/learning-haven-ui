@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 183,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This is a JSON string:\n\nInside the JSON string there is a JSON object literal:\n\nA JSON object is written betweencurly braces { }.\n\nAn object contains zero or moreproperties.\n\nProperties comes inkey/valuepairs separated bycommas.\n\nkey namesare strings enclosed indouble quotes.\n\nKeys and values areseparated by a colon.\n\nValues must be a valid JSON data type. JSON supports six value types:\n\nThis is a JSON string:\n\nInside the JSON string there is a JSON array literal:\n\nA JSON array is writtenbetween square brackets [ ].\n\nAn array containszero or more values.\n\nValues areseparated by commas.\n\nValues can be any of the six JSON data types:\n\nJSON has a small, strict syntax.\n\nThe following JavaScript features are not valid JSON:\n\nEvery property name must be a string.\n\nProperty names must be enclosed in double quotes.\n\nJSON strings must use double quotes.\n\nWhitespace is ignored outside strings.\n\nYou can use spaces, tabs, and line breaks to make JSON easier to read.\n\nJSON does not allow a comma after the last property or array value.\n\nJSON does not support comments.\n\n### Code Snippets\n\n```\n'{\"name\":\"John\", \"age\":30, \"car\":null}'\n\n---\n\n{\"name\":\"John\", \"age\":30, \"car\":null}\n\n---\n\n'[\"Ford\", \"BMW\", \"Fiat\"]'\n\n---\n\n[\"Ford\", \"BMW\", \"Fiat\"]\n\n---\n\n[\n\"Apple\",\n\"Banana\",\n\"Orange\"\n]\n\n---\n\n[1, 2, 3, 4 ,5]\n\n---\n\n{\n\"name\": \"John\"\n}\n\n---\n\n{\nname: \"John\"\n}\n\n---\n\n{\n\"city\": \"London\"\n}\n\n---\n\n{\n\"city\": 'London'\n}\n\n---\n\n{\"name\":\"John\", \"age\":30}\n\n---\n\n{\n\"name\": \"John\",\n\"age\": 30\n}\n\n---\n\n{\n\"name\": \"John\",\n\"age\": 30,\n}\n\n---\n\n{\n\"name\": \"John\",\n\"age\": 30\n}\n\n---\n\n{\n// Customer name\n\"name\": \"John\"\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_182",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

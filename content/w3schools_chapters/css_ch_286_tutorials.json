@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 286,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "CSS syntax explained\n\nCSS selectors explained\n\nCSS how to explained\n\nCSS comments explained\n\nCSS colors explained\n\nCSS background properties explained\n\nCSS border properties explained\n\nMargin properties explained\n\nCSS padding properties explained\n\nCSS height/width properties explained\n\nCSS box model explained\n\nCSS outline properties explained\n\nCSS text properties explained\n\nFont properties explained\n\nCSS icons explained\n\nCSS link properties explained\n\nCSS list properties explained\n\nCSS table properties explained\n\nCSS display properties explained\n\nCSS positioning properties explained\n\nCSS overflow properties explained\n\nCSS float properties explained\n\nCSS inline-block explained\n\nCSS align properties explained\n\nCSS combinators explained\n\nCSS pseudo-classes explained\n\nCSS pseudo-elements explained\n\nCSS image opacity explained\n\nCSS navigation bars explained\n\nCSS dropdowns explained\n\nCSS image gallery explained\n\nCSS image sprites explained\n\nCSS attribute selectors explained\n\nCSS forms explained\n\nCSS counters explained\n\nCSS website layout explained\n\nCSS rounded corners explained\n\nCSS border images explained\n\nCSS backgrounds explained\n\nCSS colors explained\n\nCSS color keywords explained\n\nCSS gradients explained\n\nCSS shadow effects explained\n\nCSS text explained\n\nCSS custom fonts explained\n\nCSS 2D transforms explained\n\nCSS 3D transforms explained\n\nCSS transitions explained\n\nCSS animations explained\n\nCSS tooltips explained\n\nCSS styling images explained\n\nCSS image modal explained\n\nCSS image centering explained\n\nCSS image filters explained\n\nCSS image shapes explained\n\nCSS object-fit explained\n\nCSS object-position explained\n\nCSS masking explained\n\nCSS buttons explained\n\nCSS pagination explained\n\nCSS multiple columns explained\n\nCSS user interface explained\n\nCSS variables explained\n\nCSS @property explained\n\nCSS box sizing explained\n\nCSS media queries explained\n\nCSS media queries examples explained\n\nCSS flexbox explained\n\nCSS flex items explained\n\nCSS flexbox responsive explained\n\nCSS grid intro explained\n\nCSS grid container explained\n\nCSS grid tracks explained\n\nCSS grid gaps explained\n\nCSS grid align explained\n\nCSS grid item explained\n\nCSS grid naming items explained\n\nCSS grid align items explained\n\nCSS grid order items explained\n\nCSS 12-column grid layout explained\n\nCSS @supports rule explained\n\nCSS responsive webdesign explained\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_285",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

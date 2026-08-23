@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 208,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A Binary Search Tree (BST) is a type ofBinary Tree data structure, where the following properties must be true for any node \"X\" in the tree:\n\nThese properties makes it faster to search, add and delete values than a regular binary tree.\n\nTo make this as easy to understand and implement as possible, let's also assume that all values in a Binary Search Tree are unique.\n\nThesizeof a tree is the number of nodes in it(n).\n\nAsubtreestarts with one of the nodes in the tree as a local root, and consists of that node and all its descendants.\n\nThedescendantsof a node are all the child nodes of that node, and all their child nodes, and so on. Just start with a node, and the descendants will be all nodes that are connected below that node.\n\nThenode's heightis the maximum number of edges between that node and a leaf node.\n\nAnode's in-order successoris the node that comes after it if we were to do in-order traversal. In-order traversal of the BST above would result in node 13 coming before node 14, and so the successor of node 13 is node 14.\n\nJust to confirm that we actually have a Binary Search Tree data structure in front of us, we can check if the properties at the top of this page are true. So for every node in the figure above, check if all the values to the left of the node are lower, and that all values to the right are higher.\n\nAnother way to check if a Binary Tree is BST, is to do an in-order traversal (like we did on the previous page) and check if the resulting list of values are in an increasing order.\n\nThe code below is an implementation of the Binary Search Tree in the figure above, with traversal.\n\nAs we can see by running the code example above, the in-order traversal produces a list of numbers in an increasing (ascending) order, which means that this Binary Tree is a Binary Search Tree.\n\nSearching for a value in a BST is very similar to how we found a value usingBinary Searchon an array.\n\nFor Binary Search to work, the array must be sorted already, and searching for a value in an array can then be done really fast.\n\nSimilarly, searching for a value in a BST can also be done really fast because of how the nodes are placed.\n\nThe algorithm can be implemented like this:\n\nThe time complexity for searching a BST for a value isO(h), wherehis the height of the tree.\n\nFor a BST with most nodes on the right side for example, the height of the tree becomes larger than it needs to be, and the worst case search will take longer. Such trees are called unbalanced.\n\nBoth Binary Search Trees above have the same nodes, and in-order traversal of both trees gives us the same result but the height is very different. It takes longer time to search the unbalanced tree above because it is higher.\n\nWe will use the next page to describe a type of Binary Tree called AVL Trees. AVL trees are self-balancing, which means that the height of the tree is kept to a minimum so that operations like search, insertion and deletion take less time.\n\nInserting a node in a BST is similar to searching for a value.\n\nInserting nodes as described above means that an inserted node will always become a new leaf node.\n\nAll nodes in the BST are unique, so in case we find the same value as the one we want to insert, we do nothing.\n\nThis is how node insertion in BST can be implemented:\n\nThe next section will explain how we can delete a node in a BST, but to do that we need a function that finds the lowest value in a node's subtree.\n\nThis is how a function for finding the lowest value in the subtree of a BST node looks like:\n\nWe will use thisminValueNode()function in the section below, to find a node's in-order successor, and use that to delete a node.\n\nTo delete a node, our function must first search the BST to find it.\n\nAfter the node is found there are three different cases where deleting a node must be done differently.\n\nIn step 3 above, the successor we find will always be a leaf node, and because it is the node that comes right after the node we want to delete, we can swap values with it and delete it.\n\nThis is how a BST can be implemented with functionality for deleting a node:\n\nLine 1: Thenodeargument here makes it possible for the function to call itself recursively on smaller and smaller subtrees in the search for the node with thedatawe want to delete.\n\nLine 2-8: This is searching for the node with correctdatathat we want to delete.\n\nLine 9-22: The node we want to delete has been found. There are three such cases:\n\nLine 24:nodeis returned to maintain the recursive functionality.\n\nBinary Search Trees take the best from two other data structures: Arrays and Linked Lists.\n\nSearching a BST is just as fast asBinary Searchon an array, with the same time complexityO(log n).\n\nAnd deleting and inserting new values can be done without shifting elements in memory, just like with Linked Lists.\n\nOn a Binary Search Tree, operations like inserting a new node, deleting a node, or searching for a node are actuallyO(h). That means that the higher the tree is (h), the longer the operation will take.\n\nThe reason why we wrote that searching for a value isO(log n)in the table above is because that is true if the tree is \"balanced\", like in the image below.\n\nWe call this tree balanced because there are approximately the same number of nodes on the left and right side of the tree.\n\nThe exact way to tell that a Binary Tree is balanced is that the height of the left and right subtrees of any node only differs by one.\n   In the image above, the left subtree of the root node has heighth=2,\n   and the right subtree has heighth=3.\n\nFor a balanced BST, with a large number of nodes (bign),\n  we get heighth \u2248 \\log_2 n, and therefore the time complexity for searching,\n  deleting, or inserting a node can be written asO(h) = O(\\log n).\n\nBut, in case the BST is completely unbalanced, like in the image below, the height of the tree is approximately the same as the number of nodes,h \u2248 n, and we get time complexityO(h) = O(n)for searching, deleting, or inserting a node.\n\nSo, to optimize operations on a BST, the height must be minimized, and to do that the tree must be balanced.\n\nAnd keeping a Binary Search Tree balanced is exactly what AVL Trees do, which is the data structure explained on the next page.\n\n### Code Snippets\n\n```\nclass TreeNode:\ndef __init__(self, data):\nself.data = data\nself.left = None\nself.right = None\ndef inOrderTraversal(node):\nif node is None:\nreturn\ninOrderTraversal(node.left)\nprint(node.data, end=\", \")\ninOrderTraversal(node.right)\nroot = TreeNode(13)\nnode7 = TreeNode(7)\nnode15 = TreeNode(15)\nnode3 = TreeNode(3)\nnode8 = TreeNode(8)\nnode14 = TreeNode(14)\nnode19 = TreeNode(19)\nnode18 = TreeNode(18)\nroot.left = node7\nroot.right = node15\nnode7.left = node3\nnode7.right = node8\nnode15.left = node14\nnode15.right = node19\nnode19.left = node18\n# Traverse\ninOrderTraversal(root)\n\n---\n\ndef search(node, target):\nif node is None:\nreturn None\nelif node.data == target:\nreturn node\nelif target < node.data:\nreturn search(node.left, target)\nelse:\nreturn search(node.right, target)\n# Search for a value\nresult = search(root, 13)\nif result:\nprint(f\"Found the node with value: {result.data}\")\nelse:\nprint(\"Value not found in the BST.\")\n\n---\n\ndef insert(node, data):\nif node is None:\nreturn TreeNode(data)\nelse:\nif data < node.data:\nnode.left = insert(node.left, data)\nelif data > node.data:\nnode.right = insert(node.right, data)\nreturn node\n# Inserting new value into the BST\ninsert(root, 10)\n\n---\n\ndef minValueNode(node):\ncurrent = node\nwhile current.left is not None:\ncurrent = current.left\nreturn current\n# Find Lowest\nprint(\"\\nLowest value:\",minValueNode(root).data)\n\n---\n\ndef delete(node, data):\nif not node:\nreturn None\nif data < node.data:\nnode.left = delete(node.left, data)\nelif data > node.data:\nnode.right = delete(node.right, data)\nelse:\n# Node with only one child or no child\nif not node.left:\ntemp = node.right\nnode = None\nreturn temp\nelif not node.right:\ntemp = node.left\nnode = None\nreturn temp\n# Node with two children, get the in-order successor\nnode.data = minValueNode(node.right).data\nnode.right = delete(node.right, node.data)\nreturn node\n# Delete node 15\ndelete(root,15)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_207",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 47,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An arrow function uses the=>symbol.\n\nAn arrow function is always written as a function expression.\n\nThis arrow function does the same thing as a regular function expression.\n\nIf the function body contains only one statement:\n\nYou can remove the wordfunction, thecurly bracketsand thereturnkeyword.\n\nIf a function has only one parameter, you can omit the parentheses:\n\nIf the function has only one statement that returns a value:\n\nYou can remove thebracketsand thereturnkeyword:\n\nIf you have parameters, you pass them inside the parentheses:\n\nIf you have only one parameter, you can skip the parentheses as well:\n\nIf there are no parameters, parentheses are required.\n\nYou can only omit thereturnkeyword and thecurly bracketsif the function is a single\nstatement. Because of this, it might be a good habit to always keep them:\n\nArrow functions are always expressions and must be assigned to a variable.\n\nThey cannot be used before they are defined.\n\nArrow functions do not have their ownthisvalue.\n\nThey inheritthisfrom the surrounding code.\n\nUsing an arrow function as a method often gives unexpected results.\n\nIn this case,thisdoes not refer to thepersonobject.\n\n### Code Snippets\n\n```\nconst multiply = (a, b) => a * b;\n\n---\n\nconst add = (a, b) => {\nreturn a + b;\n};\n\n---\n\nconst multiply = function(a, b) {return a * b}\n\n---\n\nconst multiply = (a, b) => a * b;\n\n---\n\nconst hello = () => \"Hello World!\";\n\n---\n\nconst hello = function() {return \"Hello World!\";}\n\n---\n\nconst square = (x) => x * x;\n\n---\n\nconst square = x => x * x;\n\n---\n\nconst hello = (val) => \"Hello \" + val;\n\n---\n\nconst hello = val => \"Hello \" + val;\n\n---\n\nconst hello = () => \"Hello World!\";\n\n---\n\nconst hello = (val) => \"Hello \" + val;\n\n---\n\nconst hello = val => \"Hello \" + val;\n\n---\n\nconst hello = () => \"Hello World!\";\n\n---\n\n// This will return undefined\nconst myFunction = (x, y) =>  { x * y };\n// This will return undefined\nconst myFunction = (x, y) =>  return x * y;\n// This will return the expected result\nconst myFunction = (x, y) => { return x * y };\n\n---\n\nhello(); // Error\nconst hello = () => \"Hello\";\n\n---\n\nconst person = {\nname: \"John\",\ngreet: function() {\nreturn this.name;\n}\n};\n\n---\n\nconst person = {\nname: \"John\",\ngreet: () => {\nreturn this.name;\n}\n};\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

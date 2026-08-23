@@ -23,6 +23,11 @@ export interface BuildChallenge {
   price_inr: number;
   original_price_inr: number | null;
   testimonials_config?: { auto_slide: boolean; items: any[] } | null;
+  // Dual-mode fields
+  available_modes: ('traditional' | 'vibe')[];
+  default_mode: 'traditional' | 'vibe';
+  reference_demo_url: string | null;
+  product_contract: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -45,9 +50,64 @@ export interface CreateBuildChallengeInput {
   original_price_inr?: number;
   duration_days?: number;
   testimonials_config?: { auto_slide: boolean; items: any[] };
+  // Dual-mode fields
+  available_modes?: ('traditional' | 'vibe')[];
+  default_mode?: 'traditional' | 'vibe';
+  reference_demo_url?: string;
+  product_contract?: string;
 }
 
 export interface UpdateBuildChallengeInput extends Partial<CreateBuildChallengeInput> {}
+
+// ---------- Acceptance Contract (Vibe mode) ----------
+export interface JourneyStep {
+  action:
+    | 'goto'
+    | 'click'
+    | 'fill'
+    | 'expect_visible'
+    | 'expect_hidden'
+    | 'reload'
+    | 'wait'
+    | 'screenshot';
+  /** URL path for goto, CSS/role selector/text for others */
+  target?: string;
+  /** Value for fill actions */
+  value?: string;
+  /** Optional step label */
+  label?: string;
+  /** If true, this step is not shown to learners (hidden grading check) */
+  admin_only?: boolean;
+}
+
+export interface Journey {
+  id: string;
+  label: string;
+  /** If false, the journey appears in the learner-facing spec */
+  public: boolean;
+  steps: JourneyStep[];
+}
+
+export interface ApiCheck {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  path: string;
+  expect_status?: number;
+  expect_json_contains?: Record<string, unknown>;
+}
+
+export interface VisualCheck {
+  id: string;
+  viewport?: string;
+  assert: 'no_horizontal_scroll' | 'no_console_errors' | 'screenshot_match' | string;
+  /** If true, uses AI vision model for evaluation */
+  ai_judge?: boolean;
+}
+
+export interface AcceptanceContract {
+  journeys?: Journey[];
+  api_checks?: ApiCheck[];
+  visual_checks?: VisualCheck[];
+}
 
 // ---------- Build Stage ----------
 export interface BuildStage {
@@ -62,6 +122,7 @@ export interface BuildStage {
   instructions: string | null;
   code_example: string | null;
   hints: string[];
+  // Traditional mode
   test_command: string | null;
   docker_test_image: string | null;
   timeout_seconds: number;
@@ -69,6 +130,10 @@ export interface BuildStage {
   success_criteria: Record<string, unknown>;
   /** Template variable config for randomized test inputs */
   randomization_config: Record<string, unknown> | null;
+  // Vibe mode
+  verification_type: 'docker_test' | 'contract';
+  acceptance_contract: AcceptanceContract;
+  // Common
   estimated_minutes: number | null;
   docs_url: string | null;
   concepts_content: string | null;
@@ -88,12 +153,17 @@ export interface CreateBuildStageInput {
   instructions?: string;
   code_example?: string;
   hints?: string[];
+  // Traditional
   test_command?: string;
   docker_test_image?: string | null;
   timeout_seconds?: number;
   expected_exit_code?: number;
   success_criteria?: Record<string, unknown>;
   randomization_config?: Record<string, unknown>;
+  // Vibe
+  verification_type?: 'docker_test' | 'contract';
+  acceptance_contract?: AcceptanceContract;
+  // Common
   estimated_minutes?: number;
   docs_url?: string;
   concepts_content?: string;
@@ -127,6 +197,7 @@ export interface BuildEnrollment {
   user_id: string;
   program_id: string;
   language: string;
+  build_mode: 'traditional' | 'vibe';
   current_stage: number;
   completed_stages: number[];
   total_stages: number;
@@ -155,8 +226,43 @@ export interface BuildStageResult {
   execution_time_ms: number | null;
   attempt_number: number;
   structured_feedback: Record<string, unknown>;
+  submission_source: 'github_push' | 'live_url' | 'zip_upload' | 'sandbox_build' | null;
+  submission_ref: string | null;
+  is_manual_override: boolean;
+  overridden_by_admin_id: string | null;
   created_at: string;
   completed_at: string | null;
+}
+
+// ---------- Vibe Submission ----------
+export interface VibeSubmissionInput {
+  stageId: string;
+  /** The GitHub repo URL or live deployment URL */
+  submissionRef: string;
+  submissionSource: 'github_push' | 'live_url';
+}
+
+export interface GateResult {
+  journeyId: string;
+  label: string;
+  passed: boolean;
+  steps_passed: number;
+  steps_total: number;
+  failure_step?: string;
+  failure_reason?: string;
+  screenshot_url?: string | null;
+}
+
+export interface VibeVerificationResult {
+  verdict: 'passed' | 'partial' | 'failed';
+  gates_passed: number;
+  gates_total: number;
+  score_pct: number;
+  gate_results: GateResult[];
+  logs_tail: string;
+  duration_ms: number;
+  submission_source: string;
+  submission_ref: string;
 }
 
 // ---------- API Responses ----------

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 16,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe<div>element is used as a container for other HTML elements.\n\nThe<div>element is by default a \nblock element, meaning that it takes all available width, and comes with line \nbreaks before and after.\n\nThe<div>element has no required attributes, butstyle,classandidare common.\n\nThe<div>element is often used to group sections of a web page together.\n\nIf you have a<div>element that is \nnot 100% wide, and you want to center-align it, set the CSSmarginproperty toauto.\n\nYou can have many<div>containers on the same page.\n\nWhen building web pages, you often want to have two or more<div>elements side by side, like this:\n\nThere are different methods for aligning elements side by side, all include some CSS styling.\nWe will look at the most common methods:\n\nThe CSSfloatproperty was not originally meant to align<div>elements side-by-side,\nbut has been used for this purpose for many years.\n\nThe CSSfloatproperty is used for positioning and formatting content \nand allows elements to be positioned horizontally, rather than vertically.\n\nLearn more about float in ourCSS float tutorial.\n\nIf you change the<div>element'sdisplayproperty fromblocktoinline-block,\nthe<div>elements will no longer add a line break before and after,\nand will be displayed side by side instead of on top of each other.\n\nThe CSS Flexbox Layout Module was introduced to make it easier to design flexible responsive layout\nstructure without using float or positioning.\n\nTo make the CSS flex method work, surround the<div>elements with another<div>element and give\nit the status as a flex container.\n\nLearn more about flex in ourCSS flexbox tutorial.\n\nThe CSS Grid Layout Module offers a grid-based layout system,\nwith rows and columns,\nmaking it easier to design web pages without having to use floats and positioning.\n\nSounds almost the same as flex, but has the ability to define more than one row and position each row \nindividually.\n\nThe CSS grid method requires that you surround the<div>elements with another<div>element and give\nthe status as a grid container, and you must specify the width of each column.\n\nLearn more about grid in ourCSS grid tutorial.\n\n### Code Examples\n\n```\nLorem Ipsum <div>I am a div</div>\n  dolor sit amet.\n\n---\n\n<div>\n<h2>London</h2>\n<p>London is the capital city of England.</p>\n<p>London has over 9 million inhabitants.</p>\n</div>\n\n---\n\n<style>\ndiv {\nwidth:300px;\nmargin:auto;\n}\n</style>\n\n---\n\n<div>\n<h2>London</h2>\n<p>London is the capital city of England.</p>\n<p>London has over 9 million inhabitants.</p>\n</div>\n<div>\n<h2>Oslo</h2>\n<p>Oslo is the capital city of \n  Norway.</p>\n<p>Oslo has over 700,000 inhabitants.</p>\n</div>\n<div>\n<h2>Rome</h2>\n<p>Rome is the capital city of \n  Italy.</p>\n<p>Rome has over 4 million inhabitants.</p>\n</div>\n\n---\n\n<style>\n.mycontainer {\nwidth:100%;\noverflow:auto;\n}\n.mycontainer div {\nwidth:33%;\nfloat:left;\n}\n</style>\n\n---\n\n<style>\ndiv {\nwidth: 30%;\ndisplay: \n  inline-block;\n}\n</style>\n\n---\n\n<style>\n.mycontainer {\ndisplay: flex;\n}\n.mycontainer \n  > div {\nwidth:33%;\n}\n</style>\n\n---\n\n<style>\n.grid-container {\ndisplay: grid;\ngrid-template-columns: 33% 33% 33%;\n}\n</style>\n```\n\n## Tutorials\n\nTest what you have learned about HTML div element.\n\n## Tutorials\n\nTest your understanding of the HTML div element by completing this coding challenge.\n\n## Tutorials\n\nThe HTMLclassattribute is \nused to specify a class for an HTML element.\n\nMultiple HTML elements can share the same class.\n\nTheclassattribute is often used to point \nto a class name in a style sheet. It can also be used by JavaScript to access and \nmanipulate elements with the specific class name.\n\nIn the following example we have three<div>elements \nwith aclassattribute with the value of \n\"city\". All of the three<div>elements will be styled equally according to the.citystyle definition in the head section:\n\nIn the following example we have two<span>elements \nwith aclassattribute with the value of \n\"note\". Both<span>elements will be styled equally according to the.notestyle definition in the head section:\n\nTo create a class; write a period (.) character, followed by a \nclass name. \nThen, define the CSS properties within curly braces {}:\n\nHTML elements can belong to more than one class.\n\nTo define multiple classes, separate the class names with a space, e.g. <div \nclass=\"city main\">. The element will be styled according to all the \nclasses specified.\n\nIn the following example, the first<h2>element belongs to both thecityclass and also to themainclass, \nand will get the CSS styles from both of the classes:\n\nDifferent HTML elements can point to the same class name.\n\nIn the following example, both<h2>and<p>point to the \"city\" class \nand will share the same style:\n\nThe class name can also be used by JavaScript to perform certain tasks for \nspecific elements.\n\nJavaScript can access elements with a specific class name with thegetElementsByClassName()method:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n<style>\n.city {\nbackground-color: tomato;\ncolor: white;\nborder: 2px solid black;\nmargin: 20px;\npadding: 20px;\n}\n</style>\n</head>\n<body>\n<div class=\"city\">\n<h2>London</h2>\n<p>London is the capital of England.</p>\n</div>\n<div class=\"city\">\n<h2>Paris</h2>\n<p>Paris is the capital of France.</p>\n</div>\n<div class=\"city\">\n<h2>Tokyo</h2>\n<p>Tokyo is the capital of Japan.</p>\n</div>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<style>\n.note {\nfont-size: 120%;\ncolor: red;\n}\n</style>\n</head>\n<body>\n<h1>My <span class=\"note\">Important</span> Heading</h1>\n<p>This is some <span class=\"note\">important</span> text.</p>\n</body>\n</html>\n\n---\n\n<!DOCTYPE html>\n<html>\n<head>\n<style>\n.city {\nbackground-color: tomato;\ncolor: white;\npadding: 10px;\n}\n</style>\n</head>\n<body>\n<h2 class=\"city\">London</h2>\n<p>London is the capital of England.</p>\n<h2 class=\"city\">Paris</h2>\n<p>Paris is the capital of France.</p>\n<h2 class=\"city\">Tokyo</h2>\n<p>Tokyo is the capital of Japan.</p>\n</body>\n</html>\n\n---\n\n<h2 \n  class=\"city main\">London</h2>\n<h2 class=\"city\">Paris</h2>\n<h2 \n  class=\"city\">Tokyo</h2>\n\n---\n\n<h2 class=\"city\">Paris</h2>\n<p \n  class=\"city\">Paris is the capital of France</p>\n\n---\n\n<script>\nfunction myFunction() {\nvar x =\ndocument.getElementsByClassName(\"city\")\n;\nfor (var i = 0; i < x.length; \n  i++) {\nx[i].style.display = \"none\";\n}\n}\n</script>\n```\n\n## Tutorials\n\nTest what you have learned about HTML classes.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_16",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_16",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

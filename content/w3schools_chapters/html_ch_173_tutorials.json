@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 173,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Web browsers request pages from web servers by using a URL.\n\nThe URL is the address of a web page, like:https://www.w3schools.com.\n\nURL encoding converts characters into a format that can be transmitted over the Internet.\n\nURLs can only be sent over the Internet using theASCII character-set.\n\nSince URLs often contain characters outside the ASCII set, the URL has to be \nconverted into a valid ASCII format.\n\nURL encoding replaces unsafe ASCII characters with a \"%\" followed by two \nhexadecimal digits.\n\nURLs cannot contain spaces. URL encoding normally replaces a space with a \nplus (+) sign or with %20.\n\nIf you click the \"Submit\" button below, the browser will URL encode the input \nbefore it is sent to the server. A page at the server will display the received \ninput.\n\nTry some other input and click Submit again.\n\nIn JavaScript, PHP, and ASP there are functions that can be used to URL \nencode a string.\n\nPHP has the rawurlencode() function, and ASP has the Server.URLEncode() function.\n\nIn JavaScript you can use theencodeURIComponent()function.\n\nClick the \"URL Encode\" button to see how the JavaScript function encodes the \ntext.\n\nNote:The JavaScript function encodes space as %20.\n\nYour browser will encode input, according to \nthe character-set used in your page.\n\nThe default character-set in HTML5 is UTF-8.\n\nThe ASCII control characters%00-%1Fwere originally designed to \ncontrol hardware devices.\n\nControl characters have nothing to do inside a URL.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_172",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 7,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Git."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Understanding Tutorials and more in Git",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\n\n## Tutorials\n\n\n\n## Tutorials\n\n\n\n## Tutorials\n\nThegit revertcommand undoes a previous commit by creating a new commit that reverses the changes.\n\nThis keeps your commit history intact and is the safest way to undo changes in a shared repository.\n\nFirst, you need to find the commit you want to undo.\n\nUsegit log --onelineto see a summary of your commit history:\n\nOnce you've found the commit you want to undo, usegit revertto create a new commit that reverses the changes:\n\nAfter runninggit revert, review the changes to make sure everything is as expected:\n\nHere are some tips and best practices to keep in mind when using Git Revert:\n\nHere are some common issues you may encounter when using Git Revert:\n\n### Code Examples\n\n```\nExample\ngit log --oneline\n52418f7 (HEAD -> master) Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n\n---\n\nExample\ngit revert HEAD --no-edit\n[master e56ba1f] Revert \"Just a regular update, definitely no accidents here...\"\n Date: Thu Apr 22 10:50:13 2021 +0200\n 1 file changed, 0 insertions(+), 0 deletions(-)\n create mode 100644 img_hello_git.jpg\n\n---\n\nExample\ngit log --oneline\ne56ba1f (HEAD -> master) Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n```\n\n## Tutorials\n\nThegit resetcommand moves your current branch (HEAD) to a different commit.\n\nDepending on the option, it can also change which changes are staged or even delete changes from your working directory.\n\nUse it to undo commits, unstage files, or clean up your history.\n\nFirst, you need to find the commit you want to go back to.\n\nUsegit log --onelineto see a summary of your commit history:\n\nStep 2: Move the repository back to that step:\n\nAfter the previous chapter, we have a part in ourcommithistory we could go back to.\n\nLet's try and do that withreset.\n\nFirst thing, we need to find the point we want to return to.\n\nTo do that, we need to go through thelog.\n\nTo avoid the very longloglist, we are going to use the--onelineoption, \nwhich gives just one line percommitshowing:\n\nSo let's find the point we want toresetto:\n\nWe want to return to thecommit:9a9add8 (origin/master) Added .gitignore, \nthe last one before we started to mess with things.\n\ngit reset --soft <commit>moves HEAD to the specified commit, but keeps all your changes staged (in the index).\n\nThis is useful if you want to combine several commits into one, or just want to rewrite history but keep your work ready to commit.\n\nAll changes after9a9add8are now staged, ready for a new commit.\n\ngit reset --mixed <commit>(or justgit reset <commit>) moves HEAD to the specified commit and unstages any changes, but keeps them in your working directory.\n\nThis is the default option and is useful if you want to \"undo\" a commit but keep your changes for editing or recommitting.\n\nAll changes after9a9add8are now unstaged, but still in your files.\n\nAfter running Git Reset, review your changes to make sure everything is as expected.\n\nUse Git Reset with caution, as it can rewrite your commit history.\n\nMake sure to communicate with your team before making changes to the remote repository.\n\nIf you encounter issues with Git Reset, try usinggit statusto see the current state of your repository.\n\nBe careful when using Git Reset, as it can delete changes and rewrite your commit history.\n\nMake sure to use it only when necessary.\n\n### Code Examples\n\n```\nExample\ngit log --oneline\ne56ba1f (HEAD -> master) Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n\n---\n\nExample\ngit reset --soft 9a9add8\n\n---\n\nExample\ngit reset --mixed 9a9add8\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing the concepts from Tutorials in Git.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_7",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Git?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Git that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

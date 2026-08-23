@@ -1,0 +1,348 @@
+Video URL: https://www.youtube.com/watch?v=oxO1Z5L5S4c
+Video Title: Document Object Model in JavaScript | Sigma Web Development Course - Tutorial #66
+--------------------------------------------------
+
+00:00:00.000
+In today's video, we will see that in JavaScript,
+00:00:02.800
+what is the benefit of representing things in a tree-like structure through a bomb and document object model.
+00:00:08.800
+You guys like this video and write JavaScript cap in the comment section below.
+00:00:13.500
+Let's go to the computer screen.
+00:00:14.800
+Let's roll the intro.
+00:00:16.500
+Intro
+00:00:24.800
+So guys, I have come to my computer screen
+00:00:27.000
+and the first thing i am going to do is
+00:00:30.000
+i will make a folder
+00:00:31.000
+this thing is going to be constant in this course
+00:00:33.000
+that no matter how much anyone will say
+00:00:35.000
+that don't make a folder
+00:00:36.000
+but i will make a folder with the name of video 16
+00:00:38.000
+and click on open with code
+00:00:41.000
+and here i will put an index.html
+00:00:44.000
+and here i will put a boilerhtml and here I will put boilerplate code
+00:00:46.480
+and I will put my script and I am going to write code here
+00:00:52.160
+and I am going to tell you that the title in this is JavaScript DOM
+00:00:57.440
+now what is this DOM, DOM stands for Document Object Model
+00:01:00.960
+now what happens, suppose I have written it as javascript dom
+00:01:06.000
+now you guys see this
+00:01:08.000
+in this page, body will be there
+00:01:10.000
+the content inside the body is visible here
+00:01:12.000
+the title of this page will be
+00:01:14.000
+like this, look at this, sigma web development course
+00:01:16.000
+is the title of this course
+00:01:18.000
+sorry, of this page, so
+00:01:20.000
+you get title and
+00:01:22.000
+along with that, meta tags
+00:01:24.000
+along with that, body, you get all of this
+00:01:26.140
+now what i will do is i will run this
+00:01:29.140
+i will click here
+00:01:32.140
+and show you the content and as soon as i
+00:01:34.860
+write in script that document.title is equal to
+00:01:37.840
+document.title is equal to
+00:01:41.220
+harry is good i wrote it
+00:01:44.220
+so you will get harry is good in, so basically as soon as I reload it, the title will be this, which I have given, but as soon as this javascript if I write here console.log document.title
+00:02:08.000
+then you will get to see the title and if I write here document.body
+00:02:12.000
+then you will get to see the body of the page, so if I
+00:02:16.000
+reload it and show you by inspecting it then you will get to see the body
+00:02:20.000
+now in this document.body also the things
+00:02:24.000
+you will get to see, the things inside this document.body
+00:02:26.000
+if I put div.container in body and div.box in it
+00:02:32.000
+and put this is a box, so you will get to see this thing here
+00:02:37.000
+so what is this, in a tree like structure
+00:02:40.000
+you get your entire html when you write document.body
+00:02:43.000
+and it is used to change any element
+00:02:46.500
+or if I want to change any text inside the element
+00:02:52.000
+so I can change that
+00:02:53.500
+so this is called document object model
+00:02:55.500
+I can do document.body
+00:02:57.000
+I can say that if I want to change the style of a particular element
+00:03:00.500
+so I will say document.body.style.background is equal to green
+00:03:04.000
+what will happen with this is make my document's color green
+00:03:08.000
+so if I write document.body.style.background color
+00:03:14.000
+now here the counter parts of CSS properties
+00:03:18.000
+background color will be written like this
+00:03:20.000
+background-color will not be written
+00:03:22.000
+and if I write green here
+00:03:24.000
+it will put inline css
+00:03:26.000
+so you can see inline css here
+00:03:29.000
+so with the help of inline css, the background color is given in green
+00:03:32.000
+so you can inject inline css
+00:03:35.000
+so this is our document object model
+00:03:38.000
+now there is a browser object model
+00:03:41.000
+now to know about dom and bomb
+00:03:44.000
+it will not give you a lot of power, but it is asked in the interview.
+00:03:47.000
+What is the document object model? Mapping is the entire document's inner object.
+00:03:52.000
+The object in which you get all the content of the page.
+00:03:55.000
+And what is the BOM? Browser object model.
+00:03:57.000
+Now if you want to work with someone other than the document, then the then browser provides you some additional objects, that is called BOM, like location.href
+00:04:06.000
+is provided to you, so that you can redirect
+00:04:09.000
+in another URL, which is your window object, if I
+00:04:12.000
+write here window, window, then a window
+00:04:15.000
+object is there, in which you have a document, and
+00:04:18.000
+if I write here window.document
+00:04:21.000
+window.document
+00:04:24.000
+then you get a document, if I write window.document so you get the document
+00:04:26.480
+if I write window.document.body
+00:04:28.480
+so you get the body
+00:04:30.480
+now window is a global object
+00:04:32.480
+and you don't need to write
+00:04:34.480
+window.document.body
+00:04:36.480
+you can write document.body
+00:04:38.480
+so window comes in object
+00:04:40.480
+you get dom, bomb and javascript core
+00:04:42.480
+this is a global object
+00:04:44.480
+without window. you can write a document without dot
+00:04:46.000
+so you can write that, now why we are
+00:04:49.000
+reading about all these things, let me tell you
+00:04:52.000
+we are reading about all these things so that we can
+00:04:55.000
+target elements with the help of JavaScript which we are going to see in the coming videos
+00:04:58.000
+so how we will target elements
+00:05:01.000
+like let's say i want this particular
+00:05:04.000
+element, this element on this page
+00:05:06.000
+to turn green, then I can target
+00:05:08.000
+this, one thing I want to tell you
+00:05:10.000
+that if you are on any website in browser
+00:05:12.000
+then you right click and as soon as
+00:05:14.000
+you click on inspect, then you see
+00:05:16.000
+I right clicked on this element and inspected it
+00:05:18.000
+so this element was selected, okay
+00:05:20.000
+or if I want to select this particular element
+00:05:22.000
+or select this whole div
+00:05:24.000
+then you see it has written equals to equals to dollar zero
+00:05:26.000
+now listen to this trick carefully
+00:05:28.000
+it will be useful for lifetime
+00:05:30.000
+I can use dollar zero to refer this object
+00:05:32.000
+so if I write here dollar zero
+00:05:34.000
+I write dollar zero
+00:05:36.000
+so you can see this element is coming
+00:05:38.000
+which I have selected
+00:05:40.000
+so whatever is selected becomes dollar zero
+00:05:42.000
+now if I write
+00:05:44.000
+style.backgroundcolor
+00:05:46.000
+and I write
+00:05:48.000
+equals to green
+00:05:50.000
+so I can make its background color green as you can see
+00:05:52.000
+so what is this $0
+00:05:54.000
+whichever element you selected
+00:05:56.000
+it was $0, whichever you clicked here it was $0
+00:05:58.000
+now if I want to make it $0
+00:06:00.000
+I will right click and inspect
+00:06:02.000
+and whichever element I click here it will become $0
+00:06:04.000
+see here this thumbnail section is $0
+00:06:08.000
+here this container is $0
+00:06:10.000
+so if I run $0 style and background color green
+00:06:13.000
+then this one will be green
+00:06:14.000
+so $0 is this in the browser
+00:06:17.000
+so browser gives you this kind of utility
+00:06:19.000
+so that you can select a particular element
+00:06:21.000
+and can add styles in it
+00:06:24.000
+so this is our document object model
+00:06:26.000
+now i want to show you this image which will represent
+00:06:29.000
+DOM better and will explain you what is DOM
+00:06:32.000
+so in document we have html
+00:06:35.000
+in which we have head and body, in body we have that thing which we can see
+00:06:38.000
+and here you can see that every element
+00:06:41.000
+has a leaf node, it is either text
+00:06:44.000
+or an empty element the leaf node is either text or
+00:06:45.740
+an empty element
+00:06:48.740
+so what you have to do is
+00:06:51.740
+you have to go through the DOM
+00:06:54.740
+you may want to search through a particular node
+00:06:57.740
+like if I want to find a div inside the body
+00:07:00.740
+so there are functions for that
+00:07:03.740
+if you want to select a given class or element in the body
+00:07:07.200
+you can select multiple elements
+00:07:09.600
+in all these things it provides you with the facility to select
+00:07:14.720
+and to use any complex query to select different elements
+00:07:20.640
+you can use CSS selectors in javascript if you want to use multiple nodes with a particular CSS selector
+00:07:30.000
+so i hope you understood about DOM
+00:07:33.000
+if you want to learn more about DOM then this is a MDN page
+00:07:36.000
+in which it is told that DOM represents a logical tree
+00:07:40.000
+every branch ends in a node
+00:07:43.000
+and this is a representation like an object
+00:07:45.760
+now you won't understand this till we do it
+00:07:48.720
+so what we will do is
+00:07:50.160
+I will show you by searching
+00:07:52.000
+in the coming videos
+00:07:53.120
+and I will show you how
+00:07:54.800
+elements are targeted
+00:07:56.480
+now I have shown you a very small example here
+00:07:59.280
+but in the coming videos
+00:08:00.480
+we will do more complex things
+00:08:02.560
+then you will understand
+00:08:03.760
+how to use JavaScript to target different elements with the help of javascript
+00:08:08.000
+maybe change their css or
+00:08:12.000
+remove them from dom or add them in dom
+00:08:16.000
+so i hope you liked this video and you are learning things
+00:08:20.000
+that's all for now guys, if you haven't accessed the playlist then do it
+00:08:24.000
+thank you so much guys for watching this video.

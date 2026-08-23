@@ -1,0 +1,490 @@
+Video URL: https://www.youtube.com/watch?v=Jtc3j4ZNZEQ
+Video Title: JavaScript Functions | Sigma Web Development Course - Tutorial #58
+--------------------------------------------------
+
+00:00:00.000
+Sometimes our code gets repetitive and when the code gets repetitive, we have to package a particular code in a function.
+00:00:07.760
+One more benefit of making functions in JavaScript is that you can pass arguments and get a particular work done.
+00:00:13.400
+For example, printing some statements, summing numbers, taking the average of numbers,
+00:00:18.040
+there are many more functions that can be made in JavaScript.
+00:00:21.240
+What are functions, what is syntaxavascript why should we use them
+00:00:26.000
+do like this video and write sigma batch op in the comment section
+00:00:30.000
+let's go to the computer screen
+00:00:32.000
+let's roll the intro
+00:00:42.000
+so we are going to see what is function in javascript So in javascript, function is a block of code
+00:00:47.000
+If we want to use it again and again, then we use it
+00:00:51.000
+Let me explain what it is
+00:00:53.000
+So I will make a folder named video number 58
+00:00:56.000
+And I will open it quickly in my VS code
+00:00:58.000
+And I will show you a function directly
+00:01:01.000
+I will show you a function directly and I will say index.js
+00:01:04.000
+Now suppose I tell you to print I'll make a function and show you I'll say index.js
+00:01:06.000
+Now I'll say you print
+00:01:09.000
+Hey Harry you are nice
+00:01:12.000
+Now you have to do this for other people too
+00:01:15.000
+Or let's do one thing
+00:01:18.000
+Hey Harry you are good
+00:01:20.000
+And
+00:01:22.000
+Hey Harry
+00:01:24.000
+Your T-shirt is nice hey harry your
+00:01:28.320
+t-shirt is nice then i will write hey harry
+00:01:29.600
+your course is good too
+00:01:32.600
+so this is what i have written
+00:01:35.120
+now what i will do is
+00:01:37.720
+i will run this
+00:01:40.720
+so you can see here that my output will come
+00:01:43.720
+hey harry you are nice, hey you are good, all these are here
+00:01:46.040
+Now assume that I want to
+00:01:49.600
+Change this and I want to change Harry's place to Rohan
+00:01:52.580
+So what I have to do is
+00:01:55.220
+On all these instances
+00:01:56.680
+I have to change it 4 times
+00:01:59.680
+If it was 4000 places then I would have to change it 4000 times
+00:02:02.640
+So what will be convenient for me I will make a function of it
+00:02:06.660
+And here I will make it variable
+00:02:08.660
+So that if I have to run it for someone else
+00:02:10.660
+Then I can run it
+00:02:12.660
+So to make a function, we use the function keyword
+00:02:14.660
+And here you will see a snippet
+00:02:16.660
+Which will take the name of your function
+00:02:18.660
+And will take the parameters
+00:02:20.660
+So if I write here
+00:02:22.660
+The name of this function is nice
+00:02:24.660
+And by pressing the tab, I will write Name instead of params so if i write here this function name is nice
+00:02:26.000
+and i write here name
+00:02:29.000
+and i say what it will do
+00:02:32.000
+first it will print hey and then name
+00:02:35.000
+so i will make a string and concatenate it
+00:02:38.000
+and you can concatenate string in javascript
+00:02:41.000
+like this, so what will happen here
+00:02:44.000
+hey will come, space will come, then whatever name i will give will come
+00:02:46.000
+and here you are nice will come
+00:02:48.000
+whatever i will give will come and all these things
+00:02:50.000
+will come, so basically what i will do
+00:02:52.000
+that whatever i did like this
+00:02:54.000
+i will do it like this
+00:02:56.000
+so we did here you are nice
+00:02:58.000
+then we did you are good
+00:03:00.000
+and after that we did your t-shirt is nice
+00:03:02.000
+and what we did
+00:03:04.000
+your course is nice your course is good too
+00:03:07.160
+ok, oops, I will copy this
+00:03:09.160
+and here I will put your course is good too
+00:03:12.160
+so now if I have to change the name
+00:03:14.160
+so what I will do simply
+00:03:15.360
+if I run nice harry here
+00:03:17.360
+so I will get to see all these things for harry
+00:03:20.360
+and if I do nice rohan here
+00:03:22.360
+so you will see that I will get will see all these things for rohan
+00:03:26.000
+so I don't have to go to all the lines again and again and change it
+00:03:29.000
+I have made a block of code here which runs according to certain parameters
+00:03:35.000
+so I hope you have understood why the function is used
+00:03:38.000
+it is used because we don't want to be repetitive
+00:03:42.000
+we want to do the same thing again and again through a function
+00:03:46.000
+now suppose I want to do this for Rohan
+00:03:48.000
+and I want to do this for
+00:03:50.000
+Shivam also and when I
+00:03:52.000
+do this for Shivam, then you see
+00:03:54.000
+Hey Shivam you are nice, Hey Shivam you are nice
+00:03:56.000
+I have done this twice actually and
+00:03:58.000
+you are good and after this all these things
+00:04:00.000
+are done for Shivam also, so whenever we
+00:04:02.000
+want to reuse a function, we can do it
+00:04:04.000
+plus we want to change in the function, we can bring that change also.
+00:04:07.200
+So by making this kind of function, basically we are packaging block of code
+00:04:12.400
+in a particular name which is nice. Nice means whatever name is given,
+00:04:16.600
+it will print 4 lines here. Now let's talk about another basic function
+00:04:20.399
+which is very simple, its name is sum. Ok. Sum.
+00:04:24.200
+And after doing this
+00:04:26.000
+I will give a and b here, and what I will do here
+00:04:29.000
+I will say that this sum function
+00:04:32.000
+will lock the console a and b
+00:04:35.000
+and I will have to call a function
+00:04:38.000
+I will have to write nice row like this
+00:04:41.000
+otherwise it will not run automatically, I will tell you this too
+00:04:44.000
+so if I write sum 1 2
+00:04:46.000
+I will write sum or if I write 3 5
+00:04:49.000
+then I will get 8 here, so if I run then I will get 8
+00:04:52.000
+because when I say sum 3 5, then 3 and 5
+00:04:55.000
+will go here, 3 will go in A, 5 will go in B
+00:04:58.000
+and when I do A plus B, then
+00:05:01.000
+8 will be printed, so it is a very simple thing
+00:05:04.000
+when I wrote function sum and gave 3 and 5
+00:05:06.920
+so 3 plus 5 is 8
+00:05:09.000
+will be printed here
+00:05:12.000
+now suppose i want to lock the console
+00:05:14.680
+and i want to say the sum of these numbers is
+00:05:18.640
+and i want to write sum here
+00:05:21.200
+whatever the sum is
+00:05:24.420
+and i want to put it in result
+00:05:26.000
+so if i say result is equal to
+00:05:29.000
+so in result, 5 and 3 sum won't come
+00:05:32.000
+because javascript program doesn't know what value to put
+00:05:35.000
+so to put value
+00:05:38.000
+we use return keyword and we say a plus b
+00:05:41.000
+so when i write sum a b and return a plus b
+00:05:44.000
+so value of a plusB will come in the result.
+00:05:47.000
+Return keyword is to return a value.
+00:05:50.000
+And when we call sum 3,5, then 3 will go as A, 5 will go as B, and 3 plus 5 is 8 which will come in the result.
+00:05:58.000
+And now if I run this program, then you will see 8 from the sum of these numbers.
+00:06:03.000
+Because 8 has already in the result
+00:06:05.600
+so it's a very simple thing, I hope you understood
+00:06:09.000
+this is the reason of using function
+00:06:11.400
+now if I want to do this thing again and again, then I can do it again and again
+00:06:14.600
+I can do more here, result 1, result 2
+00:06:18.000
+means I want to do this result 1
+00:06:20.000
+oops, I want to say this result 1
+00:06:23.600
+I want to say this result 2 and I want to call it result1, result2 and result3
+00:06:26.800
+ok
+00:06:27.300
+and I change the numbers here, let's say I change it to 13
+00:06:33.800
+ok, result1, result2, result3
+00:06:35.800
+and I will do the same thing here
+00:06:37.800
+here I will do 1, here 2, here result3
+00:06:40.800
+and you will see that by using the function sameSum
+00:06:43.800
+I have added more numbers so this sum function
+00:06:46.000
+is reusable so why is the function used
+00:06:49.000
+one is reusability comes in your code and along with that
+00:06:52.000
+you can pass some arguments you are passing
+00:06:55.000
+3 and 5 in this line, in this line 7 and 5
+00:06:58.000
+in this line 3 and 13 are passed
+00:07:01.000
+now suppose I want a parameter called c
+00:07:04.000
+which is optional so I will write C is equal to 3
+00:07:07.000
+that C will be by default 3 and I want to return A plus B plus C, so I will write A plus B plus C
+00:07:15.000
+and I will do the format document so that it looks good, as soon as I run it, you see
+00:07:19.000
+some of these numbers 11 came, then 15 came, then 19 came, so 5 and 3 is 8 and 8 is default value
+00:07:27.280
+8 and 3 is 11, 7 and 5 is 12 and 12 is 3, 15
+00:07:33.280
+13 and 3 is 16 and 16 is 19, so these 3 are default value of C
+00:07:39.920
+it is called default parameter, one function has default value of argument
+00:07:46.000
+And when we do c is equal to 3
+00:07:48.000
+Then default value of c will be 3
+00:07:51.000
+Now if I want a special value to pass here
+00:07:53.000
+Instead of 3, 1 should pass
+00:07:55.000
+Means 13 plus 3, 16 plus 1, 17 should be print
+00:07:57.000
+So here we are passing c which was optional
+00:08:00.000
+So in result 3 you are getting 17
+00:08:03.000
+As you can see on your computer screen
+00:08:06.000
+so this is our function, we make it like this with function keyword
+00:08:09.000
+we call it as many times as we want
+00:08:12.000
+we will give it a nice name as a string
+00:08:15.000
+so this block of code will be executed and we will do it wherever and as many times as we want
+00:08:18.000
+along with that we can also get return value from it
+00:08:21.000
+like if I write it like this
+00:08:24.000
+sum is equal to a, b, c
+00:08:26.000
+and I have given default value of c as 3
+00:08:28.000
+a and b will be passed, it is compulsory
+00:08:30.000
+you have to give it, you can't do
+00:08:32.000
+that you have only done sum 3
+00:08:34.000
+because if you do something like this and run the program
+00:08:36.000
+then you will see an error
+00:08:38.000
+and you will see a NAN, NAN means
+00:08:40.000
+not a number, why did it do NAN
+00:08:42.000
+because you didn't pass b
+00:08:44.000
+so the return value
+00:08:46.000
+is not a number, if i show you
+00:08:48.000
+console.log
+00:08:50.000
+and i say a, b
+00:08:52.000
+and c, lock all three, so the value of b
+00:08:54.000
+is undefined, i will show you
+00:08:56.000
+so see the value of b is undefined, when 3
+00:08:58.000
+passed and when
+00:09:00.000
+b came, then undefined passed
+00:09:02.000
+and undefined plus any number
+00:09:04.000
+you do, javascript returns a NAN
+00:09:06.500
+and NAN means not a number
+00:09:08.500
+so you are getting to see not a number
+00:09:10.500
+because you have not passed the argument correctly
+00:09:12.500
+so if I write here 3 comma
+00:09:14.500
+any number, like 2, then 3, 2, 5, and 3
+00:09:17.500
+8 will come, so you can see here
+00:09:20.500
+5 and 3, 8 you will get to see here
+00:09:23.500
+and 15 and 17 here, the result of this and this is being printed
+00:09:28.000
+because we are doing it and this sum function we can use it many times
+00:09:32.000
+in our code, ok in our program
+00:09:36.000
+so that was about functions in javascript, now I will tell you about arrow function
+00:09:40.000
+and I will tell you that you can put function in a variable like this
+00:09:44.000
+and you can use a function in a variable like this
+00:09:45.000
+and you can use a syntax like this which is called an arrow function
+00:09:49.000
+and here you can say that a console.log
+00:09:54.000
+I am an arrow function
+00:09:57.000
+ok you wrote it like this
+00:09:59.000
+and here you wrote 45 and let's say I will write A here or I will write X here
+00:10:08.120
+I can also write A, it's my wish and I will write X here, so X will pass here
+00:10:12.600
+so if I run it as func1
+00:10:15.920
+34
+00:10:19.240
+and I run it
+00:10:21.000
+as let us say 66
+00:10:23.440
+and I run it by saying 66 and I do it by saying 84 and I run it, so you see 34, I am an arrow function 34, then 66, then 84, so this function can be reused
+00:10:36.000
+and this is called an arrow function, this is a convenient syntax and you can store a function in a variable very func1 is a variable which is a function
+00:10:46.000
+so you can make a variable like this
+00:10:49.000
+so what is the benefit of doing this
+00:10:51.000
+that you can pass the function in turn in another function
+00:10:54.000
+so I said this a little complex
+00:10:56.000
+if you are a beginner then you will find this a little complex
+00:10:58.000
+but that's a fact
+00:11:00.000
+so if you have not downloaded the notes of javascript
+00:11:02.000
+then you go here codewithari.com slash notes and grab the copy of the notes of JavaScript.
+00:11:07.520
+Because here I have told you the terminology and all.
+00:11:10.800
+Like you see here this is a function with parameter.
+00:11:13.200
+These parameters are behaving as a local variable.
+00:11:16.480
+Here you see the function is being invoked.
+00:11:18.960
+And function invocation is a method by which you use the function.
+00:11:23.600
+So basically the function calls we had put,
+00:11:25.500
+that is called function invocation.
+00:11:27.500
+You can also call it calling the function.
+00:11:29.500
+You can say that I invoked the function.
+00:11:31.500
+It is the same thing.
+00:11:33.500
+Now here I told you about the return value
+00:11:35.500
+and I told you about the syntax of the arrow function
+00:11:38.500
+which is a fancy syntax and along with it
+00:11:40.500
+with the help of this syntax
+00:11:42.500
+you can capture the function in a variable.
+00:11:44.500
+So if you want to cast the function in a variable
+00:11:47.800
+then you can do it very easily with the help of arrow function
+00:11:50.560
+I hope that these videos are helpful for you
+00:11:52.720
+and you have accessed the playlist of Sigma web development express
+00:11:55.720
+if you haven't done it then go and bookmark and save
+00:11:58.200
+that's all for now guys
+00:11:59.720
+thank you so much guys for watching this video
+00:12:01.440
+and I will see you next time.

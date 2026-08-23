@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 267,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The@supportsrule lets you \ncheck if the browser supports a specific CSS property or value, and to define fallback styles if the feature is not supported.\n\nThis is useful for applying styles only when the browser can handle them.\n\nYou can combine@supportswith regular CSS to provide fallback styling.\n\nHere, if the browser supports display: flex, the CSS inside the @supports rule will \n  be applied. If not, the .container class outside the @supports rule will be \n  applied:\n\nHere, if the browser supports display: grid, the CSS inside the @supports rule will \n  be applied. If not, the .container class outside the @supports rule will be \n  applied:\n\nYou can usenotto apply styles only when a feature isnotsupported:\n\nYou can useand,or, andnotfor multiple conditions:\n\n### Code Snippets\n\n```\n@supports (property: value) {\n  /* CSS rules to apply if condition is true */\n}\n\n---\n\n/* use this CSS if the browser does not support display: flex */\n.container {\nfloat: left;\nwidth: 100%;\n}\n/* use this CSS if the browser supports display: flex */\n@supports (display: flex) {\n.container {\ndisplay: flex;\n}\n}\n\n---\n\n/* use this CSS if the browser does not support display: grid */\n.container \n    {\ndisplay: table;\nwidth: 90%;\nbackground-color: \n    #2196F3;\npadding: 10px;\n}\n/* use this CSS if the browser \n    supports display: grid */\n@supports (display: grid) {\n.container \n    {\ndisplay: grid;\ngrid: auto;\ngrid-gap: 10px;\nbackground-color: #2196F3;\npadding: 10px;\n}\n}\n\n---\n\n@supports not (display: grid) {\n.warning {\nbackground-color: pink;\npadding: 10px;\nborder: 1px solid red;\n}\n}\n\n---\n\n@supports (display: grid) and (gap: 10px) {\n.container {\ndisplay: grid;\ngap: 10px;\n}\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_266",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

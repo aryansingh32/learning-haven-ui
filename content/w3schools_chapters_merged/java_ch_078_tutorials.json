@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 78,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e HashMap Methods\n\nThecomputeIfAbsent()method calculates a value for a new entry based on its key. If an entry with the specified key already exists and its value is notnullthen the map is not changed.\n\nThe value is computed using a function, which can be defined by a lambda expression that is compatible with theapply()method of Java'sFunctioninterface.\n\nTo learn about lambda expressions, see ourJava Lambda Expression tutorial.\n\nKrefers to the data type of the keys of the map.\n\nJava HashMap Tutorial\n\n### Code Examples\n\n```\nExample\nCompute a value for a new entry in a map:\nimport java.util.HashMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashMap<String, String> capitalCities = new HashMap<String, String>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"Germany\", \"Berlin\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"USA\", \"Washington DC\");\n    \n    capitalCities.computeIfAbsent(\"Canada\", (k) -> \"Toronto (\" + k + \")\");\n    \n    System.out.println(capitalCities);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e HashMap Methods\n\nThecomputeIfPresent()method calculates a value for an entry based on its key. If an entry with the specified key does not exist or its value isnullthen the map is not changed.\n\nThe value is computed using a function, which can be defined by a lambda expression that is compatible with theapply()method of Java'sBiFunctioninterface.\n\nTo learn about lambda expressions, see ourJava Lambda Expression tutorial.\n\nKrefers to the data type of the keys of the map.\n\nJava HashMap Tutorial\n\n### Code Examples\n\n```\nExample\nCompute a new value for an entry in a map:\nimport java.util.HashMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashMap<String, String> capitalCities = new HashMap<String, String>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"Germany\", \"Berlin\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"USA\", \"Washington DC\");\n    \n    capitalCities.computeIfPresent(\"England\", (k, v) -> v + \"(\" + k + \")\");\n    \n    System.out.println(capitalCities);\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e HashMap Methods\n\nThecontainsKey()method returnstrueif an entry with the specified key exists in the map andfalseotherwise.\n\nJava HashMap Tutorial\n\n### Code Examples\n\n```\nExample\nCheck if a key exists in a map:\nimport java.util.HashMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashMap<String, String> capitalCities = new HashMap<String, String>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"Germany\", \"Berlin\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"USA\", \"Washington DC\");\n    System.out.println(capitalCities.containsKey(\"England\"));\n    System.out.println(capitalCities.containsKey(\"Canada\"));\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e HashMap Methods\n\nThecontainsValue()method returnstrueif an entry with the specified value exists in the map andfalseotherwise.\n\nJava HashMap Tutorial\n\n### Code Examples\n\n```\nExample\nCheck if a value exists in a map:\nimport java.util.HashMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashMap<String, String> capitalCities = new HashMap<String, String>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"Germany\", \"Berlin\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"USA\", \"Washington DC\");\n    System.out.println(capitalCities.containsValue(\"London\"));\n    System.out.println(capitalCities.containsValue(\"Ottawa\"));\n  }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e HashMap Methods\n\nTheentrySet()method returns a set containing all of the entries in the map.\n\nTo learn about sets, see ourJava HashSet tutorial.Note:The returned set is aviewof the map, which means that changing the set also changes the map.Syntaxpublic Set< Map.Entry<K,V> > entrySet()KandVrefer to the data types of the keys and values of the map.Technical DetailsReturns:A set containing all of the entries in the map.Related PagesJava HashMap TutorialJava HashSet Tutorial\u276e HashMap Methods\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nExample\nReturn all the entries in a map:\nimport java.util.HashMap;\n\npublic class Main {\n  public static void main(String[] args) {\n    HashMap<String, String> capitalCities = new HashMap<String, String>();\n    capitalCities.put(\"England\", \"London\");\n    capitalCities.put(\"Germany\", \"Berlin\");\n    capitalCities.put(\"Norway\", \"Oslo\");\n    capitalCities.put(\"USA\", \"Washington DC\");\n    \n    System.out.println(capitalCities.entrySet());\n  }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_78",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_78",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

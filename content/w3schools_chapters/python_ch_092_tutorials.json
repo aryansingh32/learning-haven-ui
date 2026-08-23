@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 92,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Theelsekeyword catches anything which isn't caught by the preceding conditions.\n\nTheelsestatement is executed when theifcondition (and anyelifconditions) evaluate toFalse.\n\nIn this exampleais greater thanb,\nso the first condition is not true, also theelifcondition is not true,\nso we go to theelsecondition and print to screen that \"a is greater than b\".\n\nYou can also have anelsewithout theelif:\n\nThis creates a simple two-way choice: if the condition is true, execute one block; otherwise, execute the else block.\n\nTheelsestatement provides a default action when none of the previous conditions are true. Think of it as a \"catch-all\" for any scenario not covered by yourifandelifstatements.\n\nYou can combineif,elif, andelseto create a comprehensive decision-making structure.\n\nTheelsestatement acts as a fallback that executes when none of the preceding conditions are true. This makes it useful for error handling, validation, and providing default values.\n\n### Code Snippets\n\n```\na = 200\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelif a == b:\nprint(\"a and b are equal\")\nelse:\nprint(\"a is greater than b\")\n\n---\n\na = 200\nb = 33\nif b > a:\nprint(\"b is greater than a\")\nelse:\nprint(\"b is not greater than a\")\n\n---\n\nnumber = 7\nif number % 2 == 0:\nprint(\"The number is even\")\nelse:\nprint(\"The number is odd\")\n\n---\n\ntemperature = 22\nif temperature > 30:\nprint(\"It's hot outside!\")\nelif temperature > 20:\nprint(\"It's warm outside\")\nelif temperature > 10:\nprint(\"It's cool outside\")\nelse:\nprint(\"It's cold outside!\")\n\n---\n\nusername = \"Emil\"\nif len(username) > 0:\nprint(f\"Welcome, {username}!\")\nelse:\nprint(\"Error: Username cannot be empty\")\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_91",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

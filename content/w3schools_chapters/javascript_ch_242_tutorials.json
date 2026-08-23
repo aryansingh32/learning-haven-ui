@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 242,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Callbacks make functions more flexible.\n\nInstead of hardcoding what should happen next, a function can let the caller decide by supplying a callback.\n\nThedisplayfunction is the callback.\n\nThegreet()function decides when to call it.\n\nMost callbacks execute immediately.\n\nThese are called synchronous callbacks because they run before the current function returns.\n\nMany JavaScript methods use synchronous callbacks.\n\nYou cannot see a result before it is computed.\n\nThe result isundefinedbecause the async code has not finished yet.\n\nThe solution to the problem above, is to give JavaScript acallback functionto call after the result is ready.\n\nA callback is a function passed as an argument to another function.\n\nThis technique allows a function to call another function.\n\nThe value is used inside the callback.\n\nThis works because the callback runs later.\n\nCallbacks are also commonly used with asynchronous APIs.\n\nIn these cases, the callback runs after the asynchronous operation has completed.\n\nThe callback is not what makes the operation asynchronous.\n\nThe asynchronous API decides when to call the callback.\n\nIn the example above:\n\nmyDisplayeris a callback function passed\nas an argument tosetTimeout().\n\n3000is the number of milliseconds before myDisplayer will be called.\n\nThe browser waits three seconds before calling the callback.\n\nThe delay is created by setTimeout(), not by the callback itself.\n\nCallbacks are often used in JavaScript, especially inevent handling:\n\nUser interactions, such as button clicks or key presses, can be handled by providing acallback functionto anevent listener.\n\nIn the example above,displayDateis a callback function passed\nas an argument to theaddEventListener()method.\n\ndisplayDatewill be called when a user clicks the button with id=\"myButton\".\n\nSometimes you would like to have better control over when to execute a function.\n\nSuppose you want to do a calculation, and then display the result.\n\nYou could first call the calculator functionmyCalculator,\nand then call the display functionmyDisplayer:\n\nOr, you could call the calculator functionmyCalculator,\nand let the calculator function call the display functionmyDisplayer:\n\nThe problem with the first example above, is that you have to call two functions to display the result.\n\nThe problem with the second example, is that you cannot prevent the calculator function from \ndisplaying the result.\n\nNow it is time to bring in a callback.\n\nUsing a callback, you could call the calculator function (myCalculator)\nwith a callback (myCallback), and let the calculator function run the callback after the calculation is finished:\n\nIn the example above,myDisplayeris used as acallback function.It is passed tomyCalculator()as anargument.Callback ChainsSometimes one callback starts another operation that uses another callback.This can lead to deeply nested, complex and hard-to-read code.When callbacks get deep, debugging is difficult.\nThe logic moves from left to right and becomes difficult to follow.This is often referred to as \"callback hell\" or the \"pyramid of doom\".Examplestep1(function(result1) {step2(result1, function(result2) {step3(result2, function(result3) {display(result3);});});});NotePromisesandasync/awaitwere introduced to make asynchronous\ncode easier to read and maintain.SummaryA callback is a function passed to another function.Callbacks can be synchronous or asynchronous.The callback itself does not make code asynchronous.Many JavaScript methods use synchronous callbacks.Asynchronous APIs often use callbacks to handle results.Promises andasync/awaitbuild on the same idea while making asynchronous code easier to write.Callback is Not AsynchronousA callback is just a function.It may be called immediately (like map() or sort()).It may be called later by an asynchronous API (like setTimeout() or fetch()).The API (not the callback) is what introduces the asynchronous behavior.Callback AlternativesAsynchronous callbacksolutions aredifficult to writeand difficult to debug.Because of this, modern asynchronous JavaScriptdo not use callbacks.Modern JavaScript offers superior alternatives for handling asynchronous operations,\nusingPromisesand theasync/awaitsyntax, which provide a cleaner flow and better error handling.When to Use a Callback?Callbacks are still important to understand.Where callbacks really shine are in asynchronous functions, \nwhere one function has to wait for another function (like waiting for a file to load).\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// A Greet Function\nfunction greet(name, callback) {\ncallback(\"Hello \" + name);\n}\n// A Display Function\nfunction display(message) {\ndocument.getElementById(\"demo\").innerHTML = message;\n}\n// Call greet() with a callback function (display)\ngreet(\"John\", display);\n\n---\n\n// Calculate Function\nfunction calculate(x, y, operation) {\nreturn operation(x, y);\n}\n// Add Function\nfunction add(a, b) {\nreturn a + b;\n}\n// Call calculate() with add as callback\nlet result = calculate(5, 3, add);\n\n---\n\nlet result;\nsetTimeout(function() {\nresult = 5;\n}, 1000);\n// What is result here?\n\n---\n\nfunction done(value) {\nmyDisplayer(value);\n}\nsetTimeout(function() {\ndone(5);\n}, 1000);\n// What is result here?\n\n---\n\n// Set a Timeout\nsetTimeout(function () {myDisplayer(\"Finished!\")}, 3000);\n\n---\n\ndocument.getElementById(\"myButton\").addEventListener(\"click\", displayDate);\n\n---\n\n// Funtion to display something\nfunction myDisplayer(some) {\ndocument.getElementById(\"demo\").innerHTML = some;\n}\n// Function to calculate a sum\nfunction myCalculator(num1, num2) {\nlet sum = num1 + num2;\nreturn sum;\n}\n// Call the calculator\nlet result = myCalculator(5, 5);\n// Call the displayer\nmyDisplayer(result);\n\n---\n\n// Funtion to display something\nfunction myDisplayer(some) {\ndocument.getElementById(\"demo\").innerHTML \n  = some;\n}\n// Function to calculate a sum\nfunction myCalculator(num1, num2) {\nlet sum = num1 + num2;\nmyDisplayer(sum);\n}\n// Call the calculator\nmyCalculator(5, 5);\n\n---\n\nfunction myDisplayer(some) {\ndocument.getElementById(\"demo\").innerHTML \n  = some;\n}\nfunction myCalculator(num1, num2, myCallback) {\nlet sum = num1 + num2;\nmyCallback(sum);\n}\nmyCalculator(5, 5, myDisplayer);\n\n---\n\nstep1(function(result1) {\nstep2(result1, function(result2) {\nstep3(result2, function(result3) {\ndisplay(result3);\n});\n});\n});\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_241",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

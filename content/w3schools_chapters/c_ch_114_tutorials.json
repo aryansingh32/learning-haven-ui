@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 114,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in C++. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Tutorials in C++",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in C++."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The<ctime>library allows us to work \nwith dates and times.\n\nTo use it, you must import the<ctime>header file:\n\nThe<ctime>library has a variety of functions to measure dates and times.\n\nThetime()function gives us atimestamprepresenting the current date and time. We can use thectime()function to show the date and time that a timestamp represents:\n\nThere are two different data types used to store the date and time:time_tfortimestampsandstruct tmfordatetime structures.\n\nTimestampsrepresent a moment in time as a single number, which makes it easier for the computer to do calculations.\n\nDatetime structuresare structures that represent different components of the date and time as members. This makes it easier for us to specify dates. Datetime structures have the following members:\n\nThetime()function can only create a timestamp for the current date, but we can create a timestamp for any date by using themktime()function.\n\nThemktime()function converts a datetime structure into a timestamp.\n\nThemktime()function also fills in thetm_wdayandtm_ydaymembers of the datetime structure with the correct values, which completes the structure and gives a valid datetime. It can be used, for example, to find the weekday of a given date:\n\nThelocaltime()andgmtime()functions can convert timestamps into datetime structures.\n\nThelocaltime()function returns a pointer to a structure representing the time in the computer's time zone.\n\nThegmtime()function returns a pointer to a structure representing the time in the GMT time zone.\n\nThese functions return apointerto a datetime structure. If we want to make sure its value does not change unexpectedly we should make a copy of it by dereferencing the pointer. To learn about dereferencing, see theC++ Dereference tutorial.\n\nSo far we have been using thectime()function to display the date contained in a timestamp. To display dates from a datetime structure we can use theasctime()function.\n\nThectime()andasctime()functions allow us to display the date but they do not allow us to choose how it is displayed.\n\nTo choose how a date is displayed we can use thestrftime()function.\n\nThestrftime()function formats a date and writes it as a C-style string into achararray. It has four parameters:\n\nThe following table has some useful format specifiers. For a more complete list, look at thestrftime() reference page.\n\nThere are two different functions that can be used to measure differences in time.\n\nThedifftime()function measures the number of seconds that passed between two different time stamps. This is useful when measuring time differences between dates.\n\nTheclock()function is useful for measuring short intervals of time while the program is running. It is more precise than thedifftime()function.\n\nEach call to the clock function returns a special kind of timestamp measured in clocks (a unit of time that depends on how the library was implemented) which has a data typeclock_t. To measure a time difference, store a timestamp at two different moments in time and then subtract them. The time difference is measured in clocks, but you can convert it into seconds by dividing it by theCLOCKS_PER_SECconstant.\n\nFor a complete reference of <ctime> functions, go to ourC++ ctime Reference.\n\n### Code Snippets\n\n```\nExample\n#include <ctime> // Import the ctime library\n\n---\n\nExample\nDisplay the current date:\n// Get the timestamp for the current date and time\ntime_t timestamp;\ntime(&timestamp);\n\n// Display the date and time represented by the timestamp\ncout << ctime(&timestamp);\nTry it Yourself \u00bb\n\n---\n\ntime_t timestamp = time(NULL);\n\n---\n\nExample\nCreate a timestamp using the\nmktime()\nfunction:\nstruct tm datetime;\ntime_t timestamp;\n\ndatetime.tm_year = 2023 - 1900; // Number of years since 1900\ndatetime.tm_mon = 12 - 1; // Number of months since January\ndatetime.tm_mday = 17;\ndatetime.tm_hour = 12;\ndatetime.tm_min = 30;\ndatetime.tm_sec = 1;\n// Daylight Savings must be specified\n// -1 uses the computer's timezone setting\ndatetime.tm_isdst = -1;\n\ntimestamp = mktime(&datetime);\n\ncout << ctime(&timestamp);\nTry it Yourself \u00bb\n\n---\n\nExample\nFind the weekday of a specified date:\n// Create the datetime structure and use mktime to fill in the missing members\nstruct tm datetime;\ndatetime.tm_year = 2023 - 1900; // Number of years since 1900\ndatetime.tm_mon = 12 - 1; // Number of months since January\ndatetime.tm_mday = 17;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nmktime(&datetime);\n\nstring weekdays[] = {\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"};\n\ncout << \"The date is on a \" << weekdays[datetime.tm_wday];\nTry it Yourself \u00bb\n\n---\n\nExample\nGet a datetime structure and output the current hour:\ntime_t timestamp = time(&timestamp);\nstruct tm datetime = *localtime(&timestamp);\n\ncout << datetime.tm_hour;\nTry it Yourself \u00bb\n\n---\n\nExample\nDisplay the date represented by a datetime structure:\ntime_t timestamp = time(NULL);\nstruct tm datetime = *localtime(&timestamp);\n\ncout << asctime(&datetime);\nTry it Yourself \u00bb\n\n---\n\nExample\nCorrect a date before displaying it:\n// Create the datetime structure and use mktime to correct mistakes\nstruct tm datetime;\ndatetime.tm_year = 2022 - 1900; // Number of years since 1900\ndatetime.tm_mon = 0; // 0 is January\ndatetime.tm_mday = 32;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nmktime(&datetime);\n\ncout << asctime(&datetime);\nTry it Yourself \u00bb\n\n---\n\nExample\nRepresent the current date in different ways:\ntime_t timestamp = time(NULL);\nstruct tm datetime = *localtime(&timestamp);\n\nchar output[50];\n\nstrftime(output, 50, \"%B %e, %Y\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%I:%M:%S %p\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%m/%d/%y\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%a %b %e %H:%M:%S %Y\", &datetime);\ncout << output << \"\\n\";\nTry it Yourself \u00bb\n\n---\n\nExample\nMeasure the time difference between two timestamps\ntime_t now;\ntime_t nextyear;\nstruct tm datetime;\n\nnow = time(NULL);\ndatetime = *localtime(&now);\ndatetime.tm_year = datetime.tm_year + 1;\ndatetime.tm_mon = 0;\ndatetime.tm_mday = 1;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nnextyear = mktime(&datetime);\n\nint diff = difftime(nextyear, now);\n\ncout << diff << \" seconds until next year\";\nTry it Yourself \u00bb\n\n---\n\nExample\nMeasure how long it takes for the program to run:\nclock_t before = clock();\nint k = 0;\nfor(int i = 0; i < 100000; i++) {\n  k += i;\n}\nclock_t duration = clock() - before;\ncout << \"Duration: \" << (float)duration / CLOCKS_PER_SEC << \" seconds\";\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_113",
+            "prompt": "Try implementing a simple program using Tutorials in C++.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in C++?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

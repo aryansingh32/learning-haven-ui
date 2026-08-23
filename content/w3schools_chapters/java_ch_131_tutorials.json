@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 131,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Annotations arespecial notesyou add to your Java code.  \nThey start with the@symbol.\n\nTheydon't change how your program runs, but they giveextra informationto the compiler or tools.\n\nJava includes several built-in annotations. Here are some of the most commonly used:\n\nThe@Overrideannotation helps the compiler \ncheck that a method really overrides a method from a superclass.\n\nIt's not required, but it's highly recommended because it helps catch errors.\n\nIn this example, we clearly indicate that we are overriding a method:\n\nIf you accidentally write the wrong method name (e.g.makesound()), \nthe compiler will show an error like:\n\nThat's the power of@Override- it prevents silent mistakes.\n\nIf you try to remove the@Overrideline in the example above, the compiler won't warn you, and the method won't override anything. Your program may still run, but it could behave unexpectedly because the intended method was never actually overridden.\n\nThe@Deprecatedannotation warns developers not to use a method because it may be removed or replaced in the future:\n\nEven though the method runs and prints the message, most IDEs or compilers will show a warning like this:\n\nThe@SuppressWarningsannotation tells the compiler to ignore specific warnings, like \"unchecked\" or \"deprecation\":\n\nUsing raw types likeArrayListwithout specifying a type (e.g.ArrayList<String>) usually causes an \n\"unchecked\" warning.\n\nThe annotation@SuppressWarnings(\"unchecked\")tells the compiler to ignore that warning. This is useful when working with old code or when you're sure the operation is safe.\n\nHowever, instead of hiding the warning, you can fix it like this:\n\nThis approach is type-safe and avoids the need for suppression.\n\n### Code Snippets\n\n```\nclass Animal {\nvoid makeSound() {\nSystem.out.println(\"Animal sound\");\n}\n}\nclass Dog extends Animal {\n@Override\nvoid makeSound() {\nSystem.out.println(\"Woof!\");\n}\n}\n\n---\n\nclass Animal {\nvoid makeSound() {\nSystem.out.println(\"Animal sound\");\n}\n}\nclass Dog extends Animal {\n@Override\nvoid makesound() { // Typo here!\nSystem.out.println(\"Woof!\");\n}\n}\npublic class Main {\npublic static void main(String[] args) {\nAnimal myDog = new Dog();\nmyDog.makeSound();\n}\n}\n\n---\n\npublic class Main {\n@Deprecated\nstatic void oldMethod() {\nSystem.out.println(\"This method is outdated.\");\n}\npublic static void main(String[] args) {\noldMethod(); // This will show a warning in most IDEs\n}\n}\n\n---\n\nimport java.util.ArrayList;\npublic class Main {\n@SuppressWarnings(\"unchecked\")\npublic static void main(String[] args) {\nArrayList cars = new ArrayList();\ncars.add(\"Volvo\");\nSystem.out.println(cars);\n}\n}\n\n---\n\nArrayList<String> cars = new ArrayList<>();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_130",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

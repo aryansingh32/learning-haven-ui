@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 162,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Always write HTML code with accessibility in mind!\n\nProvide the user a good way to navigate and interact with your site. Make your HTML code \nassemanticas possible.\n\nSemantic HTML means using correct HTML elements for their correct purpose as \nmuch as possible. Semantic elements are elements with a meaning; if you need a button, use the<button>element (and not a<div>element).\n\nSemantic HTML gives context to screen readers, which read the contents of a page out loud.\n\nWith the button example in mind:\n\nA button is also accessible for people relying on keyboard-only navigation; \nit can be clickable with both mouse and keys, and it can be tabbed between \n(using the tab key on the keyboard).\n\nExamples ofnon-semanticelements:<div>and<span>- Tells nothing about its content.\n\nExamples ofsemanticelements:<form>,<table>, and<article>- Clearly defines its content.\n\nHeadings are defined with the<h1>to<h6>tags:\n\nSearch engines use the headings to index the structure and content of your web pages.\n\nUsers skim your pages by its headings. It is important to use headings to \nshow the document structure and the relationships between different sections.\n\nScreen readers also use headings as a navigational \ntool. The different types of heading specify the outline of the page.<h1>headings should be used for main headings, followed by<h2>headings, then the less important<h3>, and so on.\n\nThealtattribute provides an alternate text for an image, if the user for \nsome reason cannot view it (because of slow connection, an error in thesrcattribute, or if the user uses a screen reader).\n\nThe value of thealtattribute should describe the image:\n\nIf a browser cannot find an image, it will display the value of thealtattribute:\n\nYou should always include thelangattribute inside the<html>tag, to declare the \nlanguage of the Web page. This is meant to assist search engines and browsers.\n\nThe following example specifies English as the language:\n\nAlways use a clear language, that is easy to understand. Also try to avoid characters that \ncannot be read clearly by a screen reader. For example:\n\nA link text should explain clearly what information the reader will get by clicking on that link.\n\nExamples of good and bad links:\n\n### Code Snippets\n\n```\n<button>Report an Error</button>\n\n---\n\n<div>Report an Error</div>\n\n---\n\n<h1>Heading 1</h1>\n<h2>Heading 2</h2>\n<h3>Heading 3</h3>\n<h4>Heading 4</h4>\n<h5>Heading 5</h5>\n<h6>Heading 6</h6>\n\n---\n\n<img src=\"img_chania.jpg\" alt=\"A narrow city street with flowers in Chania\">\n\n---\n\n<img src=\"wrongname.gif\" alt=\"A narrow city street with flowers in Chania\">\n\n---\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n...\n</body>\n</html>\n\n---\n\nFind out more about the HTML language\nRead more about\nhow to eat healthy\nBuy tickets to Mars here\n\n---\n\nClick here\nRead more..\nBuy tickets to Mars\nhere\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_161",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

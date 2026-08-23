@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 10,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Sometimes you need to quickly switch tasks or fix a bug, but you're not ready to commit your work.\n\ngit stashlets you save your uncommitted changes and return to a clean working directory.\n\nYou can come back and restore your changes later.\n\nHere are some common use cases:\n\nSave your current changes (both staged and unstaged tracked files) with:\n\nThis command saves your changes and cleans your working directory so you can safely switch tasks or branches.\n\nYour changes are now saved in a stack.\n\nWhat is a stash stack?\n\nEach time you rungit stash, your changes are saved on top of a \"stack\".\n\nThe most recent stash is on top, and you can apply or drop stashes from the top down, or pick a specific one from the list.\n\nYour working directory is clean, and you can switch branches or pull updates safely.\n\nAdd a message to remember what you stashed:\n\nThis command lets you add a descriptive message to your stash so you can remember what you were working on.\n\nSee all your saved stashes:\n\nThis command shows all the stashes you have saved so far, with their names and messages.\n\nSee what was changed in the latest stash:\n\nThis command gives a summary of what files and changes are in your most recent stash.\n\nTo see a full diff:\n\nThis command shows the exact lines that were changed in your most recent stash.\n\nRestore your most recent stashed changes (keeps the stash in the stack):\n\nThis command restores your most recent stashed changes, but keeps the stash in the list so you can use it again if needed.\n\nRestore a specific stash from the list:\n\nThis command lets you restore a specific stash from your list, not just the most recent one.\n\nApply the latest stashand remove it from the stack:\n\nThis command restores your most recent stash and removes it from the list at the same time.\n\nDelete a specific stash when you no longer need it:\n\nThis command deletes a specific stash from your list when you no longer need it.\n\nDelete all your stashes at once:\n\nThis command deletes all your stashes at once. Be careful! This cannot be undone!\n\nCreate a new branch and apply a stash to it.\n\nUseful if your stashed work should become its own feature branch:\n\nThis command creates a new branch and applies your stashed changes to it.\n\nThis is useful if you decide your work should become its own feature branch.\n\nNote:Stashes are useful for temporary work, but are not a replacement for commits!\n\n### Code Snippets\n\n```\nExample: Stash Your Work\ngit stash\nSaved working directory and index state WIP on main: 1234567 Add new feature\n\n---\n\nExample: Stash with a Message\ngit stash push -m \"WIP: homepage redesign\"\nSaved working directory and index state On main: WIP: homepage redesign\n\n---\n\nExample: List Stashes\ngit stash list\nstash@{0}: On main: WIP: homepage redesign\nstash@{1}: WIP on main: 1234567 Add new feature\n\n---\n\nExample: Show Latest Stash\ngit stash show\n src/index.html | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\n---\n\nExample: Show Full Diff\ngit stash show -p\ndiff --git a/src/index.html b/src/index.html\nindex 1234567..89abcde 100644\n--- a/src/index.html\n+++ b/src/index.html\n@@ ...\n\n---\n\nExample: Apply Latest Stash\ngit stash apply\nOn branch main\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n  (use \"git restore <file>...\" to discard changes in working directory)\n    modified:   src/index.html\n\n---\n\nExample: Apply a Specific Stash\ngit stash apply stash@{1}\nOn branch main\nChanges not staged for commit:\n    modified:   src/index.html\n\n---\n\nExample: Pop the Stash\ngit stash pop\nOn branch main\nChanges not staged for commit:\n    modified:   src/index.html\nDropped refs/stash@{0} (abc1234d5678)\n\n---\n\nExample: Drop a Stash\ngit stash drop stash@{0}\nDropped stash@{0} (abc1234d5678)\n\n---\n\nExample: Clear All Stashes\ngit stash clear\n\n---\n\nExample: Branch from a Stash\ngit stash branch new-feature stash@{0}\nSwitched to a new branch 'new-feature'\nOn branch new-feature\nChanges not staged for commit:\n    modified:   src/index.html\nDropped stash@{0} (abc1234d5678)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

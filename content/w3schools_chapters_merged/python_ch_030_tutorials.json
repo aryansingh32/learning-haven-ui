@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 30,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of class properties by completing a small coding challenge.\n\n## Tutorials\n\nMethods are functions that belong to a class. They define the behavior of objects created from the class.\n\nMethods can accept parameters just like regular functions:\n\nMethods can access and modify object properties usingself:\n\nMethods can modify the properties of an object:\n\nThe__str__()method is a special method that controls what is returned when the object is printed:\n\nA class can have multiple methods that work together:\n\nYou can delete methods from a class using thedelkeyword:\n\n### Code Examples\n\n```\nclass Person:\ndef __init__(self, name):\nself.name = name\ndef greet(self):\nprint(\"Hello, my name is \" + self.name)\np1 = Person(\"Emil\")\np1.greet()\n\n---\n\nclass Calculator:\ndef add(self, a, b):\nreturn a + b\ndef multiply(self, a, b):\nreturn a * b\ncalc = Calculator()\nprint(calc.add(5, 3))\nprint(calc.multiply(4, 7))\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\ndef get_info(self):\nreturn f\"{self.name} is {self.age} years old\"\np1 = Person(\"Tobias\", 28)\nprint(p1.get_info())\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\ndef celebrate_birthday(self):\nself.age += 1\nprint(f\"Happy birthday! You are now {self.age}\")\np1 = Person(\"Linus\", 25)\np1.celebrate_birthday()\np1.celebrate_birthday()\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\np1 = Person(\"Emil\", 36)\nprint(p1)\n\n---\n\nclass Person:\ndef __init__(self, name, age):\nself.name = name\nself.age = age\ndef __str__(self):\nreturn f\"{self.name} ({self.age})\"\np1 = Person(\"Tobias\", 36)\nprint(p1)\n\n---\n\nclass Playlist:\ndef __init__(self, name):\nself.name = name\nself.songs = []\ndef add_song(self, song):\nself.songs.append(song)\nprint(f\"Added: {song}\")\ndef remove_song(self, song):\nif song in self.songs:\nself.songs.remove(song)\nprint(f\"Removed: {song}\")\ndef show_songs(self):\nprint(f\"Playlist '{self.name}':\")\nfor song in self.songs:\nprint(f\"- {song}\")\nmy_playlist = Playlist(\"Favorites\")\nmy_playlist.add_song(\"Bohemian Rhapsody\")\nmy_playlist.add_song(\"Stairway to Heaven\")\nmy_playlist.show_songs()\n\n---\n\nclass Person:\ndef __init__(self, name):\nself.name = name\ndef greet(self):\nprint(\"Hello!\")\np1 = Person(\"Emil\")\ndel Person.greet\np1.greet()  # This will cause an error\n```\n\n## Tutorials\n\nTest your understanding of class methods by completing a small coding challenge.\n\n## Tutorials\n\nInheritance allows us to define a class that inherits all the methods and properties from another class.\n\nParent classis the class being inherited from, also called \nbase class.\n\nChild classis the class that inherits from another class, \nalso called derived class.\n\nAny class can be a parent class, so the syntax is the same as creating any \nother class:\n\nTo create a class that inherits the functionality from another class, send the parent class as a parameter when creating the child \nclass:\n\nNow the Student class has the same properties and methods as the Person \nclass.\n\nSo far we have created a child class that inherits the properties and methods \nfrom its parent.\n\nWe want to add the__init__()function to the child class (instead of thepasskeyword).\n\nWhen you add the__init__()function, the child class will no longer inherit \nthe parent's__init__()function.\n\nTo keep the inheritance of the parent's__init__()function, add a call to the \nparent's__init__()function:\n\nNow we have successfully added the__init__()function, and kept the \ninheritance of the parent class, and we are ready to add functionality in the__init__()function.\n\nPython also has asuper()function that \nwill make the child class inherit all the methods and properties from its \nparent:\n\nBy using thesuper()function, you do not \nhave to use the name of the parent element, it will automatically inherit the \nmethods and properties from its parent.\n\nIn the example below, the year2019should be a variable, and passed into theStudentclass when creating student objects.\nTo do so, add another parameter in the__init__()function:\n\nIf you add a method in the child class with the same name as a function in \nthe parent class, the inheritance of the parent method will be overridden.\n\n### Code Examples\n\n```\nclass Person:\ndef __init__(self, fname, lname):\nself.firstname = fname\nself.lastname = lname\ndef printname(self):\nprint(self.firstname, \n  self.lastname)\n#Use the Person class to create an object, and then \n  execute the printname method:\nx = Person(\"John\", \"Doe\")\nx.printname()\n\n---\n\nclass Student(Person):\npass\n\n---\n\nx = Student(\"Mike\", \"Olsen\")\nx.printname()\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\n#add properties etc.\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nPerson.__init__(self, fname, lname)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nsuper().__init__(fname, lname)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = 2019\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname, year):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = year\nx = Student(\"Mike\", \"Olsen\", 2019)\n\n---\n\nclass Student(Person):\ndef __init__(self, fname, lname, year):\nsuper().__init__(fname, lname)\nself.graduationyear \n  = year\ndef welcome(self):\nprint(\"Welcome\", \n  self.firstname, self.lastname, \"to the class of\", self.graduationyear)\n```\n\n## Tutorials\n\nTest your understanding of Python inheritance by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_30",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_30",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

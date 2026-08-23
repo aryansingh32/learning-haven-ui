@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 8,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Acommitis like a save point in your project.\n\nIt records a snapshot of your files at a certain time, with a message describing what changed.\n\nYou can always go back to a previous commit if you need to.\n\nHere are some key commands for commits:\n\nTo save your staged changes, usegit commit -m \"your message\":\n\nAlways write a clear message so you and others can understand what changed.\n\nYou can skip the staging step foralready tracked fileswithgit commit -a -m \"message\".\n\nThis commits all modified and deleted files,but not new/untracked files.\n\nWarning:Skipping the staging step can make you include unwanted changes. Use with care.\n\nNote:git commit -adoesnotwork for new/untracked files. You must usegit add <file>first for new files.\n\nIf you just typegit commit(no-m), your default editor will open so you can write a detailed, multi-line message:\n\nWrite a short summary on the first line, leave a blank line, then add more details below.\n\nTo view the history of commits for a repository, you can use thegit logcommand:\n\nFor a shorter view, usegit log --oneline:\n\nTo see which files changed in each commit, usegit log --stat:\n\n### Code Snippets\n\n```\nExample\ngit commit -m \"First release of Hello World!\"\n[master (root-commit) 221ec6e] First release of Hello World!\n 3 files changed, 26 insertions(+)\n create mode 100644 README.md\n create mode 100644 bluestyle.css\n create mode 100644 index.html\n\n---\n\nExample\ngit commit -a -m \"Quick update to README\"\n[master 123abcd] Quick update to README\n 1 file changed, 2 insertions(+)\n\n---\n\nWhat happens if you try to commit a new file with\n-a\n?\n$ git commit -a -m \"Try to commit new file\"\nOn branch master\n\nNo commits yet\n\nUntracked files:\n  (use \"git add\n...\" to include in what will be committed)\n        index.html\n\nnothing added to commit but untracked files present (use \"git add\" to track)\n\n---\n\nExample\ngit commit\n\n---\n\nExample\ngit log\ncommit 09f4acd3f8836b7f6fc44ad9e012f82faf861803 (HEAD -> master)\nAuthor: w3schools-test <test@w3schools.com>\nDate:   Fri Mar 26 09:35:54 2021 +0100\n\n    Updated index.html with a new line\n\ncommit 221ec6e10aeedbfd02b85264087cd9adc18e4b26\nAuthor: w3schools-test <test@w3schools.com>\nDate:   Fri Mar 26 09:13:07 2021 +0100\n\n    First release of Hello World!\n\n---\n\nExample\ngit log --oneline\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n\n---\n\nExample\ngit log --stat\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_7",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

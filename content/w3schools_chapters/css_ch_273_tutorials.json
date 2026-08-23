@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 273,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Many web pages are based on agrid-view, which means that the page is divided into rows and columns.\n\nA responsive grid-view often has 6 or 12 columns, and will shrink and expand as you resize the browser window.\n\nLets start building a grid-view.\n\nFirst ensure that all HTML elements have thebox-sizingproperty set toborder-box. \nThis makes sure that the padding and border are included in the total width and height of \nthe elements.\n\nAdd the following at the top of your CSS:\n\nRead more about thebox-sizingproperty in ourCSS Box Sizingchapter.\n\nWe create a grid container with five grid items (header, menu, content, facts, \nfooter):\n\nAdd some styles and colors to make it look better:\n\n### Code Snippets\n\n```\n* {\nbox-sizing: border-box;\n}\n\n---\n\n<div class=\"grid-container\">\n<div class=\"header\"><h1>Chania</h1></div>\n<div class=\"menu\">\n<ul>\n<li>The \n  Flight</li>\n<li>The City</li>\n<li>The Island</li>\n<li>The Food</li>\n</ul>\n</div>\n<div class=\"content\">\n<h1>The City</h1>\n<p>Chania is the capital of the Chania region on the island of Crete.</p>\n<p>The city can be divided in two parts, the old town and the modern city. The \n  old town is situated next to the old harbour and is the matrix around which \n  the whole urban area was developed.</p>\n<p>Chania lies along the \n  north west coast of the island Crete.</p>\n</div>\n<div \n  class=\"facts\">\n<h2>Facts:</h2>\n<ul>\n<li>Chania is a city on the island of Crete</li>\n<li>Crete is a Greek island in the Mediterranean Sea</li>\n</ul>\n</div>\n<div class=\"footer\"><p>A footer.</p></div>\n</div>\n\n---\n\n* {\nbox-sizing: border-box;\n}\nbody {\nfont-family: \"Lucida Sans\", sans-serif;\nfont-size: 17px;\n}\n.grid-container {\ndisplay: grid;\ngrid-template-areas:\n'header'\n'menu'\n'main'\n'facts'\n'footer';\nbackground-color: white;\ngap: 10px;\n}\n.header {\ngrid-area: header;\nbackground-color: purple;\ntext-align: center;\ncolor: #ffffff;\n}\n.header > h1 {\nfont-size: 40px;\n}\n.menu {\ngrid-area: menu;\n}\n.menu ul {\nlist-style-type: none;\nmargin: 0;\npadding: 0;\n}\n.menu li {\npadding: 8px;\nmargin-bottom: 7px;\nbackground-color: #33b5e5;\ncolor: \n  #ffffff;\n}\n.menu li:hover {\nbackground-color: #0099cc;\n}\n.content {\ngrid-area: main;\n}\n.content > h1 {\nfont-size: 30px;\nmargin-bottom: 7px;\n}\n.content > p {\nmargin-bottom: 7px;\n}\n.facts {\ngrid-area: facts;\nborder: 1px solid #0099cc;\nbackground-color: beige;\npadding: 10px;\n}\n.facts > h2 {\nfont-size: 20px;\n}\n.facts li {\nmargin-bottom: 5px;\n}\n.footer {\ngrid-area: footer;\nbackground-color: #0099cc;\ncolor: \n  #ffffff;\ntext-align: center;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_272",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

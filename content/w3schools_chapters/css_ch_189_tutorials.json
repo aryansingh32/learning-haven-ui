@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 189,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "CSS transitions allows you to change property values smoothly, over a given duration.\n\nMouse over the element below to see a CSS transition effect:\n\nTo create a transition effect, you must specify the CSS property you want to add a \ntransition to, and the duration of the transition.\n\nThe CSStransitionproperty is a shorthand property for:\n\nThe following example shows a 100px * 100px <div> element. The <div> \nelement has specified a transition effect for the width property, with a duration of 2 seconds:\n\nThe transition is triggered when there is a change in the element's properties. \nThis often happens within pseudo-classes (:hover, :active, :focus, or \n:checked).\n\nSo, from the code above, the transition effect will start when the width property changes value.\n\nNow, we add a div:hover class that specifies a new value for the width property when a user \nmouses over the <div> element:\n\nNotice that when the cursor mouses out of the element, it will gradually change back to its original style.\n\nYou can change multiple properties by separating them by commas.\n\nThe following example adds a transition effect for the width, height, and \nbackground-color properties, with a duration \nof 2 seconds for the width, 4 seconds for the height, and 3 seconds for the \nbackground-color:\n\nThe following table lists all the CSS transition properties:\n\n### Code Snippets\n\n```\ndiv\n{\nwidth: 100px;\nheight: 100px;\nbackground-color: red;\ntransition: width 2s;\n}\n\n---\n\ndiv:hover\n{\nwidth: 300px;\n}\n\n---\n\ndiv\n{\ntransition: width 2s, height 4s, background-color 3s;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_188",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

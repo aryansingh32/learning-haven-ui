@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 6,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nWhenbreakis encountered in a loop,the loop terminates immediately.The program control is transfered to the statements following the loop.No more loop iterationsare executed.ExampleTerminate the loop (break the loop) when the loop counter (i) is 3:for (let i = 0; i < 10; i++) {if (i === 3) { break; }text += \"The number is \" + i + \"<br>\";}Try it Yourself \u00bbYou have already seen thebreakstatement used in an earlier \nchapter of this tutorial.It was used to \"jump out\" of aswitchstatement.Break in a SwitchIn aswitchstatement, abreakstatement\nwill exit the switch block after a matching case is executed. Without break, execution would \"fall through\" to subsequent case blocks.ExampleUse the weekday number to calculate the weekday name:switch (new Date().getDay()) {case 0:day = \"Sunday\";break;case 1:day = \"Monday\";break;case 2:day = \"Tuesday\";break;case 3:day = \"Wednesday\";break;case 4:day = \"Thursday\";break;case 5:day = \"Friday\";break;case 6:day = \"Saturday\";}Try it Yourself \u00bbThebreakkeyword is crucial for preventing a switch \"fall-through.\"Withoutbreak, the code will continue to execute the next case blocks\n(and the default block if present)even if their values do not match the expression.JavaScript LabelsA label provides a name for a statement, or a block of statements,\nallowing statements to be referenced to, for program flow control,\nparticularly in loops.SyntaxA label is an identifier followed by a colon (:).labelname:statement;A label precedes a statement or a block of code.labelname: {statements}Labeled BreakSyntaxbreaklabelname;Thebreakstatement exits a loop or block\nand transfers the control to the labeled statement.Thebreakstatement is particularly useful for breaking out of\ninner or outer loops from nested loops.ExampleBreak toloop1:let text = \"\";loop1: for (let j = 1; j < 5; j++) {loop2: for (let i = 1; i < 5; i++) {if (i === 3) { break loop1; }text += i;}}Try it Yourself \u00bbExampleBreak toloop2:let text = \"\";loop1: for (let j = 1; j < 5; j++) {loop2: for (let i = 1; i < 5; i++) {if (i === 3) { break loop2; }text += i;}}Try it Yourself \u00bbbreakandcontinueare the only JavaScript statements that can \"jump out of\" a code block.A code block is a block of code between { and }.Without a label reference,breakcan onlyjump out of a loop or a switch.With a label reference,breakcanjump out \nof any code block:ExampleBreak out of the block after the second car:const cars = [\"BMW\", \"Volvo\", \"Saab\", \"Ford\"];list: {text += cars[0] + \"<br>\";text += cars[1] + \"<br>\";break list;text += cars[2] + \"<br>\";text += cars[3] + \"<br>\";}Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nfor (let i = 0; i < 10; i++) {\nif (i === 3) { break; }\ntext += \"The number is \" + i + \"<br>\";\n}\n\n---\n\nswitch (new Date().getDay()) {\ncase 0:\nday = \"Sunday\";\nbreak;\ncase 1:\nday = \"Monday\";\nbreak;\ncase 2:\nday = \"Tuesday\";\nbreak;\ncase 3:\nday = \"Wednesday\";\nbreak;\ncase 4:\nday = \"Thursday\";\nbreak;\ncase 5:\nday = \"Friday\";\nbreak;\ncase 6:\nday = \"Saturday\";\n}\n\n---\n\nlabelname\n:\nstatement\n;\n\n---\n\nlabelname\n: {\nstatements\n}\n\n---\n\nbreak\nlabelname\n;\n\n---\n\nlet text = \"\";\nloop1: for (let j = 1; j < 5; j++) {\nloop2: for (let i = 1; i < 5; i++) {\nif (i === 3) { break loop1; }\ntext += i;\n}\n}\n\n---\n\nlet text = \"\";\nloop1: for (let j = 1; j < 5; j++) {\nloop2: for (let i = 1; i < 5; i++) {\nif (i === 3) { break loop2; }\ntext += i;\n}\n}\n\n---\n\nconst cars = [\"BMW\", \"Volvo\", \"Saab\", \"Ford\"];\nlist: {\ntext += cars[0] + \"<br>\";\ntext += cars[1] + \"<br>\";\nbreak list;\ntext += cars[2] + \"<br>\";\ntext += cars[3] + \"<br>\";\n}\n```\n\n## Tutorials\n\nA label provides a name for a statement, or a block of statements,\nallowing statements to be referenced to, for program flow control,\nparticularly in loops.\n\n### Code Examples\n\n```\nfor (let i = 1; i < 10; i++) {\nif (i === 3) { continue; }\ntext += \"The number is \" + i + \"<br>\";\n}\n\n---\n\nlabelname\n:\nstatement\n;\n\n---\n\nlabelname\n: {\nstatements\n}\n\n---\n\ncontinue\nlabelname\n;\n\n---\n\nlet text = \"\";\nloop1: for (let j = 1; j < 5; j++) {\nloop2: for (let i = 1; i < 5; i++) {\nif (i === 3) { continue loop1; }\ntext += i;\n}\n}\n\n---\n\nlet text = \"\";\nloop1: for (let j = 1; j < 5; j++) {\nloop2: for (let i = 1; i < 5; i++) {\nif (i === 3) { continue\nloop2\n; }\ntext += i;\n}\n}\n```\n\n## Tutorials\n\nDefault flow executes codesequentially(from top to bottom / from left to right).\n\nConditions let youmake decisionsusing:\n\nLoops let yourun code multiple timesusing:forwhiledo...whileExampleRepeat flow until a condition (i < 5) is false.for (let i = 0; i < 5; i++) {text += \"The number is \" + i + \"<br>\";}Try it Yourself \u00bbJump StatementsJump statements let youchange the flowabruptly using:break - exits a loop or switchcontinue - skips the current loop iterationreturn - exits from a functionthrow - jumps to error handlingExampleTerminate (break) the loop when the loop counter (i) is 3:for (let i = 0; i < 10; i++) {if (i === 3) { break; }text += \"The number is \" + i + \"<br>\";}Try it Yourself \u00bbFunction FlowFunctions arecallableand reusablecode blocksFunctions will run when they are called.ExampleFunction to compute the product of two numbers:function myFunction(p1, p2) {return p1 * p2;}Try it Yourself \u00bbJavaScript Is Single-ThreadedJavaScript runs on asingle thread.It can only doone thing at a time.Every task has to wait for the previous one to finish.This can freeze an application during slow operations (like file requests).JavaScript can also run code asynchronously.Asynchronous programming is covered in the JS Advanced section:JavaScript Asynchronous Programming.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nlet x = 5;\nlet y = 6;\nlet z = x + y;\n\n---\n\nlet text = \"Unknown\";\nif (age >= 18) {\ntext = \"Adult\";\n} else {\ntext = \"Minor\";\n}\n\n---\n\nfor (let i = 0; i < 5; i++) {\ntext += \"The number is \" + i + \"<br>\";\n}\n\n---\n\nfor (let i = 0; i < 10; i++) {\nif (i === 3) { break; }\ntext += \"The number is \" + i + \"<br>\";\n}\n\n---\n\nfunction myFunction(p1, p2) {\nreturn p1 * p2;\n}\n```\n\n## Tutorials\n\nA JavaScript string is zero or more characters written inside quotes.\n\nYou can use single or double quotes:\n\nYou can use quotes inside a string, as long as they don't match the quotes \nsurrounding the string:\n\nTemplates were introduced with ES6 (JavaScript 2016).\n\nTemplates are strings enclosed in backticks (`This is a template string`).\n\nTemplates allow single and double quotes inside a string:\n\nTo find the length of a string, use the built-inlengthproperty:\n\nBecause strings must be written within quotes, JavaScript will misunderstand this string:\n\nThe string will be chopped to \"We are the so-called \".\n\nTo solve this problem, you can use anbackslash escape character.\n\nThe backslash escape character (\\) turns special characters into string characters:\n\nSix other escape sequences are valid in JavaScript:\n\nFor readability, programmers often like to avoid long code lines.\n\nA safe way to break up astatementis after an operator:\n\nA safe way to break up astringis by using string addition:\n\nTemplates were introduced with ES6 (JavaScript 2015).\n\nTemplates are strings enclosed in backticks (`This is a template string`).\n\nTemplates allow multiline strings:\n\nNormally, JavaScript strings are primitive values, created from literals:\n\nBut strings can also be defined as objects with the keywordnew:\n\n### Code Examples\n\n```\nlet text = \"John Doe\";\n\n---\n\nlet carName1 = \"Volvo XC60\";\u00a0 \n  // Double quotes\nlet carName2 = 'Volvo XC60';\u00a0 // Single quotes\n\n---\n\nlet answer1 = \"It's alright\";\nlet answer2 = \"He is called 'Johnny'\";\nlet answer3 = 'He is called \"Johnny\"';\n\n---\n\nlet text = `He's often called \"Johnny\"`;\n\n---\n\nlet text = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\nlet length = text.length;\n\n---\n\nlet text = \"We are the so-called \"Vikings\" from the north.\";\n\n---\n\nlet text = \"We are the so-called \\\"Vikings\\\" from the north.\";\n\n---\n\nlet text= 'It\\'s alright.';\n\n---\n\nlet text = \"The character \\\\ is called backslash.\";\n\n---\n\ndocument.getElementById(\"demo\").innerHTML =\n\"Hello Dolly!\";\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello \" +\n\"Dolly!\";\n\n---\n\nlet text =\n`The quick\nbrown fox\njumps over\nthe lazy dog`;\n\n---\n\nlet x = \"John\";\n\n---\n\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = \"John\";\nlet y = new String(\"John\");\n\n---\n\nlet x = new String(\"John\");\nlet y = new String(\"John\");\n\n---\n\nlet x = new String(\"John\");\nlet y = new String(\"John\");\n```\n\n## Tutorials\n\nTemplate Stringsuse back-ticks (``) rather than the quotes (\"\") to define a string:\n\nTemplate Stringsallow both single and double quotes inside a string:\n\nTemplate Stringsallow multiline strings:\n\nTemplate Stringsallow variables in strings.\n\nTemplate strings provide an easy way tointerpolatevariables in strings.\n\nTemplate Stringsallowinterpolation of expressionsin strings:\n\nTemplate Stringsis anES6  feature.\n\nES6 is fully supported in all modern browsers since June 2017:\n\n### Code Examples\n\n```\nlet text = `Hello World!`;\n\n---\n\nlet text = `He's often called \"Johnny\"`;\n\n---\n\nlet text =\n`The quick\nbrown fox\njumps over\nthe lazy dog`;\n\n---\n\n${...}\n\n---\n\nlet firstName = \"John\";\nlet lastName = \"Doe\";\nlet text = `Welcome ${firstName}, ${lastName}!`;\n\n---\n\nlet price = 10;\nlet VAT = 0.25;\nlet total = `Total: ${(price * (1 + VAT)).toFixed(2)}`;\n\n---\n\nlet header = \"Template Strings\";\nlet tags = [\"template strings\", \"javascript\", \"es6\"];\nlet html = `<h2>${header}</h2><ul>`;\nfor (const x of tags) {\nhtml += `<li>${x}</li>`;\n}\nhtml += `</ul>`;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_6",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_6",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

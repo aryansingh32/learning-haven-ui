@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 24,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nSix different values can be returned by the error name property:\n\n## Tutorials\n\nProgramming code might contain syntax errors, or logical errors.\n\nMany of these errors are difficult to diagnose.\n\nWhen code fails, beginners oftenguesswhat is wrong.\n\nDebugging is the opposite: youcheck facts.\n\nA good debugging habit is:Read\u2192Reproduce\u2192Reduce\u2192Fix\n\nOften, when programming code contains errors, nothing will happen. There are \nno error messages, and you will get no indications where to search for errors.\n\nSearching for (and fixing) errors in programming code is called code debugging.\n\nDebugging is not easy. But fortunately, all modern browsers have a built-in \nJavaScript debugger.\n\nBuilt-in debuggers can be turned on and off, forcing errors to be reported to \nthe user.\n\nWith a debugger, you can also set breakpoints (places where code execution \ncan be stopped), and examine variables while the code is executing.\n\nThe browser console shows errors and messages from JavaScript.\n\nIf your code \"does nothing\", the console often tells you why.\n\nNormally (otherwise follow the steps at the bottom of this page), youactivate debuggingin your browser with \ntheF12 key, and selectConsolein the debugger menu.\n\nIn JavaScriptconsole.log()prints values to the console.\n\nThis helps you to see what your code is doing.\n\nMany bugs happen because youassume a valueis something, but it is not.\n\nCheck the value.\n\nCheck the type.\n\nError messages look scary, but they usually mean one of a few common things.\n\nMeans: This name does not exist.\n\nOften a misspelling or variable not declared.\n\nMeans: You tried to use a value in an impossible way.\n\nOftenundefinedornull.\n\nYou can activate debugging in your browser withF12, and selectConsolein the debugger menu.\n\nOtherwise follow these steps:\n\n### Code Examples\n\n```\n<!DOCTYPE html>\n<html>\n<body>\n<h1>My First Web Page</h1>\n<script>\nconsole.log(\"Hello!\");\n</script>\n</body>\n</html>\n\n---\n\nlet price = 50;\nlet quantity = 3;\nlet total = price * quantity;\nconsole.log(\"Total:\", total);\n\n---\n\nlet x = 5;\nlet y = \"5\";\nconsole.log(x + y);\u00a0\u00a0// 55 (string!)\nconsole.log(x + Number(y));\u00a0\u00a0// 10 (number)\n\n---\n\nconsole.log(myValue);\n// ReferenceError: myValue is not defined\n\n---\n\nlet x;\nconsole.log(x.length);\n// TypeError: Cannot read properties of undefined\n\n---\n\nlet x = 10;\nif (x = 5) {\nconsole.log(\"This runs\");\n}\n\n---\n\nlet x = 10;\nif (x === 5) {\nconsole.log(\"This runs only if x is 5\");\n}\n\n---\n\n<script>\nlet a = 5;\nlet b = 6;\nlet c = a + b;\nconsole.log(c);\n```\n\n## Tutorials\n\nIn Chrome or Edge, open the console like this:\n\nThe most common console method isconsole.log().\n\nUse it to print values and see what your program is doing.\n\nUseconsole.warn()to display warnings.\n\nWarnings tell you something might be wrong, but your code can still run.\n\nUseconsole.error()to display error messages.\n\nErrors show that something has failed.\n\nYou can log more than one value at once.\n\nThe console is very useful for inspecting objects.\n\nUseconsole.table()to display data in a table format.\n\nBeginners oftenguesswhat the value is.\n\nProfessionalslog the valueand confirm it.\n\nLogging is powerful, but sometimes you need to pause code execution.\n\nNext page: Learn how to use breakpoints, step through code, and watch variables live.\n\n### Code Examples\n\n```\nconsole.log(\"Hello from JavaScript!\");\n\n---\n\nlet name = \"John\";\nlet age = 25;\nconsole.log(name);\nconsole.log(age);\n\n---\n\nconsole.warn(\"This is a warning!\");\n\n---\n\nconsole.error(\"Something went wrong!\");\n\n---\n\nlet x = 10;\nlet y = 5;\nconsole.log(\"x =\", x, \"y =\", y);\n\n---\n\nlet user = {name: \"John\", age: 25};\nconsole.log(user);\n\n---\n\nlet users = [\n{name: \"John\", age: 25},\n{name: \"Anna\", age: 30}\n];\nconsole.table(users);\n```\n\n## Tutorials\n\nA breakpoint pauses code execution on a specific line.\n\nWhen the code stops, you can inspect variables and step through the code line by line.\n\nBreakpoints are set inside the browser developer tools.\n\nIn the debugger window, you can set breakpoints in the JavaScript code.\n\nAt each breakpoint, JavaScript will stop executing, and let you examine \nJavaScript values.\n\nAfter examining values, you can resume the execution of code (typically with \na play button).\n\nOpen the browser developer tools withF12and go to theSourcestab.\n\nClick on the line numbersin your script to add breakpoints.\n\nReloadthe page to trigger the breakpoint.\n\nUse theplay buttonto run your code line by line.\n\nThedebuggerkeyword stops the execution of JavaScript, \nand calls (if available) the debugging function.\n\nThis has the same function as setting a breakpoint in the debugger.\n\nIf no debugging is available, the debugger statement has no effect.\n\nWith the debugger turned on, this code will stop executing before it \nexecutes the third line.\n\nWhen execution is paused, you can control how the code runs.\n\nThe Scope panel shows which variables are available at the current line.\n\nIt helps you understand where variables live.\n\nAt the breakpoint,yexists only inside the function.\n\nThe Watch panel lets you track variable values live.\n\nThis is useful when values change many times.\n\nAdd a variable name to the Watch panel.\n\nThe value updates automatically as you step through the code.\n\nIf execution stops repeatedly, disable the breakpoint temporarily.\n\nNext page explains the most common JavaScript error messages.\n\nYou will learn what they mean and how to fix them.\n\n### Code Examples\n\n```\nfunction add(a, b) {\nlet result = a + b;\nreturn result;\n}\ndocument.getElementById(\"demo\").innerHTML = add(10, 5);\ndocument.getElementById(\"demo\").innerHTML = add(10, 50);\ndocument.getElementById(\"demo\").innerHTML = add(10, 500);\ndocument.getElementById(\"demo\").innerHTML = add(10, 5000);\n\n---\n\nlet x = 15 * 5;\ndebugger;\ndocument.getElementById(\"demo\").innerHTML = x;\n\n---\n\nlet x = 10;\nfunction test() {\nlet y = 5;\nconsole.log(x + y);\n}\ntest();\n```\n\n## Tutorials\n\nAn error message usually has three important parts.\n\nClick the line number in the console to jump to the exact line of code.\n\nAReferenceErrormeans a variable or function name does not exist.\n\nThis is often caused by a misspelling or a missing declaration.\n\nJavaScript says it cannot findmyValue.\n\nATypeErrormeans you used a value in an invalid way.\n\nThis usually happens withundefinedornull.\n\nThe variable exists, but it has no value.\n\nYou cannot read properties fromundefined.\n\nASyntaxErrormeans JavaScript cannot understand your code.\n\nThis is often caused by missing brackets or parentheses.\n\nThe closing parenthesis is missing.\n\nNaNmeansNot a Number.\n\nThis happens when JavaScript cannot perform valid math.\n\nThe result isNaN.\n\nThis is one of the most common beginner errors.\n\nIt means you are trying to use something that does not exist.\n\nThe variable exists, but the object does not.\n\nOne error often causes many others.\n\nAsync code introduces new types of bugs.\n\nThe next page shows how to debugfetch(), promises, and async functions.\n\n### Code Examples\n\n```\nconsole.log(myValue);\n\n---\n\nlet x;\nconsole.log(x.length);\n\n---\n\nif (x == 5 {\nconsole.log(\"Hello\");\n}\n\n---\n\nlet result = \"abc\" * 5;\nconsole.log(result);\n\n---\n\nlet user;\nconsole.log(user.name);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_24",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_24",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

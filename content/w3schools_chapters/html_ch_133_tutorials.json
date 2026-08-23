@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 133,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The HTML<canvas>element is used to draw graphics, on the fly, via JavaScript.\n\nThe<canvas>element is only a container for graphics. You must use  \nJavaScript to actually draw the graphics.\n\nCanvas has several methods for drawing paths, boxes, circles, text, and adding images.\n\nCanvas is supported by all major browsers.\n\nA canvas is a rectangular area on an HTML page. By default, a canvas has no border and no content.\n\nThe markup looks like this:\n\nNote:Always specify anidattribute (to be referred to in a script), \nand awidthandheightattribute to define the size of the canvas. To add a border, use thestyleattribute.\n\nHere is an example of a basic, empty canvas:\n\nAfter creating the rectangular canvas area, you must add a JavaScript to do \nthe drawing.\n\nHere are some examples:\n\nTo learn more about<canvas>, please \nread ourHTML Canvas Tutorial.\n\n### Code Snippets\n\n```\n<canvas id=\"myCanvas\" width=\"200\" height=\"100\"></canvas>\n\n---\n\n<canvas id=\"myCanvas\" width=\"200\" height=\"100\"\nstyle=\"border:1px solid \n#000000;\">\n</canvas>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.moveTo(0, 0);\nctx.lineTo(200, 100);\nctx.stroke();\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.beginPath();\nctx.arc(95, 50, 40, 0, 2 * Math.PI);\nctx.stroke();\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.font = \"30px Arial\";\nctx.fillText(\"Hello World\", 10, 50);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nctx.font = \"30px Arial\";\nctx.strokeText(\"Hello World\", 10, 50);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\n// Create gradient\nvar grd = ctx.createLinearGradient(0, 0, 200, 0);\ngrd.addColorStop(0, \"red\");\ngrd.addColorStop(1, \"white\");\n// Fill with gradient\nctx.fillStyle = grd;\nctx.fillRect(10, 10, 150, 80);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\n// Create gradient\nvar grd = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);\ngrd.addColorStop(0, \"red\");\ngrd.addColorStop(1, \"white\");\n// Fill with gradient\nctx.fillStyle = grd;\nctx.fillRect(10, 10, 150, 80);\n</script>\n\n---\n\n<script>\nvar c = document.getElementById(\"myCanvas\");\nvar ctx = c.getContext(\"2d\");\nvar img = document.getElementById(\"scream\");\nctx.drawImage(img, 10, 10);\n</script>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_132",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

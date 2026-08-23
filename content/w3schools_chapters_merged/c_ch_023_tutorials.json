@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 23,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nAvirtual functionis a member function in the base class that can beoverriddenin derived classes.\n\nVirtual functions are a key part ofpolymorphismin C++. They let different objects respond differently to the same function call.\n\nWithoutvirtual, C++ decides which function to call based on the pointer type, not the actual object type.\n\nWithvirtual, it checks the actual object the pointer is pointing to.\n\nOr to put it even more simply:Withoutvirtual: the base function runs, even \nif the object is from a child class.Withvirtual: the child's version runs, like \nyou expect.Without Virtual FunctionExample (No virtual keyword)class Animal {public:void sound() {cout << \"Animal sound\\n\";}};class Dog : public Animal {public:void sound() {cout << \"Dog barks\\n\";}};int main() {Animal* a;\u00a0 // Declare a pointer to the base class (Animal)Dog d;\u00a0 // Create an object of the derived class (Dog)a = &d;\u00a0 // Point the base class pointer to the Dog \n  objecta->sound(); // Call the sound() function using the pointer. Since sound() is \n  not virtual, this calls Animal's versionreturn 0;}Try it Yourself \u00bbEven thoughapoints to aDog, it still callsAnimal::sound()because the function is not virtual.With Virtual FunctionExample (With virtual keyword)class Animal {public:virtualvoid sound() {cout << \"Animal sound\\n\";}};class Dog : public Animal {public:void sound() override {cout << \"Dog barks\\n\";}};int main() {Animal* a;Dog d;a = &d;a->sound();  // Outputs: Dog barksreturn 0;}Try it Yourself \u00bbNow it works!Becausesound()isvirtual, the call uses the actual object's function and not just the pointer type.Usevirtualonly in the base classUseoverride(optional, but recommended) in the derived class for clarityThe->Operator in C++You might be wondering why we used->in the examples above.The->operator is used to access members (like functions or variables) through apointer.It's a shortcut for writing(*pointer).member:Animal* a = new Animal();a->sound();  // Same as (*a).sound();Tip:If you are using a pointer to an object, use->to access its members.\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\nclass Animal {\npublic:\nvoid sound() {\ncout << \"Animal sound\\n\";\n}\n};\nclass Dog : public Animal {\npublic:\nvoid sound() {\ncout << \"Dog barks\\n\";\n}\n};\nint main() {\nAnimal* a;\u00a0 // Declare a pointer to the base class (Animal)\nDog d;\u00a0 // Create an object of the derived class (Dog)\na = &d;\u00a0 // Point the base class pointer to the Dog \n  object\na->sound(); // Call the sound() function using the pointer. Since sound() is \n  not virtual, this calls Animal's version\nreturn 0;\n}\n\n---\n\nclass Animal {\npublic:\nvirtual\nvoid sound() {\ncout << \"Animal sound\\n\";\n}\n};\nclass Dog : public Animal {\npublic:\nvoid sound() override {\ncout << \"Dog barks\\n\";\n}\n};\nint main() {\nAnimal* a;\nDog d;\na = &d;\na->sound();  // Outputs: Dog barks\nreturn 0;\n}\n\n---\n\nAnimal* a = new Animal();\na->sound();  // Same as (*a).sound();\n```\n\n## Tutorials\n\nTemplates let you write a function or class that works with different data types.\n\nThey help avoid repeating code and make programs more flexible.\n\nYou can create a function template by using thetemplatekeyword:\n\nIn the example above,add<int>(5, 3)tells the compiler to useintforT, whileadd<double>(2.5, 1.5)tells it to usedouble.\n\nYou can also use templates to make classes that work with any data type:\n\nThe example below defines a template classBoxthat can store and display a value of any data type, and then creates one box for anintand one for astring:\n\nAnd this example defines a template classPairthat stores two values of different types and displays them, then creates one pair for a person's name and age, and another for an ID and score:\n\nTemplates let you:\n\n### Code Examples\n\n```\ntemplate <\ntypename T\n>\nreturn_type\nfunction_name\n(\nT parameter\n) {\n  // code\n}\n\n---\n\ntemplate <typename T>\nT add(T a, T b) {\nreturn a + b;\n}\nint main() {\ncout << add<int>(5, 3) << \"\\n\";\ncout << add<double>(2.5, 1.5) << \"\\n\";\nreturn 0;\n}\n\n---\n\ntemplate <\ntypename T\n>\nclass\nClassName\n{\n  // members and methods using T\n};\n\n---\n\ntemplate <typename T>\nclass Box {\npublic:\nT value;\nBox(T v) {\nvalue = v;\n}\nvoid show() {\ncout << \"Value: \" << value << \"\\n\";\n}\n};\nint main() {\nBox<int> intBox(50);\nBox<string> strBox(\"Hello\");\nintBox.show();\nstrBox.show();\nreturn 0;\n}\n\n---\n\ntemplate <typename T1, typename T2>\nclass Pair {\npublic:\nT1 first;\nT2 second;\nPair(T1 \n    a, T2 b) {\nfirst = a;\nsecond = b;\n}\nvoid display() \n    {\ncout << \"First: \" << first << \", Second: \n    \" << second << \"\\n\";\n}\n};\nint main() {\nPair<string, int> \n    person(\"John\", 30);\nPair<int, double> score(51, 9.5);\nperson.display();\nscore.display();\nreturn 0;\n}\n```\n\n## Tutorials\n\nThefstreamlibrary allows us to work with files.\n\nTo use thefstreamlibrary, include both the standard<iostream>ANDthe<fstream>header file:\n\nThere are three classes included in thefstreamlibrary, \nwhich are used to create, write or read files:\n\nTo create a file, use either theofstreamorfstreamclass, \nand specify the name of the file.\n\nTo write to the file, use the insertion operator (<<).\n\nTo read from a file, use either theifstreamorfstreamclass, and the name of the file.\n\nNote that we also use awhileloop together with thegetline()function \n(which belongs to theifstreamclass) to read the file line by line, and to print the content of the file:\n\nFor a complete reference of <fstream> classes and functions, go to ourC++ fstream Reference.\n\n### Code Examples\n\n```\n#include <iostream>\n#include <fstream>\n\n---\n\n#include <iostream>\n#include <fstream>\nusing namespace std;\nint main() {\n// Create and open a text file\nofstream MyFile(\"filename.txt\");\n// \n    Write to the file\nMyFile << \"Files can be tricky, but it is fun \n    enough!\";\n// \n    Close the file\nMyFile.close();\n}\n\n---\n\n// Create a \n    text string, which is used to output the text file\nstring myText;\n// Read from the text file\nifstream MyReadFile(\"filename.txt\");\n// Use a while \n    loop together with the getline() function to read the file line by line\nwhile (getline (MyReadFile, \n    myText)) {\n// Output the text from the file\ncout << myText;\n}\n// Close the file\nMyReadFile.close();\n```\n\n## Tutorials\n\nThe<ctime>library allows us to work \nwith dates and times.\n\nTo use it, you must import the<ctime>header file:\n\nThe<ctime>library has a variety of functions to measure dates and times.\n\nThetime()function gives us atimestamprepresenting the current date and time. We can use thectime()function to show the date and time that a timestamp represents:\n\nThere are two different data types used to store the date and time:time_tfortimestampsandstruct tmfordatetime structures.\n\nTimestampsrepresent a moment in time as a single number, which makes it easier for the computer to do calculations.\n\nDatetime structuresare structures that represent different components of the date and time as members. This makes it easier for us to specify dates. Datetime structures have the following members:\n\nThetime()function can only create a timestamp for the current date, but we can create a timestamp for any date by using themktime()function.\n\nThemktime()function converts a datetime structure into a timestamp.\n\nThemktime()function also fills in thetm_wdayandtm_ydaymembers of the datetime structure with the correct values, which completes the structure and gives a valid datetime. It can be used, for example, to find the weekday of a given date:\n\nThelocaltime()andgmtime()functions can convert timestamps into datetime structures.\n\nThelocaltime()function returns a pointer to a structure representing the time in the computer's time zone.\n\nThegmtime()function returns a pointer to a structure representing the time in the GMT time zone.\n\nThese functions return apointerto a datetime structure. If we want to make sure its value does not change unexpectedly we should make a copy of it by dereferencing the pointer. To learn about dereferencing, see theC++ Dereference tutorial.\n\nSo far we have been using thectime()function to display the date contained in a timestamp. To display dates from a datetime structure we can use theasctime()function.\n\nThectime()andasctime()functions allow us to display the date but they do not allow us to choose how it is displayed.\n\nTo choose how a date is displayed we can use thestrftime()function.\n\nThestrftime()function formats a date and writes it as a C-style string into achararray. It has four parameters:\n\nThe following table has some useful format specifiers. For a more complete list, look at thestrftime() reference page.\n\nThere are two different functions that can be used to measure differences in time.\n\nThedifftime()function measures the number of seconds that passed between two different time stamps. This is useful when measuring time differences between dates.\n\nTheclock()function is useful for measuring short intervals of time while the program is running. It is more precise than thedifftime()function.\n\nEach call to the clock function returns a special kind of timestamp measured in clocks (a unit of time that depends on how the library was implemented) which has a data typeclock_t. To measure a time difference, store a timestamp at two different moments in time and then subtract them. The time difference is measured in clocks, but you can convert it into seconds by dividing it by theCLOCKS_PER_SECconstant.\n\nFor a complete reference of <ctime> functions, go to ourC++ ctime Reference.\n\n### Code Examples\n\n```\nExample\n#include <ctime> // Import the ctime library\n\n---\n\nExample\nDisplay the current date:\n// Get the timestamp for the current date and time\ntime_t timestamp;\ntime(&timestamp);\n\n// Display the date and time represented by the timestamp\ncout << ctime(&timestamp);\nTry it Yourself \u00bb\n\n---\n\ntime_t timestamp = time(NULL);\n\n---\n\nExample\nCreate a timestamp using the\nmktime()\nfunction:\nstruct tm datetime;\ntime_t timestamp;\n\ndatetime.tm_year = 2023 - 1900; // Number of years since 1900\ndatetime.tm_mon = 12 - 1; // Number of months since January\ndatetime.tm_mday = 17;\ndatetime.tm_hour = 12;\ndatetime.tm_min = 30;\ndatetime.tm_sec = 1;\n// Daylight Savings must be specified\n// -1 uses the computer's timezone setting\ndatetime.tm_isdst = -1;\n\ntimestamp = mktime(&datetime);\n\ncout << ctime(&timestamp);\nTry it Yourself \u00bb\n\n---\n\nExample\nFind the weekday of a specified date:\n// Create the datetime structure and use mktime to fill in the missing members\nstruct tm datetime;\ndatetime.tm_year = 2023 - 1900; // Number of years since 1900\ndatetime.tm_mon = 12 - 1; // Number of months since January\ndatetime.tm_mday = 17;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nmktime(&datetime);\n\nstring weekdays[] = {\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"};\n\ncout << \"The date is on a \" << weekdays[datetime.tm_wday];\nTry it Yourself \u00bb\n\n---\n\nExample\nGet a datetime structure and output the current hour:\ntime_t timestamp = time(&timestamp);\nstruct tm datetime = *localtime(&timestamp);\n\ncout << datetime.tm_hour;\nTry it Yourself \u00bb\n\n---\n\nExample\nDisplay the date represented by a datetime structure:\ntime_t timestamp = time(NULL);\nstruct tm datetime = *localtime(&timestamp);\n\ncout << asctime(&datetime);\nTry it Yourself \u00bb\n\n---\n\nExample\nCorrect a date before displaying it:\n// Create the datetime structure and use mktime to correct mistakes\nstruct tm datetime;\ndatetime.tm_year = 2022 - 1900; // Number of years since 1900\ndatetime.tm_mon = 0; // 0 is January\ndatetime.tm_mday = 32;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nmktime(&datetime);\n\ncout << asctime(&datetime);\nTry it Yourself \u00bb\n\n---\n\nExample\nRepresent the current date in different ways:\ntime_t timestamp = time(NULL);\nstruct tm datetime = *localtime(&timestamp);\n\nchar output[50];\n\nstrftime(output, 50, \"%B %e, %Y\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%I:%M:%S %p\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%m/%d/%y\", &datetime);\ncout << output << \"\\n\";\n\nstrftime(output, 50, \"%a %b %e %H:%M:%S %Y\", &datetime);\ncout << output << \"\\n\";\nTry it Yourself \u00bb\n\n---\n\nExample\nMeasure the time difference between two timestamps\ntime_t now;\ntime_t nextyear;\nstruct tm datetime;\n\nnow = time(NULL);\ndatetime = *localtime(&now);\ndatetime.tm_year = datetime.tm_year + 1;\ndatetime.tm_mon = 0;\ndatetime.tm_mday = 1;\ndatetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;\ndatetime.tm_isdst = -1;\nnextyear = mktime(&datetime);\n\nint diff = difftime(nextyear, now);\n\ncout << diff << \" seconds until next year\";\nTry it Yourself \u00bb\n\n---\n\nExample\nMeasure how long it takes for the program to run:\nclock_t before = clock();\nint k = 0;\nfor(int i = 0; i < 100000; i++) {\n  k += i;\n}\nclock_t duration = clock() - before;\ncout << \"Duration: \" << (float)duration / CLOCKS_PER_SEC << \" seconds\";\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\nEven experienced C++ developers make mistakes. The key is learning how to spot and fix them!\n\nThese pages cover common errors and helpful debugging tips to help you understand what's going wrong and how to fix it.\n\nCompile-time errors are mistakes that prevent your program from compiling.\n\n1) Missing semicolon:\n\n2) Using undeclared variables:\n\n3) Mismatched types (e.g. trying to assign astringto anint):\n\nRuntime errors occur when the program compiles but crashes or behaves unexpectedly.\n\n1) Dividing by zero:\n\n2) Accessing out-of-bounds array elements:\n\n3) Using deleted memory (dangling pointer):\n\nIn the next chapter, you will learn how to debug your code - how to find and fix bugs/errors in your program.\n\n### Code Examples\n\n```\nint x = 5\n\n---\n\ncout << myVar;\n\n---\n\nint x = \"Hello\";\n\n---\n\nint a = 10;\nint b = 0;\nint result = a / b;\u00a0 \n  // not possible\ncout << result;\n\n---\n\nint numbers[3] = {1, 2, 3};\ncout << numbers[8];\u00a0 // element \n  does not exist\n\n---\n\nint* ptr = new int(10);\ndelete ptr;\ncout << *ptr;\u00a0 \n  // invalid\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_23",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_23",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

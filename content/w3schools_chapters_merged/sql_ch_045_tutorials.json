@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 45,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe ADDDATE() function adds a time/date interval to a date and then returns the date.\n\nOR:\n\n### Code Examples\n\n```\nSELECT ADDDATE(\"2017-06-15\", INTERVAL 10 DAY);\n\n---\n\nADDDATE(\ndate\n, INTERVAL\nvalue addunit\n)\n\n---\n\nADDDATE(\ndate\n,\ndays\n)\n\n---\n\nSELECT ADDDATE(\"2017-06-15 09:34:21\", INTERVAL 15 MINUTE);\n\n---\n\nSELECT ADDDATE(\"2017-06-15 09:34:21\", INTERVAL -3 HOUR);\n\n---\n\nSELECT ADDDATE(\"2017-06-15\", INTERVAL -2 MONTH);\n```\n\n## Tutorials\n\nThe ADDTIME() function adds a time interval to a time/datetime and then returns the time/datetime.\n\n### Code Examples\n\n```\nSELECT ADDTIME(\"2017-06-15 \n  09:34:21\", \"2\");\n\n---\n\nADDTIME(\ndatetime\n,\naddtime\n)\n\n---\n\nSELECT ADDTIME(\"2017-06-15 \n  09:34:21.000001\", \"5.000003\");\n\n---\n\nSELECT ADDTIME(\"2017-06-15 09:34:21.000001\", \"2:10:5.000003\");\n\n---\n\nSELECT ADDTIME(\"2017-06-15 \n  09:34:21.000001\", \"5 2:10:5.000003\");\n\n---\n\nSELECT ADDTIME(\"09:34:21.000001\", \"2:10:5.000003\");\n```\n\n## Tutorials\n\nThe CURDATE() function returns the current date.\n\nNote:The date is returned as \n\"YYYY-MM-DD\" (string) or as YYYYMMDD (numeric).\n\nNote:This function equals theCURRENT_DATE()function.\n\n### Code Examples\n\n```\nSELECT CURDATE();\n\n---\n\nCURDATE()\n\n---\n\nSELECT CURDATE() + 1;\n```\n\n## Tutorials\n\nThe CURRENT_DATE() function returns the current date.\n\nNote:The date is returned as \n\"YYYY-MM-DD\" (string) or as YYYYMMDD (numeric).\n\nNote:This function equals theCURDATE()function.\n\n### Code Examples\n\n```\nSELECT CURRENT_DATE();\n\n---\n\nCURRENT_DATE()\n\n---\n\nSELECT CURRENT_DATE() + 1;\n```\n\n## Tutorials\n\nThe CURRENT_TIME() function returns the current time.\n\nNote:The time is returned as \n\"HH-MM-SS\" (string) or as HHMMSS.uuuuuu (numeric).\n\nNote:This function equals theCURTIME()function.\n\n### Code Examples\n\n```\nSELECT CURRENT_TIME();\n\n---\n\nCURRENT_TIME()\n\n---\n\nSELECT CURRENT_TIME() + 1;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_45",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_45",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

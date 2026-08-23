@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 90,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Math.random()returns a random number between 0 (inclusive),\u00a0 and 1 \n(exclusive):\n\nMath.random()always returns a number lower than 1.\n\nMath.random()used withMath.floor()can be used to return random integers.\n\nExplained:\n\nMath.random()returns a floating-point number between 0 (inclusive) and 1 (exclusive).\n\nExample outputs: 0.0, 0.237, 0.9999, but never 1.\n\nMath.random() * 10gives a range from 0 up to but not including 10.\n\nExample possible results: 0.0, 3.5, 9.99, etc.\n\nMath.floor()rounds a number down to the nearest whole integer:3.5 becomes 39.99 becomes 90.1 becomes 0The possible integer results are then0 through 9(both inclusive).In other words, the range is[0, 9].Example// Return a random integer from 0 to 10 (both included):Math.floor(Math.random() * 11);Try it Yourself \u00bbExample// Return a random integer from 0 to 99 (both included):Math.floor(Math.random() * 100);Try it Yourself \u00bbExample// Return a random integer from 0 to 100 (both included):Math.floor(Math.random() * 101);Try it Yourself \u00bbExample// Return a random integer between 1 and 10 (both included):Math.floor(Math.random() * 10) + 1;Try it Yourself \u00bbExplained:Math.random()returns anumberfrom 0 (inclusive) up to but not including 1.Multiplying by 10 gives a number from 0 up to but not including 10.Adding 1 shifts that range to 1 up to but not including 11.Math.floor()then rounds down, so you get anintegerbetween 1 and 10.Example// Returns a random integer from 1 to 100 (both included):Math.floor(Math.random() * 100) + 1;Try it Yourself \u00bbSummaryExpressionRange fromRange toMath.random()0<1Math.random() * 100<10Math.random() * 1000<100Math.floor(Math.random() * 10)09A Proper Random FunctionAs you can see from the examples above, it might be a good idea to create a proper random function\nto use for all random integer purposes.This JavaScript function always returns arandom integerbetween min (included) and \nmax (excluded):Examplefunction getRndInteger(min, max) {return Math.floor(Math.random() * (max - min) ) + min;}Try it Yourself \u00bbThis JavaScript function always returns arandom integerbetween min and max (both included):Examplefunction getRndInteger(min, max) {return Math.floor(Math.random() * (max - min + 1) ) + min;}Try it Yourself \u00bb\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\n// Returns a random number:\nMath.random();\n\n---\n\n// Return a random integer from 0 to 9 (both included):\nMath.floor(Math.random() * 10);\n\n---\n\n// Return a random integer from 0 to 10 (both included):\nMath.floor(Math.random() * 11);\n\n---\n\n// Return a random integer from 0 to 99 (both included):\nMath.floor(Math.random() * 100);\n\n---\n\n// Return a random integer from 0 to 100 (both included):\nMath.floor(Math.random() * 101);\n\n---\n\n// Return a random integer between 1 and 10 (both included):\nMath.floor(Math.random() * 10) + 1;\n\n---\n\n// Returns a random integer from 1 to 100 (both included):\nMath.floor(Math.random() * 100) + 1;\n\n---\n\nfunction getRndInteger(min, max) {\nreturn Math.floor(Math.random() * (max - min) ) + min;\n}\n\n---\n\nfunction getRndInteger(min, max) {\nreturn Math.floor(Math.random() * (max - min + 1) ) + min;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_89",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

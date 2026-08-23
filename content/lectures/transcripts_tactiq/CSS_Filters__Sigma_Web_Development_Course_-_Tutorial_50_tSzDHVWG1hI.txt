@@ -1,0 +1,384 @@
+Video URL: https://www.youtube.com/watch?v=tSzDHVWG1hI
+Video Title: CSS Filters | Sigma Web Development Course - Tutorial #50
+--------------------------------------------------
+
+00:00:00.000
+In today's video, we will see what are filters in CSS
+00:00:03.020
+CSS has a property called filter
+00:00:05.020
+which allows you to invert brightness, contrast, and many more things
+00:00:09.920
+by using this filter property
+00:00:11.920
+You just have to like this video and write Sigma Batch OP in the comment section below
+00:00:16.480
+We will go to the computer screen
+00:00:18.060
+Let's roll the intro
+00:00:37.000
+Alright guys so this is a special video because this is video 50 and half century we have put in this course so everyone write congratulations first Because you will write congratulations, it will feel good from the heart, we are moving forward a lot in this course, when we started this course we had only one thing in our mind
+00:00:46.000
+that will it be possible or not
+00:00:48.000
+and things are working better
+00:00:50.000
+and with this energy I will move forward
+00:00:52.000
+and make an index.html
+00:00:54.000
+today's topic is CSS filters
+00:00:56.000
+I won't take much time
+00:00:58.000
+because according to me CSS filters
+00:01:00.000
+is a very basic concept
+00:01:02.000
+yes you heard that right
+00:01:04.000
+it is a very simple thing simple thing, inbuilt thing
+00:01:06.000
+so if i say css filters
+00:01:08.000
+mdn, i bring you on mdn
+00:01:10.000
+or before that i do one thing
+00:01:12.000
+i take an image, any image
+00:01:14.000
+we take this image here
+00:01:16.000
+you can download this image too, but i
+00:01:18.000
+here simply div.container
+00:01:20.000
+i will write and in this container
+00:01:22.000
+i will put this image, so here i
+00:01:24.000
+will paste it by pressing ctrl v and paste
+00:01:25.760
+and no surprises that this image will come here
+00:01:28.740
+so if I show you then image will come
+00:01:31.700
+I haven't done anything big yet
+00:01:34.700
+but now I will show you how I can change this image
+00:01:37.700
+by doing different things
+00:01:40.700
+so if I say that my image is here I will write style
+00:01:43.700
+I will write img here I will write filter and in filter I will put blur and I will write here style, img, filter
+00:01:45.000
+and in filter I will write blur and I will say 10 pixels
+00:01:50.000
+so if I will write blur 10 pixels then see a blur will be introduced
+00:01:54.000
+and I can also reduce this value
+00:01:57.000
+so if I will reduce this value then blurriness will be reduced
+00:02:00.000
+so in this way filter can be applied in CSS
+00:02:03.000
+so blur filter works like this
+00:02:06.000
+the more value you keep the more blur will be
+00:02:08.000
+now if I come to MDN page
+00:02:10.000
+then I will get to see many filters
+00:02:12.000
+like I will get to see blur, I will get to see contrast
+00:02:15.000
+I can increase contrast, I can increase brightness
+00:02:18.000
+I can do a lot of things but for that I will do one thing
+00:02:21.000
+let's say I will take the image of SRK
+00:02:23.000
+because I want an image of a person, so let's take the image of SRK
+00:02:26.000
+and here which image should I take, I can take any image
+00:02:30.000
+I will take the image of SRK here and I will open image in new tab
+00:02:34.000
+and I will take this and I will take one more image
+00:02:38.000
+so I do one thing, I will do img a and take the image of SRK
+00:02:42.000
+and along with that I will take the image of SRK and Akshay Kumar
+00:02:46.520
+so suppose I am taking this image
+00:02:48.520
+oops, I will pick up the image from here
+00:02:52.800
+open image in new tab and I will use the link of this image
+00:02:57.120
+I will write img and I will do something like this
+00:03:00.480
+and I will simply give these images an id and class
+00:03:05.900
+and I will give one to img1, one to img2 and one to img3
+00:03:11.900
+so img1, img2, img3 and here
+00:03:15.600
+I will do .img1
+00:03:17.600
+and I will put different images in img1, img2 and img3
+00:03:21.900
+whatever I have to put
+00:03:23.900
+so I will put filters here so let's say I put a filter in different ways whatever I have to put I will put it here with filter
+00:03:26.000
+so let's say I put filter in img1
+00:03:28.000
+I will put in filter
+00:03:30.000
+let's say I want to make the brightness
+00:03:32.000
+122%
+00:03:34.000
+and see the image will become bright
+00:03:36.000
+so if I show you
+00:03:38.000
+see the brightness
+00:03:40.000
+infact I have to remove this filter
+00:03:42.000
+that I don't want to blur
+00:03:44.000
+every image because I am targeting IMG here
+00:03:46.700
+so it is blurring
+00:03:47.700
+so you see here that I have increased the brightness
+00:03:50.700
+and if I come on this image
+00:03:53.000
+and I increase this value here
+00:03:54.900
+then you see that my image will change
+00:03:56.700
+now the filter brightness I have done
+00:03:58.300
+is on this image
+00:03:59.100
+so you see here when I am changing this value
+00:04:01.500
+so see, when I increase it, it is getting brighter
+00:04:03.900
+and I can make it brighter
+00:04:05.800
+I can make it brighter
+00:04:06.800
+see I made it brighter
+00:04:08.400
+so you can do all these things
+00:04:10.000
+you can put another filter here
+00:04:11.600
+by giving space
+00:04:12.400
+so the way we saw
+00:04:13.600
+we put multiple animations
+00:04:15.000
+we put multiple transforms
+00:04:16.200
+by giving space
+00:04:17.000
+even when we put multiple classes in html
+00:04:19.399
+we put it by giving space
+00:04:20.800
+here also we can put contrast
+00:04:22.400
+in this way
+00:04:24.000
+and if I want to increase the contrast
+00:04:26.000
+I can set it from 0 to 1 and I can also set a higher value
+00:04:29.000
+if I want to increase the contrast, I can set it to 200%
+00:04:32.000
+I can also set the contrast to percent
+00:04:35.000
+and I can adjust the contrast, if I decrease the contrast
+00:04:38.000
+then the contrast is decreasing
+00:04:41.000
+so you can change the value of the contrast
+00:04:44.000
+after this we can put a grayscale filter
+00:04:46.000
+which converts an image to grayscale
+00:04:48.000
+which I will put here in Akki's image
+00:04:51.000
+so if I write here filter and grayscale
+00:04:55.000
+and I say 20%
+00:04:57.000
+so this image will be 20% grayscale
+00:04:59.000
+means 20% will be converted to grayscale
+00:05:02.000
+if I say grayscale in filter
+00:05:04.000
+if I say 100% grayscale so this image will be converted to grayscale if I say grayscale in filter 100% will be grayscale
+00:05:06.000
+then this image will be black and white
+00:05:08.000
+as you can see, as soon as the value reaches 100
+00:05:10.000
+this 100% black and white image will be made
+00:05:13.000
+then after this there is a sepia filter
+00:05:15.000
+so if I put a sepia filter here
+00:05:17.000
+suppose I say sepia
+00:05:19.000
+then it will be like this
+00:05:21.000
+you must have seen such images
+00:05:23.000
+some cameras used to generate such images.
+00:05:25.300
+So by applying the CPEA filter, images become like this.
+00:05:27.800
+Then there is another one, Hue Rotate,
+00:05:29.800
+then there is Drop Shadow, which drops the shadow.
+00:05:32.500
+Then what happens with Hue Rotate,
+00:05:34.000
+the value of Hue changes
+00:05:35.500
+and by doing Drop Shadow, a shadow drops,
+00:05:38.000
+as you can see here.
+00:05:39.500
+So you can do this thing.
+00:05:41.300
+These are the main filters,
+00:05:42.800
+a very important filter is Invert Filter,
+00:05:44.500
+which inverts an image
+00:05:46.000
+so if I come on this image and say filter
+00:05:49.000
+invert and here I will do 1 so this image will be
+00:05:52.000
+inverted, all the colors will be inverted
+00:05:55.000
+it will be converted to negative image, if you have seen
+00:05:58.000
+old images, then we don't get to see such things
+00:06:01.000
+and if I reduce this value
+00:06:04.000
+like I do 0.1 or 0.61
+00:06:06.000
+so this will be inverted to a limit
+00:06:08.000
+so you can
+00:06:10.000
+invert it a little bit
+00:06:12.000
+opacity filter can be applied
+00:06:14.000
+opacity filter reduces opacity
+00:06:16.000
+so if I say opacity
+00:06:18.000
+means how transparent
+00:06:20.000
+this image is
+00:06:22.000
+opacity, if it is 0
+00:06:24.000
+then image will be gone, if it is 1 then image will be gone if opacity is 1 then image will be visible
+00:06:28.000
+so as I increase the value
+00:06:32.000
+0.1 and as I increase the value
+00:06:36.000
+0.2 then 0.3 then image will be more dense
+00:06:40.000
+and if there is something below it then opacity will be visible
+00:06:44.000
+so if you use grid and overlap
+00:06:46.000
+one of the most important use cases of grid is
+00:06:49.000
+that you can grid the display and
+00:06:52.000
+bring all the things in one cell and stack them on top of each other
+00:06:55.000
+I told you this in the grid video, so if you want to do something like that
+00:06:58.000
+then you can use opacity so that
+00:07:01.000
+the thing at the back is also visible, okay?
+00:07:04.000
+there is no need to keep it here.
+00:07:06.000
+Advanced, I would say this is a concept of CSS.
+00:07:09.000
+It is easy to use, but its usage is a little advanced.
+00:07:12.000
+I don't find myself using a lot of filters.
+00:07:17.000
+I am telling you my experience in most of the websites.
+00:07:21.000
+But yes, sometimes the client says that I want this image like this,
+00:07:24.000
+if you want that you don't have to go to photoshop or any editing software
+00:07:28.000
+so you have built in in css and rendering is also very good
+00:07:32.000
+so I hope you have understood this thing
+00:07:34.000
+if you want to apply gaussian blur then use blur
+00:07:36.000
+brightness, contrast, drop shadow, gray scale, hue rotate, invert, opacity, saturate, sepia
+00:07:41.000
+I have told you all this and you don't need to keep any of these
+00:07:45.600
+and to apply multiple filters you can give space
+00:07:48.300
+and by giving space you can combine the filters
+00:07:51.100
+so that was all about filters
+00:07:53.000
+and you won't need more filters than this
+00:07:55.500
+okay, like you apply filter on Instagram etc.
+00:07:57.800
+you can also apply filters on CSS
+00:07:59.500
+so the kids use the filter of mobile
+00:08:02.400
+the men, the meme is that kids use filter of filters, men use Instagram filters, and legend uses CSS filters.
+00:08:11.000
+We use CSS to filter our images, so from now on, you guys use CSS filters and then take screenshots and upload them on Instagram.
+00:08:19.000
+And then write in the comments that I have done it with CSS, I am an ultra legend, okay? So you can do this kind of work.
+00:08:25.000
+So I hope you enjoyed it.
+00:08:27.400
+And to get more fun like this, access this playlist.
+00:08:31.400
+And my attempt will be to keep torturing your soul in the same way.
+00:08:36.200
+Click here to bookmark, click here to save.
+00:08:39.200
+Thank you so much guys for watching this video.
+00:08:41.000
+And I will see you next time.

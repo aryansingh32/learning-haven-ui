@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 109,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Java. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Tutorials in Java",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Java."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "So far, you have used theScannerclass toread text files.Scanneris very convenient for text because it can split input into lines, words, or numbers.  \nHowever, sometimes you need more control. For example, when readingbinary data(like images, audio, or PDFs), \nor when you need full control of raw bytes. In those cases, you useFileInputStream.\n\nThis example usesFileInputStreamto read a text file, one byte at a time, and print the result as characters:\n\nExplanation:This program opensfilename.txt, \nreads it byte by byte, and prints the result as characters in the console.\n\nThe real strength ofFileInputStreamis that it can handleany file type, not just text.  \nHere is an example that copies an image file:\n\nExplanation:This program readsimage.jpgand writes it intocopy.jpg. Since it works with raw bytes, it can copyany kind of file- text, images, audio, or PDFs.\n\nNote:The program also usesFileOutputStream.  \nWhileFileInputStreamis used toread bytesfrom a file,FileOutputStreamis used towrite bytesto a file.  \nTogether, they make it possible to copy any kind of file.\n\nYou will learn more aboutFileOutputStreamin the next chapter.\n\nJava gives you several ways to read files. Here's when to pick each one:\n\n### Code Snippets\n\n```\nExample\nimport java.io.FileInputStream;  // Import FileInputStream\nimport java.io.IOException;      // Import IOException\n\npublic class Main {\n  public static void main(String[] args) {\n    // try-with-resources: FileInputStream will be closed automatically\n    try (FileInputStream input = new FileInputStream(\"filename.txt\")) {\n\n      int i;  // variable to store each byte that is read\n\n      // Read one byte at a time until end of file (-1 means \"no more data\")\n      while ((i = input.read()) != -1) {\n        // Convert the byte to a character and print it to the console\n        System.out.print((char) i);\n      }\n\n    } catch (IOException e) {\n      // If an error happens (e.g. file not found), print an error message\n      System.out.println(\"Error reading file.\");\n    }\n  }\n}\nThe output will be:\nSome text from filename.txt\nRun Example \u00bb\n\n---\n\nExample\nimport java.io.FileInputStream;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\n\npublic class CopyFile {\n  public static void main(String[] args) {\n    // Copy image.jpg into copy.jpg\n    try (FileInputStream input = new FileInputStream(\"image.jpg\");\n         FileOutputStream output = new FileOutputStream(\"copy.jpg\")) {\n\n      int i;\n      while ((i = input.read()) != -1) {\n        output.write(i);  // write the raw byte to the new file\n      }\n\n      System.out.println(\"File copied successfully.\");\n\n    } catch (IOException e) {\n      System.out.println(\"Error handling file.\");\n    }\n  }\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_108",
+            "prompt": "Try implementing a simple program using Tutorials in Java.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Java?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

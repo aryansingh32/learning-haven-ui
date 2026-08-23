@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 48,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Python."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Understanding Tutorials and more in Python",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTo select data from a collection in MongoDB, we can use thefind_one()method.\n\nThefind_one()method returns the first \noccurrence in the selection.\n\nTo select data from a table in MongoDB, we can also use thefind()method.\n\nThefind()method returns all \noccurrences in the selection.\n\nThe first parameter of thefind()method \nis a query object. In this example we use an empty query object, which selects \nall documents in the collection.\n\nThe second parameter of thefind()method \nis an object describing which fields to include in the result.\n\nThis parameter is optional, and if omitted, all fields will be included in \nthe result.\n\n### Code Examples\n\n```\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nx = mycol.find_one()\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nfor x in mycol.find():\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nfor x in mycol.find({},{ \"_id\": 0, \"name\": 1, \"address\": 1 }):\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nfor x in mycol.find({},{ \"address\": 0 }):\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nfor x in mycol.find({},{ \"name\": 1, \"address\": 0 }):\nprint(x)\n```\n\n## Tutorials\n\nWhen finding documents in a collection, you can filter the result by using a \nquery object.\n\nThe first argument of thefind()method \nis a query object, and is used to limit the search.\n\nTo make advanced queries you can use modifiers as values in the query object.\n\nE.g. to find the documents where the \"address\" field starts with the letter \"S\" \nor higher (alphabetically), use the greater than modifier:{\"$gt\": \"S\"}:\n\nYou can also use regular expressions as a modifier.\n\nTo find only the documents where the \"address\" field starts with the letter \"S\", use the regular \nexpression{\"$regex\": \"^S\"}:\n\n### Code Examples\n\n```\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmyquery = { \"address\": \"Park Lane 38\" }\nmydoc = mycol.find(myquery)\nfor x in mydoc:\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmyquery = { \"address\": { \"$gt\": \"S\" } }\nmydoc = mycol.find(myquery)\nfor x in mydoc:\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmyquery = { \"address\": { \"$regex\": \"^S\" } }\nmydoc = mycol.find(myquery)\nfor x in mydoc:\nprint(x)\n```\n\n## Tutorials\n\nUse thesort()method to sort the result in \nascending or descending order.\n\nThesort()method takes one parameter for \n\"fieldname\" and one parameter for \"direction\" (ascending is the default \ndirection).\n\nUse the value -1 as the second parameter to sort descending.\n\n### Code Examples\n\n```\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmydoc = mycol.find().sort(\"name\")\nfor x in mydoc:\nprint(x)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmydoc = mycol.find().sort(\"name\", -1)\nfor x in mydoc:\nprint(x)\n```\n\n## Tutorials\n\nTo delete one document, we use thedelete_one()method.\n\nThe first parameter of thedelete_one()method \nis a query object defining which document to delete.\n\nTo delete more than one document, use thedelete_many()method.\n\nThe first parameter of thedelete_many()method \nis a query object defining which documents to delete.\n\nTo delete all documents in a collection, pass an empty query object to thedelete_many()method:\n\n### Code Examples\n\n```\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmyquery = { \"address\": \"Mountain 21\" }\nmycol.delete_one(myquery)\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmyquery = { \"address\": {\"$regex\": \"^S\"} }\nx = mycol.delete_many(myquery)\nprint(x.deleted_count, \" documents \n  deleted.\")\n\n---\n\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nx = mycol.delete_many({})\nprint(x.deleted_count, \" documents \n  deleted.\")\n```\n\n## Tutorials\n\nYou can delete a table, or collection as it is called in MongoDB, by using \nthedrop()method.\n\nThedrop()method returns true if the collection was dropped successfully, \nand false if the collection does not exist.\n\n### Code Examples\n\n```\nimport pymongo\nmyclient = pymongo.MongoClient(\"mongodb://localhost:27017/\")\nmydb = myclient[\"mydatabase\"]\nmycol = mydb[\"customers\"]\nmycol.drop()\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_48",
+            "prompt": "Try implementing the concepts from Tutorials in Python.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_48",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Python?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Python that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

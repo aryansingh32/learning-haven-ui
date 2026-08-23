@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 220,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "All JavaScript functions are object methods.\n\nA function can be:\n\nWhen a function is anobject method:\n\nthisrefers to theobjectthat owns the method.\n\nIn the example above,thisrefers to theperson object.\n\nthis.firstNamemeans thefirstNameproperty ofperson.\n\nthis.firstNameis the same asperson.firstName.\n\nBy default, whenthisis used in a regular function,thisrefers to theglobal object.\n\nIn a browser window, the global object is[object Window]:\n\nJavaScriptstrict modedoes not allow default binding.\n\nIn strict mode,thisused inside a function isundefined.\n\nWhen usedoutside a function,thisalways refers to theglobal object.\n\nIn a browser window the global object is[object Window]:\n\nIn a regular function instrict mode, when used outside a function,thisalso refers to theglobal object:\n\nIn JavaScript,globalThisis a special built-in object that provides a standard way to access the global object,\nregardless of the environment your code runs in - whether it is a browser, Node.js, a Web Worker,\nor another JS runtime.\n\nThe global object is the top-level object in a JavaScript environment:In browsers, it iswindow.In Node.js, it isglobal.In Web Workers, it isself.Each environment used to have its own name for this object.\nThis caused compatibility issues for code meant to run everywhere.globalThiswas introduced inECMAScript 2020(ES11) to solve that problem. It is a unified reference to the global object, no matter the environment.ExampleglobalThis === window; // true in browsersglobalThis === global; // true in Node.jsTry it Yourself \u00bbthisin Event HandlersIn HTML event handlers,thisrefers to the HTML element that received the \nevent:Examples<button onclick=\"this.innerHTML='Clicked!'\">Click Me</button>Try it Yourself \u00bb<button onclick=\"this.style.display='none'\">Click to \nRemove Me!</button>Try it Yourself \u00bbthisin Arrow FunctionsArrow functions do not have their ownthis.\nThey inheritthisfrom the surrounding scope.In regular functions thethiskeyword represents the object that called the \nfunction, which could be the window, the document, a button or whatever.With arrow functions thethiskeywordalwaysrepresents the \nobject that defined the arrow function.What isthis?In JavaScript, thethiskeyword refers to anobject.Thethiskeyword refers todifferent objectsdepending on how it is used:Alone,thisrefers to theglobal object.In a function,thisrefers to theglobal object.In a function, in strict mode,thisisundefined.In an object method,thisrefers to theobject.In an event,thisrefers to theelementthat received the event.In methods likecall(),apply()andbind(),thiscan refer toany object.thisis not a variable.thisis a keyword.You cannot change the value ofthis.ThisPrecedenceUse the following precedence of order to determine which objectthisrefers to:OrderObjectBecause1bind()thisis in a function being called using bind()2apply()thisis in a function being called using apply()2call()thisis in a function being called using call()3Object methodthisis in an object function (method)4Global scopethisis in a function in the global scopeExamples to UnderstandBelow are two examples that call the same method twice:When the page loadsWhen the user clicks a buttonThe first example usesa regular function, and the second example usesan arrow function.The result shows that the first example returns two different objects (window and button), \nand the \nsecond example returns the window object twice, because the window object is the \n\"owner\" of the function.ExamplesWith a regular functionthisrepresents the \nobject thatcallsthe function:// Regular Function:hello = function() {document.getElementById(\"demo\").innerHTML \n  += this;}// The window object calls the function:window.addEventListener(\"load\", hello);// A button object calls the \n  function:document.getElementById(\"btn\").addEventListener(\"click\", hello);Try it Yourself \u00bbWith an arrow functionthisrepresents theownerof the function:// Arrow Function:hello = () => {document.getElementById(\"demo\").innerHTML \n  += this;}// The window object calls the function:window.addEventListener(\"load\", hello);// A button object calls the \n  function:document.getElementById(\"btn\").addEventListener(\"click\", hello);Try it Yourself \u00bbArrow Functions in MethodsWith arrow functions there are no binding ofthis.They are not well suited for definingobject methods.Exampleconst person = {firstName: \"John\",sayHello: () => {return this.firstName;}};person.sayHello();Try it Yourself \u00bbThe example above does not work as expected becausethisdoes not refer to theperson object.Arrow functions can be useful inside methods when you want to keep the samethisvalue.Exampleconst person = {firstName: \"John\",sayHello: function() {return () => this.firstName;}};let hello = person.sayHello();hello();QuizWhat doesthisrefer to inside an object method?Common MistakesArrow Functions as Object MethodsArrow functions do not bind their ownthis.Assuming this Refers to an ObjectThe value ofthisdepends on how the function is called.Forgetting Strict Mode BehaviorIn strict mode,thiscan beundefined.What's Next?Now you understand howthisworks naturally.Are you ready to learn how tocontrolit manually?The JavaScript call() FunctionThe JavaScript apply() FunctionThe JavaScript bind() Function\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Snippets\n\n```\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nfullName: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n};\nperson.fullName();\n\n---\n\nfunction myFunction() {\nreturn this;\n}\n\n---\n\n\"use strict\";\nfunction myFunction() {\nreturn this;\n}\n\n---\n\nlet x = this;\n\n---\n\n\"use strict\";\nlet x = this;\n\n---\n\nglobalThis === window; // true in browsers\nglobalThis === global; // true in Node.js\n\n---\n\n<button onclick=\"this.innerHTML='Clicked!'\">Click Me</button>\n\n---\n\n<button onclick=\"this.style.display='none'\">\nClick to \nRemove Me!\n</button>\n\n---\n\n// Regular Function:\nhello = function() {\ndocument.getElementById(\"demo\").innerHTML \n  += this;\n}\n// The window object calls the function:\nwindow.addEventListener(\"load\", hello);\n// A button object calls the \n  function:\ndocument.getElementById(\"btn\").addEventListener(\"click\", hello);\n\n---\n\n// Arrow Function:\nhello = () => {\ndocument.getElementById(\"demo\").innerHTML \n  += this;\n}\n// The window object calls the function:\nwindow.addEventListener(\"load\", hello);\n// A button object calls the \n  function:\ndocument.getElementById(\"btn\").addEventListener(\"click\", hello);\n\n---\n\nconst person = {\nfirstName: \"John\",\nsayHello: () => {\nreturn this.firstName;\n}\n};\nperson.sayHello();\n\n---\n\nconst person = {\nfirstName: \"John\",\nsayHello: function() {\nreturn () => this.firstName;\n}\n};\nlet hello = person.sayHello();\nhello();\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_219",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

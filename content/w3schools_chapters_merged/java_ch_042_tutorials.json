@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 42,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Java Keywords\n\nTheinterfacekeyword is used to declare a special type of class that only contains abstract methods.\n\nTo access the interface methods, the interface must be \"implemented\" \n(kinda like inherited) by another class with theimplementskeyword (instead ofextends). The body of the \ninterface method is provided by the \"implement\" class.\n\nTo implement multiple interfaces, separate them with a comma:\n\nRead more about interfaces in ourJava Interface Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nAn\ninterface\nis an abstract \"class\" that is used to group related methods with \"empty\" bodies:\nTo access the interface methods, the interface must be \"implemented\" \n(kinda like inherited) by another class with the\nimplements\nkeyword (instead of\nextends\n). The body of the \ninterface method is provided by the \"implement\" class:\n// interface\ninterface Animal {\n\u00a0 public void animalSound(); // interface method (does not have a body)\n\u00a0 public void sleep(); // interface method (does not have a body)\n}\n\n// Pig \"implements\" the Animal interface\nclass Pig\nimplements\nAnimal {\n\u00a0 public void animalSound() {\n\u00a0\u00a0\u00a0 // The body of animalSound() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"The pig says: wee wee\");\n\u00a0 }\n\u00a0 public void sleep() {\n\u00a0\u00a0\u00a0 // The body of sleep() is provided here\n\u00a0\u00a0\u00a0 System.out.println(\"Zzz\");\n\u00a0 }\n}\n\nclass MyMainClass {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Pig myPig = new Pig();\u00a0 // Create a Pig object\n\u00a0\u00a0\u00a0 myPig.animalSound();\n\u00a0\u00a0\u00a0 myPig.sleep();\n\u00a0 }\n}\nTry it Yourself \u00bb\n\n---\n\nExample\ninterface FirstInterface {\n\u00a0 public void myMethod(); // interface method\n}\n\ninterface SecondInterface {\n\u00a0 public void myOtherMethod(); // interface method\n}\n\n// DemoClass \"implements\" FirstInterface and SecondInterface\nclass DemoClass implements\nFirstInterface, SecondInterface\n{\n\u00a0 public void myMethod() {\n\u00a0\u00a0\u00a0 System.out.println(\"Some text..\");\n\u00a0 }\n\u00a0 public void myOtherMethod() {\n\u00a0\u00a0\u00a0 System.out.println(\"Some other text...\");\n\u00a0 }\n}\n\nclass MyMainClass {\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 DemoClass myObj = new DemoClass();\n\u00a0\u00a0\u00a0 myObj.myMethod();\n\u00a0\u00a0\u00a0 myObj.myOtherMethod();\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThelongkeyword is a data type that can store whole numbers from -9223372036854775808 to 9223372036854775808.\n\nNote that you should end the value with an \"L\":\n\nRead more about data types in ourJava Data Types Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nlong myNum = 15000000000L;\nSystem.out.println(myNum);\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThemodulekeyword is used to declare a module. Following the keyword is the name of the module and braces which can contain directives describing the module.\n\nNote:Themodulekeyword is meant to be used in themodule-info.javafile of a module.\n\nThemodulekeyword was new in Java 9.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nDeclare a module:\nmodule mymodule {\n}\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThenativekeyword declares a method as belonging to an external compiled library which isnativeto the operating system.\n\nIn order to use native methods, an external library must be loaded from a.dll,.soor similar kind of file. The compiled code in the external file should be written to support the Java Native Interface.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nLoad a method from a compiled library:\nclass Main {\n  static {\n    System.loadLibrary(\"libraryname\");\n  }\n  \n  public static void main(String[] args) {\n    test();\n  }\n  \n  private static native void test();\n}\n```\n\n## Tutorials\n\n\u276e Java Keywords\n\nThenewkeyword creates new objects.\n\nRead more about objects in ourJava Classes/Objects Tutorial.\n\n\u276e Java Keywords\n\n### Code Examples\n\n```\nExample\nCreate an object called \"\nmyObj\n\" and print the value of x:\npublic class Main {\n\u00a0 int x = 5;\n\n\u00a0 public static void main(String[] args) {\n\u00a0\u00a0\u00a0 Main\nmyObj\n=\nnew\nMain();\n\u00a0\u00a0\u00a0 System.out.println(myObj.x);\n\u00a0 }\n}\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_42",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_42",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

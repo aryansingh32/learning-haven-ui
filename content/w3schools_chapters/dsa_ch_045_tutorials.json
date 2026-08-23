@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 45,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Seethe previous pagefor a general explanation of what time complexity is.\n\nThe Bubble Sort algorithmgoes through an array of \\(n\\) values \\(n-1\\) times in a worst case scenario.\n\nThe first time the algorithm runs through the array, every value is compared to the next, and swaps the values if the left value is larger than the right. This means that the highest value bubbles up, and the unsorted part of the array becomes shorter and shorter until the sorting is done. So on average, \\(\\frac{n}{2}\\) elements are considered when the algorithm goes through the array comparing and swapping values.\n\nWe can start calculating the number of operations done by the Bubble Sort algorithm on \\(n\\) values:\n\n\\[Operations = (n-1)\\cdot \\frac{n}{2} = \\frac{n^2}{2} - \\frac{n}{2} \\]\n\nWhen looking at the time complexity for algorithms, we look at very large data sets, meaning \\(n\\) is a very big number. And for a very big number \\(n\\), the term \\(\\frac{n^2}{2}\\) becomes a lot bigger than the term \\(\\frac{n}{2}\\). So large in fact, that we can approximate by simply removing that second term \\(\\frac{n}{2}\\).\n\n\\[Operations = \\frac{n^2}{2} - \\frac{n}{2} \\approx \\frac{n^2}{2} = \\frac{1}{2} \\cdot n^2 \\]\n\nWhen we are looking at time complexity like we are here, using Big O notation, factors are disregarded, so factor \\(\\frac{1}{2}\\) is omitted. This means that the run time for the Bubble Sort algorithm can be described with time complexity, using Big O notation like this:\n\n\\[ O( \\frac{1}{2} \\cdot n^2) = \\underline{\\underline{O(n^2)}} \\]\n\nAnd the graph describing the Bubble Sort time complexity looks like this:\n\nAs you can see, the run time increases really fast when the size of the array is increased.\n\nLuckily there are sorting algorithms that are faster than this, likeQuicksort.\n\nChoose the number of values in an array, and run this simulation to see how the number of operations Bubble Sort needs on an array of \\(n\\) elements is \\(O(n^2)\\):\n\nThe red line above represents the upper bound time complexity \\(O(n^2)\\), and the actual function in this case is \\(1.05 \\cdot n^2\\).\n\nA function \\(f(n)\\) is said to be \\(O(g(n))\\) if we have a positive constant \\(C\\) so that \\(C \\cdot g(n)>f(n)\\) for a large number of values \\(n\\).\n\nIn this case \\(f(n)\\) is the number of operations used by Buble Sort, \\(g(n)=n^2\\) and \\(C=1.05\\).\n\nRead more about Big O notation and time complexity onthis page.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_44",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

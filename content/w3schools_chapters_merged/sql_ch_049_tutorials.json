@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 49,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe LAST_DAY() function extracts the last day of the month for a given date.\n\n### Code Examples\n\n```\nSELECT LAST_DAY(\"2017-06-20\");\n\n---\n\nLAST_DAY(\ndate\n)\n\n---\n\nSELECT LAST_DAY(\"2017-02-10 09:34:00\");\n```\n\n## Tutorials\n\nThe LOCALTIME() function returns the current date and time.\n\nNote:The date and time is returned as \"YYYY-MM-DD HH-MM-SS\" \n(string) or as YYYYMMDDHHMMSS.uuuuuu (numeric).\n\n### Code Examples\n\n```\nSELECT \n  LOCALTIME();\n\n---\n\nLOCALTIME()\n\n---\n\nSELECT \n  LOCALTIME() + 1;\n```\n\n## Tutorials\n\nThe LOCALTIMESTAMP() function returns the current date and time.\n\nNote:The date and time is returned as \"YYYY-MM-DD HH-MM-SS\" \n(string) or as YYYYMMDDHHMMSS.uuuuuu (numeric).\n\n### Code Examples\n\n```\nSELECT \n  LOCALTIMESTAMP();\n\n---\n\nLOCALTIMESTAMP()\n\n---\n\nSELECT \n  LOCALTIMESTAMP() + 1;\n```\n\n## Tutorials\n\nThe MAKEDATE() function creates and returns a date based on a year and a \nnumber of days value.\n\n### Code Examples\n\n```\nSELECT MAKEDATE(2017, 3);\n\n---\n\nMAKEDATE(\nyear\n,\nday\n)\n\n---\n\nSELECT MAKEDATE(2017, 175);\n\n---\n\nSELECT MAKEDATE(2017, 100);\n\n---\n\nSELECT MAKEDATE(2017, 366);\n```\n\n## Tutorials\n\nThe MAKETIME() function creates and returns a time based on an hour, minute, \nand second value.\n\n### Code Examples\n\n```\nSELECT MAKETIME(11, 35, \n  4);\n\n---\n\nMAKETIME(\nhour\n,\nminute\n,\nsecond\n)\n\n---\n\nSELECT MAKETIME(16, \n  1, 0);\n\n---\n\nSELECT MAKETIME(21, \n  59, 59);\n\n---\n\nSELECT MAKETIME(838, \n  59, 59);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_49",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_49",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

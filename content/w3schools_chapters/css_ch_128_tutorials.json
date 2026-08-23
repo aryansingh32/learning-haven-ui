@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 128,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "An image sprite is a collection of various small images put into one larger image \nfile, called a \"sprite image\".\n\nA sprite image is typically arranged in a grid-like way, like this:\n\nA web page with multiple images takes a longer time to load, and generates \nmultiple server requests.\n\nSo, instead of downloading each image separately, the browser downloads the \nsingle sprite image file, which will reduce the number of server requests and \nreduce \nbandwidth usage.\n\nThe CSS key properties used for image sprites are:\n\nHere, the CSS code specifies which part of the sprite image (\"img_navsprites.gif\") to show for the different navigation items (home, next, and previous):\n\nHere, we use the sprite image (\"img_navsprites.gif\") inside a navigation list. \nWe will use an HTML list (<ul> and <li>) for the navigation list:\n\nNow position and style each navigation item:\n\nNow we want to add a hover effect to our navigation list.\n\nOur new image (\"img_navsprites_hover.gif\") contains three navigation images and three images to use for hover effects:\n\nBecause this is one single image, and not six separate files, there will be no loading delay when a user hovers over the image.\n\nWe only add three lines of code to add the hover effect:\n\n### Code Snippets\n\n```\n<html>\n<head>\n<style>\n#home {\nwidth: 46px;\nheight: 44px;\nbackground-image: url(img_navsprites.gif);\nbackground-position: 0 0; /* Top-left corner of the sprite */\n}\n#prev {\nwidth: 43px;\nheight: 44px;\nbackground-image: url('img_navsprites.gif');\nbackground-position: \n  -47px 0; /* 47px to the left of the sprite's top-left */\n}\n#next \n  {\nwidth: 43px;\nheight: 44px;\nbackground-image: \n  url('img_navsprites.gif');\nbackground-position: -91px 0; /* 91px to \n  the left of the sprite's top-left */\n}\n</style>\n</head>\n<body>\n<img id=\"home\" src=\"img_trans.gif\" width=\"1\" \n  height=\"1\">\n<img id=\"prev\" src=\"img_trans.gif\" width=\"1\" height=\"1\">\n<img id=\"next\" \n  src=\"img_trans.gif\" width=\"1\" height=\"1\">\n</body>\n</html>\n\n---\n\n#navlist {\nposition: relative;\n}\n#navlist li {\nmargin: 0;\npadding: 0;\nlist-style: none;\nposition: absolute;\ntop: 0;\n}\n#navlist li, #navlist a {\nheight: 44px;\ndisplay: block;\n}\n#home {\nleft: 0px;\nwidth: 46px;\nbackground: url('img_navsprites.gif') \n0 0;\n}\n#prev {\nleft: 60px;\nwidth: 43px;\nbackground: url('img_navsprites.gif') -47px 0;\n}\n#next {\nleft: 120px;\nwidth: 43px;\nbackground: url('img_navsprites.gif') \n-91px 0;\n}\n\n---\n\n#home a:hover {\nbackground: url('img_navsprites_hover.gif') 0 -45px;\n}\n#prev a:hover {\nbackground: url('img_navsprites_hover.gif') -47px \n-45px;\n}\n#next a:hover {\nbackground: url('img_navsprites_hover.gif') -91px \n-45px;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_127",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

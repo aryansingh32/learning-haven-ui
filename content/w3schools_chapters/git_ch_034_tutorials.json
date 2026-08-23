@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "git",
+  "chapter_number": 34,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Git. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Git+Tutorials",
+        "title": "Tutorials in Git",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Git."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Thegit revertcommand undoes a previous commit by creating a new commit that reverses the changes.\n\nThis keeps your commit history intact and is the safest way to undo changes in a shared repository.\n\nFirst, you need to find the commit you want to undo.\n\nUsegit log --onelineto see a summary of your commit history:\n\nOnce you've found the commit you want to undo, usegit revertto create a new commit that reverses the changes:\n\nAfter runninggit revert, review the changes to make sure everything is as expected:\n\nHere are some tips and best practices to keep in mind when using Git Revert:\n\nHere are some common issues you may encounter when using Git Revert:\n\n### Code Snippets\n\n```\nExample\ngit log --oneline\n52418f7 (HEAD -> master) Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n\n---\n\nExample\ngit revert HEAD --no-edit\n[master e56ba1f] Revert \"Just a regular update, definitely no accidents here...\"\n Date: Thu Apr 22 10:50:13 2021 +0200\n 1 file changed, 0 insertions(+), 0 deletions(-)\n create mode 100644 img_hello_git.jpg\n\n---\n\nExample\ngit log --oneline\ne56ba1f (HEAD -> master) Revert \"Just a regular update, definitely no accidents here...\"\n52418f7 Just a regular update, definitely no accidents here...\n9a9add8 (origin/master) Added .gitignore\n81912ba Corrected spelling error\n3fdaa5b Merge pull request #1 from w3schools-test/update-readme\n836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches\ndaf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta\nfacaeae (gh-page/master) Merge branch 'master' of https://github.com/w3schools-test/hello-world\ne7de78f Updated index.html. Resized image\n5a04b6f Updated README.md with a line about focus\nd29d69f Updated README.md with a line about GitHub\ne0b6038 merged with hello-world-images after fixing conflicts\n1f1584e added new image\ndfa79db updated index.html with emergency fix\n0312c55 Added image to Hello World\n09f4acd Updated index.html with a new line\n221ec6e First release of Hello World!\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_33",
+            "prompt": "Try implementing a simple program using Tutorials in Git.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Git?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Git!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

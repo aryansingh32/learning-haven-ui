@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 266,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "ADataViewis aviewon top of anArrayBuffer.\n\nADataViewdoes not store data by itself; instead, it lets you interpret the bytes\nin the buffer as different types:\n\nUseDataViewwhen:\n\nUseDataViewwhen you work with binary data where\nyou need full control over byte layout and types (for example network packets,\nfile formats, or interoperability with other languages).\n\nTo create aDataView, you need anArrayBuffer.\n\nThen you pass the ArrayBuffer to thenew DataView()constructor:\n\nYou can also create a DataView that starts at a specific offset and has a limited length:\n\nDataView uses getXxx() and setXxx() methods to read and write values:\n\nMany binary formats specify whether multi-byte numbers are stored aslittle-endianorbig-endian.\n\nMostDataViewnumeric methods have an optionallittleEndianparameter:\n\nOne of the main advantages ofDataViewis that you can mix\n    different types in a single buffer. For example:\n\n### Code Snippets\n\n```\n// Create a 16 bytes ArrayBuffer\nconst buffer = new ArrayBuffer(16);\n// Create a new DataView\nconst view = new DataView(buffer);\n// Get lengths and offset\nlet len1 = buffer.byteLength);\nlet len2 = view.byteLength;\nlet off1 = view.byteOffset;\n\n---\n\n// Create a 16 bytes ArrayBuffer\nconst buffer = new ArrayBuffer(16);\n// Create a new DataView\nconst view = new DataView(buffer, 4, 8);\n// Get lengths and offset\nlet len1 = buffer.byteLength);\nlet len2 = view.byteLength;\nlet off1 = view.byteOffset;\n\n---\n\nconst buffer = new ArrayBuffer(8);\nconst view = new DataView(buffer);\n// Write a 32-bit signed integer at byte offset 0\nview.setInt32(0, 123456);\n// Read it back\nconst value = view.getInt32(0);\nconsole.log(value); // 123456\n\n---\n\nconst buffer = new ArrayBuffer(16);\nconst view = new DataView(buffer);\nview.setFloat64(0, Math.PI);\nview.setFloat64(8, Math.E);\nconst pi = view.getFloat64(0);\nconst e  = view.getFloat64(8);\nconsole.log(\"PI:\", pi);\nconsole.log(\"E:\", e);\n\n---\n\nconst buffer = new ArrayBuffer(4);\nconst view   = new DataView(buffer);\n// Same number, two different byte orders:\nview.setUint32(0, 0x12345678, true);  // little-endian\nconsole.log(new Uint8Array(buffer));\n// Example output: Uint8Array(4) [120, 86, 52, 18] (0x78, 0x56, 0x34, 0x12)\n// Overwrite with big-endian\nview.setUint32(0, 0x12345678, false); // big-endian\nconsole.log(new Uint8Array(buffer));\n// Example output: Uint8Array(4) [18, 52, 86, 120] (0x12, 0x34, 0x56, 0x78)\n\n---\n\nconst buffer = new ArrayBuffer(12);\nconst view   = new DataView(buffer);\n// Byte 0: a flag (0 or 1)\nview.setUint8(0, 1);\n// Bytes 1-2: a 16-bit length (little-endian)\nview.setUint16(1, 500, true);\n// Bytes 4-11: a 64-bit float (skip byte 3 for alignment)\nview.setFloat64(4, 3.14159, true);\n// Read the values back\nconst flag   = view.getUint8(0);\nconst length = view.getUint16(1, true);\nconst value  = view.getFloat64(4, true);\nconsole.log(\"Flag:\", flag);\nconsole.log(\"Length:\", length);\nconsole.log(\"Value:\", value);\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_265",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

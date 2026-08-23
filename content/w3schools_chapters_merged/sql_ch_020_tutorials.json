@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 20,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in SQL."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Understanding Tutorials and more in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTheCREATE DATABASEcommand is used is to \ncreate a new SQL database.\n\nThe following SQL creates a database called \"testDB\":\n\nTheDROP DATABASEcommand is used is to \ndelete an existing SQL database.\n\nThe following SQL drops a database named \"testDB\":\n\n### Code Examples\n\n```\nCREATE DATABASE testDB;\n\n---\n\nDROP DATABASE testDB;\n```\n\n## Tutorials\n\nTheDEFAULTconstraint provides a default \nvalue for a column.\n\nThe default value will be added to all new records if no other value is specified.\n\nThe following SQL sets a DEFAULT value for the \"City\" column when the \"Persons\" table is created:\n\nMy SQL / SQL Server / Oracle / MS Access:\n\nThe DEFAULT constraint can also be used to insert system values, by using functions like GETDATE():\n\nTo create a DEFAULT constraint on the \"City\" column when the table is already created, use the following SQL:\n\nMySQL:\n\nSQL Server:\n\nMS Access:\n\nOracle:\n\nTo drop a DEFAULT constraint, use the following SQL:\n\nMySQL:\n\nSQL Server / Oracle / MS Access:\n\n### Code Examples\n\n```\nCREATE TABLE Persons\n(\nCity varchar(255) DEFAULT 'Sandnes'\n);\n\n---\n\nCREATE TABLE Orders\n(\nOrderDate date DEFAULT GETDATE()\n);\n\n---\n\nALTER TABLE Persons\nALTER City SET DEFAULT 'Sandnes';\n\n---\n\nALTER TABLE Persons\nADD CONSTRAINT df_City\nDEFAULT 'Sandnes' FOR City;\n\n---\n\nALTER TABLE Persons\nALTER COLUMN City SET DEFAULT 'Sandnes';\n\n---\n\nALTER TABLE Persons\nMODIFY City DEFAULT 'Sandnes';\n\n---\n\nALTER TABLE Persons\nALTER City DROP DEFAULT;\n\n---\n\nALTER TABLE Persons\nALTER COLUMN City DROP DEFAULT;\n```\n\n## Tutorials\n\nTheDELETEcommand is used to delete \nexisting records in a table.\n\nThe following SQL statement deletes the customer \"Alfreds Futterkiste\" from \nthe \"Customers\" table:\n\nIt is possible to delete all rows in a table without deleting the table. This \nmeans that the table structure, attributes, and indexes will be intact:\n\nThe following SQL statement deletes all rows in the \"Customers\" table, \nwithout deleting the table. This means that the table structure, attributes, and \nindexes will be intact:\n\n### Code Examples\n\n```\nDELETE FROM Customers\n WHERE CustomerName='Alfreds Futterkiste';\n\n---\n\nDELETE FROM Customers;\n```\n\n## Tutorials\n\nTheDESCcommand is used to sort the data \nreturned in descending order.\n\nThe following SQL statement selects all the columns from the \"Customers\" \ntable, sorted descending by the \"CustomerName\" column:\n\n### Code Examples\n\n```\nSELECT * FROM Customers\nORDER BY CustomerName DESC;\n```\n\n## Tutorials\n\nTheSELECT DISTINCTcommand returns only \ndistinct (different) values in the result set.\n\nThe following SQL statement selects only the DISTINCT values from the \"Country\" column in the \"Customers\" table:\n\n### Code Examples\n\n```\nSELECT DISTINCT Country FROM Customers;\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_20",
+            "prompt": "Try implementing the concepts from Tutorials in SQL.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_20",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in SQL?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in SQL that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

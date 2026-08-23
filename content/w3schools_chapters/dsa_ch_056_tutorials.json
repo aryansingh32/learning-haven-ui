@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 56,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Huffman Coding is an algorithm used for lossless data compression.\n\nHuffman Coding is also used as a component in many different compression algorithms. It is used as a component in lossless compressions such as zip, gzip, and png, and even as part of lossy compression algorithms like mp3 and jpeg.\n\nUse the animation below to see how a text can be compressed using Huffman Coding.\n\nThe animation shows how the letters in a text are normally stored usingUTF-8, and how Huffman Coding makes it possible to store the same text with fewer bits.\n\nHuffman Coding uses a variable length of bits to represent each piece of data, with a shorter bit representation for the pieces of data that occurs more often.\n\nFurthermore, Huffman Coding ensures that no code is the prefix of another code, which makes the compressed data easy to decode.\n\nTo get a better understanding of how Huffman Coding works, let's create a Huffman code manually, using the same text as in the animation: 'lossless'.\n\nA text is normally stored in the computer usingUTF-8, which means that each letter is stored using 8 bits for normal latin letters, like we have in 'lossless'. Other letters or symbols such as '\u20ac' or '\ud83e\udd84' are stored using more bits.\n\nTo compress the text 'lossless' using Huffman Coding, we start by counting each letter.\n\nAs you can see in the nodes above, 's' occurs 4 times, 'l' occurs 2 times, and 'o' and 'e' occurs just 1 time each.\n\nWe start building the tree with the least occurring letters 'o' and 'e', and their parent node gets count '2', because the counts for letter 'o' and 'e' are summarized.\n\nThe next nodes that get a new parent node, are the nodes with the lowest count: 'l', and the parent node of 'o' and 'e'.\n\nNow, the last node 's' must be added to the binary tree. Letter node 's' and the parent node with count '4' get a new parent node with count '8'.\n\nFollowing the edges from the root node, we can now determine the Huffman code for each letter in the word 'lossless'.\n\nThe Huffman code for each letter can now be found under each letter node in the image above. A good thing about Huffman coding is that the most used data pieces get the shortest code, so just '0' is the code for the letter 's'.\n\nAs mentioned earlier, such normal latin letters are usually stored with UTF-8, which means they take up 8 bits each. So for example the letter 'o' is stored as '01101111' with UTF-8, but it is stored as '110' with our Huffman code for the word 'lossless'.\n\nTo summarize, we have now compressed the word 'lossless' from its UTF-8 code\n\n01101100 01101111 01110011 01110011 01101100 01100101 01110011 01110011\n\nto just\n\n10 110 0 0 10 111 0 0\n\nusing Huffman Coding, which is a huge improvement.\n\nBut if data is stored with Huffman Coding as10 110 0 0 10 111 0 0, or the code is sent to us, how can it be decoded so that we see what information the Huffman code contains?\n\nFurthermore, the binary code is really10110001011100, without the spaces, and with variable bit lengths for each piece of data, so how can the computer understand where the binary code for each piece of data starts and ends?\n\nJust like with code stored as UTF-8, which our computers can already decode to the correct letters, the computer needs to know which bits represent which piece of data in the Huffman code.\n\nSo along with a Huffman code, there must also be a conversion table with information about what the Huffman binary code is for each piece of data, so that it can be decoded.\n\nSo, for this Huffman code:\n\n100110110\n\nWith this conversion table:\n\nAre you able to decode the Huffman code?\n\nWe start with the first bit:\n\nThere is no letter in the table with just1as the Huffman code, so we continue and include the next bit as well.\n\nWe can see from the table that10is 'b', so now we have the first letter. We check the next bit:\n\nWe find that0is 'a', so now we have the two first letters 'ba' stored in the Huffman code.\n\nWe continue looking up Huffman codes in the table:\n\nCode11is 'n'.\n\nCode0is 'a'.\n\nCode11is 'n'.\n\nCode0is 'a'.\n\nThe Huffman code is now decoded, and the word is 'banana'!\n\nAn interesting and very useful part of the Huffman coding algorithm is that it ensures that there is no code that is the prefix of another code.\n\nThis property, that no code is the prefix of another code, makes it possible to decode. And it is especially important in Huffman Coding because of the variable bit lengths.\n\nThe correct word for creating Huffman code based on data or text is \"encoding\", and the opposite would be \"decoding\", when the original data or text is recreated based on the code.\n\nThe code example below takes a word, or any text really, and compress it using Huffman Coding.\n\nIn addition to encode data using Huffman coding, we should also have a way to decode it, to recreate the original information.\n\nThe implementation below is basically the same as the previous code example, but with an additional function for decoding the Huffman code.\n\nThehuffman_decodingfunction takes the Huffman code, and thecodesPython dictionary(ahashmap) with the characters and their corresponding binary codes. The Function then reverse the mapping, and checks the Huffman code bit-by-bit to recreate the original text.\n\nYou have now seen how a text can be compressed using Huffman coding, and how a Huffman code can be decoded to recreate the original text.\n\n### Code Snippets\n\n```\nExample\nHuffman Coding.\nclass Node:\n    def __init__(self, char=None, freq=0):\n        self.char = char\n        self.freq = freq\n        self.left = None\n        self.right = None\n\nnodes = []\n\ndef calculate_frequencies(word):\n    frequencies = {}\n    for char in word:\n        if char not in frequencies:\n            freq = word.count(char)\n            frequencies[char] = freq\n            nodes.append(Node(char, freq))\n\ndef build_huffman_tree():\n    while len(nodes) > 1:\n        nodes.sort(key=lambda x: x.freq)\n        left = nodes.pop(0)\n        right = nodes.pop(0)\n        \n        merged = Node(freq=left.freq + right.freq)\n        merged.left = left\n        merged.right = right\n        \n        nodes.append(merged)\n\n    return nodes[0]\n\ndef generate_huffman_codes(node, current_code, codes):\n    if node is None:\n        return\n\n    if node.char is not None:\n        codes[node.char] = current_code\n\n    generate_huffman_codes(node.left, current_code + '0', codes)\n    generate_huffman_codes(node.right, current_code + '1', codes)\n\ndef huffman_encoding(word):\n    global nodes\n    nodes = []\n    calculate_frequencies(word)\n    root = build_huffman_tree()\n    codes = {}\n    generate_huffman_codes(root, '', codes)\n    return codes\n\nword = \"lossless\"\ncodes = huffman_encoding(word)\nencoded_word = ''.join(codes[char] for char in word)\n\nprint(\"Word:\", word)\nprint(\"Huffman code:\", encoded_word)\nprint(\"Conversion table:\", codes)\nTry it Yourself \u00bb\n\n---\n\nExample\nHuffman Decoding.\nclass Node:\n    def __init__(self, char=None, freq=0):\n        self.char = char\n        self.freq = freq\n        self.left = None\n        self.right = None\n\nnodes = []\n\ndef calculate_frequencies(word):\n    frequencies = {}\n    for char in word:\n        if char not in frequencies:\n            freq = word.count(char)\n            frequencies[char] = freq\n            nodes.append(Node(char, freq))\n\ndef build_huffman_tree():\n    while len(nodes) > 1:\n        nodes.sort(key=lambda x: x.freq)\n        left = nodes.pop(0)\n        right = nodes.pop(0)\n        \n        merged = Node(freq=left.freq + right.freq)\n        merged.left = left\n        merged.right = right\n        \n        nodes.append(merged)\n\n    return nodes[0]\n\ndef generate_huffman_codes(node, current_code, codes):\n    if node is None:\n        return\n\n    if node.char is not None:\n        codes[node.char] = current_code\n\n    generate_huffman_codes(node.left, current_code + '0', codes)\n    generate_huffman_codes(node.right, current_code + '1', codes)\n\ndef huffman_encoding(word):\n    global nodes\n    nodes = []\n    calculate_frequencies(word)\n    root = build_huffman_tree()\n    codes = {}\n    generate_huffman_codes(root, '', codes)\n    return codes\n\ndef huffman_decoding(encoded_word, codes):\n    current_code = ''\n    decoded_chars = []\n\n    # Invert the codes dictionary to get the reverse mapping\n    code_to_char = {v: k for k, v in codes.items()}\n\n    for bit in encoded_word:\n        current_code += bit\n        if current_code in code_to_char:\n            decoded_chars.append(code_to_char[current_code])\n            current_code = ''\n\n    return ''.join(decoded_chars)\n\nword = \"lossless\"\ncodes = huffman_encoding(word)\nencoded_word = ''.join(codes[char] for char in word)\ndecoded_word = huffman_decoding(encoded_word, codes)\n\nprint(\"Initial word:\", word)\nprint(\"Huffman code:\", encoded_word)\nprint(\"Conversion table:\", codes)\nprint(\"Decoded word:\", decoded_word)\nTry it Yourself \u00bb\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_55",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

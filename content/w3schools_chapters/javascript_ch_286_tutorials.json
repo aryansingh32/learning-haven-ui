@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 286,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This chapter demonstrates some HTML applications using \nXML, HTTP, DOM, and JavaScript.\n\nIn this chapter we will use the XML file called\"cd_catalog.xml\".\n\nThis example loops through each <CD> element, and displays the values of the <ARTIST> and the \n<TITLE> elements in an HTML table:\n\nFor more information about using JavaScript and the XML DOM, go toDOM Intro.\n\nThis example uses a function to display the first CD element in an HTML element with id=\"showCD\":\n\nTo navigate between the CDs in the example above, create anext()andprevious()function:\n\nThe last example shows how you can show album information when the user clicks on a CD:\n\n### Code Snippets\n\n```\n<table id=\"demo\"></table>\n<script>\nfunction loadXMLDoc() {\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\nconst xmlDoc = xhttp.responseXML;\nconst cd = xmlDoc.getElementsByTagName(\"CD\");\nmyFunction(cd);\n}\nxhttp.open(\"GET\", \"cd_catalog.xml\");\nxhttp.send();\n}\nfunction myFunction(cd) {\nlet table=\"<tr><th>Artist</th><th>Title</th></tr>\";\nfor (let i = 0; i < cd.length; i++) {\ntable += \"<tr><td>\" +\ncd[i].getElementsByTagName(\"ARTIST\")[0].childNodes[0].nodeValue \n +\n\"</td><td>\" +\ncd[i].getElementsByTagName(\"TITLE\")[0].childNodes[0].nodeValue \n +\n\"</td></tr>\";\n}\ndocument.getElementById(\"demo\").innerHTML = table;\n}\n</script>\n</body>\n</html>\n\n---\n\nconst xhttp = new XMLHttpRequest();\nxhttp.onload = function() {\nconst xmlDoc = xhttp.responseXML;\nconst cd = xmlDoc.getElementsByTagName(\"CD\");\nmyFunction(cd, 0);\n}\nxhttp.open(\"GET\", \"cd_catalog.xml\");\nxhttp.send();\nfunction myFunction(cd, i) {\ndocument.getElementById(\"showCD\").innerHTML =\n\"Artist: \" +\ncd[i].getElementsByTagName(\"ARTIST\")[0].childNodes[0].nodeValue +\n\"<br>Title: \" +\ncd[i].getElementsByTagName(\"TITLE\")[0].childNodes[0].nodeValue +\n\"<br>Year: \" +\ncd[i].getElementsByTagName(\"YEAR\")[0].childNodes[0].nodeValue;\n}\n\n---\n\nfunction next()\n{\n// display the next CD, unless you are on the last CD\nif (i < len-1) {\ni++;\ndisplayCD(i);\n}\n}\nfunction previous()\n{\n// display the previous CD, unless you are on the first CD\nif (i > 0) {\ni--;\ndisplayCD(i);\n}\n}\n\n---\n\nfunction displayCD(i) {\ndocument.getElementById(\"showCD\").innerHTML =\n\"Artist: \" +\ncd[i].getElementsByTagName(\"ARTIST\")[0].childNodes[0].nodeValue +\n\"<br>Title: \" +\ncd[i].getElementsByTagName(\"TITLE\")[0].childNodes[0].nodeValue +\n\"<br>Year: \" +\ncd[i].getElementsByTagName(\"YEAR\")[0].childNodes[0].nodeValue;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_285",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

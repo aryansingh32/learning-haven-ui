@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 202,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle.\n\nThink of it like a stack of pancakes - you can only add or remove pancakes from the top.\n\nA stack is a data structure that can hold many elements, and the last element added is the first one to be removed.\n\nLike a pile of pancakes, the pancakes are both added and removed from the top. So when removing a pancake, it will always be the last pancake you added. This way of organizing elements is called LIFO: Last In First Out.\n\nBasic operations we can do on a stack are:\n\nStacks can be implemented by using arrays or linked lists.\n\nStacks can be used to implement undo mechanisms, to revert to previous states, to create algorithms for depth-first search in graphs, or for backtracking.\n\nStacks are often mentioned together with Queues, which is a similar data structure described on the next page.\n\nFor Python lists (and arrays), a stack can look and behave like this:\n\nSince Python lists has good support for functionality needed to implement stacks, we start with creating a stack and do stack operations with just a few lines like this:\n\nWhile Python lists can be used as stacks, creating a dedicatedStack classprovides better encapsulation and additional functionality:\n\nReasons to implement stacks using lists/arrays:\n\nA reason fornotusing arrays to implement stacks:\n\nA linked list consists of nodes with some sort of data, and a pointer to the next node.\n\nA big benefit with using linked lists is that nodes are stored wherever there is free space in memory, the nodes do not have to be stored contiguously right after each other like elements are stored in arrays. Another nice thing with linked lists is that when adding or removing nodes, the rest of the nodes in the list do not have to be shifted.\n\nTo better understand the benefits with using arrays or linked lists to implement stacks,\nyou should check outthis pagethat explains how arrays and linked lists are stored in memory.\n\nThis is how a stack can be implemented using a linked list.\n\nA reason for using linked lists to implement stacks:\n\nReasons fornotusing linked lists to implement stacks:\n\nStacks are used in many real-world scenarios:\n\n### Code Snippets\n\n```\nstack = []\n# Push\nstack.append('A')\nstack.append('B')\nstack.append('C')\nprint(\"Stack: \", stack)\n# Peek\ntopElement = stack[-1]\nprint(\"Peek: \", topElement)\n# Pop\npoppedElement = stack.pop()\nprint(\"Pop: \", poppedElement)\n# Stack after Pop\nprint(\"Stack after Pop: \", stack)\n# isEmpty\nisEmpty = not bool(stack)\nprint(\"isEmpty: \", isEmpty)\n# Size\nprint(\"Size: \",len(stack))\n\n---\n\nclass Stack:\ndef __init__(self):\nself.stack = []\ndef push(self, element):\nself.stack.append(element)\ndef pop(self):\nif self.isEmpty():\nreturn \"Stack is empty\"\nreturn self.stack.pop()\ndef peek(self):\nif self.isEmpty():\nreturn \"Stack is empty\"\nreturn self.stack[-1]\ndef isEmpty(self):\nreturn len(self.stack) == 0\ndef size(self):\nreturn len(self.stack)\n# Create a stack\nmyStack = Stack()\nmyStack.push('A')\nmyStack.push('B')\nmyStack.push('C')\nprint(\"Stack: \", myStack.stack)\nprint(\"Pop: \", myStack.pop())\nprint(\"Stack after Pop: \", myStack.stack)\nprint(\"Peek: \", myStack.peek())\nprint(\"isEmpty: \", myStack.isEmpty())\nprint(\"Size: \", myStack.size())\n\n---\n\nclass Node:\ndef __init__(self, value):\nself.value = value\nself.next = None\nclass Stack:\ndef __init__(self):\nself.head = None\nself.size = 0\ndef push(self, value):\nnew_node = Node(value)\nif self.head:\nnew_node.next = self.head\nself.head = new_node\nself.size += 1\ndef pop(self):\nif self.isEmpty():\nreturn \"Stack is empty\"\npopped_node = self.head\nself.head = self.head.next\nself.size -= 1\nreturn popped_node.value\ndef peek(self):\nif self.isEmpty():\nreturn \"Stack is empty\"\nreturn self.head.value\ndef isEmpty(self):\nreturn self.size == 0\ndef stackSize(self):\nreturn self.size\ndef traverseAndPrint(self):\ncurrentNode = self.head\nwhile currentNode:\nprint(currentNode.value, end=\" -> \")\ncurrentNode = currentNode.next\nprint()\nmyStack = Stack()\nmyStack.push('A')\nmyStack.push('B')\nmyStack.push('C')\nprint(\"LinkedList: \", end=\"\")\nmyStack.traverseAndPrint()\nprint(\"Peek: \", myStack.peek())\nprint(\"Pop: \", myStack.pop())\nprint(\"LinkedList after Pop: \", end=\"\")\nmyStack.traverseAndPrint()\nprint(\"isEmpty: \", myStack.isEmpty())\nprint(\"Size: \", myStack.stackSize())\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_201",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

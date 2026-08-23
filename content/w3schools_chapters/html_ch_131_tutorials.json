@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 131,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "This chapter describes the differentform*attributes for the HTML<input>element.\n\nThe inputformattribute specifies the form \nthe<input>element belongs to.\n\nThe value of this attribute must be equal to the id attribute of the <form> \nelement it belongs to.\n\nThe inputformactionattribute specifies the URL of \nthe file that will process the input when the form is submitted.\n\nNote:This attribute overrides theactionattribute of the<form>element.\n\nTheformactionattribute works with the \nfollowing input types: submit and image.\n\nThe inputformenctypeattribute specifies how the form-data should be encoded when submitted (only for forms with method=\"post\").\n\nNote:This attribute overrides the enctype attribute of the<form>element.\n\nTheformenctypeattribute works with the \nfollowing input types: submit and image.\n\nThe inputformmethodattribute defines the HTTP method for sending form-data to the action URL.\n\nNote:This attribute overrides the method  attribute of the<form>element.\n\nTheformmethodattribute works with the \nfollowing input types: submit and image.\n\nThe form-data can be sent as URL variables (method=\"get\") or as an HTTP post \ntransaction (method=\"post\").\n\nNotes on the \"get\" method:\n\nNotes on the \"post\" method:\n\nThe inputformtargetattribute specifies a name or a keyword that indicates where \nto display the response that is received after submitting the form.\n\nNote:This attribute overrides the target attribute of the<form>element.\n\nTheformtargetattribute works with the \nfollowing input types: submit and image.\n\nThe inputformnovalidateattribute specifies \nthat an <input> element should not be validated when submitted.\n\nNote:This attribute overrides the novalidate attribute of the<form>element.\n\nTheformnovalidateattribute works with the \nfollowing input types: submit.\n\nThenovalidateattribute is a<form>attribute.\n\nWhen present, novalidate specifies that all of the form-data should not be validated when submitted.\n\n### Code Snippets\n\n```\n<form action=\"/action_page.php\" id=\"form1\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n</form>\n<label for=\"lname\">Last \n    name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\" form=\"form1\">\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" formaction=\"/action_page2.php\" value=\"Submit as Admin\">\n</form>\n\n---\n\n<form action=\"/action_page_binary.asp\" method=\"post\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" \n    formenctype=\"multipart/form-data\"\nvalue=\"Submit as \n    Multipart/form-data\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" method=\"get\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit using \n    GET\">\n<input type=\"submit\" formmethod=\"post\" value=\"Submit using \n    POST\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"fname\">First \n    name:</label>\n<input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n<label for=\"lname\">Last name:</label>\n<input type=\"text\" id=\"lname\" \n    name=\"lname\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" formtarget=\"_blank\" value=\"Submit to a new window/tab\">\n</form>\n\n---\n\n<form action=\"/action_page.php\">\n<label for=\"email\">Enter your \n    email:</label>\n<input type=\"email\" id=\"email\" name=\"email\"><br><br>\n<input type=\"submit\" value=\"Submit\">\n<input type=\"submit\" \n    formnovalidate=\"formnovalidate\"\nvalue=\"Submit without validation\">\n</form>\n\n---\n\n<form action=\"/action_page.php\" novalidate>\n<label \n    for=\"email\">Enter your email:</label>\n<input type=\"email\" \n    id=\"email\" name=\"email\"><br><br>\n<input type=\"submit\" \n    value=\"Submit\">\n</form>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_130",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

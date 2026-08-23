@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 69,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Sets are used to store multiple items in a single variable.\n\nSet is one of 4 built-in data types in Python used to store collections of \ndata, the other 3 areList,Tuple, andDictionary, all with different qualities and usage.\n\nA set is a collection which isunordered,unchangeable*, andunindexed.\n\nSets are written with curly brackets.\n\nSet items are unordered, unchangeable, and do not allow duplicate values.\n\nUnordered means that the items in a set do not have a defined order.\n\nSet items can appear in a different order every time you use them, \nand cannot be referred to by index or key.\n\nSet items are unchangeable, meaning that we cannot change the items after the set has been created.\n\nSets cannot have two items with the same value.\n\nTo determine how many items a set has, use thelen()function.\n\nSet items can be of any data type:\n\nA set can contain different data types:\n\nFrom Python's perspective, sets are defined as objects with the data type 'set':\n\nIt is also possible to use theset()constructor to make a set.\n\nThere are four collection data types in the Python programming language:\n\nWhen choosing a collection type, it is useful to understand the properties of that type. Choosing the right type for a particular data set could mean retention of meaning, and, it could mean an increase in efficiency or security.\n\n### Code Snippets\n\n```\nthisset = {\"apple\", \"banana\", \"cherry\"}\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\", \"apple\"}\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\", True, 1, 2}\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\", False, True, 0}\nprint(thisset)\n\n---\n\nthisset = {\"apple\", \"banana\", \"cherry\"}\nprint(len(thisset))\n\n---\n\nset1 = {\"apple\", \"banana\", \"cherry\"}\nset2 = {1, 5, 7, 9, 3}\nset3 = {True, False, False}\n\n---\n\nset1 = {\"abc\", 34, True, 40, \"male\"}\n\n---\n\nmyset = {\"apple\", \"banana\", \"cherry\"}\nprint(type(myset))\n\n---\n\nthisset = set((\"apple\", \"banana\", \"cherry\")) # note the double round-brackets\nprint(thisset)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_68",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

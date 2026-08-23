@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 34,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSSbackground-originproperty specifies where the background image is \npositioned.\n\nThis property can have one of the following values:\n\nNote:This property has no effect if thebackground-attachmentproperty is set to \"fixed\".\n\nThe following example illustrates thebackground-originproperty:\n\n### Code Examples\n\n```\n#div1 {\nborder: 2px solid black;\npadding: 35px;\nbackground-image: url(img_flwr.gif);\nbackground-repeat: no-repeat;\nbackground-origin: padding-box;\n}\n#div2 {\nborder: 2px solid black;\npadding: 35px;\nbackground-image: url(img_flwr.gif);\nbackground-repeat: no-repeat;\nbackground-origin: border-box;\n}\n#div3 {\nborder: 2px solid \n  black;\npadding: 35px;\nbackground-image: url(img_flwr.gif);\nbackground-repeat: no-repeat;\nbackground-origin: content-box;\n}\n```\n\n## Tutorials\n\nThe CSSbackground-clipproperty \ndefines how far the background (color, image, or gradient) should extend within \nan element.\n\nThis property can have one of the following values:\n\n### Code Examples\n\n```\n#div1 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-image: url(paper.gif);\nbackground-clip: border-box;\n}\n#div2 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-image: url(paper.gif);\nbackground-clip: padding-box;\n}\n#div3 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-image: url(paper.gif);\nbackground-clip: content-box;\n}\n\n---\n\n#div1 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-color: lightblue;\nbackground-clip: border-box;\n}\n#div2 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-color: lightblue;\nbackground-clip: padding-box;\n}\n#div3 {\nborder: 5px dotted black;\npadding: 35px;\nbackground-color: lightblue;\nbackground-clip: content-box;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nCSS supports140+ color names, HEX values, RGB values, RGBA \nvalues, HSL values, HSLA values, and opacity.\n\nRGBA color values are an extension ofRGB colorswith an alpha channel - which specifies the opacity \nfor a color.\n\nAn RGBA color value is \nspecified with:\n\nrgba(red,green,blue, \nalpha)\n\nThe alpha parameter is a number between 0.0 \n(fully transparent) and 1.0 (fully opaque).\n\nThe following example defines different RGBA colors:\n\nHSLA color values are an extension ofHSL colorswith an alpha channel - which specifies the opacity \nfor a color.\n\nAn HSLA color value is \nspecified with:\n\nhsla(hue,saturation,lightness, \nalpha)\n\nThe alpha parameter is a number \nbetween 0.0 (fully transparent) and 1.0 (fully opaque):\n\nThe following example defines different HSLA colors:\n\nTheopacityproperty sets the opacity for \nthe whole element (both background color and text will be opaque/transparent).\n\nTheopacityproperty value must be a number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\nNoticethat the text inside the \nelement will also be \ntransparent/opaque!\n\nThe following example shows different elements with opacity:\n\n### Code Examples\n\n```\n#p1 {background-color: rgba(255, 0, 0, 0.3);}\u00a0 /* red \nwith opacity */\n#p2 {background-color: rgba(0, 255, 0, 0.3);}\u00a0\u00a0/* green with opacity */\n#p3 {background-color: rgba(0, 0, 255, 0.3);}\u00a0\u00a0/* blue \nwith opacity */\n\n---\n\n#p1 {background-color: hsla(120, 100%, 50%, 0.3);}\u00a0 /* green with opacity */\n#p2 {background-color: hsla(120, 100%, 75%, 0.3);}\u00a0\u00a0/* light green with opacity */\n#p3 {background-color: hsla(120, 100%, 25%, 0.3);}\u00a0\u00a0/* dark \ngreen with opacity */\n#p4 {background-color: hsla(120, 60%, 70%, 0.3);}\u00a0\u00a0\u00a0/* pastel green \nwith opacity */\n\n---\n\n#p1 {background-color:rgb(255,0,0);opacity:0.6;}\u00a0 /* red with opacity \n*/\n#p2 {background-color:rgb(0,255,0);opacity:0.6;}\u00a0 /* green with \nopacity */\n#p3 {background-color:rgb(0,0,255);opacity:0.6;}\u00a0 /* blue \nwith opacity */\n```\n\n## Tutorials\n\nCSS has some special predefined color keywords that can be used with properties likecolor,background-colorandborder-color.\n\nThe special keywords are:\n\nThetransparentkeyword is used to make a \ncolor transparent. This is often used to make a transparent background color for \nan element.\n\nThecurrentcolorkeyword is like a variable \nthat holds the current value of the color property of an element.\n\nThis keyword can be useful if you want a specific color to be consistent in an \nelement or a page.\n\nTheinheritkeyword specifies that a \nproperty should inherit its value from its parent element.\n\nTheinheritkeyword can be used for any CSS \nproperty, and on any HTML element.\n\n### Code Examples\n\n```\nbody {\nbackground-image: url(\"paper.gif\");\n}\ndiv {\nbackground-color: transparent;\n}\n\n---\n\ndiv {\ncolor: blue;\nborder: 10px solid currentcolor;\n}\n\n---\n\nbody {\ncolor: purple;\n}\ndiv {\nbackground-color: \n  currentcolor;\n}\n\n---\n\nbody {\ncolor: green;\n}\ndiv {\nbox-shadow: 0px 0px \n  15px currentcolor;\nborder: 5px solid currentcolor;\n}\n\n---\n\ndiv {\nborder: 2px solid red;\n}\nspan {\nborder: \n  inherit;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_34",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_34",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

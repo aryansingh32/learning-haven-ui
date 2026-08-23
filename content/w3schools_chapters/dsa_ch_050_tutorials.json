@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "dsa",
+  "chapter_number": 50,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in DSA. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=DSA+Tutorials",
+        "title": "Tutorials in DSA",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in DSA."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Seethis pagefor a general explanation of what time complexity is.\n\nTheRadix Sortalgorithm sorts non negative integers, one digit at a time.\n\nThere are \\(n\\) values that need to be sorted, and \\(k\\) is the number of digits in the highest value.\n\nWhen Radix Sort runs, every value is moved to the radix array, and then every value is moved back into the initial array. So \\(n\\) values are moved into the radix array, and \\(n\\) values are moved back. This gives us \\(n + n=2 \\cdot n\\) operations.\n\nAnd the moving of values as described above needs to be done for every digit. This gives us a total of \\(2 \\cdot n \\cdot k\\) operations.\n\nThis gives us time complexity for Radix Sort:\n\n\\[\nO(2 \\cdot n \\cdot k) = \\underline{\\underline{O(n \\cdot k)}} \n\\]\n\nRadix Sort is perhaps the fastest sorting algorithms there is, as long as the number of digits \\(k\\) is kept relatively small compared to the number of values \\(n\\).\n\nWe can imagine a scenario where the number of digits \\(k\\) is the same as the number of values \\(n\\), in such a case we get time complexity \\(O(n \\cdot k)=O(n^2)\\) which is quite slow, and has the same time complexity as for example Bubble Sort.\n\nWe can also image a scenario where the number of digits \\(k\\) grow as the number of values \\(n\\) grow, so that \\(k(n)= \\log n\\). In such a scenario we get time complexity \\(O(n \\cdot k)=O(n \\cdot \\log n )\\), which is the same as for example Quicksort.\n\nSee the time complexity for Radix Sort in the image below.\n\nRun different simulations of Radix Sort to see how the number of operations falls between the worst case scenario \\(O(n^2)\\) (red line) and best case scenario \\(O(n)\\) (green line).\n\nThe bars representing the different values are scaled to fit the window, so that it looks ok. This means that values with 7 digits look like they are just 5 times bigger than values with 2 digits, but in reality, values with 7 digits are actually 5000 times bigger than values with 2 digits!\n\nIf we hold \\(n\\) and \\(k\\) fixed, the \"Random\", \"Descending\" and \"Ascending\" alternatives in the simulation above results in the same number of operations. This is because the same thing happens in all three cases.\n\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_49",
+            "prompt": "Try implementing a simple program using Tutorials in DSA.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in DSA?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in DSA!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

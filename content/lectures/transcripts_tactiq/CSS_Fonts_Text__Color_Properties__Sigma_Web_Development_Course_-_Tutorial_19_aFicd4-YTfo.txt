@@ -1,0 +1,1372 @@
+Video URL: https://www.youtube.com/watch?v=aFicd4-YTfo
+Video Title: CSS Fonts, Text & Color Properties | Sigma Web Development Course - Tutorial #19
+--------------------------------------------------
+
+00:00:00.000
+In today's video, we will see how fonts and color CSS work.
+00:00:03.740
+In this video, I will also tell you how you can use external fonts in your website.
+00:00:09.460
+We will know how font sizes can be changed, what is the concept of fallback font.
+00:00:14.700
+And I will tell you all this with examples.
+00:00:17.960
+Let's go to the video stream.
+00:00:19.540
+Let's roll the intro Intro
+00:00:29.000
+So guys, I will say again that today's video is going to be very important
+00:00:33.000
+Because in this I will tell you a few fonts and colors
+00:00:36.000
+And any website you make in your life
+00:00:39.000
+Fonts and colors will definitely be seen there
+00:00:43.000
+So what I will do as usual by right clicking here
+00:00:46.200
+in fact I will make a new folder by clicking here
+00:00:48.400
+in which I will make a folder named video 19
+00:00:52.500
+by right clicking I will open it with code
+00:00:54.800
+and as soon as I open it with code
+00:00:56.800
+you can see here
+00:00:58.000
+I have made a file named index.html here
+00:01:02.400
+and I am going to write internal css here
+00:01:05.000
+Because I don't want to make a style sheet so that everything of you is on the same page
+00:01:09.000
+So here I will make a div first and I will write h1 in this div
+00:01:13.000
+And I will write fonts in h1 and I will put a paragraph in it
+00:01:18.000
+This is a video on fonts, let's say I write
+00:01:23.000
+Now I want to tell you that if you haven't accessed the playlist
+00:01:26.000
+then click on bookmark
+00:01:29.000
+or click on save
+00:01:32.000
+and also the source code is updating
+00:01:35.000
+i have updated the source code of all the videos
+00:01:38.000
+i will do it in time to time
+00:01:41.000
+no surprises here, fonts and this is a video on fonts
+00:01:44.000
+but the interesting thing is is you can change the font
+00:01:46.000
+now many people are beginners
+00:01:48.000
+and they don't know what is font
+00:01:50.000
+this is a different font and this is a different font
+00:01:52.000
+and this is a different font
+00:01:54.000
+means if you see the text appearing different
+00:01:56.000
+then it is because of font
+00:01:58.000
+so if we want to change the font
+00:02:00.000
+of any element then we use font family
+00:02:02.000
+so i can easily
+00:02:04.000
+write a style tag here, we use font family. So I can easily put a style tag here
+00:02:05.600
+that paragraph, do its font family.
+00:02:08.800
+What to do?
+00:02:10.400
+Now see here a lot of options are automatically giving me VS Code.
+00:02:13.200
+Suppose I want to see here
+00:02:15.000
+Cogui and along with it Tahoma
+00:02:17.600
+and so many fonts are available here.
+00:02:20.000
+These are comma separated values
+00:02:22.000
+which will try to put the first font here
+00:02:26.000
+if this font is not available in your system
+00:02:28.000
+then it will try to put this font
+00:02:30.000
+and so on
+00:02:31.000
+so these are called fallback fonts
+00:02:33.000
+that is, the main font is
+00:02:34.000
+C O U I
+00:02:36.000
+and Tahoma, Geneva, Wardana, San Serif
+00:02:39.000
+these are fallback fonts
+00:02:41.000
+so you see here
+00:02:42.000
+as soon as I show you here
+00:02:44.000
+so its font has changed a little if I show you, the font has changed a little
+00:02:46.000
+if I want to change the font family of my h1
+00:02:49.000
+now let's say I want times new roman
+00:02:52.000
+so I will change font family to times new roman
+00:02:55.000
+and I think by default it is times new roman so there is no difference
+00:02:58.000
+but let's try something else
+00:03:01.000
+and here as soon as I
+00:03:03.600
+write font family
+00:03:05.440
+I will write like this so let's do lucid a sense and this
+00:03:09.520
+is a whole set of font family so look here that I have changed the font
+00:03:14.320
+this font looks a little better now compared to
+00:03:17.520
+if I say that the font was here before, so you can change the font from font family
+00:03:21.520
+now whenever we put font family, it is said that whenever you are putting font family,
+00:03:28.080
+then put at least one such generic font family
+00:03:30.680
+so that if the user's computer does not have that font,
+00:03:33.200
+then there is no problem.
+00:03:34.320
+In this case, it is suggested that
+00:03:36.160
+like Times New Roman, like COUI, like Sans Serif,
+00:03:39.440
+it is necessary to put a font family
+00:03:41.680
+in your fonts when you are making websites.
+00:03:43.800
+So this way you can give fonts here
+00:03:47.000
+now related to fonts we have many more properties
+00:03:52.000
+like if I want in paragraph that
+00:03:54.000
+font style I want to make it italic
+00:03:58.000
+so I can make bold italic font style
+00:04:01.000
+I made font style italic here
+00:04:03.000
+so I can do like this
+00:04:04.000
+in font style italic so I can do like this
+00:04:06.000
+in font style we have italic
+00:04:09.000
+and one is normal and one is oblique
+00:04:12.000
+we have to use font weight for bold
+00:04:15.000
+so if I make it oblique
+00:04:18.000
+and I can't even underline it
+00:04:21.000
+I have to use text decoration for underline
+00:04:24.000
+so here these values are there
+00:04:26.560
+now here usually it is used for italic
+00:04:29.720
+so if you want to do italic then you will use font style
+00:04:32.600
+as soon as you write font here, see a lot of properties related to font have come
+00:04:35.800
+and I want to tell you font weight here
+00:04:38.040
+all these values are bold, bolder, lighter
+00:04:40.680
+and you can also put values like this
+00:04:42.680
+so see it has become a little thick, that is, it has become bold
+00:04:44.680
+so whenever you want to make it bold, you can use it and make it bold,
+00:04:49.000
+so you can make it oblique, you can make it italic with font style, you can make it normal, and if you want to underline here, then you can use text decoration is a property by which you can underline so i want to tell you this and you can also overline
+00:05:06.000
+so the way you see overline, it comes up
+00:05:09.000
+but all these properties i am telling you honestly
+00:05:12.000
+they are not that much useful, as much as italic or font
+00:05:15.000
+so here is a code pen, i will put the link of it here
+00:05:18.000
+before i forget, i will put the link of this
+00:05:21.000
+code pen and this code pen link
+00:05:24.000
+will tell you which font families look like
+00:05:28.000
+so see here serif looks like this, senserif looks like this, monospace looks like this
+00:05:32.000
+and cursive looks like this
+00:05:34.000
+and you can see here that this code pen is showing a lot of things from here
+00:05:37.000
+that how your families look like
+00:05:40.000
+now what happens is that when you do web development
+00:05:42.000
+so you guys would like to use some special fonts.
+00:05:45.700
+Like I use Ballu Bhai, Ballu Bhai is a font that I like a lot.
+00:05:50.100
+Yes, Ballu Bhai and Ballu Behna are the names of these two fonts, I will show you now.
+00:05:54.200
+And in this way, you use Google Fonts, so I will show you how to use Google Fonts.
+00:06:00.200
+So if you see here, I will write Google Font in the new tab.
+00:06:04.100
+And as soon as I come to Google font, I can actually use a font.
+00:06:08.000
+If I write here Ballu Bhai, I hope I am spelling it correct,
+00:06:13.000
+Ballu Bhai, there is also Ballu Da, Ballu Bhaina,
+00:06:16.000
+and here I am not getting Ballu Bhai font, why is this Arabic font showing me?
+00:06:22.000
+I will come here to home and I will write here hey I am good
+00:06:26.000
+and here you see Ballu Bhai, Ballu
+00:06:28.000
+Bhaina, Ballu Bhai 2, all these fonts
+00:06:30.000
+I can see, ok, now if I click here
+00:06:32.000
+then you see here, Ballu Bhai 2
+00:06:34.000
+will look like this in English, now suppose I
+00:06:36.000
+want to use this font, I will
+00:06:38.000
+reset it, if I want to use this
+00:06:40.000
+then what I will simply do is
+00:06:42.000
+I will click here, ok, suppose I don't want medium 500
+00:06:44.000
+I want my font to look like this or I want it to look normal, so I will do is, I will click here Ok, suppose I don't want medium 500, I want my font to look like this
+00:06:45.480
+Or I want it to look normal
+00:06:46.880
+So I will click on plus
+00:06:48.360
+And it will give me font here
+00:06:50.360
+Now there are two ways to include font
+00:06:52.720
+Either you do it through link or through import
+00:06:55.080
+If you are doing it through import, then you have to put it in style tag
+00:06:58.080
+Import statement, which I will show you now
+00:07:00.240
+And I hope I am not going fast, I am just trying that I am not repetitive
+00:07:04.120
+And I can teach you as much as possible
+00:07:08.000
+so here you can see I have done import URL like this
+00:07:10.000
+now if I want I will comment this out
+00:07:12.000
+and I will write here font family
+00:07:14.000
+and in fact what I will do is
+00:07:16.000
+I will copy from here because here
+00:07:18.000
+font family is given how to apply
+00:07:20.000
+so it becomes a little convenient to copy and paste
+00:07:22.000
+and here see
+00:07:24.000
+Ballu Bhai has given sans serif
+00:07:26.000
+that by chance you don't have Ballu Bhai 2 font
+00:07:28.000
+so you got sans serif, now you can see here
+00:07:30.000
+this font is looking like this, as it was written
+00:07:32.000
+here it is looking and I
+00:07:34.000
+remove italic from it and I
+00:07:36.000
+remove font weight too because these two things
+00:07:38.000
+I just told you to teach you
+00:07:40.000
+you want exactly that your font looks
+00:07:42.000
+as you downloaded it and I can see
+00:07:44.000
+it because I have downloaded this Ballu by 2 from here
+00:07:47.840
+You can see here that I have got this font
+00:07:51.240
+Now if I want to use the link, then I will copy this link
+00:07:55.480
+Then I will remove the import one from here and now I will put it in my head tag
+00:07:59.480
+I will do the right click format document so that unnecessary spaces go away
+00:08:02.760
+And you can see here that I have included this font through the link in my web page
+00:08:08.000
+so I can include fonts through HTML in my web page and if I want
+00:08:12.000
+I can include the font through style tag as you can see here
+00:08:16.000
+and you can see here that my Ballu bhai is intact
+00:08:20.000
+my Ballu bhai font is visible here which can see it which is a good thing you can use many fonts like
+00:08:26.000
+popins which I use a lot to be honest
+00:08:29.000
+popins is one of my favorite fonts, so if I want to include popins
+00:08:32.000
+so it's always recommended that you
+00:08:35.000
+include all the fonts you want in one bar
+00:08:38.000
+like I want this popins, I included this
+00:08:41.000
+so I will bring this link and imports in one bar
+00:08:44.000
+in one request
+00:08:46.000
+So it's always recommended that you
+00:08:48.000
+I will remove the link tags from here because I am putting import now
+00:08:51.000
+You have to put only one of these
+00:08:53.000
+So see here, from the same import statement, Ballu bhai is also coming
+00:08:57.000
+And from the same import statement, Poppins font is also coming
+00:09:02.000
+So one arrow two targets, you can also do 1 arrow 2 arrows or 1 arrow 50 arrows.
+00:09:05.400
+But I don't think you will need 50 fonts in a web page.
+00:09:08.800
+Now see here if I want my heading to be poppins,
+00:09:12.600
+so what I will do is, as it is written here poppins and science,
+00:09:15.800
+so I will make the poppins font here first.
+00:09:18.200
+And since poppins is available now, so what will happen is that poppins will be added.
+00:09:21.800
+So see my h1 has poppins in it, you can see here.
+00:09:24.600
+I use pop-ins a lot
+00:09:26.340
+it's one of my favorite fonts
+00:09:27.780
+but you guys go to google fonts
+00:09:29.380
+and explore a lot of fonts
+00:09:31.380
+you will enjoy
+00:09:32.700
+I can guarantee you this
+00:09:34.700
+so this was about fonts in CSS
+00:09:37.020
+and I want to tell you about some other properties of fonts
+00:09:40.140
+another property is font size
+00:09:42.460
+with which you can change the font size
+00:09:44.460
+if I talk about font size you can change font size
+00:09:46.000
+if i talk about font size
+00:09:49.000
+i can use large, medium, x, small, double x, large
+00:09:52.000
+but i will recommend you pixel units
+00:09:55.000
+then we will talk about other units
+00:09:58.000
+if i do 20 pixels, you can see font size will increase
+00:10:01.000
+now i will show you one thing
+00:10:04.000
+if i don't put any font size will be little big now i will show you one thing if i don't put any font size
+00:10:06.000
+means i didn't put any font size
+00:10:08.000
+so by default one size
+00:10:10.000
+will be h1 and one size will be
+00:10:12.000
+paragraph and this
+00:10:14.000
+styling will be default browser
+00:10:16.000
+and to see this
+00:10:18.000
+i will move my face
+00:10:20.000
+now see here h1
+00:10:22.000
+you can see here
+00:10:24.000
+i will select this, go to compute it
+00:10:27.080
+and here see font size 32 pixels so I will do one thing, I will reset it
+00:10:29.800
+just in case, the value is not spoiled through zoom
+00:10:33.160
+font size if I write here, see 32 pixels is h1
+00:10:36.320
+and the paragraph, its default font size is 16 pixels
+00:10:39.320
+you can see here, 16 pixels is the default font size
+00:10:42.280
+so if I want my font size to be a little bigger
+00:10:44.520
+20 pixels, then I to be bigger 20 pixels
+00:10:46.000
+so i will make it 20 pixels
+00:10:48.000
+and now you can see here
+00:10:50.000
+20 pixels font size
+00:10:52.000
+this is a video on fonts
+00:10:54.000
+now you can select here and
+00:10:56.000
+increase font size by arrow keys
+00:10:58.000
+i am using up arrow key to increase font size
+00:11:00.000
+and i can use down arrow key
+00:11:02.000
+to make my font smaller
+00:11:04.000
+so here you can see I can make my font smaller
+00:11:07.180
+I have pressed up arrow key and down arrow key
+00:11:09.880
+so you can adjust the css here
+00:11:12.520
+suppose I want to make it 49 pixels
+00:11:15.280
+and I want to make font weight
+00:11:18.200
+let's make it 900, no it's a little more
+00:11:20.700
+suppose we make it 700, let's make it 600, yes 600 is fine
+00:11:24.580
+then let's say I want to set the color here, let's say red, and if I like these styles, then I will copy them in this way, understand what I am trying to say, now if I reload it, then all these styles will go, because all the styles you put from here are temporary, but if you want to put these styles permanently, then whatever element you applied like I have applied on paragraph, I can paste these styles here
+00:11:46.000
+and they are forever here
+00:11:48.000
+you can see, I will reload it
+00:11:50.000
+because I have pasted it in my code
+00:11:52.000
+but for now I will not use these styles
+00:11:54.000
+so I hope you understood
+00:11:56.000
+how font size works
+00:11:58.000
+now after this there is a concept of line height
+00:12:00.000
+and let's say I make line height
+00:12:02.000
+let's say 4
+00:12:04.000
+I made line height 4 of the paragraph
+00:12:05.680
+and for that I have to put some content in the paragraph
+00:12:08.680
+Let's say I write another paragraph and here I write Lorem 45
+00:12:13.360
+and why I wrote Lorem 45, you will tell me in the comment section
+00:12:16.360
+that why I wrote 45
+00:12:18.360
+or why I write 23
+00:12:19.880
+So you see what will happen with line height here, that space will come here
+00:12:23.360
+ok
+00:12:24.360
+and here the space is created because
+00:12:26.160
+it has given line height 4
+00:12:27.560
+now if I will reduce it
+00:12:29.160
+as I reduced it, as if I reduced it to 1.4
+00:12:32.160
+or 1.8
+00:12:34.160
+so you understood that this spacing is line height
+00:12:36.880
+basically it controls that if you want to increase the space of your lines
+00:12:41.080
+increase the line height
+00:12:42.520
+if I want to know what will be the default value of line height
+00:12:44.880
+then I will remove the line height from here and I will go to increases, increase the line height if i want to know what will be the default value of line height, then i will remove it from here
+00:12:46.000
+and i will search for line height in computed
+00:12:49.000
+line height
+00:12:52.000
+now here i am not able to see line height in this element
+00:12:55.000
+so in this element, i guess no line height compute has happened
+00:12:58.000
+so i will do one thing, i will search on google
+00:13:01.000
+default line height, so the default line height
+00:13:04.000
+is about 110 to 120%
+00:13:07.360
+So if you want to change the line height
+00:13:10.080
+So you can increase it by 1.2 or decrease it by 1.2
+00:13:15.280
+And line height will help you in increasing the spacing
+00:13:19.760
+After this, there is another property, letter spacing
+00:13:22.000
+And I am telling you that it is not used much
+00:13:25.000
+and if I increase the letter spacing, then see what is happening here
+00:13:28.000
+it increases the spacing of letters
+00:13:30.000
+so if you want to increase the letter spacing, then you can use it
+00:13:35.000
+I personally don't use it much
+00:13:38.000
+I make my own websites
+00:13:39.000
+but these are all things that you should know
+00:13:42.000
+through this video I want you to know about all those things
+00:13:46.880
+that you may want to do.
+00:13:50.360
+Let's say you want to capitalize the first letter.
+00:13:53.720
+So you should know how to do it.
+00:13:55.760
+Some things you may not know how to do it.
+00:13:59.160
+It will be a big problem.
+00:14:00.480
+So I will show you that if you want to capitalize
+00:14:04.560
+any first letter or any word
+00:14:08.000
+like for example h1 or let me put h2
+00:14:11.000
+and i will write about fonts
+00:14:14.000
+now i will write h2
+00:14:16.000
+i hope you can see it, let me zoom it
+00:14:18.000
+if i write h2
+00:14:20.000
+let's say i write text transform
+00:14:23.000
+and let's say I write here text transform and capitalize so if I have made the f of about fonts to a, then you see here
+00:14:31.160
+the a of about fonts will be capitalized to the first letter
+00:14:34.160
+now if I write here in text transform with a colon
+00:14:38.800
+lowercase, so you see here as I did lowercase, it will be all lowercase
+00:14:42.840
+if I do uppercase, it will be full lower case if I do upper case, it will be upper case upper case, and it comes in handy
+00:14:46.800
+it is not that it will not come in handy
+00:14:48.800
+you should not say everything that it will not come in handy
+00:14:50.800
+it is actually going to come in handy
+00:14:52.800
+so this property
+00:14:54.800
+I hope you guys
+00:14:56.800
+tie it in your tool belt
+00:14:58.800
+see here I told you about text decoration
+00:15:00.800
+if you want to underline, then underline text decoration
+00:15:02.800
+it will be underlined
+00:15:04.800
+but I tell you about text you want to underline then underline text decoration it will be underlined. But I will tell you about text decoration color
+00:15:06.000
+text decoration color
+00:15:09.000
+so here you can see text decoration color aqua
+00:15:12.000
+so here it is underlined with aqua color so you can change text decoration color
+00:15:15.000
+and this is very helpful when you
+00:15:18.000
+make navigation bars and in navigation bars
+00:15:21.000
+it happens that when you hover on them, their color changes
+00:15:24.000
+or the line appears in some way.
+00:15:26.600
+So you can do all these things through CSS.
+00:15:28.700
+So I hope you are understanding these things.
+00:15:31.100
+Write in the comment section, whatever you understand.
+00:15:34.500
+Then I will tell you about two properties very quickly.
+00:15:36.500
+Text decoration style, like if I add here,
+00:15:39.300
+if I add text decoration style to this element,
+00:15:42.600
+and I add it here, so that you have code for your reference. Text decoration style i will add it here so that you can see the code
+00:15:46.000
+text decoration style
+00:15:49.000
+and if i want dotted style
+00:15:52.000
+it will be dotted
+00:15:55.000
+if you can't see it, i hope you can see it now
+00:15:58.000
+if i want it dotted, my underlining will be dotted
+00:16:01.000
+there are many other values like
+00:16:04.000
+it is dotted, double, inherit
+00:16:06.000
+inherit means inheriting from your parents
+00:16:09.000
+if i do solid then it will be like this, if i do wavy then it will be like this
+00:16:12.000
+so if you want dash or dotted
+00:16:15.000
+then you can do it
+00:16:18.000
+dash is like this, dotted is like this, wavy is like this
+00:16:21.000
+but i will tell you that with my personal experience i have done so much web development in my life
+00:16:24.000
+maybe sometime your wavy dotted lines will be useful
+00:16:28.280
+but you should know, I will say again, you should know that if you don't know
+00:16:33.320
+then it will be a problem, if someone tells you that I want dash, I want dotted
+00:16:38.200
+then you should know how to make it
+00:16:40.200
+so these are some properties that you should know, there is also thickness
+00:16:43.800
+I will tell you the thickness
+00:16:46.000
+and there are many more things
+00:16:49.000
+but if you want to do thickness then you will write text deco th
+00:16:52.000
+so it will suggest thickness
+00:16:54.000
+if you don't want to type this text decoration color
+00:16:57.000
+or if you don't want to type any property
+00:16:59.000
+then you write t, d, and co
+00:17:01.000
+it will come, I will show you
+00:17:02.000
+like if I don't want to type this
+00:17:04.000
+and I want to be suggested quickly so I will write t, d and c if i don't want to type it
+00:17:06.000
+then i will write t d e and t h
+00:17:09.000
+i will show you
+00:17:12.000
+i want text decoration thickness
+00:17:15.000
+this is important
+00:17:18.000
+text decoration d e and t h
+00:17:21.000
+and it is showing why it is suggesting
+00:17:24.000
+because you have taken t e from th and it is showing why it is suggesting because you have taken te from here
+00:17:26.000
+and de from here and th from here
+00:17:28.000
+you will enter and it will come straight
+00:17:30.000
+and then you can use arrow key
+00:17:32.000
+or if you just colon like this
+00:17:34.000
+then it is showing you
+00:17:36.000
+now what you want, how much thickness you want
+00:17:38.000
+you can adjust the value of thickness
+00:17:40.000
+ok, let's say I do this
+00:17:42.000
+45 pixels, I hope I
+00:17:44.000
+did not do too much, I guess I did too much so I will this 45 pixels, I hope I didn't do too much
+00:17:45.000
+I guess I have done too much, so I will not do it dotted, I will keep it solid
+00:17:49.000
+I will keep it solid and you will see here that I have made it a little too thick
+00:17:54.000
+I will have to reduce its value a little and see I will reduce its value
+00:17:58.000
+so it is a little less, I think 7 pixels is more than enough
+00:18:01.000
+7 pixels is way more than enough, so let's do 7 pixels and see it's thick.
+00:18:06.000
+So sometimes you have to make it thick. What do you have to do?
+00:18:09.000
+If you want to make your text decoration thicker,
+00:18:12.000
+then you can do something like this. So you guys use text decoration
+00:18:15.000
+thickness to make it thicker. Okay. Then after this
+00:18:18.000
+I would like to tell you about the text-indent property.
+00:18:21.000
+The text-indent property is like, let's say I give 45 pixels
+00:18:24.000
+to the text-indent, so see an 45px text indented, so you can see an indent
+00:18:26.000
+so you can add an indent
+00:18:28.000
+and I will show you
+00:18:30.000
+that if I will reduce the value of text indented
+00:18:32.000
+by arrow key
+00:18:34.000
+so you can see an indent
+00:18:36.000
+then after this, to make vlogs
+00:18:38.000
+text overflow is used a lot
+00:18:40.000
+text overflow property
+00:18:42.000
+means what you want
+00:18:44.000
+if your text is overflowing from your box
+00:18:46.000
+then what should happen, like here
+00:18:49.000
+I comment out some properties like I don't want dotted
+00:18:52.000
+I make it black
+00:18:55.000
+I don't want to do aqua, I make text decoration color blue
+00:18:58.000
+because black is by default, now I
+00:19:01.000
+want to set the width of my text overflow
+00:19:04.000
+I make the width to 45 pixels
+00:19:08.120
+and as soon as I did 45 pixels
+00:19:10.120
+so it became something like this
+00:19:11.640
+now if I do ellipsis or clip in text overflow
+00:19:15.600
+so what will happen, what is the difference between ellipsis and clip
+00:19:18.080
+I will tell you
+00:19:19.280
+if I increase the width of it, it will become something like this
+00:19:22.560
+and let's do the same for paragraph
+00:19:25.400
+I think we can understand this thing better in paragraph
+00:19:27.800
+so here I will give a class
+00:19:29.600
+and in class I will do lorem
+00:19:31.600
+and I will put a style here by dot lorem
+00:19:33.200
+dot lorem
+00:19:34.200
+ok
+00:19:35.200
+and I will do the same thing here for you
+00:19:37.200
+one is text overflow
+00:19:38.400
+one is its width I will give
+00:19:39.600
+one is first of all I will give border
+00:19:41.600
+2 pixels solid red
+00:19:43.200
+and after this I will give width 45px
+00:19:46.560
+and let's see how it looks, so it looks like this
+00:19:49.640
+now what I will say to this paragraph
+00:19:51.560
+that if there is text overflow in it, then do ellipsis
+00:19:54.880
+now here one more important thing is that you have to hide the overflow
+00:19:58.040
+which means that if it is overflowing from the box
+00:20:01.160
+what do you want your element
+00:20:02.560
+you want scroll, you want hidden
+00:20:04.320
+so now see I have hidden the overflow, can hide it by using ellipsis
+00:20:07.000
+and if i change the value of it to clip then it will hide it
+00:20:13.000
+so there are many more properties like this
+00:20:15.000
+one more property is word break
+00:20:19.000
+so i will make it 145
+00:20:21.000
+and i will write word break
+00:20:25.000
+and if I do break all in word break
+00:20:27.000
+then you see here
+00:20:29.000
+if I don't do break all here
+00:20:31.000
+then see dollar went down here
+00:20:33.000
+if I do break all then what will happen
+00:20:35.000
+it will break the word here
+00:20:37.000
+it did DOL and OR here
+00:20:39.000
+so if you want your words to be break
+00:20:41.000
+then you can use this property
+00:20:43.000
+then after this there is a text line property let's say I want to center it
+00:20:45.680
+so I will put text align center here
+00:20:47.680
+text align center
+00:20:49.120
+and now see it is centered
+00:20:50.280
+if I reload it, it will go for sure
+00:20:52.600
+so I will put it in h2
+00:20:55.400
+and I will say text align center
+00:20:59.520
+ok
+00:21:00.040
+so here it is automatically suggesting me
+00:21:02.440
+and I am taking it as my property
+00:21:04.680
+which is very important for me if I am coding
+00:21:08.560
+So you see here about font center is entered
+00:21:10.760
+I hope you understood this thing
+00:21:12.920
+So these were all the properties of text
+00:21:15.120
+Now here the properties of text are very important
+00:21:17.280
+Because if you want to make good websites
+00:21:19.360
+then you should know everything about text
+00:21:21.160
+only then you will be able to control your text
+00:21:23.960
+So these were some properties of text
+00:21:26.000
+I will give you a link in the description where you will get additional
+00:21:29.000
+to learn about all these things and all this
+00:21:32.000
+I have read in this video, after that things will be very
+00:21:35.000
+intuitive for you. So what I will do is
+00:21:38.000
+I will move towards colors and I will tell you how colors
+00:21:41.000
+work. So let's do one thing,
+00:21:44.000
+let's make one more html file
+00:21:46.000
+with the name of colors.html
+00:21:48.000
+because we have
+00:21:50.000
+spread a lot of mess
+00:21:52.000
+while understanding fonts
+00:21:54.000
+because obviously this is not a good website
+00:21:56.000
+I have made this to teach you concepts
+00:21:58.000
+and we will make good websites
+00:22:00.000
+wait, ok, so let's talk about colors
+00:22:02.000
+so here I will put
+00:22:04.000
+its heading, colors and I will put its heading, colors.
+00:22:06.000
+And I will put a little heading of this too, fonts.
+00:22:08.000
+I know it doesn't look good, so I can give a little beauty by putting a title.
+00:22:11.000
+Now after this I will put style here.
+00:22:14.000
+Oops, I don't know why I make style capital.
+00:22:16.000
+And what I will do here, I will write h1, let's learn,
+00:22:20.000
+learn about colors.
+00:22:23.000
+Now let's say I want to change the color of h1
+00:22:26.000
+so i will say h1, i have used element selector here, i will do format document
+00:22:29.000
+by using element selector i will change the color to red
+00:22:32.000
+color and red
+00:22:35.000
+and obviously you guessed it right, here the color is
+00:22:38.000
+i want to preview colors.html
+00:22:41.000
+yes it's done, let's learn about colors
+00:22:44.000
+you can see that it came from red color.
+00:22:46.000
+No surprises there.
+00:22:48.000
+Now can I make it orange? Yes, I can.
+00:22:50.000
+And range. And you can see here that
+00:22:52.000
+its color has become orange.
+00:22:54.000
+What are the color keywords that can be used?
+00:22:56.000
+Now see these are color keywords.
+00:22:58.000
+It is possible that the color in your mind
+00:23:00.000
+is not a color keyword in CSS.
+00:23:02.000
+It happens. And I am stuck.
+00:23:04.000
+I am telling you personally that I am so stuck in these things that there is a color keyword in CSS And i am stuck in these things
+00:23:06.000
+That there is no color in my mind
+00:23:09.000
+Like light blue
+00:23:12.000
+So i will show you how to find it
+00:23:15.000
+If i write dark yellow
+00:23:18.000
+And it is not coming
+00:23:21.000
+Because if i show you
+00:23:24.000
+Is dark red? yes it is dark red
+00:23:26.000
+is it dark grey? yes it is dark grey
+00:23:29.000
+so why is it not dark yellow?
+00:23:32.000
+so what happens is that there are some color keywords in CSS
+00:23:35.000
+and what I will do is I will show you a code pen
+00:23:38.000
+that code pen you don't have to write
+00:23:41.000
+I mean this is very much common sense
+00:23:44.000
+that you don't know how to write
+00:23:45.600
+but here you can see Alice Blue
+00:23:48.460
+Antique White, Aqua, Aquamarine, Azure
+00:23:51.480
+Blue and all these colors, all the colors in CSS
+00:23:54.520
+has a comprehensive list, so let's do one thing
+00:23:57.520
+I am putting it here just to see you
+00:24:00.460
+it's not that you have to write it, don't think that
+00:24:03.300
+I am sitting to remember it, no, I know you are smart and you will not do this.
+00:24:07.000
+So these are the color keywords we have, so one is the easiest for us, I will put a good color, dark red, one is the easiest way for us, here I close this too, close this too, close this too, use the color keyword but sometimes what happens see colors are millions of colors okay
+00:24:25.460
+if you have to give a particular color to someone
+00:24:28.080
+means he gave you a hex color code
+00:24:30.160
+now what is hex color code
+00:24:31.680
+hex color code is a way to represent the code
+00:24:34.520
+now I will tell you three ways
+00:24:36.120
+which are very commonly used to show color
+00:24:39.640
+okay so I do one thing
+00:24:40.720
+I write a paragraph here
+00:24:43.440
+I will write
+00:24:44.160
+color can be represented in
+00:24:46.000
+and here
+00:24:49.000
+i will make an ordered list
+00:24:52.000
+and i will write
+00:24:55.000
+color codes
+00:24:58.000
+sorry color keywords and here hex color codes
+00:25:01.000
+one li and one list item
+00:25:04.000
+and after this i will add one more li hex color code, one li is my list item hex color code
+00:25:05.000
+and after this I will add one more li
+00:25:08.000
+RGB, then one more li will add
+00:25:11.000
+RGBA, and then one more li will add
+00:25:14.000
+HSLU, saturation and lightness
+00:25:17.000
+so here you can see, what is the first method
+00:25:20.000
+so if I have to do it through color keywords, I have shown you how to do it
+00:25:23.000
+now I will show you how you can use this color
+00:25:26.300
+by giving a hex color, if I write color here
+00:25:30.400
+I write hashtag here
+00:25:31.400
+and I will write FFAB
+00:25:33.400
+in fact I will not choose random color, I will go to hex color code
+00:25:37.900
+and here you can see a lot of hex color code
+00:25:40.600
+you can give any color's hex color code
+00:25:43.400
+and
+00:25:44.600
+there is a way to generate a hex code
+00:25:46.940
+here it is shown
+00:25:48.940
+and if you want to take this color
+00:25:50.940
+and you like it
+00:25:52.940
+and you have this color in your mind
+00:25:54.940
+then I will copy this code
+00:25:56.940
+and it will generate the same color
+00:25:58.940
+after hash I will write this
+00:26:00.940
+and you can see the green color
+00:26:02.940
+so hex color is a way to represent color
+00:26:04.940
+which uses hex values ok and you can see the green color here so hex color is a way to represent color
+00:26:05.720
+which uses hex values
+00:26:08.980
+now a particular hex color has RGB equivalent
+00:26:11.980
+if it is a very common color like red
+00:26:14.600
+then its color keyword will be equivalent
+00:26:17.440
+so if you want to use any color then you will be given its code
+00:26:20.440
+now that code can be given in RGB
+00:26:23.480
+that code can be given through a color keyword like red, blue or you can be given to you in RGB that code can be given to you through a color code, color keyword like red, blue
+00:26:26.000
+or it can be given to you in RGB, RGBA or HSL
+00:26:29.000
+so this is hex color code
+00:26:32.000
+now i will tell you how RGB is used
+00:26:35.000
+if you want to use RGB then you will write color
+00:26:38.000
+and RGB and here the value of red from 0 to 255
+00:26:41.000
+like if i write 23, green value from 0 to 255
+00:26:44.000
+and here blue value from 0 to 255 for example, if i write 23 green value from 0 to 255
+00:26:46.000
+and blue value from 0 to 255
+00:26:48.000
+and see this color is made
+00:26:50.000
+if you hover over it
+00:26:52.000
+you will see this
+00:26:54.000
+and you can generate any color
+00:26:56.000
+see RGB values are changing
+00:26:58.000
+so you can generate any color
+00:27:00.000
+so with RGB values
+00:27:02.000
+if red is this much
+00:27:04.000
+green is this much, blue is this much, then this color is made
+00:27:06.000
+if you want to make white
+00:27:08.000
+then put all colors
+00:27:10.000
+it will become white, if you want to make black
+00:27:12.000
+then put nothing, dark, 0, 0, 0
+00:27:14.000
+and different colors are made from the middle values
+00:27:16.000
+so RGB makes a particular color
+00:27:18.000
+you can use
+00:27:20.000
+this is one way to represent colors
+00:27:22.000
+another way
+00:27:24.000
+to represent color is
+00:27:25.220
+RGBA, and RGBA has same
+00:27:28.180
+RGBA has same RGB
+00:27:31.180
+but one thing is different, that is alpha
+00:27:34.180
+and what is alpha value, it varies from 0 to 1
+00:27:37.180
+if I make it 0.5, let me show you
+00:27:39.920
+and I do this, so I can do this
+00:27:42.960
+from 0 to 1, you can see the value is changing
+00:27:46.000
+and by default it is 1
+00:27:48.000
+if I do 1 then there is no need to write
+00:27:50.000
+but if I do this much for alpha
+00:27:52.000
+so what will happen, what is alpha basically
+00:27:54.000
+its opacity, I will reduce the opacity
+00:27:56.000
+if I reduce it completely, then this color
+00:27:58.000
+will look like this, see it is light
+00:28:00.000
+it is very light
+00:28:02.000
+after this you have an HSL equivalent
+00:28:04.000
+of a color, and if I have a HSL equivalent of a color
+00:28:05.000
+and if I have to tell you what is the most used, see most of the time these color keywords are used
+00:28:11.000
+after that the most used is hex color, because those people who make designs
+00:28:16.000
+they mostly use hex color codes in their designs and when they use hex color codes, then developers like us have to use hex color codes to bring the exact color in our design through HTML and CSS.
+00:28:30.240
+Okay, so here we have to use the value we have got.
+00:28:34.880
+If we have been told that RGB color is fine, then we will put values.
+00:28:39.200
+If your boss has told you that RGB values are to be used through red color, then we will do this.
+00:28:44.040
+The exact same color will be made
+00:28:46.000
+if any developer has used a particular color in android app
+00:28:49.000
+if that developer has to use the same color in his website
+00:28:52.000
+then bring the exact color code
+00:28:55.000
+hex color code or RGB values
+00:28:58.000
+sometimes HSL is also used
+00:29:01.000
+I will tell you, it is used less, I personally do not use HSL in my website
+00:29:04.000
+but HSL is used
+00:29:06.000
+Now I want to tell you that
+00:29:09.000
+H in HSL is Hue which represents the type of color
+00:29:12.000
+S means intensity
+00:29:15.000
+and purity and L determines lightness
+00:29:18.000
+Now you can see how HSL color can be made
+00:29:21.000
+I will copy the color from here and show you
+00:29:24.000
+Personally I am not a big fan of HSL to be honest I will copy the color from here and I will show you guys
+00:29:26.000
+I am not a big fan of HSL to be honest
+00:29:29.000
+but sometimes I get colors so I have to use it
+00:29:32.000
+and obviously if you hover over here and change it
+00:29:35.000
+it will change in HSL only
+00:29:38.000
+you can also change the alpha value
+00:29:41.000
+there is also HSLA but again it is not that useful
+00:29:44.000
+but you should know that there is also HSLA is also there but again it is not used that much but you should know that HSLA is also there, you can also give alpha value in it
+00:29:47.000
+something like this, okay?
+00:29:48.000
+I can also add HSLA but again we will keep alpha as 100 and use HSLA only for now
+00:29:55.000
+because if you are making your website then you have full creative control over which color you are using
+00:30:01.000
+so this was about color, if you want to add color in background
+00:30:06.000
+we use same thing in background color and exactly the way i gave color
+00:30:09.000
+you can give it in that way, for example if you want to give color in background
+00:30:12.000
+you can give value of RGB, HSL, RGBA
+00:30:15.000
+you can give color key words, you can give hex code
+00:30:18.000
+sky is the limit, its your choice
+00:30:21.000
+here your choice
+00:30:24.000
+you will say it's my choice
+00:30:26.000
+whatever color i use, if you are making your website
+00:30:29.000
+if you are making someone else's then he will say it's my choice
+00:30:32.000
+you are a developer, make a website, use the color i am saying
+00:30:35.000
+now border color
+00:30:38.000
+and text decoration color
+00:30:41.000
+the color which is there in the whole css
+00:30:44.000
+border color, and there are many other colors the color of the border, where ever we read colors, we can use this kind of values
+00:30:52.000
+so that was about colors in CSS
+00:30:54.000
+now there are many things like how to read hsl, how to tweak values and make a particular color
+00:31:01.000
+so those things will go to design lessons you should have a goal of how to make a website, so those things will go towards design lessons
+00:31:05.000
+you should have a goal here, how to make a good website
+00:31:09.000
+so I hope in this long video I have explained you font and colors
+00:31:13.000
+because many people were saying that the videos are getting short, so I thought
+00:31:15.000
+a long video should also be given to you, so I have tried to tell you fonts and colors
+00:31:19.000
+in today's video, I am enjoying telling you in the comment section
+00:31:23.000
+in this course and people are not bookmarking the playlist
+00:31:26.000
+and not liking the video
+00:31:28.000
+which is wrong
+00:31:30.000
+I think you should access this playlist
+00:31:32.000
+and bookmark it
+00:31:34.000
+and like this video
+00:31:36.000
+share it with your friends
+00:31:38.000
+and share your land in my name
+00:31:40.000
+and prepare to meet me in the next video
+00:31:42.000
+Thank you so much guys for watching this video

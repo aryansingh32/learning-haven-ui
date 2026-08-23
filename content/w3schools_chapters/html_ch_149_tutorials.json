@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 149,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in HTML. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Tutorials in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in HTML."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The Server-Sent Events (SSE) API enables pushing \nmessages/updates from a server to the web page via HTTP connection.\n\nA server-sent event is when a web page automatically gets messages/updates from a server.\n\nNormally, a web page has to request data from the server, but with server-sent events, the updates \nare pushed automatically.\n\nExamples: Facebook/Twitter updates, stock market updates, news feeds, sport results, etc.\n\nThe numbers in the table specify the first browser version that fully support \nthe Server-Sent Events API.\n\nTheEventSourceobject is used to receive server-sent event notifications:\n\nExample explained:\n\nIn the tryit example above there were some extra lines of code to check browser support for server-sent events:\n\nFor the example above to work, you need a server capable of sending data updates (like PHP or ASP).\n\nThe server-side event stream syntax is simple. Set the \"Content-Type\" header to \n\"text/event-stream\". Now you can start sending event streams.\n\nCode in PHP (demo_sse.php):\n\nCode in ASP (VB) (demo_sse.asp):\n\nCode explained:\n\nIn the examples above we used the onmessage event to get messages. But other events are also available:\n\n### Code Snippets\n\n```\n<script>\nconst x = document.getElementById(\"result\");\n// Check browser support for SSE\nif(typeof(EventSource) \n  !== \"undefined\") {\nvar source = new EventSource(\"demo_sse.php\");\nsource.onmessage = function(event) {\nx.innerHTML += \n  event.data + \"<br>\";\n};\n} else {\nx.innerHTML = \"Sorry, \n  no support for server-sent events.\";\n}\n</script>\n\n---\n\nif(typeof(EventSource) !== \"undefined\") {\n// Yes! Server-sent events support!\n//\nSome code.....\n}\n else {\n// Sorry! No server-sent events support..\n}\n\n---\n\n<?php\nheader('Content-Type: text/event-stream');\nheader('Cache-Control: no-cache');\n$time = date('r');\necho \"data: The server time is: {$time}\\n\\n\";\nflush();\n?>\n\n---\n\n<%\nResponse.ContentType = \"text/event-stream\"\nResponse.Expires = -1\nResponse.Write(\"data: The server time is: \" & now())\nResponse.Flush()\n%>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_148",
+            "prompt": "Try implementing a simple program using Tutorials in HTML.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in HTML?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

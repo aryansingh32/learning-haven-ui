@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 40,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTemporal reached TC39 Stage 4 in July 2026.\n\nStage 4 means the feature is complete and will be included in the next publication.\nAn important timing detail is that ECMAScript 2026 had already been cut,\nand it did not contain Temporal.\n\nConclusion: Temporal is JavaScript 2027, not JavaScript 2026.\n\nThis can be slightly confusing because it became Stage 4 during 2026, and browsers began implementing Temporal\nlong before before the ES2026 release.\n\nTemporal is a major update to the JavaScript standard.\n\nIt is currently supported in Chrome, Edge, Firefox, and Opera\nand is expected to reach full availability across browsers before 2027.\n\nTheSafariimplementation can be tested in\nSafari Technology Preview by enabling the --use-temporal runtime flag.\n\nLearn JavaScript Temporal in the Right Order.\n\n### Code Examples\n\n```\n<script\nsrc=\"https://cdn.jsdelivr.net/npm/@js-temporal/polyfill/dist/index.umd.js\">\n</script>\n```\n\n## Tutorials\n\nWith Temporal, you can get today's date and add days in a clear and safe way.\n\nWithJavaScript Date, you only have one type of date object.\n\nTemporal gives youseparate objectsdepending on what you need:\n\nTemporal objects are immutable, which means they cannot be changed after they are created.\n\nTemporal objects return a new valueinstead of modifying the existing one.\n\nDST-safe arithmeticensures time calculations (addition and subtraction) remain accurate across\nDaylight Saving Time (DST) transitions, preventing 1-hour errors.\n\nIt involves using timezone and calendar-aware objects (ZonedDateTime) that understand\nlocal clock shifts.\n\nRFC 5545(Internet Calendaring and Scheduling Core Object Specification),\nis the industry standard for exchanging calendar and scheduling information.\n\nIt allows different systems (like Google Calendar, Apple Calendar,\nand Microsoft Outlook) to communicate seamlessly.\n\nUse Temporal when you need reliable date and time handling.\n\n### Code Examples\n\n```\n// Month 5 is June\nlet d = new Date(2026, 5, 17);\n\n---\n\n// Create a Date\nlet d = new Date(2026, 5, 17);\n// Add 7 days\nd.setDate(d.getDate() + 7);\n// Here the original date (d) is lost\n\n---\n\n// Create a Temporal object\nconst today = Temporal.Now.plainDateISO();\n// Add a duration\nconst nextWeek = today.add({ days: 7 });\n\n---\n\nlet d = new Date();\n```\n\n## Tutorials\n\nThe JavaScriptDate objectis old and has severaldesign problems.\n\nThese are the most common mistakes developers make when using Date objects:\n\nIn the JavaScript Date object, January is month 0 and December is month 11.\n\nIn the JavaScript Temporal object, January is month 1 and December is month 12.\n\nThis is much more user-friendly.\n\nJavaScript Date objectscan change.\n\nDate objects aremutable.\n\nJavaScript Temporal objectscannot change.\n\nTemporal objects areimmutable.\n\nJavaScript has beena minefield of different formats, browser quirks and locale surprises.\n\nDate strings can be parsed differently across browsers and environments,\nand different formats may be interpreted as local time or UTC.\n\nA date string like2026-05-07is interpreted asUTC timein JavaScript.\n\nA date-time string like2026-05-07T14:40:00is interpreted aslocal time.\n\nTemporal avoids the problems above by defining strict parsing rules for\nISO strings.\n\nTemporal.PlainDateis not a timestamp.\n\nIt is just2026-05-17with no time and no time zone.\n\nnew Date(2026, 4, 1)creates a timestamp of\nyour local time at midnight.\n\nThis means a day can \"shift\" when you format it to UTC.\n\nA Date object always stores a timestamp, but it can display values as local time or UTC.\n\nThis mix can easily cause confusion when converting and comparing dates.\n\nThe same moment can look different depending on how it is displayed.\n\nTemporal uses clear types for time zones.\n\nTemporal.ZonedDateTimealways includes a time zone.\n\nDaylight saving time (DST) can cause a day to be 23 or 25 hours long.\n\nThis can break calculations that assume every day is exactly 24 hours.\n\nThe result can be off by one hour in time zones with DST changes.\n\nDate math often requires manual calculations.\n\nTemporal has built-in date arithmetic.\n\nDate mixes everything in one object.\n\nTemporal objectsseparate different use cases into different objects.\n\nThis makes code easier to read and less error-prone.\n\n### Code Examples\n\n```\n// May 17, 2026:\nlet date = new Date(2026, 4, 17)\n\n---\n\n// May 17, 2026:\nconst date = new Temporal.PlainDate(2026, 5, 17)\n\n---\n\n// Create a Date\nconst date = new Date(\"2026-05-17\");\n// Add 7 days to date\ndate.setDate(date.getDate() + 7);\n// Here the original date is lost\n\n---\n\n// Create a Date\nconst date1 = new Date(\"2026-05-17\");\n// Create a copy\nconst date2 = date1;\n// Add 7 days to date1\ndate1.setDate(date1.getDate() + 7);\n// Here date2 has changed\n\n---\n\n// Create a Date\nconst date1 = Temporal.PlainDate.from(\"2026-05-17\");\n// Add 7 days\nconst date2 = date1.add({ days: 7 });\n// Here original date1 is kept\n\n---\n\nconst d1 = new Date(\"2026-05-17\");\nconst d2 = new Date(\"2026-05-17T00:00:00\");\nconst d3 = new Date(\"05/17/2026\");\nconst d4 = new Date(\"May 17 2026\");\nconst d5 = new Date(\"17 May 2026\");\nconst d6 = new Date(2026, 4, 17);\n\n---\n\n// Create a PlainDate object\nconst date = Temporal.PlainDate.from(\"2026-05-17\");\n\n---\n\n// Create a Date object\nconst date = new Date(2026, 4, 1);\n// Might be another day in some time zones:\ndate.toISOString();\n\n---\n\nconst date = new Date();\nlet time1 = date.toString();\nlet time2 = date.toUTCString();\n\n---\n\nconst instant = Temporal.Now.instant();\nconst local = Temporal.Now.zonedDateTimeISO();\n\n---\n\nconst start = new Date(\"2026-03-29T00:00:00\");\nconst end = new Date(start.getTime() + 24 * 60 * 60 * 1000);\n\n---\n\nconst start = new Date(\"2026-05-01\");\nconst end = new Date(\"2026-05-17\");\nconst diff = end - start;\n\n---\n\nconst start = Temporal.PlainDate.from(\"2026-05-01\");\nconst end = Temporal.PlainDate.from(\"2026-05-17\");\nconst diff = start.until(end);\n\n---\n\nconst date = new Date(); // date + time + zone\n```\n\n## Tutorials\n\nAnISO 8601 durationrepresent lengths of time.\n\nIt uses a standard format starting with\u00b1P(Period),\nfollowed by the structurenYnMnDTnHnMnS.\n\nIt covers yearsnY, monthsnM, weeksnW, daysnD, and aTbefore hoursnH, minutesnM, and secondsnS.\n\nA Duration can be created in several different ways:\n\nYou can create a Temporal.Duration object using thenewconstructor\nwithinteger parameters.\n\nThe parameters must be in this orde:\n\nYou can create a duration object using thefrom()method with anobject literalparameter like{days:7, hours: 2}:\n\nYou can create a Duration object using thefrom()method\nwith anISO duration stringas parameter.\n\nTheTemporal.Durationobject has12 propertiesof time information.\n\nThewith()method returns a new duration\nwith specific properties (time units) replaced:\n\nTheDuration objectfacilitates safe and clear date and time arithmetic,\npreventing issues related to DST (daylight saving time) and time zone changes.\n\nTheDuration objectcan handle time in various units, including years, months,\nweeks, days, hours, minutes, seconds, milliseconds, microseconds, and nanoseconds.\n\nTheDuration objectmakes date arithmetic clear, readable, and safer than using manual millisecond calculations.\n\nTheadd()method returns a new duration with a duration added.\n\nTheadd()method does not change the original duration.\n\nThesubtract()method returns a new duration with a duration subtracted.\n\nThesubtract()method does not change the original duration.\n\nAll temporal objectshave their ownadd() method:\n\nAll temporal objectshave their ownsubtract() method:\n\nThe Temporal.Duration object does not have anequals()method due to the\ncomplexity of handling different representations of the same duration.\n\nInstead, equality is checked using the staticTemporal.Duration.compare()method.\n\nThis method returns-1if the first duration is shorter,0if it is the same,\nand1if it is longer.\n\nAll temporal objectshave their owncompare() method:\n\nThe code above fails and throws a RangeError because d2 contains a calendar unit (months),\nwhich has an uneven and variable length.\n\nWithout a specific starting point on the calendar, the JavaScript runtime cannot determine\nexactly how many days are in \"1 month\" to perform the comparison.\n\nFor example, 1 month starting in February could be 28 or 29 days, while 1 month starting in\nJanuary is 31 days.\n\nThe Temporal.Duration object does not have an equals() method because durations can be represented\nin multiple \"unbalanced\" ways that are mathematically equivalent but structurally different.\n\nFor example, a duration of 90 seconds is logically equal to 1 minute and 30 seconds,\nbut they are stored as distinct property sets within the Temporal.Duration object.\n\nUnbalanced Units: By default, Temporal.Duration preserves the units exactly as they were defined.\nBecause \"60 minutes\" and \"1 hour\" are different internal representations, a standard equals() method would\nbe ambiguous (should it check for identical properties or identical time length?)\n\nVariable Unit Lengths: Units like days, months, and years do not have a fixed length.\nA \"month\" can be 28, 30, or 31 days depending on the calendar and reference date.\n\nNeed for Context: To accurately compare two durations containing calendar units\n(years, months, weeks), you must provide a relativeTo option (a specific starting point).\nWithout this reference, the API cannot determine if two calendar-based durations are truly \"equal\".\n\n### Code Examples\n\n```\n// Create a Duration object\nconst duration = Temporal.Duration.from({days:7, hours:2});\n\n---\n\nP7DT2H\n\n---\n\n+P nY nM nW nD T nH nM nS\n\n---\n\nP3Y6M4DT12H30M5S\n\n---\n\n// Create a Duration object\nconst duration = new Temporal.Duration(0, 0, 0, 7, 2);\n\n---\n\n// Create a Duration object\nconst duration = Temporal.Duration.from({days:7, hours:2});\n\n---\n\n// Create a Duration\nconst duration = Temporal.Duration.from(\"P7DT2H\");\n\n---\n\n//Create a Duration\nconst duration = new Temporal.Duration(0, 0, 0, 7, 2, 0);\n// List the Properties\nlet text =\n\"blank: \" + duration.blank + \" \" +\n\"sign: \" + duration.sign + \" \" +\n\"years: \" + duration.years + \" \" +\n\"months: \" + duration.months + \" \" +\n\"weeks: \" + duration.weeks + \" \" +\n\"days: \" + duration.days + \" \" +\n\"hour: \" + duration.hours  + \" \" +\n\"minutes: \" + duration.minutes  + \" \" +\n\"seconds: \" + duration.seconds  + \" \" +\n\"milliseconds: \" + duration.milliseconds  + \" \" +\n\"microseconds: \" + duration.microseconds  + \" \" +\n\"nanoseconds: \" + duration.nanoseconds;\n\n---\n\n// Create a Duration\nconst duration = Temporal.Duration.from({hours:10, minutes:30});\n// Create a new duration with the minutes changed to 45\nconst newDuration = duration.with({minutes:45});\n\n---\n\n// Create a Duration\nconst d1 = Temporal.Duration.from({ hours:2, minutes:30 });\n// Add a Duration\nconst d2 = d1.add({ hours:1, minutes:30 });\n\n---\n\n// Create a Duration\nconst d1 = Temporal.Duration.from({ hours:2, minutes:30 });\n// Subtract a Duration\nconst d2 = d1.subtract({ hours:1, minutes:30 });\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ minutes:90 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ hours:1, minutes:30 });\nconst d2 = Temporal.Duration.from({ hours:1, minutes:30 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n// Create two Durations\nconst d1 = Temporal.Duration.from({ days:30 });\nconst d2 = Temporal.Duration.from({ months: 1 });\n// Compare the Durations\nlet result = Temporal.Duration.compare(d1, d2);\n\n---\n\n//Create a Duration\nconst duration = new Temporal.Duration(0, 0, 0, 7, 2, 0);\n// List the Properties\nlet text =\n\"blank: \" + duration.blank + \" \" +\n\"sign: \" + duration.sign + \" \" +\n\"years: \" + duration.years + \" \" +\n\"months: \" + duration.months + \" \" +\n\"weeks: \" + duration.weeks + \" \" +\n\"days: \" + duration.days + \" \" +\n\"hour: \" + duration.hours  + \" \" +\n\"minutes: \" + duration.minutes  + \" \" +\n\"seconds: \" + duration.seconds  + \" \" +\n\"milliseconds: \" + duration.milliseconds  + \" \" +\n\"microseconds: \" + duration.microseconds  + \" \" +\n\"nanoseconds: \" + duration.nanoseconds;\n```\n\n## Tutorials\n\nTheZat the end of the date stands forZero time.\n\nTheTin the middle is aseparatorbetween date and time.\n\nUTC stands forUniversal Time Coordinated.\n\nTo obtain local time in world, you need to add or subtract hours from UTC\ndepending on how many time zones you are away from Greenwich.\n\nAn Instant can be created in several different ways:\n\nYou can create an Instant using thenew Temporal.Instant()constructor.\n\nThenat the end meansBigInt.\n\nTheparametermust be aBigInt.\n\nYou can create an Instant from anRFC 9557 string.\n\nTheZat the end of the time, is theISO 8601standard for formattingUTC time.\n\nIt indicates that the offset from UTC time is 0 (Zero).\n\nIt is also known asZtime,Zerotime orZulutime.\n\nTheTin the middle is theISO 8601standard forseparatingdate and time.\n\nYou can create an Instant object from the number ofmilliseconds since the Unix epoch.\n\nYou can create an Instant object from the number ofnanoseconds since the Unix epoch.\n\nJavaScript Temporal.Instant does not have any method for creating an instant from current time.\n\nYou must use a Temporal.Now method instead.\n\nTheTemporal.Now.instant()method returns an Instant object with the exact current time.\n\nWithDate, you useDate.now()to get the current\ntimestamp.\n\nTheDate.now()method returns the timestamp value inmilliseconds:\n\nWithTemporal, you useTemporal.Now.instant():\n\nThe propertyepochMillisecondsreturns the timestamp value inmilliseconds:\n\nThe propertyepochNanosecondsreturns the timestamp value innanoseconds:\n\nAll temporal objectshave their owncompare() method:\n\nMost (*) temporal objectshave their ownequals() method:\n\n(*) Duration has not.\n\nATemporal.Instantdoes not include time zone information.\n\nYou must convert it to aTemporal.ZonedDateTimeto display local time.\n\nThetoZonedDateTimeISO()method converts a UTC moment\nto a specific time zone:\n\nUTC is a global clock.\n\nTime zone is the local view of the same clock.\n\nUTC is used as a reference time:\n\n### Code Examples\n\n```\nconst instant = Temporal.Instant.from(\"2026-05-17T14:30:00Z\");\n\n---\n\nLondon:\u00a0\u00a0\u00a0\u00a012:00 (UTC)\nOslo:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a014:00 (UTC+2)\nNew York:\u00a0\u00a008:00 (UTC-4)\nTokyo:\u00a0\u00a0\u00a0\u00a0\u00a021:00 (UTC+9)\n\n---\n\nconst instant = new Temporal.Instant(1779028200000000000n);\n\n---\n\nconst instant = Temporal.Instant.from(\"2026-05-17T14:30:00Z\");\n\n---\n\nconst instant = Temporal.Instant.fromEpochMilliseconds(1779028200000);\n\n---\n\nconst instant = Temporal.Instant.fromEpochNanoseconds(1779028200000000000n);\n\n---\n\nconst instant = Temporal.Now.instant();\n\n---\n\nlet timestamp = Date.now();\n\n---\n\nconst instant = Temporal.Now.instant();\nlet timestamp = instant.epochMilliseconds;\n\n---\n\nconst instant = Temporal.Now.instant();\nlet timestamp = instant.epochNanoseconds;\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// compare()\nlet x1 = Temporal.Instant.compare(i1, i2));\nlet x2 = Temporal.Instant.compare(i1, i3));\nlet x3 = Temporal.Instant.compare(i3, i1));\n\n---\n\n// Create Temporal.Instant objects\nconst i1 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i2 = Temporal.Instant.from(\"2026-05-17T12:00:00Z\");\nconst i3 = Temporal.Instant.from(\"2026-05-17T13:00:00Z\");\n// equals()\nlet x1 = i1.equals(i2);\nlet x2 = i1.equals(i3);\n\n---\n\nconst instant = Temporal.Instant.from(\"2026-05-17T14:30:00Z\");\nconst zoned = instant.toZonedDateTimeISO(\"Europe/Oslo\");\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_40",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_40",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

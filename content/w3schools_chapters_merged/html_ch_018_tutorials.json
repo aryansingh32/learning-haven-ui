@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "html",
+  "chapter_number": 18,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in HTML."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=HTML+Tutorials",
+        "title": "Understanding Tutorials and more in HTML",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nTest your understanding of HTML buttons by completing this coding challenge.\n\n## Tutorials\n\nAn HTML iframe is used to display a web page within a web page.\n\nThe HTML<iframe>tag specifies an \ninline frame.\n\nAn inline frame is used to embed another document within the current HTML document.\n\nTip:It is a good practice to always include atitleattribute for the<iframe>. \nThis is used by screen readers to read out what the content of the iframe is.\n\nUse theheightandwidthattributes to specify the \nsize of the iframe.\n\nThe height and width are specified in pixels by default:\n\nOr you can add thestyleattribute and use \nthe CSSheightandwidthproperties:\n\nBy default, an iframe has a border around it.\n\nTo remove the border, add thestyleattribute and use the CSSborderproperty:\n\nWith CSS, you can also change the size, style and color of the iframe's border:\n\nAn iframe can be used as the target frame for a link.\n\nThetargetattribute \nof the link must refer to thenameattribute of the iframe:\n\n### Code Examples\n\n```\n<iframe src=\"\nurl\n\" title=\"\ndescription\n\"></iframe>\n\n---\n\n<iframe src=\"demo_iframe.htm\" height=\"200\" width=\"300\" \n  title=\"Iframe Example\"></iframe>\n\n---\n\n<iframe src=\"demo_iframe.htm\" style=\"height:200px;width:300px;\" \n  title=\"Iframe Example\"></iframe>\n\n---\n\n<iframe src=\"demo_iframe.htm\" style=\"border:none;\" \n  title=\"Iframe Example\"></iframe>\n\n---\n\n<iframe src=\"demo_iframe.htm\" style=\"border:2px solid red;\" \n  title=\"Iframe Example\"></iframe>\n\n---\n\n<iframe src=\"demo_iframe.htm\" name=\"iframe_a\" title=\"Iframe \n  Example\"></iframe>\n<p><a href=\"https://www.w3schools.com\" target=\"iframe_a\">W3Schools.com</a></p>\n```\n\n## Tutorials\n\nTest what you have learned about HTML iframes.\n\n## Tutorials\n\nTest your understanding of HTML iframes by completing this coding challenge.\n\n## Tutorials\n\nJavaScript makes HTML pages more dynamic and interactive.\n\nThe HTML<script>tag is used to define a client-side script \n(JavaScript).\n\nThe<script>element either contains script statements, or it points to an \nexternal script file through thesrcattribute.\n\nCommon uses for JavaScript are image manipulation, form validation, and \ndynamic changes of content.\n\nTo select an HTML element, JavaScript most often uses thedocument.getElementById()method.\n\nThis JavaScript example writes \"Hello JavaScript!\" into an HTML element with id=\"demo\":\n\nHere are some examples of what JavaScript can do:\n\nThe HTML<noscript>tag defines an alternate content \nto be displayed to users that \nhave disabled scripts in their browser or have a browser that doesn't support \nscripts:\n\n### Code Examples\n\n```\n<script>\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>\n\n---\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n\n---\n\ndocument.getElementById(\"demo\").style.fontSize = \"25px\";\ndocument.getElementById(\"demo\").style.color = \"red\";\ndocument.getElementById(\"demo\").style.backgroundColor = \"yellow\";\n\n---\n\ndocument.getElementById(\"image\").src = \"picture.gif\";\n\n---\n\n<script>\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>\n<noscript>Sorry, your browser does not support JavaScript!</noscript>\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing the concepts from Tutorials in HTML.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_18",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in HTML?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in HTML that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in HTML!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

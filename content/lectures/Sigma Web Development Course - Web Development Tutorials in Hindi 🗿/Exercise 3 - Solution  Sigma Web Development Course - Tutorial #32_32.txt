@@ -1,0 +1,722 @@
+Video URL: https://www.youtube.com/watch?v=2PWgbyL3ex8
+Video Title: Exercise 3 - Solution | Sigma Web Development Course - Tutorial #32
+--------------------------------------------------
+
+00:00:00.000
+You guys did a great job in exercise 3
+00:00:02.560
+A lot of people have solved it
+00:00:04.720
+And I'm really very proud of you guys
+00:00:06.080
+That you guys are learning so much
+00:00:07.360
+In today's video, you'll get a shoutout
+00:00:09.280
+And I'm going to react to your solutions in this video
+00:00:13.360
+So that your understanding of CSS can improve
+00:00:16.320
+Like the video with high energy
+00:00:18.000
+And write Sigma Batch OP in the comment section below
+00:00:20.720
+Let's go to the computer screen
+00:00:22.080
+Let's go to the computer screen. Let's do the intro.
+00:00:34.000
+Alright guys, so I have come back to my computer screen. I am going to give you a shoutout.
+00:00:36.000
+Many people have used different ways to solve this exercise.
+00:00:40.000
+And I am really very proud.
+00:00:42.000
+You guys have used a lot of great ways.
+00:00:44.000
+Now what I will do here
+00:00:46.000
+I have made index.html here
+00:00:48.000
+and in this index.html I will
+00:00:50.000
+design my card
+00:00:52.000
+and here in the body I will simply
+00:00:54.000
+put a div.card
+00:00:56.000
+and after putting the card I will put a style
+00:00:58.000
+and after putting the style I will give some styles to this card
+00:01:00.000
+and here simply in my body
+00:01:02.000
+first of all what I will do
+00:01:04.000
+I will give the background color gray I have give a background color in gray in my body
+00:01:06.000
+I have given a background color in gray
+00:01:08.000
+and in the card I will give a background color in white
+00:01:10.000
+so that it looks different
+00:01:12.000
+and I will give a width and height
+00:01:14.000
+width I will give it 344 pixels
+00:01:18.000
+and I will give a height let us say 444 pixels
+00:01:22.000
+this is how my card looks
+00:01:24.000
+I have written in pixels so it looks like this I have written in pixels, so it looks like this
+00:01:25.400
+Now I will make it 144 pixels, I will make it 344
+00:01:28.800
+Here 244 also looks good
+00:01:30.520
+I just have to design my card, that's it
+00:01:32.800
+And now you can reach the width and height of an ideal card with trial and error
+00:01:37.120
+But now it is not important how it looks
+00:01:39.320
+I have to achieve this kind of card
+00:01:41.480
+So in the first time, what I will do is
+00:01:43.960
+I will give it a border radius
+00:01:46.000
+and I will give it a 3 pixels
+00:01:48.000
+which I can increase to 7 pixels
+00:01:50.000
+till I achieve a desired curve
+00:01:52.000
+here, what I am going to
+00:01:54.000
+give here, I will
+00:01:56.000
+put that here in a card named dev.image
+00:01:58.000
+in which I am going to put
+00:02:00.000
+an image and I will
+00:02:02.000
+put an image here and I will bring this image
+00:02:04.000
+image of a boat let us say man with boat
+00:02:08.000
+ok let's do this any image
+00:02:12.000
+you can download any image, download a stock image
+00:02:16.000
+or if you take its url then it is not a big deal, so I will take the url from pexels
+00:02:20.000
+and I will put it here, it will overflow for sure, it is overflowing
+00:02:24.000
+so for this either you use width height, I will put it here, it will overflow for sure it is overflowing, so for this you can use width height
+00:02:26.000
+I will give width of this
+00:02:29.000
+188 pixels
+00:02:32.000
+and the dot image
+00:02:35.000
+I will give padding
+00:02:38.000
+how much padding I will give, see 198
+00:02:41.000
+this was 194, I will keep this 198, 10 pixels are left
+00:02:44.000
+I will give padding of 5 pixels from all 4 directions
+00:02:46.000
+padding, ok, and see it came like this
+00:02:49.000
+and my border radius, I will give the same
+00:02:52.000
+which was here, you can see, I will not give the border pixel to the image
+00:02:55.000
+I will give the dot image to the image
+00:02:58.000
+I will give this border radius to img
+00:03:01.000
+so I gave border radius, so see it came like this
+00:03:04.000
+ok, see there can be 50 ways to design this card
+00:03:06.000
+many people have used flexbox
+00:03:09.000
+I am giving a challenge that I will not use flexbox
+00:03:12.000
+after this I will make a div of capsules
+00:03:15.000
+I will write div.capsules, div.capsules
+00:03:18.000
+here my capsules will come and here
+00:03:21.000
+I will put div.content
+00:03:24.000
+and here my h put div.content and here i will put h1 and i will write
+00:03:28.000
+harry and after this i will have a paragraph
+00:03:32.000
+in which i will write lorem 23
+00:03:36.000
+and now the dot content
+00:03:40.000
+i will say that the font size of the dot content
+00:03:44.000
+should be less
+00:03:45.000
+what should I do, font size should be less, 13 pixels
+00:03:49.000
+this is not enough, so I have to increase my card
+00:03:52.000
+I have to increase the card, this won't work
+00:03:54.000
+let's increase it, what is the card going to be?
+00:03:56.000
+I have to change the high d, I have 300, yes, now it's fine
+00:04:02.000
+so I have made the card like this now the dot content is here
+00:04:06.000
+so let's give padding in this
+00:04:08.000
+how much padding? 3 pixels?
+00:04:10.000
+or 13 pixels? let's give 13
+00:04:12.000
+ok, I have given padding of 13 pixels
+00:04:14.000
+now you can see
+00:04:16.000
+that it looks like this, definitely I have to download
+00:04:18.000
+font from google font
+00:04:20.000
+but I will put capsules here
+00:04:22.000
+two, one I will write span here
+00:04:24.000
+and I will write in capsule nature, ok, I will put two capsules here one I will write span here and
+00:04:25.040
+in capsule I will write nature
+00:04:27.700
+and capitalize it
+00:04:30.040
+and the second capsule is
+00:04:33.020
+my lake
+00:04:35.280
+I will write lake here
+00:04:38.580
+nature and lake
+00:04:40.560
+and the dot capsules
+00:04:43.940
+in dot capsules inside the dot capsules
+00:04:46.000
+we have to style our span
+00:04:48.000
+how to style it
+00:04:50.000
+we have to style it in such a way that
+00:04:52.000
+we will give a border
+00:04:54.000
+2 pixels solid black and we will see
+00:04:56.000
+that we can give a bigger one
+00:04:58.000
+we will give padding
+00:05:00.000
+let us say 4 pixels and we will keep on increasing it
+00:05:02.000
+if we feel like it
+00:05:04.000
+and the dot capsules that we have
+00:05:07.360
+means this element will target this div with dot capsules
+00:05:10.480
+what we'll do is we'll give padding inside dot capsules
+00:05:14.080
+and that will be padding 0 from top bottom and 34 pixels from left right
+00:05:19.200
+and I'm not referring to any sheet, I'm just writing the code by looking
+00:05:22.160
+everything is coming from here, okay
+00:05:24.160
+padding 4 pixels, now I can make it 2 pixels and make it 1 pixel, or if I feel that it is a little dark, I can make it grey, okay, it will be like this and you can see that I also make the font small, I can say that the font size is 12 pixels so that the capsules are a little small, but again I leave it on you, if you want 1 pixel from the top bottom, 3 pixels from the left right, you can do this too, your capsule will be a little wide, oops, yes, it's fine, the capsule is a little wide, so yes, you can see here what is looking good, now see this is at the starting, I have made the pad a little more
+00:06:06.000
+what happens in padding is that you can do different values like this
+00:06:10.000
+if I do this, then I can individually control here
+00:06:15.000
+that which padding is how much, so if I show you this now
+00:06:19.000
+let's open in browser and I do it rightly and inspect
+00:06:23.000
+so you guys see that this span
+00:06:26.000
+look at my words carefully
+00:06:28.000
+this span
+00:06:29.000
+hmmm
+00:06:30.000
+let me close this
+00:06:31.000
+div
+00:06:32.000
+in capsules there is span
+00:06:34.000
+I have given border in this
+00:06:36.000
+and I have given padding in capsules
+00:06:38.000
+so see this 0 padding
+00:06:40.000
+34 padding
+00:06:42.000
+see if I reduce 34
+00:06:44.000
+so which one is reducing you can see if I reduce 34, you can see which one is getting reduced
+00:06:46.600
+if I reduce this padding, you can see which one is getting reduced
+00:06:50.400
+so this is left and right and these two 0's are top and bottom
+00:06:54.600
+so we can give different padding from all four directions
+00:06:58.600
+if we want, but I am not giving it now
+00:07:01.200
+then along with that, you can see the content, I have given some padding in the content
+00:07:05.400
+in content and h1 also there is padding
+00:07:08.600
+so let's do one thing that
+00:07:10.280
+the padding of h1 is top bottom
+00:07:12.680
+let's start and margin 0
+00:07:15.760
+okay and
+00:07:17.160
+let's make padding 0
+00:07:19.320
+so margin 0 padding 0
+00:07:20.480
+now see it came up
+00:07:21.320
+I have to make the font size of content h1 a little smaller
+00:07:24.520
+so I am dot content h1, so I will
+00:07:25.000
+I will reduce the font size of .content h1, in fact I should use h2, not h1,
+00:07:32.000
+font size will automatically reduce, because h1 is the main heading, this is a card, so I will write h2,
+00:07:36.000
+I will keep it as secondary heading, so you can see here, I have made this card very closely,
+00:07:41.000
+if I want to shift this card a little bit, I can do that too, I will simply give it to the body, whatever I have to give, I will give a padding to the body, say 45 pixels, it will shift a little bit, you will see where the card is, so this card came a little out, you see a little spacing from the top, so I have made it very close, now if a designer is in touch with me, I will ask him, brother, which font did you that is, whoever has made this design, I will ask him which font you have used in it,
+00:08:08.560
+he will tell me, he will say that this is it, look its color is grey, so let's make it grey,
+00:08:12.520
+so the content of mine, its color will be, so I made it grey,
+00:08:19.640
+and the content, we can use pop-ins for its font,
+00:08:23.800
+by the way, there is an extension called whatfont, which will tell you
+00:08:27.520
+which font is being used somewhere, but I will go to google font and use popins, and I am not referring to any paper,
+00:08:36.000
+I will not download, family, if you want, you can download it like this and then you can install it in your pc,
+00:08:41.360
+so it will be installed in your pc, but then it will run on your PC you won't want that
+00:08:45.300
+you will want to use it whenever you want
+00:08:48.000
+so let's say I want to add this one
+00:08:50.000
+bold one
+00:08:50.800
+and I will copy this
+00:08:52.300
+I like the import one a little more
+00:08:54.300
+so I will copy this
+00:08:55.800
+by copying this
+00:08:56.800
+I will paste it in my code
+00:08:58.800
+and I will write here at the top
+00:09:00.800
+and by importing it
+00:09:02.300
+I will write this thing wherever
+00:09:04.000
+my popins will be used
+00:09:06.000
+so you see here when I write like this, I don't have to use ballo bhai, I have to use popins
+00:09:11.000
+although I have also imported ballo bhai, how is ballo bhai looking?
+00:09:14.000
+ballo bhai is also looking good by the way, so I can do this, okay
+00:09:18.000
+and definitely I can change the font size, like I have done here
+00:09:22.000
+and if I make it 3 pixels then it will be a little more
+00:09:25.000
+so I make it 9 pixels and this is fine
+00:09:30.000
+then after this I will use Ballu Bhai, you know where I will use Ballu Bhai
+00:09:33.000
+here Nature and Lake is written
+00:09:35.000
+so I will put this Ballu Bhai in my span of capsule
+00:09:40.000
+so this Ballu Bhai will look like this my nature and lake
+00:09:42.000
+I know it looks very different from this but again you can do this, I should increase this border radius a little
+00:09:48.000
+and the one pixel I have taken here, I should make it 2, we should make the font size a little smaller
+00:09:55.000
+6 pixels is a little less I guess, but again when you make a website
+00:10:00.000
+then your designer will tell you how you have to do things. So here I have made it 7, nature, lake, whatever is the difference here,
+00:10:08.500
+you can see it yourself. Now here I don't like this capsule,
+00:10:12.000
+to be honest, so I do the padding of this 0 and increase it a little more,
+00:10:17.500
+which is 2 pixels, yes 6 pixels is looking very good, I have made it 0, 6 pixels,
+00:10:22.500
+and I also see the spacing spacing is fine
+00:10:26.000
+maybe in capsules
+00:10:28.000
+first of all, let's make it 06 pixels
+00:10:30.000
+06 pixels
+00:10:32.000
+06 pixels
+00:10:34.000
+and the padding of capsules
+00:10:36.000
+which I have given 34
+00:10:38.000
+maybe I want to reduce it a little
+00:10:40.000
+should I make it 30? let's try 28
+00:10:42.000
+yes, it's looking good
+00:10:44.000
+and the top and bottom of this Harry is written
+00:10:46.000
+I am feeling very bad
+00:10:48.000
+See padding on content
+00:10:50.000
+I would like to remove the padding of content
+00:10:52.000
+I would like to remove padding 13 in content
+00:10:54.000
+Where is padding 13 on content
+00:10:56.000
+I will remove it, I will make it 3
+00:10:58.000
+Or maybe I will make it 3 pixels
+00:11:00.000
+13 pixels, I will make it 12 pixels
+00:11:02.000
+Or 13 pixels, 13 pixels from the left and right
+00:11:04.000
+13 pixels from the top and bottom 13 pixels is not at all right, 5, 13, yes, looks good, maybe I will increase a little more, should I do 7, yes, okay, so when you start liking your card, then you stop,
+00:11:14.200
+font sizes are not looking good to you, change it, font size of h2 is not looking good to you, change it, okay, so there is no such thing that you can't change it you can definitely change it
+00:11:25.360
+now I will show you one more thing
+00:11:27.360
+the card here, we have given the height
+00:11:29.860
+if you don't give the height then it will be auto adjusted
+00:11:31.860
+and maybe I can give a padding to this card
+00:11:35.360
+and I will say that I only want the padding of top bottom
+00:11:38.360
+so I will make it 34 pixels 0
+00:11:40.360
+or if I want only the padding of bottom
+00:11:42.360
+so I will make it to 0,0 and
+00:11:46.000
+whatever padding i want below, let's say i want 34px
+00:11:49.000
+so i will do it like this, my card is designed, you can see
+00:11:52.000
+now yes i know i have to make a button too, let's quickly
+00:11:55.000
+make this button, i forgot to make div.button
+00:11:58.000
+and here will be a button and in this will be written let us say submit
+00:12:01.000
+ok and in this button i will first enter text align
+00:12:04.000
+dot button text align
+00:12:08.000
+center, it is in the center, then after this I will
+00:12:12.000
+style the button, in dot button, you do
+00:12:16.000
+first of all you give it padding 3px, ok
+00:12:20.000
+then you give border radius 3px
+00:12:24.000
+ok let's say, if not say 9 pixels, 9 pixels ok, so I gave border radius
+00:12:32.000
+what you can do, you can give background color blue, and I know this is not blue, it is this color
+00:12:40.000
+and when you will make websites, you will get exact color, don't worry, don't take tension,
+00:12:45.300
+and color is white I guess, color is blue actually, this is light blue, this is dark blue,
+00:12:51.300
+this is light blue and color is dark blue, okay, color is dark blue,
+00:12:58.300
+okay, something like this, and padding can be increased
+00:13:05.000
+maybe, so I will make it 0px 13px
+00:13:09.000
+and I will write read more
+00:13:12.000
+I will write read more in the button, don't take tension
+00:13:15.000
+I will write read more, font foot will be made small
+00:13:18.000
+so I will make its font size 12px
+00:13:21.000
+and maybe I should give padding from top
+00:13:24.000
+or I will make it 7 and give padding from top 4
+00:13:28.000
+and if we make font size smaller then how will it look
+00:13:32.000
+if I make it 8 pixels then how will it look, yes, read more
+00:13:36.000
+now the outline that is coming here, it is coming from the border, we will have to see where it is coming from
+00:13:40.000
+so I will make the border none so that this border goes away and you can find out the exact colors
+00:13:44.000
+this button is a little bigger, maybe I will make the border none so that it goes to the border and you guys can find out the exact colors
+00:13:45.280
+this button is a little bigger maybe I will make it 7 pixels from here
+00:13:49.420
+and from here I will make it 9 pixels
+00:13:51.180
+maybe I will increase the font size a little bit
+00:13:53.180
+and I will give margin in this
+00:13:56.380
+by the way you can give only margin top
+00:13:58.380
+margin top and I can give 3 pixels
+00:14:00.880
+I can do it in some way
+00:14:02.880
+and if you want to give more then you can give more
+00:14:04.380
+so my card is made exactly
+00:14:06.480
+almost almost it is made, not exactly
+00:14:08.480
+so I have to increase the border radius a little bit
+00:14:10.480
+to make it curvy, now ok
+00:14:12.480
+15 pixels is ok, now see we have come quite close
+00:14:14.480
+but this card is a little light
+00:14:16.480
+ok, let's make it more light, no problem
+00:14:18.480
+so I have made it more light and this read mode
+00:14:20.480
+this is also blue color
+00:14:22.480
+so I will correct this also
+00:14:24.480
+this is also light blue so this is also blue color, so I will correct this also, this is also light blue, so this is this color,
+00:14:28.000
+okay, see you will get the exact color, you can also do font width bold, see when you make a website for any freelancing line,
+00:14:37.000
+so it will never tell you that this is like this, that is like that, if it wants exact then you have to give,
+00:14:42.000
+but if your site is looking good then he will never have a problem
+00:14:45.840
+I am telling you my experience
+00:14:48.360
+he will never say that I want exact
+00:14:51.360
+and if he will say then you take him on call, share screen, inspect and tell
+00:14:54.460
+tell bro how is it looking now
+00:14:56.320
+if he says it is not looking good then you
+00:14:58.360
+take him directly on call and tell him how is it looking now
+00:15:01.360
+if it is not looking good now
+00:15:03.400
+now it is looking good, how is it, you can change it by doing this, if he says make it bigger,
+00:15:08.500
+make it bigger, sometimes things don't look good, it is his website,
+00:15:11.500
+do it, never say, once I give a warning that this is not looking good,
+00:15:17.000
+this is looking good, but after that if I get that yes, it is fine,
+00:15:20.000
+we should look good, yes, fine, I will do it, so this is my card,
+00:15:24.500
+I have not made exact, I will tell you again
+00:15:27.000
+that to make exact, I need font, font size, which you get in figma file
+00:15:32.000
+I have not used flexbox, which I ideally use
+00:15:35.000
+I also use grid sometimes, I use flexbox a lot
+00:15:39.000
+but we can make something like this, I have not used exact font
+00:15:43.000
+now you can duplicate this card
+00:15:45.300
+you can also make a card like this
+00:15:48.100
+so if I put it here
+00:15:50.100
+so now I have made another card here
+00:15:52.500
+and if I give margin top in card
+00:15:56.300
+where is my card
+00:15:57.800
+I will give margin only of 4 pixels
+00:16:00.800
+so you can see
+00:16:02.300
+I have another card, so will get cardy card here
+00:16:06.000
+and if I want all these cards
+00:16:09.000
+that
+00:16:12.440
+if they come like this then I will put display flex
+00:16:15.000
+although I will tell you about display flex later
+00:16:18.000
+I just want to tell you how amazing is flexbox
+00:16:21.000
+you will get an idea from this
+00:16:24.000
+that I am not able to live without it, I am using it,
+00:16:27.000
+I am doing it, now see it came like this, you can see it, so you can make such cards,
+00:16:32.000
+different things will come here, it has become a kind of website, now let's do one more thing,
+00:16:36.000
+cursor pointer on the button, what do we do, cursor pointer, so here cursor pointer is done like this
+00:16:45.500
+Now if you want to hover the button
+00:16:48.000
+So its background color
+00:16:53.500
+Let us say the color of background color changes
+00:16:58.000
+If you want something like this, you can do that
+00:17:00.000
+Suppose I want to hover
+00:17:02.000
+Its background color becomes and the color lighter
+00:17:07.680
+so I can do that
+00:17:09.680
+see I will move the arrow and it will look like this
+00:17:11.680
+maybe I will make it white
+00:17:13.680
+I will make the background color completely white
+00:17:15.680
+so it will look like this
+00:17:17.680
+I don't think it is right to make it completely white
+00:17:19.680
+I will do one thing
+00:17:21.680
+I will make it a little lighter
+00:17:25.000
+so that at least the button is visible so now you can see I will do one thing, I will make it a little lighter.
+00:17:28.000
+At least the button is visible.
+00:17:30.000
+So now you can see that it is happening like this.
+00:17:33.000
+Okay, so something is happening when you are walking, then it is clear that there is a button.
+00:17:35.000
+So I hope you liked this card,
+00:17:37.000
+you can do exactly a lot of things in it.
+00:17:39.000
+But now we will go to give a shoutout to those people
+00:17:42.000
+who designed this card.
+00:17:44.000
+So guys, I have solved it here, it took me a lot of time. First of all, shoutout to Aditya, Irfan Ali, shoutout to Program In World,
+00:17:46.000
+shoutout to Mohammad Tanveer Alam,
+00:17:48.000
+shoutout to Rule Breaker,
+00:17:50.000
+shoutout to Alok Chaudhary,
+00:17:52.000
+shoutout to RRC Gaming, Developer Foundation,
+00:17:54.000
+then Felix has not given a solution,
+00:17:56.000
+he has just accepted the challenge.
+00:17:58.000
+Here RRC Gaming is the winner.
+00:18:00.000
+Finally, what happens is that your code should work.
+00:18:02.000
+Along with that, I want to give more shoutouts
+00:18:04.000
+to Felix, Graham, and to all the I have just accepted the challenge. Here is the RRC Gaming winner. Finally, what happens is that your code should work.
+00:18:07.000
+Along with that, I want to give more shoutouts to Felix, Grand Navid Khan, Great Navid Khan,
+00:18:12.000
+Subhash Trikas, Nitin Saxena, Saif Ansari,
+00:18:16.000
+Kumaal Tariq, Sabha Sehar, Sports Talk, Dilip Gujar,
+00:18:21.000
+then Biz Gamer Rahul Mehta, theny Treasure, Khubel B Tech I will give shoutouts to some people randomly
+00:18:27.800
+I will give shoutouts to Shiv Mahapur, Zain Ali, Core Zero, Shakeel Ahmed, Zubair Khan, Code with Rohit, Priyanshu, It's Zivo, Funair Nasir, then to Idzmi Dilip, then to Rishabh Shakya, and to Abhishek Katiyan.
+00:18:53.280
+So with this, we will meet in the solution of the next exercise, and the next exercise is going to be even more intense.
+00:18:58.160
+So, you guys load the fun, and the next exercise is going to be posted posted soon I will tell you if you have not yet
+00:19:06.000
+done the playlist access of the sigma web development course and have not done the code access
+00:19:09.000
+then do it right now, right now
+00:19:12.000
+everyone do it and show me the playlist access of the sigma web development course
+00:19:15.000
+bookmark should be on everyone's laptop, if you ever meet me and I did not get a bookmark on your laptop
+00:19:18.000
+then you can see, click here and save
+00:19:21.000
+thank you so much guys for watching this video and I will see you
+00:19:24.000
+next time

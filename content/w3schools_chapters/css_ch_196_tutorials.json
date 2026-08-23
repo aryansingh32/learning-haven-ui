@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 196,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in CSS. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Tutorials in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in CSS."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "A CSS tooltip is used to specify extra information about something when the \nuser moves the mouse pointer over an element:\n\nCreate a tooltip that appears when the user moves the mouse over an element:\n\nHTML:\n\nCSS:\n\nYou can position the tooltip as you like. Here we will show how to position \nthe tooltip to the left, right, top and bottom.\n\nIn this example, the tooltip is placed to the right (left:105%) of the \"hoverable\" \ntext (<div>). Also note thattop:-5pxis used to place it in the middle of its container element. \nWe use the number5because the tooltip text has a top and \nbottom padding of \n5px. If you increase its padding, also increase the value of thetopproperty to \nensure that it stays in the middle (if this is something you want). The same \napplies if you want the tooltip placed to the left.\n\nIf you want the tooltip to appear on top or on the bottom, see examples \nbelow. Note that we use themargin-leftproperty with a value of minus 65 \npixels. This is to center the tooltip above/below the hoverable text. It is set \nto the half of the tooltip's width (130/2 = 65).\n\nIf you want a tooltip that fades in, use the CSStransitionproperty \nand theopacityproperty, and go from being completely invisible to 100% visible, in a number of specified seconds \n(2 second in our example):\n\n### Code Snippets\n\n```\n<style>\n/* Tooltip container */\n.tooltip {\nposition: relative;\ndisplay: inline-block;\nborder-bottom: 1px dotted \nblack; /* Add dots under the hoverable text */\ncursor: pointer;\n}\n/* Tooltip text \n*/\n.tooltiptext {\nvisibility: hidden; /* \n  Hidden by default */\nwidth: 130px;\nbackground-color: black;\ncolor: #ffffff;\ntext-align: center;\npadding: 5px 0;\nborder-radius: 6px;\nposition: absolute;\nz-index: 1; /* Ensure tooltip is displayed above \n  content */\n}\n/* Show \nthe tooltip text on hover */\n.tooltip:hover \n.tooltiptext {\nvisibility: visible;\n}\n</style>\n<div class=\"tooltip\">\nHover \nover me\n<span class=\"tooltiptext\">\nSome \n  tooltip \ntext\n</span>\n</div>\n\n---\n\n.tooltiptext {\ntop: -5px;\nleft: \n105%;\n}\n\n---\n\n.tooltiptext {\ntop: -5px;\nright: \n105%;\n}\n\n---\n\n.tooltiptext {\nwidth: 130px;\nbottom: 100%;\nleft: \n  65%;\nmargin-left: -65px; /* Use half of the width \n(130/2 = 65), to center the tooltip */\n}\n\n---\n\n.tooltiptext {\nwidth: 130px;\ntop: 100%;\nleft: \n50%;\nmargin-left: -65px; /* Use half of the width \n(130/2 = 65), to center the tooltip */\n}\n\n---\n\n.tooltiptext {\nopacity: 0;\ntransition: opacity 2s;\n}\n.tooltip:hover \n.tooltiptext {\nopacity: 1;\n}\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_195",
+            "prompt": "Try implementing a simple program using Tutorials in CSS.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in CSS?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

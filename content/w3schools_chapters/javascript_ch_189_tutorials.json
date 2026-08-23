@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 189,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in JavaScript. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Tutorials in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in JavaScript."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "The following JSON describes three employees:\n\nThe following XML describes the same employees:\n\nJSON and XML have several similarities:\n\nJSON organizes information with objects and arrays.\n\nXML organizes information with elements and attributes.\n\nJavaScript provides built-in methods for working with JSON.\n\nTheJSON.parse()method converts JSON text into a JavaScript value.\n\nTheJSON.stringify()method converts a JavaScript value into JSON text.\n\nJavaScript can parse XML text with theDOMParser object.\n\nJSON often needs fewer characters than XML to represent the same data.\n\nXML can represent information where text and markup appear together.\n\nThis is called mixed content.\n\nMixed content makes XML suitable for many document formats.\n\nJSON is normally better suited to data structures made from values, objects, and arrays.\n\nXML can store information in both elements and attributes.\n\nJSON does not distinguish between attributes and other properties.\n\nXML namespaces can distinguish elements that use the same name but have different meanings.\n\nBoth JSON and XML data can be checked against rules.\n\nXML documents can be validated with formats such as DTD and XML Schema.\n\nJSON documents can be validated with JSON Schema.\n\nValidation is useful when applications must agree on the required structure and allowed values.\n\nUse the format that matches the data and the systems exchanging it.\n\nJSON is often simpler for data used directly by JavaScript applications.\n\nXML provides features that are useful for documents and more complex markup systems.\n\nBoth JSON and XML can be used to receive data from a web server.\n\nThe following JSON and XML examples both define an employees object with 3 employees:\n\nFor Fetch operations, JSON is faster and easier than XML:\n\nUsing JSON\n\nUsing XML\n\nJSON is a good choice for:\n\nXML is a good choice for:\n\n### Code Snippets\n\n```\n{\n\"employees\": [\n{\"firstName\":\"John\", \"lastName\":\"Doe\"},\n{\"firstName\":\"Anna\", \"lastName\":\"Smith\"},\n{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}\n]\n}\n\n---\n\n<employees>\n<employee>\n<firstName>John</firstName>\n<lastName>Doe</lastName>\n</employee>\n<employee>\n<firstName>Anna</firstName>\n<lastName>Smith</lastName>\n</employee>\n<employee>\n<firstName>Peter</firstName>\n<lastName>Jones</lastName>\n</employee>\n</employees>\n\n---\n\n{\n\"name\": \"John\",\n\"skills\": [\"HTML\", \"CSS\", \"JavaScript\"]\n}\n\n---\n\n<person id=\"101\">\n<name>John</name>\n<skills>\n<skill>HTML</skill>\n<skill>CSS</skill>\n<skill>JavaScript</skill>\n</skills>\n</person>\n\n---\n\n// JSON text\nconst text = '{\"name\":\"John\",\"age\":30}';\n// Parse the JSON text\nconst person = JSON.parse(text);\n\n---\n\n// JavaScript Object\nconst person = {name: \"John\", age: 30};\n// Convert the object to JSON\nconst text = JSON.stringify(person);\n\n---\n\n// XML text\nconst text = \"<person><name>John</name></person>\";\n// Parse the XML text\nconst parser = new DOMParser();\nconst xmlDoc = parser.parseFromString(text, \"text/xml\");\n// Extract name using DOM method\nconst name = xmlDoc.getElementsByTagName(\"name\")[0].textContent;\n\n---\n\n{\"name\":\"John\",\"age\":30}\n\n---\n\n<person>\n<name>John</name>\n<age>30</age>\n</person>\n\n---\n\n<message>\nPlease read the <important>safety instructions</important>\nbefore continuing.\n</message>\n\n---\n\n<product id=\"101\" currency=\"USD\">\n<name>Laptop</name>\n<price>899</price>\n</product>\n\n---\n\n{\n\"id\": 101,\n\"currency\": \"USD\",\n\"name\": \"Laptop\",\n\"price\": 899\n}\n\n---\n\n<root\nxmlns:h=\"http://www.w3.org/TR/html4/\"\nxmlns:f=\"https://example.com/furniture\">\n<h:table>...</h:table>\n<f:table>...</f:table>\n</root>\n\n---\n\n{\"employees\":[\n{ \"firstName\":\"John\", \"lastName\":\"Doe\" },\n{ \"firstName\":\"Anna\", \"lastName\":\"Smith\" },\n{ \"firstName\":\"Peter\", \"lastName\":\"Jones\" }\n]}\n\n---\n\n<employees>\n<employee>\n<firstName>John</firstName>\n<lastName>Doe</lastName>\n</employee>\n<employee>\n<firstName>Anna</firstName>\n<lastName>Smith</lastName>\n</employee>\n<employee>\n<firstName>Peter</firstName>\n<lastName>Jones</lastName>\n</employee>\n</employees>\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_188",
+            "prompt": "Try implementing a simple program using Tutorials in JavaScript.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in JavaScript?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

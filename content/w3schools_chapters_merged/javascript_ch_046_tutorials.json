@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "javascript",
+  "chapter_number": 46,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in JavaScript."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=JavaScript+Tutorials",
+        "title": "Understanding Tutorials and more in JavaScript",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nIn JavaScript, thethiskeyword refers to anobject.\n\nThethiskeyword refers todifferent objectsdepending on how it is used:\n\nUse the following precedence of order to determine which objectthisrefers to:\n\nUse the following precedence of order to determine which objectthisrefers to:\n\n## Tutorials\n\nIf you answered most questions correctly, you understand advanced function concepts.\n\nIf not, review the advanced chapters and try again.\n\nBack to Advanced Functions\n\n### Code Examples\n\n```\nconst person = {\nname: \"John\",\ngetName: function() {\nreturn this.name;\n}\n};\nperson.getName();\n\n---\n\nconst getName = person.getName;\ngetName();\n\n---\n\nconst person = { name: \"John\" };\nfunction getName() { return this.name; }\n\n---\n\nfunction add(a, b) {\nreturn a + b;\n}\nadd.apply(null, [4, 5]);\n\n---\n\nfunction greet() {\nreturn \"Hello \" + this.name;\n}\nconst person = { name: \"John\" };\nconst getJohn = greet.bind(person);\n\n---\n\nfunction counter() {\nlet count = 0;\nreturn function() {\ncount++;\nreturn count;\n};\n}\nconst c = counter();\nc();\nc();\n\n---\n\nfunction sayHello() { return \"Hello\"; }\nfunction run(fn) { return fn(); }\nrun(sayHello);\n```\n\n## Tutorials\n\nStep 1Advanced\n\nStep 2Advanced\n\nWhen used in an object method, this refers to the object.\n\nStep 3Advanced\n\nStep 4Advanced\n\nGetters and setters allow you to define Object Accessors (Computed Properties).\n\nStep 5Advanced\n\nStep 6Advanced\n\nStep 7Advanced\n\nStep 8Advanced\n\n## Tutorials\n\nAn object literal is a list of propertykey:valuesinside curly braces{ }.\n\nObjects written as name value pairs are similar to:\n\nTheObject.create()method creates an object from an existing object.\n\nES2019 added the Object methodfromEntries()to JavaScript.ThefromEntries()method creates an object from iterable key / value pairs.Exampleconst fruits = [[\"apples\", 300],[\"pears\", 900],[\"bananas\", 500]];const myObj = Object.fromEntries(fruits);Try it Yourself \u00bbBrowser SupportfromEntries()is an ECMAScript 2019 feature.ES2019is supported in all modern browsers sinceJanuary 2020:Chrome66Edge79Firefox61Safari12Opera50Apr 2018Jan 2020Jun 2018Sep 2018May 2018JavaScript Object.assign()TheObject.assign()method copies properties from\none or more source objects to a target object.Example// Create Target Objectconst person1 = {firstName: \"John\",lastName: \"Doe\",age: 50,eyeColor: \"blue\"};// Create Source Objectconst person2 = {firstName: \"Anne\",lastName: \"Smith\"};// Assign Source to TargetObject.assign(person1, person2);Try it Yourself \u00bbIn JavaScript, Objects are King.If you Understand Objects, you Understand JavaScript.In JavaScript, almost \"everything\" is an object.Objects are objectsMaths are objectsFunctions are objectsDates are objectsArrays are objectsMaps are objectsSets are objectsAll JavaScript values, except primitives, are objects.JavaScript PrimitivesAprimitive data typeis data type that can only store a single primitive value.JavaScript defines 7 types of primitive data types:TypeExample valuestring\"Hello\"number3.14booleantruebigint12345678901234nnullnullundefinedundefinedsymbolsymbolImmutablePrimitive values are immutable (they are hardcoded and cannot be changed).if x = 3.14, you can change the value of x, but you cannot change the value of 3.14.ValueTypeComment\"Hello\"string\"Hello\" is always \"Hello\"3.14number3.14 is always 3.14truebooleantrue is always truefalsebooleanfalse is always falsenullnullnull is always nullundefinedundefinedundefined is always undefinedJavaScript Objects are MutableObjects are mutable: They are addressed by reference, not by value.If person is an object, the following statement will not create a copy of person:const x = person;The object x isnot a copyof person. The object xisperson.The object x and the object person share the same memory address.Any changes to x will also change person:Example//Create an Objectconst person = {firstName:\"John\",lastName:\"Doe\",age:50, eyeColor:\"blue\"}// Try to create a copyconst x = person;// This will change age in person:x.age = 10;Try it Yourself \u00bbAdvanced Chapters:JavaScript Object DefinitionsJavaScript Object Advanced thisJavaScript Object IterationsJavaScript Object Getters & SettersJavaScript Object ManagementJavaScript Object ProtectionJavaScript Object PrototypesJavaScript Object Reference\u276e PreviousNext \u276f\u2605+1Sign in to track progress\n\n### Code Examples\n\n```\n{firstName:\"John\", lastName:\"Doe\", age:50, eyeColor:\"blue\"};\n\n---\n\n// Create an Object\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n\n---\n\n// Create an Object\nconst person = new Object({\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n});\n\n---\n\n// Create an Object:\nconst person = {\nfirstName: \"John\",\nlastName: \"Doe\"\n};\n// Create new Object\nconst man = Object.create(person);\nman.firstName = \"Peter\";\n\n---\n\nconst fruits = [\n[\"apples\", 300],\n[\"pears\", 900],\n[\"bananas\", 500]\n];\nconst myObj = Object.fromEntries(fruits);\n\n---\n\n// Create Target Object\nconst person1 = {\nfirstName: \"John\",\nlastName: \"Doe\",\nage: 50,\neyeColor: \"blue\"\n};\n// Create Source Object\nconst person2 = {firstName: \"Anne\",lastName: \"Smith\"};\n// Assign Source to Target\nObject.assign(person1, person2);\n\n---\n\nconst x = person;\n\n---\n\n//Create an Object\nconst person = {\nfirstName:\"John\",\nlastName:\"Doe\",\nage:50, eyeColor:\"blue\"\n}\n// Try to create a copy\nconst x = person;\n// This will change age in person:\nx.age = 10;\n```\n\n## Tutorials\n\nWhen used in an object method,thisrefers tothe object.\n\nIn the example above,thisrefers tothe person object.\n\nBecause thefullNamemethod is a method of thepersonobject.\n\nIn these examples,thisis theperson object:\n\ni.e.this.firstNameis thefirstNameproperty ofthis(the person object).\n\nThecall()andapply()methods are predefined JavaScript methods.\n\nThey can both be used to call an object method with another object as argument.\n\nThe example below calls person1.fullName with person2 as an argument,thisrefers to person2,\neven if fullName is a method of person1:\n\nWith thebind()method, an object can borrow a method from another object.\n\nThis example creates 2 objects (person and member).\n\nThe member object borrows the fullname method from the person object:\n\nIn JavaScript, thethiskeyword refers to anobject.\n\nThethiskeyword refers todifferent objectsdepending on how it is used:\n\nUse the following precedence of order to determine which objectthisrefers to:\n\n### Code Examples\n\n```\nconst\nperson\n= {\nfirstName: \"John\",\nlastName : \"Doe\",\nid\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 :\u00a05566,\nfullName : function() {\nreturn\nthis\n.firstName + \" \" +\nthis\n.lastName;\n}\n};\n\n---\n\nconst\nperson\n= {\nfirstName\u00a0 : \"John\",\nlastName\u00a0\u00a0 : \"Doe\",\nid\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 :\u00a05566,\nmyFunction : function() {\nreturn\nthis\n;\n}\n};\n\n---\n\nconst\nperson\n= {\nfirstName: \"John\",\nlastName : \"Doe\",\nid\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 :\u00a05566,\nfullName : function() {\nreturn\nthis\n.firstName + \" \" +\nthis\n.lastName;\n}\n};\n\n---\n\nconst person1 = {\nfullName: function() {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\nconst person2 = {\nfirstName:\"John\",\nlastName: \"Doe\",\n}\n// Return \"John Doe\":\nperson1.fullName.call(person2);\n\n---\n\nconst person = {\nfirstName:\"John\",\nlastName: \"Doe\",\nfullName: function () {\nreturn this.firstName + \" \" + this.lastName;\n}\n}\nconst member = {\nfirstName:\"Hege\",\nlastName: \"Nilsen\",\n}\nlet fullName = person.fullName.bind(member);\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_46",
+            "prompt": "Try implementing the concepts from Tutorials in JavaScript.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_46",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in JavaScript?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in JavaScript that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in JavaScript!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

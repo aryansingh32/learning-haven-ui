@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "python",
+  "chapter_number": 179,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in Python. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Python+Tutorials",
+        "title": "Tutorials in Python",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in Python."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "Standard deviation is a number that describes how spread out the values are.\n\nA low standard deviation means that most of the numbers are close to the mean (average) value.\n\nA high standard deviation means that the values are spread out over a wider range.\n\nExample: This time we have registered the speed of 7 cars:\n\nThe standard deviation is:\n\nMeaning that most of the values are within the range of 0.9 from the mean \nvalue, which is 86.4.\n\nLet us do the same with a selection of numbers with a wider range:\n\nThe standard deviation is:\n\nMeaning that most of the values are within the range of 37.85 from the mean \nvalue, which is 77.4.\n\nAs you can see, a higher standard deviation indicates that the values are \nspread out over a wider range.\n\nThe NumPy module has a method to calculate the standard deviation:\n\nVariance is another number that indicates how spread out the values are.\n\nIn fact, if you take the square root of the variance, you get the standard \ndeviation!\n\nOr the other way around, if you multiply the standard deviation by itself, you get the \nvariance!\n\nTo calculate the variance you have to do as follows:\n\n1. Find the mean:\n\n2. For each value: find the difference from the mean:\n\n3. For each difference: find the square value:\n\n4. The variance is the average number of these squared differences:\n\nLuckily, NumPy has a method to calculate the variance:\n\nAs we have learned, the formula to find the standard deviation is the square root of the variance:\n\nOr, as in the example from before, use the NumPy to calculate the standard deviation:\n\nStandard Deviation is often represented by the symbol Sigma:\u03c3\n\nVariance is often represented by the symbol Sigma Squared:\u03c32\n\nThe Standard Deviation and Variance are terms that are often used in Machine Learning, so it is important to understand how to get them, and the concept behind them.\n\n### Code Snippets\n\n```\nimport numpy\nspeed = [86,87,88,86,87,85,86]\nx = numpy.std(speed)\nprint(x)\n\n---\n\nimport numpy\nspeed = [32,111,138,28,59,77,97]\nx = numpy.std(speed)\nprint(x)\n\n---\n\nimport numpy\nspeed = [32,111,138,28,59,77,97]\nx = numpy.var(speed)\nprint(x)\n\n---\n\nimport numpy\nspeed = [32,111,138,28,59,77,97]\nx = numpy.std(speed)\nprint(x)\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_178",
+            "prompt": "Try implementing a simple program using Tutorials in Python.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in Python?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in Python!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

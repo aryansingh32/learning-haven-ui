@@ -1,0 +1,104 @@
+{
+  "roadmap_slug": "sql",
+  "chapter_number": 10,
+  "title": "Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 30,
+  "story_hook": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to the chapter on Tutorials. Here you'll uncover the secrets of Tutorials in SQL. This is an essential building block."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=SQL+Tutorials",
+        "title": "Tutorials in SQL",
+        "channel": "YouTube Search",
+        "duration_min": 10,
+        "focus_note": "Watch to understand Tutorials concepts in SQL."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "TheNOToperator is used in theWHEREclause to return all records that DO NOT match the specified criteria. It reverses the result of a condition from true to false and vice-versa.\n\nThe following SQL selects all customers that are NOT \nfrom Spain:\n\nIn the example above, theNOToperator is used in combination with the=operator.\n\nTheNOToperator is also used in combination with other operators to exclude data, such as:\n\nBelow is a selection from theCustomerstable used in the examples:\n\nTheNOT LIKEoperator is used in theWHEREclause to exclude rows that match a specified character pattern.\n\nThere are two wildcards often used in conjunction with theNOT LIKEoperator:\n\nThe following SQL selects all customers that do NOT start with the letter \"A\":\n\nTheNOT BETWEENoperator is used in theWHEREclause to select rows where a value falls outside a specified inclusive range.\n\nTheNOT BETWEENoperator can be used with numeric, text, or date values.\n\nThe following SQL selects all customers with a CustomerID NOT between 10 and \n60:\n\nTheNOT INoperator is used in theWHEREclause to exclude rows that match any value in a specified list or a subquery result set.\n\nThe following SQL selects all customers with City NOT IN \"Paris\" or \"London\":\n\nThe \"NOT Greater Than\" condition is expressed with theNOToperator in conjunction with the standard greater than or equal to (>=) operator.\n\nThe following SQL selects all customers with a CustomerID not greater than 50:\n\nThe \"NOT Less Than\" condition is expressed with theNOToperator in conjunction with the standard less than or equal to (<=) operator.\n\nThe following SQL selects all customers with a CustomerID not less than 50:\n\n### Code Snippets\n\n```\nSELECT * FROM Customers\nWHERE NOT Country = 'Spain';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerName NOT LIKE 'A%';\n\n---\n\nSELECT * FROM Customers\nWHERE CustomerID NOT BETWEEN 10 AND 60;\n\n---\n\nSELECT * FROM Customers\nWHERE City NOT IN ('Paris', 'London');\n\n---\n\nSELECT * FROM Customers\nWHERE NOT CustomerID > 50;\n\n---\n\nSELECT * FROM Customers\nWHERE NOT CustomerId < 50;\n```"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_9",
+            "prompt": "Try implementing a simple program using Tutorials in SQL.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is the primary purpose of Tutorials in SQL?",
+            "options": [
+              "To handle logic",
+              "To format data",
+              "To store values"
+            ],
+            "correctAnswer": "To handle logic",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a small program that demonstrates your knowledge of Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous -> Tutorials",
+        "recall_questions": [
+          "What does Tutorials do?"
+        ],
+        "identity_affirmation": "You just leveled up your skills.",
+        "completion_celebration": {
+          "message": "Tutorials Master Unlocked!",
+          "linkedin_card_text": "Tutorials Master Unlocked in SQL!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+20 XP",
+            "Knowledge Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

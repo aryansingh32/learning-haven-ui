@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "css",
+  "chapter_number": 8,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in CSS."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=CSS+Tutorials",
+        "title": "Understanding Tutorials and more in CSS",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nThe CSSwidthproperty specifies the width of the element's content area. The \ncontent area is the portion inside the padding, border, and margin of an element \n(the box model).\n\nSo, if an element has a specified width, the padding added to that element will \nbe added to the total width of the element. This is often an undesirable result.\n\nThebox-sizingproperty defines how the width and height of an element are calculated: should they include padding and borders, or not.\n\nThebox-sizingproperty can have the following values:\n\nSo, to keep the width at 300px, no matter the amount of padding, you can use thebox-sizing: border-box;. This causes the element to maintain its actual width; if \nyou increase the padding, the available content space will decrease.\n\n### Code Examples\n\n```\ndiv {\nwidth: 300px;\npadding: 25px;\n}\n\n---\n\ndiv {\nwidth: 300px;\npadding: 25px;\nbox-sizing: border-box;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n## Tutorials\n\nThe CSSheightandwidthproperties are used to set the height and width of an element.\n\nTheheightandwidthproperties are used to set the \nheight and width of an element.\n\nThe height and width do not include padding, borders, or margins. \nIt sets the height and width of the area inside the padding, border, \nand margin of the element.\n\nTheheightandwidthproperties \ncan have the following values:\n\nNote:Remember that theheightandwidthproperties do not include padding, borders, \nor margins! They set the height/width of the area inside the padding, border, \nand margin of the element!\n\nSet the height and width of elementsThis example demonstrates how to set the height and width of different elements.\n\nSet the height and width of an image using percentThis example demonstrates how to set the height and width of an image using a percent value.\n\n### Code Examples\n\n```\ndiv {\nheight: \n200px;\nwidth: 50%;\nbackground-color: powderblue;\n}\n\n---\n\ndiv {\nheight: \n100px;\nwidth: 500px;\nbackground-color: powderblue;\n}\n```\n\n## Tutorials\n\nThemin-widthandmax-widthproperties are used to set the minimum and maximum width of an element.\n\nThemin-heightandmax-heightproperties are used to set the minimum and maximum height of an element.\n\nThemax-widthproperty sets the maximum \nallowed width of an element. This prevents the width of an element to be larger \nthan themax-widthproperty value.\n\nThemax-widthproperty can have the following values:\n\nOne problem with thewidthproperty can occur when the browser window is smaller than the width of \nthe element. The browser then adds a horizontal scrollbar to the page. \nSo, usingmax-widthwill improve the browser's handling on small windows.\n\nDrag the browser window to smaller than 600px wide, to see the difference between the two divs below!\n\nUsing width:\n\nUsing max-width:\n\nNote:If you use both thewidthproperty and themax-widthproperty on the same element, and the value of thewidthproperty is larger than themax-widthproperty; themax-widthproperty \nvalue will be used!\n\nSet min-width and max-width of an elementThis example demonstrates how to set a minimum width and a maximum width of an element using a pixel value.\n\nSet min-height and max-height of an elementThis example demonstrates how to set a minimum height and a maximum height of an element using a pixel value.\n\n### Code Examples\n\n```\n.div1 {\nmax-width: 500px;\nbackground-color: powderblue;\n}\n.div2 {\nwidth: 500px;\nbackground-color: powderblue;\n}\n\n---\n\n.div1 {\nwidth: 100%;\nmax-width: 900px;\nbackground-color: powderblue;\n}\n```\n\n## Tutorials\n\nTest your understanding of CSS by completing a small coding challenge.\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_8",
+            "prompt": "Try implementing the concepts from Tutorials in CSS.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_8",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in CSS?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in CSS that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in CSS!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

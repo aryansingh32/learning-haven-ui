@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "c",
+  "chapter_number": 18,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in C++."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=C+++Tutorials",
+        "title": "Understanding Tutorials and more in C++",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\nInformation can be passed to functions as a parameter. Parameters act as \nvariables inside the function.\n\nParameters are specified after the function name, inside the parentheses.\nYou can add as many parameters as you want, just separate them with a comma:\n\nThe following example has a \nfunction that takes astringcalledfnameas parameter.\nWhen the function is called, we pass along a first name,\nwhich is used inside the function to print the full name:\n\n### Code Examples\n\n```\nvoid\nfunctionName\n(\nparameter1\n,\nparameter2\n,\nparameter3\n) {\n// code to be executed\n}\n\n---\n\nvoid myFunction(\nstring fname\n) {\ncout << fname << \" Refsnes\\n\";\n}\nint main() {\nmyFunction(\n\"Liam\"\n);\nmyFunction(\n\"Jenny\"\n);\nmyFunction(\n\"Anja\"\n);\nreturn 0;\n}\n// Liam Refsnes\n// Jenny Refsnes\n// \n  Anja Refsnes\n```\n\n## Tutorials\n\nYou can also use a default parameter value, by using the equals sign (=).\n\nIf we call the function without an argument, it uses the default value (\"Norway\"):\n\n### Code Examples\n\n```\nvoid myFunction(\nstring country = \"Norway\"\n) {\ncout \n  << country << \"\\n\";\n}\nint main() {\nmyFunction(\"Sweden\");\nmyFunction(\"India\");\nmyFunction();\nmyFunction(\"USA\");\nreturn 0;\n}\n// Sweden\n// \n  India\n// Norway\n// USA\n```\n\n## Tutorials\n\nInside the function, you can add as many parameters as you want:\n\n### Code Examples\n\n```\nvoid myFunction(\nstring fname, int age\n) {\ncout << fname << \" Refsnes. \n  \" << age << \" years old. \\n\";\n}\nint main() {\nmyFunction(\n\"Liam\", 3\n);\nmyFunction(\n\"Jenny\", 14\n);\nmyFunction(\n\"Anja\", 30\n);\nreturn 0;\n}\n// Liam Refsnes. 3 years old.\n// Jenny Refsnes. 14 years old.\n// Anja Refsnes. 30 years old.\n```\n\n## Tutorials\n\nThevoidkeyword, used in the previous examples, indicates that the \nfunction should not return a value. If you \nwant the function to return a value, you can use a data type (such asint,string, etc.) instead ofvoid, and use thereturnkeyword inside the function:\n\nThis example returns the sum of a function withtwo parameters:\n\nYou can also store the result in a variable:\n\nHere is a simple and fun \"game example\" using a function withreturnto double a number five times:\n\n### Code Examples\n\n```\nint\nmyFunction(int x) {\nreturn\n5 \n    + x;\n}\nint main() {\ncout << myFunction(3);\nreturn 0;\n}\n// Outputs \n  8 (5 + 3)\n\n---\n\nint myFunction(int x, int y) {\nreturn x + y;\n}\nint main() \n  {\ncout << myFunction(5, 3);\nreturn 0;\n}\n// Outputs 8 (5 + 3)\n\n---\n\nint myFunction(int x, int y) {\nreturn x + y;\n}\nint main() {\nint z = myFunction(5, 3);\ncout << z;\nreturn 0;\n}\n// Outputs 8 (5 + 3)\n\n---\n\nint doubleGame(int x) {\nreturn x * 2;\n}\nint main() {\nfor (int i = 1; i <= 5; i++) \n  {\ncout << \"Double of \" << i << \" is \" << \n  doubleGame(i) << \n  endl;\n}\nreturn 0;\n}\n```\n\n## Tutorials\n\nIn the examples from the previous page, we used normal variables when we passed parameters to \na function.\n\nYou can also pass areferenceto \nthe function.\n\nThis can be useful when you need to change the value of the argument(s):\n\n### Code Examples\n\n```\nvoid changeValue(int &num) {\nnum = 50;\n}\nint main() {\nint value = 10;\nchangeValue(value);\u00a0 // Call the function and \n    change the value to 50\ncout << value;\nreturn 0;\n}\n\n---\n\nvoid swapNums(int &x, int &y) {\nint z = x;\nx = y;\ny = z;\n}\nint main() {\nint firstNum = 10;\nint secondNum = 20;\ncout << \n    \"Before swap: \" << \"\\n\";\ncout << firstNum << secondNum << \"\\n\";\n// Call the function, which will change the values of firstNum \n    and secondNum\nswapNums(firstNum, secondNum);\ncout << \"After swap: \n    \" << \"\\n\";\ncout << firstNum << secondNum << \"\\n\";\nreturn 0;\n}\n\n---\n\nvoid modifyStr(string &str) {\nstr += \" World!\";\n}\nint main() {\nstring greeting = \"Hello\";\nmodifyStr(greeting);\ncout << \n    greeting;\nreturn 0;\n}\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_18",
+            "prompt": "Try implementing the concepts from Tutorials in C++.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_18",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in C++?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in C++ that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in C++!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}

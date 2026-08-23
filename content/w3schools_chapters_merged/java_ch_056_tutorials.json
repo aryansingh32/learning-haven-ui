@@ -1,0 +1,109 @@
+{
+  "roadmap_slug": "java",
+  "chapter_number": 56,
+  "title": "Tutorials to Tutorials",
+  "topic_tag": "tutorials",
+  "difficulty": "BEGINNER",
+  "est_minutes": 60,
+  "story_hook": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java.",
+  "steps": [
+    {
+      "step_number": 1,
+      "type": "story_hook",
+      "title": "Story Hook",
+      "content": {
+        "story": "Welcome to this comprehensive chapter covering Tutorials to Tutorials. Mastering these concepts is crucial in Java."
+      }
+    },
+    {
+      "step_number": 2,
+      "type": "video",
+      "title": "Curated YouTube",
+      "content": {
+        "youtube_url": "https://www.youtube.com/results?search_query=Java+Tutorials",
+        "title": "Understanding Tutorials and more in Java",
+        "channel": "YouTube Search",
+        "duration_min": 20,
+        "focus_note": "Watch this video to understand the core concepts introduced in Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 3,
+      "type": "doc",
+      "title": "Learning Doc",
+      "content": {
+        "doc_md": "## Tutorials\n\n\u276e Math Methods\n\nTheatan2()method returns the angle theta in radians from the conversion of rectangular coordinates (x, y) to polar coordinates (r, theta).\n\nThis is the same as callingatan(y/x)except that it takes into account negative values of x so that it can return angles outside of the range -PI/2 to PI/2.\n\n### Code Examples\n\n```\nExample\nReturn the angle in radians of the polar coordinates given rectangular coordinates:\nSystem.out.println(Math.atan2(0.5, 0.5));\nSystem.out.println(Math.atan2(-0.5, -0.5));\nSystem.out.println(Math.atan2(5, 5));\nSystem.out.println(Math.atan2(10, 20));\nSystem.out.println(Math.atan2(-5, -5));\nSystem.out.println(Math.atan2(-10, 10));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThecbrt()method returns the cube root of a number.\n\n### Code Examples\n\n```\nExample\nReturn the cube root of different numbers:\nSystem.out.println(Math.cbrt(0));\nSystem.out.println(Math.cbrt(1));\nSystem.out.println(Math.cbrt(27));\nSystem.out.println(Math.cbrt(0.64));\nSystem.out.println(Math.cbrt(-27));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nTheceil()method rounds a number UP to the \nnearest integer.\n\nTip:To round a number DOWN to the nearest integer, look at thefloor()method.\n\nTip:To round a number to the nearest integer in either direction, look at theround()method.\n\n### Code Examples\n\n```\nExample\nRound numbers up to the nearest integer:\nSystem.out.println(Math.ceil(0.60));\nSystem.out.println(Math.ceil(0.40));\nSystem.out.println(Math.ceil(5));\nSystem.out.println(Math.ceil(5.1));\nSystem.out.println(Math.ceil(-5.1));\nSystem.out.println(Math.ceil(-5.9));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThecopySign()method returns the value of the first number with the sign of the second number.\n\nOne of the following:\n\n### Code Examples\n\n```\nExample\nReturn the value of a number with the sign of another:\nSystem.out.println(Math.copySign(-4.7, 3));\nSystem.out.println(Math.copySign(4.7, -2.5));\nSystem.out.println(Math.copySign(3, 4)); \nSystem.out.println(Math.copySign(-2.5, -4.7));\nTry it Yourself \u00bb\n```\n\n## Tutorials\n\n\u276e Math Methods\n\nThecos()method returns the cosine of an angle.\n\nNote:Angles are measured in radians.\n\nTip:You can use the constantMath.PIto make fractions of PI for angles.\n\n### Code Examples\n\n```\nExample\nReturn the cosine of different angles:\nSystem.out.println(Math.cos(3));\nSystem.out.println(Math.cos(-3));\nSystem.out.println(Math.cos(0));\nSystem.out.println(Math.cos(Math.PI));\nSystem.out.println(Math.cos(Math.PI/2));\nTry it Yourself \u00bb\n```\n\n---\n"
+      }
+    },
+    {
+      "step_number": 4,
+      "type": "practice",
+      "title": "Practice Problems",
+      "content": {
+        "practice_problems": [
+          {
+            "id": "p1_56",
+            "prompt": "Try implementing the concepts from Tutorials in Java.",
+            "input_type": "text"
+          },
+          {
+            "id": "p2_56",
+            "prompt": "Write another program using Tutorials.",
+            "input_type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 5,
+      "type": "quiz",
+      "title": "Mini Quiz",
+      "content": {
+        "quiz_questions": [
+          {
+            "question": "What is one of the primary uses of Tutorials in Java?",
+            "options": [
+              "To handle application logic and structure",
+              "To format data for display",
+              "To store temporary values"
+            ],
+            "correctAnswer": "To handle application logic and structure",
+            "explanation": "Understanding the core purpose of Tutorials is vital."
+          }
+        ]
+      }
+    },
+    {
+      "step_number": 6,
+      "type": "task",
+      "title": "The Task",
+      "content": {
+        "task_prompt": "Write a comprehensive program in Java that incorporates Tutorials to Tutorials."
+      }
+    },
+    {
+      "step_number": 7,
+      "type": "micro_revision",
+      "title": "Micro-Revision",
+      "content": {
+        "connection_map": "Previous Chapter -> Tutorials to Tutorials",
+        "recall_questions": [
+          "What did you learn about Tutorials?"
+        ],
+        "identity_affirmation": "You just leveled up your skills significantly by completing a major section.",
+        "completion_celebration": {
+          "message": "Section Master Unlocked!",
+          "linkedin_card_text": "Mastered Tutorials to Tutorials in Java!"
+        },
+        "streak_reminder": "Keep the streak alive!",
+        "reward_chest": {
+          "type": "random",
+          "rewards": [
+            "+50 XP",
+            "Section Badge"
+          ]
+        }
+      }
+    }
+  ]
+}
