@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { learningService } from '../api/learning.service';
 import { CheckCircle2, Loader2, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
@@ -29,12 +29,19 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(isCompleted);
   const [editing, setEditing] = useState(false);
+  // BH-009: Track server draft save status
+  const [draftSaved, setDraftSaved] = useState(false);
+  const draftTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
     if (saved) setNotes(saved);
     setCompleted(isCompleted);
     setEditing(false);
+    setDraftSaved(false);
+    return () => {
+      if (draftTimerRef.current) clearTimeout(draftTimerRef.current);
+    };
   }, [chapterId, isCompleted, storageKey]);
 
   if (!task) return null;
@@ -42,7 +49,22 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
   const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setNotes(val);
+    // Save to localStorage immediately for fast restore
     localStorage.setItem(storageKey, val);
+    setDraftSaved(false);
+
+    // BH-009: Debounce server-side draft save (1.5s after last keystroke)
+    if (draftTimerRef.current) clearTimeout(draftTimerRef.current);
+    if (val.trim()) {
+      draftTimerRef.current = setTimeout(async () => {
+        try {
+          await learningService.saveDraft(chapterId, val);
+          setDraftSaved(true);
+        } catch {
+          // Draft save failure is non-fatal — localStorage still has it
+        }
+      }, 1500);
+    }
   };
 
   const handleSubmit = async () => {
@@ -115,13 +137,17 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
 
           {showForm && (
             <>
-              <label className="block text-sm font-semibold text-foreground mb-3">
+              <label className="block text-sm font-semibold text-foreground mb-1">
                 Write your solution or notes here...
               </label>
+              {/* BH-009: Show server-side draft persistence status */}
+              <p className="text-[10px] text-muted-foreground mb-3">
+                {draftSaved ? '✓ Draft saved to your account' : 'Your response is saved to your account on submit'}
+              </p>
               <textarea
                 value={notes}
                 onChange={handleNotesChange}
-                placeholder="Type your notes here. They are saved locally as you type."
+                placeholder="Type your answer here. Your response will be saved to your account when you submit."
                 className="w-full min-h-[140px] p-4 rounded-xl border border-border bg-background focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 resize-y transition-shadow text-sm outline-none"
               />
             </>

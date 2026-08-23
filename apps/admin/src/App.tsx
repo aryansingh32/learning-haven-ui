@@ -26,6 +26,7 @@ import VisualRoadmapBuilder from './pages/VisualRoadmapBuilder';
 import Settings from './pages/Settings';
 import GamificationSettings from './pages/GamificationSettings';
 import AuditLogs from './pages/AuditLogs';
+import Certificates from './pages/Certificates';
 import CMSControl from './pages/CMSControl';
 import NetworkMonitoring from './pages/NetworkMonitoring';
 import CoursePageCMS from './pages/CoursePageCMS';
@@ -131,6 +132,7 @@ function App() {
               <Route path="/communications" element={<CommunicationCenter />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/referrals" element={<Referrals />} />
+              <Route path="/certificates" element={<Certificates />} />
 
               {/* Finance */}
               <Route path="/plans" element={<Plans />} />

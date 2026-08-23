@@ -3,17 +3,10 @@ import { supabase } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import logger from '../../../config/logger';
 import { AIProviderService, AIConfig } from './ai-provider.service';
+import { GamificationService } from '../../auth/services/gamification.service';
+import { EntitlementsService } from '../../entitlements/entitlements.service';
 import { Response } from 'express';
 import { env } from '../../../config/env';
-
-// Rate limits by plan (queries per month)
-const PLAN_LIMITS: Record<string, number> = {
-    free: 5,
-    'basic-monthly': 50,
-    'basic-yearly': 50,
-    'pro-monthly': -1, // unlimited
-    'pro-yearly': -1,
-};
 
 export class AIService {
     private static async getAIConfig(): Promise<AIConfig> {
@@ -53,9 +46,11 @@ export class AIService {
         problemId?: string
     ) {
         try {
-            const canQuery = await this.checkRateLimit(userId);
-            if (!canQuery) {
-                throw new Error('AI query limit reached for your plan. Upgrade to continue.');
+            // BUG-012 fix: route all quota checks through EntitlementsService (admin-controlled)
+            // instead of the old hardcoded PLAN_LIMITS constant.
+            const entCheck = await EntitlementsService.checkAndConsumeUsage(userId, 'ai_queries_per_day');
+            if (!entCheck.allowed) {
+                throw new Error(`AI limit reached (${entCheck.used}/${entCheck.limit} queries today). Upgrade your plan to continue.`);
             }
 
             const { data: history } = await supabase
@@ -68,6 +63,44 @@ export class AIService {
             const messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
                 { role: 'system', content: SYSTEM_PROMPT },
             ];
+
+            // BH-011: Inject learner context so the Mentor automatically knows the
+            // learner's state — XP, streak, active course/chapter, weak areas, etc.
+            // Previously getMentorContext() was only used for dashboard nudge cards
+            // and never reached the LLM. This closes that gap.
+            try {
+                const ctx = await GamificationService.getMentorContext(userId);
+                const ctxParts: string[] = [];
+
+                if (ctx.context.courseTitle) {
+                    ctxParts.push(`The student is enrolled in: "${ctx.context.courseTitle}".`);
+                }
+                if (ctx.context.activeChapter) {
+                    ctxParts.push(`Currently working on chapter: "${ctx.context.activeChapter}".`);
+                }
+                if (ctx.context.lastCompletedChapter) {
+                    ctxParts.push(`Last completed chapter: "${ctx.context.lastCompletedChapter}".`);
+                }
+                if (typeof ctx.context.streak === 'number') {
+                    ctxParts.push(`Current streak: ${ctx.context.streak} day(s).`);
+                }
+                if (ctx.context.daysInactive !== null && ctx.context.daysInactive !== undefined) {
+                    ctxParts.push(`Days since last active: ${ctx.context.daysInactive}.`);
+                }
+                if (ctx.scenario && ctx.message) {
+                    ctxParts.push(`Contextual scenario: ${ctx.scenario}. Mentor nudge: "${ctx.message}"`);
+                }
+
+                if (ctxParts.length > 0) {
+                    messages.push({
+                        role: 'system',
+                        content: `[Learner Context — use this to personalise your responses]\n${ctxParts.join(' ')}`,
+                    });
+                }
+            } catch (ctxErr) {
+                // Non-fatal: if context fetch fails, continue with static system prompt
+                logger.warn('getMentorContext failed — continuing without learner context', ctxErr);
+            }
 
             if (problemId) {
                 const { data: problem } = await supabase
@@ -114,7 +147,8 @@ export class AIService {
                 { user_id: userId, role: 'assistant', content: fullReply, problem_id: problemId || null, tokens_used: tokensUsed },
             ]);
 
-            await this.incrementUsage(userId);
+            // Note: EntitlementsService.checkAndConsumeUsage already incremented the Redis counter.
+            // We still insert the chat record above for history, so nothing extra needed here.
         } catch (error: any) {
             logger.error('AI chat error:', { userId, error: error.message });
             throw error;
@@ -178,78 +212,16 @@ export class AIService {
      * Get remaining queries for the month
      */
     static async getRemainingQueries(userId: string) {
-        const limit = await this.getUserLimit(userId);
-        if (limit === -1) return { remaining: -1, limit: -1, unlimited: true };
-
-        const used = await this.getMonthlyUsage(userId);
+        const entCheck = await EntitlementsService.checkEntitlement(userId, 'ai_queries_per_day');
+        if (entCheck.limit === -1) return { remaining: -1, limit: -1, unlimited: true };
 
         return {
-            remaining: Math.max(0, limit - used),
-            used,
-            limit,
+            remaining: entCheck.remaining ?? 0,
+            used: entCheck.used ?? 0,
+            limit: entCheck.limit ?? 0,
             unlimited: false,
         };
     }
 
-    /**
-     * Check if user can make an AI query
-     */
-    private static async checkRateLimit(userId: string): Promise<boolean> {
-        const limit = await this.getUserLimit(userId);
-        if (limit === -1) return true; // unlimited
-
-        const used = await this.getMonthlyUsage(userId);
-        return used < limit;
-    }
-
-    /**
-     * Get user's plan limit
-     */
-    private static async getUserLimit(userId: string): Promise<number> {
-        const { data: user } = await supabase
-            .from('users')
-            .select('current_plan')
-            .eq('id', userId)
-            .single();
-
-        const plan = user?.current_plan || 'free';
-        if (plan === 'free') {
-            const config = await this.getAIConfig();
-            return config.freeTierLimit !== undefined ? config.freeTierLimit : 50;
-        }
-        return PLAN_LIMITS[plan] ?? 50;
-    }
-
-    /**
-     * Get monthly usage count
-     */
-    private static async getMonthlyUsage(userId: string): Promise<number> {
-        const cacheKey = `ai:usage:${userId}:${new Date().toISOString().slice(0, 7)}`;
-        const cached = await CacheService.get<number>(cacheKey);
-        if (cached !== null) return cached;
-
-        const startOfMonth = new Date();
-        startOfMonth.setDate(1);
-        startOfMonth.setHours(0, 0, 0, 0);
-
-        const { count } = await supabase
-            .from('ai_chats')
-            .select('id', { count: 'exact', head: true })
-            .eq('user_id', userId)
-            .eq('role', 'user')
-            .gte('created_at', startOfMonth.toISOString());
-
-        const usage = count || 0;
-        await CacheService.set(cacheKey, usage, 3600);
-
-        return usage;
-    }
-
-    /**
-     * Increment monthly usage counter
-     */
-    private static async incrementUsage(userId: string) {
-        const cacheKey = `ai:usage:${userId}:${new Date().toISOString().slice(0, 7)}`;
-        await CacheService.del(cacheKey); // invalidate cache
-    }
 }
+

@@ -17,6 +17,7 @@ const pageNames: Record<string, string> = {
     '/tasks': 'Task Assignment',
     '/feedback': 'Feedback',
     '/referrals': 'Referrals',
+    '/certificates': 'Certificates',
     '/plans': 'Subscription Plans',
     '/withdrawals': 'Withdrawals',
     '/apprenticeship': 'Apprenticeship Platform',

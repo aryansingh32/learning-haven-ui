@@ -37,7 +37,7 @@ const createLimiter = ({ keyPrefix, ...options }: RateLimitConfig) =>
 export const authRateLimit = createLimiter({
   keyPrefix: 'auth',
   windowMs: 15 * 60 * 1000,
-  max: 100, // Increased to avoid 429 during testing
+  max: 10, // 10 auth attempts per 15 minutes per IP/user
   keyGenerator: userOrIpKey('auth'),
 });
 

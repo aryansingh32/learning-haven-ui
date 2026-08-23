@@ -9,7 +9,61 @@ import { Loader2, Plus, Save, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminService } from '../services/admin.service';
 
+import api from '../services/api';
+import { Badge } from '@/components/ui/badge';
+import { Users, CheckCircle, Clock, DollarSign, TrendingUp, XCircle } from 'lucide-react';
+
+function ReferralOverview() {
+    const { data, isLoading } = useQuery({
+        queryKey: ['referral-stats'],
+        queryFn: async () => {
+            const res = await api.get('/admin/referrals/stats');
+            return res.data;
+        },
+    });
+
+    if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
+
+    const s = data || {};
+    const stats = [
+        { label: 'Total Referrals', value: s.total ?? 0, icon: Users, color: 'bg-blue-100 text-blue-600' },
+        { label: 'Pending Review', value: s.pending ?? 0, icon: Clock, color: 'bg-yellow-100 text-yellow-600' },
+        { label: 'Active Referrals', value: s.active ?? 0, icon: CheckCircle, color: 'bg-emerald-100 text-emerald-600' },
+        { label: 'Paid Out', value: s.paid ?? 0, icon: DollarSign, color: 'bg-purple-100 text-purple-600' },
+        { label: 'Rejected', value: s.rejected ?? 0, icon: XCircle, color: 'bg-red-100 text-red-600' },
+        { label: 'Total Earned', value: `₹${((s.total_earned ?? 0) / 100).toLocaleString('en-IN')}`, icon: TrendingUp, color: 'bg-indigo-100 text-indigo-600' },
+    ];
+
+    return (
+        <div className="space-y-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {stats.map((stat) => (
+                    <Card key={stat.label} className="border-0 shadow-md">
+                        <CardContent className="p-4">
+                            <div className={`w-9 h-9 rounded-lg ${stat.color} flex items-center justify-center mb-3`}>
+                                <stat.icon className="w-4 h-4" />
+                            </div>
+                            <p className="text-xs text-muted-foreground font-medium">{stat.label}</p>
+                            <p className="text-2xl font-bold mt-0.5">{stat.value}</p>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+            {(s.total_paid ?? 0) > 0 && (
+                <Card className="border-0 shadow-md">
+                    <CardContent className="p-4">
+                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">Total Paid Out</p>
+                        <p className="text-3xl font-bold text-emerald-600">₹{((s.total_paid ?? 0) / 100).toLocaleString('en-IN')}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Across {s.paid ?? 0} completed referrals</p>
+                    </CardContent>
+                </Card>
+            )}
+        </div>
+    );
+}
+
 export default function Referrals() {
+
     const queryClient = useQueryClient();
     
     // In a real implementation, adminService.getCustomReferrals() and adminService.createCustomReferral()
@@ -60,14 +114,7 @@ export default function Referrals() {
                 </TabsList>
 
                 <TabsContent value="overview">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Standard Referrals</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-muted-foreground">Standard referral overview goes here...</p>
-                        </CardContent>
-                    </Card>
+                    <ReferralOverview />
                 </TabsContent>
 
                 <TabsContent value="custom" className="space-y-4">

@@ -36,6 +36,10 @@ const difficultyStyles: Record<string, string> = {
   hard: 'bg-destructive/15 text-destructive',
 };
 
+const PRICING = {
+  monthlyDisplay: '583'
+};
+
 function youtubeIdFromUrl(url?: string): string {
   if (!url) return '';
   const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -279,7 +283,7 @@ export default function LearnChapterPage() {
           </ChapterCta>
           {isPaywall && (
             <ChapterCta variant="primary" onClick={() => navigate('/pricing')}>
-              Upgrade to Pro — ₹583/mo
+              Upgrade to Pro — ₹{PRICING.monthlyDisplay}/mo
             </ChapterCta>
           )}
         </div>

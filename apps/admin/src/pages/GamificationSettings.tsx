@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Loader2, Save, Trophy, Target, Award } from 'lucide-react';
+import { Loader2, Save, Trophy, Target, Award, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 type GamificationConfig = {
@@ -154,7 +154,14 @@ const GamificationSettings = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {config.identity_titles.map((title, i) => (
-                <div key={title.id} className="grid gap-3 md:grid-cols-4 p-4 rounded-lg border bg-muted/30">
+                <div key={title.id} className="grid gap-3 md:grid-cols-4 p-4 rounded-lg border bg-muted/30 relative">
+                  <Button
+                    variant="ghost" size="icon"
+                    className="absolute top-2 right-2 h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={() => setConfig(p => ({ ...p, identity_titles: p.identity_titles.filter((_, idx) => idx !== i) }))}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
                   <div>
                     <Label className="text-xs">Title</Label>
                     <Input value={title.title} onChange={(e) => updateIdentity(i, 'title', e.target.value)} />
@@ -182,6 +189,12 @@ const GamificationSettings = () => {
                   </div>
                 </div>
               ))}
+              <Button
+                variant="outline" size="sm"
+                onClick={() => setConfig(p => ({ ...p, identity_titles: [...p.identity_titles, { id: Date.now().toString(), minLevel: 0, maxLevel: 10, title: 'New Title', requiredChapterTags: [] }] }))}
+              >
+                <Plus className="h-3 w-3 mr-1" /> Add Title
+              </Button>
             </CardContent>
           </Card>
 
@@ -191,7 +204,14 @@ const GamificationSettings = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {config.badges.map((badge, i) => (
-                <div key={badge.id} className="grid gap-3 md:grid-cols-5 p-4 rounded-lg border bg-muted/30">
+                <div key={badge.id} className="grid gap-3 md:grid-cols-5 p-4 rounded-lg border bg-muted/30 relative">
+                  <Button
+                    variant="ghost" size="icon"
+                    className="absolute top-2 right-2 h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={() => setConfig(p => ({ ...p, badges: p.badges.filter((_, idx) => idx !== i) }))}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
                   <div>
                     <Label className="text-xs">Emoji</Label>
                     <Input value={badge.emoji} onChange={(e) => updateBadge(i, 'emoji', e.target.value)} />
@@ -210,6 +230,12 @@ const GamificationSettings = () => {
                   </div>
                 </div>
               ))}
+              <Button
+                variant="outline" size="sm"
+                onClick={() => setConfig(p => ({ ...p, badges: [...p.badges, { id: Date.now().toString(), name: 'New Badge', emoji: '🏆', topicTag: '', solveCount: 5 }] }))}
+              >
+                <Plus className="h-3 w-3 mr-1" /> Add Badge
+              </Button>
             </CardContent>
           </Card>
 
@@ -244,10 +270,17 @@ const GamificationSettings = () => {
                 </div>
               </div>
               {config.daily_quest_templates.map((quest, i) => (
-                <div key={quest.key} className="grid gap-3 md:grid-cols-3 p-4 rounded-lg border bg-muted/30">
+                <div key={quest.key} className="grid gap-3 md:grid-cols-3 p-4 rounded-lg border bg-muted/30 relative">
+                  <Button
+                    variant="ghost" size="icon"
+                    className="absolute top-2 right-2 h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={() => setConfig(p => ({ ...p, daily_quest_templates: p.daily_quest_templates.filter((_, idx) => idx !== i) }))}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
                   <div>
                     <Label className="text-xs">Key</Label>
-                    <Input value={quest.key} disabled />
+                    <Input value={quest.key} onChange={(e) => updateQuest(i, 'key', e.target.value)} />
                   </div>
                   <div>
                     <Label className="text-xs">Label</Label>
@@ -259,6 +292,12 @@ const GamificationSettings = () => {
                   </div>
                 </div>
               ))}
+              <Button
+                variant="outline" size="sm"
+                onClick={() => setConfig(p => ({ ...p, daily_quest_templates: [...p.daily_quest_templates, { key: `quest_${Date.now()}`, label: 'New Quest', xp: 25 }] }))}
+              >
+                <Plus className="h-3 w-3 mr-1" /> Add Quest
+              </Button>
             </CardContent>
           </Card>
         </>

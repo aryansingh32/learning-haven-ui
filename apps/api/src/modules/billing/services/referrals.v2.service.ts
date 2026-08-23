@@ -51,7 +51,8 @@ export class ReferralsV2Service {
     if (existingRef.rows.length > 0) return { success: false, reason: 'Already referred' };
 
     const { score: fraudScore, reasons: fraudReasons } = await this.calculateFraudScore(referrerId, signupIp, deviceFingerprint);
-    const status = fraudScore > 70 ? 'suspicious' : 'pending';
+    // Score >= 70 means suspicious (max from IP+device = 40+30 = 70, so >= catches it)
+    const status = fraudScore >= 70 ? 'suspicious' : 'pending';
 
     await pool.query(
       `INSERT INTO public.referrals (referrer_id, referred_user_id, referral_code_id, referral_code_used, status, fraud_score, fraud_reasons, signup_ip, signup_device_fingerprint)
@@ -223,7 +224,7 @@ export class ReferralsV2Service {
 
   static async getMyReferrals(userId: string) {
     const res = await pool.query(
-      `SELECT r.id, r.status, r.earned_amount, r.created_at, r.credit_eligible_at, u.first_name, u.last_name
+       `SELECT r.id, r.status, r.earned_amount, r.created_at, r.credit_eligible_at, u.full_name
        FROM public.referrals r
        JOIN public.users u ON u.id = r.referred_user_id
        WHERE r.referrer_id = $1
@@ -232,7 +233,12 @@ export class ReferralsV2Service {
     );
     return res.rows.map(r => ({
       ...r,
-      name: `${r.first_name} ${r.last_name ? r.last_name[0] + '.' : ''}`
+      // full_name is the canonical column; gracefully abbreviate the last word
+      name: (() => {
+        const parts = (r.full_name || '').trim().split(' ');
+        if (parts.length === 1) return parts[0];
+        return `${parts[0]} ${parts[parts.length - 1][0]}.`;
+      })()
     }));
   }
 

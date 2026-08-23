@@ -18,6 +18,7 @@ export default function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [referralCode, setReferralCode] = useState("");
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function SignUp() {
     e.preventDefault();
     setLoading(true);
     try {
-      await register({ email, password, referral_code: referralCode || undefined });
+      await register({ email, password, full_name: fullName, referral_code: referralCode || undefined });
       toast.success("Account created!");
       navigate("/onboarding");
     } catch (error: any) {
@@ -79,6 +80,17 @@ export default function SignUp() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleEmailSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input
+              id="fullName"
+              type="text"
+              placeholder="John Doe"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input

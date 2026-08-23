@@ -4,10 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n \"vite,compile\" -c \"blue,magenta\" \"npm:dev:vite\" \"npm:dev:compile\"",
+    "dev": "vite",
     "dev:vite": "vite",
-    "dev:compile": "node scripts/compile-server.js || echo 'Compile server failed to start - JSCPP will be used as fallback'",
-    "compile-server": "node scripts/compile-server.js",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

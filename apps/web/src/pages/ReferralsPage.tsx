@@ -7,11 +7,7 @@ import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 import { useApiQuery, useApiMutation } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const tiers = [
-  { name: "Bronze", min: 0, max: 2, emoji: "🥉" },
-  { name: "Silver", min: 3, max: 9, emoji: "🥈" },
-  { name: "Gold", min: 10, max: 999, emoji: "🥇" },
-];
+// Tiers will be fetched from API
 
 const ReferralsPage = () => {
   const [copied, setCopied] = useState(false);
@@ -39,9 +35,12 @@ const ReferralsPage = () => {
   const totalEarned = useAnimatedCounter(0, refInfo?.wallet?.total_earned || 0, 800);
   const currentBalance = refInfo?.wallet?.balance || 0;
 
-  const currentTier = tiers.find(t =>
-    (refInfo?.referral_count || 0) >= t.min && (refInfo?.referral_count || 0) <= t.max
-  ) || tiers[0];
+  const apiTiers = refInfo?.tiers || [
+    { name: "Bronze", min: 0, max: 2, emoji: "🥉" },
+    { name: "Silver", min: 3, max: 9, emoji: "🥈" },
+    { name: "Gold", min: 10, max: 999, emoji: "🥇" }
+  ];
+  const currentTier = refInfo?.currentTier || apiTiers[0];
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -54,8 +53,8 @@ const ReferralsPage = () => {
       alert("Please enter a valid UPI ID");
       return;
     }
-    if (currentBalance < 1) {
-      alert("Minimum withdrawal is ₹1");
+    if (currentBalance < 100) {
+      alert("Minimum withdrawal is ₹100");
       return;
     }
 
@@ -151,7 +150,7 @@ const ReferralsPage = () => {
           <p className="text-sm font-semibold text-foreground">Tier Status</p>
         </div>
         <div className="grid grid-cols-3 gap-3">
-          {tiers.map((tier) => {
+          {apiTiers.map((tier: any) => {
             const isActive = currentTier.name === tier.name;
             return (
               <motion.div
@@ -231,7 +230,7 @@ const ReferralsPage = () => {
               <div className="group relative">
                 <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
                 <div className="absolute bottom-full right-0 mb-2 w-48 p-2 bg-popover text-[10px] rounded-lg shadow-xl border border-border opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
-                  Withdrawals processed within 24-48 hours. Min ₹1.
+                  Withdrawals processed within 24-48 hours. Min ₹100.
                 </div>
               </div>
             </div>
@@ -245,7 +244,7 @@ const ReferralsPage = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={handleWithdraw}
-              disabled={withdrawMutation.isPending || currentBalance < 1}
+              disabled={withdrawMutation.isPending || currentBalance < 100}
               className="w-full py-3 rounded-xl gradient-golden text-primary-foreground font-medium text-sm transition-all shadow-lg hover:shadow-xl btn-ripple disabled:grayscale disabled:opacity-50"
             >
               {withdrawMutation.isPending ? "Processing..." : `Withdraw ₹${currentBalance}`}

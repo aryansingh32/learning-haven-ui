@@ -21,7 +21,41 @@ app.set('trust proxy', 1);
 // ──────────────────────────────────────────────────────────
 // Security & parsing
 // ──────────────────────────────────────────────────────────
-app.use(cors());
+// ── CORS: only allow known origins ──────────────────────────
+const ALLOWED_ORIGINS = [
+  'https://learninghaven.in',
+  'https://www.learninghaven.in',
+  'https://admin.learninghaven.in',
+  'https://app.learninghaven.in',
+  // Add any other production origins here
+];
+
+if (env.NODE_ENV !== 'production') {
+  ALLOWED_ORIGINS.push(
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:5174',
+  );
+}
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (server-to-server, Postman, curl)
+      if (!origin) return callback(null, true);
+      // In development, allow all origins (including ngrok tunnels)
+      if (env.NODE_ENV !== 'production') return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Idempotency-Key', 'X-Request-ID', 'ngrok-skip-browser-warning'],
+  })
+);
 app.use(helmet());
 app.use(compression());
 

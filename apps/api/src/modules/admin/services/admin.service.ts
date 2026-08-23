@@ -41,7 +41,38 @@ export class AdminService {
                 .select('id', { count: 'exact', head: true })
                 .gte('created_at', todayStart.toISOString());
 
+            // For MoM user growth
+            const { pool } = await import('../../../config/database');
+            const userGrowthRes = await pool.query(`
+                WITH current_month AS (
+                    SELECT COUNT(*) AS count FROM public.users WHERE created_at >= date_trunc('month', CURRENT_DATE)
+                ),
+                last_month AS (
+                    SELECT COUNT(*) AS count FROM public.users WHERE created_at >= date_trunc('month', CURRENT_DATE - INTERVAL '1 month') AND created_at < date_trunc('month', CURRENT_DATE)
+                )
+                SELECT current_month.count AS curr, last_month.count AS prev FROM current_month, last_month
+            `);
+            const currUserMonth = parseInt(userGrowthRes.rows[0]?.curr || '0', 10);
+            const prevUserMonth = parseInt(userGrowthRes.rows[0]?.prev || '0', 10);
+            const user_growth_pct = prevUserMonth === 0 ? (currUserMonth > 0 ? 100 : 0) : ((currUserMonth - prevUserMonth) / prevUserMonth) * 100;
+
+            const revGrowthRes = await pool.query(`
+                WITH current_month AS (
+                    SELECT COALESCE(SUM(amount), 0) AS sum FROM public.payments WHERE status = 'captured' AND created_at >= date_trunc('month', CURRENT_DATE)
+                ),
+                last_month AS (
+                    SELECT COALESCE(SUM(amount), 0) AS sum FROM public.payments WHERE status = 'captured' AND created_at >= date_trunc('month', CURRENT_DATE - INTERVAL '1 month') AND created_at < date_trunc('month', CURRENT_DATE)
+                )
+                SELECT current_month.sum AS curr, last_month.sum AS prev FROM current_month, last_month
+            `);
+            const currRevMonth = parseFloat(revGrowthRes.rows[0]?.curr || '0');
+            const prevRevMonth = parseFloat(revGrowthRes.rows[0]?.prev || '0');
+            const revenue_growth_pct = prevRevMonth === 0 ? (currRevMonth > 0 ? 100 : 0) : ((currRevMonth - prevRevMonth) / prevRevMonth) * 100;
+
             const stats = {
+                user_growth_pct,
+                revenue_growth_pct,
+                new_users_today: todaySignups || 0,
                 users: {
                     total: usersRes.count || 0,
                     recent_7d: recentSignups || 0,
@@ -290,7 +321,7 @@ export class AdminService {
     /**
      * Get audit logs with filtering
      */
-    static async getAuditLogs(page: number = 1, limit: number = 50, action?: string) {
+    static async getAuditLogs(page: number = 1, limit: number = 50, filters: any = {}) {
         try {
             const offset = (page - 1) * limit;
 
@@ -298,8 +329,21 @@ export class AdminService {
                 .from('admin_logs')
                 .select('*, admin:users!admin_id(full_name, email)', { count: 'exact' });
 
-            if (action) {
-                query = query.eq('action', action);
+            if (filters.action) {
+                query = query.eq('action', filters.action);
+            }
+            if (filters.admin_id) {
+                query = query.eq('admin_id', filters.admin_id);
+            }
+            if (filters.target_id) {
+                // assume resource_id acts as target_id
+                query = query.eq('resource_id', filters.target_id);
+            }
+            if (filters.from_date) {
+                query = query.gte('created_at', filters.from_date);
+            }
+            if (filters.to_date) {
+                query = query.lte('created_at', filters.to_date);
             }
 
             const { data, count, error } = await query
@@ -327,22 +371,74 @@ export class AdminService {
      */
     static async getWithdrawals(status: string = 'pending', page: number = 1, limit: number = 20) {
         try {
+            const { pool } = await import('../../../config/database');
             const offset = (page - 1) * limit;
 
-            const { data, count, error } = await supabase
-                .from('withdrawals')
-                .select('*, user:users(full_name, email)', { count: 'exact' })
-                .eq('status', status)
-                .order('requested_at', { ascending: false })
-                .range(offset, offset + limit - 1);
+            let data = [];
+            let count = 0;
 
-            if (error) throw error;
+            try {
+                const countRes = await pool.query(`SELECT COUNT(*) FROM public.withdrawals WHERE status = $1`, [status]);
+                count = parseInt(countRes.rows[0].count, 10);
+
+                const dataRes = await pool.query(`
+                    SELECT w.*, u.full_name, u.email, u.phone,
+                           rw.upi_id AS rw_upi, rw.bank_account, rw.ifsc_code, rw.account_holder_name
+                    FROM public.withdrawals w
+                    LEFT JOIN public.users u ON u.id = w.user_id
+                    LEFT JOIN public.referral_withdrawals rw ON rw.id = w.id
+                    WHERE w.status = $1
+                    ORDER BY w.requested_at DESC
+                    LIMIT $2 OFFSET $3
+                `, [status, limit, offset]);
+
+                data = dataRes.rows.map(r => ({
+                    ...r,
+                    upi_id: r.rw_upi || r.upi_id,
+                    bank_account: r.bank_account || r.bank_account,
+                    user: { full_name: r.full_name, email: r.email, phone: r.phone }
+                }));
+            } catch (err: any) {
+                try {
+                    const countRes = await pool.query(`SELECT COUNT(*) FROM public.withdrawals WHERE status = $1`, [status]);
+                    count = parseInt(countRes.rows[0].count, 10);
+
+                    const dataRes = await pool.query(`
+                        SELECT w.*, u.full_name, u.email, u.phone,
+                               w.upi_id, w.bank_account, w.ifsc_code, w.account_holder_name
+                        FROM public.withdrawals w
+                        LEFT JOIN public.users u ON u.id = w.user_id
+                        WHERE w.status = $1
+                        ORDER BY w.requested_at DESC
+                        LIMIT $2 OFFSET $3
+                    `, [status, limit, offset]);
+
+                    data = dataRes.rows.map(r => ({
+                        ...r,
+                        user: { full_name: r.full_name, email: r.email, phone: r.phone }
+                    }));
+                } catch (e2: any) {
+                    const dataRes = await pool.query(`
+                        SELECT w.*, u.full_name, u.email, u.phone
+                        FROM public.withdrawals w
+                        LEFT JOIN public.users u ON u.id = w.user_id
+                        WHERE w.status = $1
+                        ORDER BY w.requested_at DESC
+                        LIMIT $2 OFFSET $3
+                    `, [status, limit, offset]);
+                    
+                    data = dataRes.rows.map(r => ({
+                        ...r,
+                        user: { full_name: r.full_name, email: r.email, phone: r.phone }
+                    }));
+                }
+            }
 
             return {
-                withdrawals: data || [],
-                total: count || 0,
+                withdrawals: data,
+                total: count,
                 page,
-                total_pages: Math.ceil((count || 0) / limit),
+                total_pages: Math.ceil(count / limit),
             };
         } catch (error) {
             logger.error('Get withdrawals error:', error);

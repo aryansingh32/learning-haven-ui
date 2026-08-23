@@ -27,6 +27,7 @@ export default function PhaseCompletionPage() {
   const totalMinutes = (phase?.course_items || []).reduce((sum: number, m: any) => sum + (m.est_minutes || 15), 0);
   const missionsTotal = phase?.item_count || 0;
   const problemsSolved = 0; // TODO: fetch from progress
+  const celebrationMeta = phase?.celebration;
 
   const shareText = `🎉 I just completed "${phase?.title || 'a course'}" on DSA OS!\n\n${missionsTotal} chapters, ${problemsSolved}+ problems solved.\n\nThis structured approach is actually working. If you're from a Tier 3/4 college and want to crack placements, check it out.\n\n#DSA #CodingJourney #Placements`;
 
@@ -61,7 +62,7 @@ export default function PhaseCompletionPage() {
         {[
           { icon: CheckCircle2, label: 'Chapters', value: `${missionsTotal}` },
           { icon: Target, label: 'Problems Solved', value: `${problemsSolved}+` },
-          { icon: Zap, label: 'XP Earned', value: `${missionsTotal * 100}` },
+          { icon: Zap, label: 'XP Earned', value: `${celebrationMeta?.xp ?? (missionsTotal * 100)}` },
           { icon: Clock, label: 'Time Spent', value: `~${Math.round(totalMinutes / 60)}h` },
         ].map((stat, i) => (
           <motion.div

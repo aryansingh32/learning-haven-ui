@@ -1,4 +1,4 @@
-import { supabase } from '../../../config/database';
+import { supabase, pool } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import logger from '../../../config/logger';
 
@@ -124,11 +124,14 @@ export class TasksService {
 
             if (error) throw error;
 
-            // Award XP on completion
+            // Award XP on completion using atomic DB-side function (BH-008)
+            // Idempotency key based on taskId prevents double-awards on retry
             if (data.status === 'completed' && task.xp_reward > 0) {
-                await supabase.rpc('increment_xp', {
-                    p_user_id: userId,
-                    p_amount: task.xp_reward,
+                await pool.query(
+                    `SELECT public.increment_xp($1, $2, $3, $4)`,
+                    [userId, task.xp_reward, 'task_completion', `task_completion:${taskId}`]
+                ).catch((xpErr: Error) => {
+                    logger.warn('XP award on task completion failed', { taskId, xpErr });
                 });
             }
 

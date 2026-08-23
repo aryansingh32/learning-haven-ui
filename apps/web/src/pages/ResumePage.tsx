@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { useApiMutation } from '@/hooks/useApi';
+import { useApiMutation, useApiQuery } from '@/hooks/useApi';
 import { api } from '@/services/api.svc';
 import { FileText, Save, Download, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Plus, Trash2, Wand2, LayoutTemplate } from 'lucide-react';
 import { toast } from 'sonner';
@@ -27,6 +27,19 @@ export default function ResumePage() {
     const [activeSection, setActiveSection] = useState('personal');
     const [atsScore, setAtsScore] = useState(0);
     const [selectedTemplate, setSelectedTemplate] = useState<'standard' | 'modern' | 'classic'>('modern');
+    const [isPrinting, setIsPrinting] = useState(false);
+
+    const { data: apiResumeData } = useApiQuery<any>(['resume'], '/resume');
+
+    useEffect(() => {
+        if (apiResumeData && Object.keys(apiResumeData).length > 0) {
+            setData(apiResumeData);
+        }
+    }, [apiResumeData]);
+
+    const saveMutation = useApiMutation<any, any>(
+        (variables) => api.post('/resume', variables)
+    );
 
     // Load from local storage or backend on mount
     useEffect(() => {
@@ -66,6 +79,9 @@ export default function ResumePage() {
 
         setAtsScore(Math.min(100, score));
         localStorage.setItem('dsa_os_resume_v2', JSON.stringify(data));
+        
+        // Fire and forget save to API
+        saveMutation.mutateAsync(data).catch(() => {});
     }, [data]);
 
     const improveContentMutation = useApiMutation<{ improvedText: string }, { text: string; context: string }>(
@@ -160,8 +176,10 @@ export default function ResumePage() {
     };
 
     const handleDownloadPDF = () => {
+        setIsPrinting(true);
         toast.success("Generating PDF...");
         setTimeout(() => {
+            window.onafterprint = () => setIsPrinting(false);
             window.print();
         }, 500);
     };
@@ -200,9 +218,10 @@ export default function ResumePage() {
                     </button>
                     <button
                         onClick={handleDownloadPDF}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-md shadow-primary/20"
+                        disabled={isPrinting}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-md shadow-primary/20 disabled:opacity-50"
                     >
-                        <Download className="h-4 w-4" /> Export PDF
+                        <Download className="h-4 w-4" /> {isPrinting ? 'Printing...' : 'Export PDF'}
                     </button>
                 </div>
             </div>

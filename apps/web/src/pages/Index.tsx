@@ -691,9 +691,10 @@ function KnowledgeGraphWidget() {
 // ─── Referral Earnings Widget ──────────────────────────────────────────────────
 function ReferralWidget() {
   const navigate = useNavigate();
-  // Using dummy stats for Phase 2 UI implementation
-  const referralsCount = 3;
-  const target = 5;
+  const { data: refInfo } = useApiQuery<any>(['referral-info'], '/referrals/info');
+  
+  const referralsCount = refInfo?.referral_count || 0;
+  const target = refInfo?.next_tier_target || 5;
   const progressPercent = Math.round((referralsCount / target) * 100);
 
   return (

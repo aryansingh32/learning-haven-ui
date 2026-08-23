@@ -374,7 +374,18 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
               <div className="col-span-2 flex items-center gap-1.5">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <button className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors">
+                    <button
+                      onClick={() => {
+                        // BUG-027 fix: Open resource URL if available, otherwise navigate to problem
+                        if ((problem as any).resource_url) {
+                          window.open((problem as any).resource_url, '_blank', 'noopener,noreferrer');
+                        } else {
+                          // Navigate to practice problem page
+                          window.open(`/problems/${problem.id}`, '_blank', 'noopener,noreferrer');
+                        }
+                      }}
+                      className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors"
+                    >
                       <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                     </button>
                   </TooltipTrigger>
@@ -396,19 +407,25 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
                 </Tooltip>
               </div>
               <div className="col-span-2 flex justify-center">
-                {/* Replaced 'Solve' button with status behavior, but keeping a CTA if needed or removing it as Status covers it. 
-                     The user requested "Solve button" so I keep it but maybe it links to the problem? 
-                     Actually, the ExternalLink is the resource. The 'Solve' button was just a CTA.
-                     I'll keep it as a link to the external resource as well.
-                 */}
-                <a
-                  href={problem.link || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-2.5 py-1 rounded-lg gradient-golden text-primary-foreground text-[10px] font-semibold transition-all shadow-sm hover:shadow-md block text-center"
+                {/* BH-006: Removed dead external "Solve" link — problem.link never existed
+                    in the schema. Problems are solved in-app. Button now marks as "tried"
+                    if not already solved, giving the learner a direct status action. */}
+                <button
+                  onClick={() => {
+                    if (problem.status !== 'solved') {
+                      handleStatusChange(problem.id, 'tried');
+                    }
+                  }}
+                  disabled={problem.status === 'solved'}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all shadow-sm block text-center",
+                    problem.status === 'solved'
+                      ? "bg-success/20 text-success cursor-default"
+                      : "gradient-golden text-primary-foreground hover:shadow-md"
+                  )}
                 >
-                  Solve
-                </a>
+                  {problem.status === 'solved' ? 'Done ✓' : 'Practice'}
+                </button>
               </div>
               <div className="col-span-2 text-right">
                 <span className={cn("text-[10px] px-2.5 py-1 rounded-lg font-semibold", difficultyColor[problem.difficulty?.toLowerCase()] || "bg-secondary")}>

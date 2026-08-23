@@ -111,7 +111,7 @@ const categories = [
         id: 'people',
         label: 'Users',
         icon: Users,
-        basePaths: ['/users', '/permissions', '/communications', '/referrals', '/feedback'],
+        basePaths: ['/users', '/permissions', '/communications', '/referrals', '/feedback', '/certificates'],
         exactPaths: [],
         items: [
             { name: 'Users', href: '/users', icon: Users },
@@ -119,6 +119,7 @@ const categories = [
             { name: 'Communications', href: '/communications', icon: Mail },
             { name: 'Referrals', href: '/referrals', icon: Zap },
             { name: 'Feedback', href: '/feedback', icon: MessageSquare },
+            { name: 'Certificates', href: '/certificates', icon: FileText },
         ]
     },
     {

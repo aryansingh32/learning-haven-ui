@@ -25,6 +25,11 @@ const painPoints = [
   },
 ];
 
+const PRICING = {
+  monthlyDisplay: '583',
+  yearlyDisplay: '6,999',
+};
+
 const pillars = [
   {
     icon: BookOpen,
@@ -382,8 +387,8 @@ export default function LandingPage() {
             >
               <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Most Popular</div>
               <p className="text-sm font-bold text-orange-100 uppercase tracking-widest mb-1">Pro</p>
-              <p className="text-3xl font-extrabold mb-1">₹583<span className="text-sm font-medium text-orange-100">/mo</span></p>
-              <p className="text-xs text-orange-100 mb-4">billed annually (₹6,999/year)</p>
+              <p className="text-3xl font-extrabold mb-1">₹{PRICING.monthlyDisplay}<span className="text-sm font-medium text-orange-100">/mo</span></p>
+              <p className="text-xs text-orange-100 mb-4">billed annually (₹{PRICING.yearlyDisplay}/year)</p>
               <ul className="space-y-2.5 text-sm text-orange-50 mb-6">
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 shrink-0" /> All courses + all chapters</li>
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 shrink-0" /> Unlimited AI coaching</li>

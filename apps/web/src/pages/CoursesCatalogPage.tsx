@@ -174,7 +174,20 @@ export default function CoursesCatalogPage() {
     const enrolledCourseIds = new Set(enrollments.map((e: any) => e.course_id));
     return allCourses.filter(c => !enrolledCourseIds.has(c.id)).slice(0, 4);
   }, [allCourses, enrollments]);
-  const goToCourse = (id: string) => navigate(`/course/${id}/chapters`);
+  // BH-010: Route premium courses to subscription page if not enrolled.
+  // Previously ALL courses went to /course/:id/chapters regardless of premium status,
+  // so there was no purchase entry point at the catalog level.
+  const goToCourse = (id: string) => {
+    const course = allCourses.find((c) => c.id === id);
+    const isEnrolled = enrollments.some((e: any) => e.course_id === id);
+
+    if (course?.is_premium && !isEnrolled) {
+      // Send to subscription/pricing page with context so the CTA can pre-select this course
+      navigate(`/subscription?course_id=${id}&ref=catalog`);
+    } else {
+      navigate(`/course/${id}/chapters`);
+    }
+  };
 
   if (isCoursesLoading) {
     return (

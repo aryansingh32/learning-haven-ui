@@ -81,11 +81,21 @@ const Dashboard = () => {
         );
     }
 
-    const s = data || {};
+    const s = data || {} as any;
     const totalUsers = s.total_users ?? s.totalUsers ?? 0;
     const totalProblems = s.total_problems ?? s.totalProblems ?? 0;
     const totalSubmissions = s.total_submissions ?? s.totalSubmissions ?? 0;
     const activeToday = s.active_today ?? s.activeToday ?? 0;
+    const userGrowthPct: number = s.user_growth_pct ?? null;
+    const revenueGrowthPct: number = s.revenue_growth_pct ?? null;
+    const newUsersToday: number = s.new_users_today ?? 0;
+
+    const growthTrend = userGrowthPct !== null
+        ? `${userGrowthPct >= 0 ? '+' : ''}${userGrowthPct.toFixed(1)}% vs last month`
+        : undefined;
+    const revenueTrend = revenueGrowthPct !== null
+        ? `${revenueGrowthPct >= 0 ? '+' : ''}${revenueGrowthPct.toFixed(1)}% vs last month`
+        : undefined;
 
     return (
         <div className="space-y-6">
@@ -107,11 +117,12 @@ const Dashboard = () => {
 
             {/* Primary KPI Row */}
             <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
-                <StatCard title="Total Users" value={totalUsers} icon={Users} trend="+12% from last month" trendUp gradient="gradient-primary" delay={0} link="/users" />
-                <StatCard title="Active Today" value={activeToday} icon={Zap} gradient="gradient-warning" delay={50} />
-                <StatCard title="Revenue (Month)" value={`₹${s.monthly_revenue ?? 0}`} icon={DollarSign} gradient="gradient-success" delay={100} link="/revenue" />
+                <StatCard title="Total Users" value={totalUsers} icon={Users} trend={growthTrend} trendUp={(userGrowthPct ?? 0) >= 0} gradient="gradient-primary" delay={0} link="/users" />
+                <StatCard title="Active Today" value={activeToday} icon={Zap} trend={newUsersToday > 0 ? `+${newUsersToday} new today` : undefined} trendUp gradient="gradient-warning" delay={50} />
+                <StatCard title="Revenue (Month)" value={`₹${s.monthly_revenue ?? 0}`} icon={DollarSign} trend={revenueTrend} trendUp={(revenueGrowthPct ?? 0) >= 0} gradient="gradient-success" delay={100} link="/revenue" />
                 <StatCard title="Premium Users" value={s.premium_users ?? 0} icon={Crown} gradient="bg-gradient-to-br from-purple-500 to-purple-700" delay={150} link="/plans" />
             </div>
+
 
             {/* Secondary KPI Row */}
             <div className="grid gap-3 grid-cols-2 md:grid-cols-4">

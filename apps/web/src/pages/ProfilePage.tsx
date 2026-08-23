@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
-import { Award, Flame, Zap, Target, BookOpen, Code, Calendar, Share2, ExternalLink, Star, Trophy, Briefcase, TrendingUp, Brain, AlertTriangle } from 'lucide-react';
+import { Award, Flame, Zap, Target, BookOpen, Code, Calendar, Share2, ExternalLink, Star, Trophy, Briefcase, TrendingUp, Brain, AlertTriangle, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApiQuery } from '@/hooks/useApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { useRoadmap } from '@/context/RoadmapContext';
+import { useState } from 'react';
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [copiedProfile, setCopiedProfile] = useState(false);
 
   // Keep ALL existing API calls
   const { data: profileStats, isLoading } = useApiQuery<any>(
@@ -81,10 +84,26 @@ const ProfilePage = () => {
 
         {/* Share profile */}
         <div className="mt-4 flex items-center gap-2">
-          <button className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors">
-            <Share2 className="w-3 h-3" /> Share Profile
+          <button
+            onClick={async () => {
+              const profileUrl = `${window.location.origin}/profile/${user?.id}`;
+              try {
+                await navigator.clipboard.writeText(profileUrl);
+                setCopiedProfile(true);
+                setTimeout(() => setCopiedProfile(false), 2000);
+              } catch {
+                window.prompt('Copy your profile link:', profileUrl);
+              }
+            }}
+            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+          >
+            {copiedProfile ? <Check className="w-3 h-3 text-green-500" /> : <Share2 className="w-3 h-3" />}
+            {copiedProfile ? 'Link Copied!' : 'Share Profile'}
           </button>
-          <button className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors">
+          <button
+            onClick={() => window.open(`${window.location.origin}/profile/${user?.id}`, '_blank')}
+            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+          >
             <ExternalLink className="w-3 h-3" /> Public Profile
           </button>
         </div>

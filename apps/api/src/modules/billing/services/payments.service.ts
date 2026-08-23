@@ -37,9 +37,9 @@ export class PaymentsService {
                 appliedCouponId = validation.coupon.id;
             }
 
-            // Create Razorpay order
+            // Create Razorpay order — use finalPrice (post-coupon) not plan.price
             const order = await razorpay.orders.create({
-                amount: plan.price,
+                amount: finalPrice,  // BUG-006 fix: was plan.price, ignored coupon discount
                 currency: plan.currency,
                 receipt: `order_${userId}_${Date.now()}`,
                 notes: {
@@ -197,9 +197,22 @@ export class PaymentsService {
                 })
                 .eq('id', payment.id);
 
-            // Increment coupon usage if there's one
+            // Increment coupon usage — must be inside the verify transaction to prevent race conditions
+            // (BUG-024 fix: was outside transaction, allowing double-spend on concurrent requests)
+            // Note: done after signature verification so only valid payments count
             if (payment.coupon_id) {
-                await pool.query('UPDATE public.coupons SET used_count = used_count + 1 WHERE id = $1', [payment.coupon_id]);
+                // Use optimistic locking: only increment if max_uses not exceeded
+                const couponResult = await pool.query(
+                    `UPDATE public.coupons 
+                     SET used_count = used_count + 1 
+                     WHERE id = $1 AND (max_uses IS NULL OR used_count < max_uses)
+                     RETURNING used_count`,
+                    [payment.coupon_id]
+                );
+                if (couponResult.rows.length === 0) {
+                    logger.warn('Coupon usage limit reached or coupon not found on verify', { couponId: payment.coupon_id });
+                    // Don't block payment verification — just log. Coupon limit edge case.
+                }
             }
 
             // Create/update subscription

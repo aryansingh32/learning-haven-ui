@@ -133,7 +133,9 @@ export const PLANS_FALLBACK = {
 export type PlanId = string;
 
 /**
- * Get plans from DB, falling back to hardcoded if unavailable
+ * Get plans from DB, falling back to hardcoded if unavailable.
+ * BUG-016 fix: reads from the authoritative `plans` table (v2 schema),
+ * not the deprecated `plans_config` table.
  */
 let _cachedPlans: Record<string, any> | null = null;
 let _cacheExpiry = 0;
@@ -146,29 +148,33 @@ export async function getPlans(): Promise<Record<string, any>> {
 
     try {
         const { data, error } = await supabase
-            .from('plans_config')
+            .from('plans')               // BUG-016: was 'plans_config' (deprecated)
             .select('*')
             .eq('is_active', true)
-            .order('order_index', { ascending: true });
+            .order('sort_order', { ascending: true });
 
         if (error || !data || data.length === 0) {
-            logger.warn('plans_config table unavailable, using hardcoded fallback');
+            logger.warn('plans table unavailable or empty, using hardcoded fallback');
             return PLANS_FALLBACK;
         }
 
         const plans: Record<string, any> = {};
         for (const plan of data) {
-            plans[plan.id] = {
-                id: plan.id,
+            // Map `plans` table columns → internal plan shape
+            // slug is the lookup key (e.g. 'pro', 'standard')
+            const slug = plan.slug || plan.id;
+            plans[slug] = {
+                id: slug,
                 name: plan.name,
-                price: plan.price,
-                currency: plan.currency || 'INR',
-                interval: plan.interval,
-                features: typeof plan.features === 'string' ? JSON.parse(plan.features) : plan.features,
-                not_included: plan.metadata?.not_included || [],
-                problem_access: plan.problem_access || 'basic',
-                ai_queries_limit: plan.ai_queries_limit ?? 50,
-                free_question_limit: plan.free_question_limit ?? 20,
+                price: plan.price_monthly ?? plan.price_one_time ?? 0,
+                price_annual: plan.price_annual,
+                price_lifetime: plan.price_lifetime,
+                currency: 'INR',
+                interval: 'monthly',
+                features: Array.isArray(plan.features) ? plan.features : [],
+                not_included: [],
+                problem_access: plan.slug || 'basic',
+                ai_queries_limit: plan.features?.ai_queries_per_day ?? 0,
             };
         }
 

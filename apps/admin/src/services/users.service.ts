@@ -9,14 +9,13 @@ export interface UsersListResponse {
 }
 
 export const usersService = {
-    listUsers: async (page = 1, limit = 10, search = ''): Promise<UsersListResponse> => {
+    listUsers: async (page = 1, limit = 10, search = '', plan?: string): Promise<UsersListResponse> => {
         const params = new URLSearchParams({
             page: page.toString(),
             limit: limit.toString(),
         });
-        if (search) {
-            params.append('search', search);
-        }
+        if (search) params.append('search', search);
+        if (plan) params.append('plan', plan);
 
         const response = await api.get<UsersListResponse>(`/admin/users?${params.toString()}`);
         return response.data;

@@ -51,7 +51,7 @@ const Courses = () => {
 
     const deleteMut = useMutation({
         mutationFn: (id: string) => coursesService.delete(id),
-        onSuccess: () => {
+        onSuccess: (_data, id) => {
             queryClient.invalidateQueries({ queryKey: ['admin-courses'] });
             toast.success('Course deleted');
             setSelectedIds((prev) => prev.filter((i) => i !== id));

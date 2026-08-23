@@ -12,6 +12,8 @@ import { toast } from 'sonner';
 export default function Permissions() {
     const [search, setSearch] = useState('');
     const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null);
+    const [showCreateRole, setShowCreateRole] = useState(false);
+    const [newRole, setNewRole] = useState({ name: '', description: '' });
     const queryClient = useQueryClient();
 
     const { data: roles = [], isLoading: isLoadingRoles } = useQuery({
@@ -72,6 +74,21 @@ export default function Permissions() {
         }
     });
 
+    const createRoleMutation = useMutation({
+        mutationFn: async () => {
+            await api.post('/admin/roles', newRole);
+        },
+        onSuccess: () => {
+            toast.success('Role created successfully');
+            queryClient.invalidateQueries({ queryKey: ['admin-roles'] });
+            setShowCreateRole(false);
+            setNewRole({ name: '', description: '' });
+        },
+        onError: () => {
+            toast.error('Failed to create role');
+        }
+    });
+
     const selectedRole = roles.find((r: any) => r.id === selectedRoleId);
     const displayPermissions = editedPermissions.length > 0 ? editedPermissions : permissions;
 
@@ -87,12 +104,35 @@ export default function Permissions() {
                     <h2 className="text-3xl font-bold tracking-tight">Role & Permissions</h2>
                     <p className="text-muted-foreground mt-1">Manage role-based access overrides across the platform.</p>
                 </div>
-                <Button onClick={() => {
-                    import('sonner').then(m => m.toast.info('Role creation is coming soon'));
-                }}>
+                <Button onClick={() => setShowCreateRole(true)}>
                     <Plus className="w-4 h-4 mr-2" /> Create Role
                 </Button>
             </div>
+
+            {showCreateRole && (
+                <Card className="border-0 shadow-md mb-6">
+                    <CardHeader>
+                        <CardTitle className="text-base">Create New Role</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div>
+                            <label className="text-sm font-medium mb-1 block">Role Name</label>
+                            <Input value={newRole.name} onChange={e => setNewRole({...newRole, name: e.target.value})} placeholder="e.g. Moderator" />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium mb-1 block">Description</label>
+                            <Input value={newRole.description} onChange={e => setNewRole({...newRole, description: e.target.value})} placeholder="e.g. Can moderate content" />
+                        </div>
+                        <div className="flex gap-2 justify-end">
+                            <Button variant="outline" onClick={() => setShowCreateRole(false)}>Cancel</Button>
+                            <Button onClick={() => createRoleMutation.mutate()} disabled={createRoleMutation.isPending}>
+                                {createRoleMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                                Create
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-1 space-y-4">

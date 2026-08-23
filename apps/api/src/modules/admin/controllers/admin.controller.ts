@@ -883,8 +883,14 @@ export class AdminController {
         try {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 50;
-            const action = req.query.action as string | undefined;
-            const result = await AdminService.getAuditLogs(page, limit, action);
+            const filters = {
+                action: req.query.action as string | undefined,
+                admin_id: req.query.admin_id as string | undefined,
+                target_id: req.query.target_id as string | undefined,
+                from_date: req.query.from_date as string | undefined,
+                to_date: req.query.to_date as string | undefined,
+            };
+            const result = await AdminService.getAuditLogs(page, limit, filters);
             res.json(result);
         } catch (error) {
             logger.error('Audit logs error:', error);

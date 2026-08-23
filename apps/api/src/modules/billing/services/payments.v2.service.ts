@@ -275,17 +275,98 @@ export class PaymentsV2Service {
     const paymentId = paymentEntity.id;
 
     if (event === 'payment.captured' || event === 'payment.authorized') {
-      // In our flow, frontend handles verification. Webhook is fallback.
+      // BUG-005 fix: Actually activate the subscription if payment is still 'created'.
+      // Razorpay has already verified the webhook signature in the controller,
+      // so we trust this event and activate without a separate signature check.
       try {
-        const paymentRes = await pool.query(`SELECT user_id, status FROM public.payments WHERE razorpay_order_id = $1`, [orderId]);
-        if (paymentRes.rows.length > 0 && paymentRes.rows[0].status === 'created') {
-           // We don't have the signature here easily for verifyAndActivate, but since this is webhook,
-           // Razorpay has already verified. We should ideally bypass signature check or use a dedicated method.
-           // For now, logging. Frontend verify covers 99%.
-           logger.info(`Webhook payment.captured for ${orderId}`);
+        const paymentRes = await pool.query(
+          `SELECT id, user_id, plan_id, billing_cycle, final_amount, discount_amount, coupon_id, status
+           FROM public.payments WHERE razorpay_order_id = $1`,
+          [orderId]
+        );
+        if (paymentRes.rows.length === 0) {
+          logger.warn(`Webhook payment.captured: no payment record for order ${orderId}`);
+          return;
+        }
+
+        const payment = paymentRes.rows[0];
+
+        if (payment.status === 'captured') {
+          // Already handled by frontend verify flow — nothing to do
+          logger.info(`Webhook payment.captured: already captured for order ${orderId}, skipping`);
+          return;
+        }
+
+        // Payment is still 'created' (frontend failed to call verify) — activate now
+        logger.info(`Webhook activating subscription for order ${orderId}, payment ${paymentId}`);
+
+        const client = await pool.connect();
+        try {
+          await client.query('BEGIN');
+
+          // Mark payment as captured
+          await client.query(
+            `UPDATE public.payments SET status = 'captured', razorpay_payment_id = $1, updated_at = NOW() WHERE id = $2`,
+            [paymentId, payment.id]
+          );
+
+          // Increment coupon usage if applicable
+          if (payment.coupon_id) {
+            await client.query(
+              `UPDATE public.coupons SET used_count = used_count + 1 WHERE id = $1 AND (max_uses IS NULL OR used_count < max_uses)`,
+              [payment.coupon_id]
+            );
+          }
+
+          // Cancel existing active subscriptions
+          await client.query(
+            `UPDATE public.subscriptions SET status = 'cancelled', cancel_reason = 'upgrade', updated_at = NOW() WHERE user_id = $1 AND status = 'active'`,
+            [payment.user_id]
+          );
+
+          // Determine subscription end date
+          const now = new Date();
+          const isYearly = payment.billing_cycle === 'annual' || payment.billing_cycle === 'yearly';
+          const isLifetime = payment.billing_cycle === 'lifetime';
+          const endDate = new Date(now);
+          if (isLifetime) {
+            endDate.setFullYear(endDate.getFullYear() + 100);
+          } else if (isYearly) {
+            endDate.setFullYear(endDate.getFullYear() + 1);
+          } else {
+            endDate.setMonth(endDate.getMonth() + 1);
+          }
+
+          // Create new subscription
+          const subRes = await client.query(
+            `INSERT INTO public.subscriptions (user_id, plan_id, billing_cycle, status, amount_paid, current_period_start, current_period_end)
+             VALUES ($1, $2, $3, 'active', $4, $5, $6)
+             RETURNING id`,
+            [payment.user_id, payment.plan_id, payment.billing_cycle, payment.final_amount, now.toISOString(), endDate.toISOString()]
+          );
+
+          // Update user plan
+          await client.query(
+            `UPDATE public.users SET current_plan = (SELECT slug FROM public.plans WHERE id = $1), active_subscription_id = $2, updated_at = NOW() WHERE id = $3`,
+            [payment.plan_id, subRes.rows[0].id, payment.user_id]
+          );
+
+          await client.query('COMMIT');
+
+          // Invalidate entitlement caches
+          await CacheService.delPattern(`entitlements:${payment.user_id}`);
+          await CacheService.delPattern(`content_entitlements:${payment.user_id}`);
+          await CacheService.del(`user_plan:${payment.user_id}`);
+
+          logger.info(`Webhook successfully activated subscription for user ${payment.user_id} via webhook fallback`);
+        } catch (e) {
+          await client.query('ROLLBACK');
+          logger.error('Webhook subscription activation error:', e);
+        } finally {
+          client.release();
         }
       } catch (e) {
-        logger.error('Webhook error:', e);
+        logger.error('Webhook payment.captured error:', e);
       }
     } else if (event === 'payment.failed') {
       await pool.query(`UPDATE public.payments SET status = 'failed' WHERE razorpay_order_id = $1`, [orderId]);

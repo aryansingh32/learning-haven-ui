@@ -294,9 +294,10 @@ export class GamificationService {
             row = update;
 
             if (allComplete && !row.rows[0].reward_claimed) {
+                // BH-007: Use atomic increment_xp to add to ledger for auditability
                 await pool.query(
-                    `UPDATE public.users SET xp = xp + $1 WHERE id = $2`,
-                    [bonusXp, userId]
+                    `SELECT public.increment_xp($1, $2, $3, $4)`,
+                    [userId, bonusXp, 'daily_quest', `daily_quest_bonus:${userId}:${today}`]
                 );
                 await pool.query(
                     `UPDATE public.user_daily_quests SET reward_claimed = true WHERE id = $1`,

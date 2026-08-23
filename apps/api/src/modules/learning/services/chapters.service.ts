@@ -4,6 +4,25 @@ import { updateStreak } from '../../../utils/streak';
 import { checkBadges } from '../../../utils/badges';
 import { CoursesService } from './courses.service';
 
+/**
+ * BUG-014 fix: Remove correct answer fields from quiz questions before sending to client.
+ * This prevents trivial cheating via browser DevTools / API inspection.
+ * Server-side answer checking is done in POST /chapters/:id/quiz/check.
+ */
+function sanitizeQuizQuestions(questions: any[]): any[] {
+    if (!Array.isArray(questions)) return questions;
+    return questions.map(q => {
+        const sanitized = { ...q };
+        // Strip all answer-revealing fields
+        delete sanitized.answer;
+        delete sanitized.correctAnswer;
+        delete sanitized.correct_answer;
+        delete sanitized.correct_index;
+        delete sanitized.correctIndex;
+        return sanitized;
+    });
+}
+
 type StepRow = { type?: string; content?: Record<string, unknown> };
 
 export class ChaptersService {
@@ -194,6 +213,14 @@ export class ChaptersService {
                     : null,
                 content: {
                     ...(content || {}),
+                    // BUG-014 fix: Sanitize quiz questions — strip answer fields before sending to client
+                    quiz_questions: content?.quiz_questions
+                        ? sanitizeQuizQuestions(
+                              Array.isArray(content.quiz_questions)
+                                  ? content.quiz_questions
+                                  : JSON.parse(content.quiz_questions)
+                          )
+                        : [],
                     steps: steps || [],
                 },
                 progress,
@@ -354,8 +381,15 @@ export class ChaptersService {
         }
     }
 
-    static async updateTaskProgress(userId: string, chapterId: string) {
+    /**
+     * BH-009: Updated to persist the learner's actual task response server-side.
+     * Previously, notes were never read from req.body and this function discarded them.
+     * Now the response is stored in task_response with a submission timestamp.
+     */
+    static async updateTaskProgress(userId: string, chapterId: string, notes?: string) {
         try {
+            const now = new Date().toISOString();
+
             const { data: existing, error: fetchError } = await supabase
                 .from('user_chapter_progress')
                 .select('id, quiz_score')
@@ -369,8 +403,17 @@ export class ChaptersService {
 
             const payload: any = {
                 tasks_completed: 1,
-                updated_at: new Date().toISOString(),
+                updated_at: now,
             };
+
+            // Persist the learner's written response if provided
+            if (notes !== undefined && notes !== null) {
+                payload.task_response = notes;
+                payload.task_submitted_at = now;
+                // Clear draft once submitted
+                payload.task_draft = null;
+                payload.task_draft_saved_at = null;
+            }
 
             if (!existing) {
                 payload.user_id = userId;
@@ -400,6 +443,45 @@ export class ChaptersService {
         } catch (error) {
             logger.error('Update task progress error:', { userId, chapterId, error });
             throw new Error('Failed to update task progress');
+        }
+    }
+
+    /**
+     * BH-009: Auto-save task draft without marking task as submitted.
+     * Allows learners to resume their work across sessions.
+     */
+    static async saveTaskDraft(userId: string, chapterId: string, draft: string) {
+        try {
+            const now = new Date().toISOString();
+
+            const { data: existing } = await supabase
+                .from('user_chapter_progress')
+                .select('id')
+                .eq('user_id', userId)
+                .eq('chapter_id', chapterId)
+                .maybeSingle();
+
+            const payload: any = {
+                task_draft: draft,
+                task_draft_saved_at: now,
+                updated_at: now,
+            };
+
+            if (existing) {
+                await supabase
+                    .from('user_chapter_progress')
+                    .update(payload)
+                    .eq('id', existing.id);
+            } else {
+                await supabase
+                    .from('user_chapter_progress')
+                    .insert({ user_id: userId, chapter_id: chapterId, status: 'IN_PROGRESS', ...payload });
+            }
+
+            return { success: true };
+        } catch (error) {
+            logger.error('Save task draft error:', { userId, chapterId, error });
+            throw new Error('Failed to save task draft');
         }
     }
 
@@ -539,18 +621,13 @@ export class ChaptersService {
             const xpReward = celebration.xp;
 
             try {
-                const { data: userRow } = await supabase
-                    .from('users')
-                    .select('xp')
-                    .eq('id', userId)
-                    .maybeSingle();
-                await supabase
-                    .from('users')
-                    .update({
-                        xp: (userRow?.xp || 0) + xpReward,
-                        updated_at: now,
-                    })
-                    .eq('id', userId);
+                // BH-007: Use atomic DB-side increment_xp function to prevent lost-update
+                // race conditions from concurrent requests (two tabs, double-click, retries).
+                // The idempotency_key ensures exactly-once XP award even on retry.
+                await pool.query(
+                    `SELECT public.increment_xp($1, $2, $3, $4)`,
+                    [userId, xpReward, 'chapter_unlock', `chapter_unlock:${userId}:${chapterId}`]
+                );
             } catch (xpErr) {
                 logger.warn('XP award on chapter unlock failed', xpErr);
             }

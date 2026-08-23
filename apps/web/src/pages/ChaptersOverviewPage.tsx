@@ -48,7 +48,7 @@ export default function ChaptersOverviewPage() {
         difficulty: normalizeDifficulty(ch.difficulty),
         icon: ch.topic_tag || "Grid",
         status: ch.status,
-        reward: { xp: 100 + ch.chapter_number * 25 },
+        reward: { xp: ch.xp_reward ?? (100 + ch.chapter_number * 25) },
       })),
     [chapters]
   );

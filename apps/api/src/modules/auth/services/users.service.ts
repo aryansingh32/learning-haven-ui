@@ -1,4 +1,4 @@
-import { supabase, pool } from '../../../config/database';
+import { supabase, supabaseAdmin, pool } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import { calculateLevel, xpToNextLevel } from '../../../utils/xp';
 import logger from '../../../config/logger';
@@ -18,15 +18,16 @@ export class UsersService {
             
             // Auto-create missing profile (e.g. if user was created via Supabase Dashboard or trigger failed)
             if (!data) {
-                const authResult = await pool.query('SELECT email, raw_user_meta_data FROM auth.users WHERE id = $1', [user_id]);
-                const authUser = authResult.rows[0];
-                
-                if (!authUser) {
+                // Use supabaseAdmin (service role) to read from auth.users — this is the only
+                // legitimate bypass of RLS since auth.users is a special Supabase auth table.
+                const { data: authUser, error: authErr } = await supabaseAdmin.auth.admin.getUserById(user_id);
+                if (authErr || !authUser?.user) {
                     throw new Error('User not found');
                 }
+                const supabaseUser = authUser.user;
                 
-                const email = authUser.email;
-                const full_name = authUser.raw_user_meta_data?.full_name || email.split('@')[0] || 'User';
+                const email = supabaseUser.email ?? '';
+                const full_name = supabaseUser.user_metadata?.full_name || email.split('@')[0] || 'User';
                 
                 const insertResult = await pool.query(
                     'INSERT INTO public.users (id, email, full_name) VALUES ($1, $2, $3) RETURNING *',
@@ -71,6 +72,25 @@ export class UsersService {
      */
     static async updateProfile(user_id: string, updates: any) {
         try {
+            // Whitelist allowed fields — prevents mass assignment attacks
+            // (e.g., users trying to set role, current_plan, wallet_balance, xp)
+            const ALLOWED_FIELDS = [
+                'full_name',
+                'avatar_url',
+                'phone',
+                'preferences',
+                'career_track',
+                'onboarding_answers',
+                'onboarding_completed',
+            ];
+            const safeUpdates = Object.fromEntries(
+                Object.entries(updates).filter(([key]) => ALLOWED_FIELDS.includes(key))
+            );
+
+            if (Object.keys(safeUpdates).length === 0) {
+                throw new Error('No valid fields to update');
+            }
+
             // Clear cache
             await CacheService.del(`user:${user_id}:stats`);
             await CacheService.del(`user:${user_id}:progress`);
@@ -78,7 +98,7 @@ export class UsersService {
             const { data, error } = await supabase
                 .from('users')
                 .update({
-                    ...updates,
+                    ...safeUpdates,
                     updated_at: new Date().toISOString(),
                 })
                 .eq('id', user_id)
