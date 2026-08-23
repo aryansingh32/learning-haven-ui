@@ -133,7 +133,7 @@ const Users = () => {
                                         <div className="flex flex-col">
                                             <div className="flex items-center gap-1.5">
                                                 <span className="font-medium">{user.full_name || '—'}</span>
-                                                {user.is_banned && <ShieldAlert className="h-3.5 w-3.5 text-destructive" title="Banned" />}
+                                                {user.is_banned && <span title="Banned"><ShieldAlert className="h-3.5 w-3.5 text-destructive" /></span>}
                                             </div>
                                             <span className="text-xs text-muted-foreground">{user.email}</span>
                                         </div>

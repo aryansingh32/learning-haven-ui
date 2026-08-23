@@ -35,6 +35,12 @@ export default function ProjectsPage() {
       }),
   });
 
+  
+  // AUDIT: Entitlement Enforcement (Phase 5.2)
+  // Currently, BuildHavenService.startChallenge (backend) does NOT enforce entitlements,
+  // relying entirely on UI-level routing/gating which is currently disabled (TODO: Razorpay).
+  // The catalog shows all challenges. We need to document that `is_free` flags exist 
+  // but are not strictly enforced yet.
   const challenges = useMemo(() => {
     const list = data?.challenges || [];
     const q = query.toLowerCase().trim();

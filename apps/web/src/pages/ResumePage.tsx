@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useApiMutation, useApiQuery } from '@/hooks/useApi';
 import { api } from '@/services/api.svc';
-import { FileText, Save, Download, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Plus, Trash2, Wand2, LayoutTemplate } from 'lucide-react';
+import { FileText, Save, Download, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Plus, Trash2, Wand2, LayoutTemplate, Loader2, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { ResumeData, defaultResumeData } from '../types/resume';
@@ -19,6 +19,8 @@ const SECTIONS = [
     { id: 'extra', title: '5. Extras (Certs, Languages)' },
 ];
 
+type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+
 export default function ResumePage() {
     const { user } = useAuth() as any;
     const isPro = user?.role === 'pro' || user?.role === 'standard';
@@ -28,36 +30,60 @@ export default function ResumePage() {
     const [atsScore, setAtsScore] = useState(0);
     const [selectedTemplate, setSelectedTemplate] = useState<'standard' | 'modern' | 'classic'>('modern');
     const [isPrinting, setIsPrinting] = useState(false);
+    const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+    // Track whether we've finished loading from server (or confirmed no data exists)
+    const [hasLoadedInitialData, setHasLoadedInitialData] = useState(false);
 
-    const { data: apiResumeData } = useApiQuery<any>(['resume'], '/resume');
-
-    useEffect(() => {
-        if (apiResumeData && Object.keys(apiResumeData).length > 0) {
-            setData(apiResumeData);
-        }
-    }, [apiResumeData]);
+    const { data: apiResumeData, isSuccess: apiLoaded } = useApiQuery<any>(['resume'], '/resume');
 
     const saveMutation = useApiMutation<any, any>(
         (variables) => api.post('/resume', variables)
     );
 
-    // Load from local storage or backend on mount
+    // BH-2.4: Single, ordered data-loading effect.
+    // Priority: API > localStorage > user profile defaults.
+    // Only runs once after the API query settles (success or empty).
     useEffect(() => {
-        const saved = localStorage.getItem('dsa_os_resume_v2');
-        if (saved) {
-            try {
-                setData(JSON.parse(saved));
-            } catch (e) { }
-        } else if (user) {
-            setData(prev => ({
-                ...prev,
-                personalInfo: { ...prev.personalInfo, fullName: user.full_name || '', email: user.email || '' }
-            }));
-        }
-    }, [user]);
+        if (!apiLoaded) return; // wait for query to settle
 
-    // Calculate generic ATS score based on data completeness
+        if (apiResumeData && Object.keys(apiResumeData).length > 0) {
+            // Server data wins — hydrate from API and sync localStorage
+            setData(apiResumeData);
+            localStorage.setItem('dsa_os_resume_v2', JSON.stringify(apiResumeData));
+        } else {
+            // No server data — try localStorage
+            const saved = localStorage.getItem('dsa_os_resume_v2');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    setData(parsed);
+                    // Sync the localStorage data up to the server (fire once)
+                    saveMutation.mutateAsync(parsed).catch(() => {
+                        // Non-fatal on initial sync; user edits will retry
+                    });
+                } catch {
+                    // Corrupt localStorage — fall through to profile defaults
+                }
+            } else if (user) {
+                // Neither source has data — pre-fill from profile
+                setData(prev => ({
+                    ...prev,
+                    personalInfo: { ...prev.personalInfo, fullName: user.full_name || '', email: user.email || '' }
+                }));
+            }
+        }
+        setHasLoadedInitialData(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiLoaded]); // intentionally excludes saveMutation to avoid re-runs
+
+    // Debounce ref for save
+    const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // BH-2.4: Calculate completeness score and debounce-persist on every data change.
+    // Only runs after initial data has been loaded to avoid overwriting with defaults.
     useEffect(() => {
+        if (!hasLoadedInitialData) return;
+
         let score = 0;
         const { personalInfo, education, experience, projects, skills } = data;
 
@@ -70,19 +96,31 @@ export default function ResumePage() {
         if (education.length > 0) score += 15;
         if (experience.length > 0) score += 20;
         if (projects.length > 0) score += 15;
-        
+
         if (skills.languages || skills.frameworks) score += 15;
-        
+
         if (data.certificates.length > 0) score += 5;
         if (data.languages.length > 0) score += 5;
         if (data.references.length > 0) score += 5;
 
         setAtsScore(Math.min(100, score));
         localStorage.setItem('dsa_os_resume_v2', JSON.stringify(data));
-        
-        // Fire and forget save to API
-        saveMutation.mutateAsync(data).catch(() => {});
-    }, [data]);
+
+        // Debounced API save — waits 1.5s after last change before persisting
+        if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+        setSaveStatus('saving');
+        saveTimerRef.current = setTimeout(async () => {
+            try {
+                await saveMutation.mutateAsync(data);
+                setSaveStatus('saved');
+                // Reset to idle after 3s
+                setTimeout(() => setSaveStatus('idle'), 3000);
+            } catch (err: any) {
+                setSaveStatus('error');
+                toast.error(err?.response?.data?.error || 'Failed to save resume — check your connection.');
+            }
+        }, 1500);
+    }, [data, hasLoadedInitialData]);
 
     const improveContentMutation = useApiMutation<{ improvedText: string }, { text: string; context: string }>(
         (variables) => api.post('/resume/improve', variables)
@@ -198,7 +236,7 @@ export default function ResumePage() {
                 </div>
                 <div className="flex gap-3 items-center">
                     <div className="flex flex-col items-end mr-4">
-                        <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">ATS Score</span>
+                        <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">Resume Completeness</span>
                         <div className="flex items-center gap-2">
                             <div className="w-32 h-2.5 bg-secondary rounded-full overflow-hidden">
                                 <motion.div
@@ -210,6 +248,19 @@ export default function ResumePage() {
                             <span className="font-bold font-display text-foreground">{atsScore}/100</span>
                         </div>
                     </div>
+                    {/* BH-2.4: Save status indicator */}
+                    {saveStatus !== 'idle' && (
+                        <div className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg ${
+                            saveStatus === 'saving' ? 'bg-secondary text-muted-foreground' :
+                            saveStatus === 'saved' ? 'bg-success/15 text-success' :
+                            'bg-destructive/15 text-destructive'
+                        }`}>
+                            {saveStatus === 'saving' && <Loader2 className="h-3 w-3 animate-spin" />}
+                            {saveStatus === 'saved' && <CheckCircle2 className="h-3 w-3" />}
+                            {saveStatus === 'error' && <AlertCircle className="h-3 w-3" />}
+                            {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'saved' ? 'Saved' : 'Save failed'}
+                        </div>
+                    )}
                     <button
                         onClick={handleAutoFill}
                         className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/80 transition-colors"

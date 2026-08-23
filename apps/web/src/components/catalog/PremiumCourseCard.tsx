@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Clock, Crown, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Crown, Tag, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
@@ -91,9 +91,17 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
       <div className="relative h-[132px] overflow-hidden bg-secondary">
         <Cover course={course} />
         {course.is_premium && (
-          <span className="absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-reward text-reward-foreground text-caption font-bold shadow-sm">
-            <Crown className="w-3 h-3" /> Premium
-          </span>
+          <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-reward text-reward-foreground text-caption font-bold shadow-sm">
+              <Crown className="w-3 h-3" /> Premium
+            </span>
+            {course.is_individually_purchasable && course.price && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-card/90 text-foreground text-[10px] font-bold shadow-sm border border-border/60 backdrop-blur-sm">
+                <Tag className="w-2.5 h-2.5 text-primary" />
+                {`₹${(course.price / 100).toLocaleString('en-IN')}`}
+              </span>
+            )}
+          </div>
         )}
         {difficulty && (
           <span className={cn('absolute bottom-2 left-2 px-1.5 py-0 rounded border text-[10px] tracking-wide font-bold backdrop-blur-sm bg-card/85', difficultyClass(course.difficulty_level))}>
@@ -121,7 +129,12 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
           )}
         </div>
         <span className="mt-auto inline-flex items-center gap-1 text-meta font-bold text-primary pt-2 group-hover:gap-2 transition-all">
-          {isEnrolled ? 'Continue learning' : 'Start learning'} <ArrowRight className="w-3.5 h-3.5" />
+          {isEnrolled
+            ? 'Continue learning'
+            : (course.is_individually_purchasable && course.price)
+              ? `Buy \u20b9${(course.price / 100).toLocaleString('en-IN')}`
+              : 'Start learning'}{' '}
+          <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
     </motion.article>

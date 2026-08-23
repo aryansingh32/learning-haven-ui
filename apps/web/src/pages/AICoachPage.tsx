@@ -363,10 +363,34 @@ const AICoachPage = () => {
         <div ref={chatEndRef} />
       </div>
 
+      {/* Upgrade CTA */}
+      {usage?.remaining === 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 p-4 rounded-xl border border-reward/30 bg-reward/5 text-center flex flex-col items-center gap-3"
+        >
+          <div className="w-10 h-10 rounded-full bg-reward/10 flex items-center justify-center text-reward mb-1">
+            <Sparkles className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-foreground">You've reached your daily AI limit</h3>
+            <p className="text-xs text-muted-foreground mt-1">Upgrade to Pro for unlimited AI mentoring and faster responses.</p>
+          </div>
+          <button
+            onClick={() => navigate('/pricing')}
+            className="px-6 py-2 rounded-lg bg-reward text-reward-foreground font-bold text-xs hover:bg-reward/90 transition-all shadow-sm"
+          >
+            Unlock Unlimited AI
+          </button>
+        </motion.div>
+      )}
+
       {/* Input */}
       <div className="mt-4 flex gap-2">
         <motion.button
           whileTap={{ scale: 0.9 }}
+          disabled={usage?.remaining === 0}
           className="h-11 w-11 rounded-xl card-glass flex items-center justify-center text-muted-foreground hover:text-primary transition-all flex-shrink-0 border border-border/50"
         >
           <Mic className="h-5 w-5" />
@@ -378,7 +402,7 @@ const AICoachPage = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            disabled={isTyping}
+            disabled={isTyping || usage?.remaining === 0}
             placeholder={isTyping ? "Mentor is thinking..." : "Ask about your current topic..."}
             aria-label="Message AI mentor"
             className="w-full px-4 py-3 pr-12 rounded-xl card-glass text-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all border border-border/50 disabled:opacity-50"
@@ -395,7 +419,7 @@ const AICoachPage = () => {
             <motion.button
               whileTap={{ scale: 0.85 }}
               onClick={() => handleSend()}
-              disabled={!input.trim()}
+              disabled={!input.trim() || usage?.remaining === 0}
               className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-lg bg-reward text-reward-foreground flex items-center justify-center transition-all shadow-md hover:shadow-lg hover:bg-reward/90 disabled:opacity-40 disabled:grayscale focus-visible:ring-2 focus-visible:ring-reward"
               aria-label="Send message"
             >

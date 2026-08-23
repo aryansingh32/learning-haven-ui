@@ -12,10 +12,18 @@ router.get('/auth/url', authenticateUser, GitHubController.getAuthUrl);
 router.get('/auth/callback', GitHubController.authCallback);
 
 // Webhook receiver (called by GitHub, validated via HMAC)
-// Needs raw body for HMAC verification if express.json() was globally applied
-// Note: if the main app.ts already uses express.json() without preserving raw body, 
-// the signature check might fail depending on payload whitespace.
-// A common fix is using express.json({ verify: (req, buf) => req.rawBody = buf }) in app.ts
-router.post('/webhooks', express.json(), GitHubController.webhookReceiver);
+// express.json's `verify` callback fires before parsing and receives the raw buffer.
+// Attaching it to req.rawBody allows the controller to compute HMAC over the
+// exact bytes GitHub signed, rather than re-serialising req.body (which changes
+// whitespace/key-order and breaks real signatures).
+router.post(
+    '/webhooks',
+    express.json({
+        verify: (req: any, _res, buf) => {
+            req.rawBody = buf;
+        },
+    }),
+    GitHubController.webhookReceiver
+);
 
 export default router;

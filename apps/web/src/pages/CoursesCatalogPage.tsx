@@ -19,6 +19,7 @@ import { EnrolledPaths } from '@/components/catalog/EnrolledPaths';
 import { AIRecommendations } from '@/components/catalog/AIRecommendations';
 import { fetchMyCourseEnrollments } from '@/data/chapters';
 import { chapterCount, derivedTopics, type CatalogCourse, type HeroSlide } from '@/components/catalog/catalog-utils';
+import { CourseCheckoutModal } from '@/components/CourseCheckoutModal';
 import { cn } from '@/lib/utils';
 
 type Filter = 'all' | 'beginner' | 'intermediate' | 'advanced' | 'free' | 'premium';
@@ -74,6 +75,21 @@ function StatPill({ icon: Icon, value, label }: { icon: typeof BookOpen; value: 
         <p className="font-display text-card-title font-bold leading-none">{value}</p>
         <p className="text-caption text-muted-foreground truncate">{label}</p>
       </div>
+
+      {/* Per-course checkout modal */}
+      {checkoutCourse && (
+        <CourseCheckoutModal
+          open={Boolean(checkoutCourse)}
+          onClose={() => setCheckoutCourse(null)}
+          course={{
+            id: checkoutCourse.id,
+            title: checkoutCourse.title,
+            description: checkoutCourse.description,
+            price: checkoutCourse.price!,
+            currency: checkoutCourse.currency,
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -82,6 +98,7 @@ export default function CoursesCatalogPage() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
   const [showAll, setShowAll] = useState(false);
+  const [checkoutCourse, setCheckoutCourse] = useState<CatalogCourse | null>(null);
   const navigate = useNavigate();
   const qc = useQueryClient();
 
@@ -174,18 +191,20 @@ export default function CoursesCatalogPage() {
     const enrolledCourseIds = new Set(enrollments.map((e: any) => e.course_id));
     return allCourses.filter(c => !enrolledCourseIds.has(c.id)).slice(0, 4);
   }, [allCourses, enrollments]);
-  // BH-010: Route premium courses to subscription page if not enrolled.
-  // Previously ALL courses went to /course/:id/chapters regardless of premium status,
-  // so there was no purchase entry point at the catalog level.
+  // BH-010 (updated): Three-way branch for course navigation:
+  // 1. Free / entitled user                    → navigate to course chapters
+  // 2. Individually purchasable with price      → open per-course checkout modal
+  // 3. Premium plan-gated only                  → navigate to subscription page with course context
   const goToCourse = (id: string) => {
     const course = allCourses.find((c) => c.id === id);
     const isEnrolled = enrollments.some((e: any) => e.course_id === id);
 
-    if (course?.is_premium && !isEnrolled) {
-      // Send to subscription/pricing page with context so the CTA can pre-select this course
-      navigate(`/subscription?course_id=${id}&ref=catalog`);
-    } else {
+    if (!course || !course.is_premium || isEnrolled) {
       navigate(`/course/${id}/chapters`);
+    } else if (course.is_individually_purchasable && course.price) {
+      setCheckoutCourse(course);
+    } else {
+      navigate(`/subscription?course_id=${id}&ref=catalog`);
     }
   };
 

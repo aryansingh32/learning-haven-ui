@@ -18,6 +18,12 @@ export type CatalogCourse = {
   enrolled_count?: number;
   type?: string;
   meta?: { image_url?: string; est_hours?: number; icon?: string; order?: number };
+  /** Per-course individual purchase price in paise (INR) or cents. e.g. 49900 = ₹499 */
+  price?: number;
+  /** ISO 4217 currency code, defaults to 'INR' */
+  currency?: string;
+  /** When true, this course can be purchased individually without a subscription */
+  is_individually_purchasable?: boolean;
 };
 
 export type HeroSlide = {

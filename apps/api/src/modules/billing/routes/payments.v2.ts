@@ -15,6 +15,8 @@ const createOrderV2Schema = z.object({
     coupon_code: z.string().max(50).optional(),
     resource_type: z.enum(['course', 'career_path', 'project', 'apprenticeship_program']).optional(),
     resource_id: z.string().uuid().optional(),
+    /** Convenience shorthand: course_id sets resource_type='course' + resource_id automatically */
+    course_id: z.string().uuid().optional(),
   }),
 });
 
@@ -45,6 +47,13 @@ router.post(
   writeRateLimit,
   validate(createOrderV2Schema),
   PaymentsV2Controller.createOrder
+);
+
+router.post(
+  '/create-course-order',
+  authenticateUser,
+  writeRateLimit,
+  PaymentsV2Controller.createCourseOrder
 );
 
 router.post(

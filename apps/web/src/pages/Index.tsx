@@ -8,6 +8,7 @@ import { buildHavenService } from '@/features/build-haven/api/build-haven.servic
 import { useLearnCourse } from '@/hooks/useLearnCourse';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/context/AuthContext';
+import { useEntitlements } from '@/services/entitlement.service';
 import { cn } from '@/lib/utils';
 import { ProgressRing } from '@/components/ProgressRing';
 import { MissionHero } from '@/components/gamification/MissionHero';
@@ -116,6 +117,7 @@ const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { isPaid } = useEntitlements();
 
   // ── Data Fetching ──
   const { data: profileStats, isLoading: profileLoading } = useApiQuery<{
@@ -440,6 +442,37 @@ const Index = () => {
                     </div>
                   );
                 })}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Unconditional Merchandising Widget */}
+          {!isPaid && (
+            <motion.section
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="card-glass rounded-2xl p-6 sm:p-8 border-2 border-primary/20 bg-gradient-to-br from-primary/10 via-reward/5 to-transparent relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-10">
+                <Crown className="w-32 h-32 text-primary" />
+              </div>
+              <div className="relative z-10 max-w-md">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4 border border-primary/20">
+                  <Crown className="w-3.5 h-3.5" /> PRO MEMBERSHIP
+                </div>
+                <h2 className="text-2xl font-display font-extrabold text-foreground leading-snug mb-2">
+                  Accelerate your engineering career
+                </h2>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Unlock unlimited AI mentoring, premium real-world build challenges, and advanced chapters.
+                </p>
+                <button
+                  onClick={() => navigate('/pricing')}
+                  className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 flex items-center gap-2"
+                >
+                  View Plans & Pricing <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
             </motion.section>
           )}

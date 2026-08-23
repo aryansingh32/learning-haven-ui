@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Shield, Crown, Zap, CreditCard, Calendar, ArrowRight,
   ChevronDown, AlertTriangle, Check, Loader2, Receipt,
@@ -25,6 +25,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SubscriptionPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const contextCourseId = searchParams.get('course_id');
   const { tier, isPaid, entitlements } = useEntitlements();
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
@@ -68,6 +70,27 @@ export default function SubscriptionPage() {
         <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Billing & Subscription</h1>
         <p className="text-sm text-muted-foreground mt-1">Manage your plan, view orders, and track entitlements.</p>
       </div>
+
+      {/* BH-4.4: Contextual banner when arriving from course catalog */}
+      {contextCourseId && !isPaid && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-reward/10 p-4 flex items-center gap-4"
+        >
+          <Crown className="w-8 h-8 text-primary shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-foreground">Unlock this course with Pro</p>
+            <p className="text-xs text-muted-foreground">A Pro subscription gives you unlimited access to every course, AI mentor, and career tools.</p>
+          </div>
+          <button
+            onClick={() => navigate('/pricing')}
+            className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold shrink-0 hover:bg-primary/90 transition-colors"
+          >
+            See plans
+          </button>
+        </motion.div>
+      )}
 
       {/* Current Plan Card */}
       <motion.div

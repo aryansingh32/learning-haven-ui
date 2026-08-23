@@ -11,6 +11,9 @@ export interface Course {
     is_published?: boolean;
     is_active: boolean;
     created_at: string;
+    price?: number | null;
+    currency?: string;
+    is_individually_purchasable?: boolean;
     items?: CourseItem[];
 }
 

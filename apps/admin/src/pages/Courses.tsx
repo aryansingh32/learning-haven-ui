@@ -19,7 +19,8 @@ const Courses = () => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [form, setForm] = useState<Partial<Course>>({ 
         title: '', description: '', cover_image: '', difficulty_level: 'Beginner', 
-        duration_days: 30, is_premium: false, is_published: false 
+        duration_days: 30, is_premium: false, is_published: false,
+        price: null, currency: 'INR', is_individually_purchasable: false
     });
 
     const { data: courses, isLoading } = useQuery({
@@ -78,14 +79,17 @@ const Courses = () => {
             difficulty_level: c.difficulty_level || 'Beginner',
             duration_days: c.duration_days || 30,
             is_premium: c.is_premium || false,
-            is_published: c.is_published || false
+            is_published: c.is_published || false,
+            price: c.price || null,
+            currency: c.currency || 'INR',
+            is_individually_purchasable: c.is_individually_purchasable || false
         });
     };
 
     const resetForm = () => {
         setShowCreate(false);
         setEditingId(null);
-        setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false });
+        setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false, price: null, currency: 'INR', is_individually_purchasable: false });
     };
 
     const handleSelectAll = (checked: boolean) => {
@@ -109,7 +113,7 @@ const Courses = () => {
                     <h2 className="text-3xl font-bold tracking-tight">Courses</h2>
                     <p className="text-muted-foreground mt-1">Create and manage your educational catalog</p>
                 </div>
-                <Button onClick={() => { setShowCreate(true); setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false }); }}>
+                <Button onClick={() => { setShowCreate(true); setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false, price: null, currency: 'INR', is_individually_purchasable: false }); }}>
                     <Plus className="mr-2 h-4 w-4" /> New Course
                 </Button>
             </div>
@@ -155,15 +159,34 @@ const Courses = () => {
                                 <Input type="number" value={form.duration_days} onChange={(e) => setForm({ ...form, duration_days: parseInt(e.target.value) || 0 })} placeholder="30" />
                             </div>
                             
-                            <div className="flex items-center gap-6 mt-4">
-                                <div className="flex items-center gap-2">
-                                    <Switch checked={form.is_premium} onCheckedChange={(c) => setForm({ ...form, is_premium: c })} />
-                                    <Label>Premium (Paid)</Label>
+                            <div className="flex flex-col gap-4 mt-4 md:col-span-2">
+                                <div className="flex items-center gap-6">
+                                    <div className="flex items-center gap-2">
+                                        <Switch checked={form.is_premium} onCheckedChange={(c) => setForm({ ...form, is_premium: c })} />
+                                        <Label>Premium (Paid via Subscription)</Label>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Switch checked={form.is_published} onCheckedChange={(c) => setForm({ ...form, is_published: c })} />
+                                        <Label>Published (Public)</Label>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Switch checked={form.is_individually_purchasable} onCheckedChange={(c) => setForm({ ...form, is_individually_purchasable: c })} />
+                                        <Label>Individually Purchasable</Label>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Switch checked={form.is_published} onCheckedChange={(c) => setForm({ ...form, is_published: c })} />
-                                    <Label>Published (Public)</Label>
-                                </div>
+                                {form.is_individually_purchasable && (
+                                    <div className="flex items-center gap-4 p-4 rounded-xl border bg-secondary/20">
+                                        <div className="flex-1 space-y-1.5">
+                                            <Label>Price (in paise/cents)</Label>
+                                            <Input type="number" value={form.price || ''} onChange={(e) => setForm({ ...form, price: e.target.value ? parseInt(e.target.value) : null })} placeholder="e.g. 49900 for ₹499" />
+                                            <p className="text-[10px] text-muted-foreground">Amount in smallest currency unit (e.g. 49900 = ₹499.00)</p>
+                                        </div>
+                                        <div className="w-1/3 space-y-1.5">
+                                            <Label>Currency</Label>
+                                            <Input value={form.currency || 'INR'} onChange={(e) => setForm({ ...form, currency: e.target.value.toUpperCase() })} placeholder="INR" />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
 

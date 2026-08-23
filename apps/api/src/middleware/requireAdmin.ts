@@ -7,11 +7,6 @@ import logger from '../config/logger';
  * Helper to get user role — tries Supabase first, falls back to raw SQL in dev
  */
 async function getUserRole(userId: string): Promise<string | null> {
-    // DEV ONLY: Bypass for testing
-    if (userId === '12345678-1234-1234-1234-123456789012') {
-        return 'super_admin';
-    }
-
     // Try Supabase client first
     const { data: user, error } = await supabase
         .from('users')

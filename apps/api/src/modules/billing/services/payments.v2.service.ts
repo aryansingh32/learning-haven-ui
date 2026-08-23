@@ -128,6 +128,91 @@ export class PaymentsV2Service {
   }
 
   /**
+   * Create a Razorpay order for an individually-priced course (no plan required).
+   * Prices directly from public.courses.price rather than the plans table.
+   */
+  static async createCourseOrder(userId: string, courseId: string, couponCode?: string) {
+    // 1. Fetch course
+    const courseRes = await pool.query(
+      `SELECT id, title, price, currency, is_individually_purchasable
+         FROM public.courses
+         WHERE id =  AND is_published = true`,
+      [courseId]
+    );
+    if (courseRes.rows.length === 0) throw new Error('Course not found or not published');
+    const course = courseRes.rows[0];
+    if (!course.is_individually_purchasable || course.price == null) {
+      throw new Error('This course is not available for individual purchase');
+    }
+
+    // 2. Check if already entitled
+    const entitled = await pool.query(
+      `SELECT 1 FROM public.user_entitlements
+         WHERE user_id =  AND feature_key = 'course_access'
+           AND resource_type = 'course' AND resource_id =  AND bool_value = true`,
+      [userId, courseId]
+    );
+    if (entitled.rows.length > 0) throw new Error('You already have access to this course');
+
+    // 3. Apply coupon (reuse existing coupon validation if code provided)
+    let discountAmount = 0;
+    let couponId: string | null = null;
+    if (couponCode) {
+      const cv = await this.validateCoupon(couponCode, 'course_one_time', userId, course.price);
+      if (!cv.valid) throw new Error(cv.reason);
+      discountAmount = cv.discountAmount;
+      couponId = cv.coupon.id;
+    }
+
+    const discountedPrice = Math.max(0, course.price - discountAmount);
+    const gstInfo = calculateGST(discountedPrice);
+    const finalAmountInPaise = gstInfo.total;
+
+    if (finalAmountInPaise < 100 && finalAmountInPaise > 0) {
+      throw new Error('Final amount cannot be less than ₹1');
+    }
+
+    // 4. Create Razorpay order
+    let razorpayOrderId = `free_course_${Date.now()}_${userId.slice(0, 8)}`;
+    if (finalAmountInPaise > 0) {
+      const order = await razorpay.orders.create({
+        amount: finalAmountInPaise,
+        currency: course.currency || 'INR',
+        receipt: `course_${courseId.slice(0, 8)}_${Date.now()}`,
+        notes: { user_id: userId, course_id: courseId, purchase_kind: 'course' },
+      });
+      razorpayOrderId = order.id;
+    }
+
+    // 5. Insert payment record (plan_id is null for course-only purchases)
+    const paymentResult = await pool.query(
+      `INSERT INTO public.payments (
+           user_id, plan_id, amount, discount_amount, tax_amount, final_amount,
+           status, razorpay_order_id, coupon_id, coupon_code, billing_cycle, description, metadata
+         ) VALUES (, NULL, , , , , , , , , 0, 1, 2)
+         RETURNING id`,
+      [
+        userId, course.price, discountAmount, gstInfo.gst_amount, finalAmountInPaise,
+        'created', razorpayOrderId, couponId, couponCode, 'one_time',
+        `${course.title} (one-time purchase)`,
+        { purchase_kind: 'course', resource_type: 'course', resource_id: courseId },
+      ]
+    );
+
+    return {
+      orderId: paymentResult.rows[0].id,
+      razorpayOrderId,
+      amount: course.price,
+      discountAmount,
+      taxAmount: gstInfo.gst_amount,
+      finalAmount: finalAmountInPaise,
+      currency: course.currency || 'INR',
+      course: { id: course.id, title: course.title },
+      keyId: env.RAZORPAY_KEY_ID,
+    };
+  }
+
+  /**
    * Verify Razorpay payment and activate subscription.
    */
   static async verifyAndActivate(

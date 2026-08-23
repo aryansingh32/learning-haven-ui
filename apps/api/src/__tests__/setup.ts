@@ -104,6 +104,30 @@ jest.mock('../workers/build-verification.worker', () => ({
   __esModule: true,
 }));
 
+// Mock BullMQ Queue and Worker classes.
+// payments.v2.service.ts and github.controller.ts instantiate Queue at module
+// load time (top-level `new Queue(...)`). Without this mock the Queue constructor
+// opens a real ioredis connection that keeps the event loop alive after all tests
+// finish, causing Jest to hang indefinitely (root cause of the
+// verifyAndActivate / POST /api/v2/payments/verify timeout — BH-1.4).
+jest.mock('bullmq', () => {
+  const mockQueue = jest.fn().mockImplementation(() => ({
+    add: jest.fn().mockResolvedValue({ id: 'mock-job-id' }),
+    close: jest.fn().mockResolvedValue(undefined),
+    getJob: jest.fn().mockResolvedValue(null),
+    getJobs: jest.fn().mockResolvedValue([]),
+  }));
+  const mockWorker = jest.fn().mockImplementation(() => ({
+    on: jest.fn(),
+    close: jest.fn().mockResolvedValue(undefined),
+  }));
+  return {
+    __esModule: true,
+    Queue: mockQueue,
+    Worker: mockWorker,
+  };
+});
+
 // Mock OpenAI
 jest.mock('../config/openai', () => ({
   __esModule: true,
@@ -126,7 +150,7 @@ jest.mock('../config/logger', () => ({
   default: {
     info: jest.fn(),
     warn: jest.fn(),
-    error: jest.fn((...args) => console.error(...args)),
+    error: jest.fn((...args: any[]) => console.error(...args)),
     debug: jest.fn(),
   },
 }));
