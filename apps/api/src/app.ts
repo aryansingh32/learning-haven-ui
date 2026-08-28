@@ -10,6 +10,7 @@ import logger from './config/logger';
 import { requestTracer, requestContext } from './middleware/requestTracer';
 import { env } from './config/env';
 import { metricsMiddleware, renderPrometheusMetrics } from './observability/metrics';
+import { pool } from './config/database';
 
 import routes from './modules/core/routes/index';
 
@@ -115,8 +116,14 @@ app.get('/', (req, res) => {
     res.send('Learning Haven API v2.0 is running');
 });
 
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/api/health', async (req, res) => {
+    try {
+        await pool.query('SELECT 1');
+        res.json({ status: 'ok', db: 'ok', timestamp: new Date().toISOString() });
+    } catch (err) {
+        logger.error('Health check DB ping failed', err);
+        res.status(503).json({ status: 'error', db: 'unreachable', timestamp: new Date().toISOString() });
+    }
 });
 
 app.get('/metrics', (req, res) => {

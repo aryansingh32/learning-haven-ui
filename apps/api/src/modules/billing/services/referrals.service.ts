@@ -50,13 +50,35 @@ export class ReferralsService {
                 .eq('referrer_id', userId)
                 .order('created_at', { ascending: false });
 
+            const activeReferralCount = referrals?.filter(r => r.status === 'active' || r.status === 'paid').length || 0;
+
             const stats = {
                 total_referrals: referrals?.length || 0,
-                active_referrals: referrals?.filter(r => r.status === 'active' || r.status === 'paid').length || 0,
+                active_referrals: activeReferralCount,
                 pending_referrals: referrals?.filter(r => r.status === 'pending').length || 0,
                 total_earned: referrals?.reduce((sum, r) => sum + (r.earned_amount || 0), 0) || 0,
                 wallet_balance: user.wallet_balance || 0,
             };
+
+            // Commission tiers — admin-managed progression, keyed off active referral count
+            const { data: tierRows } = await supabase
+                .from('referral_commission_tiers')
+                .select('tier_name, emoji, min_referrals, max_referrals, commission_pct')
+                .eq('is_active', true)
+                .order('sort_order', { ascending: true });
+
+            const tiers = (tierRows || []).map(t => ({
+                name: t.tier_name,
+                emoji: t.emoji,
+                min: t.min_referrals,
+                max: t.max_referrals ?? 999,
+                commission_pct: t.commission_pct,
+            }));
+
+            const currentTier =
+                tiers.find(t => activeReferralCount >= t.min && activeReferralCount <= t.max) ||
+                tiers[0] ||
+                null;
 
             // Get referred user names
             const referralDetails = [];
@@ -85,6 +107,8 @@ export class ReferralsService {
                 referral_link: `${process.env.FRONTEND_URL}/signup?ref=${displayCode}`,
                 stats,
                 referrals: referralDetails,
+                tiers,
+                current_tier: currentTier,
             };
         } catch (error) {
             logger.error('Get referral info error:', { userId, error });
@@ -313,12 +337,12 @@ export class ReferralsService {
 
             if (!user) throw new Error('User not found');
 
-            if ((user.wallet_balance || 0) < amount) {
-                throw new Error('Insufficient wallet balance');
+            if (amount < 10000) {
+                throw new Error('Minimum withdrawal amount is ₹100');
             }
 
-            if (amount < 100) {
-                throw new Error('Minimum withdrawal amount is ₹1');
+            if ((user.wallet_balance || 0) < amount) {
+                throw new Error('Insufficient wallet balance');
             }
 
             // Create withdrawal request

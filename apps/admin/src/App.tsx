@@ -1,54 +1,67 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
-import Users from './pages/Users';
-import UserDetail from './pages/UserDetail';
-import SystemHealth from './pages/SystemHealth';
-import Permissions from './pages/Permissions';
-import Experiments from './pages/Experiments';
-import CommunicationCenter from './pages/CommunicationCenter';
-import Problems from './pages/Problems';
-import ProblemEditor from './pages/ProblemEditor';
-import Categories from './pages/Categories';
-import Patterns from './pages/Patterns';
-import Courses from './pages/Courses';
-import Chapters from './pages/Chapters';
-import Tasks from './pages/Tasks';
-import Feedback from './pages/Feedback';
-import Referrals from './pages/Referrals';
-import Plans from './pages/Plans';
-import Withdrawals from './pages/Withdrawals';
-import Leaderboard from './pages/Leaderboard';
-import AIConfig from './pages/AIConfig';
-import VisualRoadmapBuilder from './pages/VisualRoadmapBuilder';
-import Settings from './pages/Settings';
-import GamificationSettings from './pages/GamificationSettings';
-import AuditLogs from './pages/AuditLogs';
-import Certificates from './pages/Certificates';
-import CMSControl from './pages/CMSControl';
-import NetworkMonitoring from './pages/NetworkMonitoring';
-import CoursePageCMS from './pages/CoursePageCMS';
-import ContentImport from './pages/ContentImport';
 import { Loader2 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 import DashboardLayout from './layouts/DashboardLayout';
 
-import ProgramsPage from './pages/apprenticeship/ProgramsPage';
-import ProgramEditorPage from './pages/apprenticeship/ProgramEditorPage';
-import ProjectEditorPage from './pages/apprenticeship/ProjectEditorPage';
-import OverviewPage from './pages/apprenticeship/OverviewPage';
-import SubmissionsPage from './pages/apprenticeship/SubmissionsPage';
-import StudentsPage from './pages/apprenticeship/StudentsPage';
-import StudentDetailPage from './pages/apprenticeship/StudentDetailPage';
-import ApprenticeshipAnalyticsPage from './pages/apprenticeship/AnalyticsPage';
-import CouponsPage from './pages/apprenticeship/CouponsPage';
-import NotificationsPage from './pages/apprenticeship/NotificationsPage';
-import BuildChallengesPage from './pages/apprenticeship/BuildChallengesPage';
-import BuildChallengeUsersPage from './pages/build-haven/BuildChallengeUsersPage';
-import CommerceCouponsPage from './pages/commerce/CouponsPage';
-import RevenuePage from './pages/commerce/RevenuePage';
+// Lazy-load every route page so Vite can split them into separate chunks —
+// previously all 30+ admin pages were imported eagerly into one bundle that
+// every admin login had to download in full before the dashboard could render.
+const Login = lazy(() => import('./pages/Login'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Analytics = lazy(() => import('./pages/Analytics'));
+const Users = lazy(() => import('./pages/Users'));
+const UserDetail = lazy(() => import('./pages/UserDetail'));
+const SystemHealth = lazy(() => import('./pages/SystemHealth'));
+const Permissions = lazy(() => import('./pages/Permissions'));
+const Experiments = lazy(() => import('./pages/Experiments'));
+const CommunicationCenter = lazy(() => import('./pages/CommunicationCenter'));
+const Problems = lazy(() => import('./pages/Problems'));
+const ProblemEditor = lazy(() => import('./pages/ProblemEditor'));
+const Categories = lazy(() => import('./pages/Categories'));
+const Patterns = lazy(() => import('./pages/Patterns'));
+const Courses = lazy(() => import('./pages/Courses'));
+const Chapters = lazy(() => import('./pages/Chapters'));
+const Tasks = lazy(() => import('./pages/Tasks'));
+const Feedback = lazy(() => import('./pages/Feedback'));
+const Referrals = lazy(() => import('./pages/Referrals'));
+const Plans = lazy(() => import('./pages/Plans'));
+const Withdrawals = lazy(() => import('./pages/Withdrawals'));
+const Leaderboard = lazy(() => import('./pages/Leaderboard'));
+const AIConfig = lazy(() => import('./pages/AIConfig'));
+const VisualRoadmapBuilder = lazy(() => import('./pages/VisualRoadmapBuilder'));
+const Settings = lazy(() => import('./pages/Settings'));
+const GamificationSettings = lazy(() => import('./pages/GamificationSettings'));
+const AuditLogs = lazy(() => import('./pages/AuditLogs'));
+const Certificates = lazy(() => import('./pages/Certificates'));
+const CMSControl = lazy(() => import('./pages/CMSControl'));
+const NetworkMonitoring = lazy(() => import('./pages/NetworkMonitoring'));
+const CoursePageCMS = lazy(() => import('./pages/CoursePageCMS'));
+const ContentImport = lazy(() => import('./pages/ContentImport'));
+
+const ProgramsPage = lazy(() => import('./pages/apprenticeship/ProgramsPage'));
+const ProgramEditorPage = lazy(() => import('./pages/apprenticeship/ProgramEditorPage'));
+const ProjectEditorPage = lazy(() => import('./pages/apprenticeship/ProjectEditorPage'));
+const OverviewPage = lazy(() => import('./pages/apprenticeship/OverviewPage'));
+const SubmissionsPage = lazy(() => import('./pages/apprenticeship/SubmissionsPage'));
+const StudentsPage = lazy(() => import('./pages/apprenticeship/StudentsPage'));
+const StudentDetailPage = lazy(() => import('./pages/apprenticeship/StudentDetailPage'));
+const ApprenticeshipAnalyticsPage = lazy(() => import('./pages/apprenticeship/AnalyticsPage'));
+const CouponsPage = lazy(() => import('./pages/apprenticeship/CouponsPage'));
+const NotificationsPage = lazy(() => import('./pages/apprenticeship/NotificationsPage'));
+const BuildChallengesPage = lazy(() => import('./pages/apprenticeship/BuildChallengesPage'));
+const BuildChallengeUsersPage = lazy(() => import('./pages/build-haven/BuildChallengeUsersPage'));
+const CommerceCouponsPage = lazy(() => import('./pages/commerce/CouponsPage'));
+const RevenuePage = lazy(() => import('./pages/commerce/RevenuePage'));
+
+function PageLoader() {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  );
+}
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -85,6 +98,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<Login />} />
@@ -155,6 +169,7 @@ function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </Suspense>
         <Toaster richColors position="top-right" />
       </AuthProvider>
     </Router>

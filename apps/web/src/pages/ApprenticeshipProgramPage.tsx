@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Clock, Code2, Users, CheckCircle2, ShieldCheck, Github, ExternalLink } from "lucide-react";
+import { ArrowLeft, Clock, Code2, Users, CheckCircle2, ShieldCheck, Github } from "lucide-react";
 import { tracker } from "@/lib/tracker";
 import { toast } from "sonner";
 
@@ -326,15 +326,6 @@ export default function ApprenticeshipProgramPage() {
               </Button>
             </div>
 
-            <a href="#" className="flex items-center justify-between p-4 rounded-2xl bg-muted/50 border border-border/50 hover:bg-muted transition-colors group">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-background rounded-lg shadow-sm">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                </div>
-                <div className="text-sm font-bold">View Example Certificate</div>
-              </div>
-              <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-            </a>
           </div>
         </div>
       </div>

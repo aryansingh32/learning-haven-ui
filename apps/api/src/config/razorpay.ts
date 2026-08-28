@@ -8,6 +8,17 @@ const razorpay = new Razorpay({
 });
 
 /**
+ * Constant-time hex-string comparison. Returns false (never throws) on
+ * length mismatch instead of leaking timing information via `===`.
+ */
+function safeCompareHex(expectedHex: string, actualHex: string): boolean {
+    const expected = Buffer.from(expectedHex, 'hex');
+    const actual = Buffer.from(actualHex, 'hex');
+    if (expected.length !== actual.length) return false;
+    return crypto.timingSafeEqual(expected, actual);
+}
+
+/**
  * Verify Razorpay payment signature
  */
 export function verifyPaymentSignature(
@@ -20,21 +31,27 @@ export function verifyPaymentSignature(
         .createHmac('sha256', env.RAZORPAY_KEY_SECRET)
         .update(body)
         .digest('hex');
-    return expectedSignature === signature;
+    return safeCompareHex(expectedSignature, signature);
 }
 
 /**
- * Verify Razorpay webhook signature
+ * Verify Razorpay webhook signature.
+ * Fails closed (rejects everything) if the webhook secret isn't configured —
+ * an empty-string HMAC key would let anyone forge a valid signature and post
+ * fake "payment captured" webhooks to grant themselves paid access.
  */
 export function verifyWebhookSignature(
     body: string,
     signature: string
 ): boolean {
+    if (!env.RAZORPAY_WEBHOOK_SECRET) {
+        return false;
+    }
     const expectedSignature = crypto
-        .createHmac('sha256', env.RAZORPAY_WEBHOOK_SECRET || '')
+        .createHmac('sha256', env.RAZORPAY_WEBHOOK_SECRET)
         .update(body)
         .digest('hex');
-    return expectedSignature === signature;
+    return safeCompareHex(expectedSignature, signature);
 }
 
 export default razorpay;

@@ -79,7 +79,7 @@ export const applyReferralSchema = z.object({
 
 export const withdrawalSchema = z.object({
     body: z.object({
-        amount: z.number().int().min(100), // min ₹1 (100 paise)
+        amount: z.number().int().min(10000), // min ₹100 (10000 paise) — matches public.withdrawals CHECK constraint
         upi_id: z.string().min(5).max(50),
     }),
 });

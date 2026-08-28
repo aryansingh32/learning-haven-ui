@@ -36,10 +36,6 @@ const difficultyStyles: Record<string, string> = {
   hard: 'bg-destructive/15 text-destructive',
 };
 
-const PRICING = {
-  monthlyDisplay: '583'
-};
-
 function youtubeIdFromUrl(url?: string): string {
   if (!url) return '';
   const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -67,6 +63,16 @@ export default function LearnChapterPage() {
     nextChapterId?: string;
   } | null>(null);
   const [cinemaMode, setCinemaMode] = useState(false);
+
+  // Live pricing — never hardcode prices, they must match what checkout actually charges.
+  const { data: plansData } = useQuery({
+    queryKey: ['learn-chapter-plans'],
+    queryFn: () => api.get('/plans'),
+    staleTime: 10 * 60 * 1000,
+  });
+  const activePlans = Array.isArray(plansData) ? plansData : ((plansData as any)?.data || []);
+  const proPlan = activePlans.find((p: any) => p.slug === 'pro') || activePlans.find((p: any) => p.is_highlighted) || activePlans[0];
+  const monthlyPriceDisplay = proPlan?.price_monthly ? Math.round(proPlan.price_monthly / 100).toLocaleString('en-IN') : null;
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chapter', chapterId],
@@ -283,7 +289,7 @@ export default function LearnChapterPage() {
           </ChapterCta>
           {isPaywall && (
             <ChapterCta variant="primary" onClick={() => navigate('/pricing')}>
-              Upgrade to Pro — ₹{PRICING.monthlyDisplay}/mo
+              Upgrade to Pro{monthlyPriceDisplay ? ` — ₹${monthlyPriceDisplay}/mo` : ''}
             </ChapterCta>
           )}
         </div>

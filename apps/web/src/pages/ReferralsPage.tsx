@@ -32,15 +32,18 @@ const ReferralsPage = () => {
   );
 
   const referralLink = `${window.location.origin}/signup?ref=${refInfo?.referral_code || ""}`;
-  const totalEarned = useAnimatedCounter(0, refInfo?.wallet?.total_earned || 0, 800);
-  const currentBalance = refInfo?.wallet?.balance || 0;
+  // Backend stores money in paise; convert to rupees for display.
+  const walletBalancePaise = refInfo?.stats?.wallet_balance || 0;
+  const totalEarnedRupees = Math.round((refInfo?.stats?.total_earned || 0) / 100);
+  const currentBalance = Math.round(walletBalancePaise / 100);
+  const totalEarned = useAnimatedCounter(0, totalEarnedRupees, 800);
 
-  const apiTiers = refInfo?.tiers || [
-    { name: "Bronze", min: 0, max: 2, emoji: "🥉" },
-    { name: "Silver", min: 3, max: 9, emoji: "🥈" },
-    { name: "Gold", min: 10, max: 999, emoji: "🥇" }
+  const apiTiers = refInfo?.tiers?.length ? refInfo.tiers : [
+    { name: "Bronze", min: 0, max: 4, emoji: "🥉" },
+    { name: "Silver", min: 5, max: 14, emoji: "🥈" },
+    { name: "Gold", min: 15, max: 29, emoji: "🥇" }
   ];
-  const currentTier = refInfo?.currentTier || apiTiers[0];
+  const currentTier = refInfo?.current_tier || apiTiers[0];
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -60,7 +63,7 @@ const ReferralsPage = () => {
 
     try {
       await withdrawMutation.mutateAsync({
-        amount: currentBalance,
+        amount: walletBalancePaise,
         upi_id: upiId
       });
       alert("Withdrawal request submitted successfully!");
@@ -124,7 +127,7 @@ const ReferralsPage = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { icon: Users, label: "Total Referrals", value: refInfo?.referral_count || 0, color: "text-primary" },
+          { icon: Users, label: "Total Referrals", value: refInfo?.stats?.total_referrals || 0, color: "text-primary" },
           { icon: Wallet, label: "Total Earned", value: `₹${totalEarned}`, color: "text-primary" },
           { icon: ArrowUpRight, label: "Available", value: `₹${currentBalance}`, color: "text-success" },
           { icon: Trophy, label: "Tier", value: currentTier.name, color: "text-primary" },
@@ -195,21 +198,21 @@ const ReferralsPage = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-lg gradient-golden flex items-center justify-center text-xs font-bold text-primary-foreground shadow-sm">
-                      {u.referred_user?.full_name?.charAt(0) || "U"}
+                      {u.name?.charAt(0) || "U"}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-foreground">{u.referred_user?.full_name || "New User"}</p>
-                      <p className="text-[10px] text-muted-foreground">{new Date(u.created_at).toLocaleDateString()}</p>
+                      <p className="text-sm font-medium text-foreground">{u.name || "New User"}</p>
+                      <p className="text-[10px] text-muted-foreground">{new Date(u.date).toLocaleDateString()}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <span className={cn(
                       "text-[10px] px-2 py-0.5 rounded-lg font-semibold",
-                      u.status === 'completed' ? "bg-success/15 text-success border border-success/20" : "bg-primary/15 text-primary border border-primary/20"
+                      (u.status === 'active' || u.status === 'paid') ? "bg-success/15 text-success border border-success/20" : "bg-primary/15 text-primary border border-primary/20"
                     )}>
-                      {u.status === 'completed' ? 'Active' : 'Pending'}
+                      {(u.status === 'active' || u.status === 'paid') ? 'Active' : 'Pending'}
                     </span>
-                    <p className="text-xs font-semibold text-foreground mt-1">₹{u.reward_amount || 0}</p>
+                    <p className="text-xs font-semibold text-foreground mt-1">₹{Math.round((u.earned || 0) / 100)}</p>
                   </div>
                 </motion.div>
               ))
@@ -259,20 +262,17 @@ const ReferralsPage = () => {
               ) : (
                 leaderboard?.map((u, i) => (
                   <motion.div
-                    key={u.user_id}
+                    key={u.rank ?? i}
                     whileHover={{ x: 4 }}
-                    className={cn(
-                      "flex items-center gap-3 p-3 rounded-xl transition-all",
-                      u.isMe ? "card-layer-2 border border-primary/20" : "bg-secondary/30 hover:bg-secondary/50"
-                    )}
+                    className="flex items-center gap-3 p-3 rounded-xl transition-all bg-secondary/30 hover:bg-secondary/50"
                   >
                     <span className="font-display font-bold text-base w-7 text-center">
                       {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}
                     </span>
-                    <span className={cn("flex-1 text-sm font-medium", u.isMe ? "text-primary font-semibold" : "text-foreground truncate")}>
-                      {u.user?.full_name || "Top Referrer"}
+                    <span className="flex-1 text-sm font-medium text-foreground truncate">
+                      {u.name || "Top Referrer"}
                     </span>
-                    <span className="text-xs font-semibold text-muted-foreground">{u.referral_count} refs</span>
+                    <span className="text-xs font-semibold text-muted-foreground">{u.referrals} refs</span>
                   </motion.div>
                 ))
               )}

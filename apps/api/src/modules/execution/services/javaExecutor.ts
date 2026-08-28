@@ -23,6 +23,20 @@ const execAsync = promisify(exec);
 const JAVA_TIMEOUT_MS = 10000; // 10s total (compile + run)
 const JAVA_MEMORY_LIMIT = '256m';
 
+/**
+ * Minimal env for the untrusted javac/java child process.
+ * Never spread `process.env` here — this process is a full-scale Node backend
+ * holding DB credentials, Supabase service-role keys, Razorpay secrets, and
+ * JWT signing secrets. User-submitted Java code can read its own process env
+ * via System.getenv() and has outbound network access, so inheriting the
+ * parent env would let any authenticated user exfiltrate every backend secret.
+ */
+const SANDBOX_ENV: NodeJS.ProcessEnv = {
+    PATH: process.env.PATH,
+    JAVA_HOME: process.env.JAVA_HOME,
+    LANG: process.env.LANG || 'C.UTF-8',
+};
+
 interface TestCase {
     input: string;
     output: string;
@@ -269,7 +283,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                 {
                     cwd: workDir,
                     timeout: JAVA_TIMEOUT_MS / 2,
-                    env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                    env: { ...SANDBOX_ENV, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
                 }
             );
 
@@ -301,7 +315,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                     {
                         cwd: workDir,
                         timeout: JAVA_TIMEOUT_MS,
-                        env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                        env: { ...SANDBOX_ENV, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
                     }
                 );
 
@@ -352,7 +366,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                         {
                             cwd: workDir,
                             timeout: JAVA_TIMEOUT_MS,
-                            env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                            env: { ...SANDBOX_ENV, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
                         }
                     );
                     const elapsed = Date.now() - start;

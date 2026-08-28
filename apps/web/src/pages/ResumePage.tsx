@@ -29,32 +29,39 @@ export default function ResumePage() {
     const [selectedTemplate, setSelectedTemplate] = useState<'standard' | 'modern' | 'classic'>('modern');
     const [isPrinting, setIsPrinting] = useState(false);
 
-    const { data: apiResumeData } = useApiQuery<any>(['resume'], '/resume');
-
-    useEffect(() => {
-        if (apiResumeData && Object.keys(apiResumeData).length > 0) {
-            setData(apiResumeData);
-        }
-    }, [apiResumeData]);
+    const { data: apiResumeData, isFetched: resumeFetched } = useApiQuery<any>(['resume'], '/resume');
 
     const saveMutation = useApiMutation<any, any>(
         (variables) => api.post('/resume', variables)
     );
 
-    // Load from local storage or backend on mount
+    // The server is the source of truth for cross-device sync. Only fall back to a
+    // local draft (or a fresh prefill from the account) once we know for certain the
+    // server has nothing saved — never let a stale local copy silently clobber newer
+    // data the user saved from another device.
     useEffect(() => {
+        if (!resumeFetched) return;
+
+        if (apiResumeData && Object.keys(apiResumeData).length > 0) {
+            setData(apiResumeData);
+            return;
+        }
+
         const saved = localStorage.getItem('dsa_os_resume_v2');
         if (saved) {
             try {
                 setData(JSON.parse(saved));
+                return;
             } catch (e) { }
-        } else if (user) {
+        }
+
+        if (user) {
             setData(prev => ({
                 ...prev,
                 personalInfo: { ...prev.personalInfo, fullName: user.full_name || '', email: user.email || '' }
             }));
         }
-    }, [user]);
+    }, [apiResumeData, resumeFetched, user]);
 
     // Calculate generic ATS score based on data completeness
     useEffect(() => {
@@ -79,10 +86,14 @@ export default function ResumePage() {
 
         setAtsScore(Math.min(100, score));
         localStorage.setItem('dsa_os_resume_v2', JSON.stringify(data));
-        
-        // Fire and forget save to API
-        saveMutation.mutateAsync(data).catch(() => {});
-    }, [data]);
+
+        // Fire and forget save to API. Skip until the initial server load has
+        // settled — otherwise the pre-load `defaultResumeData` gets POSTed and can
+        // race with (and momentarily clobber) the real saved resume.
+        if (resumeFetched) {
+            saveMutation.mutateAsync(data).catch(() => {});
+        }
+    }, [data, resumeFetched]);
 
     const improveContentMutation = useApiMutation<{ improvedText: string }, { text: string; context: string }>(
         (variables) => api.post('/resume/improve', variables)

@@ -70,7 +70,7 @@ export class ChaptersService {
 
         const { data: user } = await supabase
             .from('users')
-            .select('full_name, streak_count, xp, skip_tokens_remaining')
+            .select('full_name, streak, xp, skip_tokens_remaining')
             .eq('id', userId)
             .maybeSingle();
 
@@ -105,7 +105,7 @@ export class ChaptersService {
             },
             user: {
                 full_name: user?.full_name || 'Learner',
-                streak_day: user?.streak_count || 1,
+                streak_day: user?.streak || 1,
                 skip_tokens_remaining: user?.skip_tokens_remaining ?? 0,
             },
             next_chapter: nextResult.rows[0] || null,
@@ -175,7 +175,7 @@ export class ChaptersService {
 
             const { data: user } = await supabase
                 .from('users')
-                .select('full_name, streak_count, skip_tokens_remaining, current_plan')
+                .select('full_name, streak, skip_tokens_remaining, current_plan')
                 .eq('id', userId)
                 .maybeSingle();
 
@@ -227,7 +227,7 @@ export class ChaptersService {
                 celebration,
                 user: {
                     full_name: user?.full_name || 'Learner',
-                    streak_day: user?.streak_count || 1,
+                    streak_day: user?.streak || 1,
                     skip_tokens_remaining: user?.skip_tokens_remaining ?? 0,
                 },
             };

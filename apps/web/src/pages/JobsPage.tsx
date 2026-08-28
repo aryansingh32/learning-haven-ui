@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useApiQuery } from '@/hooks/useApi';
+import { useApiQuery, useApiMutation } from '@/hooks/useApi';
+import { api } from '@/services/api.svc';
 import { Briefcase, Clock, ExternalLink, Bookmark, ChevronRight, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -36,7 +37,27 @@ export const JobsPage = () => {
     const section: JobsSection = searchParams.get('tab') === 'apprenticeships' ? 'apprenticeships' : 'opportunities';
     const [activeTab, setActiveTab] = useState<JobType | 'ALL'>('ALL');
     const [page, setPage] = useState(1);
+    // Bookmarks are synced server-side (public.job_bookmarks) so they survive
+    // refresh and follow the user across devices.
+    const { data: bookmarksResponse } = useApiQuery<any>(
+        ['job-bookmarks'],
+        '/user-jobs/bookmarks'
+    );
     const [savedJobs, setSavedJobs] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        const bookmarks = bookmarksResponse?.data?.bookmarks || bookmarksResponse?.bookmarks;
+        if (Array.isArray(bookmarks)) {
+            setSavedJobs(Object.fromEntries(bookmarks.map((b: any) => [b.id, true])));
+        }
+    }, [bookmarksResponse]);
+
+    const saveMutation = useApiMutation<any, { jobId: string; jobData: any }>(
+        (variables) => api.post('/user-jobs/bookmarks', variables)
+    );
+    const unsaveMutation = useApiMutation<any, string>(
+        (jobId) => api.delete(`/user-jobs/bookmarks/${jobId}`)
+    );
 
     const typeQuery = activeTab === 'ALL' ? '' : `&type=${activeTab}`;
 
@@ -48,9 +69,19 @@ export const JobsPage = () => {
     const jobs = data?.jobs || [];
     const total = data?.total || 0;
 
-    const toggleSave = (id: string, e: React.MouseEvent) => {
+    const toggleSave = (job: JobAlert, e: React.MouseEvent) => {
         e.preventDefault();
-        setSavedJobs(prev => ({ ...prev, [id]: !prev[id] }));
+        const isSaved = !!savedJobs[job.id];
+        setSavedJobs(prev => ({ ...prev, [job.id]: !isSaved }));
+        if (isSaved) {
+            unsaveMutation.mutateAsync(job.id).catch(() => {
+                setSavedJobs(prev => ({ ...prev, [job.id]: true }));
+            });
+        } else {
+            saveMutation.mutateAsync({ jobId: job.id, jobData: job }).catch(() => {
+                setSavedJobs(prev => ({ ...prev, [job.id]: false }));
+            });
+        }
     };
 
     const getBadgeColor = (type: JobType) => {
@@ -190,7 +221,7 @@ export const JobsPage = () => {
                                                 </div>
                                             </div>
                                             <button
-                                                onClick={(e) => toggleSave(job.id, e)}
+                                                onClick={(e) => toggleSave(job, e)}
                                                 className="p-2 -mr-2 -mt-2 text-muted-foreground hover:text-blue-600 transition-colors rounded-full hover:bg-blue-50"
                                             >
                                                 <Bookmark className="w-5 h-5" fill={savedJobs[job.id] ? "currentColor" : "none"} />

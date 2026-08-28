@@ -3,9 +3,25 @@ import { motion } from "framer-motion";
 import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const CertificatesPage = () => {
   const { user } = useAuth();
+
+  const downloadCertificate = (cert: any) => {
+    if (!cert?.certificate_url) {
+      toast.error("This certificate's PDF isn't ready yet. Please try again shortly.");
+      return;
+    }
+    const link = document.createElement('a');
+    link.href = cert.certificate_url;
+    link.download = `${(cert.topic || 'certificate').replace(/\s+/g, '-').toLowerCase()}.pdf`;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
 
   // Keep ALL existing API calls
   const { data: profile } = useApiQuery<any>(
@@ -61,21 +77,21 @@ const CertificatesPage = () => {
             </motion.div>
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-2">Certificate of Achievement</p>
             <h2 className="text-xl sm:text-2xl font-extrabold mb-1">
-              {activeCert.topic_name || activeCert.title || "DSA Mastery"}
+              {activeCert.topic || "DSA Mastery"}
             </h2>
             <p className="text-sm opacity-80 mb-1">Awarded to <strong>{userName}</strong></p>
             <p className="text-xs opacity-60 mb-5">
-              For demonstrating exceptional skills in {activeCert.topic_name || "Data Structures and Algorithms"}
+              For demonstrating exceptional skills in {activeCert.topic || "Data Structures and Algorithms"}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
               <button
-                onClick={() => alert('Certificate download coming soon')}
+                onClick={() => downloadCertificate(activeCert)}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-orange-600 text-sm font-bold shadow-md hover:shadow-lg transition-all">
                 <Download className="w-4 h-4" /> Download PDF
               </button>
               <button
                 onClick={() => {
-                  const certUrl = `${window.location.origin}/certificates/verify/${activeCert.certificate_code || activeCert.id}`;
+                  const certUrl = `${window.location.origin}/certificates/verify/${activeCert.verification_code || activeCert.id}`;
                   window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(certUrl)}`, '_blank');
                 }}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/20 text-white text-sm font-bold border border-white/30 backdrop-blur hover:bg-white/30 transition-all"
@@ -123,13 +139,13 @@ const CertificatesPage = () => {
               </div>
             </div>
             <p className="text-[11px] text-muted-foreground whitespace-pre-line leading-relaxed">
-              {getShareText(activeCert.topic_name || activeCert.title || 'DSA Mastery')}
+              {getShareText(activeCert.topic || 'DSA Mastery')}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             {["LinkedIn", "Twitter / X", "WhatsApp", "Copy Link"].map((platform, i) => {
-              const shareLink = `${window.location.origin}/certificates/verify/${activeCert.certificate_code || activeCert.id}`;
-              const text = getShareText(activeCert.topic_name || activeCert.title || 'DSA Mastery');
+              const shareLink = `${window.location.origin}/certificates/verify/${activeCert.verification_code || activeCert.id}`;
+              const text = getShareText(activeCert.topic || 'DSA Mastery');
               let onClick = () => {};
               if (platform === "LinkedIn") onClick = () => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareLink)}`, '_blank');
               else if (platform === "Twitter / X") onClick = () => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text + '\n' + shareLink)}`, '_blank');
@@ -165,7 +181,7 @@ const CertificatesPage = () => {
           <div className="space-y-2">
             {certificates.map((cert, i) => (
               <motion.div
-                key={cert.id || cert.certificate_code || i}
+                key={cert.id || cert.verification_code || i}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 + i * 0.05 }}
@@ -176,7 +192,7 @@ const CertificatesPage = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
-                    {cert.topic_name || cert.title || "Track Mastery"}
+                    {cert.topic || "Track Mastery"}
                   </p>
                   <div className="flex items-center gap-2 mt-0.5">
                     <Calendar className="w-3 h-3 text-muted-foreground" />
@@ -186,11 +202,11 @@ const CertificatesPage = () => {
                   </div>
                 </div>
                 <div className="flex gap-1 flex-shrink-0">
-                  <button onClick={() => alert('Certificate download coming soon')} className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
+                  <button onClick={() => downloadCertificate(cert)} className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
                     <Download className="w-3.5 h-3.5" />
                   </button>
                   <button onClick={() => {
-                    const url = `${window.location.origin}/certificates/verify/${cert.certificate_code || cert.id}`;
+                    const url = `${window.location.origin}/certificates/verify/${cert.verification_code || cert.id}`;
                     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
                   }} className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
                     <Share2 className="w-3.5 h-3.5" />

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { FlaskConical, Play, Square, Settings, Users, ArrowRight, BarChart, Plus, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface Experiment {
     id: number | string;
@@ -42,7 +43,7 @@ export default function Experiments() {
                     <p className="text-muted-foreground mt-1">Manage and monitor live experiments</p>
                 </div>
                 <Button onClick={() => {
-                    window.alert('Experiment creation will be available in the next release');
+                    toast.info('Experiment creation will be available in the next release');
                 }}>
                     <Plus className="mr-2 h-4 w-4" /> New Experiment
                 </Button>
@@ -95,15 +96,18 @@ export default function Experiments() {
 
                                     <div className="flex items-center gap-3 md:min-w-[150px] justify-end">
                                         {exp.status === 'running' ? (
-                                            <Button variant="outline" size="sm" className="w-24 border-yellow-200 text-yellow-700 hover:bg-yellow-50">
+                                            <Button variant="outline" size="sm" className="w-24 border-yellow-200 text-yellow-700 hover:bg-yellow-50"
+                                                onClick={() => toast.info('Pausing experiments will be available in the next release')}>
                                                 <Square className="w-3 h-3 mr-2" /> Pause
                                             </Button>
                                         ) : (
-                                            <Button variant="outline" size="sm" className="w-24 border-emerald-200 text-emerald-700 hover:bg-emerald-50">
+                                            <Button variant="outline" size="sm" className="w-24 border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                                                onClick={() => toast.info('Starting experiments will be available in the next release')}>
                                                 <Play className="w-3 h-3 mr-2" /> Start
                                             </Button>
                                         )}
-                                        <Button variant="ghost" size="icon">
+                                        <Button variant="ghost" size="icon"
+                                            onClick={() => toast.info('Experiment settings will be available in the next release')}>
                                             <Settings className="w-4 h-4" />
                                         </Button>
                                     </div>

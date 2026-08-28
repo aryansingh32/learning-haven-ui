@@ -54,6 +54,7 @@ const ApprenticeshipDashboardPage = lazy(() => import("./pages/ApprenticeshipDas
 const ApprenticeshipEnrollmentPage = lazy(() => import("./pages/ApprenticeshipEnrollmentPage"));
 const WorkspacePage = lazy(() => import("./pages/WorkspacePage"));
 const ApprenticeshipCertificatePage = lazy(() => import("./pages/ApprenticeshipCertificatePage"));
+const CertificateVerifyPage = lazy(() => import("./pages/CertificateVerifyPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const BuildChallengePage = lazy(() => import("./pages/BuildChallengePage"));
 const BuildWorkspacePage = lazy(() => import("./pages/BuildWorkspacePage"));
@@ -61,7 +62,17 @@ const SubscriptionPage = lazy(() => import("./pages/SubscriptionPage"));
 const PhaseCompletionPage = lazy(() => import("./pages/PhaseCompletionPage"));
 const ProtectedRoute = lazy(() => import("@/components/ProtectedRoute").then(m => ({ default: m.ProtectedRoute })));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Default React Query staleTime is 0, which refetches on every route
+      // mount and window refocus. 30s is enough to stop refetch storms on
+      // normal navigation while still keeping data reasonably fresh; any
+      // query that needs tighter or looser freshness can still override it.
+      staleTime: 30 * 1000,
+    },
+  },
+});
 
 // Minimal full-page loading fallback used while lazy chunks download
 function PageLoader() {
@@ -95,6 +106,7 @@ const App = () => (
               <Route path="/" element={<LandingPage />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/certificates/:code" element={<ApprenticeshipCertificatePage />} />
+              <Route path="/certificates/verify/:code" element={<CertificateVerifyPage />} />
 
               {/* Legacy redirects */}
               <Route path="/apprenticeships" element={<Navigate to="/jobs?tab=apprenticeships" replace />} />

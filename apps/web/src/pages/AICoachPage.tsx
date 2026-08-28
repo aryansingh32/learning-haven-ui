@@ -168,7 +168,7 @@ const AICoachPage = () => {
       }
     } catch (error: any) {
       if (error.name === 'AbortError') {
-        console.log("Chat aborted");
+        // User-initiated cancellation — nothing to report.
       } else {
         console.error("AI Error:", error);
       }
