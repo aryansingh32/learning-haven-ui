@@ -328,7 +328,8 @@ export class BuildHavenController {
       res.json(ok({ result }));
     } catch (error: any) {
       logger.error('vibeSubmitStage error:', error);
-      res.status(400).json(fail(error.message || 'Failed to submit vibe stage', 'E_BUILD_560'));
+      const status = error.statusCode === 403 ? 403 : 400;
+      res.status(status).json(fail(error.message || 'Failed to submit vibe stage', 'E_BUILD_560'));
     }
   }
 

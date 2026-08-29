@@ -8,6 +8,7 @@ import { BuildStageSidebar } from '@/features/build-haven/components/BuildStageS
 import { BuildTestRunner } from '@/features/build-haven/components/BuildTestRunner';
 import { BuildLeaderboardPanel } from '@/features/build-haven/components/BuildLeaderboardPanel';
 import { BuildRepoSetup } from '@/features/build-haven/components/BuildRepoSetup';
+import { VibeSubmitPanel } from '@/features/build-haven/components/VibeSubmitPanel';
 import { BuildWorkspaceTopBar } from '@/features/build-haven/components/BuildWorkspaceTopBar';
 import { BuildDifficultyBadge } from '@/features/build-haven/components/BuildDifficultyBadge';
 import { BuildExampleGate } from '@/features/build-haven/components/BuildExampleGate';
@@ -112,8 +113,13 @@ export default function BuildWorkspacePage() {
     [challenge?.stages]
   );
 
-  // BUG-003 fix: Force setup view if no GitHub repo connected by default
-  const activeView: ViewMode = (!enrollment?.repo_url && !enrollment?.repo_full_name && viewMode === null)
+  const isVibeMode = enrollment?.build_mode === 'vibe';
+
+  // BUG-003 fix: Force setup view if no GitHub repo connected by default.
+  // Vibe-mode enrollments never have a repo (there's nothing to set up —
+  // learners build with whatever AI tool they like and submit a URL/repo
+  // when ready), so this never applies to them.
+  const activeView: ViewMode = (!isVibeMode && !enrollment?.repo_url && !enrollment?.repo_full_name && viewMode === null)
     ? 'setup'
     : (viewMode ?? enrollment?.current_stage ?? stagesSorted[0]?.stage_number ?? 'setup');
 
@@ -305,6 +311,7 @@ export default function BuildWorkspacePage() {
           activeView={activeView}
           onSelectSetup={() => setViewMode('setup')}
           onSelectStage={(n) => setViewMode(n)}
+          isVibeMode={isVibeMode}
         />
 
         {/* Middle column — Main content */}
@@ -360,7 +367,7 @@ export default function BuildWorkspacePage() {
 
               {/* Main content tabs */}
               <header className="shrink-0 border-b border-border/60 px-5 py-3 space-y-3">
-                {(!enrollment?.repo_url && !enrollment?.repo_full_name) && (
+                {(!isVibeMode && !enrollment?.repo_url && !enrollment?.repo_full_name) && (
                   <div className="flex items-center gap-3 rounded-lg border border-warning/30 bg-warning/5 px-4 py-3">
                     <AlertCircle className="h-5 w-5 text-warning shrink-0" />
                     <p className="text-sm text-foreground">
@@ -391,7 +398,7 @@ export default function BuildWorkspacePage() {
                 </div>
                 {!isViewingTestTarget && enrollment && (
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Git pushes are verified only for stage {enrollment.current_stage}. Browse other stages for reference.
+                    {isVibeMode ? 'Submissions' : 'Git pushes'} are verified only for stage {enrollment.current_stage}. Browse other stages for reference.
                   </p>
                 )}
               </header>
@@ -446,8 +453,19 @@ export default function BuildWorkspacePage() {
                         <p className="text-sm text-muted-foreground">No instructions for this stage yet.</p>
                       )}
 
+                      {/* Vibe mode: proof-gate contract + submission form, in place of git-push instructions */}
+                      {isVibeMode && viewedStage?.verification_type === 'contract' && (
+                        <VibeSubmitPanel
+                          enrollmentId={enrollment!.id}
+                          stageId={viewedStage.id}
+                          journeys={(viewedStage.acceptance_contract as any)?.journeys || []}
+                          initialResult={(lastResult?.structured_feedback as any) ?? null}
+                          onSubmitted={() => invalidateWorkspace()}
+                        />
+                      )}
+
                       {/* How to pass this stage */}
-                      {(viewedStage?.test_command || viewedStage?.success_criteria) && (
+                      {!isVibeMode && (viewedStage?.test_command || viewedStage?.success_criteria) && (
                         <section className="rounded-xl border border-border/50 bg-card/40 p-5">
                           <h3 className="text-sm font-semibold text-foreground">How to pass this stage</h3>
 
@@ -617,7 +635,9 @@ export default function BuildWorkspacePage() {
                 </ScrollArea>
               </Tabs>
 
-              {/* Fixed bottom test results bar */}
+              {/* Fixed bottom test results bar — traditional (Docker) mode only;
+                  vibe/contract stages show results inline in VibeSubmitPanel above. */}
+              {!(isVibeMode && viewedStage?.verification_type === 'contract') && (
               <BuildTestRunner
                 verdict={verdict}
                 isVerifying={isVerifying}
@@ -638,6 +658,7 @@ export default function BuildWorkspacePage() {
                 liveLogLines={liveLogLines}
                 nextStageAlreadyImplemented={nextStageAlreadyImplemented}
               />
+              )}
             </>
           )}
             </>
