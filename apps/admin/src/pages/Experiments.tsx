@@ -71,7 +71,7 @@ export default function Experiments() {
                                         <div className="flex items-center gap-3">
                                             <h3 className="text-lg font-semibold">{exp.name || exp.AI_Tutor_Voice}</h3>
                                             <Badge variant={exp.status === 'running' ? 'default' : exp.status === 'paused' ? 'secondary' : 'outline'} className={exp.status === 'running' ? 'bg-emerald-500 hover:bg-emerald-600' : ''}>
-                                                {exp.status.toUpperCase()}
+                                                {(exp.status || '').toUpperCase()}
                                             </Badge>
                                         </div>
                                         <p className="text-sm font-mono text-muted-foreground">{exp.key}</p>

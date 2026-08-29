@@ -69,12 +69,12 @@ const Users = () => {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight">Users</h2>
                     <p className="text-muted-foreground">Manage users, roles, and permissions.</p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     {/* Plan filter */}
                     <Select value={planFilter} onValueChange={(v) => { setPlanFilter(v); setPage(1); }}>
                         <SelectTrigger className="w-32">
@@ -89,13 +89,13 @@ const Users = () => {
                         </SelectContent>
                     </Select>
                     {/* Search */}
-                    <div className="relative">
+                    <div className="relative w-full sm:w-[250px]">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
                             placeholder="Search users..."
                             value={search}
                             onChange={handleSearch}
-                            className="pl-8 w-[250px]"
+                            className="pl-8 w-full"
                         />
                     </div>
                 </div>

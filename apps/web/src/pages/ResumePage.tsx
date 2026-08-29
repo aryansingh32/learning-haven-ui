@@ -265,7 +265,7 @@ export default function ResumePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative items-start">
                 {/* Left Side: Builder Form (Col Span 5) */}
-                <div className="lg:col-span-5 space-y-4 print:hidden overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar">
+                <div className="lg:col-span-5 space-y-4 print:hidden lg:overflow-y-auto lg:max-h-[85vh] lg:pr-2 custom-scrollbar">
                     {/* 1. Personal Info Section */}
                     <div className="card-glass rounded-2xl overflow-hidden border border-border/50 transition-all">
                         <button
@@ -585,7 +585,7 @@ export default function ResumePage() {
                 </div>
 
                 {/* Right Side: Live Resume Preview (Col Span 7) */}
-                <div className="lg:col-span-7 bg-white rounded-md shadow-2xl overflow-hidden print:col-span-12 print:m-0 print:border-none print:shadow-none min-h-[1056px] relative">
+                <div className="lg:col-span-7 bg-white rounded-md shadow-2xl overflow-auto lg:overflow-hidden print:col-span-12 print:m-0 print:border-none print:shadow-none min-h-[1056px] relative">
                     {selectedTemplate === 'modern' && <ModernTemplate data={data} />}
                     {selectedTemplate === 'classic' && <ClassicTemplate data={data} />}
                     {selectedTemplate === 'standard' && <StandardTemplate data={data} />}

@@ -191,7 +191,7 @@ export default function ApprenticeshipProgramPage() {
           <div className="space-y-6 max-w-3xl">
             <div className="flex items-center gap-3 flex-wrap">
               <Badge variant="outline" className="bg-background/50 backdrop-blur-sm border-primary/20 text-primary">
-                {program.difficulty_level.toUpperCase()}
+                {(program.difficulty_level || '').toUpperCase()}
               </Badge>
               {program.status === 'draft' && (
                 <Badge variant="secondary" className="bg-amber-500/10 text-amber-500">COMING SOON</Badge>

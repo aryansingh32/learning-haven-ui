@@ -25,7 +25,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { ChevronDown, ChevronRight, Loader2, Copy, CheckCircle2, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Loader2, Copy, CheckCircle2, X, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { cn } from '@/lib/utils';

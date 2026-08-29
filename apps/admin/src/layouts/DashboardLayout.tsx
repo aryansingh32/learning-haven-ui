@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar';
 import { useAuth } from '@/context/AuthContext';
-import { Bell, Search } from 'lucide-react';
+import { Bell, Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -33,6 +34,7 @@ const pageNames: Record<string, string> = {
 const DashboardLayout = () => {
     const { user } = useAuth();
     const location = useLocation();
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
     const getPageName = () => {
         const exact = pageNames[location.pathname];
@@ -45,14 +47,22 @@ const DashboardLayout = () => {
 
     return (
         <div className="flex h-screen bg-background">
-            <Sidebar />
+            <Sidebar mobileOpen={mobileNavOpen} onMobileClose={() => setMobileNavOpen(false)} />
             <div className="flex-1 flex flex-col overflow-hidden min-w-0">
                 {/* Header */}
-                <header className="h-16 border-b bg-card/50 backdrop-blur-xl flex items-center justify-between px-6 shrink-0 z-10">
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <h1 className="text-lg font-semibold tracking-tight">{getPageName()}</h1>
-                            <p className="text-xs text-muted-foreground">
+                <header className="h-16 border-b bg-card/50 backdrop-blur-xl flex items-center justify-between px-4 md:px-6 shrink-0 z-10">
+                    <div className="flex items-center gap-3 md:gap-4 min-w-0">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 shrink-0 md:hidden"
+                            onClick={() => setMobileNavOpen(true)}
+                        >
+                            <Menu className="h-5 w-5" />
+                        </Button>
+                        <div className="min-w-0">
+                            <h1 className="text-lg font-semibold tracking-tight truncate">{getPageName()}</h1>
+                            <p className="text-xs text-muted-foreground truncate hidden sm:block">
                                 Welcome back, {user?.full_name || 'Admin'}
                             </p>
                         </div>
@@ -76,7 +86,7 @@ const DashboardLayout = () => {
                 </header>
 
                 {/* Main content */}
-                <main className="flex-1 overflow-y-auto p-6">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6">
                     <div className="page-enter">
                         <Outlet />
                     </div>

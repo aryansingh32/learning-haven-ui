@@ -42,7 +42,9 @@ export function BuildStageSidebar({
   onSelectStage,
   isVibeMode,
 }: Props) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 768
+  );
 
   // Group stages by section (using simple grouping: every 3-4 stages)
   // In CodeCrafters these are grouped by feature area — we'll use stage titles
@@ -111,7 +113,7 @@ export function BuildStageSidebar({
   }
 
   return (
-    <aside className="flex w-[280px] shrink-0 flex-col border-r border-border/60 bg-card/30">
+    <aside className="flex w-[280px] max-w-[80vw] shrink-0 flex-col border-r border-border/60 bg-card/30">
       {/* Header */}
       <div className="border-b border-border/60 p-4">
         <div className="flex items-center justify-between">

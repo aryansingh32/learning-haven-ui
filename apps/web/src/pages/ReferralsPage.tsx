@@ -152,7 +152,7 @@ const ReferralsPage = () => {
           <Crown className="h-4 w-4 text-primary" />
           <p className="text-sm font-semibold text-foreground">Tier Status</p>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {apiTiers.map((tier: any) => {
             const isActive = currentTier.name === tier.name;
             return (

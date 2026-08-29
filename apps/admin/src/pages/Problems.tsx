@@ -63,12 +63,12 @@ const Problems = () => {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight">Problems</h2>
                     <p className="text-muted-foreground">Manage coding problems and challenges.</p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     <Button variant="outline" onClick={handleBulkImport} disabled={importMutation.isPending}>
                         {importMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Plus className="mr-2 h-4 w-4" />}
                         Bulk Import
@@ -81,13 +81,13 @@ const Problems = () => {
             </div>
 
             <div className="flex items-center gap-2">
-                <div className="relative">
+                <div className="relative w-full sm:w-[250px]">
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         placeholder="Search problems..."
                         value={search}
                         onChange={handleSearch}
-                        className="pl-8 w-[250px]"
+                        className="pl-8 w-full"
                     />
                 </div>
             </div>
