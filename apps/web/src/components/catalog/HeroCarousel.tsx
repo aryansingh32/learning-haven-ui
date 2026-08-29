@@ -24,7 +24,7 @@ export function HeroCarousel({ slides }: Props) {
     <section className="w-full mb-6 md:mb-8">
       <Carousel plugins={multiple ? [autoplay] : []} className="w-full relative" opts={{ loop: multiple }}>
         <CarouselContent className="-ml-0">
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <CarouselItem key={slide.id} className="pl-0">
               <div
                 className={cn(
@@ -69,7 +69,17 @@ export function HeroCarousel({ slides }: Props) {
                   </div>
                   {slide.image && (
                     <div className="hidden md:block relative h-[220px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 dark:border-white/10 dark:shadow-[0_0_40px_rgba(255,255,255,0.08)] z-10">
-                      <img src={slide.image} alt="" aria-hidden className="w-full h-full object-cover object-top" />
+                      <img
+                        src={slide.image}
+                        alt=""
+                        aria-hidden
+                        width={300}
+                        height={220}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
+                        decoding="async"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   )}
                 </div>

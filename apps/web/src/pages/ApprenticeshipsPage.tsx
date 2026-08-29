@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
 import { apprenticeshipService } from '@/features/apprenticeship/api/apprenticeship.service';
-import { Button } from "@/components/ui/button";
+import { ApprenticeshipCard, type ApprenticeshipCardData } from '@/features/apprenticeship/components/ApprenticeshipCard';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Briefcase, Search, ArrowRight, CheckCircle2, ChevronRight, Zap, Target } from "lucide-react";
+import { Briefcase, Search, CheckCircle2, Zap, Target } from "lucide-react";
 import { tracker } from "@/lib/tracker";
 
 export default function ApprenticeshipsPage() {
@@ -77,7 +76,7 @@ export default function ApprenticeshipsPage() {
 
       {/* Programs Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {[1, 2, 3].map(i => (
             <div key={i} className="h-[400px] rounded-2xl bg-muted/20 animate-pulse border border-border" />
           ))}
@@ -89,77 +88,9 @@ export default function ApprenticeshipsPage() {
           <p className="text-muted-foreground">Try adjusting your search criteria.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPrograms.map((program: any) => (
-            <Link 
-              key={program.id} 
-              to={`/jobs/apprenticeships/${program.slug}`}
-              onClick={() => tracker.track('program_page_viewed', { program_id: program.id, slug: program.slug })}
-              className="group relative flex flex-col justify-between bg-card hover:bg-accent/5 transition-all duration-300 border border-primary/10 hover:border-primary/30 rounded-3xl p-8 hover:shadow-2xl hover:shadow-primary/5 overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 scale-150 -translate-y-10 translate-x-10 pointer-events-none">
-                <Briefcase className="w-32 h-32" />
-              </div>
-              
-              <div className="relative z-10 space-y-4">
-                <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="capitalize bg-background/50 backdrop-blur">
-                    {program.difficulty_level}
-                  </Badge>
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {program.total_projects} Projects
-                  </span>
-                </div>
-                
-                <div>
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {program.title}
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed">
-                    {program.description}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {program.tech_stack?.slice(0, 3).map((tech: string) => (
-                    <Badge key={tech} variant="secondary" className="bg-primary/5 text-primary hover:bg-primary/10">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {program.tech_stack?.length > 3 && (
-                    <span className="text-xs text-muted-foreground font-medium self-center">
-                      +{program.tech_stack.length - 3} more
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div className="relative z-10 pt-8 mt-auto border-t border-primary/10 group-hover:border-primary/20 transition-colors">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-sm text-muted-foreground font-medium">Estimated Time</div>
-                  <div className="text-sm font-bold flex items-center">
-                    <Target className="h-4 w-4 mr-2 text-primary" /> {program.duration_days} Days
-                  </div>
-                </div>
-                
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-2xl font-black">₹{(program.price_inr / 100).toLocaleString('en-IN')}</span>
-                      {program.original_price_inr && (
-                        <span className="text-sm text-muted-foreground line-through ml-2">
-                          ₹{(program.original_price_inr / 100).toLocaleString('en-IN')}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <Button className="w-full justify-between group/btn bg-primary hover:bg-primary/90 text-primary-foreground transition-all">
-                    View Details
-                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </div>
-            </Link>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {(filteredPrograms as ApprenticeshipCardData[]).map((program, i) => (
+            <ApprenticeshipCard key={program.id} program={program} index={i} />
           ))}
         </div>
       )}

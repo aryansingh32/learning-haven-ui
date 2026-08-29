@@ -692,10 +692,16 @@ function KnowledgeGraphWidget() {
 function ReferralWidget() {
   const navigate = useNavigate();
   const { data: refInfo } = useApiQuery<any>(['referral-info'], '/referrals/info');
-  
-  const referralsCount = refInfo?.referral_count || 0;
-  const target = refInfo?.next_tier_target || 5;
-  const progressPercent = Math.round((referralsCount / target) * 100);
+
+  const referralsCount = refInfo?.stats?.active_referrals ?? refInfo?.stats?.total_referrals ?? 0;
+  const tiers: Array<{ min: number; max: number; name?: string }> = refInfo?.tiers?.length
+    ? refInfo.tiers
+    : [{ min: 0, max: 5 }];
+  const currentTier = refInfo?.current_tier || tiers[0];
+  const nextTier = tiers.find((t) => t.min > (currentTier?.min ?? 0));
+  const target = nextTier?.min ?? currentTier?.max ?? 5;
+  const progressPercent = target > 0 ? Math.min(100, Math.round((referralsCount / target) * 100)) : 100;
+  const remaining = Math.max(0, target - referralsCount);
 
   return (
     <motion.div
@@ -717,7 +723,9 @@ function ReferralWidget() {
       <div className="space-y-1">
         <div className="flex justify-between text-xs font-bold">
           <span className="text-foreground">{referralsCount} joined</span>
-          <span className="text-orange-500">Tier 1 Unlock: {target}</span>
+          <span className="text-orange-500">
+            {nextTier ? `${nextTier.name || 'Next tier'} unlock: ${target}` : 'Max tier reached'}
+          </span>
         </div>
         <div className="h-2 bg-secondary rounded-full overflow-hidden">
           <motion.div
@@ -728,7 +736,7 @@ function ReferralWidget() {
           />
         </div>
         <p className="text-[10px] font-semibold text-muted-foreground text-right mt-1">
-          {target - referralsCount} more to go
+          {nextTier ? `${remaining} more to go` : "You're at the top tier"}
         </p>
       </div>
     </motion.div>

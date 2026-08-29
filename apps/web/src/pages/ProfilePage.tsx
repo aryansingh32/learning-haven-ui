@@ -57,7 +57,15 @@ const ProfilePage = () => {
         <div className="flex items-start gap-4">
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl gradient-golden flex items-center justify-center text-white font-display font-bold text-2xl shadow-lg overflow-hidden flex-shrink-0">
             {profileStats?.avatar_url ? (
-              <img src={profileStats.avatar_url} alt={userName} className="w-full h-full object-cover" />
+              <img
+                src={profileStats.avatar_url}
+                alt={userName}
+                loading="lazy"
+                decoding="async"
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+              />
             ) : (
               firstName.charAt(0)
             )}

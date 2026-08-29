@@ -41,7 +41,15 @@ export function EnrolledPaths({ enrollments }: EnrolledPathsProps) {
             >
               <div className="flex items-start gap-4 mb-5">
                 {course.cover_image ? (
-                  <img src={course.cover_image} alt={course.title} className="w-12 h-12 rounded-xl object-cover shrink-0 shadow-sm" />
+                  <img
+                    src={course.cover_image}
+                    alt={course.title}
+                    loading="lazy"
+                    decoding="async"
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-xl object-cover shrink-0 shadow-sm"
+                  />
                 ) : (
                   <div className={cn('w-12 h-12 rounded-xl flex shrink-0 items-center justify-center font-display font-bold text-lg text-white shadow-inner bg-gradient-to-br', gradient)}>
                     {courseInitials(course.title)}

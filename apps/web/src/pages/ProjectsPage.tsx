@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { buildHavenService } from '@/features/build-haven/api/build-haven.service';
-import { BuildDifficultyBadge } from '@/features/build-haven/components/BuildDifficultyBadge';
+import { BuildChallengeCard, type BuildChallengeCardData } from '@/features/build-haven/components/BuildChallengeCard';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Select,
   SelectContent,
@@ -13,9 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Hammer, Search, GitBranch, Terminal, Sparkles, ArrowRight } from 'lucide-react';
+import { Hammer, Search, GitBranch, Terminal, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 
 const DIFFICULTIES = ['', 'beginner', 'intermediate', 'advanced'] as const;
 const LANGUAGES = ['', 'python', 'javascript', 'java', 'go', 'rust', 'c', 'cpp'] as const;
@@ -138,75 +137,20 @@ export default function ProjectsPage() {
       </div>
 
       {isLoading ? (
-        <div className="text-sm text-muted-foreground">Loading projects…</div>
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-[300px] rounded-2xl" />
+          ))}
+        </div>
       ) : challenges.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border p-12 text-center text-muted-foreground">
           No challenges match your filters. Admins can publish build challenges from the admin panel.
         </div>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {challenges.map(
-            (
-              challenge: {
-                id: string;
-                slug: string;
-                title: string;
-                description?: string;
-                short_tagline?: string;
-                difficulty_level?: string;
-                supported_languages?: string[];
-                stages_count?: number;
-                is_free?: boolean;
-              },
-              i: number
-            ) => (
-              <motion.div
-                key={challenge.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.04 }}
-              >
-                <Link
-                  to={`/projects/${challenge.slug}`}
-                  className={cn(
-                    'group flex h-full flex-col rounded-2xl border border-border/60 bg-card/80 p-5',
-                    'transition-all hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5'
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                      {challenge.title}
-                    </h3>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
-                  </div>
-                  {challenge.short_tagline ? (
-                    <p className="mt-1 text-xs text-primary/90 line-clamp-1">{challenge.short_tagline}</p>
-                  ) : null}
-                  <p className="mt-2 flex-1 text-sm text-muted-foreground line-clamp-3">
-                    {challenge.description}
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <BuildDifficultyBadge difficulty={challenge.difficulty_level} />
-                    {challenge.is_free ? (
-                      <Badge variant="secondary" className="text-[10px]">
-                        Free
-                      </Badge>
-                    ) : null}
-                    {challenge.stages_count ? (
-                      <span className="text-[10px] text-muted-foreground">{challenge.stages_count} stages</span>
-                    ) : null}
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-1">
-                    {(challenge.supported_languages || []).slice(0, 4).map((lang: string) => (
-                      <Badge key={lang} variant="outline" className="text-[10px] capitalize">
-                        {lang}
-                      </Badge>
-                    ))}
-                  </div>
-                </Link>
-              </motion.div>
-            )
-          )}
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {(challenges as BuildChallengeCardData[]).map((challenge, i) => (
+            <BuildChallengeCard key={challenge.id} challenge={challenge} index={i} />
+          ))}
         </div>
       )}
     </motion.div>

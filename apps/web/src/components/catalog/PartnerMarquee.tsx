@@ -46,7 +46,15 @@ export function PartnerMarquee({ title, partners, onPartnerClick, className }: P
               className="flex flex-col items-center gap-2 shrink-0 opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg px-2 py-1"
               title={`${p.courses || 0} courses`}
             >
-              <img src={p.logo} alt={p.name} className="h-6 md:h-7 w-auto max-w-[120px] object-contain" />
+              <img
+                src={p.logo}
+                alt={p.name}
+                loading="lazy"
+                decoding="async"
+                width={120}
+                height={28}
+                className="h-6 md:h-7 w-auto max-w-[120px] object-contain"
+              />
               {(p.name || p.courses > 0) && (
                 <span className="text-caption font-semibold text-muted-foreground whitespace-nowrap">
                   {p.name}
