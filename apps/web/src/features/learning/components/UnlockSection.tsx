@@ -44,10 +44,9 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
       toast.success('Chapter skipped using token');
       onSkipped();
     } catch (err: unknown) {
-      const message =
-        err && typeof err === 'object' && 'response' in err
-          ? (err as { response?: { data?: { error?: string } } }).response?.data?.error
-          : undefined;
+      // The API interceptor rejects with a plain Error carrying the server's
+      // message, so read `.message` rather than an axios-shaped `.response`.
+      const message = err instanceof Error ? err.message : undefined;
       toast.error(message || 'Failed to skip chapter');
     } finally {
       setSkipLoading(false);

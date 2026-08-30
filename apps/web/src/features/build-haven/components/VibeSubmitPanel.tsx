@@ -162,12 +162,12 @@ export function VibeSubmitPanel({ enrollmentId, stageId, journeys, initialResult
     },
   });
 
-  const errorMessage =
-    submitMutation.isError && (submitMutation.error as any)?.response?.data?.error?.message
-      ? (submitMutation.error as any).response.data.error.message
-      : submitMutation.isError
-        ? 'Submission failed — please try again.'
-        : null;
+  // The API interceptor rejects with a plain Error carrying the server's
+  // message, so read `.message` rather than an axios-shaped `.response`.
+  const errorMessage = submitMutation.isError
+    ? (submitMutation.error instanceof Error && submitMutation.error.message) ||
+      'Submission failed — please try again.'
+    : null;
 
   return (
     <div className="space-y-5">

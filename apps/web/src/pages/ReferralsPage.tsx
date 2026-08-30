@@ -70,7 +70,7 @@ const ReferralsPage = () => {
       refetchInfo();
       setUpiId("");
     } catch (error: any) {
-      alert(error.response?.data?.error || "Withdrawal failed");
+      alert(error instanceof Error ? error.message : "Withdrawal failed");
     }
   };
 

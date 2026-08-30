@@ -115,7 +115,7 @@ export default function ResumePage() {
             onSuccess(res.improvedText);
             toast.success("Description enhanced!", { id: toastId });
         } catch (error: any) {
-            toast.error(error.response?.data?.error || "Failed to improve text", { id: toastId });
+            toast.error(error instanceof Error ? error.message : "Failed to improve text", { id: toastId });
         }
     };
 
