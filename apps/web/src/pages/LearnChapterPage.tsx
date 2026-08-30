@@ -654,10 +654,13 @@ export default function LearnChapterPage() {
         streakDay={celebrationPayload?.streak ?? data?.user?.streak_day ?? 1}
         userName={userName}
         linkedInText={celebrationMeta?.linkedin_text}
+        // Only pass a next action when a next chapter actually exists —
+        // otherwise the overlay offered "Continue to next chapter" on the last
+        // chapter of a course and quietly went back to the chapter list.
         onNext={
           celebrationPayload?.nextChapterId
             ? () => navigate(`/chapter/${celebrationPayload.nextChapterId}`)
-            : () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')
+            : undefined
         }
       />
     </motion.div>

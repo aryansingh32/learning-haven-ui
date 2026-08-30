@@ -56,24 +56,24 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
   return (
     <div className="pt-2 text-center">
       {!isReady ? (
-        <div className="bg-slate-50 border-2 border-slate-100 rounded-3xl p-8">
-          <div className="w-16 h-16 bg-slate-200 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="bg-secondary/40 border-2 border-border rounded-3xl p-8">
+          <div className="w-16 h-16 bg-secondary text-muted-foreground rounded-full flex items-center justify-center mx-auto mb-6">
             <Lock className="w-8 h-8" />
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6">
+          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-6">
             Complete to Unlock Next Chapter
           </h3>
 
           <div className="space-y-3 mb-8 text-left max-w-sm mx-auto">
             <div
-              className={`flex items-center justify-between p-4 rounded-xl border ${quizPassed ? 'bg-emerald-50 border-emerald-100 text-emerald-800' : 'bg-white border-slate-200 text-slate-600'}`}
+              className={`flex items-center justify-between p-4 rounded-xl border ${quizPassed ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400' : 'bg-card border-border text-muted-foreground'}`}
             >
               <span className="font-semibold text-sm">Quiz passed (≥66%)</span>
               <span>{quizPassed ? '✅' : '⏳'}</span>
             </div>
             <div
-              className={`flex items-center justify-between p-4 rounded-xl border ${taskCompleted ? 'bg-emerald-50 border-emerald-100 text-emerald-800' : 'bg-white border-slate-200 text-slate-600'}`}
+              className={`flex items-center justify-between p-4 rounded-xl border ${taskCompleted ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400' : 'bg-card border-border text-muted-foreground'}`}
             >
               <span className="font-semibold text-sm">Task completed</span>
               <span>{taskCompleted ? '✅' : '⏳'}</span>
@@ -83,14 +83,14 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
           <button
             type="button"
             disabled
-            className="w-full h-14 bg-slate-200 text-slate-400 font-bold rounded-2xl flex items-center justify-center gap-2 cursor-not-allowed"
+            className="w-full h-14 bg-secondary text-muted-foreground font-bold rounded-2xl flex items-center justify-center gap-2 cursor-not-allowed"
           >
             Unlock Next Chapter <Lock className="w-5 h-5" />
           </button>
         </div>
       ) : (
-        <div className="bg-emerald-50 border-2 border-emerald-100 rounded-3xl p-8 animate-in zoom-in duration-500">
-          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm shadow-emerald-200/50">
+        <div className="bg-emerald-500/10 border-2 border-emerald-500/20 rounded-3xl p-8 animate-in zoom-in duration-500">
+          <div className="w-20 h-20 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
@@ -118,7 +118,7 @@ export const UnlockSection: React.FC<UnlockSectionProps> = ({
             type="button"
             onClick={() => void handleSkip()}
             disabled={skipLoading}
-            className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors px-4 py-2 rounded-lg hover:bg-blue-50"
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors px-4 py-2 rounded-lg hover:bg-primary/10"
           >
             {skipLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 text-amber-500" />}
             Or use a Skip Token — you have {skipTokens} remaining

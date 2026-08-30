@@ -339,9 +339,14 @@ export default function CelebrationOverlay({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-full rounded-xl border border-border py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary"
+                  className={cn(
+                    'w-full rounded-xl py-2.5 text-sm font-semibold transition-colors',
+                    onNext
+                      ? 'border border-border text-muted-foreground hover:bg-secondary'
+                      : 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg hover:from-orange-600 hover:to-amber-600'
+                  )}
                 >
-                  Back to chapter
+                  {onNext ? 'Back to chapter' : 'Back to course'}
                 </button>
 
                 {/* Sharing — secondary, collapsed by default */}
