@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useApiMutation, useApiQuery } from '@/hooks/useApi';
 import { api } from '@/services/api.svc';
+import { useEntitlements } from '@/services/entitlement.service';
+import { buildHavenService } from '@/features/build-haven/api/build-haven.service';
 import { FileText, Save, Download, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Plus, Trash2, Wand2, LayoutTemplate } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -21,7 +23,11 @@ const SECTIONS = [
 
 export default function ResumePage() {
     const { user } = useAuth() as any;
-    const isPro = user?.role === 'pro' || user?.role === 'standard';
+    // Gate on the real entitlement rather than a hardcoded role string: plans
+    // grant `resume_builder_access`, and the role list here missed 'super' and
+    // 'career_accelerator' entirely.
+    const { can } = useEntitlements();
+    const isPro = can('resume_builder');
 
     const [data, setData] = useState<ResumeData>(defaultResumeData);
     const [activeSection, setActiveSection] = useState('personal');
@@ -86,13 +92,24 @@ export default function ResumePage() {
 
         setAtsScore(Math.min(100, score));
         localStorage.setItem('dsa_os_resume_v2', JSON.stringify(data));
+    }, [data]);
 
-        // Fire and forget save to API. Skip until the initial server load has
-        // settled — otherwise the pre-load `defaultResumeData` gets POSTed and can
-        // race with (and momentarily clobber) the real saved resume.
-        if (resumeFetched) {
+    // Persist to the server on a debounce. This effect runs on every keystroke
+    // (`data` changes per character), so saving directly from it fired one POST
+    // per character typed. Skip until the initial server load has settled —
+    // otherwise the pre-load `defaultResumeData` gets POSTed and can race with
+    // (and momentarily clobber) the real saved resume.
+    useEffect(() => {
+        if (!resumeFetched) return;
+
+        const timer = setTimeout(() => {
             saveMutation.mutateAsync(data).catch(() => {});
-        }
+        }, 1200);
+
+        return () => clearTimeout(timer);
+        // saveMutation is recreated each render; depending on it would defeat
+        // the debounce.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, resumeFetched]);
 
     const improveContentMutation = useApiMutation<{ improvedText: string }, { text: string; context: string }>(
@@ -122,21 +139,31 @@ export default function ResumePage() {
     const handleAutoFill = async () => {
         const toastId = toast.loading("Fetching profile data...");
         try {
-            const [statsRes, enrollmentsRes] = await Promise.all([
-                api.get('/users/me/stats'),
-                api.get('/build/enrollments').catch(() => ({ data: [] }))
-            ]);
-            
-            const enrollments = enrollmentsRes.data || [];
-            
-            const newProjects = enrollments.map((env: any) => ({
-                id: Date.now().toString() + Math.random(),
-                title: env.apprenticeship_programs?.title || 'Project',
-                techStack: env.language || '',
-                link: '',
-                duration: '',
-                description: `• Completed stage ${env.current_stage || 1} of ${env.apprenticeship_programs?.total_projects || 10}`
-            }));
+            // Was calling '/build/enrollments'; the real route is '/v1/build/…',
+            // so this 404'd into its own catch and silently imported nothing.
+            const enrollmentsRes = await buildHavenService
+                .getMyEnrollments()
+                .catch(() => ({ enrollments: [] as any[] }));
+
+            const enrollments = enrollmentsRes?.enrollments || [];
+
+            // Don't re-add a project the learner already has on the resume.
+            const existingTitles = new Set(
+                data.projects.map((p: any) => (p.title || '').trim().toLowerCase()).filter(Boolean)
+            );
+
+            const newProjects = enrollments
+                .map((env: any) => ({
+                    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                    title: env.build_challenges?.title || env.apprenticeship_programs?.title || 'Project',
+                    techStack: env.language || '',
+                    link: env.repo_url || '',
+                    duration: '',
+                    description: `• Completed stage ${env.current_stage || 1} of ${
+                        env.build_challenges?.stages_count || env.apprenticeship_programs?.total_projects || 10
+                    }`,
+                }))
+                .filter((p) => !existingTitles.has(p.title.trim().toLowerCase()));
 
             setData(prev => ({
                 ...prev,
@@ -147,11 +174,16 @@ export default function ResumePage() {
                 },
                 projects: [...prev.projects, ...newProjects]
             }));
-            
-            toast.success("Profile data imported!", { id: toastId });
+
+            toast.success(
+                newProjects.length > 0
+                    ? `Imported ${newProjects.length} project${newProjects.length === 1 ? '' : 's'} from your account.`
+                    : "Your details are up to date — no new projects to import.",
+                { id: toastId }
+            );
         } catch (err) {
             console.error(err);
-            toast.error("Failed to auto-fill data.", { id: toastId });
+            toast.error(err instanceof Error ? err.message : "Failed to auto-fill data.", { id: toastId });
         }
     };
 
