@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Trophy, ArrowRight, Share2, Clock, Zap, CheckCircle2, Target } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { fetchPhases, fetchPhaseChapters } from '@/data/chapters';
 import { useAuth } from '@/context/AuthContext';
 
@@ -102,12 +103,41 @@ export default function PhaseCompletionPage() {
         <div className="bg-secondary/50 rounded-xl p-4 border border-border/50 mb-4">
           <p className="text-xs text-foreground whitespace-pre-line">{shareText}</p>
         </div>
-        <button
-          onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank')}
-          className="w-full sm:w-auto px-6 py-3 bg-[#0077B5] text-white rounded-xl font-bold text-sm hover:bg-[#006699] transition-colors"
-        >
-          Share on LinkedIn
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(shareText);
+                toast.success('Caption copied — paste it into your post.');
+              } catch {
+                toast.error('Could not copy caption.');
+              }
+            }}
+            className="w-full sm:w-auto px-6 py-3 border border-border rounded-xl font-bold text-sm hover:bg-secondary transition-colors"
+          >
+            Copy caption
+          </button>
+          <button
+            onClick={async () => {
+              // share-offsite only accepts a URL, so the caption is copied to the
+              // clipboard first — otherwise the text shown above is never posted.
+              try {
+                await navigator.clipboard.writeText(shareText);
+                toast.success('Caption copied — paste it into your LinkedIn post.');
+              } catch {
+                /* clipboard can be blocked; still open the composer */
+              }
+              window.open(
+                `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`,
+                '_blank',
+                'noopener,noreferrer'
+              );
+            }}
+            className="w-full sm:w-auto px-6 py-3 bg-[#0077B5] text-white rounded-xl font-bold text-sm hover:bg-[#006699] transition-colors"
+          >
+            Share on LinkedIn
+          </button>
+        </div>
       </motion.div>
 
       {/* Next Phase CTA */}

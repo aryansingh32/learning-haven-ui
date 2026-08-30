@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, animate } from 'framer-motion';
-import { X, Download, Copy, Linkedin, ArrowRight, Loader2 } from 'lucide-react';
+import {
+  X, Download, Copy, Linkedin, ArrowRight, Loader2, Trophy, Zap, Flame, Share2, ChevronDown,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { toPng } from 'html-to-image';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import { LinkedInAchievementCard } from './LinkedInAchievementCard';
 
 export interface CelebrationOverlayProps {
@@ -66,6 +69,7 @@ export default function CelebrationOverlay({
   const [displayXp, setDisplayXp] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const caption = buildLinkedInCaption({
     userName,
@@ -80,34 +84,42 @@ export default function CelebrationOverlay({
   useEffect(() => {
     if (!isOpen) {
       setDisplayXp(0);
+      setShareOpen(false);
       return;
     }
 
     document.body.style.overflow = 'hidden';
-    const duration = 1600;
-    const end = Date.now() + duration;
 
-    const frame = () => {
-      confetti({
-        particleCount: 4,
-        angle: 60,
-        spread: 50,
-        origin: { x: 0, y: 0.7 },
-        colors: ['#f97316', '#fbbf24'],
-      });
-      confetti({
-        particleCount: 4,
-        angle: 120,
-        spread: 50,
-        origin: { x: 1, y: 0.7 },
-        colors: ['#f97316', '#fbbf24'],
-      });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    };
-    frame();
+    // Respect users who prefer reduced motion — skip the confetti burst.
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    let raf = 0;
+    if (!prefersReduced) {
+      const end = Date.now() + 1600;
+      const frame = () => {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0, y: 0.7 },
+          colors: ['#f97316', '#fbbf24', '#10b981'],
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1, y: 0.7 },
+          colors: ['#f97316', '#fbbf24', '#10b981'],
+        });
+        if (Date.now() < end) raf = requestAnimationFrame(frame);
+      };
+      frame();
+    }
 
     const controls = animate(0, xpEarned, {
-      duration: 1.4,
+      duration: prefersReduced ? 0 : 1.4,
       ease: 'easeOut',
       onUpdate: (v) => setDisplayXp(Math.floor(v)),
     });
@@ -115,8 +127,19 @@ export default function CelebrationOverlay({
     return () => {
       document.body.style.overflow = '';
       controls.stop();
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [isOpen, xpEarned]);
+
+  // Close on Escape.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
 
   const generatePng = useCallback(async () => {
     if (!cardRef.current) throw new Error('Card not ready');
@@ -204,6 +227,12 @@ export default function CelebrationOverlay({
     }
   }, [caption, chapterTitle, copyCaption, generatePng]);
 
+  const stats = [
+    { icon: Zap, label: 'XP earned', value: `+${displayXp}`, tone: 'text-reward' },
+    { icon: Flame, label: 'Day streak', value: String(streakDay), tone: 'text-orange-500' },
+    { icon: Trophy, label: 'Milestone', value: badgeName, tone: 'text-primary' },
+  ];
+
   const overlay = (
     <AnimatePresence>
       {isOpen && (
@@ -219,100 +248,184 @@ export default function CelebrationOverlay({
           <button
             type="button"
             aria-label="Close celebration"
-            className="absolute inset-0 bg-black/55 backdrop-blur-xl"
+            className="absolute inset-0 bg-black/60 backdrop-blur-md"
             onClick={onClose}
           />
 
           <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 pointer-events-none">
             <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.99 }}
-              transition={{ type: 'spring', damping: 30, stiffness: 380 }}
-              className="pointer-events-auto w-full max-w-[400px] max-h-[min(92vh,720px)] flex flex-col rounded-2xl border border-white/10 bg-[#121212] shadow-2xl overflow-hidden"
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 340 }}
+              className="pointer-events-auto flex w-full max-w-[460px] max-h-[min(94vh,780px)] flex-col overflow-hidden rounded-3xl border border-border/60 bg-card shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Sticky header — close always visible */}
-              <div className="shrink-0 flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10 bg-[#121212]">
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-orange-400">
-                    Chapter complete
-                  </p>
-                  <h2 id="celebration-title" className="text-lg font-bold text-white truncate">
-                    You leveled up 🚀
-                  </h2>
-                </div>
+              {/* Hero — the achievement itself leads */}
+              <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 px-6 pb-6 pt-7 text-center text-white">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,rgba(255,255,255,0.28),transparent_55%)]" />
                 <button
                   type="button"
                   onClick={onClose}
-                  className="shrink-0 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                  className="absolute right-3 top-3 z-10 rounded-full bg-black/20 p-2 text-white transition-colors hover:bg-black/35"
                   aria-label="Close"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="h-4 w-4" />
                 </button>
+
+                <motion.div
+                  initial={{ scale: 0, rotate: -18 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ delay: 0.12, type: 'spring', stiffness: 220, damping: 14 }}
+                  className="relative mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 ring-4 ring-white/25 backdrop-blur-sm"
+                >
+                  <Trophy className="h-8 w-8" />
+                </motion.div>
+
+                <p className="relative text-[10px] font-bold uppercase tracking-[0.18em] text-white/80">
+                  {chapterNumber ? `Chapter ${chapterNumber} complete` : 'Chapter complete'}
+                </p>
+                <h2 id="celebration-title" className="relative mt-1 text-2xl font-extrabold leading-tight">
+                  {chapterTitle}
+                </h2>
+                {courseTitle && (
+                  <p className="relative mt-1 text-xs font-medium text-white/75">{courseTitle}</p>
+                )}
               </div>
 
-              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-3">
-                <div className="text-center">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-orange-500/15 border border-orange-500/25 px-3 py-1 text-sm font-bold text-orange-400">
-                    +{displayXp} XP · {chapterTitle}
-                  </span>
+              <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 space-y-4">
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-2">
+                  {stats.map((s, i) => (
+                    <motion.div
+                      key={s.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + i * 0.07 }}
+                      className="rounded-xl border border-border/50 bg-secondary/30 p-3 text-center"
+                    >
+                      <s.icon className={cn('mx-auto mb-1.5 h-4 w-4', s.tone)} />
+                      <p className="truncate font-display text-base font-bold leading-tight text-foreground" title={s.value}>
+                        {s.value}
+                      </p>
+                      <p className="mt-0.5 text-[10px] font-medium text-muted-foreground">{s.label}</p>
+                    </motion.div>
+                  ))}
                 </div>
 
-                <p className="text-center text-[11px] text-white/40 -mt-1">
-                  Download or share this card on LinkedIn
-                </p>
+                {skills.filter(Boolean).length > 0 && (
+                  <div className="flex flex-wrap justify-center gap-1.5">
+                    {skills.filter(Boolean).slice(0, 4).map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[11px] font-semibold text-primary"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-                <LinkedInAchievementCard
-                  ref={cardRef}
-                  userName={userName}
-                  chapterTitle={chapterTitle}
-                  xpEarned={xpEarned}
-                  streakDay={streakDay}
-                  badgeName={badgeName}
-                  skills={skills}
-                  chapterNumber={chapterNumber}
-                  courseTitle={courseTitle}
-                />
-
-                <button
-                  type="button"
-                  onClick={() => void downloadCard()}
-                  disabled={downloading || sharing}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white py-3 text-sm font-bold disabled:opacity-60"
-                >
-                  {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-                  Download card (PNG)
-                </button>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => void copyCaption()}
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 py-2.5 text-xs font-bold text-white"
-                  >
-                    <Copy className="w-3.5 h-3.5" /> Copy caption
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void shareLinkedIn()}
-                    disabled={sharing || downloading}
-                    className="flex items-center justify-center gap-1.5 rounded-xl bg-[#0A66C2] py-2.5 text-xs font-bold text-white disabled:opacity-60"
-                  >
-                    {sharing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Linkedin className="w-3.5 h-3.5" />}
-                    Share on LinkedIn
-                  </button>
-                </div>
-
-                {onNext ? (
+                {/* Primary action — keep learning */}
+                {onNext && (
                   <button
                     type="button"
                     onClick={onNext}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/10 py-2.5 text-xs font-bold text-white"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:from-orange-600 hover:to-amber-600 hover:shadow-xl"
                   >
-                    Next chapter <ArrowRight className="w-3.5 h-3.5" />
+                    Continue to next chapter <ArrowRight className="h-4 w-4" />
                   </button>
-                ) : null}
+                )}
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-full rounded-xl border border-border py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary"
+                >
+                  Back to chapter
+                </button>
+
+                {/* Sharing — secondary, collapsed by default */}
+                <div className="rounded-xl border border-border/60 bg-secondary/20">
+                  <button
+                    type="button"
+                    onClick={() => setShareOpen((v) => !v)}
+                    aria-expanded={shareOpen}
+                    className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left"
+                  >
+                    <span className="flex items-center gap-2 text-sm font-bold text-foreground">
+                      <Share2 className="h-4 w-4 text-primary" />
+                      Share your achievement
+                    </span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 shrink-0 text-muted-foreground transition-transform',
+                        shareOpen && 'rotate-180'
+                      )}
+                    />
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {shareOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-3 border-t border-border/50 p-4">
+                          <LinkedInAchievementCard
+                            ref={cardRef}
+                            userName={userName}
+                            chapterTitle={chapterTitle}
+                            xpEarned={xpEarned}
+                            streakDay={streakDay}
+                            badgeName={badgeName}
+                            skills={skills}
+                            chapterNumber={chapterNumber}
+                            courseTitle={courseTitle}
+                          />
+
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => void downloadCard()}
+                              disabled={downloading || sharing}
+                              className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-background py-2.5 text-xs font-bold text-foreground transition-colors hover:bg-secondary disabled:opacity-60"
+                            >
+                              {downloading ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                              ) : (
+                                <Download className="h-3.5 w-3.5" />
+                              )}
+                              Download PNG
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => void copyCaption()}
+                              className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-background py-2.5 text-xs font-bold text-foreground transition-colors hover:bg-secondary"
+                            >
+                              <Copy className="h-3.5 w-3.5" /> Copy caption
+                            </button>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => void shareLinkedIn()}
+                            disabled={sharing || downloading}
+                            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0A66C2] py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#095196] disabled:opacity-60"
+                          >
+                            {sharing ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : (
+                              <Linkedin className="h-3.5 w-3.5" />
+                            )}
+                            Share on LinkedIn
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -323,4 +436,4 @@ export default function CelebrationOverlay({
 
   if (typeof document === 'undefined') return null;
   return createPortal(overlay, document.body);
-};
+}

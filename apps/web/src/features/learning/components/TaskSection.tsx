@@ -85,10 +85,9 @@ export const TaskSection: React.FC<TaskSectionProps> = ({
       onComplete();
       toast.success(completed ? 'Task updated!' : 'Task marked as complete!');
     } catch (err: unknown) {
-      const message =
-        err && typeof err === 'object' && 'response' in err
-          ? (err as { response?: { data?: { error?: string } } }).response?.data?.error
-          : undefined;
+      // The API interceptor rejects with a plain Error carrying the server's
+      // message, so read `.message` rather than an axios-shaped `.response`.
+      const message = err instanceof Error ? err.message : undefined;
       toast.error(message || 'Failed to complete task');
     } finally {
       setLoading(false);
