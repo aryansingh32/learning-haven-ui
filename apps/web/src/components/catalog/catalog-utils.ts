@@ -13,6 +13,12 @@ export type CatalogCourse = {
   duration_days?: number;
   is_premium?: boolean;
   is_published?: boolean;
+  /** One-time purchase price in paise. Null/undefined = not individually purchasable. */
+  price_inr?: number | null;
+  /** Struck-through reference price in paise, for discount display. */
+  original_price_inr?: number | null;
+  /** Openly accessible — no plan or purchase required. */
+  is_free?: boolean;
   item_count?: number;
   chapter_count?: number;
   enrolled_count?: number;
@@ -88,6 +94,44 @@ export function courseInitials(title: string): string {
     .slice(0, 2)
     .map((w) => w[0]?.toUpperCase())
     .join('');
+}
+
+/** Money is stored in paise everywhere on the backend. */
+export function formatRupees(paise: number): string {
+  return `₹${Math.round(paise / 100).toLocaleString('en-IN')}`;
+}
+
+export type CoursePricing =
+  | { kind: 'free' }
+  /** Covered by the learner's subscription, or already bought. */
+  | { kind: 'owned' }
+  /** Purchasable outright. */
+  | { kind: 'paid'; price: string; originalPrice: string | null; discountPercent: number | null }
+  /** Premium, but only reachable by subscribing — no standalone price set. */
+  | { kind: 'plan_only' };
+
+/**
+ * Resolve what a catalog card should show in place of a price, mirroring how
+ * Coursera labels a course: "Free", a price, or an owned/enrolled state.
+ */
+export function coursePricing(course: CatalogCourse, owned = false): CoursePricing {
+  if (owned) return { kind: 'owned' };
+  if (course.is_free) return { kind: 'free' };
+
+  const price = course.price_inr;
+  if (price == null || price <= 0) {
+    return course.is_premium ? { kind: 'plan_only' } : { kind: 'free' };
+  }
+
+  const original = course.original_price_inr ?? null;
+  const hasDiscount = original != null && original > price;
+
+  return {
+    kind: 'paid',
+    price: formatRupees(price),
+    originalPrice: hasDiscount ? formatRupees(original) : null,
+    discountPercent: hasDiscount ? Math.round(((original - price) / original) * 100) : null,
+  };
 }
 
 export function formatCount(count: number): string {

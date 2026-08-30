@@ -86,6 +86,23 @@ export class PaymentsV2Controller {
   }
 
   /**
+   * POST /api/v2/payments/course-order
+   * One-time purchase of a single course, priced from the course record.
+   */
+  static async createCourseOrder(req: Request, res: Response) {
+    try {
+      const userId = (req as AuthRequest).user!.id;
+      const { course_id, coupon_code } = req.body;
+
+      const order = await PaymentsV2Service.createCourseOrder(userId, course_id, coupon_code);
+      return created(res, order);
+    } catch (error: any) {
+      logger.error('Create course order error:', error);
+      return badRequest(res, error.message || 'Failed to create course order');
+    }
+  }
+
+  /**
    * POST /api/v2/payments/verify
    */
   static async verifyPayment(req: Request, res: Response) {

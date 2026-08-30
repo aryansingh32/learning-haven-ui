@@ -9,6 +9,12 @@ export interface Course {
     duration_days?: number;
     is_premium?: boolean;
     is_published?: boolean;
+    /** One-time purchase price in paise. Null = not individually purchasable. */
+    price_inr?: number | null;
+    /** Struck-through reference price in paise, for discount display. */
+    original_price_inr?: number | null;
+    /** Openly accessible — no plan or purchase required. */
+    is_free?: boolean;
     is_active: boolean;
     created_at: string;
     items?: CourseItem[];

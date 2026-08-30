@@ -128,6 +128,117 @@ export class PaymentsV2Service {
   }
 
   /**
+   * Create a Razorpay order for a single course, priced from the course record
+   * rather than from a subscription plan (Coursera-style one-time purchase).
+   *
+   * Grants permanent access on verification — see `verifyAndActivate`, which
+   * leaves `expires_at` NULL when a purchase has no plan behind it.
+   */
+  static async createCourseOrder(userId: string, courseId: string, couponCode?: string) {
+    const courseRes = await pool.query(
+      `SELECT id, title, slug, price_inr, original_price_inr, is_free, is_published
+         FROM public.courses
+        WHERE (id::text = $1 OR slug = $1)
+        LIMIT 1`,
+      [courseId],
+    );
+    if (courseRes.rows.length === 0) {
+      throw new Error('Course not found');
+    }
+    const course = courseRes.rows[0];
+
+    if (!course.is_published) {
+      throw new Error('This course is not available for purchase');
+    }
+    if (course.is_free) {
+      throw new Error('This course is free — no purchase is required');
+    }
+    if (course.price_inr == null || course.price_inr <= 0) {
+      throw new Error('This course is not individually purchasable');
+    }
+
+    // Already owned? Don't let the learner pay twice.
+    const owned = await pool.query(
+      `SELECT 1 FROM public.user_entitlements
+        WHERE user_id = $1
+          AND entitlement_type::text = 'resource_access'
+          AND resource_type = 'course'
+          AND resource_id = $2
+          AND starts_at <= NOW()
+          AND (expires_at IS NULL OR expires_at > NOW())
+        LIMIT 1`,
+      [userId, course.id],
+    );
+    if (owned.rows.length > 0) {
+      throw new Error('You already have access to this course');
+    }
+
+    const basePrice: number = course.price_inr;
+
+    let discountAmount = 0;
+    let couponId: string | null = null;
+    if (couponCode) {
+      // Course coupons are validated against the catalog-wide scope.
+      const cv = await this.validateCoupon(couponCode, 'course', userId, basePrice);
+      if (!cv.valid) throw new Error(cv.reason);
+      discountAmount = cv.discountAmount;
+      couponId = cv.coupon.id;
+    }
+
+    const discountedPrice = Math.max(0, basePrice - discountAmount);
+    const gstInfo = calculateGST(discountedPrice);
+    const finalAmountInPaise = gstInfo.total;
+
+    if (finalAmountInPaise < 100 && finalAmountInPaise > 0) {
+      throw new Error('Final amount cannot be less than ₹1');
+    }
+
+    let razorpayOrderId = `free_order_${Date.now()}_${userId.slice(0, 8)}`;
+    if (finalAmountInPaise > 0) {
+      const order = await razorpay.orders.create({
+        amount: finalAmountInPaise,
+        currency: 'INR',
+        receipt: `course_${userId.slice(0, 8)}_${Date.now()}`,
+        notes: { user_id: userId, course_id: course.id, purchase_kind: 'course' },
+      });
+      razorpayOrderId = order.id;
+    }
+
+    const metadata = {
+      purchase_kind: 'resource',
+      resource_type: 'course',
+      resource_id: course.id,
+      course_slug: course.slug,
+    };
+
+    const paymentResult = await pool.query(
+      `INSERT INTO public.payments (
+         user_id, plan_id, amount, discount_amount, tax_amount, final_amount,
+         status, razorpay_order_id, coupon_id, coupon_code, billing_cycle, description, metadata
+       ) VALUES ($1, NULL, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+       RETURNING id`,
+      [
+        userId, basePrice, discountAmount, gstInfo.gst_amount, finalAmountInPaise,
+        'created', razorpayOrderId, couponId, couponCode, 'one_time',
+        course.title,
+        metadata,
+      ],
+    );
+
+    return {
+      orderId: paymentResult.rows[0].id,
+      razorpayOrderId,
+      amount: basePrice,
+      discountAmount,
+      taxAmount: gstInfo.gst_amount,
+      finalAmount: finalAmountInPaise,
+      currency: 'INR',
+      course: { id: course.id, title: course.title, slug: course.slug },
+      keyId: env.RAZORPAY_KEY_ID,
+    };
+  }
+
+  /**
    * Verify Razorpay payment and activate subscription.
    */
   static async verifyAndActivate(
@@ -159,13 +270,24 @@ export class PaymentsV2Service {
         return { success: true, message: 'Payment already processed' }; // Idempotent
       }
 
-      // 3. Fetch plan
-      const planRes = await client.query(`SELECT slug, name FROM public.plans WHERE id = $1`, [payment.plan_id]);
-      const plan = planRes.rows[0];
+      // 3. Fetch plan. A standalone resource purchase (e.g. a single course)
+      //    has no plan_id, so `plan` may legitimately be undefined here.
+      const planRes = payment.plan_id
+        ? await client.query(`SELECT slug, name FROM public.plans WHERE id = $1`, [payment.plan_id])
+        : { rows: [] as Array<{ slug: string; name: string }> };
+      const plan = planRes.rows[0] as { slug: string; name: string } | undefined;
       const resourceType = payment.metadata?.resource_type;
       const resourceId = payment.metadata?.resource_id;
       const resourceFeature = this.featureForResource(resourceType);
       const isResourcePurchase = Boolean(resourceFeature && resourceId);
+
+      if (!plan && !isResourcePurchase) {
+        throw new Error('Payment references neither a plan nor a purchasable resource');
+      }
+
+      // Human-readable label for the granted entitlement and the receipt email.
+      const purchaseLabel =
+        plan?.name || payment.description || `${resourceType || 'Resource'} access`;
 
       // 4. Update payment status
       await client.query(
@@ -198,7 +320,7 @@ export class PaymentsV2Service {
 
         await client.query(
           `UPDATE public.users SET current_plan = $1, active_subscription_id = $2 WHERE id = $3`,
-          [plan.slug, subscriptionId, userId]
+          [plan!.slug, subscriptionId, userId]
         );
       }
 
@@ -221,11 +343,14 @@ export class PaymentsV2Service {
             resourceFeature,
             resourceType,
             resourceId,
-            `${plan.name} access`,
+            `${purchaseLabel} access`,
             payment.id,
             subscriptionId,
-            periodEnd,
-            { plan_slug: plan.slug, billing_cycle: payment.billing_cycle },
+            // A standalone one-time purchase (no plan behind it) grants
+            // permanent access; access bought as part of a subscription lapses
+            // with that subscription.
+            plan ? periodEnd : null,
+            { plan_slug: plan?.slug ?? null, billing_cycle: payment.billing_cycle },
           ]
         );
       }
@@ -253,9 +378,14 @@ export class PaymentsV2Service {
 
       // Enqueue jobs
       await monetizationQueue.add('referral.check-and-activate', { userId, paymentId: payment.id });
-      await monetizationQueue.add('payment.welcome-email', { userId, planName: plan.name });
+      await monetizationQueue.add('payment.welcome-email', { userId, planName: purchaseLabel });
 
-      return { success: true, subscriptionId, plan: { name: plan.name, slug: plan.slug } };
+      return {
+        success: true,
+        subscriptionId,
+        plan: plan ? { name: plan.name, slug: plan.slug } : null,
+        resource: isResourcePurchase ? { type: resourceType, id: resourceId } : null,
+      };
     } catch (error) {
       await client.query('ROLLBACK');
       throw error;

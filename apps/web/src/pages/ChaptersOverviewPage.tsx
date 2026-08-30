@@ -8,6 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useLearnCourse } from "@/hooks/useLearnCourse";
 import { PremiumLockBadge } from "@/components/PremiumLockBadge";
+import { CoursePurchasePanel } from "@/components/catalog/CoursePurchasePanel";
+import type { CatalogCourse } from "@/components/catalog/catalog-utils";
 
 const difficultyStyles: Record<string, string> = {
   easy: "bg-success/10 text-success border border-success/20",
@@ -125,6 +127,15 @@ export default function ChaptersOverviewPage() {
           </div>
         </div>
       </section>
+
+      {/* Renders only when this course is individually purchasable and the
+          learner does not already have access. */}
+      {course && (
+        <CoursePurchasePanel
+          course={course as unknown as CatalogCourse}
+          chapterCount={missions.length}
+        />
+      )}
 
       {missions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border p-12 text-center text-muted-foreground">

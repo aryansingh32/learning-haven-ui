@@ -21,6 +21,13 @@ router.get('/', CoursesController.listCourses);
 router.get('/enrollments/mine', authenticateUser, CoursesController.getMyEnrollments);
 
 /**
+ * @route   GET /api/courses/access/mine
+ * @desc    Which courses the learner already has access to (plan-wide or purchased)
+ * @access  Private
+ */
+router.get('/access/mine', authenticateUser, CoursesController.getMyCourseAccess);
+
+/**
  * @route   POST /api/courses/:id/enroll
  * @desc    Enroll in a course
  * @access  Private

@@ -46,6 +46,25 @@ export class CoursesController {
     }
 
     /**
+     * GET /api/courses/access/mine
+     * Which courses the learner can already open — either because their plan
+     * covers the whole catalog, or because they bought the course outright.
+     * Drives the "Enrolled" / "Buy" state on the catalog cards.
+     */
+    static async getMyCourseAccess(req: Request, res: Response) {
+        try {
+            const userId = (req as any).user?.id;
+            if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
+            const access = await CoursesService.getMyCourseAccess(userId);
+            res.json(access);
+        } catch (error) {
+            logger.error('Get course access error:', error);
+            res.status(500).json({ error: 'Failed to fetch course access' });
+        }
+    }
+
+    /**
      * POST /api/courses/:id/enroll
      */
     static async enroll(req: Request, res: Response) {

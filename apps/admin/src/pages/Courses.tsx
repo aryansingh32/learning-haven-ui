@@ -19,7 +19,8 @@ const Courses = () => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [form, setForm] = useState<Partial<Course>>({ 
         title: '', description: '', cover_image: '', difficulty_level: 'Beginner', 
-        duration_days: 30, is_premium: false, is_published: false 
+        duration_days: 30, is_premium: false, is_published: false,
+        is_free: false, price_inr: null, original_price_inr: null
     });
 
     const { data: courses, isLoading } = useQuery({
@@ -78,14 +79,17 @@ const Courses = () => {
             difficulty_level: c.difficulty_level || 'Beginner',
             duration_days: c.duration_days || 30,
             is_premium: c.is_premium || false,
-            is_published: c.is_published || false
+            is_published: c.is_published || false,
+            is_free: c.is_free || false,
+            price_inr: c.price_inr ?? null,
+            original_price_inr: c.original_price_inr ?? null
         });
     };
 
     const resetForm = () => {
         setShowCreate(false);
         setEditingId(null);
-        setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false });
+        setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false, is_free: false, price_inr: null, original_price_inr: null });
     };
 
     const handleSelectAll = (checked: boolean) => {
@@ -109,7 +113,7 @@ const Courses = () => {
                     <h2 className="text-3xl font-bold tracking-tight">Courses</h2>
                     <p className="text-muted-foreground mt-1">Create and manage your educational catalog</p>
                 </div>
-                <Button onClick={() => { setShowCreate(true); setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false }); }}>
+                <Button onClick={() => { setShowCreate(true); setForm({ title: '', description: '', cover_image: '', difficulty_level: 'Beginner', duration_days: 30, is_premium: false, is_published: false, is_free: false, price_inr: null, original_price_inr: null }); }}>
                     <Plus className="mr-2 h-4 w-4" /> New Course
                 </Button>
             </div>
@@ -155,16 +159,74 @@ const Courses = () => {
                                 <Input type="number" value={form.duration_days} onChange={(e) => setForm({ ...form, duration_days: parseInt(e.target.value) || 0 })} placeholder="30" />
                             </div>
                             
-                            <div className="flex items-center gap-6 mt-4">
+                            <div className="flex flex-wrap items-center gap-6 mt-4">
+                                <div className="flex items-center gap-2">
+                                    <Switch checked={form.is_free} onCheckedChange={(c) => setForm({ ...form, is_free: c })} />
+                                    <Label>Free (no purchase needed)</Label>
+                                </div>
                                 <div className="flex items-center gap-2">
                                     <Switch checked={form.is_premium} onCheckedChange={(c) => setForm({ ...form, is_premium: c })} />
-                                    <Label>Premium (Paid)</Label>
+                                    <Label>Premium (plan required)</Label>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Switch checked={form.is_published} onCheckedChange={(c) => setForm({ ...form, is_published: c })} />
                                     <Label>Published (Public)</Label>
                                 </div>
                             </div>
+
+                            {/* Individual purchase pricing. Leaving the price empty keeps
+                                the course reachable only through a subscription plan. */}
+                            {!form.is_free && (
+                                <div className="mt-4 rounded-lg border p-4 space-y-3">
+                                    <div>
+                                        <Label className="text-base">Individual purchase price</Label>
+                                        <p className="text-xs text-muted-foreground mt-0.5">
+                                            Leave blank to make this course plan-only (no standalone checkout).
+                                        </p>
+                                    </div>
+                                    <div className="grid sm:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label>Price (₹)</Label>
+                                            <Input
+                                                type="number"
+                                                min={0}
+                                                value={form.price_inr != null ? form.price_inr / 100 : ''}
+                                                onChange={(e) => {
+                                                    const rupees = e.target.value;
+                                                    setForm({
+                                                        ...form,
+                                                        price_inr: rupees === '' ? null : Math.round(parseFloat(rupees) * 100),
+                                                    });
+                                                }}
+                                                placeholder="e.g. 499"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Original price (₹) — optional</Label>
+                                            <Input
+                                                type="number"
+                                                min={0}
+                                                value={form.original_price_inr != null ? form.original_price_inr / 100 : ''}
+                                                onChange={(e) => {
+                                                    const rupees = e.target.value;
+                                                    setForm({
+                                                        ...form,
+                                                        original_price_inr: rupees === '' ? null : Math.round(parseFloat(rupees) * 100),
+                                                    });
+                                                }}
+                                                placeholder="e.g. 999"
+                                            />
+                                        </div>
+                                    </div>
+                                    {form.price_inr != null &&
+                                        form.original_price_inr != null &&
+                                        form.original_price_inr < form.price_inr && (
+                                            <p className="text-xs text-destructive">
+                                                Original price must be at or above the live price.
+                                            </p>
+                                        )}
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex gap-2 mt-8 justify-end">

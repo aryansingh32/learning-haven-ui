@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
   accentIndex, chapterCount, COVER_GRADIENTS, courseCover, courseDifficulty, courseDuration,
-  courseInitials, difficultyClass, formatCount, type CatalogCourse,
+  courseInitials, coursePricing, difficultyClass, formatCount, type CatalogCourse,
 } from './catalog-utils';
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   variant?: 'vertical' | 'horizontal';
   className?: string;
   isEnrolled?: boolean;
+  /** True when the learner's plan covers this course, or they bought it. */
+  isOwned?: boolean;
 };
 
 function Cover({ course, className }: { course: CatalogCourse; className?: string }) {
@@ -38,11 +40,12 @@ function Cover({ course, className }: { course: CatalogCourse; className?: strin
   );
 }
 
-export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className, isEnrolled }: Props) {
+export function PremiumCourseCard({ course, index = 0, onClick, variant = 'vertical', className, isEnrolled, isOwned }: Props) {
   const difficulty = courseDifficulty(course);
   const duration = courseDuration(course);
   const chapters = chapterCount(course);
   const learners = course.enrolled_count || 0;
+  const pricing = coursePricing(course, isOwned || isEnrolled);
 
   if (variant === 'horizontal') {
     return (
@@ -120,9 +123,39 @@ export function PremiumCourseCard({ course, index = 0, onClick, variant = 'verti
             <span className="inline-flex items-center gap-1"><Users className="w-3.5 h-3.5" /> {formatCount(learners)}</span>
           )}
         </div>
-        <span className="mt-auto inline-flex items-center gap-1 text-meta font-bold text-primary pt-2 group-hover:gap-2 transition-all">
-          {isEnrolled ? 'Continue learning' : 'Start learning'} <ArrowRight className="w-3.5 h-3.5" />
-        </span>
+        <div className="mt-auto flex items-end justify-between gap-2 pt-2">
+          {/* Price — the first thing a learner scans for on a catalog card. */}
+          <div className="min-w-0">
+            {pricing.kind === 'free' && (
+              <span className="text-meta font-bold text-success">Free</span>
+            )}
+            {pricing.kind === 'owned' && (
+              <span className="text-meta font-bold text-success">Enrolled</span>
+            )}
+            {pricing.kind === 'plan_only' && (
+              <span className="text-meta font-bold text-reward">Included with Pro</span>
+            )}
+            {pricing.kind === 'paid' && (
+              <span className="flex flex-wrap items-baseline gap-x-1.5">
+                <span className="font-display text-base font-bold text-foreground">{pricing.price}</span>
+                {pricing.originalPrice && (
+                  <span className="text-caption text-muted-foreground line-through">{pricing.originalPrice}</span>
+                )}
+                {pricing.discountPercent != null && pricing.discountPercent > 0 && (
+                  <span className="text-caption font-bold text-success">{pricing.discountPercent}% off</span>
+                )}
+              </span>
+            )}
+          </div>
+          <span className="shrink-0 inline-flex items-center gap-1 text-meta font-bold text-primary group-hover:gap-2 transition-all">
+            {isEnrolled || isOwned
+              ? 'Continue'
+              : pricing.kind === 'paid'
+                ? 'View course'
+                : 'Start learning'}
+            <ArrowRight className="w-3.5 h-3.5" />
+          </span>
+        </div>
       </div>
     </motion.article>
   );

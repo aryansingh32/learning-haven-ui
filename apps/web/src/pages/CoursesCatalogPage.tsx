@@ -110,6 +110,30 @@ export default function CoursesCatalogPage() {
     },
   });
 
+  // Which courses the learner can already open — plan-wide access or an
+  // outright purchase. Drives the price vs. "Enrolled" state on each card.
+  const { data: accessData } = useQuery({
+    queryKey: ['my-course-access'],
+    queryFn: async () => {
+      try {
+        return (await api.get('/courses/access/mine')) as unknown as {
+          has_all_access: boolean;
+          purchased_course_ids: string[];
+        };
+      } catch {
+        return { has_all_access: false, purchased_course_ids: [] };
+      }
+    },
+    staleTime: 60_000,
+  });
+
+  const hasAllCourseAccess = accessData?.has_all_access ?? false;
+  const purchasedCourseIds = useMemo(
+    () => new Set(accessData?.purchased_course_ids || []),
+    [accessData]
+  );
+  const ownsCourse = (id: string) => hasAllCourseAccess || purchasedCourseIds.has(id);
+
   const enrollments = enrollmentsData || [];
 
   const allCourses = useMemo(() => (phases || []) as CatalogCourse[], [phases]);
@@ -174,19 +198,31 @@ export default function CoursesCatalogPage() {
     const enrolledCourseIds = new Set(enrollments.map((e: any) => e.course_id));
     return allCourses.filter(c => !enrolledCourseIds.has(c.id)).slice(0, 4);
   }, [allCourses, enrollments]);
-  // BH-010: Route premium courses to subscription page if not enrolled.
-  // Previously ALL courses went to /course/:id/chapters regardless of premium status,
-  // so there was no purchase entry point at the catalog level.
+  // Routing mirrors Coursera: an owned/free course opens straight into its
+  // chapters; a paid one opens the course page, which carries the price and
+  // the buy action. Only a premium course with no standalone price still has
+  // to go to the subscription page, since a plan is the only way to reach it.
   const goToCourse = (id: string) => {
     const course = allCourses.find((c) => c.id === id);
     const isEnrolled = enrollments.some((e: any) => e.course_id === id);
+    const owned = ownsCourse(id) || isEnrolled;
 
-    if (course?.is_premium && !isEnrolled) {
-      // Send to subscription/pricing page with context so the CTA can pre-select this course
-      navigate(`/subscription?course_id=${id}&ref=catalog`);
-    } else {
+    if (owned || course?.is_free) {
       navigate(`/course/${id}/chapters`);
+      return;
     }
+
+    if (course?.price_inr && course.price_inr > 0) {
+      navigate(`/course/${id}/chapters`);
+      return;
+    }
+
+    if (course?.is_premium) {
+      navigate(`/subscription?course_id=${id}&ref=catalog`);
+      return;
+    }
+
+    navigate(`/course/${id}/chapters`);
   };
 
   if (isCoursesLoading) {
@@ -331,6 +367,7 @@ export default function CoursesCatalogPage() {
                       onClick={() => goToCourse(course.id)}
                       className="min-w-0 max-w-none"
                       isEnrolled={enrollments.some((e: any) => e.course_id === course.id)}
+                      isOwned={ownsCourse(course.id)}
                     />
                   ))}
                 </div>

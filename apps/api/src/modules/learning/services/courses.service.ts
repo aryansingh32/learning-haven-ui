@@ -74,6 +74,53 @@ export class CoursesService {
         }
     }
 
+    /**
+     * Courses the learner can already open, and why.
+     *
+     * `has_all_access` is true when their plan carries the catalog-wide
+     * `all_courses_access` entitlement, in which case per-course purchases are
+     * irrelevant and the catalog should not offer a price.
+     */
+    static async getMyCourseAccess(userId: string): Promise<{
+        has_all_access: boolean;
+        purchased_course_ids: string[];
+    }> {
+        try {
+            const [allAccessRes, purchasedRes] = await Promise.all([
+                pool.query(
+                    `SELECT 1
+                       FROM public.users u
+                       JOIN public.plans p ON p.slug::text = u.current_plan::text
+                       JOIN public.plan_entitlements pe ON pe.plan_id = p.id
+                      WHERE u.id = $1
+                        AND pe.feature_key = 'all_courses_access'
+                        AND pe.bool_value = true
+                      LIMIT 1`,
+                    [userId],
+                ),
+                pool.query(
+                    `SELECT resource_id
+                       FROM public.user_entitlements
+                      WHERE user_id = $1
+                        AND entitlement_type::text = 'resource_access'
+                        AND resource_type = 'course'
+                        AND resource_id IS NOT NULL
+                        AND starts_at <= NOW()
+                        AND (expires_at IS NULL OR expires_at > NOW())`,
+                    [userId],
+                ),
+            ]);
+
+            return {
+                has_all_access: allAccessRes.rows.length > 0,
+                purchased_course_ids: purchasedRes.rows.map((r: any) => String(r.resource_id)),
+            };
+        } catch (error) {
+            logger.error('Get course access error:', { userId, error });
+            throw new Error('Failed to fetch course access');
+        }
+    }
+
     // ── Enrollments ─────────────────────────────────────────
 
     static async getMyEnrollments(userId: string) {
@@ -156,6 +203,10 @@ export class CoursesService {
         cover_image?: string;
         is_premium?: boolean;
         is_published?: boolean;
+        // Individual-purchase pricing, in paise.
+        price_inr?: number | null;
+        original_price_inr?: number | null;
+        is_free?: boolean;
     }) {
         try {
             const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
