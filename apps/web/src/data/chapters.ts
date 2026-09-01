@@ -27,6 +27,14 @@ export type PracticeProblem = {
   expected_output?: string;
 };
 
+export type VisualizerFrame = {
+  array?: (number | string)[];
+  highlight?: number[];
+  swapped?: number[];
+  pointer_labels?: Record<string, number>;
+  caption: string;
+};
+
 export type StepContent = {
   story?: string;
   youtube_url?: string;
@@ -40,6 +48,8 @@ export type StepContent = {
     url?: string;
     task?: string;
     notes?: string;
+    title?: string;
+    frames?: VisualizerFrame[];
   };
   practice_problems?: PracticeProblem[];
   quiz_questions?: QuizQuestion[];

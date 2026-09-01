@@ -334,6 +334,8 @@ export default function LearnChapterPage() {
             url={c.visualizer?.url}
             task={c.visualizer?.task}
             notes={c.visualizer?.notes}
+            title={c.visualizer?.title}
+            frames={c.visualizer?.frames}
             onMarkDone={() => markStepDone(step.id, index)}
           />
         );

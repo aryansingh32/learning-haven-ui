@@ -65,13 +65,24 @@ const docContentSchema = z.object({
     doc_md: z.string().optional(),
 });
 
+const visualizerFrameSchema = z.object({
+    array:     z.array(z.union([z.number(), z.string()])).optional(),
+    highlight: z.array(z.number()).optional(),
+    swapped:   z.array(z.number()).optional(),
+    pointer_labels: z.record(z.string(), z.number()).optional(),
+    caption:   z.string(),
+});
+
 const visualizerContentSchema = z.object({
     step_type: z.literal('visualizer'),
-    // c.visualizer.url / .task / .notes  (lines 320-323)
+    // c.visualizer.url / .task / .notes  (legacy external-link mode, lines 320-323)
+    // c.visualizer.frames  (interactive step-by-step mode, admin-authored)
     visualizer: z.object({
         url:   z.string().optional(),
         task:  z.string().optional(),
         notes: z.string().optional(),
+        title: z.string().optional(),
+        frames: z.array(visualizerFrameSchema).min(1).optional(),
     }).optional(),
 });
 
