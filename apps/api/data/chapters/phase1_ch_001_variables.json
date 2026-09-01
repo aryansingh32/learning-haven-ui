@@ -24,7 +24,14 @@
         "title": "Variables in C++/JS 2026",
         "channel": "Apna College",
         "duration_min": 18,
-        "focus_note": "Watch first 12 minutes only. Notice how memory boxes are created and destroyed."
+        "focus_note": "Watch first 12 minutes only. Notice how memory boxes are created and destroyed.",
+        "timeline": [
+          { "start_sec": 20, "end_sec": 60, "type": "message", "body": "💡 Pro tip: say the variable's name out loud as you type it — it helps memory stick." },
+          { "start_sec": 60, "end_sec": 150, "type": "flashcard", "front": "What is a variable?", "body": "A named location in memory that stores a value your program can read or change." },
+          { "start_sec": 150, "end_sec": 240, "type": "quiz", "body": "Which of these is a valid variable declaration in JavaScript?", "options": ["let x = 5;", "5 = x;", "variable x is 5"], "correct_index": 0 },
+          { "start_sec": 240, "end_sec": 360, "type": "note", "title": "Stack vs Heap", "body": "Simple values (numbers, booleans) usually live on the stack. Objects and arrays live on the heap, with the stack holding a reference to them." },
+          { "start_sec": 360, "type": "doc", "title": "Scope Recap", "body": "A variable's scope is the region of code where it's accessible. Block scope ({ }) applies to let/const; var ignores block scope entirely." }
+        ]
       }
     },
     {
@@ -41,9 +48,16 @@
       "title": "Memory Boxes Visualizer",
       "content": {
         "visualizer": {
-          "url": "https://visualgo.net/en/memory",
-          "task": "Drag values into boxes to simulate variables.",
-          "notes": "Observe how variables appear/disappear with scope."
+          "title": "Swapping Two Variables — Step by Step",
+          "task": "Watch how memory boxes change when we swap x and y — and why a temp variable is needed.",
+          "frames": [
+            { "array": [5], "highlight": [0], "pointer_labels": { "x": 0 }, "caption": "int x = 5; — a box named x is created in memory, holding 5." },
+            { "array": [5, 10], "highlight": [1], "pointer_labels": { "x": 0, "y": 1 }, "caption": "int y = 10; — a second box named y is created, holding 10." },
+            { "array": [10, 10], "highlight": [0, 1], "swapped": [0], "pointer_labels": { "x": 0, "y": 1 }, "caption": "x = y; — x now holds 10. But we just overwrote the original 5 with no way to get it back!" },
+            { "array": [5, 10, 5], "highlight": [2], "pointer_labels": { "x": 0, "y": 1, "temp": 2 }, "caption": "Let's redo it properly. First: temp = x; — temp now safely holds the original 5." },
+            { "array": [10, 10, 5], "highlight": [0], "swapped": [0], "pointer_labels": { "x": 0, "y": 1, "temp": 2 }, "caption": "x = y; — now x holds 10. Nothing is lost, because temp still has the original 5." },
+            { "array": [10, 5, 5], "highlight": [1], "swapped": [1], "pointer_labels": { "x": 0, "y": 1, "temp": 2 }, "caption": "y = temp; — y now holds 5. Swap complete: x=10, y=5, exactly as intended." }
+          ]
         }
       }
     },

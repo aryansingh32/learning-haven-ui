@@ -17,12 +17,22 @@ interface ServerCheckResult {
   correctOption: string | null;
 }
 
+export interface QuizAnswerDetail {
+  question: string;
+  options: string[];
+  selected_index: number;
+  selected_text: string;
+  is_correct: boolean;
+  correct_option: string | null;
+  explanation: string;
+}
+
 interface QuizSectionProps {
   chapterId: string;
   questions: QuizQuestion[];
   savedScorePercent?: number | null;
   alreadySubmitted?: boolean;
-  onSubmitQuiz: (score: number, passed: boolean, totalQuestions: number) => void;
+  onSubmitQuiz: (score: number, passed: boolean, totalQuestions: number, answers: QuizAnswerDetail[]) => void;
   onProceed: () => void;
 }
 
@@ -125,7 +135,22 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
       setSubmitted(true);
       setPhase('results');
       persistLocal(answers, true);
-      onSubmitQuiz(correctCount, didPass, normalized.length);
+
+      const answersDetail: QuizAnswerDetail[] = normalized.map((q) => {
+        const result = resultMap[q.id];
+        const selectedIndex = answers[q.id];
+        return {
+          question: q.text,
+          options: q.options,
+          selected_index: selectedIndex,
+          selected_text: q.options[selectedIndex] ?? '',
+          is_correct: Boolean(result?.correct),
+          correct_option: result?.correct ? null : result?.correctOption ?? null,
+          explanation: result?.explanation || q.explanation || '',
+        };
+      });
+
+      onSubmitQuiz(correctCount, didPass, normalized.length, answersDetail);
     } finally {
       setChecking(false);
     }

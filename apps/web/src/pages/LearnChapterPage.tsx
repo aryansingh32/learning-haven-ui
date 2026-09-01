@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   fetchChapterWithProgress,
@@ -14,7 +14,7 @@ import { api } from '@/services/api.svc';
 import { useAuth } from '@/context/AuthContext';
 import { StoryHook } from '@/features/learning/components/StoryHook';
 import { VideoSection } from '@/features/learning/components/VideoSection';
-import { QuizSection } from '@/features/learning/components/QuizSection';
+import { QuizSection, type QuizAnswerDetail } from '@/features/learning/components/QuizSection';
 import { TaskSection } from '@/features/learning/components/TaskSection';
 import { UnlockSection } from '@/features/learning/components/UnlockSection';
 import { ProblemsSection } from '@/features/learning/components/ProblemsSection';
@@ -24,6 +24,7 @@ import { CompleteStepSection } from '@/features/learning/components/CompleteStep
 import { MicroRevisionSection } from '@/features/learning/components/MicroRevisionSection';
 import CelebrationOverlay from '@/features/learning/components/CelebrationOverlay';
 import { ChapterCta } from '@/features/learning/components/ChapterCta';
+import { ChapterNotesPanel } from '@/features/learning/components/ChapterNotesPanel';
 import { toast } from 'sonner';
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
 
@@ -67,6 +68,7 @@ export default function LearnChapterPage() {
     nextChapterId?: string;
   } | null>(null);
   const [cinemaMode, setCinemaMode] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chapter', chapterId],
@@ -84,11 +86,12 @@ export default function LearnChapterPage() {
   });
 
   const quizMutation = useMutation({
-    mutationFn: ({ score, passed, totalQuestions }: { score: number; passed: boolean; totalQuestions: number }) =>
+    mutationFn: ({ score, passed, totalQuestions, answers }: { score: number; passed: boolean; totalQuestions: number; answers: QuizAnswerDetail[] }) =>
       api.post(`/chapters/${chapterId}/progress/quiz`, {
         score,
         passed,
         total_questions: totalQuestions,
+        answers,
       }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ['chapter', chapterId] });
@@ -311,19 +314,30 @@ export default function LearnChapterPage() {
             channel={c.channel}
             duration={c.duration_min}
             focusNote={c.focus_note}
+            timeline={c.timeline}
+            chapterId={chapter.id}
             cinemaMode={cinemaMode}
             onCinemaModeChange={setCinemaMode}
             onMarkDone={() => markStepDone(step.id, index)}
           />
         );
       case 'doc':
-        return <DocSection markdown={c.doc_md || ''} onMarkDone={() => markStepDone(step.id, index)} />;
+        return (
+          <DocSection
+            markdown={c.doc_md || ''}
+            chapterId={chapter.id}
+            chapterTitle={step.title || chapter.title}
+            onMarkDone={() => markStepDone(step.id, index)}
+          />
+        );
       case 'visualizer':
         return (
           <VisualizerSection
             url={c.visualizer?.url}
             task={c.visualizer?.task}
             notes={c.visualizer?.notes}
+            title={c.visualizer?.title}
+            frames={c.visualizer?.frames}
             onMarkDone={() => markStepDone(step.id, index)}
           />
         );
@@ -356,8 +370,8 @@ export default function LearnChapterPage() {
                 q: q.question,
               })
             )}
-            onSubmitQuiz={(score, passed, totalQuestions) => {
-              quizMutation.mutate({ score, passed, totalQuestions });
+            onSubmitQuiz={(score, passed, totalQuestions, answers) => {
+              quizMutation.mutate({ score, passed, totalQuestions, answers });
             }}
             onProceed={() => markStepDone(step.id, index)}
           />
@@ -436,13 +450,24 @@ export default function LearnChapterPage() {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <button
-        type="button"
-        onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" /> Back to course
-      </button>
+      <div className="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to course
+        </button>
+        {started && (
+          <button
+            type="button"
+            onClick={() => setNotesOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 px-3.5 py-2 text-xs font-bold text-foreground transition-colors"
+          >
+            <NotebookText className="h-3.5 w-3.5 text-orange-500" /> My Notes
+          </button>
+        )}
+      </div>
 
       {/* Story hero — hidden in YouTube cinema mode */}
       {!(started && cinemaMode && activeStepIsVideo) && (
@@ -654,6 +679,14 @@ export default function LearnChapterPage() {
             ? () => navigate(`/chapter/${celebrationPayload.nextChapterId}`)
             : () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')
         }
+      />
+
+      <ChapterNotesPanel
+        open={notesOpen}
+        onOpenChange={setNotesOpen}
+        chapterId={chapter.id}
+        chapterTitle={chapter.title}
+        courseId={data?.course?.id}
       />
     </motion.div>
   );

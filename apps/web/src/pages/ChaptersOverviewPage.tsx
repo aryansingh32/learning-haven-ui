@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight, ArrowLeft, CheckCircle2, Clock, Flame, Lock,
-  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2
+  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -96,15 +96,35 @@ export default function ChaptersOverviewPage() {
             <h1 className="font-display text-2xl font-extrabold text-foreground">{phaseTitle}</h1>
             <p className="text-sm text-muted-foreground mt-1 max-w-xl">{phaseDescription}</p>
           </div>
-          {nextMission && (
-            <button
-              type="button"
-              onClick={() => navigate(`/chapter/${nextMission.id}`)}
-              className="inline-flex items-center gap-2 rounded-xl bg-orange-500 hover:bg-orange-600 shadow-md text-white px-5 py-2.5 text-sm font-bold transition-all hover:-translate-y-0.5"
-            >
-              Continue Chapter <ArrowRight className="h-4 w-4" />
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {courseId && (
+              <button
+                type="button"
+                onClick={() => navigate(`/course/${courseId}/notebook`)}
+                className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 text-foreground px-4 py-2.5 text-sm font-bold transition-all"
+              >
+                <NotebookText className="h-4 w-4 text-orange-500" /> My Notebook
+              </button>
+            )}
+            {courseId && (
+              <button
+                type="button"
+                onClick={() => navigate(`/course/${courseId}/mock-test`)}
+                className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 text-foreground px-4 py-2.5 text-sm font-bold transition-all"
+              >
+                <Trophy className="h-4 w-4 text-orange-500" /> Mock Test
+              </button>
+            )}
+            {nextMission && (
+              <button
+                type="button"
+                onClick={() => navigate(`/chapter/${nextMission.id}`)}
+                className="inline-flex items-center gap-2 rounded-xl bg-orange-500 hover:bg-orange-600 shadow-md text-white px-5 py-2.5 text-sm font-bold transition-all hover:-translate-y-0.5"
+              >
+                Continue Chapter <ArrowRight className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
         <div className="mt-5">
           <motion.div

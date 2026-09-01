@@ -63,12 +63,12 @@ router.post('/:chapterId/quiz/check', authenticateUser, async (req: any, res: Re
 router.post('/:chapterId/progress/quiz', authenticateUser, async (req: any, res: Response) => {
     try {
         const { chapterId } = req.params;
-        const { score, passed, total_questions } = req.body;
+        const { score, passed, total_questions, answers } = req.body;
         const userId = req.user?.id;
 
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
-        const result = await ChaptersService.updateQuizProgress(userId, chapterId, score, passed, total_questions);
+        const result = await ChaptersService.updateQuizProgress(userId, chapterId, score, passed, total_questions, answers);
         return res.json(result);
     } catch (err: any) {
         logger.error('Quiz progress POST error', err);

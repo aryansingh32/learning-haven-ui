@@ -49,7 +49,9 @@ class ApiService {
       },
       async (error: AxiosError) => {
         const status = error.response?.status;
-        const message = (error.response?.data as { error?: string })?.error || error.message;
+        const responseError = (error.response?.data as { error?: string | { message?: string } })?.error;
+        const message =
+          (typeof responseError === 'string' ? responseError : responseError?.message) || error.message;
         const config = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
         const isAnalyticsTrack = config?.url?.includes('/analytics/track');
@@ -94,7 +96,10 @@ class ApiService {
           }
         }
 
-        return Promise.reject(new Error(message));
+        const apiError = new Error(message) as Error & { status?: number; data?: unknown };
+        apiError.status = status;
+        apiError.data = error.response?.data;
+        return Promise.reject(apiError);
       }
     );
   }
