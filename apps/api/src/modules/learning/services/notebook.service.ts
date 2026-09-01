@@ -110,6 +110,7 @@ export class NotebookService {
                 notes_updated_at: notes?.updated_at || null,
                 quiz_score: progress?.quiz_score ?? null,
                 quiz_attempts: progress?.quiz_attempts ?? 0,
+                quiz_answers: Array.isArray(progress?.quiz_answers) ? progress.quiz_answers : [],
                 task_response: progress?.task_response || null,
                 task_submitted_at: progress?.task_submitted_at || null,
             };
@@ -259,6 +260,44 @@ export class NotebookService {
                     x: margin, y: cursorY, size: 11, font: helvetica, color: rgb(0.85, 0.5, 0.1),
                 });
                 cursorY -= 22;
+
+                const quizAnswers = Array.isArray((entry as any).quiz_answers) ? (entry as any).quiz_answers : [];
+                for (const [i, qa] of quizAnswers.entries()) {
+                    const isCorrect = Boolean(qa.is_correct);
+                    const marker = isCorrect ? '[correct]' : '[wrong]';
+                    const markerColor = isCorrect ? rgb(0.15, 0.55, 0.3) : rgb(0.75, 0.2, 0.2);
+
+                    ensureSpace(16);
+                    const qLines = wrapText(`${i + 1}. ${qa.question || ''}`, helveticaBold, 11);
+                    qLines.forEach((line, li) => {
+                        ensureSpace(15);
+                        page.drawText(line, { x: margin, y: cursorY, size: 11, font: helveticaBold, color: rgb(0.15, 0.15, 0.15) });
+                        if (li === 0) {
+                            const markerWidth = helveticaBold.widthOfTextAtSize(marker, 9);
+                            page.drawText(marker, { x: width - margin - markerWidth, y: cursorY, size: 9, font: helveticaBold, color: markerColor });
+                        }
+                        cursorY -= 15;
+                    });
+
+                    if (qa.selected_text) {
+                        ensureSpace(14);
+                        const answerLabel = isCorrect ? 'Your answer (correct):' : 'Your answer:';
+                        for (const line of wrapText(`${answerLabel} ${qa.selected_text}`, helvetica, 10)) {
+                            ensureSpace(14);
+                            page.drawText(line, { x: margin + 12, y: cursorY, size: 10, font: helvetica, color: markerColor });
+                            cursorY -= 14;
+                        }
+                    }
+                    if (!isCorrect && qa.correct_option) {
+                        for (const line of wrapText(`Correct answer: ${qa.correct_option}`, helvetica, 10)) {
+                            ensureSpace(14);
+                            page.drawText(line, { x: margin + 12, y: cursorY, size: 10, font: helvetica, color: rgb(0.15, 0.55, 0.3) });
+                            cursorY -= 14;
+                        }
+                    }
+                    cursorY -= 6;
+                }
+                cursorY -= 6;
             }
 
             if (entry.notes) {

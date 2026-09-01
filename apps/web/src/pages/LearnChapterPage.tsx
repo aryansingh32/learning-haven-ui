@@ -14,7 +14,7 @@ import { api } from '@/services/api.svc';
 import { useAuth } from '@/context/AuthContext';
 import { StoryHook } from '@/features/learning/components/StoryHook';
 import { VideoSection } from '@/features/learning/components/VideoSection';
-import { QuizSection } from '@/features/learning/components/QuizSection';
+import { QuizSection, type QuizAnswerDetail } from '@/features/learning/components/QuizSection';
 import { TaskSection } from '@/features/learning/components/TaskSection';
 import { UnlockSection } from '@/features/learning/components/UnlockSection';
 import { ProblemsSection } from '@/features/learning/components/ProblemsSection';
@@ -86,11 +86,12 @@ export default function LearnChapterPage() {
   });
 
   const quizMutation = useMutation({
-    mutationFn: ({ score, passed, totalQuestions }: { score: number; passed: boolean; totalQuestions: number }) =>
+    mutationFn: ({ score, passed, totalQuestions, answers }: { score: number; passed: boolean; totalQuestions: number; answers: QuizAnswerDetail[] }) =>
       api.post(`/chapters/${chapterId}/progress/quiz`, {
         score,
         passed,
         total_questions: totalQuestions,
+        answers,
       }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ['chapter', chapterId] });
@@ -358,8 +359,8 @@ export default function LearnChapterPage() {
                 q: q.question,
               })
             )}
-            onSubmitQuiz={(score, passed, totalQuestions) => {
-              quizMutation.mutate({ score, passed, totalQuestions });
+            onSubmitQuiz={(score, passed, totalQuestions, answers) => {
+              quizMutation.mutate({ score, passed, totalQuestions, answers });
             }}
             onProceed={() => markStepDone(step.id, index)}
           />

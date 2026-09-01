@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Download, Loader2,
-  NotebookText, CheckCircle2, ListChecks, Sparkles,
+  NotebookText, CheckCircle2, XCircle, ListChecks, Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { fetchCourseNotebook, exportCourseNotebookPdf, type NotebookEntry } from '@/data/notebook';
@@ -213,6 +213,38 @@ export default function NotebookPage() {
                     </div>
                   ) : null}
 
+                  {page.entry.quiz_answers?.length ? (
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">Quiz Review</p>
+                      <div className="space-y-3">
+                        {page.entry.quiz_answers.map((qa, qi) => (
+                          <div
+                            key={qi}
+                            className={cn(
+                              'rounded-lg border-l-4 bg-white/40 p-3',
+                              qa.is_correct ? 'border-emerald-500/70' : 'border-red-400/70'
+                            )}
+                          >
+                            <div className="flex items-start gap-2">
+                              {qa.is_correct ? (
+                                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                              ) : (
+                                <XCircle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                              )}
+                              <p className="text-sm font-semibold leading-relaxed">{qi + 1}. {qa.question}</p>
+                            </div>
+                            <p className="text-xs mt-1.5 pl-6 text-[#5b5138]">
+                              Your answer: <span className={cn('font-semibold', qa.is_correct ? 'text-emerald-700' : 'text-red-600 line-through decoration-red-400')}>{qa.selected_text}</span>
+                            </p>
+                            {!qa.is_correct && qa.correct_option && (
+                              <p className="text-xs pl-6 text-emerald-700 font-semibold">Correct answer: {qa.correct_option}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+
                   {page.entry.task_response ? (
                     <div>
                       <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">Task Response</p>
@@ -220,7 +252,7 @@ export default function NotebookPage() {
                     </div>
                   ) : null}
 
-                  {!page.entry.notes && !page.entry.task_response && page.entry.quiz_score === null && (
+                  {!page.entry.notes && !page.entry.task_response && !page.entry.quiz_answers?.length && page.entry.quiz_score === null && (
                     <div className="flex flex-col items-center justify-center text-center gap-2 py-16 text-[#a89a76]">
                       <Sparkles className="h-6 w-6" />
                       <p className="text-sm">Nothing here yet — write notes from the chapter page.</p>

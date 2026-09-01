@@ -1,5 +1,15 @@
 import { api } from '@/services/api.svc';
 
+export type NotebookQuizAnswer = {
+  question: string;
+  options: string[];
+  selected_index: number;
+  selected_text: string;
+  is_correct: boolean;
+  correct_option: string | null;
+  explanation: string;
+};
+
 export type NotebookEntry = {
   chapter_id: string;
   chapter_number: number;
@@ -11,6 +21,7 @@ export type NotebookEntry = {
   notes_updated_at: string | null;
   quiz_score: number | null;
   quiz_attempts: number;
+  quiz_answers: NotebookQuizAnswer[];
   task_response: string | null;
   task_submitted_at: string | null;
 };

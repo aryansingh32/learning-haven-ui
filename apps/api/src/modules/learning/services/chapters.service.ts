@@ -325,7 +325,8 @@ export class ChaptersService {
         chapterId: string,
         score: number,
         passed: boolean,
-        totalQuestions?: number
+        totalQuestions?: number,
+        answers?: unknown
     ) {
         try {
             const safeTotalQuestions = Number(totalQuestions) > 0 ? Number(totalQuestions) : 3;
@@ -350,6 +351,10 @@ export class ChaptersService {
                 quiz_attempts: attempts,
                 updated_at: new Date().toISOString(),
             };
+
+            if (Array.isArray(answers)) {
+                payload.quiz_answers = answers;
+            }
 
             if (!existing) {
                 payload.user_id = userId;
