@@ -24,7 +24,14 @@
         "title": "Variables in C++/JS 2026",
         "channel": "Apna College",
         "duration_min": 18,
-        "focus_note": "Watch first 12 minutes only. Notice how memory boxes are created and destroyed."
+        "focus_note": "Watch first 12 minutes only. Notice how memory boxes are created and destroyed.",
+        "timeline": [
+          { "start_sec": 20, "end_sec": 60, "type": "message", "body": "💡 Pro tip: say the variable's name out loud as you type it — it helps memory stick." },
+          { "start_sec": 60, "end_sec": 150, "type": "flashcard", "front": "What is a variable?", "body": "A named location in memory that stores a value your program can read or change." },
+          { "start_sec": 150, "end_sec": 240, "type": "quiz", "body": "Which of these is a valid variable declaration in JavaScript?", "options": ["let x = 5;", "5 = x;", "variable x is 5"], "correct_index": 0 },
+          { "start_sec": 240, "end_sec": 360, "type": "note", "title": "Stack vs Heap", "body": "Simple values (numbers, booleans) usually live on the stack. Objects and arrays live on the heap, with the stack holding a reference to them." },
+          { "start_sec": 360, "type": "doc", "title": "Scope Recap", "body": "A variable's scope is the region of code where it's accessible. Block scope ({ }) applies to let/const; var ignores block scope entirely." }
+        ]
       }
     },
     {

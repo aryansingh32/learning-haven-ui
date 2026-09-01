@@ -314,6 +314,8 @@ export default function LearnChapterPage() {
             channel={c.channel}
             duration={c.duration_min}
             focusNote={c.focus_note}
+            timeline={c.timeline}
+            chapterId={chapter.id}
             cinemaMode={cinemaMode}
             onCinemaModeChange={setCinemaMode}
             onMarkDone={() => markStepDone(step.id, index)}

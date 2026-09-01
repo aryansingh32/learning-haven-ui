@@ -27,6 +27,19 @@ export type PracticeProblem = {
   expected_output?: string;
 };
 
+export type VideoTimelineEventType = 'flashcard' | 'note' | 'quiz' | 'doc' | 'message';
+
+export type VideoTimelineEvent = {
+  start_sec: number;
+  end_sec?: number;
+  type: VideoTimelineEventType;
+  title?: string;
+  body: string;
+  front?: string;
+  options?: string[];
+  correct_index?: number;
+};
+
 export type VisualizerFrame = {
   array?: (number | string)[];
   highlight?: number[];
@@ -43,6 +56,7 @@ export type StepContent = {
   duration_min?: number;
   focus_note?: string;
   backup_urls?: string[];
+  timeline?: VideoTimelineEvent[];
   doc_md?: string;
   visualizer?: {
     url?: string;

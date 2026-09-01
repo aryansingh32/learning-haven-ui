@@ -2,7 +2,10 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Monitor, Minimize2 } from 'lucide-react';
 import { ChapterCta } from './ChapterCta';
+import { VideoTimelinePanel } from './VideoTimelinePanel';
+import { useYouTubePlayer } from '@/hooks/useYouTubePlayer';
 import { cn } from '@/lib/utils';
+import type { VideoTimelineEvent } from '@/data/chapters';
 
 interface VideoSectionProps {
   videoId: string;
@@ -11,6 +14,8 @@ interface VideoSectionProps {
   duration?: number;
   focusNote?: string;
   timestamps?: Array<{ title: string; seconds: number }>;
+  timeline?: VideoTimelineEvent[];
+  chapterId?: string;
   cinemaMode?: boolean;
   onCinemaModeChange?: (active: boolean) => void;
   onMarkDone?: () => void;
@@ -23,6 +28,8 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   duration,
   focusNote,
   timestamps = [],
+  timeline = [],
+  chapterId,
   cinemaMode = false,
   onCinemaModeChange,
   onMarkDone,
@@ -30,6 +37,9 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   const [playing, setPlaying] = useState(false);
   const [hoverPreview, setHoverPreview] = useState(false);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const hasTimeline = timeline.length > 0 && Boolean(chapterId);
+  const { containerRef: ytContainerRef, currentTime } = useYouTubePlayer(videoId, hasTimeline && playing);
 
   if (!videoId) return null;
 
@@ -138,7 +148,11 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
             </button>
           )}
 
-          {playing && playerSrc && (
+          {playing && hasTimeline && (
+            <div ref={ytContainerRef} className="absolute inset-0 w-full h-full" />
+          )}
+
+          {playing && !hasTimeline && playerSrc && (
             <iframe
               className="absolute inset-0 w-full h-full"
               src={playerSrc}
@@ -176,6 +190,10 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
         <p className="text-center text-xs text-muted-foreground">
           Cinema mode — timeline and notes stay below. Use &ldquo;Normal layout&rdquo; to restore the default view.
         </p>
+      )}
+
+      {playing && hasTimeline && chapterId && (
+        <VideoTimelinePanel events={timeline} currentTime={currentTime} chapterId={chapterId} chapterTitle={title} />
       )}
 
       {!cinemaMode && focusNote && <p className="text-xs text-muted-foreground">{focusNote}</p>}

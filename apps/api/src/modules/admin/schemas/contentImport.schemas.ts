@@ -47,6 +47,17 @@ const storyHookContentSchema = z.object({
     story: z.string().optional(),
 });
 
+const videoTimelineEventSchema = z.object({
+    start_sec:     z.number(),
+    end_sec:       z.number().optional(),
+    type:          z.enum(['flashcard', 'note', 'quiz', 'doc', 'message']),
+    title:         z.string().optional(),
+    body:          z.string(),
+    front:         z.string().optional(),
+    options:       z.array(z.string()).optional(),
+    correct_index: z.number().optional(),
+});
+
 const videoContentSchema = z.object({
     step_type: z.literal('video'),
     // c.youtube_url / c.youtube_id  (lines 305-306)
@@ -57,6 +68,8 @@ const videoContentSchema = z.object({
     channel:      z.string().optional(),
     duration_min: z.union([z.number(), z.string().transform(Number)]).pipe(z.number()).optional(),
     focus_note:   z.string().optional(),
+    // c.timeline — timestamp-synced flashcards/notes/quizzes below the player
+    timeline:     z.array(videoTimelineEventSchema).optional(),
 });
 
 const docContentSchema = z.object({
