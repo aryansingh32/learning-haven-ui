@@ -2,7 +2,6 @@ import { Copy, Check, Gift, Trophy, ArrowUpRight, Users, Wallet, Crown, Trending
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip } from "recharts";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 import { useApiQuery, useApiMutation } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";

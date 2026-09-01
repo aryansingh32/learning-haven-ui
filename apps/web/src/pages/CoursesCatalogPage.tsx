@@ -75,21 +75,6 @@ function StatPill({ icon: Icon, value, label }: { icon: typeof BookOpen; value: 
         <p className="font-display text-card-title font-bold leading-none">{value}</p>
         <p className="text-caption text-muted-foreground truncate">{label}</p>
       </div>
-
-      {/* Per-course checkout modal */}
-      {checkoutCourse && (
-        <CourseCheckoutModal
-          open={Boolean(checkoutCourse)}
-          onClose={() => setCheckoutCourse(null)}
-          course={{
-            id: checkoutCourse.id,
-            title: checkoutCourse.title,
-            description: checkoutCourse.description,
-            price: checkoutCourse.price!,
-            currency: checkoutCourse.currency,
-          }}
-        />
-      )}
     </div>
   );
 }
@@ -226,6 +211,21 @@ export default function CoursesCatalogPage() {
 
   return (
     <div className="pb-24 md:pb-10">
+      {/* Per-course checkout modal */}
+      {checkoutCourse && (
+        <CourseCheckoutModal
+          open={Boolean(checkoutCourse)}
+          onClose={() => setCheckoutCourse(null)}
+          course={{
+            id: checkoutCourse.id,
+            title: checkoutCourse.title,
+            description: checkoutCourse.description,
+            price: checkoutCourse.price!,
+            currency: checkoutCourse.currency,
+          }}
+        />
+      )}
+
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
       {Array.isArray(partners) && partners.length > 0 && (

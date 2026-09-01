@@ -33,14 +33,20 @@ export function HeroCarousel({ slides }: Props) {
                   !slide.backgroundImage && 'bg-gradient-to-br',
                   !slide.backgroundImage && (VARIANT_STYLES[slide.variant] || VARIANT_STYLES.primary)
                 )}
-                style={
-                  slide.backgroundImage 
-                    ? { backgroundImage: `url(${slide.backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } 
-                    : undefined
-                }
               >
                 {slide.backgroundImage && (
-                  <div className="absolute inset-0 bg-black/40 md:bg-gradient-to-r md:from-black/90 md:to-black/30 z-0" />
+                  <>
+                    {/* Use <img> instead of CSS background-image so crossOrigin can be set,
+                        preventing OpaqueResponseBlocking (CORB) on external images */}
+                    <img
+                      src={slide.backgroundImage}
+                      alt=""
+                      aria-hidden
+                      crossOrigin="anonymous"
+                      className="absolute inset-0 w-full h-full object-cover object-center z-0 pointer-events-none select-none"
+                    />
+                    <div className="absolute inset-0 bg-black/40 md:bg-gradient-to-r md:from-black/90 md:to-black/30 z-0" />
+                  </>
                 )}
                 {!slide.backgroundImage && (
                   <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:22px_22px] z-0" aria-hidden />
@@ -69,7 +75,7 @@ export function HeroCarousel({ slides }: Props) {
                   </div>
                   {slide.image && (
                     <div className="hidden md:block relative h-[220px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 dark:border-white/10 dark:shadow-[0_0_40px_rgba(255,255,255,0.08)] z-10">
-                      <img src={slide.image} alt="" aria-hidden className="w-full h-full object-cover object-top" />
+                      <img src={slide.image} alt="" aria-hidden crossOrigin="anonymous" className="w-full h-full object-cover object-top" />
                     </div>
                   )}
                 </div>

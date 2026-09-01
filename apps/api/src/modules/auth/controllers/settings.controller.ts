@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
+import { CacheService } from '../../core/services/cache.service';
+
+const PUBLIC_SETTINGS_CACHE_KEY = 'settings:public';
+const PUBLIC_SETTINGS_CACHE_TTL = 300; // 5 minutes
 
 export class SettingsController {
     /**
@@ -8,6 +12,12 @@ export class SettingsController {
      */
     static async getPublicSettings(req: Request, res: Response) {
         try {
+            // Serve from cache when available — avoids a DB round-trip on every page load
+            const cached = await CacheService.get<Record<string, unknown>>(PUBLIC_SETTINGS_CACHE_KEY);
+            if (cached) {
+                return res.json(cached);
+            }
+
             // Fetch keys that are allowed to be public
             const publicKeys = [
                 'onboarding_steps',
@@ -36,6 +46,9 @@ export class SettingsController {
                 acc[curr.key] = curr.value;
                 return acc;
             }, {});
+
+            // Cache for TTL — fire-and-forget
+            CacheService.set(PUBLIC_SETTINGS_CACHE_KEY, config, PUBLIC_SETTINGS_CACHE_TTL).catch(() => {});
 
             res.json(config);
         } catch (error) {

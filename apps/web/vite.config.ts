@@ -34,6 +34,16 @@ export default defineConfig(({ mode }) => {
         "/api": {
           target: apiTarget,
           changeOrigin: true,
+          configure: (proxy, _options) => {
+            proxy.on("error", (err, _req, res) => {
+              // Gracefully handle the API server being down/restarting
+              console.log("[Vite] API proxy error (API server may be starting up):", err.message);
+              if (res && typeof (res as any).writeHead === 'function') {
+                (res as any).writeHead(503, { 'Content-Type': 'application/json' });
+                (res as any).end(JSON.stringify({ error: 'API server unavailable', code: 'ECONNREFUSED' }));
+              }
+            });
+          },
         },
       },
     },

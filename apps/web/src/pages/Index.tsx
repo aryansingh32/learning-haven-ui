@@ -16,7 +16,7 @@ import { DailyQuestsWidget } from '@/components/gamification/DailyQuestsWidget';
 import { formatStreakDays, type Mission, type DailyQuests, type Identity } from '@/lib/gamification';
 import {
   ArrowRight, Zap, Flame, Code2, BookOpen,
-  Trophy, Target, ChevronRight, Briefcase, TrendingUp, Brain, AlertTriangle, Gift
+  Trophy, Target, ChevronRight, Briefcase, TrendingUp, Brain, AlertTriangle, Gift, Crown
 } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isToday } from 'date-fns';
 import { useRoadmap } from '@/context/RoadmapContext';

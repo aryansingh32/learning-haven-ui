@@ -209,6 +209,25 @@ export class EntitlementsService {
     const map: Record<string, EntitlementResult> = {};
     const today = todayIST();
 
+    // Pre-check if any entitlement needs build enrollment count — avoids N+1 DB queries
+    const needsBuildCount = info.entitlements.some(
+      (e) => e.entitlementType === 'numeric_limit' &&
+        (e.featureKey === 'challenge_limit' || e.featureKey === 'project_access') &&
+        (e.numericValue ?? 0) !== -1,
+    );
+    let buildEnrollmentCount = 0;
+    if (needsBuildCount) {
+      try {
+        const countRes = await pool.query(
+          `SELECT COUNT(DISTINCT program_id) AS count FROM public.build_enrollments WHERE user_id = $1`,
+          [userId],
+        );
+        buildEnrollmentCount = parseInt(countRes.rows[0].count, 10);
+      } catch (err) {
+        logger.warn('Failed to fetch build enrollment count; defaulting to 0', { userId, error: err });
+      }
+    }
+
     for (const ent of info.entitlements) {
       switch (ent.entitlementType) {
         case 'boolean':
@@ -225,11 +244,8 @@ export class EntitlementsService {
           } else {
             let used = 0;
             if (ent.featureKey === 'challenge_limit' || ent.featureKey === 'project_access') {
-              const countRes = await pool.query(
-                `SELECT COUNT(DISTINCT program_id) as count FROM public.build_enrollments WHERE user_id = $1`,
-                [userId]
-              );
-              used = parseInt(countRes.rows[0].count, 10);
+              // Reuse the pre-fetched count — no extra DB round-trip
+              used = buildEnrollmentCount;
             } else {
               const key = usageKey(userId, ent.featureKey, today);
               const usedStr = await redis.get(key);

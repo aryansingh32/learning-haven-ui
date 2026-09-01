@@ -55,9 +55,21 @@ export const pool = new Pool({
     max: env.PG_POOL_MAX,
     idleTimeoutMillis: env.PG_IDLE_TIMEOUT_MS,
     connectionTimeoutMillis: env.PG_CONNECTION_TIMEOUT_MS,
+    // Keep TCP connections alive so the remote Supabase postgres doesn't silently
+    // drop idle connections, which causes "Connection terminated" errors.
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10_000,
+    ssl: databaseUrl?.includes('supabase.co') ? { rejectUnauthorized: false } : undefined,
+});
+
+// Cap per-query execution time at 15s to ensure pool connections are
+// released promptly even when a query hangs (e.g. due to Supabase throttling).
+pool.on('connect', (client) => {
+    client.query("SET statement_timeout = '15000'").catch(() => {
+        // Non-fatal: if SET fails, the pool still works fine
+    });
 });
 
 pool.on('error', (err) => {
-    console.error('Unexpected error on idle client', err);
+    console.error('Unexpected error on idle pg pool client:', err.message);
 });
-

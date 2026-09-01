@@ -34,7 +34,10 @@ export default function ResumePage() {
     // Track whether we've finished loading from server (or confirmed no data exists)
     const [hasLoadedInitialData, setHasLoadedInitialData] = useState(false);
 
-    const { data: apiResumeData, isSuccess: apiLoaded } = useApiQuery<any>(['resume'], '/resume');
+    const { data: apiResumeData, isSuccess: apiLoaded } = useApiQuery<any>(['resume'], '/resume', {
+        // Don't retry on 404 — backend endpoint may not be deployed yet
+        retry: false,
+    });
 
     const saveMutation = useApiMutation<any, any>(
         (variables) => api.post('/resume', variables)
@@ -116,6 +119,15 @@ export default function ResumePage() {
                 // Reset to idle after 3s
                 setTimeout(() => setSaveStatus('idle'), 3000);
             } catch (err: any) {
+                // Silently swallow 404 — the backend endpoint may not be available yet.
+                // Any other error surfaces as a toast.
+                const is404 = err?.message?.includes('404') ||
+                    err?.response?.status === 404 ||
+                    String(err?.message).toLowerCase().includes('not found');
+                if (is404) {
+                    setSaveStatus('idle');
+                    return;
+                }
                 setSaveStatus('error');
                 toast.error(err?.response?.data?.error || 'Failed to save resume — check your connection.');
             }
