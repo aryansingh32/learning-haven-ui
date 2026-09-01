@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   fetchChapterWithProgress,
@@ -24,6 +24,7 @@ import { CompleteStepSection } from '@/features/learning/components/CompleteStep
 import { MicroRevisionSection } from '@/features/learning/components/MicroRevisionSection';
 import CelebrationOverlay from '@/features/learning/components/CelebrationOverlay';
 import { ChapterCta } from '@/features/learning/components/ChapterCta';
+import { ChapterNotesPanel } from '@/features/learning/components/ChapterNotesPanel';
 import { toast } from 'sonner';
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
 
@@ -67,6 +68,7 @@ export default function LearnChapterPage() {
     nextChapterId?: string;
   } | null>(null);
   const [cinemaMode, setCinemaMode] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chapter', chapterId],
@@ -436,13 +438,24 @@ export default function LearnChapterPage() {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <button
-        type="button"
-        onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" /> Back to course
-      </button>
+      <div className="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={() => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to course
+        </button>
+        {started && (
+          <button
+            type="button"
+            onClick={() => setNotesOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 px-3.5 py-2 text-xs font-bold text-foreground transition-colors"
+          >
+            <NotebookText className="h-3.5 w-3.5 text-orange-500" /> My Notes
+          </button>
+        )}
+      </div>
 
       {/* Story hero — hidden in YouTube cinema mode */}
       {!(started && cinemaMode && activeStepIsVideo) && (
@@ -654,6 +667,14 @@ export default function LearnChapterPage() {
             ? () => navigate(`/chapter/${celebrationPayload.nextChapterId}`)
             : () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')
         }
+      />
+
+      <ChapterNotesPanel
+        open={notesOpen}
+        onOpenChange={setNotesOpen}
+        chapterId={chapter.id}
+        chapterTitle={chapter.title}
+        courseId={data?.course?.id}
       />
     </motion.div>
   );
