@@ -46,6 +46,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const LearnChapterPage = lazy(() => import("./pages/LearnChapterPage"));
 const ChaptersOverviewPage = lazy(() => import("./pages/ChaptersOverviewPage"));
 const NotebookPage = lazy(() => import("./pages/NotebookPage"));
+const MockTestPage = lazy(() => import("./pages/MockTestPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
 const ResumePage = lazy(() => import("./pages/ResumePage"));
@@ -125,6 +126,7 @@ const App = () => (
                         <Route path="/courses" element={<CoursesCatalogPage />} />
                         <Route path="/course/:courseId/chapters" element={<ChaptersOverviewPage />} />
                         <Route path="/course/:courseId/notebook" element={<NotebookPage />} />
+                        <Route path="/course/:courseId/mock-test" element={<MockTestPage />} />
                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
                         <Route path="/projects" element={<ProjectsPage />} />

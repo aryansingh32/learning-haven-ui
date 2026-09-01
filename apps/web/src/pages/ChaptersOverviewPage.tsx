@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight, ArrowLeft, CheckCircle2, Clock, Flame, Lock,
-  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText
+  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -104,6 +104,15 @@ export default function ChaptersOverviewPage() {
                 className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 text-foreground px-4 py-2.5 text-sm font-bold transition-all"
               >
                 <NotebookText className="h-4 w-4 text-orange-500" /> My Notebook
+              </button>
+            )}
+            {courseId && (
+              <button
+                type="button"
+                onClick={() => navigate(`/course/${courseId}/mock-test`)}
+                className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/40 hover:bg-secondary/80 text-foreground px-4 py-2.5 text-sm font-bold transition-all"
+              >
+                <Trophy className="h-4 w-4 text-orange-500" /> Mock Test
               </button>
             )}
             {nextMission && (

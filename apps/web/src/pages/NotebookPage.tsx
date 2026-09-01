@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Download, Loader2,
-  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X,
+  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X, Trophy,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 type NotebookPage =
   | { kind: 'cover' }
   | { kind: 'toc' }
+  | { kind: 'mock_test' }
   | { kind: 'chapter'; entry: NotebookEntry };
 
 export default function NotebookPage() {
@@ -68,6 +69,7 @@ export default function NotebookPage() {
     return [
       { kind: 'cover' },
       { kind: 'toc' },
+      ...(notebook.mock_test ? [{ kind: 'mock_test' as const }] : []),
       ...notebook.entries.map((entry) => ({ kind: 'chapter' as const, entry })),
     ];
   }, [notebook]);
@@ -177,11 +179,23 @@ export default function NotebookPage() {
                     <ListChecks className="h-5 w-5 text-orange-500" /> Table of Contents
                   </h3>
                   <div className="space-y-1.5">
-                    {notebook.entries.map((entry, i) => (
+                    {notebook.mock_test && (
+                      <button
+                        type="button"
+                        onClick={() => goTo(pages.findIndex((p) => p.kind === 'mock_test'))}
+                        className="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm font-bold hover:bg-[#f0ead9] transition-colors"
+                      >
+                        <span className="flex items-center gap-2">
+                          <Trophy className="h-3.5 w-3.5 text-orange-500 shrink-0" /> Mock Test Results
+                        </span>
+                        <span className="text-[10px] font-bold text-orange-600 shrink-0">{notebook.mock_test.score_percent}%</span>
+                      </button>
+                    )}
+                    {notebook.entries.map((entry) => (
                       <button
                         key={entry.chapter_id}
                         type="button"
-                        onClick={() => goTo(i + 2)}
+                        onClick={() => goTo(pages.findIndex((p) => p.kind === 'chapter' && p.entry.chapter_id === entry.chapter_id))}
                         className="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-[#f0ead9] transition-colors"
                       >
                         <span className="flex items-center gap-2">
@@ -192,6 +206,47 @@ export default function NotebookPage() {
                           <span className="text-[10px] font-bold text-orange-600 shrink-0">{entry.quiz_score}%</span>
                         )}
                       </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {page?.kind === 'mock_test' && notebook.mock_test && (
+                <div className="space-y-4">
+                  <h3 className="font-display text-xl font-bold flex items-center gap-2">
+                    <Trophy className="h-5 w-5 text-orange-500" /> Mock Test Results
+                  </h3>
+                  <div className="rounded-xl bg-orange-500/10 border border-orange-500/20 p-4 text-center">
+                    <p className="text-3xl font-extrabold text-orange-600">{notebook.mock_test.score_percent}%</p>
+                    <p className="text-xs text-[#5b5138] mt-1">
+                      {notebook.mock_test.correct_count} / {notebook.mock_test.total_questions} correct
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    {notebook.mock_test.answers.map((qa, qi) => (
+                      <div
+                        key={qi}
+                        className={cn(
+                          'rounded-lg border-l-4 bg-white/40 p-3',
+                          qa.is_correct ? 'border-emerald-500/70' : 'border-red-400/70'
+                        )}
+                      >
+                        <div className="flex items-start gap-2">
+                          {qa.is_correct ? (
+                            <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                          ) : (
+                            <XCircle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                          )}
+                          <p className="text-sm font-semibold leading-relaxed">{qi + 1}. {qa.question}</p>
+                        </div>
+                        {qa.chapter_title && <p className="text-[10px] pl-6 text-[#8a7d5f] uppercase tracking-wide">{qa.chapter_title}</p>}
+                        <p className="text-xs mt-1.5 pl-6 text-[#5b5138]">
+                          Your answer: <span className={cn('font-semibold', qa.is_correct ? 'text-emerald-700' : 'text-red-600 line-through decoration-red-400')}>{qa.selected_text || '(skipped)'}</span>
+                        </p>
+                        {!qa.is_correct && qa.correct_option && (
+                          <p className="text-xs pl-6 text-emerald-700 font-semibold">Correct answer: {qa.correct_option}</p>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -348,7 +403,13 @@ export default function NotebookPage() {
             <ChevronLeft className="h-4 w-4" /> Prev
           </button>
           <span className="text-xs font-semibold text-muted-foreground">
-            {page?.kind === 'chapter' ? page.entry.title : page?.kind === 'toc' ? 'Contents' : 'Cover'}
+            {page?.kind === 'chapter'
+              ? page.entry.title
+              : page?.kind === 'toc'
+                ? 'Contents'
+                : page?.kind === 'mock_test'
+                  ? 'Mock Test Results'
+                  : 'Cover'}
           </span>
           <button
             type="button"

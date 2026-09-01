@@ -1,6 +1,7 @@
 import { PDFDocument, rgb, StandardFonts, PDFFont, PDFPage } from 'pdf-lib';
 import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
+import { MockTestService } from './mock-test.service';
 
 export class NotebookService {
     static async getChapterNotes(userId: string, chapterId: string) {
@@ -184,7 +185,8 @@ export class NotebookService {
         });
 
         const completedCount = entries.filter((e) => e.status === 'COMPLETED').length;
-        const hasContent = entries.some((e) => e.notes || e.task_response || e.quiz_score);
+        const mockTest = await MockTestService.getLatestMockTest(userId, courseId);
+        const hasContent = entries.some((e) => e.notes || e.task_response || e.quiz_score) || Boolean(mockTest);
 
         return {
             course: { id: course.id, title: course.title, slug: course.slug },
@@ -193,6 +195,7 @@ export class NotebookService {
             total_chapters: chapters.length,
             completed_chapters: completedCount,
             has_content: hasContent,
+            mock_test: mockTest,
             entries,
         };
     }
@@ -278,6 +281,85 @@ export class NotebookService {
             y: height - 292, size: 11, font: helvetica, color: rgb(0.6, 0.6, 0.6),
         });
         drawWatermark(cover);
+
+        // Mock test results page, if the learner has completed one
+        const mockTest = (notebook as any).mock_test as {
+            score_percent: number;
+            correct_count: number;
+            total_questions: number;
+            answers: Array<{ question: string; selected_text: string; is_correct: boolean; correct_option: string | null; chapter_title?: string }>;
+            submitted_at: string;
+        } | null;
+
+        if (mockTest) {
+            let mtPage = doc.addPage(pageSize);
+            let mtCursorY = height - margin;
+            const maxWidth = width - margin * 2;
+
+            const wrapText = (text: string, font: PDFFont, size: number): string[] => {
+                const words = text.replace(/\r/g, '').split(/\s+/);
+                const lines: string[] = [];
+                let current = '';
+                for (const word of words) {
+                    const candidate = current ? `${current} ${word}` : word;
+                    if (font.widthOfTextAtSize(candidate, size) > maxWidth && current) {
+                        lines.push(current);
+                        current = word;
+                    } else {
+                        current = candidate;
+                    }
+                }
+                if (current) lines.push(current);
+                return lines;
+            };
+
+            const ensureMtSpace = (needed: number) => {
+                if (mtCursorY - needed < margin + 20) {
+                    drawWatermark(mtPage);
+                    mtPage = doc.addPage(pageSize);
+                    mtCursorY = height - margin;
+                }
+            };
+
+            mtPage.drawText('Mock Test Results', { x: margin, y: mtCursorY, size: 18, font: helveticaBold, color: rgb(0.1, 0.1, 0.1) });
+            mtCursorY -= 26;
+            mtPage.drawText(
+                `${mockTest.score_percent}% — ${mockTest.correct_count}/${mockTest.total_questions} correct`,
+                { x: margin, y: mtCursorY, size: 12, font: helvetica, color: rgb(0.85, 0.5, 0.1) }
+            );
+            mtCursorY -= 28;
+
+            (mockTest.answers || []).forEach((qa, i) => {
+                const marker = qa.is_correct ? '[correct]' : '[wrong]';
+                const markerColor = qa.is_correct ? rgb(0.15, 0.55, 0.3) : rgb(0.75, 0.2, 0.2);
+                const qLines = wrapText(`${i + 1}. ${qa.question}`, helveticaBold, 11);
+                qLines.forEach((line, li) => {
+                    ensureMtSpace(15);
+                    mtPage.drawText(line, { x: margin, y: mtCursorY, size: 11, font: helveticaBold, color: rgb(0.15, 0.15, 0.15) });
+                    if (li === 0) {
+                        const markerWidth = helveticaBold.widthOfTextAtSize(marker, 9);
+                        mtPage.drawText(marker, { x: width - margin - markerWidth, y: mtCursorY, size: 9, font: helveticaBold, color: markerColor });
+                    }
+                    mtCursorY -= 15;
+                });
+                if (qa.selected_text) {
+                    for (const line of wrapText(`Your answer: ${qa.selected_text}`, helvetica, 10)) {
+                        ensureMtSpace(14);
+                        mtPage.drawText(line, { x: margin + 12, y: mtCursorY, size: 10, font: helvetica, color: markerColor });
+                        mtCursorY -= 14;
+                    }
+                }
+                if (!qa.is_correct && qa.correct_option) {
+                    for (const line of wrapText(`Correct answer: ${qa.correct_option}`, helvetica, 10)) {
+                        ensureMtSpace(14);
+                        mtPage.drawText(line, { x: margin + 12, y: mtCursorY, size: 10, font: helvetica, color: rgb(0.15, 0.55, 0.3) });
+                        mtCursorY -= 14;
+                    }
+                }
+                mtCursorY -= 8;
+            });
+            drawWatermark(mtPage);
+        }
 
         // One page per chapter that has any learner content
         const contentEntries = notebook.entries.filter(

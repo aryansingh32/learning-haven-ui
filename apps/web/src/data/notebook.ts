@@ -28,6 +28,14 @@ export type NotebookEntry = {
   task_submitted_at: string | null;
 };
 
+export type NotebookMockTest = {
+  score_percent: number;
+  correct_count: number;
+  total_questions: number;
+  answers: (NotebookQuizAnswer & { chapter_title?: string })[];
+  submitted_at: string;
+};
+
 export type CourseNotebook = {
   course: { id: string; title: string; slug?: string };
   learner_name: string;
@@ -35,6 +43,7 @@ export type CourseNotebook = {
   total_chapters: number;
   completed_chapters: number;
   has_content: boolean;
+  mock_test: NotebookMockTest | null;
   entries: NotebookEntry[];
 };
 
