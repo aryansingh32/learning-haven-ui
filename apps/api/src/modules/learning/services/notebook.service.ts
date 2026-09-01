@@ -53,6 +53,51 @@ export class NotebookService {
     }
 
     /**
+     * Appends a highlighted excerpt from a doc step (or the whole doc) into the
+     * learner's chapter notes as a quoted block. Gated behind notebook_edit_access.
+     */
+    static async appendChapterHighlight(userId: string, chapterId: string, text: string, sourceTitle?: string) {
+        const trimmed = text.trim();
+        if (!trimmed) {
+            throw new Error('Nothing to add');
+        }
+
+        const existing = await NotebookService.getChapterNotes(userId, chapterId);
+        const heading = sourceTitle ? `**From "${sourceTitle}":**\n` : '';
+        const block = `\n\n${heading}> ${trimmed.replace(/\n/g, '\n> ')}\n`;
+        const nextContent = `${existing.content}${block}`;
+
+        return NotebookService.saveChapterNotes(userId, chapterId, nextContent);
+    }
+
+    /**
+     * Derives a short auto-summary and any embedded image URLs from a doc
+     * step's markdown, so the notebook gets useful content with zero learner effort.
+     */
+    private static summarizeDoc(markdown: string): { summary: string; images: string[] } {
+        const images: string[] = [];
+        const imageRe = /!\[[^\]]*\]\((\S+?)\)/g;
+        let match: RegExpExecArray | null;
+        while ((match = imageRe.exec(markdown)) !== null) {
+            images.push(match[1]);
+        }
+
+        const plainText = markdown
+            .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+            .replace(/\[([^\]]*)\]\([^)]+\)/g, '$1')
+            .replace(/[#*_`>]/g, '')
+            .replace(/\r/g, '')
+            .split('\n')
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .join(' ');
+
+        const summary = plainText.length > 320 ? `${plainText.slice(0, 317).trimEnd()}…` : plainText;
+
+        return { summary, images: images.slice(0, 4) };
+    }
+
+    /**
      * Aggregates everything a learner has produced in a course — per-chapter notes,
      * quiz scores, and submitted task responses — into one notebook, page per chapter.
      */
@@ -73,7 +118,7 @@ export class NotebookService {
         const chapters = chaptersResult.rows;
         const chapterIds = chapters.map((c) => c.id);
 
-        const [progressResult, notesResult, userResult] = await Promise.all([
+        const [progressResult, notesResult, docStepsResult, userResult] = await Promise.all([
             chapterIds.length
                 ? pool.query(
                       'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = ANY($2)',
@@ -86,6 +131,15 @@ export class NotebookService {
                       [userId, chapterIds]
                   )
                 : Promise.resolve({ rows: [] }),
+            chapterIds.length
+                ? pool.query(
+                      `SELECT DISTINCT ON (chapter_id) chapter_id, content
+                       FROM public.steps
+                       WHERE chapter_id = ANY($1) AND type = 'doc'
+                       ORDER BY chapter_id, step_number ASC`,
+                      [chapterIds]
+                  )
+                : Promise.resolve({ rows: [] }),
             supabase.from('users').select('full_name').eq('id', userId).maybeSingle(),
         ]);
 
@@ -95,9 +149,20 @@ export class NotebookService {
         const notesByChapter = new Map<string, any>();
         notesResult.rows.forEach((row: any) => notesByChapter.set(row.chapter_id, row));
 
+        const docByChapter = new Map<string, { summary: string; images: string[] }>();
+        docStepsResult.rows.forEach((row: any) => {
+            const markdown = row.content?.doc_md;
+            if (typeof markdown === 'string' && markdown.trim()) {
+                docByChapter.set(row.chapter_id, NotebookService.summarizeDoc(markdown));
+            }
+        });
+
+        const engagedStatuses = new Set(['IN_PROGRESS', 'COMPLETED']);
+
         const entries = chapters.map((chapter) => {
             const progress = progressByChapter.get(chapter.id);
             const notes = notesByChapter.get(chapter.id);
+            const doc = engagedStatuses.has(progress?.status) ? docByChapter.get(chapter.id) : undefined;
 
             return {
                 chapter_id: chapter.id,
@@ -108,6 +173,8 @@ export class NotebookService {
                 completed_at: progress?.completed_at || null,
                 notes: notes?.content || '',
                 notes_updated_at: notes?.updated_at || null,
+                doc_summary: doc?.summary || null,
+                doc_images: doc?.images || [],
                 quiz_score: progress?.quiz_score ?? null,
                 quiz_attempts: progress?.quiz_attempts ?? 0,
                 quiz_answers: Array.isArray(progress?.quiz_answers) ? progress.quiz_answers : [],
@@ -213,7 +280,9 @@ export class NotebookService {
         drawWatermark(cover);
 
         // One page per chapter that has any learner content
-        const contentEntries = notebook.entries.filter((e) => e.notes || e.task_response || e.quiz_score);
+        const contentEntries = notebook.entries.filter(
+            (e) => e.notes || e.task_response || e.quiz_score || (e as any).doc_summary
+        );
         const pagesToRender = contentEntries.length ? contentEntries : notebook.entries;
 
         for (const entry of pagesToRender) {
@@ -253,6 +322,44 @@ export class NotebookService {
                 cursorY -= 24;
             }
             cursorY -= 8;
+
+            const docSummary = (entry as any).doc_summary as string | null;
+            const docImages = ((entry as any).doc_images || []) as string[];
+            if (docSummary) {
+                ensureSpace(16);
+                page.drawText('Chapter Summary', { x: margin, y: cursorY, size: 12, font: helveticaBold, color: rgb(0.2, 0.2, 0.2) });
+                cursorY -= 16;
+                for (const line of wrapText(docSummary, helvetica, 10.5)) {
+                    ensureSpace(15);
+                    page.drawText(line, { x: margin, y: cursorY, size: 10.5, font: helvetica, color: rgb(0.35, 0.35, 0.35) });
+                    cursorY -= 15;
+                }
+                cursorY -= 6;
+
+                for (const imageUrl of docImages) {
+                    try {
+                        const res = await fetch(imageUrl);
+                        if (!res.ok) continue;
+                        const bytes = new Uint8Array(await res.arrayBuffer());
+                        const contentType = res.headers.get('content-type') || '';
+                        const embedded = contentType.includes('png') || /\.png($|\?)/i.test(imageUrl)
+                            ? await doc.embedPng(bytes)
+                            : await doc.embedJpg(bytes);
+
+                        const maxImgWidth = maxWidth;
+                        const scale = Math.min(1, maxImgWidth / embedded.width);
+                        const imgW = embedded.width * scale;
+                        const imgH = embedded.height * scale;
+
+                        ensureSpace(imgH + 10);
+                        page.drawImage(embedded, { x: margin, y: cursorY - imgH, width: imgW, height: imgH });
+                        cursorY -= imgH + 10;
+                    } catch (imgErr) {
+                        logger.warn('Notebook PDF: skipping unembeddable image', { imageUrl });
+                    }
+                }
+                cursorY -= 4;
+            }
 
             if (entry.quiz_score !== null) {
                 ensureSpace(18);
@@ -329,7 +436,7 @@ export class NotebookService {
                 }
             }
 
-            if (!entry.notes && !entry.task_response && entry.quiz_score === null) {
+            if (!entry.notes && !entry.task_response && entry.quiz_score === null && !docSummary) {
                 page.drawText('No notes yet — write some from the chapter page!', {
                     x: margin, y: cursorY, size: 11, font: helvetica, color: rgb(0.6, 0.6, 0.6),
                 });

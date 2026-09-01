@@ -1,16 +1,18 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Download, Loader2,
-  NotebookText, CheckCircle2, XCircle, ListChecks, Sparkles,
+  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { fetchCourseNotebook, exportCourseNotebookPdf, type NotebookEntry } from '@/data/notebook';
+import { Textarea } from '@/components/ui/textarea';
+import { fetchCourseNotebook, exportCourseNotebookPdf, saveChapterNotes, type NotebookEntry } from '@/data/notebook';
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
+import { parseEntitlementError } from '@/lib/entitlementError';
 import { toast } from 'sonner';
 
 type NotebookPage =
@@ -18,19 +20,14 @@ type NotebookPage =
   | { kind: 'toc' }
   | { kind: 'chapter'; entry: NotebookEntry };
 
-function parseEntitlementError(err: unknown): { denied: boolean; message?: string } {
-  const anyErr = err as { status?: number; data?: { error?: { message?: string } | string } };
-  if (anyErr?.status !== 403) return { denied: false };
-  const data = anyErr.data?.error;
-  const message = typeof data === 'string' ? data : data?.message;
-  return { denied: true, message };
-}
-
 export default function NotebookPage() {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const [pageIndex, setPageIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [editingChapterId, setEditingChapterId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState('');
 
   const { data: notebook, isLoading } = useQuery({
     queryKey: ['notebook', courseId],
@@ -54,6 +51,16 @@ export default function NotebookPage() {
         toast.error('Could not generate the PDF. Try again.');
       }
     },
+  });
+
+  const saveNotesMutation = useMutation({
+    mutationFn: ({ chapterId, content }: { chapterId: string; content: string }) => saveChapterNotes(chapterId, content),
+    onSuccess: () => {
+      toast.success('Notebook updated');
+      setEditingChapterId(null);
+      void qc.invalidateQueries({ queryKey: ['notebook', courseId] });
+    },
+    onError: () => toast.error('Could not save your edits. Try again.'),
   });
 
   const pages: NotebookPage[] = useMemo(() => {
@@ -204,14 +211,79 @@ export default function NotebookPage() {
                     )}
                   </div>
 
-                  {page.entry.notes ? (
+                  {page.entry.doc_summary ? (
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">My Notes</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2 flex items-center gap-1.5">
+                        Chapter Summary
+                      </p>
+                      <p className="text-sm leading-relaxed text-[#3a3222]">{page.entry.doc_summary}</p>
+                      {page.entry.doc_images?.length ? (
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          {page.entry.doc_images.map((src, i) => (
+                            <div key={i} className="rounded-lg overflow-hidden border border-[#e8e0d0] bg-white/40 aspect-video flex items-center justify-center">
+                              <img
+                                src={src}
+                                alt={`Chapter ${page.entry.chapter_number} illustration ${i + 1}`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => { (e.currentTarget.parentElement as HTMLElement).style.display = 'none'; }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f]">My Notes</p>
+                      {editingChapterId === page.entry.chapter_id ? (
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => saveNotesMutation.mutate({ chapterId: page.entry.chapter_id, content: editContent })}
+                            disabled={saveNotesMutation.isPending}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 hover:text-emerald-800"
+                          >
+                            {saveNotesMutation.isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />} Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingChapterId(null)}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8a7d5f] hover:text-[#5b5138]"
+                          >
+                            <X className="h-3 w-3" /> Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingChapterId(page.entry.chapter_id);
+                            setEditContent(page.entry.notes);
+                          }}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-600 hover:text-orange-700"
+                        >
+                          <Pencil className="h-3 w-3" /> Edit
+                        </button>
+                      )}
+                    </div>
+
+                    {editingChapterId === page.entry.chapter_id ? (
+                      <Textarea
+                        value={editContent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                        className="min-h-[160px] text-sm bg-white/60 text-[#2a2419]"
+                        placeholder="Write your notes for this chapter..."
+                      />
+                    ) : page.entry.notes ? (
                       <div className="prose prose-sm max-w-none text-[#2a2419]">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>{page.entry.notes}</ReactMarkdown>
                       </div>
-                    </div>
-                  ) : null}
+                    ) : (
+                      <p className="text-xs text-[#a89a76] italic">No notes yet — click Edit to add some.</p>
+                    )}
+                  </div>
 
                   {page.entry.quiz_answers?.length ? (
                     <div>
@@ -252,12 +324,6 @@ export default function NotebookPage() {
                     </div>
                   ) : null}
 
-                  {!page.entry.notes && !page.entry.task_response && !page.entry.quiz_answers?.length && page.entry.quiz_score === null && (
-                    <div className="flex flex-col items-center justify-center text-center gap-2 py-16 text-[#a89a76]">
-                      <Sparkles className="h-6 w-6" />
-                      <p className="text-sm">Nothing here yet — write notes from the chapter page.</p>
-                    </div>
-                  )}
                 </div>
               )}
 

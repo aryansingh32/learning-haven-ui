@@ -91,4 +91,35 @@ router.put('/chapter/:chapterId/notes', authenticateUser, async (req: any, res: 
     }
 });
 
+/**
+ * POST /api/notebook/chapter/:chapterId/notes/append
+ * Appends a highlighted excerpt (or full doc) into the learner's chapter
+ * notes. Gated behind notebook_edit_access — premium notebook feature.
+ */
+router.post(
+    '/chapter/:chapterId/notes/append',
+    authenticateUser,
+    requireEntitlement('notebook_edit_access'),
+    async (req: any, res: Response) => {
+        try {
+            const userId = req.user?.id;
+            if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
+            const { text, source_title } = req.body;
+            if (typeof text !== 'string' || !text.trim()) {
+                return res.status(400).json({ error: 'Missing text string' });
+            }
+
+            const result = await NotebookService.appendChapterHighlight(userId, req.params.chapterId, text, source_title);
+            return res.json(result);
+        } catch (err: any) {
+            logger.error('Append chapter highlight error', err);
+            if (err.message === 'Chapter not found') {
+                return res.status(404).json({ error: err.message });
+            }
+            return res.status(400).json({ error: err.message || 'Failed to add highlight' });
+        }
+    }
+);
+
 export default router;

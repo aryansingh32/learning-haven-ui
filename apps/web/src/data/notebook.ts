@@ -19,6 +19,8 @@ export type NotebookEntry = {
   completed_at: string | null;
   notes: string;
   notes_updated_at: string | null;
+  doc_summary: string | null;
+  doc_images: string[];
   quiz_score: number | null;
   quiz_attempts: number;
   quiz_answers: NotebookQuizAnswer[];
@@ -51,6 +53,14 @@ export async function fetchChapterNotes(chapterId: string): Promise<ChapterNotes
 
 export async function saveChapterNotes(chapterId: string, content: string): Promise<ChapterNotes> {
   return api.put(`/notebook/chapter/${chapterId}/notes`, { content });
+}
+
+export async function appendChapterNoteHighlight(
+  chapterId: string,
+  text: string,
+  sourceTitle?: string
+): Promise<ChapterNotes> {
+  return api.post(`/notebook/chapter/${chapterId}/notes/append`, { text, source_title: sourceTitle });
 }
 
 export type NotebookExportResult = { url: string; generated_at: string };

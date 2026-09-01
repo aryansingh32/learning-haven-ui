@@ -320,7 +320,14 @@ export default function LearnChapterPage() {
           />
         );
       case 'doc':
-        return <DocSection markdown={c.doc_md || ''} onMarkDone={() => markStepDone(step.id, index)} />;
+        return (
+          <DocSection
+            markdown={c.doc_md || ''}
+            chapterId={chapter.id}
+            chapterTitle={step.title || chapter.title}
+            onMarkDone={() => markStepDone(step.id, index)}
+          />
+        );
       case 'visualizer':
         return (
           <VisualizerSection
