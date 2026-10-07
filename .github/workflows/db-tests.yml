@@ -1,0 +1,40 @@
+name: Database tests
+
+# Builds a scratch Postgres from the live-schema snapshot, applies new
+# migrations, and runs the RLS / college-isolation suites. Make this a
+# required check on main so no change can leak one college's data to another.
+on:
+  pull_request:
+    paths:
+      - 'apps/api/supabase/**'
+      - 'apps/api/scripts/test-db.sh'
+      - '.github/workflows/db-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/supabase/**'
+
+jobs:
+  db-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install psql 17
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y -qq postgresql-client-17
+      - name: Run database tests
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        run: bash apps/api/scripts/test-db.sh
