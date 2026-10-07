@@ -77,6 +77,14 @@ const envSchema = z.object({
 
   // ── Apprenticeship ────────────────────────────────────────
   APPRENTICESHIP_DISCORD_INVITE: z.string().optional(),
+
+  // ── Code execution (Judge0 sandbox) ───────────────────────
+  // Without JUDGE0_URL, development falls back to the local JDK runner;
+  // production refuses to run untrusted code at all.
+  JUDGE0_URL: z.string().url().optional(),
+  JUDGE0_AUTH_TOKEN: z.string().min(1).optional(),
+  JUDGE0_JAVA_LANGUAGE_ID: z.coerce.number().default(62),
+  JUDGE0_TIMEOUT_MS: z.coerce.number().default(20_000),
 });
 
 export type Env = z.infer<typeof envSchema>;

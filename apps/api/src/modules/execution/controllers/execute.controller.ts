@@ -6,7 +6,20 @@
 
 import { Request, Response } from 'express';
 import { executeJava, isJavaAvailable } from '../services/javaExecutor';
+import { executeJavaJudge0, isJudge0Configured, isJudge0Healthy } from '../services/judge0.service';
+import { env } from '../../../config/env';
 import logger from '../../../config/logger';
+
+type Backend = 'judge0' | 'local' | 'none';
+
+/**
+ * Judge0 when configured. The local JDK runner has no real isolation, so it
+ * is a development convenience only and is never used in production.
+ */
+function selectBackend(): Backend {
+    if (isJudge0Configured()) return 'judge0';
+    return env.NODE_ENV === 'production' ? 'none' : 'local';
+}
 
 export class ExecuteController {
     /**
@@ -52,9 +65,22 @@ export class ExecuteController {
                 testCaseCount: testCases.length
             });
 
-            const result = await executeJava(code, testCases);
+            const backend = selectBackend();
+            if (backend === 'none') {
+                logger.error('Java execution requested but JUDGE0_URL is not configured');
+                return res.status(503).json({
+                    status: 'Runtime Error',
+                    output: 'Code execution is not available right now.',
+                    executionTime: 0
+                });
+            }
+
+            const result = backend === 'judge0'
+                ? await executeJavaJudge0(code, testCases)
+                : await executeJava(code, testCases);
 
             logger.info('Java execution complete', {
+                backend,
                 status: result.status,
                 executionTime: result.executionTime
             });
@@ -76,9 +102,13 @@ export class ExecuteController {
      * Check if execution backends are available.
      */
     static async health(req: Request, res: Response) {
-        const javaAvailable = await isJavaAvailable();
+        const backend = selectBackend();
+        const javaAvailable = backend === 'judge0'
+            ? await isJudge0Healthy()
+            : backend === 'local' && await isJavaAvailable();
         return res.json({
             status: 'ok',
+            backend,
             languages: {
                 java: javaAvailable
             }

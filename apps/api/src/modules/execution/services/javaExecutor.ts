@@ -32,12 +32,12 @@ const JAVA_CHILD_ENV: NodeJS.ProcessEnv = {
     JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}`,
 };
 
-interface TestCase {
+export interface TestCase {
     input: string;
     output: string;
 }
 
-interface TestCaseResult {
+export interface TestCaseResult {
     passed: boolean;
     input: string;
     expectedOutput: string;
@@ -45,7 +45,7 @@ interface TestCaseResult {
     executionTime: number;
 }
 
-interface JavaExecutionResult {
+export interface JavaExecutionResult {
     status: 'Accepted' | 'Wrong Answer' | 'Compilation Error' | 'Runtime Error' | 'Time Limit Exceeded';
     output: string;
     executionTime: number;
@@ -77,7 +77,7 @@ function parseInputForJava(input: string): string {
  * If the user code already has a main method, use it directly with stdin.
  * If the user defines a Solution class, wrap it with a test driver.
  */
-function wrapJavaCode(userCode: string, testCases: TestCase[]): string {
+export function wrapJavaCode(userCode: string, testCases: TestCase[]): string {
     const hasMain = /public\s+static\s+void\s+main\s*\(/.test(userCode);
     const hasSolutionClass = /class\s+Solution\s*\{/.test(userCode);
 
@@ -243,6 +243,47 @@ class Main {
 }
 
 /**
+ * Parse the Solution-mode harness output (`__RESULT__:passed||input||expected||actual||ms`).
+ */
+export function parseHarnessOutput(stdout: string): JavaExecutionResult {
+    const results: TestCaseResult[] = [];
+    const lines = stdout.split('\n').filter(l => l.startsWith('__RESULT__:'));
+    const otherOutput = stdout.split('\n').filter(l => !l.startsWith('__RESULT__:') && !l.startsWith('__ERROR__:')).join('\n');
+
+    for (const line of lines) {
+        const parts = line.replace('__RESULT__:', '').split('||');
+        results.push({
+            passed: parts[0] === 'true',
+            input: parts[1] || '',
+            expectedOutput: parts[2] || '',
+            actualOutput: parts[3] || '',
+            executionTime: parseInt(parts[4]) || 0
+        });
+    }
+
+    return summarize(results, otherOutput.trim());
+}
+
+/**
+ * Main-mode comparison: whole stdout against the expected output, ignoring whitespace differences.
+ */
+export function outputMatches(actual: string, expected: string): boolean {
+    const a = actual.trim(), e = (expected || '').trim();
+    return a === e || a.replace(/\s+/g, '') === e.replace(/\s+/g, '');
+}
+
+export function summarize(results: TestCaseResult[], output = ''): JavaExecutionResult {
+    const allPassed = results.length > 0 && results.every(r => r.passed);
+    const totalTime = results.reduce((acc, r) => acc + r.executionTime, 0);
+    return {
+        status: allPassed ? 'Accepted' : 'Wrong Answer',
+        output,
+        executionTime: totalTime,
+        testCaseResults: results
+    };
+}
+
+/**
  * Execute Java code against test cases.
  */
 export async function executeJava(code: string, testCases: TestCase[]): Promise<JavaExecutionResult> {
@@ -314,31 +355,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                     }
                 );
 
-                // Parse structured results
-                const results: TestCaseResult[] = [];
-                const lines = stdout.split('\n').filter(l => l.startsWith('__RESULT__:'));
-                const otherOutput = stdout.split('\n').filter(l => !l.startsWith('__RESULT__:') && !l.startsWith('__ERROR__:')).join('\n');
-
-                for (const line of lines) {
-                    const parts = line.replace('__RESULT__:', '').split('||');
-                    results.push({
-                        passed: parts[0] === 'true',
-                        input: parts[1] || '',
-                        expectedOutput: parts[2] || '',
-                        actualOutput: parts[3] || '',
-                        executionTime: parseInt(parts[4]) || 0
-                    });
-                }
-
-                const allPassed = results.length > 0 && results.every(r => r.passed);
-                const totalTime = results.reduce((acc, r) => acc + r.executionTime, 0);
-
-                return {
-                    status: allPassed ? 'Accepted' : 'Wrong Answer',
-                    output: otherOutput.trim(),
-                    executionTime: totalTime,
-                    testCaseResults: results
-                };
+                return parseHarnessOutput(stdout);
 
             } catch (runError: any) {
                 if (runError.killed) {
@@ -367,7 +384,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                     const elapsed = Date.now() - start;
                     const actual = stdout.trim();
                     const expected = (tc.output || '').trim();
-                    const passed = actual === expected || actual.replace(/\s+/g, '') === expected.replace(/\s+/g, '');
+                    const passed = outputMatches(actual, expected);
 
                     results.push({
                         passed,
@@ -394,14 +411,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                 }
             }
 
-            const allPassed = results.length > 0 && results.every(r => r.passed);
-            const totalTime = results.reduce((acc, r) => acc + r.executionTime, 0);
-            return {
-                status: allPassed ? 'Accepted' : 'Wrong Answer',
-                output: '',
-                executionTime: totalTime,
-                testCaseResults: results
-            };
+            return summarize(results);
         }
 
     } catch (err) {
