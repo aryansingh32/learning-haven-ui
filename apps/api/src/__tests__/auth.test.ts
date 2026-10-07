@@ -13,6 +13,7 @@ const mockSupabaseAuth = {
   refreshSession: jest.fn(),
   signOut: jest.fn(),
   getUser: jest.fn(),
+  admin: { signOut: jest.fn() },
 };
 
 const mockSupabaseFrom = jest.fn().mockReturnValue({
@@ -33,6 +34,9 @@ const mockSupabaseFrom = jest.fn().mockReturnValue({
 });
 
 jest.mock('../config/database', () => ({
+  // Sign-in/up/refresh run on a fresh per-request client; signout revokes via admin.
+  createAuthClient: () => ({ auth: mockSupabaseAuth }),
+  supabaseAdmin: { auth: mockSupabaseAuth },
   supabase: {
     auth: mockSupabaseAuth,
     from: mockSupabaseFrom,
@@ -241,7 +245,7 @@ describe('Auth Endpoints', () => {
   // ────────────────────────────────────────────────────
   describe('POST /api/auth/signout', () => {
     it('should sign out successfully', async () => {
-      mockSupabaseAuth.signOut.mockResolvedValueOnce({ error: null });
+      mockSupabaseAuth.admin.signOut.mockResolvedValueOnce({ error: null });
 
       const res = await request(app)
         .post('/api/auth/signout')
@@ -249,6 +253,8 @@ describe('Auth Endpoints', () => {
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
+      // Revokes the caller's own token, not a server-held session.
+      expect(mockSupabaseAuth.admin.signOut).toHaveBeenCalledWith('some-token', 'local');
     });
 
     it('should return 400 when no token provided', async () => {

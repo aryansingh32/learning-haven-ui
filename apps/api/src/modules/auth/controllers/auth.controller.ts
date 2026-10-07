@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { supabase } from '../../../config/database';
+import { createAuthClient, supabase, supabaseAdmin } from '../../../config/database';
 import logger from '../../../config/logger';
 import { ReferralsService } from '../../billing/services/referrals.service';
 import {
@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response) => {
     }
 
     try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await createAuthClient().auth.signUp({
             email,
             password,
             options: {
@@ -81,7 +81,7 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await createAuthClient().auth.signInWithPassword({
             email,
             password,
         });
@@ -106,7 +106,7 @@ export const refreshSession = async (req: Request, res: Response) => {
     }
 
     try {
-        const { data, error } = await supabase.auth.refreshSession({ refresh_token });
+        const { data, error } = await createAuthClient().auth.refreshSession({ refresh_token });
 
         if (error || !data.session?.access_token) {
             logger.warn(`Session refresh failed: ${error?.message || 'no session'}`);
@@ -128,10 +128,11 @@ export const refreshSession = async (req: Request, res: Response) => {
 };
 
 export const signout = async (req: Request, res: Response) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return badRequest(res, 'No token provided');
+    const token = req.headers.authorization?.replace(/^Bearer\s+/i, '');
+    if (!token) return badRequest(res, 'No token provided');
 
-    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    // Revoke this user's own session (the token they sent), not the server's.
+    const { error } = await supabaseAdmin.auth.admin.signOut(token, 'local');
 
     if (error) {
         return serverError(res);

@@ -8,14 +8,16 @@ const databaseUrl = env.DATABASE_URL;
 import ws from 'ws';
 
 /**
- * Standard Supabase client — uses ANON key so that Row Level Security (RLS)
- * policies are respected. This client represents the "logged-out" / service
- * perspective and should NOT bypass RLS.
+ * Server-side data client. This is trusted server code: routes enforce auth
+ * and ownership themselves, and the pg pool below already connects with full
+ * database rights. It uses the SERVICE_ROLE key so that the public anon key
+ * (shipped inside the web app) can be locked out of every table by RLS.
  *
- * For auth token-scoped operations, use supabase.auth.setSession() or pass the
- * token via the Authorization header at the HTTP level.
+ * Never call session-changing auth methods (signIn*, signUp, refreshSession,
+ * signOut) on this shared client — supabase-js keeps that session in memory
+ * and would run later queries as that user. Use createAuthClient() instead.
  */
-export const supabase = createClient(supabaseUrl, env.SUPABASE_ANON_KEY, {
+export const supabase = createClient(supabaseUrl, env.SUPABASE_SERVICE_ROLE_KEY, {
   auth: {
     persistSession: false,
     autoRefreshToken: false,
@@ -49,6 +51,25 @@ export const supabaseAdmin = createClient(supabaseUrl, env.SUPABASE_SERVICE_ROLE
     transport: ws,
   },
 });
+
+/**
+ * A fresh, throwaway client for one auth flow (sign in, sign up, refresh).
+ * Nothing it learns about a session is shared with other requests.
+ */
+export function createAuthClient() {
+  return createClient(supabaseUrl, env.SUPABASE_ANON_KEY || env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+    global: {
+      fetch: fetch,
+    },
+    realtime: {
+      transport: ws,
+    },
+  });
+}
 
 export const pool = new Pool({
     connectionString: databaseUrl,
