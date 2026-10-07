@@ -36,6 +36,9 @@ import {
     Hammer,
     Briefcase,
     FileUp,
+    ClipboardList,
+    Layers,
+    HelpCircle,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
@@ -89,6 +92,18 @@ const categories = [
         items: [
             { name: 'Build Projects', href: '/build-challenges', icon: Code },
             { name: 'Challenge Users', href: '/build-challenges/users', icon: Users },
+        ]
+    },
+    {
+        id: 'test-series',
+        label: 'Test Series',
+        icon: ClipboardList,
+        basePaths: ['/test-series'],
+        exactPaths: [],
+        items: [
+            { name: 'Exam Categories', href: '/test-series/categories', icon: Layers },
+            { name: 'Test Series', href: '/test-series', icon: ClipboardList },
+            { name: 'Question Bank', href: '/test-series/questions', icon: HelpCircle },
         ]
     },
     {

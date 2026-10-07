@@ -32,6 +32,7 @@ import entitlementsRoutes from '../../entitlements/entitlements.routes';
 import paymentsV2Routes from '../../billing/routes/payments.v2';
 import referralsV2Routes from '../../billing/routes/referrals.v2';
 import plansRoutes from '../../plans/plans.routes';
+import testSeriesRoutes from '../../testseries/routes/testseries';
 
 const router = Router();
 
@@ -59,6 +60,7 @@ router.use('/execute', executeRoutes);
 router.use('/chapters', chaptersRoutes);
 router.use('/notebook', notebookRoutes);
 router.use('/mock-test', mockTestRoutes);
+router.use('/test-series', testSeriesRoutes);
 router.use('/cron', cronRoutes);
 router.use('/jobs', jobsRoutes);
 router.use('/settings', settingsRoutes);

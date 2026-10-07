@@ -28,6 +28,9 @@ const pageNames: Record<string, string> = {
     '/logs': 'Audit Logs',
     '/cms': 'CMS & Appearance',
     '/network': 'Network Monitoring',
+    '/test-series/categories': 'Exam Categories',
+    '/test-series': 'Test Series',
+    '/test-series/questions': 'Question Bank',
 };
 
 const DashboardLayout = () => {

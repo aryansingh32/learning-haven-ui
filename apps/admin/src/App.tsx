@@ -31,6 +31,11 @@ import CMSControl from './pages/CMSControl';
 import NetworkMonitoring from './pages/NetworkMonitoring';
 import CoursePageCMS from './pages/CoursePageCMS';
 import ContentImport from './pages/ContentImport';
+import ExamCategoriesPage from './pages/testseries/ExamCategoriesPage';
+import TestSeriesPage from './pages/testseries/TestSeriesPage';
+import SeriesTestsPage from './pages/testseries/SeriesTestsPage';
+import TestBuilderPage from './pages/testseries/TestBuilderPage';
+import QuestionBankPage from './pages/testseries/QuestionBankPage';
 import { Loader2 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -108,6 +113,13 @@ function App() {
               <Route path="/chapters" element={<Chapters />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/content-import" element={<ContentImport />} />
+
+              {/* Test Series (standalone CBT engine) */}
+              <Route path="/test-series/categories" element={<ExamCategoriesPage />} />
+              <Route path="/test-series" element={<TestSeriesPage />} />
+              <Route path="/test-series/questions" element={<QuestionBankPage />} />
+              <Route path="/test-series/:seriesId/tests" element={<SeriesTestsPage />} />
+              <Route path="/test-series/tests/:testId/builder" element={<TestBuilderPage />} />
 
               {/* Apps */}
               <Route path="/apprenticeship" element={<OverviewPage />} />

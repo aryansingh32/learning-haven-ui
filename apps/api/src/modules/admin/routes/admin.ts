@@ -7,6 +7,7 @@ import { requireAdmin, requireSuperAdmin } from '../../../middleware/requireAdmi
 import { adminLogging } from '../../../middleware/adminLogging';
 import { AdminPermissionsController } from '../controllers/admin.permissions.controller';
 import { ContentImportController } from '../controllers/contentImport.controller';
+import adminTestSeriesRoutes from '../../testseries/admin/admin-testseries.routes';
 
 const router = Router();
 
@@ -246,6 +247,12 @@ router.post('/content/import', csvUpload, ContentImportController.importContent)
 router.get('/content/import/:batchId', ContentImportController.getBatch);
 router.patch('/content/import/:batchId/rows/:rowId', ContentImportController.updateRow);
 router.post('/content/import/:batchId/publish', ContentImportController.publishBatch);
+
+// ══════════════════════════════════════════════════════════
+// TEST SERIES (standalone CBT engine: exam categories, series,
+// tests, sections, question bank — see modules/testseries)
+// ══════════════════════════════════════════════════════════
+router.use('/test-series', adminTestSeriesRoutes);
 
 // ══════════════════════════════════════════════════════════
 // TASK 1: User Intelligence Endpoint

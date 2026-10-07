@@ -10,7 +10,7 @@
  * happen anywhere except inside publishBatch, which wraps everything in a
  * pg transaction.
  */
-import { supabase, pool } from '../../../config/database';
+import { supabaseAdmin, pool } from '../../../config/database';
 import { GoogleSheetsService } from '../../core/services/googleSheets.service';
 import { parseCsv } from '../../core/utils/csv.util';
 import { CategoriesService } from '../../learning/services/categories.service';
@@ -24,6 +24,7 @@ import {
     type StepRow,
     type ProblemRow,
     type BuildStageRow,
+    type TestseriesQuestionRow,
 } from '../schemas/contentImport.schemas';
 import logger from '../../../config/logger';
 
@@ -82,12 +83,16 @@ export class ContentImportService {
         // Pre-load lookup data for business rule checks
         let courseSlugToId: Map<string, string> | null = null;
         let programSlugToId: Map<string, string> | null = null;
+        let testSlugToId: Map<string, string> | null = null;
 
         if (contentType === 'chapters_meta' || contentType === 'chapter_steps') {
             courseSlugToId = await this._loadCourseSlugs();
         }
         if (contentType === 'build_stages') {
             programSlugToId = await this._loadProgramSlugs();
+        }
+        if (contentType === 'testseries_questions') {
+            testSlugToId = await this._loadTestSlugs();
         }
 
         // Track within-batch uniqueness
@@ -211,6 +216,49 @@ export class ContentImportService {
                 }
             }
 
+            if (contentType === 'testseries_questions') {
+                const rowData = data as TestseriesQuestionRow;
+                const OPTION_LETTERS = ['a', 'b', 'c', 'd', 'e', 'f'] as const;
+
+                if (rowData.test_slug && !testSlugToId!.has(rowData.test_slug)) {
+                    errors.push(`test_slug "${rowData.test_slug}" does not match any existing test`);
+                    status = 'error';
+                }
+
+                if (rowData.question_type === 'nat') {
+                    if (rowData.nat_answer === undefined || rowData.nat_answer === null || Number.isNaN(rowData.nat_answer)) {
+                        errors.push('nat_answer is required (and must be numeric) for nat questions');
+                        status = 'error';
+                    }
+                } else {
+                    const filledLetters = OPTION_LETTERS.filter((l) => {
+                        const v = (rowData as any)[`option_${l}`];
+                        return typeof v === 'string' && v.trim().length > 0;
+                    });
+                    if (filledLetters.length < 2) {
+                        errors.push('mcq/msq questions need at least 2 non-empty options (option_a, option_b, ...)');
+                        status = 'error';
+                    }
+                    const correctLetters = (rowData.correct_options || '')
+                        .split(',')
+                        .map((s) => s.trim().toLowerCase())
+                        .filter(Boolean);
+                    if (correctLetters.length === 0) {
+                        errors.push('correct_options is required for mcq/msq (comma-separated option letters, e.g. "b" or "a,c")');
+                        status = 'error';
+                    } else if (rowData.question_type === 'mcq' && correctLetters.length !== 1) {
+                        errors.push('mcq questions must have exactly one correct option in correct_options');
+                        status = 'error';
+                    } else {
+                        const invalidLetters = correctLetters.filter((l) => !filledLetters.includes(l as any));
+                        if (invalidLetters.length > 0) {
+                            errors.push(`correct_options references option letter(s) with no text: ${invalidLetters.join(', ')}`);
+                            status = 'error';
+                        }
+                    }
+                }
+            }
+
             results.push({ row: data, status, errors });
         }
 
@@ -236,7 +284,7 @@ export class ContentImportService {
         const errorRows = validatedRows.filter((r) => r.status === 'error').length;
 
         // Insert the batch header
-        const { data: batch, error: batchErr } = await supabase
+        const { data: batch, error: batchErr } = await supabaseAdmin
             .from('content_import_batches')
             .insert({
                 content_type: contentType,
@@ -264,14 +312,14 @@ export class ContentImportService {
             errors: vr.errors,
         }));
 
-        const { data: insertedRows, error: rowsErr } = await supabase
+        const { data: insertedRows, error: rowsErr } = await supabaseAdmin
             .from('content_import_rows')
             .insert(rowInserts)
             .select('id, row_number, raw_data, status, errors');
 
         if (rowsErr) {
             // Rollback batch header if rows fail
-            await supabase.from('content_import_batches').delete().eq('id', batch.id);
+            await supabaseAdmin.from('content_import_batches').delete().eq('id', batch.id);
             throw new Error(`Failed to stage import rows: ${rowsErr.message}`);
         }
 
@@ -305,7 +353,7 @@ export class ContentImportService {
         errors: string[];
     }> {
         // Load batch
-        const { data: batch, error: batchErr } = await supabase
+        const { data: batch, error: batchErr } = await supabaseAdmin
             .from('content_import_batches')
             .select('*')
             .eq('id', batchId)
@@ -315,7 +363,7 @@ export class ContentImportService {
         if (batch.status === 'published') throw new Error('Batch already published');
 
         // Load rows
-        const { data: rows, error: rowsErr } = await supabase
+        const { data: rows, error: rowsErr } = await supabaseAdmin
             .from('content_import_rows')
             .select('*')
             .eq('batch_id', batchId)
@@ -512,6 +560,9 @@ export class ContentImportService {
         if (contentType === 'build_stages') {
             return this._upsertBuildStage(rawData as BuildStageRow, client);
         }
+        if (contentType === 'testseries_questions') {
+            return this._upsertTestseriesQuestion(rawData as TestseriesQuestionRow, client);
+        }
         // chapter_steps is handled separately in publishBatch (grouped replaceSteps)
         throw new Error(`Unknown content type: ${contentType}`);
     }
@@ -587,7 +638,7 @@ export class ContentImportService {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)/g, '');
 
-        const { data: problem, error } = await supabase
+        const { data: problem, error } = await supabaseAdmin
             .from('problems')
             .select('id')
             .eq('slug', slug)
@@ -672,9 +723,83 @@ export class ContentImportService {
         }
     }
 
+    /**
+     * Insert one question into the standalone CBT question bank
+     * (public.testseries_questions), converting the flat option_a..option_f
+     * CSV columns into the typed options/correct_options JSON columns.
+     * Always inserts a new row -- there's no natural dedupe key for a
+     * free-text question, so re-importing the same CSV creates duplicates
+     * (use the Question Bank browser to remove any). If test_slug is
+     * given, also attaches the question to that test's question list at
+     * the next sort position.
+     */
+    private static async _upsertTestseriesQuestion(data: TestseriesQuestionRow, client: any): Promise<string> {
+        const OPTION_LETTERS = ['a', 'b', 'c', 'd', 'e', 'f'] as const;
+        let options: { id: string; text: string }[] | null = null;
+        let correctOptions: string[] | null = null;
+
+        if (data.question_type !== 'nat') {
+            options = OPTION_LETTERS
+                .map((letter) => ({ letter, text: (data as any)[`option_${letter}`] as string | undefined }))
+                .filter((o) => o.text && o.text.trim().length > 0)
+                .map((o) => ({ id: o.letter, text: o.text!.trim() }));
+            correctOptions = (data.correct_options || '')
+                .split(',')
+                .map((s) => s.trim().toLowerCase())
+                .filter(Boolean);
+        }
+
+        const questionRes = await client.query(
+            `INSERT INTO public.testseries_questions
+               (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks, topic, difficulty, explanation)
+             VALUES ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11)
+             RETURNING id`,
+            [
+                data.question_type,
+                data.body,
+                options ? JSON.stringify(options) : null,
+                correctOptions ? JSON.stringify(correctOptions) : null,
+                data.question_type === 'nat' ? data.nat_answer : null,
+                data.nat_tolerance ?? 0,
+                data.marks ?? 1,
+                data.negative_marks ?? 0,
+                data.topic || null,
+                data.difficulty || null,
+                data.explanation || null,
+            ]
+        );
+        const questionId: string = questionRes.rows[0].id;
+
+        if (data.test_slug) {
+            const testRes = await client.query(`SELECT id FROM public.tests WHERE slug = $1 LIMIT 1`, [data.test_slug]);
+            if (testRes.rows.length > 0) {
+                const testId: string = testRes.rows[0].id;
+                const sortRes = await client.query(
+                    `SELECT COALESCE(MAX(sort_order), -1) + 1 AS next_order FROM public.test_questions WHERE test_id = $1`,
+                    [testId]
+                );
+                await client.query(
+                    `INSERT INTO public.test_questions (test_id, question_id, sort_order)
+                     VALUES ($1, $2, $3)
+                     ON CONFLICT (test_id, question_id) DO NOTHING`,
+                    [testId, questionId, sortRes.rows[0].next_order]
+                );
+            }
+        }
+
+        return questionId;
+    }
+
+    /** Loads all published+unpublished test slugs → IDs for testseries_questions validation. */
+    private static async _loadTestSlugs(): Promise<Map<string, string>> {
+        const { data, error } = await supabaseAdmin.from('tests').select('id, slug');
+        if (error) throw new Error(`Failed to load tests: ${error.message}`);
+        return new Map((data || []).map((t: any) => [t.slug, t.id]));
+    }
+
     /** Loads all course slugs → IDs for chapter validation. */
     private static async _loadCourseSlugs(): Promise<Map<string, string>> {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
             .from('courses')
             .select('id, slug');
         if (error) throw new Error(`Failed to load courses: ${error.message}`);
@@ -683,7 +808,7 @@ export class ContentImportService {
 
     /** Loads all apprenticeship_programs slugs → IDs for build_stage validation. */
     private static async _loadProgramSlugs(): Promise<Map<string, string>> {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
             .from('apprenticeship_programs')
             .select('id, slug');
         if (error) throw new Error(`Failed to load programs: ${error.message}`);

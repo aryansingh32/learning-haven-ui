@@ -47,6 +47,8 @@ const LearnChapterPage = lazy(() => import("./pages/LearnChapterPage"));
 const ChaptersOverviewPage = lazy(() => import("./pages/ChaptersOverviewPage"));
 const NotebookPage = lazy(() => import("./pages/NotebookPage"));
 const MockTestPage = lazy(() => import("./pages/MockTestPage"));
+const TestSeriesCatalogPage = lazy(() => import("./pages/testseries/TestSeriesCatalogPage"));
+const CBTTestPage = lazy(() => import("./pages/testseries/CBTTestPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
 const ResumePage = lazy(() => import("./pages/ResumePage"));
@@ -115,6 +117,16 @@ const App = () => (
               />
               <Route path="/build/:slug/workspace" element={<RedirectBuildWorkspaceSlug />} />
 
+              {/* Full-screen CBT exam (no nav chrome, matches the workspace pattern above) */}
+              <Route
+                path="/test-series/tests/:testId"
+                element={
+                  <ProtectedRoute>
+                    <CBTTestPage />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/*"
                 element={
@@ -127,6 +139,7 @@ const App = () => (
                         <Route path="/course/:courseId/chapters" element={<ChaptersOverviewPage />} />
                         <Route path="/course/:courseId/notebook" element={<NotebookPage />} />
                         <Route path="/course/:courseId/mock-test" element={<MockTestPage />} />
+                        <Route path="/test-series" element={<TestSeriesCatalogPage />} />
                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
                         <Route path="/projects" element={<ProjectsPage />} />

@@ -271,14 +271,58 @@ export const buildStageRowSchema = z.object({
 export type BuildStageRow = z.infer<typeof buildStageRowSchema>;
 
 // ─────────────────────────────────────────────────────────────
+// Test-Series Question Row Schema
+// Flat, CSV/Excel-friendly shape for the standalone CBT question
+// bank (public.testseries_questions) — options are plain columns
+// (option_a..option_f) rather than nested JSON, since that's what
+// spreadsheet-authored question banks actually look like.
+// "test_slug" is optional: when given, the question is also
+// auto-attached to that test's question list (public.test_questions)
+// at the next sort position. Omit it to import into the bank only,
+// for later assignment via the admin test-builder UI.
+// ─────────────────────────────────────────────────────────────
+const optionalNumber = (fallback: number) =>
+    z.union([
+        z.number(),
+        z.string().transform((v) => (v.trim() === '' ? fallback : Number(v))),
+    ]).pipe(z.number()).default(fallback);
+
+export const testseriesQuestionRowSchema = z.object({
+    test_slug:       z.string().optional(),
+    question_type:   z.enum(['mcq', 'msq', 'nat']),
+    body:            z.string().min(1, 'body is required'),
+    option_a:        z.string().optional(),
+    option_b:        z.string().optional(),
+    option_c:        z.string().optional(),
+    option_d:        z.string().optional(),
+    option_e:        z.string().optional(),
+    option_f:        z.string().optional(),
+    // Comma-separated option letters, e.g. "b" (mcq) or "a,c" (msq)
+    correct_options: z.string().optional(),
+    nat_answer:      z.union([
+        z.number(),
+        z.string().transform((v) => (v.trim() === '' ? undefined : Number(v))),
+    ]).optional(),
+    nat_tolerance:   optionalNumber(0),
+    marks:           optionalNumber(1),
+    negative_marks:  optionalNumber(0),
+    topic:           z.string().optional(),
+    difficulty:      z.enum(['easy', 'medium', 'hard']).optional(),
+    explanation:     z.string().optional(),
+});
+
+export type TestseriesQuestionRow = z.infer<typeof testseriesQuestionRowSchema>;
+
+// ─────────────────────────────────────────────────────────────
 // Content type → schema mapping (convenience)
 // 'chapters' is split into 'chapters_meta' + 'chapter_steps'
 // ─────────────────────────────────────────────────────────────
 export const CONTENT_TYPE_SCHEMAS = {
-    chapters_meta:  chapterMetaRowSchema,
-    chapter_steps:  stepRowSchema,
-    problems:       problemRowSchema,
-    build_stages:   buildStageRowSchema,
+    chapters_meta:        chapterMetaRowSchema,
+    chapter_steps:        stepRowSchema,
+    problems:             problemRowSchema,
+    build_stages:         buildStageRowSchema,
+    testseries_questions: testseriesQuestionRowSchema,
 } as const;
 
 export type ContentType = keyof typeof CONTENT_TYPE_SCHEMAS;
@@ -330,5 +374,24 @@ export const TEMPLATE_EXAMPLES: Record<ContentType, Record<string, string>> = {
         docker_test_image: 'node:18-alpine',
         timeout_seconds:   '120',
         expected_exit_code: '0',
+    },
+    testseries_questions: {
+        test_slug:       'gate-cs-2026-mock-1',
+        question_type:   'mcq',
+        body:            'What is the time complexity of binary search on a sorted array of n elements?',
+        option_a:        'O(n)',
+        option_b:        'O(log n)',
+        option_c:        'O(n log n)',
+        option_d:        'O(1)',
+        option_e:        '',
+        option_f:        '',
+        correct_options: 'b',
+        nat_answer:      '',
+        nat_tolerance:   '0',
+        marks:           '1',
+        negative_marks:  '0.33',
+        topic:           'Algorithms',
+        difficulty:      'medium',
+        explanation:     'Binary search halves the search space each step, giving O(log n).',
     },
 };

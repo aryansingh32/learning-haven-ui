@@ -8,7 +8,7 @@ import api from './api';
 
 // ─── Types ──────────────────────────────────────────────────
 
-export type ContentType = 'chapters_meta' | 'chapter_steps' | 'problems' | 'build_stages';
+export type ContentType = 'chapters_meta' | 'chapter_steps' | 'problems' | 'build_stages' | 'testseries_questions';
 
 export interface ImportRow {
     id: string;

@@ -1,7 +1,7 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Bot, Gift, Award,
-  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
   { to: "/courses", icon: BookOpen, label: "Learn" },
   { to: "/topics", icon: ListChecks, label: "Practice" },
+  { to: "/test-series", icon: ClipboardList, label: "Test Series" },
   { to: "/projects", icon: Hammer, label: "Challenges" },
   { to: "/ai-coach", icon: Bot, label: "Mentor" },
   { to: "/profile", icon: Trophy, label: "Profile" },

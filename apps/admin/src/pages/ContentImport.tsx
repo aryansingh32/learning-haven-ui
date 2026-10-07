@@ -51,6 +51,7 @@ import { cn } from '@/lib/utils';
 const NON_CHAPTER_CONTENT_TYPES: { key: ContentType; label: string }[] = [
     { key: 'problems', label: 'Problems' },
     { key: 'build_stages', label: 'Build Stages' },
+    { key: 'testseries_questions', label: 'Test Series Questions' },
 ];
 
 // ─── Row status badge helper ──────────────────────────────────
@@ -613,10 +614,11 @@ const ContentImport: React.FC = () => {
 
             {/* Main Tabs */}
             <Tabs defaultValue="chapters">
-                <TabsList className="grid grid-cols-5 w-full max-w-2xl">
+                <TabsList className="grid grid-cols-5 w-full max-w-3xl">
                     <TabsTrigger value="chapters">Chapters</TabsTrigger>
                     <TabsTrigger value="problems">Problems</TabsTrigger>
                     <TabsTrigger value="build_stages">Build Stages</TabsTrigger>
+                    <TabsTrigger value="testseries_questions">Test Series</TabsTrigger>
                     <TabsTrigger value="history">History</TabsTrigger>
                 </TabsList>
 
