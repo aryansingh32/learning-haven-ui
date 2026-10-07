@@ -11,6 +11,11 @@ export default defineConfig({
     include: ["src/**/*.{test,spec}.{ts,tsx}", "../../tests/frontend/**/*.{test,spec}.{ts,tsx}"],
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: [
+      { find: "@", replacement: path.resolve(__dirname, "./src") },
+      // Specs in ../../tests/frontend sit outside this package, so bare imports
+      // would otherwise fail to resolve; point them at this app's node_modules.
+      { find: /^(react|react-dom|react-router-dom|sonner|@tanstack\/react-query|@testing-library\/[^/]+)(\/.*)?$/, replacement: path.resolve(__dirname, "node_modules") + "/$1$2" },
+    ],
   },
 });

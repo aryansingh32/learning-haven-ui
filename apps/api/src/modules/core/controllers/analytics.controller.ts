@@ -22,19 +22,26 @@ export const trackEvent = async (req: Request, res: Response) => {
             }
         }
 
+        if (typeof event_type !== 'string' || event_type.length === 0 || event_type.length > 64) {
+            return res.status(400).json({ error: 'event_type is required' });
+        }
+
+        // Map onto the analytics_events schema (event_name / properties / session_id).
         const { error } = await supabase
             .from('analytics_events')
             .insert([{
-                tracking_id,
                 user_id,
-                event_type,
-                path,
-                action_name,
-                metadata,
-                error_message,
-                error_stack,
+                event_name: event_type,
+                session_id: typeof tracking_id === 'string' ? tracking_id.slice(0, 100) : null,
+                properties: {
+                    path,
+                    action_name,
+                    metadata,
+                    error_message: typeof error_message === 'string' ? error_message.slice(0, 1000) : undefined,
+                    error_stack: typeof error_stack === 'string' ? error_stack.slice(0, 4000) : undefined,
+                    user_agent,
+                },
                 ip_address,
-                user_agent
             }]);
 
         if (error) {
@@ -58,19 +65,19 @@ export const getNetworkAnalytics = async (req: Request, res: Response) => {
 
         const { count: activeUsers } = await supabase
             .from('analytics_events')
-            .select('tracking_id', { count: 'exact', head: true })
+            .select('session_id', { count: 'exact', head: true })
             .gte('created_at', fifteenMinsAgo);
 
         const { count: pageViews } = await supabase
             .from('analytics_events')
             .select('*', { count: 'exact', head: true })
-            .eq('event_type', 'page_view')
+            .eq('event_name', 'page_view')
             .gte('created_at', todayStart.toISOString());
 
         const { count: errors } = await supabase
             .from('analytics_events')
             .select('*', { count: 'exact', head: true })
-            .in('event_type', ['error', 'unhandled_rejection'])
+            .in('event_name', ['error', 'unhandled_rejection'])
             .gte('created_at', todayStart.toISOString());
 
         const { data: events } = await supabase
@@ -83,7 +90,13 @@ export const getNetworkAnalytics = async (req: Request, res: Response) => {
             activeUsers: activeUsers || 0,
             pageViews: pageViews || 0,
             errors: errors || 0,
-            events: events || []
+            // Flatten to the shape the admin Network Monitoring page renders.
+            events: (events || []).map((e: any) => ({
+                ...e,
+                ...(e.properties || {}),
+                event_type: e.event_name,
+                tracking_id: e.session_id,
+            })),
         });
     } catch (e) {
         logger.error('Failed to fetch network analytics:', e);

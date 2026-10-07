@@ -352,7 +352,7 @@ export class ProgramsService {
   static async verifyCertificate(code: string) {
     const { data, error } = await supabase
       .from('apprenticeship_certificates')
-      .select('*')
+      .select('*, program:apprenticeship_programs(title, total_projects)')
       .eq('verification_code', code)
       .single();
 

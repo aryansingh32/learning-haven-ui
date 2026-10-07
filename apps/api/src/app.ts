@@ -1,4 +1,7 @@
 import express from 'express';
+// Must load before any routes: forwards rejected promises from async handlers
+// to the global error handler instead of crashing the process.
+import 'express-async-errors';
 import cors from 'cors';
 import './workers/email.worker';
 import './workers/verification.worker';
@@ -143,7 +146,9 @@ app.get('/api/protected', authenticateUser, (req, res) => {
 // Global error handler
 // Never leak stack traces or internal error details to clients.
 // ──────────────────────────────────────────────────────────
-app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (res.headersSent) return next(err);
+
     logger.error({
         message: err.message,
         stack: process.env.NODE_ENV === 'production' ? '[REDACTED]' : err.stack,

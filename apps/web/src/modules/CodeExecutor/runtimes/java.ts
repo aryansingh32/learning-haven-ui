@@ -1,6 +1,7 @@
 
 import { ExecutionResult, TestCase } from "../types";
 import { logger } from "../logger";
+import { ensureValidAccessToken } from "@/lib/authSession";
 
 /**
  * Run Java code via backend JDK execution.
@@ -28,14 +29,34 @@ export const runJava = async (code: string, testCases: TestCase[]): Promise<Exec
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 15000); // 15s total timeout
 
+            const accessToken = await ensureValidAccessToken();
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+                },
                 body: JSON.stringify({ code, testCases }),
                 signal: controller.signal,
             });
 
             clearTimeout(timeout);
+
+            if (response.status === 401) {
+                return {
+                    status: 'Runtime Error',
+                    output: 'Sign in to run Java code.',
+                    executionTime: 0
+                };
+            }
+
+            if (response.status === 429) {
+                return {
+                    status: 'Runtime Error',
+                    output: 'You have hit the hourly limit for Java runs. Please try again later.',
+                    executionTime: 0
+                };
+            }
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));

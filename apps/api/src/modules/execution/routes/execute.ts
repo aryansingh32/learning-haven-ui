@@ -5,11 +5,14 @@
 
 import { Router } from 'express';
 import { ExecuteController } from '../controllers/execute.controller';
+import { authenticateUser } from '../../../middleware/auth';
+import { submissionRateLimit } from '../../../middleware/rateLimit';
 
 const router = Router();
 
-// Java execution (requires JDK on server)
-router.post('/java', ExecuteController.executeJava);
+// Java execution (requires JDK on server). Runs untrusted code on the host,
+// so it must never be anonymous or unthrottled.
+router.post('/java', authenticateUser, submissionRateLimit, ExecuteController.executeJava);
 
 // Health check for available execution backends
 router.get('/health', ExecuteController.health);

@@ -23,6 +23,15 @@ const execAsync = promisify(exec);
 const JAVA_TIMEOUT_MS = 10000; // 10s total (compile + run)
 const JAVA_MEMORY_LIMIT = '256m';
 
+// User code runs in these processes: never hand it the API's secrets
+// (Supabase service key, Razorpay, etc.). Only what the JVM needs.
+const JAVA_CHILD_ENV: NodeJS.ProcessEnv = {
+    PATH: process.env.PATH,
+    JAVA_HOME: process.env.JAVA_HOME,
+    LANG: 'C.UTF-8',
+    JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}`,
+};
+
 interface TestCase {
     input: string;
     output: string;
@@ -269,7 +278,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                 {
                     cwd: workDir,
                     timeout: JAVA_TIMEOUT_MS / 2,
-                    env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                    env: JAVA_CHILD_ENV
                 }
             );
 
@@ -301,7 +310,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                     {
                         cwd: workDir,
                         timeout: JAVA_TIMEOUT_MS,
-                        env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                        env: JAVA_CHILD_ENV
                     }
                 );
 
@@ -352,7 +361,7 @@ export async function executeJava(code: string, testCases: TestCase[]): Promise<
                         {
                             cwd: workDir,
                             timeout: JAVA_TIMEOUT_MS,
-                            env: { ...process.env, JAVA_TOOL_OPTIONS: `-Xmx${JAVA_MEMORY_LIMIT}` }
+                            env: JAVA_CHILD_ENV
                         }
                     );
                     const elapsed = Date.now() - start;

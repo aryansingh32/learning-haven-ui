@@ -19,12 +19,15 @@ export default function ApprenticeshipCertificatePage() {
     queryKey: ["apprenticeship-certificate", code],
     queryFn: () => apprenticeshipService.verifyCertificate(code),
     enabled: Boolean(code),
+    // An unknown code is a definitive answer — don't make the visitor wait through retries.
+    retry: false,
   });
 
   const certificate = query.data?.certificate;
+  const programTitle = certificate?.program?.title || "Learning Haven Apprenticeship";
   const shareText = useMemo(() => {
     if (!certificate) return "";
-    return `I'm excited to share that I've completed the ${certificate.program_id || "Learning Haven Apprenticeship"} at Learning Haven.\n\nCertificate: ${window.location.href}\n\n#WebDevelopment #LearningHaven`;
+    return `I'm excited to share that I've completed the ${programTitle} at Learning Haven.\n\nCertificate: ${window.location.href}\n\n#WebDevelopment #LearningHaven`;
   }, [certificate]);
 
   const shareOnLinkedIn = () => {
@@ -78,7 +81,7 @@ export default function ApprenticeshipCertificatePage() {
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="text-xs uppercase text-slate-400">Projects</p>
-                <p className="mt-2 text-lg font-semibold">{certificate.projects_completed}/5</p>
+                <p className="mt-2 text-lg font-semibold">{certificate.projects_completed}/{certificate.program?.total_projects || certificate.projects_completed}</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="text-xs uppercase text-slate-400">Quality</p>

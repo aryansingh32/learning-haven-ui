@@ -6,9 +6,6 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isAuthenticated, isLoading } = useAuth();
     const location = useLocation();
 
-    // TEMPORARY: auth bypassed for UI testing
-    return <>{children}</>;
-
     if (isLoading) {
         return (
             <div className="h-screen w-full flex items-center justify-center bg-depth">
