@@ -1,5 +1,5 @@
 import { pool } from '../../../config/database';
-import { scoreAttempt, AnswerState, ScoringQuestion } from './scoring';
+import { scoreAttempt, AnswerState, ScoringQuestion } from '@repo/assessment-core';
 
 interface QuestionRow {
   id: string;

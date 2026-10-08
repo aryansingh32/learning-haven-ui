@@ -1,0 +1,26 @@
+{
+  "name": "@repo/assessment-core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pure, dependency-free assessment logic shared by the Forge API and the Campus API: scoring, per-attempt shuffling, roster parsing, proctoring rules.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": ["<rootDir>/src"]
+  }
+}

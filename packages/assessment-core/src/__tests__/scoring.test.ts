@@ -1,4 +1,4 @@
-import { scoreQuestion, scoreAttempt, ScoringQuestion, AnswerState } from '../services/scoring';
+import { scoreQuestion, scoreAttempt, ScoringQuestion, AnswerState } from '../scoring';
 
 const mcq: ScoringQuestion = {
   id: 'q-mcq',
