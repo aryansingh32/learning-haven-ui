@@ -8,6 +8,7 @@ import { errorHandler, HttpError } from './errors';
 import { assignmentsRouter } from './routes/assignments';
 import { meRouter } from './routes/me';
 import { orgRouter } from './routes/org';
+import { platformRouter } from './routes/platform';
 import { studentRouter } from './routes/student';
 import { testsRouter } from './routes/tests';
 
@@ -24,6 +25,7 @@ const api = express.Router();
 api.use(requireUser);
 api.use('/me', meRouter);
 api.use('/my', studentRouter);
+api.use('/platform', platformRouter);
 api.use('/orgs/:orgId', orgRouter);
 api.use('/orgs/:orgId/tests', testsRouter);
 api.use('/orgs/:orgId/assignments', assignmentsRouter);

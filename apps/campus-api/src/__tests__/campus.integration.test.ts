@@ -30,6 +30,7 @@ const U = {
   s2: 'a0000000-0000-0000-0000-000000000012', // verified, never on the roster
   adminB: 'b0000000-0000-0000-0000-000000000001',
   facultyB: 'b0000000-0000-0000-0000-000000000002',
+  forgeAdmin: 'f0000000-0000-0000-0000-000000000001',
 };
 const ORG_A = 'aaaaaaaa-1111-0000-0000-00000000000a';
 const ORG_B = 'bbbbbbbb-1111-0000-0000-00000000000b';
@@ -44,6 +45,7 @@ beforeAll(async () => {
     await pool.query(`insert into auth.users (id, email, email_confirmed_at) values ($1, $2, now())`, [u.id, u.email]);
     await pool.query(`insert into public.users (id, email, full_name) values ($1, $2, $3)`, [u.id, u.email, u.email.split('@')[0]]);
   }
+  await pool.query(`update public.users set role = 'super_admin' where id = $1`, [U.forgeAdmin]);
   await pool.query(`insert into campus.organizations (id, slug, name) values ($1, 'college-a', 'College A'), ($2, 'college-b', 'College B')`, [ORG_A, ORG_B]);
   await pool.query(`insert into campus.departments (org_id, name, code) values ($1, 'Computer Science', 'CSE')`, [ORG_A]);
   await pool.query(`insert into campus.batches (id, org_id, name) values ($1, $2, 'CSE-2027-A'), ($3, $4, 'B1')`, [BATCH_A, ORG_A, BATCH_B, ORG_B]);
@@ -218,7 +220,11 @@ describe('a student sits the test', () => {
     expect(copy.body).toMatchObject({ severity: 'warning', violationCount: 1 });
   });
 
-  it('scores on submit and blocks a second attempt', async () => {
+  it('scores on submit (on the questions it was dealt) and blocks a second attempt', async () => {
+    // Faculty add a question while the student is mid-test; it must not change this attempt's total.
+    const added = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${testId}/questions`).set(await as(U.facultyA))
+      .send({ type: 'nat', body: 'Added mid-test', natAnswer: 1, marks: 10 });
+    expect(added.status).toBe(201);
     const res = await request(app).post(`/campus/v1/my/attempts/${attemptId}/submit`).set(await as(U.s1));
     expect(res.body.status).toBe('completed');
     expect(res.body.submitReason).toBe('manual');
@@ -279,5 +285,30 @@ describe('auto-submit on violations', () => {
     expect(view.body).toMatchObject({ status: 'completed', submitReason: 'violations' });
     // Results release after close by default, so no score is shown yet.
     expect(view.body.result).toEqual({ released: false });
+  });
+});
+
+describe('platform: onboarding a college', () => {
+  it('lets Forge staff create a college with an owner', async () => {
+    const res = await request(app).post('/campus/v1/platform/colleges').set(await as(U.forgeAdmin))
+      .send({ name: 'College C', slug: 'college-c', ownerEmail: 's2@a.edu', seatLimit: 500 });
+    expect(res.status).toBe(201);
+    const me = await request(app).get('/campus/v1/me').set(await as(U.s2));
+    expect(me.body.memberships).toEqual([expect.objectContaining({ orgName: 'College C', role: 'owner' })]);
+    const list = await request(app).get('/campus/v1/platform/colleges').set(await as(U.forgeAdmin));
+    expect(list.body.map((c: { slug: string }) => c.slug)).toEqual(expect.arrayContaining(['college-a', 'college-b', 'college-c']));
+  });
+
+  it('explains when the owner has no account yet', async () => {
+    const res = await request(app).post('/campus/v1/platform/colleges').set(await as(U.forgeAdmin))
+      .send({ name: 'College D', slug: 'college-d', ownerEmail: 'nobody@nowhere.edu' });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/doesn't have a Forge account/);
+  });
+
+  it('is closed to college admins', async () => {
+    expect((await request(app).get('/campus/v1/platform/colleges').set(await as(U.adminA))).status).toBe(403);
+    expect((await request(app).post('/campus/v1/platform/colleges').set(await as(U.adminA))
+      .send({ name: 'Rogue', slug: 'rogue', ownerEmail: 'admina@a.edu' })).status).toBe(403);
   });
 });

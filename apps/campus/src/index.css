@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Light, classroom-friendly theme. --brand is replaced at runtime with the
+   college's brand colour (see BrandProvider); everything accent-coloured
+   derives from it. */
+@theme {
+  --color-background: hsl(220 20% 98%);
+  --color-foreground: hsl(222 47% 11%);
+
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222 47% 11%);
+
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222 47% 11%);
+
+  --color-primary: var(--brand, hsl(243 75% 59%));
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(220 14% 95%);
+  --color-secondary-foreground: hsl(222 47% 11%);
+
+  --color-muted: hsl(220 14% 95%);
+  --color-muted-foreground: hsl(220 9% 40%);
+
+  --color-accent: hsl(220 14% 93%);
+  --color-accent-foreground: hsl(222 47% 11%);
+
+  --color-destructive: hsl(0 72% 45%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+
+  --color-success: hsl(152 60% 32%);
+  --color-warning: hsl(32 90% 40%);
+
+  --color-border: hsl(220 13% 89%);
+  --color-input: hsl(220 13% 85%);
+  --color-ring: var(--brand, hsl(243 75% 59%));
+
+  --radius: 0.625rem;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* { border-color: var(--color-border); }
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Tabular figures keep scores and counts aligned in tables. */
+.tabular { font-variant-numeric: tabular-nums; }
+
+:focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; }

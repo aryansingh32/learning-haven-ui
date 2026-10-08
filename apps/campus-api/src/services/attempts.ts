@@ -142,10 +142,21 @@ async function assignmentFor(attempt: AttemptRow): Promise<AssignmentRow> {
   });
 }
 
+/**
+ * The questions this attempt was dealt at start. If staff edit the test while
+ * students are sitting it, an attempt is still scored on its own question set.
+ */
+function attemptQuestions(attempt: AttemptRow, questions: QuestionRow[]): QuestionRow[] {
+  const dealt = attempt.question_order?.questionIds;
+  if (!dealt) return questions;
+  const ids = new Set(dealt);
+  return questions.filter((q) => ids.has(q.id));
+}
+
 /** Score from saved answers and close the attempt. Idempotent under races. */
 async function finalize(attempt: AttemptRow, reason: 'manual' | 'timeout' | 'violations' | 'closed'): Promise<AttemptRow> {
   return asSystem(async (db) => {
-    const questions = await loadQuestions(db, attempt.test_id);
+    const questions = attemptQuestions(attempt, await loadQuestions(db, attempt.test_id));
     const { totalScore, correctCount, totalMarks } = scoreAttempt(questions.map(toScoring), attempt.answers ?? []);
     const { rows } = await db.query<AttemptRow>(
       `update public.test_attempts
@@ -239,7 +250,7 @@ export async function getAttemptView(userId: string, attemptId: string) {
   const released = resultsReleased(assignment);
 
   const questions = attempt.status === 'in_progress' || released
-    ? await asSystem((db) => loadQuestions(db, attempt.test_id))
+    ? attemptQuestions(attempt, await asSystem((db) => loadQuestions(db, attempt.test_id)))
     : [];
   const byId = new Map(questions.map((q) => [q.id, q]));
   const order = attempt.question_order ?? { questionIds: questions.map((q) => q.id), optionOrder: {} };
