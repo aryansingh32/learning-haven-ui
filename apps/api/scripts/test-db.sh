@@ -3,6 +3,8 @@
 # apply every migration dated after it, then run the SQL test suites.
 #
 #   TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm test:db
+#   ... test-db.sh --prepare-only   build forge_db_test and keep it (used by the
+#                                   Campus API integration tests); runs no suites
 #
 # TEST_DATABASE_URL must point at a disposable Postgres 17 server: a database
 # named forge_db_test is dropped and recreated on it. Never point it at a
@@ -40,6 +42,11 @@ for f in "$migrations"/*.sql; do
     psql_q "$test_url" -f "$f"
   fi
 done
+
+if [[ "${1:-}" == "--prepare-only" ]]; then
+  echo "Prepared $test_url"
+  exit 0
+fi
 
 echo "→ Test suites"
 for t in "$tests"/*.sql; do

@@ -1,0 +1,52 @@
+{
+  "name": "@repo/campus-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Forge Campus API: colleges, batches, rosters, assignments and proctored attempts. Queries run as the signed-in user so Postgres RLS enforces college isolation.",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "@repo/assessment-core": "workspace:*",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^4.22.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^8.1.0",
+    "jose": "^4.15.9",
+    "pg": "^8.18.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.19.19",
+    "@types/pg": "^8.15.6",
+    "@types/supertest": "^7.2.0",
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.11",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testTimeout": 30000,
+    "setupFiles": [
+      "<rootDir>/src/__tests__/setup-env.ts"
+    ],
+    "globalSetup": "<rootDir>/src/__tests__/global-setup.ts",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ]
+  }
+}

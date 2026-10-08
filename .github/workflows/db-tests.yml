@@ -8,11 +8,15 @@ on:
     paths:
       - 'apps/api/supabase/**'
       - 'apps/api/scripts/test-db.sh'
+      - 'apps/campus-api/**'
+      - 'packages/assessment-core/**'
       - '.github/workflows/db-tests.yml'
   push:
     branches: [main]
     paths:
       - 'apps/api/supabase/**'
+      - 'apps/campus-api/**'
+      - 'packages/assessment-core/**'
 
 jobs:
   db-tests:
@@ -38,3 +42,16 @@ jobs:
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
         run: bash apps/api/scripts/test-db.sh
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install workspace
+        run: pnpm install --frozen-lockfile
+      - name: Shared assessment logic tests
+        run: pnpm --filter @repo/assessment-core test
+      - name: Campus API integration tests (real Postgres + RLS)
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        run: pnpm --filter @repo/campus-api test
