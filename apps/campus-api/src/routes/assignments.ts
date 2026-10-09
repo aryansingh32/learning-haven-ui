@@ -3,8 +3,10 @@ import { z } from 'zod';
 import { normalizePolicy } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
-import { badRequest, notFound } from '../errors';
+import { badRequest, HttpError, notFound } from '../errors';
 import { requirePermission } from '../permissions';
+import { gradeCodingAnswers } from '../services/attempts';
+import { judgeAvailable } from '../services/judge';
 
 export const assignmentsRouter = Router({ mergeParams: true });
 const uuid = z.string().uuid();
@@ -126,9 +128,10 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
         where bm.batch_id = $1 and m.role = 'student'`, [assignment.batch_id])).rows;
     const attempts = (await db.query<{
       user_id: string; status: string; score: string | null; total_marks: string; submitted_at: string | null;
-      violation_count: number; submit_reason: string | null; attempt_number: number;
+      violation_count: number; submit_reason: string | null; attempt_number: number; grading_pending: boolean;
     }>(
-      `select user_id, status, score, total_marks, submitted_at, violation_count, submit_reason, attempt_number
+      `select user_id, status, score, total_marks, submitted_at, violation_count, submit_reason, attempt_number,
+              exists (select 1 from jsonb_array_elements(answers) a where a->>'grading' = 'pending') as grading_pending
          from public.test_attempts where assignment_id = $1`, [assignmentId])).rows;
     return { assignment, members, attempts };
   });
@@ -158,6 +161,8 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
       violations: mine.reduce((sum, a) => sum + a.violation_count, 0),
       submitReason: best?.submit_reason ?? null,
       submittedAt: best?.submitted_at ?? null,
+      // Coding answers not judged yet (judge was down at submit) — see /regrade.
+      gradingPending: done.some((a) => a.grading_pending),
     };
   }).sort((a, b) => (a.rollNumber ?? '').localeCompare(b.rollNumber ?? '', undefined, { numeric: true }));
 
@@ -170,6 +175,7 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
     highestPercent: scored.length ? Math.max(...scored) : null,
     lowestPercent: scored.length ? Math.min(...scored) : null,
     flagged: rows.filter((r) => r.violations > 0).length,
+    gradingPending: rows.filter((r) => r.gradingPending).length,
   };
 
   if (req.query.format === 'csv') {
@@ -194,6 +200,40 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
   }
 
   res.json({ assignment: { id: data.assignment.id, title: data.assignment.title, batch: data.assignment.batch_name }, summary, rows });
+});
+
+const regradeBody = z.object({ rejudge: z.boolean().default(false) });
+
+/**
+ * Judge coding answers of submitted attempts again: by default only those
+ * still pending (judge was down at submit); `rejudge` re-runs every coding
+ * answer, e.g. after fixing a question's test cases.
+ */
+assignmentsRouter.post('/:assignmentId/regrade', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  const { rejudge } = regradeBody.parse(req.body ?? {});
+  await requirePermission(userId, orgId, 'assessments.grade');
+  await requirePermission(userId, orgId, 'reports.view'); // to read the attempts
+  if (!judgeAvailable()) throw new HttpError(503, 'The code judge is not configured yet, so coding answers cannot be graded.');
+
+  // RLS proves this college's staff may see these attempts.
+  const attemptIds = await asUser(userId, async (db) => (await db.query<{ id: string }>(
+    `select t.id from public.test_attempts t join campus.assignments a on a.id = t.assignment_id
+      where t.assignment_id = $1 and a.org_id = $2 and t.status = 'completed'
+        and ($3 or exists (select 1 from jsonb_array_elements(t.answers) x where x->>'grading' = 'pending'))`,
+    [assignmentId, orgId, rejudge]
+  )).rows.map((r) => r.id));
+
+  let judged = 0;
+  let pending = 0;
+  for (const id of attemptIds) {
+    const r = await gradeCodingAnswers(id, rejudge);
+    judged += r.judged;
+    pending += r.pending;
+  }
+  res.json({ attempts: attemptIds.length, judged, pending });
 });
 
 assignmentsRouter.get('/:assignmentId/attempts/:attemptId/events', async (req, res) => {

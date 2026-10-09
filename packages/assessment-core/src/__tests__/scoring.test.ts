@@ -148,3 +148,36 @@ describe('scoreAttempt — aggregate', () => {
     expect(result.totalMarks).toBe(5);
   });
 });
+
+describe('scoreQuestion — coding (partial marks per test, no negative marking)', () => {
+  const coding: ScoringQuestion = {
+    id: 'q-code', question_type: 'coding', correct_options: null, nat_answer: null, nat_tolerance: 0, marks: 10, negative_marks: 2,
+  };
+  const judged = (passed: number, total: number) =>
+    answered('q-code', { code: 'def f(): pass', language: 'python', tests_passed: passed, tests_total: total, grading: 'judged' });
+
+  it('awards full marks when every test passes', () => {
+    expect(scoreQuestion(coding, judged(4, 4))).toMatchObject({ attempted: true, isCorrect: true, marksAwarded: 10, testsPassed: 4, testsTotal: 4 });
+  });
+
+  it('awards marks in proportion to passed tests, rounded to 2 places', () => {
+    expect(scoreQuestion(coding, judged(1, 3))).toMatchObject({ isCorrect: false, marksAwarded: 3.33 });
+  });
+
+  it('never goes negative, even with negative_marks configured', () => {
+    expect(scoreQuestion(coding, judged(0, 5)).marksAwarded).toBe(0);
+  });
+
+  it('is unattempted without code', () => {
+    expect(scoreQuestion(coding, answered('q-code', { code: '   ' })).attempted).toBe(false);
+    expect(scoreQuestion(coding, answered('q-code', { status: 'visited', code: 'x' })).attempted).toBe(false);
+  });
+
+  it('scores 0 and reports pending until the judge has run', () => {
+    expect(scoreQuestion(coding, answered('q-code', { code: 'x', grading: 'pending' }))).toMatchObject({ attempted: true, marksAwarded: 0, pending: true });
+  });
+
+  it('cannot be inflated by a passed count above the total', () => {
+    expect(scoreQuestion(coding, judged(9, 3)).marksAwarded).toBe(10);
+  });
+});

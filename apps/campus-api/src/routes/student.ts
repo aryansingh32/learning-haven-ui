@@ -3,7 +3,8 @@ import { z } from 'zod';
 import { normalizePolicy, PROCTORING_EVENTS } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
-import { getAttemptView, recordEvent, resultsReleased, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
+import { getAttemptView, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
+import { JUDGED_LANGUAGES } from '../services/judge';
 
 export const studentRouter = Router();
 const uuid = z.string().uuid();
@@ -83,12 +84,25 @@ studentRouter.get('/attempts/:id', async (req, res) => {
 const answerBody = z.object({
   selectedOptions: z.array(z.string().min(1).max(64)).max(20).nullable().optional(),
   natValue: z.number().finite().nullable().optional(),
+  code: z.string().max(50_000, 'Code exceeds the 50 KB limit.').nullable().optional(),
+  language: z.enum(JUDGED_LANGUAGES).nullable().optional(),
   markedForReview: z.boolean().optional(),
 });
 
 studentRouter.put('/attempts/:id/answers/:questionId', async (req, res) => {
   const userId = userOf(req);
   res.json(await saveAnswer(userId, uuid.parse(req.params.id), uuid.parse(req.params.questionId), answerBody.parse(req.body)));
+});
+
+const runBody = z.object({
+  code: z.string().min(1, 'Write some code first.').max(50_000, 'Code exceeds the 50 KB limit.'),
+  language: z.enum(JUDGED_LANGUAGES),
+});
+
+/** Run code on the sample tests of a coding question. Doesn't save or score. */
+studentRouter.post('/attempts/:id/questions/:questionId/run', async (req, res) => {
+  const userId = userOf(req);
+  res.json(await runSamples(userId, uuid.parse(req.params.id), uuid.parse(req.params.questionId), runBody.parse(req.body)));
 });
 
 const eventBody = z.object({ type: z.enum(PROCTORING_EVENTS) });

@@ -317,3 +317,129 @@ describe('platform: onboarding a college', () => {
       .send({ name: 'Rogue', slug: 'rogue', ownerEmail: 'admina@a.edu' })).status).toBe(403);
   });
 });
+
+describe('coding questions', () => {
+  let codingTestId: string;
+  let codingAssignmentId: string;
+  let attemptId: string;
+  let questionId: string;
+  const PY_STARTER = 'class Solution:\n    def double(self, x):\n        pass\n';
+  // Passes the sample and one hidden test, fails the negative one.
+  const PY_PARTIAL = 'class Solution:\n    def double(self, x):\n        return x * 2 if x > 0 else 0\n';
+
+  it('lets faculty author a coding question with sample and hidden tests', async () => {
+    const created = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA))
+      .send({ title: 'Coding round', durationMinutes: 30 });
+    codingTestId = created.body.id;
+    const url = `/campus/v1/orgs/${ORG_A}/tests/${codingTestId}/questions`;
+
+    const noSample = await request(app).post(url).set(await as(U.facultyA)).send({
+      type: 'coding', body: 'Double it', starterCode: { python: PY_STARTER }, tests: [{ input: 'x = 1', expected: '2' }],
+    });
+    expect(noSample.status).toBe(400);
+    const noStarter = await request(app).post(url).set(await as(U.facultyA)).send({
+      type: 'coding', body: 'Double it', starterCode: { python: '  ' }, tests: [{ input: 'x = 1', expected: '2', isSample: true }],
+    });
+    expect(noStarter.status).toBe(400);
+
+    const ok = await request(app).post(url).set(await as(U.facultyA)).send({
+      type: 'coding', body: 'Return x doubled.', marks: 6,
+      starterCode: { python: PY_STARTER, javascript: 'function double(x) {\n}\n' },
+      tests: [
+        { input: 'x = 1', expected: '2', isSample: true },
+        { input: 'x = 5', expected: '10' },
+        { input: 'x = -3', expected: '-6' },
+      ],
+    });
+    expect(ok.status).toBe(201);
+    questionId = ok.body.id;
+
+    const detail = await request(app).get(`/campus/v1/orgs/${ORG_A}/tests/${codingTestId}`).set(await as(U.facultyA));
+    expect(detail.body.questions[0]).toMatchObject({ type: 'coding', compare: 'exact', marks: 6 });
+    expect(detail.body.questions[0].tests).toHaveLength(3);
+    expect(Object.keys(detail.body.questions[0].starterCode).sort()).toEqual(['javascript', 'python']);
+
+    await request(app).patch(`/campus/v1/orgs/${ORG_A}/tests/${codingTestId}`).set(await as(U.facultyA)).send({ published: true });
+    const assigned = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: codingTestId, title: 'Coding round', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), resultRelease: 'immediately',
+    });
+    expect(assigned.status).toBe(201);
+    codingAssignmentId = assigned.body.id;
+  });
+
+  it('gives the student starter code and samples, never hidden tests', async () => {
+    const res = await request(app).post(`/campus/v1/my/assignments/${codingAssignmentId}/start`).set(await as(U.s1));
+    expect(res.status).toBe(201);
+    attemptId = res.body.attemptId;
+    expect(res.body.questions[0]).toMatchObject({
+      type: 'coding', languages: ['javascript', 'python'], samples: [{ input: 'x = 1', expected: '2' }],
+    });
+    expect(res.body.questions[0].starterCode.python).toBe(PY_STARTER);
+    expect(JSON.stringify(res.body)).not.toMatch(/x = 5|x = -3|-6/);
+  });
+
+  it('runs code on the samples only, with a short cooldown', async () => {
+    const run = await request(app).post(`/campus/v1/my/attempts/${attemptId}/questions/${questionId}/run`).set(await as(U.s1))
+      .send({ code: PY_PARTIAL, language: 'python' });
+    expect(run.status).toBe(200);
+    expect(run.body).toMatchObject({ verdict: 'Accepted', passed: 1, total: 1 });
+    const again = await request(app).post(`/campus/v1/my/attempts/${attemptId}/questions/${questionId}/run`).set(await as(U.s1))
+      .send({ code: PY_PARTIAL, language: 'python' });
+    expect(again.status).toBe(429);
+    const stranger = await request(app).post(`/campus/v1/my/attempts/${attemptId}/questions/${questionId}/run`).set(await as(U.s2))
+      .send({ code: PY_PARTIAL, language: 'python' });
+    expect(stranger.status).toBe(404);
+  });
+
+  it('saves code only in an allowed language', async () => {
+    const url = `/campus/v1/my/attempts/${attemptId}/answers/${questionId}`;
+    expect((await request(app).put(url).set(await as(U.s1)).send({ code: 'class Solution {}', language: 'java' })).status).toBe(400);
+    expect((await request(app).put(url).set(await as(U.s1)).send({ selectedOptions: ['a'] })).status).toBe(400);
+    const saved = await request(app).put(url).set(await as(U.s1)).send({ code: PY_PARTIAL, language: 'python' });
+    expect(saved.body).toEqual({ questionId, status: 'answered' });
+    // Marking for review keeps the saved code.
+    const marked = await request(app).put(url).set(await as(U.s1)).send({ markedForReview: true });
+    expect(marked.body.status).toBe('answered_marked');
+  });
+
+  it('judges every test on submit and gives partial marks', async () => {
+    const res = await request(app).post(`/campus/v1/my/attempts/${attemptId}/submit`).set(await as(U.s1));
+    expect(res.body.status).toBe('completed');
+    expect(res.body.result).toMatchObject({ released: true, score: 4, totalMarks: 6, correctCount: 0 });
+    expect(res.body.result.perQuestion[0]).toMatchObject({ testsPassed: 2, testsTotal: 3, isCorrect: false, marksAwarded: 4 });
+  });
+
+  it('lets faculty regrade pending answers, and no one else', async () => {
+    // Simulate a submit while the judge was down.
+    await pool.query(
+      `update public.test_attempts set score = 0,
+         answers = (select jsonb_agg(a || '{"grading":"pending","tests_passed":null,"tests_total":null}') from jsonb_array_elements(answers) a)
+       where id = $1`, [attemptId]);
+    const pending = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/results`).set(await as(U.facultyA));
+    expect(pending.body.summary.gradingPending).toBe(1);
+    expect(pending.body.rows[0]).toMatchObject({ score: 0, gradingPending: true });
+
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/regrade`).set(await as(U.facultyB)).send({})).status).toBe(403);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/regrade`).set(await as(U.s1)).send({})).status).toBe(403);
+
+    const regrade = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/regrade`).set(await as(U.facultyA)).send({});
+    expect(regrade.body).toEqual({ attempts: 1, judged: 1, pending: 0 });
+    const after = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/results`).set(await as(U.facultyA));
+    expect(after.body.rows[0]).toMatchObject({ score: 4, gradingPending: false });
+  });
+
+  it('keeps hidden tests away from students in the database', async () => {
+    const client = await pool.connect();
+    try {
+      await client.query('begin');
+      await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: U.s1, role: 'authenticated' })]);
+      await client.query('set local role authenticated');
+      const { rows } = await client.query(`select count(*)::int as n from public.question_test_cases`);
+      expect(rows[0].n).toBe(0);
+    } finally {
+      await client.query('rollback');
+      client.release();
+    }
+  });
+});

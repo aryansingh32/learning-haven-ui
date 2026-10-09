@@ -3,7 +3,7 @@
 // most trust-critical part of this product -- is exhaustively unit
 // testable without mocking anything.
 
-export type QuestionType = 'mcq' | 'msq' | 'nat';
+export type QuestionType = 'mcq' | 'msq' | 'nat' | 'coding';
 export type AnswerStatus = 'not_visited' | 'visited' | 'answered' | 'marked_for_review' | 'answered_marked';
 
 export interface ScoringQuestion {
@@ -21,6 +21,14 @@ export interface AnswerState {
   status: AnswerStatus;
   selected_options: string[] | null;
   nat_value: number | null;
+  // coding only: the saved program, and what the server judge found when the
+  // attempt was submitted. Never set by the client.
+  code?: string | null;
+  language?: string | null;
+  tests_passed?: number | null;
+  tests_total?: number | null;
+  /** 'pending' when the judge was unavailable at submit; staff can regrade. */
+  grading?: 'judged' | 'pending' | null;
 }
 
 export interface QuestionScoreResult {
@@ -28,6 +36,10 @@ export interface QuestionScoreResult {
   attempted: boolean;
   isCorrect: boolean | null; // null when unattempted
   marksAwarded: number;
+  /** coding only: tests passed / total, and whether judging is still pending. */
+  testsPassed?: number;
+  testsTotal?: number;
+  pending?: boolean;
 }
 
 export interface AttemptScoreResult {
@@ -45,6 +57,7 @@ function isAttempted(answer: AnswerState | undefined, questionType: QuestionType
   if (!answer) return false;
   if (answer.status !== 'answered' && answer.status !== 'answered_marked') return false;
   if (questionType === 'nat') return answer.nat_value !== null && answer.nat_value !== undefined;
+  if (questionType === 'coding') return typeof answer.code === 'string' && answer.code.trim().length > 0;
   return Array.isArray(answer.selected_options) && answer.selected_options.length > 0;
 }
 
@@ -76,6 +89,23 @@ export function scoreQuestion(question: ScoringQuestion, answer: AnswerState | u
       attempted: true,
       isCorrect,
       marksAwarded: isCorrect ? question.marks : 0,
+    };
+  }
+
+  if (question.question_type === 'coding') {
+    // Partial marks per passed test, no negative marking. Unjudged = 0 until regraded.
+    const a = answer!;
+    if (a.grading !== 'judged' || !a.tests_total) {
+      return { questionId: question.id, attempted: true, isCorrect: false, marksAwarded: 0, pending: a.grading !== 'judged', testsPassed: 0, testsTotal: a.tests_total ?? 0 };
+    }
+    const passed = Math.max(0, Math.min(a.tests_passed ?? 0, a.tests_total));
+    return {
+      questionId: question.id,
+      attempted: true,
+      isCorrect: passed === a.tests_total,
+      marksAwarded: Math.round((question.marks * passed / a.tests_total) * 100) / 100,
+      testsPassed: passed,
+      testsTotal: a.tests_total,
     };
   }
 

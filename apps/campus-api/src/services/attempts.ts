@@ -21,11 +21,12 @@ import {
 } from '@repo/assessment-core';
 import { asSystem, asUser, Db } from '../db';
 import { badRequest, HttpError, notFound } from '../errors';
+import { JudgedLanguage, judgeCode, JudgeUnavailableError, languagesOf, StarterCode } from './judge';
 
 interface QuestionRow {
   id: string;
   question_group_id: string | null;
-  question_type: 'mcq' | 'msq' | 'nat';
+  question_type: 'mcq' | 'msq' | 'nat' | 'coding';
   body: string;
   options: Array<{ id: string; text: string }> | null;
   correct_options: string[] | null;
@@ -36,6 +37,15 @@ interface QuestionRow {
   section_id: string | null;
   section_name: string | null;
   stimulus: string | null;
+  starter_code: StarterCode;
+  judge_config: { compare?: string };
+}
+
+interface TestCaseRow {
+  question_id: string;
+  input: string;
+  expected_output: string;
+  is_sample: boolean;
 }
 
 interface AttemptRow {
@@ -95,7 +105,7 @@ export function resultsReleased(a: Pick<AssignmentRow, 'result_release' | 'close
 async function loadQuestions(db: Db, testId: string): Promise<QuestionRow[]> {
   const { rows } = await db.query<QuestionRow>(
     `select q.id, q.question_group_id, q.question_type, q.body, q.options, q.correct_options,
-            q.nat_answer, q.nat_tolerance, q.marks, q.negative_marks,
+            q.nat_answer, q.nat_tolerance, q.marks, q.negative_marks, q.starter_code, q.judge_config,
             tq.section_id, s.name as section_name, g.stimulus
        from public.test_questions tq
        join public.testseries_questions q on q.id = tq.question_id
@@ -107,6 +117,22 @@ async function loadQuestions(db: Db, testId: string): Promise<QuestionRow[]> {
   );
   return rows;
 }
+
+/** Test cases for coding questions — samples only unless `all`. Server side only. */
+async function loadTestCases(db: Db, questionIds: string[], all: boolean): Promise<Map<string, TestCaseRow[]>> {
+  const byQuestion = new Map<string, TestCaseRow[]>();
+  if (questionIds.length === 0) return byQuestion;
+  const { rows } = await db.query<TestCaseRow>(
+    `select question_id, input, expected_output, is_sample from public.question_test_cases
+      where question_id = any($1::uuid[]) and ($2 or is_sample)
+      order by question_id, sort_order, created_at`,
+    [questionIds, all]
+  );
+  for (const r of rows) byQuestion.set(r.question_id, [...(byQuestion.get(r.question_id) ?? []), r]);
+  return byQuestion;
+}
+
+const toJudgeTests = (rows: TestCaseRow[]) => rows.map((t) => ({ input: t.input, expected: t.expected_output, isSample: t.is_sample }));
 
 /** The student's view of the assignment — null when RLS says they can't see it. */
 async function visibleAssignment(userId: string, assignmentId: string): Promise<AssignmentRow | null> {
@@ -153,23 +179,116 @@ function attemptQuestions(attempt: AttemptRow, questions: QuestionRow[]): Questi
   return questions.filter((q) => ids.has(q.id));
 }
 
-/** Score from saved answers and close the attempt. Idempotent under races. */
+const codingIds = (questions: QuestionRow[]) => new Set(questions.filter((q) => q.question_type === 'coding').map((q) => q.id));
+
+function rescore(questions: QuestionRow[], answers: AnswerState[]) {
+  return scoreAttempt(questions.map(toScoring), answers);
+}
+
+/**
+ * Close the attempt and score it from the answers saved in the database.
+ * Closing comes first, so no answer can change while code is judged; coding
+ * answers count as "grading pending" (0 marks) until the judge has run.
+ * Idempotent under races: only the request that closes the attempt grades it.
+ */
 async function finalize(attempt: AttemptRow, reason: 'manual' | 'timeout' | 'violations' | 'closed'): Promise<AttemptRow> {
-  return asSystem(async (db) => {
+  const closed = await asSystem(async (db) => {
     const questions = attemptQuestions(attempt, await loadQuestions(db, attempt.test_id));
-    const { totalScore, correctCount, totalMarks } = scoreAttempt(questions.map(toScoring), attempt.answers ?? []);
     const { rows } = await db.query<AttemptRow>(
       `update public.test_attempts
-          set status = 'completed', submitted_at = least(now(), expires_at),
-              score = $2, correct_count = $3, total_marks = $4, submit_reason = $5
+          set status = 'completed', submitted_at = least(now(), expires_at), submit_reason = $2
         where id = $1 and status = 'in_progress'
         returning *`,
-      [attempt.id, totalScore, correctCount, totalMarks, reason]
+      [attempt.id, reason]
     );
-    if (rows[0]) return rows[0];
-    const fresh = await db.query<AttemptRow>(`select * from public.test_attempts where id = $1`, [attempt.id]);
-    return fresh.rows[0];
+    if (!rows[0]) {
+      const fresh = await db.query<AttemptRow>(`select * from public.test_attempts where id = $1`, [attempt.id]);
+      return { row: fresh.rows[0], closedNow: false, needsJudge: false };
+    }
+    const coding = codingIds(questions);
+    let needsJudge = false;
+    const answers = (rows[0].answers ?? []).map((a) => {
+      if (!coding.has(a.question_id) || !a.code?.trim()) return a;
+      needsJudge = true;
+      return { ...a, grading: 'pending' as const, tests_passed: null, tests_total: null };
+    });
+    const { totalScore, correctCount, totalMarks } = rescore(questions, answers);
+    const updated = await db.query<AttemptRow>(
+      `update public.test_attempts set answers = $2::jsonb, score = $3, correct_count = $4, total_marks = $5
+        where id = $1 returning *`,
+      [attempt.id, JSON.stringify(answers), totalScore, correctCount, totalMarks]
+    );
+    return { row: updated.rows[0], closedNow: true, needsJudge };
   });
+  if (!closed.closedNow || !closed.needsJudge) return closed.row;
+  try {
+    await gradeCodingAnswers(attempt.id);
+  } catch (err) {
+    // The attempt is safely closed with coding marks pending; staff can regrade.
+    console.error('Grading coding answers failed', { attemptId: attempt.id, error: err instanceof Error ? err.message : String(err) });
+  }
+  return asSystem(async (db) => (await db.query<AttemptRow>(`select * from public.test_attempts where id = $1`, [attempt.id])).rows[0]);
+}
+
+/**
+ * Judge the coding answers of a submitted attempt against every test (sample
+ * and hidden) and rescore it. Answers already judged are kept unless `rejudge`.
+ * If the judge is unavailable, those answers stay pending.
+ * Callers must already have proven access to the attempt.
+ */
+export async function gradeCodingAnswers(attemptId: string, rejudge = false): Promise<{ judged: number; pending: number }> {
+  const loaded = await asSystem(async (db) => {
+    const attempt = (await db.query<AttemptRow>(`select * from public.test_attempts where id = $1 and status = 'completed'`, [attemptId])).rows[0];
+    if (!attempt) return null;
+    const questions = attemptQuestions(attempt, await loadQuestions(db, attempt.test_id));
+    const tests = await loadTestCases(db, [...codingIds(questions)], true);
+    return { attempt, questions, tests };
+  });
+  if (!loaded) return { judged: 0, pending: 0 };
+  const { attempt, questions, tests } = loaded;
+  const byId = new Map(questions.map((q) => [q.id, q]));
+
+  let judged = 0;
+  let pending = 0;
+  let judgeDown = false;
+  const answers: AnswerState[] = [];
+  for (const a of attempt.answers ?? []) {
+    const q = byId.get(a.question_id);
+    if (!q || q.question_type !== 'coding' || !a.code?.trim() || (a.grading === 'judged' && !rejudge)) {
+      answers.push(a);
+      continue;
+    }
+    const cases = toJudgeTests(tests.get(q.id) ?? []);
+    const language = a.language as JudgedLanguage;
+    if (!languagesOf(q.starter_code).includes(language)) {
+      answers.push({ ...a, grading: 'judged', tests_passed: 0, tests_total: cases.length });
+      judged++;
+      continue;
+    }
+    if (judgeDown) {
+      answers.push({ ...a, grading: 'pending' });
+      pending++;
+      continue;
+    }
+    try {
+      const r = await judgeCode({ starterCode: q.starter_code, judgeConfig: q.judge_config }, a.code, language, cases);
+      answers.push({ ...a, grading: 'judged', tests_passed: r.passed, tests_total: r.total });
+      judged++;
+    } catch (err) {
+      if (!(err instanceof JudgeUnavailableError)) throw err;
+      judgeDown = true;
+      answers.push({ ...a, grading: 'pending' });
+      pending++;
+    }
+  }
+
+  const { totalScore, correctCount, totalMarks } = rescore(questions, answers);
+  await asSystem((db) => db.query(
+    `update public.test_attempts set answers = $2::jsonb, score = $3, correct_count = $4, total_marks = $5
+      where id = $1 and status = 'completed'`,
+    [attemptId, JSON.stringify(answers), totalScore, correctCount, totalMarks]
+  ));
+  return { judged, pending };
 }
 
 async function closeIfExpired(attempt: AttemptRow): Promise<AttemptRow> {
@@ -255,6 +374,10 @@ export async function getAttemptView(userId: string, attemptId: string) {
   const byId = new Map(questions.map((q) => [q.id, q]));
   const order = attempt.question_order ?? { questionIds: questions.map((q) => q.id), optionOrder: {} };
 
+  const samples = attempt.status === 'in_progress'
+    ? await asSystem((db) => loadTestCases(db, [...codingIds(questions)], false))
+    : new Map<string, TestCaseRow[]>();
+
   const publicQuestions = attempt.status === 'in_progress'
     ? order.questionIds.filter((id) => byId.has(id)).map((id) => {
         const q = byId.get(id)!;
@@ -267,6 +390,12 @@ export async function getAttemptView(userId: string, attemptId: string) {
           id: q.id, type: q.question_type, body: q.body, options,
           marks: Number(q.marks), negativeMarks: Number(q.negative_marks ?? 0),
           section: q.section_name, passage: q.stimulus,
+          // Coding: starter code and sample tests only — hidden tests stay on the server.
+          ...(q.question_type === 'coding' ? {
+            languages: languagesOf(q.starter_code),
+            starterCode: q.starter_code,
+            samples: (samples.get(q.id) ?? []).map((t) => ({ input: t.input, expected: t.expected_output })),
+          } : {}),
         };
       })
     : [];
@@ -308,7 +437,7 @@ export async function saveAnswer(
   userId: string,
   attemptId: string,
   questionId: string,
-  payload: { selectedOptions?: string[] | null; natValue?: number | null; markedForReview?: boolean }
+  payload: { selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: string | null; markedForReview?: boolean }
 ) {
   const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
   if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
@@ -317,28 +446,49 @@ export async function saveAnswer(
   const idx = answers.findIndex((a) => a.question_id === questionId);
   if (idx < 0) throw badRequest('That question is not part of this test.');
 
-  if (payload.selectedOptions?.length) {
-    const valid = await asSystem(async (db) => {
-      const { rows } = await db.query<{ options: Array<{ id: string }> | null; question_type: string }>(
-        `select options, question_type from public.testseries_questions where id = $1`, [questionId]
-      );
-      const ids = new Set((rows[0]?.options ?? []).map((o) => o.id));
-      const single = rows[0]?.question_type === 'mcq';
-      return payload.selectedOptions!.every((o) => ids.has(o)) && (!single || payload.selectedOptions!.length === 1);
-    });
-    if (!valid) throw badRequest('That answer is not one of the options.');
-  }
+  const question = await asSystem(async (db) => (await db.query<Pick<QuestionRow, 'options' | 'question_type' | 'starter_code'>>(
+    `select options, question_type, starter_code from public.testseries_questions where id = $1`, [questionId]
+  )).rows[0]);
+  if (!question) throw badRequest('That question is not part of this test.');
 
-  const hasAnswer = Boolean(payload.selectedOptions?.length) || (payload.natValue !== undefined && payload.natValue !== null);
-  const status = hasAnswer
-    ? (payload.markedForReview ? 'answered_marked' : 'answered')
-    : (payload.markedForReview ? 'marked_for_review' : 'visited');
-  answers[idx] = {
-    question_id: questionId,
-    status,
-    selected_options: payload.selectedOptions?.length ? payload.selectedOptions : null,
-    nat_value: payload.natValue ?? null,
-  };
+  if (question.question_type === 'coding') {
+    if (payload.selectedOptions?.length || (payload.natValue !== undefined && payload.natValue !== null)) {
+      throw badRequest('This is a coding question — save code, not an option.');
+    }
+    const previous = answers[idx];
+    const code = payload.code !== undefined ? payload.code : previous.code ?? null;
+    const language = payload.language !== undefined ? payload.language : previous.language ?? null;
+    if (code && (!language || !languagesOf(question.starter_code).includes(language as JudgedLanguage))) {
+      throw badRequest('Pick one of the languages this question allows.');
+    }
+    const hasCode = Boolean(code?.trim());
+    answers[idx] = {
+      question_id: questionId,
+      status: hasCode ? (payload.markedForReview ? 'answered_marked' : 'answered') : (payload.markedForReview ? 'marked_for_review' : 'visited'),
+      selected_options: null,
+      nat_value: null,
+      code,
+      language,
+    };
+  } else {
+    if (payload.code) throw badRequest('Only coding questions take code.');
+    if (payload.selectedOptions?.length) {
+      const ids = new Set((question.options ?? []).map((o) => o.id));
+      const single = question.question_type === 'mcq';
+      const valid = payload.selectedOptions.every((o) => ids.has(o)) && (!single || payload.selectedOptions.length === 1);
+      if (!valid) throw badRequest('That answer is not one of the options.');
+    }
+    const hasAnswer = Boolean(payload.selectedOptions?.length) || (payload.natValue !== undefined && payload.natValue !== null);
+    answers[idx] = {
+      question_id: questionId,
+      status: hasAnswer
+        ? (payload.markedForReview ? 'answered_marked' : 'answered')
+        : (payload.markedForReview ? 'marked_for_review' : 'visited'),
+      selected_options: payload.selectedOptions?.length ? payload.selectedOptions : null,
+      nat_value: payload.natValue ?? null,
+    };
+  }
+  const status = answers[idx].status;
 
   const updated = await asSystem(async (db) => {
     const { rowCount } = await db.query(
@@ -350,6 +500,40 @@ export async function saveAnswer(
   });
   if (!updated) throw new HttpError(409, 'Time is up — this attempt has been submitted.');
   return { questionId, status };
+}
+
+// One sample run per attempt at a time, and not more often than this.
+const RUN_INTERVAL_MS = 3_000;
+const lastRun = new Map<string, number>();
+
+/** Run code on a coding question's SAMPLE tests while the attempt is open. Never scores. */
+export async function runSamples(userId: string, attemptId: string, questionId: string, payload: { code: string; language: string }) {
+  const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+  if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
+  if (!(attempt.answers ?? []).some((a) => a.question_id === questionId)) throw badRequest('That question is not part of this test.');
+
+  const now = Date.now();
+  if (now - (lastRun.get(attemptId) ?? 0) < RUN_INTERVAL_MS) throw new HttpError(429, 'Wait a moment before running again.');
+  lastRun.set(attemptId, now);
+  if (lastRun.size > 10_000) for (const [k, t] of lastRun) if (now - t > 60_000) lastRun.delete(k);
+
+  const { question, samples } = await asSystem(async (db) => {
+    const q = (await db.query<Pick<QuestionRow, 'question_type' | 'starter_code' | 'judge_config'>>(
+      `select question_type, starter_code, judge_config from public.testseries_questions where id = $1`, [questionId]
+    )).rows[0];
+    return { question: q, samples: (await loadTestCases(db, [questionId], false)).get(questionId) ?? [] };
+  });
+  if (!question || question.question_type !== 'coding') throw badRequest('Only coding questions can be run.');
+  if (!languagesOf(question.starter_code).includes(payload.language as JudgedLanguage)) {
+    throw badRequest('Pick one of the languages this question allows.');
+  }
+  if (samples.length === 0) throw badRequest('This question has no sample tests to run.');
+  try {
+    return await judgeCode({ starterCode: question.starter_code, judgeConfig: question.judge_config }, payload.code, payload.language as JudgedLanguage, toJudgeTests(samples));
+  } catch (err) {
+    if (err instanceof JudgeUnavailableError) throw new HttpError(503, 'Running code is not available right now. Your code is saved and will be graded after you submit.');
+    throw err;
+  }
 }
 
 export async function recordEvent(userId: string, attemptId: string, type: ProctoringEventType) {

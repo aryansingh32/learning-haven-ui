@@ -267,6 +267,62 @@ select pg_temp.check_eq((select count(*) from public.test_attempts), 0, 'College
 select pg_temp.check_eq((select count(*) from campus.proctoring_events), 0, 'College B sees no College A proctoring events');
 reset role;
 
+-- ── Coding questions (slice B1) ─────────────────────────────────────────────
+insert into public.testseries_questions (id, question_type, body, starter_code, judge_config, owner_org_id) values
+  ('aaaaaaaa-0000-0000-0000-0000000000c2', 'coding', 'A coding', '{"python":"class Solution:\n    def f(self, x):\n        pass\n"}', '{"compare":"exact"}', 'aaaaaaaa-0000-0000-0000-00000000000a'),
+  ('bbbbbbbb-0000-0000-0000-0000000000c2', 'coding', 'B coding', '{"python":"class Solution:\n    def f(self, x):\n        pass\n"}', '{}', 'bbbbbbbb-0000-0000-0000-00000000000b'),
+  ('f0000000-0000-0000-0000-0000000000c2', 'coding', 'Forge coding', '{"java":"class Solution {}"}', '{}', '00000000-0000-0000-0000-00000000f0f0');
+insert into public.question_test_cases (question_id, input, expected_output, is_sample) values
+  ('aaaaaaaa-0000-0000-0000-0000000000c2', 'x = 1', '1', true),
+  ('aaaaaaaa-0000-0000-0000-0000000000c2', 'x = 99', '99', false),
+  ('bbbbbbbb-0000-0000-0000-0000000000c2', 'x = 2', '2', false),
+  ('f0000000-0000-0000-0000-0000000000c2', 'x = 3', '3', false);
+
+select pg_temp.check_denied(
+  $$insert into public.testseries_questions (question_type, body, owner_org_id) values ('coding', 'no starter', 'aaaaaaaa-0000-0000-0000-00000000000a')$$,
+  'a coding question needs starter code');
+select pg_temp.check_denied(
+  $$insert into public.testseries_questions (question_type, body, starter_code, judge_config, owner_org_id)
+    values ('coding', 'bad compare', '{"python":"x"}', '{"compare":"fuzzy"}', 'aaaaaaaa-0000-0000-0000-00000000000a')$$,
+  'a coding question needs a known compare mode');
+
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000002');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into public.testseries_questions (question_type, body, starter_code, owner_org_id)
+    values ('coding', 'new', '{"javascript":"function f(x) {}"}', 'aaaaaaaa-0000-0000-0000-00000000000a')$$),
+  1, 'A faculty can create a coding question');
+select pg_temp.check_eq((select count(*) from public.question_test_cases), 2, 'A faculty reads only College A test cases (sample + hidden)');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into public.question_test_cases (question_id, input, expected_output) values ('aaaaaaaa-0000-0000-0000-0000000000c2', 'x = 5', '5')$$),
+  1, 'A faculty can add a hidden test to a College A question');
+select pg_temp.check_denied(
+  $$insert into public.question_test_cases (question_id, input, expected_output) values ('bbbbbbbb-0000-0000-0000-0000000000c2', 'x', 'y')$$,
+  'A faculty cannot add tests to a College B question');
+select pg_temp.check_denied(
+  $$insert into public.question_test_cases (question_id, input, expected_output) values ('f0000000-0000-0000-0000-0000000000c2', 'x', 'y')$$,
+  'A faculty cannot add tests to a Forge question');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$update public.question_test_cases set expected_output = 'hacked' where question_id = 'bbbbbbbb-0000-0000-0000-0000000000c2'$$),
+  0, 'A faculty cannot edit College B tests');
+reset role;
+
+select pg_temp.act_as('a2000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from public.question_test_cases), 0, 'a student reads no test cases (hidden tests stay on the server)');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$delete from public.question_test_cases$$), 0, 'a student cannot delete test cases');
+reset role;
+
+select pg_temp.act_as('b3000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from public.question_test_cases), 1, 'College B faculty reads only College B test cases');
+reset role;
+
+set local role anon;
+select pg_temp.check_denied($$select count(*) from public.question_test_cases$$, 'anon cannot read test cases');
+reset role;
+
 rollback;
 
 \o

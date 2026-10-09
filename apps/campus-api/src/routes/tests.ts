@@ -76,10 +76,18 @@ testsRouter.get('/:testId', async (req, res) => {
     const questions = (await db.query(
       `select q.id, q.question_type as type, q.body, q.options, q.correct_options as "correctOptions",
               q.nat_answer as "natAnswer", q.nat_tolerance as "natTolerance", q.marks, q.negative_marks as "negativeMarks",
-              q.topic, q.difficulty, q.explanation, tq.sort_order as "sortOrder"
+              q.topic, q.difficulty, q.explanation, q.starter_code as "starterCode",
+              q.judge_config->>'compare' as compare, tq.sort_order as "sortOrder"
          from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
         where tq.test_id = $1 order by tq.sort_order, q.created_at`, [testId])).rows;
-    return { ...test, questions };
+    // Authors see every test case, hidden ones included (RLS: content.create on this college).
+    const cases = (await db.query<{ question_id: string; input: string; expected: string; isSample: boolean }>(
+      `select question_id, input, expected_output as expected, is_sample as "isSample" from public.question_test_cases
+        where question_id = any($1::uuid[]) order by sort_order, created_at`,
+      [questions.filter((q) => q.type === 'coding').map((q) => q.id)])).rows;
+    return { ...test, questions: questions.map((q) => q.type === 'coding'
+      ? { ...q, tests: cases.filter((c) => c.question_id === q.id).map(({ question_id: _q, ...c }) => c) }
+      : { ...q, starterCode: undefined, compare: undefined }) };
   });
   if (!result) throw notFound('Test not found in this college.');
   res.json({
@@ -125,7 +133,7 @@ testsRouter.patch('/:testId', async (req, res) => {
 
 const optionIds = 'abcdefghij'.split('');
 const questionBody = z.object({
-  type: z.enum(['mcq', 'msq', 'nat']),
+  type: z.enum(['mcq', 'msq', 'nat', 'coding']),
   body: z.string().trim().min(1).max(10_000),
   options: z.array(z.string().trim().min(1).max(2000)).min(2).max(10).optional(),
   correct: z.array(z.number().int().min(0).max(9)).optional(),
@@ -136,7 +144,23 @@ const questionBody = z.object({
   topic: z.string().trim().max(120).nullable().optional(),
   difficulty: z.enum(['easy', 'medium', 'hard']).nullable().optional(),
   explanation: z.string().trim().max(10_000).nullable().optional(),
+  // coding only
+  starterCode: z.object({ javascript: z.string().max(20_000), python: z.string().max(20_000), java: z.string().max(20_000) }).partial().strict().optional(),
+  compare: z.enum(['exact', 'unordered', 'unordered_deep']).default('exact'),
+  tests: z.array(z.object({
+    input: z.string().trim().min(1).max(20_000),
+    expected: z.string().trim().min(1).max(20_000),
+    isSample: z.boolean().default(false),
+  })).max(50).optional(),
 }).superRefine((q, ctx) => {
+  if (q.type === 'coding') {
+    if (!q.starterCode || !Object.values(q.starterCode).some((c) => c?.trim())) {
+      ctx.addIssue({ code: 'custom', path: ['starterCode'], message: 'Add starter code for at least one language.' });
+    }
+    if (!q.tests?.length) ctx.addIssue({ code: 'custom', path: ['tests'], message: 'Add at least one test case.' });
+    else if (!q.tests.some((t) => t.isSample)) ctx.addIssue({ code: 'custom', path: ['tests'], message: 'Mark at least one test as a sample so students can try their code.' });
+    return;
+  }
   if (q.type === 'nat') {
     if (q.natAnswer === undefined) ctx.addIssue({ code: 'custom', path: ['natAnswer'], message: 'A numeric answer is required.' });
     return;
@@ -154,20 +178,31 @@ testsRouter.post('/:testId/questions', async (req, res) => {
   const testId = uuid.parse(req.params.testId);
   const q = questionBody.parse(req.body);
   await requirePermission(userId, orgId, 'content.create');
-  const options = q.type === 'nat' ? null : q.options!.map((text, i) => ({ id: optionIds[i], text }));
-  const correct = q.type === 'nat' ? null : [...new Set(q.correct!)].sort().map((i) => optionIds[i]);
+  const choice = q.type === 'mcq' || q.type === 'msq';
+  const options = choice ? q.options!.map((text, i) => ({ id: optionIds[i], text })) : null;
+  const correct = choice ? [...new Set(q.correct!)].sort().map((i) => optionIds[i]) : null;
+  const coding = q.type === 'coding';
   const created = await asUser(userId, async (db) => {
     const owns = (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount;
     if (!owns) throw notFound('Test not found in this college.');
     const question = (await db.query<{ id: string }>(
       `insert into public.testseries_questions
          (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks,
-          topic, difficulty, explanation, owner_org_id, visibility)
-       values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private') returning id`,
+          topic, difficulty, explanation, owner_org_id, visibility, starter_code, judge_config)
+       values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private', $13::jsonb, $14::jsonb) returning id`,
       [q.type, q.body, options ? JSON.stringify(options) : null, correct ? JSON.stringify(correct) : null,
-       q.natAnswer ?? null, q.natTolerance ?? 0, q.marks, q.type === 'mcq' ? q.negativeMarks : 0,
-       q.topic ?? null, q.difficulty ?? null, q.explanation ?? null, orgId]
+       q.type === 'nat' ? q.natAnswer ?? null : null, q.natTolerance ?? 0, q.marks, q.type === 'mcq' ? q.negativeMarks : 0,
+       q.topic ?? null, q.difficulty ?? null, q.explanation ?? null, orgId,
+       JSON.stringify(coding ? Object.fromEntries(Object.entries(q.starterCode!).filter(([, c]) => c?.trim())) : {}), JSON.stringify(coding ? { compare: q.compare } : {})]
     )).rows[0];
+    if (coding) {
+      await db.query(
+        `insert into public.question_test_cases (question_id, input, expected_output, is_sample, sort_order)
+         select $1, t->>'input', t->>'expected', (t->>'isSample')::boolean, i::int
+           from jsonb_array_elements($2::jsonb) with ordinality as x(t, i)`,
+        [question.id, JSON.stringify(q.tests)]
+      );
+    }
     await db.query(
       `insert into public.test_questions (test_id, question_id, sort_order)
        values ($1, $2, coalesce((select max(sort_order) + 1 from public.test_questions where test_id = $1), 0))`,
