@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { CodeWorkspace, type SupportedLanguage } from '@/modules/CodeExecutor';
 import { ProblemDetailPanel } from '@/features/practice/ProblemDetailPanel';
-import { fetchProblem, judgeOnServer, JUDGED_LANGUAGES, setProblemStatus, toQuestion } from '@/features/practice/practice.service';
+import { fetchProblem, judgeOnServer, JUDGED_LANGUAGES, runOnServer, SERVER_RUN_LANGUAGES, setProblemStatus, toQuestion } from '@/features/practice/practice.service';
 
 const DIFF_STYLE: Record<string, string> = {
   easy: 'text-emerald-400 bg-emerald-500/10',
@@ -50,6 +50,10 @@ export default function ProblemPage() {
     return outcome.result;
   }, [problem, refreshLists]);
 
+  // C++ can't run in the browser: its Run goes to the server (sample tests only).
+  const run = useCallback((code: string, language: SupportedLanguage) =>
+    (SERVER_RUN_LANGUAGES.includes(language) ? runOnServer(problem!, code, language) : undefined), [problem]);
+
   const status = useMutation({
     mutationFn: (s: 'tried' | 'revision' | 'solved') => setProblemStatus(problem!.id, s),
     onSuccess: (_d, s) => {
@@ -74,7 +78,8 @@ export default function ProblemPage() {
     );
   }
 
-  const languages = problem.judged ? JUDGED_LANGUAGES : undefined;
+  // A judged problem offers the languages it has starter code for.
+  const languages = problem.judged ? JUDGED_LANGUAGES.filter((l) => problem.starter_code[l]) : undefined;
 
   const header = (
     <header className="h-14 shrink-0 flex items-center gap-3 px-3 sm:px-4 border-b border-white/5 bg-zinc-900/70 backdrop-blur-xl">
@@ -124,6 +129,7 @@ export default function ProblemPage() {
       initialLanguage="javascript"
       storageKey={`problem:${problem.slug}`}
       onSubmit={problem.judged ? submit : undefined}
+      onRun={problem.judged ? run : undefined}
       showSubmit={problem.judged}
       theme="dark"
     />

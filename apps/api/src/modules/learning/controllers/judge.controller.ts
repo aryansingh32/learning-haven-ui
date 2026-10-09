@@ -77,6 +77,44 @@ export class JudgeController {
     }
 
     /**
+     * POST /api/problems/:id/run
+     * Run a solution on the SAMPLE tests only, on the server. For languages the
+     * browser can't run (C++). Never records a solve, status or XP.
+     */
+    static async run(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        const problemId = req.params.id as string;
+        const parsed = judgeBody.safeParse(req.body);
+        if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0]?.message || 'Invalid request' });
+        const { code, language } = parsed.data;
+
+        try {
+            const data = await ProblemsService.getJudgeData(problemId);
+            if (!data) return res.status(404).json({ error: 'Problem not found' });
+            const { problem, tests } = data;
+            if (problem.is_premium && !(await hasPaidPlan(userId))) {
+                return res.status(403).json({ error: 'This problem is part of Forge Pro.', code: 'PREMIUM_REQUIRED' });
+            }
+            const samples = tests.filter((t) => t.is_sample);
+            if (samples.length === 0) return res.status(409).json({ error: 'This problem has no sample tests to run.' });
+
+            const compare: CompareMode = isCompareMode(problem.judge_config?.compare) ? problem.judge_config.compare : 'exact';
+            const result = await judgeSolution({
+                code,
+                language,
+                compare,
+                hint: functionHint(language, problem.starter_code?.[language]),
+                tests: samples.map((t) => ({ input: t.input, expected: t.expected_output, isSample: true })),
+            });
+            return res.json(result);
+        } catch (err) {
+            if (err instanceof JudgeUnavailableError) return res.status(503).json({ error: err.message, code: 'JUDGE_UNAVAILABLE' });
+            logger.error('Run request failed', { problemId, error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not run your code. Please try again.' });
+        }
+    }
+
+    /**
      * POST /api/problems/:id/status
      * Track tried / revision. "Solved" is only self-reported for problems the judge can't check.
      */

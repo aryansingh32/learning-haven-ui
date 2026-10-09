@@ -108,3 +108,29 @@ describe('status and legacy submit', () => {
     expect(SubmissionsService.submitSolution).not.toHaveBeenCalled();
   });
 });
+
+describe('POST /problems/:id/run', () => {
+  jest.setTimeout(60_000);
+
+  it('runs the sample tests only and records nothing', async () => {
+    const res = await call(JudgeController.run, { code: 'function containsDuplicate() { return true; }', language: 'javascript' });
+    expect(res.statusCode).toBe(200);
+    // Only the sample (which this wrong answer happens to pass) — the hidden test is not run or revealed.
+    expect(res.body).toMatchObject({ verdict: 'Accepted', passed: 1, total: 1 });
+    expect(JSON.stringify(res.body)).not.toContain('[7]');
+    expect(SubmissionsService.submitSolution).not.toHaveBeenCalled();
+    expect(StatusService.updateStatus).not.toHaveBeenCalled();
+  });
+
+  it('runs C++ on the server', async () => {
+    const code = 'class Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) {\n        return set<int>(nums.begin(), nums.end()).size() != nums.size();\n    }\n};';
+    const res = await call(JudgeController.run, { code, language: 'cpp' });
+    expect(res.body).toMatchObject({ verdict: 'Accepted', passed: 1, total: 1 });
+  });
+
+  it('keeps premium problems for paid plans', async () => {
+    mocked(ProblemsService.getJudgeData).mockResolvedValue({ ...containsDuplicate, problem: { ...containsDuplicate.problem, is_premium: true } });
+    const res = await call(JudgeController.run, { code: CORRECT, language: 'javascript' });
+    expect(res.statusCode).toBe(403);
+  });
+});

@@ -16,6 +16,8 @@ interface UseCodeExecutionOptions {
     onRunComplete?: (result: ExecutionResult) => void;
     /** Submit to a server judge instead of re-running in the browser. */
     onSubmit?: (code: string, language: SupportedLanguage) => Promise<ExecutionResult>;
+    /** Run on a server instead of in the browser — return undefined to run in the browser. */
+    onRun?: (code: string, language: SupportedLanguage) => Promise<ExecutionResult> | undefined;
     /** Autosave code per language under this key (e.g. the problem slug). */
     storageKey?: string;
 }
@@ -36,6 +38,7 @@ export const useCodeExecution = ({
     onSolved,
     onRunComplete,
     onSubmit,
+    onRun,
     storageKey,
 }: UseCodeExecutionOptions) => {
     // Keyed on content, not object identity: a refetched question must not reset the editor.
@@ -112,7 +115,7 @@ export const useCodeExecution = ({
         setExecutionResult(null);
 
         try {
-            const result = await executeCode(language, code, question);
+            const result = await (onRun?.(code, language) ?? executeCode(language, code, question));
             logger.info('Execution Completed', { status: result.status });
             setExecutionResult(result);
             onRunComplete?.(result);

@@ -53,6 +53,13 @@ router.post(
 router.post('/:id/judge', authenticateUser, submissionRateLimit, JudgeController.judge);
 
 /**
+ * @route   POST /api/problems/:id/run
+ * @desc    Run a solution on the sample tests only (server-side; for languages the browser can't run)
+ * @access  Private
+ */
+router.post('/:id/run', authenticateUser, submissionRateLimit, JudgeController.run);
+
+/**
  * @route   POST /api/problems/:id/status
  * @desc    Mark a problem tried / for revision (solved only for problems without tests)
  * @access  Private

@@ -34,8 +34,10 @@ interface JudgeResponse {
   firstSolve: boolean;
 }
 
-/** Languages the server judge can check. */
-export const JUDGED_LANGUAGES: SupportedLanguage[] = ['javascript', 'python', 'java'];
+/** Languages the server judge can check (a problem offers those it has starter code for). */
+export const JUDGED_LANGUAGES: SupportedLanguage[] = ['javascript', 'python', 'java', 'cpp'];
+/** Languages the browser can't run: Run goes to the server (sample tests only). */
+export const SERVER_RUN_LANGUAGES: SupportedLanguage[] = ['cpp'];
 
 export const fetchProblem = (slug: string): Promise<ProblemDetail> => api.get(`/problems/${encodeURIComponent(slug)}`);
 export const fetchHints = (id: string): Promise<{ hints: string[] }> => api.get(`/problems/${id}/hints`);
@@ -79,6 +81,24 @@ export async function judgeOnServer(p: ProblemDetail, code: string, language: Su
     return { result: { status: 'Runtime Error', output: message, executionTime: 0 }, xpGained: 0, firstSolve: false };
   }
 
+  return { result: toExecutionResult(p, res, true), xpGained: res.xpGained, firstSolve: res.firstSolve };
+}
+
+/** Run on the server against the sample tests only (no solve, no XP). */
+export async function runOnServer(p: ProblemDetail, code: string, language: SupportedLanguage): Promise<ExecutionResult> {
+  try {
+    const res: Omit<JudgeResponse, 'xpGained' | 'firstSolve'> = await api.post(`/problems/${p.id}/run`, { code, language });
+    return toExecutionResult(p, res, false);
+  } catch (e) {
+    const err = e as Error & { status?: number };
+    const message = err.status === 403
+      ? 'This problem is part of Forge Pro. Upgrade to run it.'
+      : err.message || 'Could not run your code right now. Try again in a moment.';
+    return { status: 'Runtime Error', output: message, executionTime: 0 };
+  }
+}
+
+function toExecutionResult(p: ProblemDetail, res: Omit<JudgeResponse, 'xpGained' | 'firstSolve'>, judged: boolean): ExecutionResult {
   let sampleNo = 0;
   let hiddenNo = 0;
   const testCaseResults = res.tests.map((t) => {
@@ -97,14 +117,10 @@ export async function judgeOnServer(p: ProblemDetail, code: string, language: Su
   });
 
   return {
-    result: {
-      status: res.verdict,
-      output: res.message ?? '',
-      executionTime: res.timeMs,
-      testCaseResults: res.verdict === 'Compilation Error' ? undefined : testCaseResults,
-      judged: { passed: res.passed, total: res.total },
-    },
-    xpGained: res.xpGained,
-    firstSolve: res.firstSolve,
+    status: res.verdict,
+    output: res.message ?? '',
+    executionTime: res.timeMs,
+    testCaseResults: res.verdict === 'Compilation Error' ? undefined : testCaseResults,
+    ...(judged ? { judged: { passed: res.passed, total: res.total } } : {}),
   };
 }

@@ -32,6 +32,8 @@ export interface CodeWorkspaceProps {
     questionPanel?: React.ReactNode;
     languages?: SupportedLanguage[];
     onSubmit?: (code: string, language: SupportedLanguage) => Promise<import('./types').ExecutionResult>;
+    /** Run on a server for some languages; return undefined to run in the browser. */
+    onRun?: (code: string, language: SupportedLanguage) => Promise<import('./types').ExecutionResult> | undefined;
     storageKey?: string;
 }
 
@@ -75,6 +77,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
     questionPanel: customQuestionPanel,
     languages,
     onSubmit,
+    onRun,
     storageKey,
 }) => {
     const {
@@ -100,6 +103,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
         resetOnQuestionChange,
         onSolved,
         onSubmit,
+        onRun,
         storageKey,
     });
 

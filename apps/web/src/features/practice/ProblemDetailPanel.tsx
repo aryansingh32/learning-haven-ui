@@ -77,7 +77,7 @@ function Description({ problem, question }: { problem: ProblemDetail; question: 
 
       {problem.judged && (
         <p className="text-xs text-zinc-500">
-          <span className="font-semibold text-zinc-400">Run</span> checks the {problem.sample_tests.length} examples in your browser.{' '}
+          <span className="font-semibold text-zinc-400">Run</span> checks the {problem.sample_tests.length} examples.{' '}
           <span className="font-semibold text-zinc-400">Submit</span> judges all {problem.test_count} tests, including hidden ones.
         </p>
       )}
