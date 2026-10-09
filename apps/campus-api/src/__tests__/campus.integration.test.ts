@@ -471,3 +471,78 @@ describe('coding questions', () => {
     }
   });
 });
+
+describe('timed sections', () => {
+  let tid: string;
+  let aid: string;
+  let attemptId: string;
+  const sec: Record<string, string> = {};
+  const qid: Record<string, string> = {};
+  const url = () => `/campus/v1/orgs/${ORG_A}/tests/${tid}`;
+
+  it('lets faculty build sections, place questions and lock the timing', async () => {
+    tid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Sectional mock', durationMinutes: 90 })).body.id;
+    for (const [name, minutes] of [['Aptitude', 1], ['Technical', 1]] as const) {
+      const r = await request(app).post(`${url()}/sections`).set(await as(U.facultyA)).send({ name, durationMinutes: minutes });
+      expect(r.status).toBe(201);
+      sec[name] = r.body.id;
+    }
+    expect((await request(app).post(`${url()}/sections`).set(await as(U.facultyB)).send({ name: 'x' })).status).toBe(403);
+
+    for (const [key, section] of [['apt', 'Aptitude'], ['tech', 'Technical']] as const) {
+      const r = await request(app).post(`${url()}/questions`).set(await as(U.facultyA))
+        .send({ type: 'nat', body: `${key} question`, natAnswer: 1, marks: 1, sectionId: sec[section] });
+      qid[key] = r.body.id;
+    }
+    qid.loose = (await request(app).post(`${url()}/questions`).set(await as(U.facultyA)).send({ type: 'nat', body: 'loose', natAnswer: 1 })).body.id;
+
+    await request(app).patch(url()).set(await as(U.facultyA)).send({ sectionTimeLocked: true });
+    const early = await request(app).patch(url()).set(await as(U.facultyA)).send({ published: true });
+    expect(early.status).toBe(400);
+    expect(early.body.error).toMatch(/every question in a section/);
+
+    expect((await request(app).patch(`${url()}/questions/${qid.loose}`).set(await as(U.facultyA)).send({ sectionId: sec.Technical })).status).toBe(200);
+    expect((await request(app).patch(url()).set(await as(U.facultyA)).send({ published: true })).status).toBe(200);
+    const detail = await request(app).get(url()).set(await as(U.facultyA));
+    expect(detail.body).toMatchObject({ sectionTimeLocked: true });
+    expect(detail.body.sections.map((s: { name: string; questionCount: number }) => [s.name, s.questionCount])).toEqual([['Aptitude', 1], ['Technical', 2]]);
+
+    aid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: tid, title: 'Sectional mock', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), resultRelease: 'immediately',
+    })).body.id;
+  });
+
+  it('tells the student about the sections before they start', async () => {
+    const mine = (await request(app).get('/campus/v1/my/assignments').set(await as(U.s1))).body.find((a: { id: string }) => a.id === aid);
+    expect(mine).toMatchObject({ durationMinutes: 2, timedSections: [{ name: 'Aptitude', minutes: 1 }, { name: 'Technical', minutes: 1 }] });
+  });
+
+  it('shows only the current section and refuses answers elsewhere', async () => {
+    const start = await request(app).post(`/campus/v1/my/assignments/${aid}/start`).set(await as(U.s1));
+    attemptId = start.body.attemptId;
+    expect(start.body.sections.map((s: { name: string }) => s.name)).toEqual(['Aptitude', 'Technical']);
+    expect(start.body.currentSection.index).toBe(0);
+    expect(start.body.questions.map((q: { id: string }) => q.id)).toEqual([qid.apt]);
+    expect(new Date(start.body.expiresAt).getTime() - Date.now()).toBeLessThanOrEqual(120_000 + 5_000);
+
+    expect((await request(app).put(`/campus/v1/my/attempts/${attemptId}/answers/${qid.tech}`).set(await as(U.s1)).send({ natValue: 1 })).status).toBe(423);
+    expect((await request(app).put(`/campus/v1/my/attempts/${attemptId}/answers/${qid.apt}`).set(await as(U.s1)).send({ natValue: 1 })).status).toBe(200);
+  });
+
+  it('moves on by itself when the section time is up, and never goes back', async () => {
+    await pool.query(`update public.test_attempts set section_started_at = now() - interval '61 seconds' where id = $1`, [attemptId]);
+    const view = await request(app).get(`/campus/v1/my/attempts/${attemptId}`).set(await as(U.s1));
+    expect(view.body.status).toBe('in_progress');
+    expect(view.body.currentSection.index).toBe(1);
+    expect(view.body.questions.map((q: { id: string }) => q.id).sort()).toEqual([qid.tech, qid.loose].sort());
+    expect((await request(app).put(`/campus/v1/my/attempts/${attemptId}/answers/${qid.apt}`).set(await as(U.s1)).send({ natValue: 5 })).status).toBe(423);
+    expect((await request(app).put(`/campus/v1/my/attempts/${attemptId}/answers/${qid.tech}`).set(await as(U.s1)).send({ natValue: 1 })).status).toBe(200);
+  });
+
+  it('finishing the last section submits the test, scored on every section', async () => {
+    const done = await request(app).post(`/campus/v1/my/attempts/${attemptId}/sections/finish`).set(await as(U.s1));
+    expect(done.body).toMatchObject({ status: 'completed', submitReason: 'manual' });
+    expect(done.body.result).toMatchObject({ score: 2, totalMarks: 3 });
+  });
+});

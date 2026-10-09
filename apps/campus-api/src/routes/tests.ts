@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import { Router } from 'express';
 import { z } from 'zod';
 import { userOf } from '../auth';
-import { asSystem, asUser } from '../db';
+import { asSystem, asUser, Db } from '../db';
 import { badRequest, notFound } from '../errors';
 import { requirePermission } from '../permissions';
 
@@ -70,14 +70,14 @@ testsRouter.get('/:testId', async (req, res) => {
   const testId = uuid.parse(req.params.testId);
   const result = await asUser(userId, async (db) => {
     const test = (await db.query(
-      `select id, title, instructions, duration_seconds, is_published from public.tests
+      `select id, title, instructions, duration_seconds, is_published, section_time_locked from public.tests
         where id = $1 and owner_org_id = $2 and deleted_at is null`, [testId, orgId])).rows[0];
     if (!test) return null;
     const questions = (await db.query(
       `select q.id, q.question_type as type, q.body, q.options, q.correct_options as "correctOptions",
               q.nat_answer as "natAnswer", q.nat_tolerance as "natTolerance", q.marks, q.negative_marks as "negativeMarks",
               q.topic, q.difficulty, q.explanation, q.starter_code as "starterCode",
-              q.judge_config->>'compare' as compare, tq.sort_order as "sortOrder"
+              q.judge_config->>'compare' as compare, tq.sort_order as "sortOrder", tq.section_id as "sectionId"
          from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
         where tq.test_id = $1 order by tq.sort_order, q.created_at`, [testId])).rows;
     // Authors see every test case, hidden ones included (RLS: content.create on this college).
@@ -85,7 +85,10 @@ testsRouter.get('/:testId', async (req, res) => {
       `select question_id, input, expected_output as expected, is_sample as "isSample" from public.question_test_cases
         where question_id = any($1::uuid[]) order by sort_order, created_at`,
       [questions.filter((q) => q.type === 'coding').map((q) => q.id)])).rows;
-    return { ...test, questions: questions.map((q) => q.type === 'coding'
+    const sections = (await db.query(
+      `select id, name, duration_seconds, sort_order from public.test_sections where test_id = $1 order by sort_order, created_at`,
+      [testId])).rows;
+    return { ...test, sections, questions: questions.map((q) => q.type === 'coding'
       ? { ...q, tests: cases.filter((c) => c.question_id === q.id).map(({ question_id: _q, ...c }) => c) }
       : { ...q, starterCode: undefined, compare: undefined }) };
   });
@@ -93,6 +96,11 @@ testsRouter.get('/:testId', async (req, res) => {
   res.json({
     id: result.id, title: result.title, instructions: result.instructions,
     durationMinutes: Math.round(result.duration_seconds / 60), published: result.is_published,
+    sectionTimeLocked: result.section_time_locked,
+    sections: result.sections.map((x: { id: string; name: string; duration_seconds: number | null }) => ({
+      id: x.id, name: x.name, durationMinutes: x.duration_seconds === null ? null : Math.round(x.duration_seconds / 60),
+      questionCount: result.questions.filter((q: { sectionId: string | null }) => q.sectionId === x.id).length,
+    })),
     questions: result.questions.map((q: Record<string, unknown>) => ({
       ...q,
       marks: Number(q.marks),
@@ -103,7 +111,27 @@ testsRouter.get('/:testId', async (req, res) => {
   });
 });
 
-const testPatch = testBody.partial().extend({ published: z.boolean().optional() });
+const testPatch = testBody.partial().extend({ published: z.boolean().optional(), sectionTimeLocked: z.boolean().optional() });
+
+/** Why a timed-section test can't be published yet (null when it can). */
+async function timedSectionProblem(db: Db, testId: string): Promise<string | null> {
+  const { rows } = await db.query<{ locked: boolean; sections: number; untimed: number; empty: number; loose: number }>(
+    `select t.section_time_locked as locked,
+            (select count(*)::int from public.test_sections s where s.test_id = t.id) as sections,
+            (select count(*)::int from public.test_sections s where s.test_id = t.id and s.duration_seconds is null
+                and exists (select 1 from public.test_questions q where q.section_id = s.id)) as untimed,
+            (select count(*)::int from public.test_sections s where s.test_id = t.id
+                and not exists (select 1 from public.test_questions q where q.section_id = s.id)) as empty,
+            (select count(*)::int from public.test_questions q where q.test_id = t.id and q.section_id is null) as loose
+       from public.tests t where t.id = $1`, [testId]);
+  const r = rows[0];
+  if (!r?.locked) return null;
+  if (r.sections === 0) return 'Timed sections are on: add at least one section.';
+  if (r.untimed > 0) return 'Give every section a time limit.';
+  if (r.loose > 0) return 'Timed sections are on: put every question in a section.';
+  if (r.empty === r.sections) return 'Add questions to your sections.';
+  return null;
+}
 
 testsRouter.patch('/:testId', async (req, res) => {
   const userId = userOf(req);
@@ -115,6 +143,13 @@ testsRouter.patch('/:testId', async (req, res) => {
     if (body.published) {
       const { rows } = await db.query<{ n: number }>(`select count(*)::int as n from public.test_questions where test_id = $1`, [testId]);
       if (rows[0].n === 0) throw badRequest('Add at least one question before publishing.');
+    }
+    if (body.sectionTimeLocked !== undefined) {
+      await db.query(`update public.tests set section_time_locked = $3 where id = $1 and owner_org_id = $2`, [testId, orgId, body.sectionTimeLocked]);
+    }
+    if (body.published) {
+      const problem = await timedSectionProblem(db, testId);
+      if (problem) throw badRequest(problem);
     }
     const { rowCount } = await db.query(
       `update public.tests set
@@ -140,6 +175,7 @@ const questionBody = z.object({
   natAnswer: z.number().finite().optional(),
   natTolerance: z.number().min(0).optional(),
   marks: z.number().positive().max(100).default(1),
+  sectionId: z.string().uuid().nullable().optional(),
   negativeMarks: z.number().min(0).max(100).default(0),
   topic: z.string().trim().max(120).nullable().optional(),
   difficulty: z.enum(['easy', 'medium', 'hard']).nullable().optional(),
@@ -206,9 +242,9 @@ testsRouter.post('/:testId/questions', async (req, res) => {
       );
     }
     await db.query(
-      `insert into public.test_questions (test_id, question_id, sort_order)
-       values ($1, $2, coalesce((select max(sort_order) + 1 from public.test_questions where test_id = $1), 0))`,
-      [testId, question.id]
+      `insert into public.test_questions (test_id, question_id, sort_order, section_id)
+       values ($1, $2, coalesce((select max(sort_order) + 1 from public.test_questions where test_id = $1), 0), $3)`,
+      [testId, question.id, q.sectionId ?? null]
     );
     return question;
   });
@@ -232,4 +268,85 @@ testsRouter.delete('/:testId/questions/:questionId', async (req, res) => {
     );
   });
   res.status(204).end();
+});
+
+// ── Sections ─────────────────────────────────────────────────────────────────
+// RLS (campus.can_author_test) limits these to staff of the college that owns the test.
+
+const sectionBody = z.object({
+  name: z.string().trim().min(1).max(120),
+  durationMinutes: z.number().int().min(1).max(1440).nullable().optional(),
+});
+
+testsRouter.post('/:testId/sections', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const body = sectionBody.parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  const created = await asUser(userId, async (db) => {
+    const owns = (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount;
+    if (!owns) throw notFound('Test not found in this college.');
+    return (await db.query(
+      `insert into public.test_sections (test_id, name, duration_seconds, sort_order)
+       values ($1, $2, $3, coalesce((select max(sort_order) + 1 from public.test_sections where test_id = $1), 0))
+       returning id, name`,
+      [testId, body.name, body.durationMinutes ? body.durationMinutes * 60 : null]
+    )).rows[0];
+  });
+  res.status(201).json(created);
+});
+
+testsRouter.patch('/:testId/sections/:sectionId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const sectionId = uuid.parse(req.params.sectionId);
+  const body = sectionBody.partial().parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  await asUser(userId, async (db) => {
+    const { rowCount } = await db.query(
+      `update public.test_sections s set
+          name = coalesce($3, s.name),
+          duration_seconds = case when $4::boolean then $5 else s.duration_seconds end
+        from public.tests t
+        where s.id = $1 and s.test_id = $2 and t.id = s.test_id and t.owner_org_id = $6`,
+      [sectionId, testId, body.name ?? null, body.durationMinutes !== undefined,
+       body.durationMinutes ? body.durationMinutes * 60 : null, orgId]
+    );
+    if (!rowCount) throw notFound('Section not found in this test.');
+  });
+  res.json({ ok: true });
+});
+
+/** Deleting a section keeps its questions; they become unsectioned. */
+testsRouter.delete('/:testId/sections/:sectionId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const sectionId = uuid.parse(req.params.sectionId);
+  await requirePermission(userId, orgId, 'content.create');
+  await asUser(userId, async (db) => {
+    const { rowCount } = await db.query(
+      `delete from public.test_sections s using public.tests t
+        where s.id = $1 and s.test_id = $2 and t.id = s.test_id and t.owner_org_id = $3`, [sectionId, testId, orgId]);
+    if (!rowCount) throw notFound('Section not found in this test.');
+  });
+  res.status(204).end();
+});
+
+/** Move a question into a section (or out of all sections with null). */
+testsRouter.patch('/:testId/questions/:questionId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const questionId = uuid.parse(req.params.questionId);
+  const { sectionId } = z.object({ sectionId: z.string().uuid().nullable() }).parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  await asUser(userId, async (db) => {
+    const { rowCount } = await db.query(
+      `update public.test_questions set section_id = $3 where test_id = $1 and question_id = $2`, [testId, questionId, sectionId]);
+    if (!rowCount) throw notFound('Question not found in this test.');
+  });
+  res.json({ ok: true });
 });

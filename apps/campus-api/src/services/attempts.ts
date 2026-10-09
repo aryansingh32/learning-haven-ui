@@ -17,6 +17,8 @@ import {
   ProctoringPolicy,
   scoreAttempt,
   ScoringQuestion,
+  sectionClock,
+  finishSection,
   shouldAutoSubmit,
 } from '@repo/assessment-core';
 import { asSystem, asUser, Db } from '../db';
@@ -64,9 +66,19 @@ interface AttemptRow {
   total_questions: number;
   total_marks: string;
   attempt_number: number;
-  question_order: { questionIds: string[]; optionOrder: Record<string, string[]> } | null;
+  question_order: { questionIds: string[]; optionOrder: Record<string, string[]>; sections?: SnapshotSection[] } | null;
+  current_section: number;
+  section_started_at: string | null;
   violation_count: number;
   submit_reason: string | null;
+}
+
+/** A timed section as dealt to this attempt (snapshot at start). */
+interface SnapshotSection {
+  id: string;
+  name: string;
+  durationSeconds: number;
+  questionIds: string[];
 }
 
 interface AssignmentRow {
@@ -291,9 +303,64 @@ export async function gradeCodingAnswers(attemptId: string, rejudge = false): Pr
   return { judged, pending };
 }
 
+/** Where a timed-section attempt is now (null for tests without timed sections). */
+function clockOf(attempt: AttemptRow, now = new Date()) {
+  const sections = attempt.question_order?.sections;
+  if (!sections?.length) return null;
+  return sectionClock(
+    sections,
+    { index: attempt.current_section, startedAt: new Date(attempt.section_started_at ?? attempt.started_at) },
+    new Date(attempt.expires_at),
+    now
+  );
+}
+
+/** Persist a section move. Only one request wins a race; the others re-read. */
+async function moveToSection(attempt: AttemptRow, index: number, startedAt: Date): Promise<AttemptRow> {
+  return asSystem(async (db) => {
+    const { rows } = await db.query<AttemptRow>(
+      `update public.test_attempts set current_section = $2, section_started_at = $3
+        where id = $1 and status = 'in_progress' and current_section = $4
+        returning *`,
+      [attempt.id, index, startedAt.toISOString(), attempt.current_section]
+    );
+    return rows[0] ?? (await db.query<AttemptRow>(`select * from public.test_attempts where id = $1`, [attempt.id])).rows[0];
+  });
+}
+
+/** Submit attempts whose time is up, and move timed sections on when their clock runs out. */
+/** Snapshot the test's timed sections in authored order, each with this attempt's question order. */
+async function timedSectionsFor(db: Db, testId: string, questions: QuestionRow[], dealt: string[]): Promise<SnapshotSection[]> {
+  const { rows } = await db.query<{ id: string; name: string; duration_seconds: number | null }>(
+    `select id, name, duration_seconds from public.test_sections where test_id = $1 order by sort_order, created_at`, [testId]);
+  const sectionOf = new Map(questions.map((q) => [q.id, q.section_id]));
+  const sections = rows
+    .map((s) => ({ id: s.id, name: s.name, durationSeconds: s.duration_seconds ?? 0, questionIds: dealt.filter((id) => sectionOf.get(id) === s.id) }))
+    .filter((s) => s.questionIds.length > 0);
+  const placed = sections.reduce((n, s) => n + s.questionIds.length, 0);
+  if (sections.length === 0 || placed !== dealt.length || sections.some((s) => s.durationSeconds <= 0)) {
+    throw badRequest("This test's timed sections aren't set up completely yet. Ask your faculty.");
+  }
+  return sections;
+}
+
 async function closeIfExpired(attempt: AttemptRow): Promise<AttemptRow> {
-  if (attempt.status !== 'in_progress' || new Date(attempt.expires_at) > new Date()) return attempt;
-  return finalize(attempt, 'timeout');
+  if (attempt.status !== 'in_progress') return attempt;
+  if (new Date(attempt.expires_at) <= new Date()) return finalize(attempt, 'timeout');
+  const clock = clockOf(attempt);
+  if (!clock) return attempt;
+  if (clock.finished) return finalize(attempt, 'timeout');
+  if (clock.index !== attempt.current_section) return moveToSection(attempt, clock.index, clock.startedAt);
+  return attempt;
+}
+
+/** In a timed-section test, only the current section can be answered. */
+function assertInCurrentSection(attempt: AttemptRow, questionId: string) {
+  const clock = clockOf(attempt);
+  if (!clock) return;
+  const current = attempt.question_order!.sections![clock.index];
+  // 423 (not 409): the attempt is still open, the student just moves on to the next section.
+  if (!current.questionIds.includes(questionId)) throw new HttpError(423, 'That section has closed — its answers can no longer be changed.');
 }
 
 export async function startAttempt(userId: string, assignmentId: string) {
@@ -325,16 +392,22 @@ export async function startAttempt(userId: string, assignmentId: string) {
 
   const attemptId = randomUUID();
   await asSystem(async (db) => {
-    const test = await db.query<{ duration_seconds: number }>(`select duration_seconds from public.tests where id = $1`, [assignment.test_id]);
+    const test = await db.query<{ duration_seconds: number; section_time_locked: boolean }>(
+      `select duration_seconds, section_time_locked from public.tests where id = $1`, [assignment.test_id]);
     const questions = await loadQuestions(db, assignment.test_id);
     if (questions.length === 0) throw badRequest('This test has no questions yet. Ask your faculty.');
 
-    const duration = assignment.duration_seconds ?? test.rows[0].duration_seconds;
-    const order = buildAttemptOrder(
+    let duration = assignment.duration_seconds ?? test.rows[0].duration_seconds;
+    const order: AttemptRow['question_order'] & object = buildAttemptOrder(
       questions,
       { shuffleQuestions: assignment.shuffle_questions, shuffleOptions: assignment.shuffle_options },
       attemptId
     );
+    if (test.rows[0].section_time_locked) {
+      order.sections = await timedSectionsFor(db, assignment.test_id, questions, order.questionIds);
+      // A timed-section test lasts exactly as long as its sections.
+      duration = order.sections.reduce((sum, x) => sum + x.durationSeconds, 0);
+    }
     const initialAnswers: AnswerState[] = order.questionIds.map((id) => ({
       question_id: id, status: 'not_visited', selected_options: null, nat_value: null,
     }));
@@ -344,9 +417,9 @@ export async function startAttempt(userId: string, assignmentId: string) {
       await db.query(
         `insert into public.test_attempts
            (id, user_id, test_id, assignment_id, org_id, attempt_number, status, started_at,
-            expires_at, answers, total_questions, total_marks, question_order)
+            expires_at, answers, total_questions, total_marks, question_order, current_section, section_started_at)
          values ($1, $2, $3, $4, $5, $6, 'in_progress', now(),
-                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb)`,
+                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now())`,
         [attemptId, userId, assignment.test_id, assignment.id, assignment.org_id, used + 1,
          duration, assignment.closes_at, JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order)]
       );
@@ -378,8 +451,12 @@ export async function getAttemptView(userId: string, attemptId: string) {
     ? await asSystem((db) => loadTestCases(db, [...codingIds(questions)], false))
     : new Map<string, TestCaseRow[]>();
 
+  // Timed sections: only the current section's questions are sent.
+  const clock = attempt.status === 'in_progress' ? clockOf(attempt) : null;
+  const visible = clock ? new Set(order.sections![clock.index].questionIds) : null;
+
   const publicQuestions = attempt.status === 'in_progress'
-    ? order.questionIds.filter((id) => byId.has(id)).map((id) => {
+    ? order.questionIds.filter((id) => byId.has(id) && (!visible || visible.has(id))).map((id) => {
         const q = byId.get(id)!;
         const optionIds = order.optionOrder[id];
         const options = q.options && optionIds
@@ -411,7 +488,9 @@ export async function getAttemptView(userId: string, attemptId: string) {
     proctoring: policy,
     violationCount: attempt.violation_count,
     questions: publicQuestions,
-    answers: attempt.status === 'in_progress' ? attempt.answers : undefined,
+    answers: attempt.status === 'in_progress' ? (attempt.answers ?? []).filter((a) => !visible || visible.has(a.question_id)) : undefined,
+    sections: order.sections?.map((x) => ({ id: x.id, name: x.name, durationSeconds: x.durationSeconds, questionCount: x.questionIds.length })) ?? null,
+    currentSection: clock ? { index: clock.index, endsAt: clock.endsAt.toISOString() } : null,
     submitReason: attempt.submit_reason,
     result: attempt.status === 'completed' ? resultView(attempt, released, questions, order.questionIds) : undefined,
   };
@@ -441,6 +520,7 @@ export async function saveAnswer(
 ) {
   const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
   if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
+  assertInCurrentSection(attempt, questionId);
 
   const answers: AnswerState[] = attempt.answers ?? [];
   const idx = answers.findIndex((a) => a.question_id === questionId);
@@ -511,6 +591,7 @@ export async function runSamples(userId: string, attemptId: string, questionId: 
   const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
   if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
   if (!(attempt.answers ?? []).some((a) => a.question_id === questionId)) throw badRequest('That question is not part of this test.');
+  assertInCurrentSection(attempt, questionId);
 
   const now = Date.now();
   if (now - (lastRun.get(attemptId) ?? 0) < RUN_INTERVAL_MS) throw new HttpError(429, 'Wait a moment before running again.');
@@ -575,6 +656,23 @@ export async function recordEvent(userId: string, attemptId: string, type: Proct
     autoSubmitted = true;
   }
   return { severity, violationCount, maxViolations: policy.maxViolations, autoSubmitted };
+}
+
+/** Finish the current timed section early; the next one starts now (the last one submits the test). */
+export async function finishCurrentSection(userId: string, attemptId: string) {
+  const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+  if (attempt.status !== 'in_progress') return getAttemptView(userId, attemptId);
+  if (!attempt.question_order?.sections?.length) throw badRequest('This test has no timed sections.');
+  const now = new Date();
+  const next = finishSection(
+    attempt.question_order.sections,
+    { index: attempt.current_section, startedAt: new Date(attempt.section_started_at ?? attempt.started_at) },
+    new Date(attempt.expires_at),
+    now
+  );
+  if (next.finished) await finalize(attempt, 'manual');
+  else await moveToSection(attempt, next.index, next.startedAt);
+  return getAttemptView(userId, attemptId);
 }
 
 export async function submitAttempt(userId: string, attemptId: string) {

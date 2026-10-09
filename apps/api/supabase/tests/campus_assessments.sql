@@ -323,6 +323,38 @@ set local role anon;
 select pg_temp.check_denied($$select count(*) from public.question_test_cases$$, 'anon cannot read test cases');
 reset role;
 
+-- ── Timed sections (slice B3) ───────────────────────────────────────────────
+insert into public.tests (id, slug, title, duration_seconds, owner_org_id, visibility) values
+  ('aaaaaaaa-0000-0000-0000-0000000000e2', 'a-test-2', 'A test 2', 600, 'aaaaaaaa-0000-0000-0000-00000000000a', 'org');
+insert into public.test_sections (id, test_id, name, duration_seconds) values
+  ('aaaaaaaa-0000-0000-0000-0000000000d2', 'aaaaaaaa-0000-0000-0000-0000000000e2', 'Other test section', 600);
+
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000002');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into public.test_sections (id, test_id, name, duration_seconds)
+    values ('aaaaaaaa-0000-0000-0000-0000000000d1', 'aaaaaaaa-0000-0000-0000-0000000000e1', 'Aptitude', 900)$$),
+  1, 'A faculty can add a timed section to a College A test');
+select pg_temp.check_denied(
+  $$insert into public.test_sections (test_id, name, duration_seconds) values ('aaaaaaaa-0000-0000-0000-0000000000e1', 'Too short', 30)$$,
+  'a section must last at least a minute');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$update public.test_questions set section_id = 'aaaaaaaa-0000-0000-0000-0000000000d1'
+     where test_id = 'aaaaaaaa-0000-0000-0000-0000000000e1' and question_id = 'aaaaaaaa-0000-0000-0000-0000000000c1'$$),
+  1, 'A faculty can place a question in a section of the same test');
+select pg_temp.check_denied(
+  $$update public.test_questions set section_id = 'aaaaaaaa-0000-0000-0000-0000000000d2'
+     where test_id = 'aaaaaaaa-0000-0000-0000-0000000000e1' and question_id = 'aaaaaaaa-0000-0000-0000-0000000000c1'$$,
+  'a question cannot be placed in another test''s section');
+reset role;
+
+select pg_temp.act_as('a2000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$update public.test_attempts set current_section = 0, section_started_at = now() - interval '1 hour'$$),
+  0, 'a student cannot move their own section clock');
+reset role;
+
 rollback;
 
 \o
