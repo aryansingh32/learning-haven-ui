@@ -13,10 +13,15 @@ paying pilot (per the plan doc's phase gate) · **Later** = only with demand · 
 ## 1. Verdict in one page
 
 Forge is **not** an LMS with a chatbot bolted on — it already owns the hard, differentiating half of the
-inventory: a coding platform (Monaco, 4 in-browser runtimes, Judge0 for Java), GitHub-verified build projects
+inventory: a coding-platform base (Monaco + 4 runtimes + Judge0 for Java — though see the correction below), GitHub-verified build projects
 verified in Docker, apprenticeships, a CBT test engine with negative marking, an AI mentor, resume builder with
 ATS scoring, jobs board, gamification, referrals and verifiable certificates. Forge Campus adds multi-college
 tenancy with database-enforced isolation, rosters, college-authored tests, proctored assignments and results.
+
+> **Correction (item-by-item check, `FEATURE_CHECKLIST.md`):** of 1,898 listed features, **321 are done (16%), 285 partly
+> (15%), 1,292 not done (68%)**. Two things are weaker than this audit first said: the in-app code editor is only
+> mounted on the developer page `/test-editor` (practice problems link out to external sites; `/problems/:id` has
+> no route), and the live database holds just 8 practice problems and 0 test-series questions.
 
 Against the 60 modules: **~12 are substantially built, ~25 are partly there, ~23 are missing.** That is the
 right shape for a pilot: the missing ones are mostly breadth (labs, live classes, parent portal, accreditation,
@@ -82,7 +87,7 @@ How this audit's recommendations avoid compromising the existing product — eve
 | **Assess** | Campus assignments (MCQ/MSQ/NAT, proctored) · Test Series CBT · mock tests from course quizzes · DSA problems with submissions · build challenges | No coding questions in Campus tests; no aptitude content |
 | **Identify gaps** | `getMentorContext` (`apps/api/src/modules/auth/services/gamification.service.ts`), knowledge-graph widget on the dashboard, per-question scoring in `assessment-core` | Questions carry `topic`/`difficulty` but **no result writes a per-skill score**. Campus results are invisible to Forge's gap detection |
 | **Plan** | Daily missions & quests, roadmap context, AI mentor | Plan isn't generated from measured gaps |
-| **Teach & practise** | Courses/chapters with video, visualizer, notebook; 4 code runtimes; problems; projects | — (strongest part) |
+| **Teach & practise** | Courses/chapters with video, visualizer, notebook; projects | Learners can't code in the app (editor only on `/test-editor`); 8 practice problems live |
 | **Reassess** | Retakes (`max_attempts`), mock tests | No adaptive re-test targeting the weak skills |
 | **Verify mastery** | GitHub-verified projects, certificates with public verification page | No "skill verified" credential tied to evidence |
 | **Placement readiness** | Client-side career readiness in `RoadmapContext.tsx` | Not server-side, not explainable, not visible to the college |
@@ -183,7 +188,7 @@ prediction exercise types.
 **When:** route all non-JS languages through Judge0 **P2**; output-prediction & debugging question types **P2**.
 
 ### 9. Online coding IDE — 🟡
-✅ Monaco editor, run/submit, stdin, test-case results, workspace pages, GitHub repo integration for projects.
+🟡 Monaco editor, run, stdin, test-case results exist in `modules/CodeExecutor` **but only on the developer page `/test-editor`** — no learner route uses them. ✅ GitHub repo integration for projects.
 ❌ Multi-file explorer, terminal, version history, AI code review/explanation inside the editor, mobile coding.
 **When:** AI explain-my-error **P2**; multi-file **Later** (build challenges already use GitHub for that).
 

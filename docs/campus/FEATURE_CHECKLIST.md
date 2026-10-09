@@ -1,0 +1,2112 @@
+# Master feature checklist — verified against the code and the live database
+
+Verified 2026-10-09 on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
+the live Supabase database (read-only counts) for content.
+
+- `[x]` **Done** — built *and* reachable by the people it's for. Evidence after the dash.
+- `[ ] 🟡` **Partly** — something real exists, but with a gap (named after the dash).
+- `[ ]` **Not done** — nothing in the code.
+
+Rules used: a database column with no screen is 🟡, not done. A feature that only exists on a developer test page
+is 🟡. A content topic is done only if a published chapter or problem covers it. "Campus" = Forge Campus
+(college) apps; "Forge" = the learner app/admin/API.
+
+> **Two facts that change the picture**
+> 1. **The in-app code editor is not reachable by learners.** Monaco, the 4 runtimes and the test-case console
+>    are only mounted on `/test-editor`, a developer page. Practice problems open an external link
+>    (`resource_url`, e.g. LeetCode) or `/problems/:id` — and **no `/problems/:id` route exists**. Projects are
+>    coded locally and pushed to GitHub.
+> 2. **Content is thin in the live database:** 8 practice problems (Arrays & Hashing 6, Two Pointers 1, Binary
+>    Search 1), 6 published courses / 72 chapters, 0 test series, 0 test-series questions.
+
+## Summary
+
+| # | Module | ✅ Done | 🟡 Partly | ❌ Not done | Total |
+|---|---|---:|---:|---:|---:|
+| 1 | Student Identity & Account Management | 8 | 5 | 10 | 23 |
+| 2 | College, University & Organization Management | 9 | 8 | 12 | 29 |
+| 3 | Role-Based Access & Permissions | 8 | 8 | 8 | 24 |
+| 4 | Student Dashboard | 11 | 8 | 5 | 24 |
+| 5 | Learning Management System | 16 | 11 | 20 | 47 |
+| 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
+| 7 | AI Agent System | 0 | 0 | 23 | 23 |
+| 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
+| 9 | Online Coding IDE | 8 | 22 | 28 | 58 |
+| 10 | Coding Practice Platform | 10 | 11 | 22 | 43 |
+| 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
+| 12 | Assessment Engine | 27 | 9 | 21 | 57 |
+| 13 | Question Bank Management | 9 | 6 | 27 | 42 |
+| 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
+| 15 | Online Judge & Evaluation Engine | 2 | 12 | 17 | 31 |
+| 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
+| 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
+| 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
+| 19 | Resume & Portfolio Builder | 7 | 3 | 16 | 26 |
+| 20 | Interview Preparation | 0 | 1 | 27 | 28 |
+| 21 | System Design & Software Engineering | 2 | 3 | 25 | 30 |
+| 22 | Project-Based Learning | 10 | 3 | 15 | 28 |
+| 23 | Faculty & Trainer Portal | 5 | 4 | 26 | 35 |
+| 24 | Placement Officer & Training and Placement Cell | 1 | 3 | 29 | 33 |
+| 25 | Learning Analytics | 2 | 7 | 30 | 39 |
+| 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
+| 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
+| 28 | Assignments & Homework | 6 | 4 | 16 | 26 |
+| 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
+| 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
+| 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
+| 32 | Certificates & Credentials | 9 | 3 | 12 | 24 |
+| 33 | Proctoring & Assessment Security | 12 | 5 | 18 | 35 |
+| 34 | AI-Era Academic Integrity | 1 | 1 | 23 | 25 |
+| 35 | Coding Contests & Hackathons | 0 | 0 | 30 | 30 |
+| 36 | SQL & Database Practice | 0 | 0 | 20 | 20 |
+| 37 | Data Science, AI & Machine Learning Labs | 0 | 1 | 28 | 29 |
+| 38 | Cloud, DevOps & Hands-On Labs | 1 | 4 | 20 | 25 |
+| 39 | Communication & Soft Skills | 0 | 1 | 22 | 23 |
+| 40 | Notifications & Communication | 1 | 6 | 17 | 24 |
+| 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
+| 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
+| 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
+| 44 | Admin Control Center | 17 | 17 | 13 | 47 |
+| 45 | Payments & Monetization | 11 | 6 | 16 | 33 |
+| 46 | SaaS & Enterprise Management | 4 | 2 | 23 | 29 |
+| 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
+| 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
+| 49 | Security & Privacy | 14 | 7 | 27 | 48 |
+| 50 | Reliability & Platform Infrastructure | 15 | 9 | 25 | 49 |
+| 51 | Search & Discovery | 1 | 3 | 20 | 24 |
+| 52 | Content Creation & Management | 5 | 5 | 19 | 29 |
+| 53 | Library & Learning Resources | 3 | 3 | 18 | 24 |
+| 54 | Mentorship & Human Support | 1 | 1 | 25 | 27 |
+| 55 | Parent & Guardian Portal | 0 | 0 | 15 | 15 |
+| 56 | Institutional Reports & Accreditation | 0 | 1 | 22 | 23 |
+| 57 | Gamified Campus Ecosystem | 0 | 0 | 21 | 21 |
+| 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
+| 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
+| 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
+| | **All modules** | **321** (16%) | **285** (15%) | **1292** (68%) | **1898** |
+
+---
+
+### 1. Student Identity & Account Management
+- [x] Student Registration — email/password and phone sign-up (`pages/auth/SignUp.tsx`, `auth-phone.controller.ts`)
+- [ ] 🟡 Email Verification — Supabase Auth confirmation; Campus requires a verified email to claim a roster entry; no Forge screen enforcing it
+- [x] Mobile OTP Verification — `otp_verifications` table, `/auth/phone-send-otp`, `/auth/phone-verify-otp`
+- [x] Social Login — Google sign-in via Supabase OAuth (`SignIn.tsx`, `SignUp.tsx`)
+- [ ] Single Sign-On (SSO)
+- [ ] Multi-Factor Authentication
+- [x] Student Profile — `ProfilePage.tsx`
+- [ ] 🟡 Academic Profile — `users.college_name`, `year_of_study`; Campus roll number + department; no academic record (CGPA, backlogs)
+- [ ] 🟡 Skills Profile — skills only inside the resume builder
+- [x] Resume Profile — resume builder saved server-side (`resume.service.ts`)
+- [x] GitHub Profile Integration — GitHub OAuth connection for projects (`githubOAuth.ts`, `apprenticeship_github_connections`)
+- [ ] LinkedIn Profile Integration
+- [ ] Profile Completion Score
+- [ ] Digital Student ID
+- [x] Multi-College Account Support — one account, many `campus.org_memberships`
+- [x] Account Recovery — forgot-password on `SignIn.tsx`
+- [ ] 🟡 Session Management — token refresh scheduler; sign-out revokes the token; no "active sessions" screen
+- [ ] Device Management
+- [ ] Login History
+- [ ] 🟡 Account Activity History — activity heatmap from `analytics_events`; no account-level log
+- [ ] Consent Management
+- [ ] Data Export
+- [ ] Account Deletion — `users.deleted_at` column exists, no deletion flow
+
+### 2. College, University & Organization Management
+- [x] Multi-Tenant Architecture — `campus` schema, RLS isolation, 36 + 43 SQL checks in CI
+- [x] College Registration — Forge staff create a college + owner (`campus-api/routes/platform.ts`, portal Platform page)
+- [ ] University Management
+- [x] Organization Management — `campus.organizations` (platform / college)
+- [x] Department Management — `campus.departments`, portal Batches/Departments page
+- [ ] 🟡 Branch Management — departments double as branches; no separate branch entity
+- [ ] Semester Management
+- [ ] Academic Year Management
+- [ ] 🟡 Course Management — Forge admin manages courses; colleges cannot yet
+- [x] Batch Management — `campus.batches`, members, faculty
+- [ ] 🟡 Section Management — use a batch per section; no section entity
+- [ ] Classroom Management
+- [x] Faculty Management — memberships with role `faculty`, `batch_faculty`
+- [x] Student Enrollment — roster entries claimed on sign-in; batch members
+- [x] Bulk Student Import — roster upload with preview and per-line errors (portal People page)
+- [ ] 🟡 CSV/Excel Import — CSV only
+- [ ] Student Data Synchronization
+- [ ] 🟡 Organizational Hierarchy — org → department → batch; no deeper levels
+- [ ] Campus Management
+- [ ] Multi-Campus Management
+- [ ] Academic Calendar
+- [ ] Holiday Calendar
+- [ ] Academic Policy Management
+- [x] Organization Branding — logo + brand colour (portal Settings; shown on student My College)
+- [ ] Custom Domain Support
+- [ ] 🟡 White-Label Platform — logo/colour only
+- [ ] 🟡 Tenant-Level Configuration — branding; proctoring is set per assignment
+- [ ] 🟡 Tenant-Level Analytics — portal overview counts; no analytics
+- [ ] Organization-Level Billing
+
+### 3. Role-Based Access & Permissions
+- [x] Role-Based Access Control (RBAC) — `campus.role_permissions` enforced in RLS + API; Forge `admin_roles`/`admin_permissions`
+- [ ] Attribute-Based Access Control (ABAC)
+- [x] Super Admin — `users.role = super_admin`
+- [x] Organization Admin — college `owner` / `admin` roles
+- [x] College Admin — `admin` role
+- [ ] 🟡 Placement Officer — role exists, no screens
+- [ ] HOD Dashboard
+- [ ] 🟡 Faculty Dashboard — portal Overview, Assignments, Results; no at-risk view
+- [ ] Trainer Dashboard
+- [ ] Mentor Dashboard
+- [x] Student Dashboard — Forge dashboard + My College
+- [ ] Parent Dashboard
+- [ ] 🟡 Evaluator Dashboard — role exists, no screens (no subjective grading yet)
+- [ ] 🟡 Question Setter Dashboard — faculty test editor; no separate role view
+- [ ] 🟡 Proctor Dashboard — `invigilator` role + events stored; no live board
+- [ ] Auditor Dashboard
+- [ ] 🟡 Custom Role Builder — Forge admin can create roles (`Permissions.tsx`); colleges cannot
+- [x] Permission Matrix — role → permission keys (`role_permissions`, admin Permissions page)
+- [x] Module-Level Permissions — permission keys per area (content, assessments, members…)
+- [x] Action-Level Permissions — e.g. `assessments.create`, `members.manage`
+- [ ] Approval Workflows
+- [ ] 🟡 Delegated Administration — college owner appoints admins
+- [ ] Impersonation Audit
+- [ ] 🟡 Access Audit Logs — `admin_audit_logs` for Forge admin actions; no access log for Campus
+
+### 4. Student Dashboard
+- [x] Personalized Student Dashboard — `pages/Index.tsx`
+- [x] Learning Progress Overview — continue-learning, phase progress
+- [x] Course Progress — chapter progress bars
+- [x] Coding Progress — problems solved + difficulty breakdown
+- [ ] 🟡 Assessment Performance — average college score on My College; not on the dashboard
+- [ ] 🟡 Placement Readiness Score — career-readiness widget computed in the browser (`RoadmapContext.tsx`)
+- [ ] 🟡 Skill Proficiency Score — knowledge-graph widget, client-side
+- [ ] 🟡 Daily Learning Plan — mission hero suggests today's task; not a plan
+- [ ] Weekly Learning Plan
+- [x] Daily Missions — `/users/me/mission`, daily quests
+- [x] Pending Assignments — College tests card on the dashboard (new)
+- [x] Upcoming Tests — College tests card + My College Upcoming tab (new)
+- [x] Upcoming Deadlines — "closes in …" on the card and My College (new)
+- [x] Learning Streaks — streak, longest streak, streak freezes
+- [x] Achievement Showcase — badges + identity title
+- [ ] Skill Radar
+- [ ] 🟡 Weak Topic Indicators — knowledge graph weak areas, adaptive-difficulty banner (rule-based)
+- [x] Recommended Next Action — mission hero; "Do this next" on My College
+- [ ] 🟡 Personal Learning Goals — `learning_goal`, `daily_time_minutes` captured at onboarding; no goal tracking
+- [ ] 🟡 Study Time Analytics — `study_time_total`, Pomodoro timer; no analytics view
+- [ ] 🟡 Recent Activity Feed — activity heatmap; no feed
+- [ ] Progress Comparison
+- [ ] Portfolio Dashboard
+- [ ] AI Learning Summary
+
+### 5. Learning Management System
+- [x] Course Builder — admin Courses, Chapters editors, content import
+- [ ] 🟡 Drag-and-Drop Course Builder — Visual Roadmap Builder in admin; chapter editing is form-based
+- [x] Course Categories — `categories`
+- [ ] 🟡 Course Prerequisites — sequential chapter unlocking; no course-to-course prerequisites
+- [x] Course Enrollment — `course_enrollments`
+- [x] Self-Paced Learning
+- [ ] Instructor-Led Learning
+- [ ] Cohort-Based Learning
+- [ ] Live Classes
+- [ ] 🟡 Recorded Classes — YouTube lesson videos
+- [x] Video Lessons — `chapter_content.video_youtube_id`
+- [x] Interactive Lessons — visualizer steps, quizzes, timestamp-synced interaction layer
+- [x] Text Lessons — steps / articles
+- [ ] PDF Lessons
+- [ ] Presentation Lessons
+- [ ] Audio Lessons
+- [x] Embedded Resources — article links per chapter
+- [x] YouTube Integration — YouTube player hook (`useYouTubePlayer.ts`)
+- [ ] SCORM Support
+- [ ] xAPI Support
+- [ ] LTI Integration
+- [x] Learning Paths — phases → chapters, roadmaps
+- [ ] 🟡 Course Bundles — plans bundle access; no bundle product
+- [x] Module Management — phases / chapters / steps
+- [x] Lesson Sequencing — chapter numbers, steps order
+- [x] Lesson Completion Tracking — `user_chapter_progress`
+- [ ] Learning Objectives
+- [ ] Course Versioning
+- [x] Course Publishing — `courses.is_published`
+- [ ] Course Scheduling
+- [ ] Course Expiry
+- [ ] 🟡 Drip Content — chapters unlock in order; no time-based drip
+- [ ] 🟡 Prerequisite Enforcement — locked chapters until earlier ones are done
+- [ ] Bookmarking
+- [ ] 🟡 Notes and Highlights — per-chapter notes + auto notebook; no highlights
+- [ ] Lesson Search
+- [ ] Transcript Search
+- [ ] 🟡 Video Playback Speed — only YouTube's own control
+- [x] Resume Learning — "Continue learning" on dashboard
+- [ ] Offline Learning
+- [x] Course Feedback — `feedback` table + admin Feedback page
+- [ ] Course Ratings — `program_reviews` table exists, 0 rows, no UI
+- [ ] 🟡 Course Discussions — only apprenticeship community posts
+- [ ] Course Announcements
+- [ ] 🟡 Course Completion Rules — phase completion page, certificates
+- [ ] Course Duplication
+- [ ] 🟡 Course Import and Export — staged import; no export
+
+### 6. AI-Powered Learning
+- [x] AI Learning Copilot — global AI assistant on every page (`GlobalAIAssistant.tsx`)
+- [x] AI Personal Tutor — AI mentor page (`AICoachPage.tsx`), streaming
+- [x] AI Doubt Solver — mentor chat; `doubt_queries_used` limit
+- [x] Context-Aware AI Tutor — learner context from `getMentorContext` + current page
+- [ ] Syllabus-Aware Responses
+- [ ] 🟡 Course-Aware Responses — knows which page area you're on; not lesson content
+- [ ] 🟡 Code-Aware Responses — chats can carry a `problem_id`; apprenticeship AI help; no code from an editor
+- [ ] Document-Aware Responses
+- [ ] AI Voice Tutor
+- [ ] Multilingual AI Tutor
+- [ ] Hinglish Learning Mode
+- [ ] Regional Language Learning
+- [ ] Adaptive Learning Paths
+- [ ] AI Skill Assessment
+- [ ] 🟡 AI Knowledge Gap Detection — rule-based knowledge graph, not AI
+- [ ] 🟡 AI Weakness Detection — rule-based weak areas
+- [ ] 🟡 AI Learning Recommendations — rule-based mission / adaptive-difficulty banner
+- [ ] AI Study Plan Generator
+- [ ] 🟡 AI Daily Task Generator — daily quests are rule-based
+- [ ] 🟡 AI Revision Planner — "marked for revision" list; no planner
+- [ ] AI Flashcard Generator
+- [ ] AI Quiz Generator
+- [ ] AI Practice Question Generator
+- [ ] 🟡 AI Explanation Generator — via mentor chat only
+- [ ] 🟡 AI Example Generator — via mentor chat only
+- [ ] 🟡 AI Analogy Generator — via mentor chat only
+- [ ] AI Diagram Generator
+- [ ] AI Mind Map Generator
+- [ ] AI Summary Generator
+- [ ] 🟡 AI Notes Generator — course notebook is auto-generated from content (not AI)
+- [ ] AI Lecture Summarizer
+- [ ] AI Video Summarizer
+- [ ] AI Transcript Generator
+- [ ] 🟡 AI Concept Simplifier — via mentor chat only
+- [x] AI Step-by-Step Solver — system prompt: "step-by-step solution walkthroughs" (`config/openai.ts`)
+- [ ] AI Socratic Questioning
+- [x] AI Hint-Based Learning — system prompt: "hints without revealing the full solution"
+- [ ] AI Misconception Detection
+- [ ] AI Answer Verification
+- [ ] AI Citation and Source References
+- [ ] AI Confidence Indicators
+- [ ] AI Hallucination Feedback
+- [ ] 🟡 AI Learning Memory — chat history in `ai_chats` fed back as context; `user_memory_profiles` table unused (0 rows)
+- [ ] AI Personalized Revision
+- [ ] AI Spaced Repetition
+- [ ] AI Forgetting Curve Tracking
+- [ ] 🟡 AI Difficulty Adaptation — adaptive-difficulty banner on Practice (rule-based)
+- [ ] AI Learning Pace Adaptation
+- [ ] AI Mastery Estimation
+- [ ] AI Progress Forecasting
+- [ ] AI Exam Readiness Prediction
+- [ ] AI Study Habit Analysis
+- [x] AI Learning Companion — global assistant
+- [ ] AI Learning Agent
+- [ ] AI Tool Calling
+- [ ] AI Workflow Automation
+- [ ] 🟡 AI Model Routing — one model, switchable in admin (OpenRouter / OpenAI / Anthropic keys); no routing
+- [x] AI Usage Limits — `ai_queries_per_day` via EntitlementsService
+- [ ] 🟡 AI Token Usage Analytics — `ai_chats.tokens_used`, `/ai/usage`; no analytics view
+- [ ] AI Cost Management
+- [ ] AI Response Feedback
+- [ ] AI Evaluation Benchmarks
+
+### 7. AI Agent System
+- [ ] Student Learning Agent
+- [ ] Coding Mentor Agent
+- [ ] Assessment Preparation Agent
+- [ ] Career Guidance Agent
+- [ ] Resume Improvement Agent
+- [ ] Interview Preparation Agent
+- [ ] Faculty Assistant Agent
+- [ ] Question Generation Agent
+- [ ] Course Creation Agent
+- [ ] Evaluation Agent
+- [ ] Analytics Agent
+- [ ] Placement Officer Agent
+- [ ] Administrative Assistant Agent
+- [ ] Multi-Agent Orchestration
+- [ ] Agent Memory
+- [ ] Agent Task Planning
+- [ ] Agent Tool Permissions
+- [ ] Human Approval Workflows
+- [ ] Agent Execution Logs
+- [ ] Agent Output Verification
+- [ ] Agent Cost Controls
+- [ ] Agent Failure Recovery
+- [ ] Agent Performance Evaluation
+
+### 8. Programming Language Learning
+- [ ] 🟡 C Programming — JSCPP runs C in the browser, only on the dev `/test-editor` page; no C course
+- [ ] 🟡 C++ Programming — JSCPP runtime on the dev page; no C++ course
+- [ ] 🟡 Java Programming — Judge0 backend (`judge0.service.ts`); no learner editor; no Java course
+- [ ] 🟡 Python Programming — Pyodide runtime on the dev page; no Python course
+- [ ] 🟡 JavaScript Programming — runtime on the dev page; "Programming Foundations" course
+- [ ] TypeScript Programming
+- [ ] Go Programming
+- [ ] Rust Programming
+- [ ] Kotlin Programming
+- [ ] Swift Programming
+- [ ] SQL Learning
+- [x] HTML Learning — "Html & CSS Mastery" course (published)
+- [x] CSS Learning — same course (box model, selectors, specificity…)
+- [ ] Dart Programming
+- [ ] Language-Specific Roadmaps
+- [ ] Language-Specific Practice
+- [ ] Syntax Reference
+- [ ] Standard Library Reference
+- [ ] 🟡 Code Examples Library — examples inside chapters only
+- [ ] Interactive Code Examples
+- [ ] 🟡 Code Execution Playground — exists at `/test-editor` (developer page, not linked)
+- [ ] Multi-Language Code Conversion
+- [ ] Language Comparison
+- [ ] Compiler Error Explanation
+- [ ] Debugging Exercises
+- [ ] Code Tracing Exercises
+- [ ] Output Prediction Exercises
+- [ ] Fill-in-the-Code Exercises
+- [ ] Code Completion Exercises
+- [ ] Code Refactoring Exercises
+
+### 9. Online Coding IDE
+*All 🟡 items here exist in `apps/web/src/modules/CodeExecutor` but are only mounted on the developer page `/test-editor`.*
+- [ ] 🟡 Browser-Based Code Editor — dev page only
+- [ ] 🟡 Monaco Editor Integration — dev page only
+- [ ] 🟡 Multi-Language Editor — C/C++, Java, JS, Python; dev page only
+- [ ] 🟡 Syntax Highlighting — Monaco; dev page only
+- [ ] 🟡 Intelligent Autocomplete — Monaco default; dev page only
+- [ ] Code Formatting
+- [ ] 🟡 Code Folding — Monaco default; dev page only
+- [ ] Multi-Tab Editor
+- [ ] Multiple File Support
+- [ ] Project Explorer
+- [ ] Terminal Emulator
+- [ ] 🟡 Standard Input Support — Judge0 / Java executor accept stdin
+- [ ] 🟡 Standard Output Panel — `ConsolePanel.tsx`; dev page only
+- [ ] Custom Test Input
+- [ ] 🟡 Run Code — dev page only
+- [ ] Submit Code
+- [ ] Code Execution History
+- [ ] 🟡 Execution Time Display — in result types; dev page only
+- [ ] 🟡 Memory Usage Display — in result types; dev page only
+- [ ] 🟡 Compiler Error Display — dev page only
+- [ ] 🟡 Runtime Error Display — dev page only
+- [ ] 🟡 Test Case Results — Test Cases tab in `ConsolePanel.tsx`; dev page only
+- [ ] Code Diff Viewer
+- [ ] Code Version History
+- [ ] Autosave
+- [ ] Code Recovery
+- [ ] Keyboard Shortcuts
+- [ ] 🟡 Theme Customization — dark editor theme only
+- [ ] Font Customization
+- [ ] Editor Accessibility
+- [ ] 🟡 Resizable Panels — `ResizeLayout.tsx`; dev page only
+- [ ] Full-Screen Editor
+- [ ] 🟡 Split-Screen Editor — question/editor/console split; dev page only
+- [ ] Mobile Coding Support
+- [ ] AI Code Completion
+- [ ] 🟡 AI Code Explanation — apprenticeship "AI help" endpoint (`ai-help.controller.ts`)
+- [ ] 🟡 AI Debugging Assistant — same apprenticeship AI help
+- [ ] AI Code Review
+- [ ] AI Complexity Analysis
+- [ ] AI Test Case Generation
+- [ ] AI Refactoring Suggestions
+- [ ] AI Code Translation
+- [ ] AI Documentation Generation
+- [ ] AI Error Diagnosis
+- [ ] 🟡 AI Hint Mode — stage hints in build workspace; AI gives hints by prompt
+- [ ] AI Interviewer Mode
+- [ ] Code Sharing
+- [ ] Shareable Playgrounds
+- [x] GitHub Integration — GitHub OAuth, repo setup, push-to-verify for projects
+- [x] Git Integration — learners work in their own Git repo; stages verified from it
+- [x] Repository Import — starter repositories per challenge (`starter_repo_url`)
+- [x] Project Templates — starter repos / build stages
+- [x] Containerized Code Execution — Docker verification worker for build challenges (`verification.worker.ts`)
+- [x] Sandboxed Execution — Judge0 for Java; production refuses without it
+- [x] Execution Quotas — auth + rate limit on `/execute/java`
+- [x] Runtime Isolation — Judge0 runs code off the API host
+- [ ] 🟡 Network Isolation — Judge0 setup guide (`infra/judge0/README.md`); Judge0 not deployed yet
+- [ ] 🟡 Resource Limits — Judge0 limits + build-challenge `timeout_seconds`; Judge0 not deployed yet
+
+### 10. Coding Practice Platform
+*Live database: **8 problems** in total.*
+- [ ] 🟡 Coding Problem Library — Practice page + admin Problems; only 8 problems live
+- [x] Topic-Wise Problems — grouped by topic on Practice
+- [x] Difficulty-Wise Problems — easy/medium/hard filter
+- [ ] 🟡 Company-Wise Problems — `problems.companies` filled for 8 problems; no company filter in UI
+- [x] Pattern-Wise Problems — `patterns`, `problem_patterns`, admin Patterns
+- [ ] Interview Problems
+- [x] Beginner Problems — easy filter
+- [x] Advanced Problems — hard filter
+- [ ] 🟡 Daily Coding Challenge — daily quests can include problems; no daily problem
+- [ ] Weekly Coding Challenge
+- [ ] Problem of the Day
+- [ ] 🟡 Curated Problem Sheets — the topic list is one curated sheet
+- [x] DSA Roadmaps — "DSA Foundations" and "DSA Patterns Mastery" courses
+- [ ] Blind 75-Style Problem Lists
+- [ ] 🟡 NeetCode-Style Learning Paths — pattern chapters (two pointers, sliding window…); few linked problems
+- [ ] 🟡 LeetCode-Style Practice Lists — problems link out to external sites
+- [ ] Problem Bookmarks
+- [x] Problem Notes — `user_notes` (notes, pattern notes, mistake log), `NotesModal.tsx`
+- [ ] Personal Problem Collections
+- [ ] Custom Problem Lists
+- [x] Solved Problem Tracking — `user_problem_status`
+- [x] Unsolved Problem Tracking — status per problem
+- [x] Reattempt Tracking — "marked for revision"
+- [ ] 🟡 Solution Submission History — `submissions` stores code; no history screen (problems are solved externally)
+- [ ] Multiple Language Solutions
+- [ ] 🟡 Editorials — `solution_explanation` column; 0 problems have one; not shown
+- [ ] 🟡 Official Solutions — `solution_code` column; not shown
+- [ ] Community Solutions
+- [ ] AI-Generated Hints
+- [ ] 🟡 Progressive Hints — `problems.hints` filled for 8 problems; not shown on Practice
+- [ ] Hidden Test Cases
+- [ ] Custom Test Cases
+- [ ] Sample Test Cases
+- [ ] Problem Discussion Forum
+- [ ] Upvoting and Downvoting
+- [ ] Problem Reporting
+- [ ] Duplicate Problem Detection
+- [ ] Problem Versioning
+- [ ] 🟡 Problem Recommendations — adaptive-difficulty banner
+- [ ] Similar Problem Recommendations
+- [ ] Prerequisite Problem Recommendations
+- [ ] Mastery-Based Problem Unlocking
+- [ ] Contest Problem Collections
+
+### 11. Data Structures & Algorithms
+*Done = a published chapter teaches it (live DB, 72 chapters).*
+- [x] DSA Learning Roadmap — DSA Foundations + DSA Patterns Mastery
+- [x] Arrays — "Arrays", "Arrays Deep Dive"
+- [x] Strings — "Strings"
+- [x] Linked Lists — "Linked Lists"
+- [x] Stacks — "Stacks"
+- [x] Queues — "Queues"
+- [x] Hashing — "Hashing & HashMaps"
+- [x] Trees — "Trees"
+- [x] Binary Search Trees — "Binary Search Trees"
+- [x] Heaps — "Heaps & Priority Queues"
+- [x] Graphs — "Graphs", "BFS Pattern"
+- [ ] Tries
+- [x] Recursion — "Recursion - The Chapter That Changes Everything"
+- [x] Backtracking — "DFS & Backtracking Pattern"
+- [x] Sorting Algorithms — "Sorting Algorithms"
+- [ ] 🟡 Searching Algorithms — binary search covered; no general searching chapter
+- [x] Binary Search Patterns — "Binary Search", "Binary Search on Answer"
+- [x] Sliding Window Patterns — "Sliding Window Pattern"
+- [x] Two Pointers — "Two Pointer Pattern"
+- [ ] Prefix Sums
+- [x] Fast and Slow Pointers — "Fast & Slow Pointers (Floyd's Cycle)"
+- [x] Monotonic Stack — "Monotonic Stack Pattern"
+- [x] Greedy Algorithms — "Greedy Pattern"
+- [x] Dynamic Programming — "Dynamic Programming"
+- [ ] 🟡 Graph Algorithms — BFS/DFS only
+- [ ] Bit Manipulation
+- [ ] Union-Find
+- [ ] Topological Sorting
+- [ ] Shortest Path Algorithms
+- [ ] Minimum Spanning Trees
+- [ ] Segment Trees
+- [ ] Fenwick Trees
+- [ ] String Matching Algorithms
+- [x] Complexity Analysis — "Time & Space Complexity"
+- [ ] 🟡 Time Complexity Practice — taught; no practice set
+- [ ] 🟡 Space Complexity Practice — "Space Complexity" chapter; no practice set
+- [ ] Recurrence Relations
+- [ ] Dry Run Builder
+- [ ] 🟡 Interactive Memory Visualization — chapter visualizer step (interactive animation)
+- [ ] Pointer Visualization
+- [ ] Recursion Tree Visualization
+- [ ] Call Stack Visualization
+- [ ] Graph Traversal Visualization
+- [ ] 🟡 Sorting Visualization — possible in the visualizer step; not verified per chapter
+- [ ] Dynamic Programming Table Visualization
+- [x] Algorithm Animation — visualizer step rebuilt as interactive animation
+- [ ] 🟡 Step-by-Step Execution — visualizer steps; not tied to user code
+- [ ] Test Case Tracing
+- [ ] 🟡 Pattern Recognition Training — pattern chapters
+- [ ] Approach Comparison
+- [ ] Brute Force to Optimal Progression
+- [ ] Solution Optimization Challenges
+- [ ] DSA Mastery Tracking
+
+### 12. Assessment Engine
+*Two engines: Test Series CBT (Forge, 0 tests live) and Campus assignments (`packages/assessment-core`).*
+- [x] Assessment Builder — Campus test editor; admin Test Builder
+- [x] Timed Assessments — server-enforced timer
+- [ ] Untimed Assessments
+- [x] Scheduled Assessments — assignment opens/closes windows; `tests.release_at`
+- [ ] Adaptive Assessments
+- [x] Practice Assessments — course mock tests from quiz pools; retakes
+- [x] Mock Tests — `MockTestPage.tsx`, `mock-test.service.ts`
+- [ ] 🟡 Placement Assessments — engine supports them; no placement content
+- [ ] Coding Assessments
+- [ ] 🟡 Aptitude Assessments — MCQ/NAT engine ready; no aptitude content
+- [x] Technical Assessments — MCQ/MSQ/NAT technical tests
+- [ ] Personality Assessments
+- [ ] Communication Assessments
+- [ ] 🟡 Domain-Specific Assessments — any topic via MCQ; nothing domain-specific
+- [x] Section-Wise Tests — `test_sections`
+- [x] Multi-Section Assessments — sectional tests in Test Series
+- [x] Question Randomization — seeded per-attempt shuffle (Campus)
+- [ ] Question Pool Sampling
+- [x] Option Randomization — per-attempt option shuffle (Campus)
+- [ ] Difficulty-Based Selection
+- [x] Negative Marking — per question
+- [ ] 🟡 Partial Marking — MSQ is all-or-nothing; no partial credit
+- [ ] 🟡 Section Time Limits — `test_sections.duration_seconds` column; not enforced in the exam UI
+- [x] Global Time Limits
+- [x] Question Navigation — palette
+- [x] Question Flagging — mark for review
+- [x] Answer Review — palette states + submit summary
+- [x] Autosave Answers — every answer saved instantly (Campus)
+- [x] Resume Interrupted Test — refresh/reopen resumes (verified in browser)
+- [x] Test Window Restrictions — opens/closes; deadline = min(start + duration, close)
+- [x] Attempt Limits — `max_attempts`
+- [x] Retake Policies — attempts up to the limit, Retake button
+- [ ] Question Dependencies
+- [ ] 🟡 Section Locking — `tests.section_time_locked` column; not enforced
+- [x] Randomized Question Sets — different order per student
+- [ ] Multiple Assessment Versions
+- [x] Test Scheduling — assignment scheduling in portal
+- [ ] 🟡 Assessment Invitations — assigned to a batch; no invite emails
+- [ ] Access Codes
+- [ ] 🟡 Candidate Eligibility Rules — batch membership only
+- [x] Test Instructions — faculty instructions + rules screen
+- [ ] Assessment Preview
+- [x] Draft Assessments — assignment/test status draft vs published
+- [ ] Assessment Versioning
+- [ ] Assessment Duplication
+- [ ] Assessment Templates
+- [ ] Assessment Approval Workflow
+- [x] Assessment Publication — publish tests/assignments
+- [x] Assessment Archiving — assignment status `archived`
+- [ ] Assessment Expiry
+- [x] Automated Evaluation — server-side scoring on saved answers
+- [ ] Manual Evaluation
+- [ ] Hybrid Evaluation
+- [ ] Re-evaluation Requests
+- [ ] Grace Period Management
+- [ ] Accommodation Settings
+- [ ] 🟡 Assessment Audit Logs — proctoring events + submit reason per attempt; no change log
+
+### 13. Question Bank Management
+- [x] Centralized Question Bank — `testseries_questions`, admin Question Bank page (0 questions live)
+- [x] MCQ Question Builder
+- [x] Multiple-Select Questions — MSQ
+- [ ] 🟡 True/False Questions — as a 2-option MCQ
+- [ ] 🟡 Fill-in-the-Blank Questions — numeric answers (NAT) only
+- [ ] Short-Answer Questions
+- [ ] Long-Answer Questions
+- [ ] Coding Questions
+- [ ] SQL Questions
+- [ ] Output Prediction Questions
+- [ ] Debugging Questions
+- [ ] Code Ordering Questions
+- [ ] Match-the-Following Questions
+- [x] Case-Based Questions — `question_groups` passages shown with each question
+- [ ] Assertion-Reason Questions
+- [ ] Audio Questions
+- [ ] Video Questions
+- [ ] Image-Based Questions
+- [ ] Diagram-Based Questions
+- [ ] Spreadsheet Questions
+- [ ] 🟡 Question Tagging — topic field
+- [x] Topic Mapping — `topic`
+- [x] Difficulty Classification — easy/medium/hard
+- [ ] Learning Outcome Mapping
+- [ ] Bloom's Taxonomy Mapping
+- [ ] Question Versioning
+- [ ] Question Approval
+- [ ] Question Review Workflow
+- [x] Question Import — staged content import (admin)
+- [x] Bulk Question Upload — staged import
+- [ ] 🟡 Excel Question Import — spreadsheet-based import (admin only; not for colleges)
+- [ ] 🟡 CSV Question Import — admin only
+- [ ] QTI Import and Export
+- [ ] Question Duplication Detection
+- [ ] Question Quality Scoring
+- [ ] Question Usage Analytics
+- [ ] Question Discrimination Analysis
+- [ ] Question Difficulty Analysis
+- [ ] Question Exposure Tracking
+- [ ] Question Retirement
+- [x] Question Bank Permissions — `owner_org_id` + `visibility`, RLS
+- [ ] 🟡 Question Bank Sharing — visibility levels exist; no sharing/licensing flow
+
+### 14. AI Assessment Generation
+- [ ] AI Assessment Generator
+- [ ] AI Question Generator
+- [ ] AI Coding Problem Generator
+- [ ] AI Aptitude Question Generator
+- [ ] AI MCQ Generator
+- [ ] AI SQL Question Generator
+- [ ] AI Test Case Generator
+- [ ] AI Hidden Test Case Generator
+- [ ] AI Distractor Generator
+- [ ] AI Answer Key Generator
+- [ ] AI Solution Generator
+- [ ] AI Rubric Generator
+- [ ] AI Difficulty Calibration
+- [ ] AI Question Validation
+- [ ] AI Ambiguity Detection
+- [ ] AI Duplicate Detection
+- [ ] AI Curriculum Alignment
+- [ ] AI Syllabus-to-Test Generation
+- [ ] AI Document-to-Question Generation
+- [ ] AI Lecture-to-Assessment Generation
+- [ ] AI Topic-Based Test Generation
+- [ ] AI Personalized Test Generation
+- [ ] AI Adaptive Test Generation
+- [ ] AI Question Translation
+- [ ] AI Question Paraphrasing
+- [ ] AI Question Quality Scoring
+- [ ] AI Answer Key Verification
+- [ ] AI Test Case Execution Validation
+- [ ] AI Human Review Queue
+- [ ] AI Question Revision Suggestions
+- [ ] AI Question Leakage Detection
+
+### 15. Online Judge & Evaluation Engine
+- [ ] 🟡 Multi-Language Code Judge — Judge0 wired for Java only; Judge0 not deployed
+- [ ] 🟡 Test Case Evaluation — build-challenge stages run tests in Docker; no per-question test cases
+- [ ] Hidden Test Case Evaluation
+- [ ] Partial Test Case Scoring
+- [ ] Custom Scoring Rules
+- [ ] 🟡 Time Limit Enforcement — Judge0 + build `timeout_seconds`
+- [ ] 🟡 Memory Limit Enforcement — Judge0 defaults
+- [ ] 🟡 Compilation Error Detection — Judge0/Java executor return compile errors
+- [ ] 🟡 Runtime Error Detection — returned by executor
+- [ ] Time Limit Exceeded Detection
+- [ ] Memory Limit Exceeded Detection
+- [ ] Wrong Answer Detection
+- [ ] Accepted Verdict
+- [ ] 🟡 Output Comparison — build stages compare test output
+- [ ] Floating-Point Tolerance
+- [ ] Special Judge Support
+- [ ] Interactive Judge Support
+- [ ] Custom Checker Support
+- [ ] 🟡 Multi-File Compilation — build challenges run whole repos in Docker
+- [ ] 🟡 Language Runtime Configuration — `JUDGE0_JAVA_LANGUAGE_ID`, build-challenge languages
+- [x] Judge Queue Management — BullMQ verification queue
+- [ ] Distributed Judge Workers
+- [ ] Judge Scaling
+- [ ] 🟡 Submission Retry — BullMQ job retries
+- [ ] 🟡 Evaluation Retry — BullMQ job retries
+- [ ] 🟡 Evaluation Audit Logs — `build_stage_results`, `job_logs`
+- [ ] Judge Health Monitoring
+- [ ] Judge Failure Recovery
+- [x] Submission Rate Limiting — rate limit on execution
+- [ ] Execution Cost Monitoring
+- [ ] Judge Capacity Monitoring
+
+### 16. Aptitude & Employability Training
+*No aptitude content exists; the test engine could run it.*
+- [ ] Quantitative Aptitude
+- [ ] Logical Reasoning
+- [ ] Verbal Ability
+- [ ] Data Interpretation
+- [ ] Analytical Reasoning
+- [ ] Critical Thinking
+- [ ] Puzzles
+- [ ] Probability
+- [ ] Permutations and Combinations
+- [ ] Number Systems
+- [ ] Percentages
+- [ ] Profit and Loss
+- [ ] Time and Work
+- [ ] Time, Speed and Distance
+- [ ] Ratios and Proportions
+- [ ] Averages
+- [ ] Algebra
+- [ ] Geometry
+- [ ] Reading Comprehension
+- [ ] 🟡 Grammar Practice — "Learn English A to Z" course is published but empty
+- [ ] Vocabulary Builder
+- [ ] Sentence Correction
+- [ ] Para Jumbles
+- [ ] Verbal Reasoning
+- [ ] Aptitude Question Bank
+- [ ] Topic-Wise Practice
+- [ ] 🟡 Timed Aptitude Tests — engine ready, no content
+- [ ] Adaptive Aptitude Practice
+- [ ] Aptitude Weakness Analysis
+- [ ] Speed and Accuracy Tracking
+- [ ] Placement Aptitude Roadmaps
+- [ ] Company-Specific Aptitude Tests
+- [ ] Daily Aptitude Challenges
+
+### 17. Company-Wise Placement Preparation
+- [ ] Company-Wise Preparation Tracks
+- [ ] Company Eligibility Profiles
+- [ ] 🟡 Company Question Banks — `problems.companies` tags (8 problems); no bank
+- [ ] Company Coding Rounds
+- [ ] Company Aptitude Rounds
+- [ ] Company Technical MCQs
+- [ ] Company Interview Experiences
+- [ ] Company-Specific Mock Tests
+- [ ] Company-Specific Learning Paths
+- [ ] Company-Specific Syllabus
+- [ ] Company-Wise Cutoff Tracking
+- [ ] Hiring Pattern Analytics
+- [ ] Company-Wise Skill Gap Analysis
+- [ ] 🟡 Role-Based Preparation — `users.career_track` from onboarding
+- [ ] Service-Based Company Tracks
+- [ ] Product-Based Company Tracks
+- [ ] Startup Hiring Tracks
+- [ ] Graduate Trainee Preparation
+- [ ] Campus Placement Preparation
+- [ ] Off-Campus Placement Preparation
+- [ ] 🟡 Placement Readiness Score — client-side career readiness
+- [ ] Interview Readiness Score
+- [ ] Company Match Score
+- [ ] Eligibility Checker
+- [ ] Placement Calendar
+- [x] Placement Opportunity Feed — Jobs page + `job_alerts`, apprenticeships tab
+- [ ] 🟡 Hiring Drive Notifications — `receive_job_alerts` preference + cron job; drives not modelled
+
+### 18. AI Career Intelligence
+- [ ] 🟡 AI Career Coach — mentor chat can discuss careers
+- [ ] AI Career Roadmap
+- [ ] AI Career Path Recommendation
+- [ ] AI Role Recommendation
+- [ ] AI Skill Gap Analysis
+- [ ] AI Job Description Analysis
+- [ ] AI Resume Matching
+- [ ] AI Job Eligibility Analysis
+- [ ] 🟡 AI Job Readiness Score — rule-based career readiness, client-side
+- [ ] AI Career Progress Tracking
+- [ ] AI Salary Benchmarking
+- [ ] AI Skill Demand Analysis
+- [ ] AI Industry Trend Analysis
+- [ ] AI Career Transition Planning
+- [ ] AI Personalized Upskilling Plan
+- [ ] AI Interview Preparation Plan
+- [ ] 🟡 AI Job Application Tracker — saved jobs (bookmarks); no application tracking
+- [ ] AI Internship Recommendations
+- [ ] AI Project Recommendations
+- [ ] AI Portfolio Gap Detection
+- [ ] AI Career Goal Tracking
+- [ ] AI Placement Probability Estimation
+- [ ] AI Career Recommendation Explainability
+
+### 19. Resume & Portfolio Builder
+- [x] Resume Builder — `ResumePage.tsx`, saved server-side
+- [ ] AI Resume Builder
+- [x] ATS-Friendly Templates — resume templates (e.g. `ModernTemplate.tsx`)
+- [ ] Resume Version Management
+- [x] Resume Scoring — ATS score on the resume page
+- [ ] 🟡 ATS Compatibility Checker — rule-based score only
+- [ ] Keyword Optimization
+- [ ] Job Description Matching
+- [ ] Achievement Rewriting
+- [ ] Resume Grammar Checking
+- [ ] 🟡 Resume Feedback — score hints only
+- [ ] Cover Letter Builder
+- [ ] AI Cover Letter Generator
+- [ ] Portfolio Website Builder
+- [x] Project Portfolio — Projects page with build enrollments
+- [ ] GitHub Portfolio Import
+- [ ] GitHub Contribution Analysis
+- [ ] 🟡 Project Showcase — on Projects/Profile for the learner; not public
+- [x] Certification Showcase — Certificates page
+- [ ] Skills Verification
+- [x] Achievement Verification — public certificate verification page (`/certificates/:code`)
+- [ ] Public Profile Page — `/profile/:username` not built
+- [ ] Shareable Portfolio
+- [x] Resume PDF Export — print/export from `ResumePage.tsx`
+- [ ] LinkedIn Profile Review
+- [ ] Personal Branding Checklist
+
+### 20. Interview Preparation
+*Only a "mock interview" entitlement flag exists in plans; no feature.*
+- [ ] AI Mock Interview
+- [ ] AI Voice Interview
+- [ ] AI Video Interview
+- [ ] Technical Mock Interview
+- [ ] 🟡 DSA Interview Practice — DSA courses + problems
+- [ ] System Design Interview Practice
+- [ ] HR Interview Practice
+- [ ] Behavioral Interview Practice
+- [ ] Managerial Interview Practice
+- [ ] Domain-Specific Interviews
+- [ ] Company-Specific Interviews
+- [ ] Role-Specific Interviews
+- [ ] Live Coding Interviews
+- [ ] Collaborative Coding
+- [ ] Interview Question Bank
+- [ ] Interview Answer Evaluation
+- [ ] STAR Answer Framework
+- [ ] Communication Feedback
+- [ ] Speech Clarity Feedback
+- [ ] Answer Structure Feedback
+- [ ] Technical Accuracy Scoring
+- [ ] Follow-Up Question Generation
+- [ ] Interview Transcript
+- [ ] Interview Replay
+- [ ] Interview Performance Analytics
+- [ ] Interview Improvement Plan
+- [ ] Interview Confidence Tracking
+- [ ] Interview History
+
+### 21. System Design & Software Engineering
+- [ ] System Design Learning Paths
+- [ ] Architecture Diagram Builder
+- [ ] Architecture Pattern Library
+- [ ] API Design Exercises
+- [ ] Database Design Exercises
+- [ ] ER Diagram Builder
+- [ ] UML Diagram Builder
+- [ ] Sequence Diagram Builder
+- [ ] Low-Level Design Practice
+- [ ] High-Level Design Practice
+- [ ] Design Pattern Exercises
+- [ ] Distributed Systems Learning
+- [ ] Database Fundamentals
+- [ ] Operating Systems Learning
+- [ ] Computer Networks Learning
+- [ ] Computer Architecture Learning
+- [ ] Object-Oriented Programming Practice
+- [ ] 🟡 Software Engineering Fundamentals — "Programming Foundations" course
+- [ ] 🟡 Git and GitHub Training — build challenges require Git/GitHub; no course
+- [ ] Linux Command-Line Practice
+- [ ] 🟡 Docker Practice — challenges verified in Docker; no Docker teaching
+- [ ] Cloud Fundamentals
+- [ ] DevOps Fundamentals
+- [ ] CI/CD Learning
+- [ ] Testing Fundamentals
+- [ ] Debugging Challenges
+- [ ] Code Review Exercises
+- [ ] Open-Source Contribution Training
+- [x] Project-Based Learning — build challenges, apprenticeships
+- [x] Real-World Engineering Simulations — staged build-your-own-X challenges verified by tests
+
+### 22. Project-Based Learning
+- [x] Guided Projects — staged build challenges with hints
+- [x] Industry Projects — apprenticeship programs + projects
+- [ ] Capstone Projects
+- [ ] Team Projects
+- [x] Individual Projects
+- [x] Project Templates — starter repos
+- [x] Project Milestones — build stages / apprenticeship test stages
+- [ ] Project Task Boards
+- [x] Project Submission — `apprenticeship_submissions`, `build_stage_results`
+- [x] GitHub Repository Submission — repo connection + verification
+- [ ] Project Evaluation Rubrics
+- [ ] 🟡 AI Project Mentor — apprenticeship AI help
+- [ ] AI Project Idea Generator
+- [ ] AI Project Scoping Assistant
+- [ ] AI Code Review
+- [ ] AI Architecture Review
+- [ ] AI Documentation Review
+- [ ] AI Testing Assistant
+- [x] Project Progress Tracking — `apprenticeship_project_progress`, stage results
+- [ ] 🟡 Project Collaboration — community posts/replies per program
+- [ ] Project Peer Review
+- [ ] Project Demo Submission
+- [ ] Project Presentation Evaluation
+- [ ] Project Portfolio Publishing
+- [x] Industry Challenge Library — Challenges page (build challenges)
+- [ ] Real-World Case Studies
+- [ ] 🟡 Project Showcase Gallery — build leaderboard panel; no gallery
+- [x] Project-Based Certifications — apprenticeship + program certificates
+
+### 23. Faculty & Trainer Portal
+- [ ] 🟡 Faculty Dashboard — Campus portal overview
+- [ ] Course Assignment
+- [x] Batch Assignment — tests assigned to batches
+- [x] Student Roster — People page, batch members
+- [ ] Attendance Management
+- [x] Assignment Management — Assignments page with create dialog
+- [x] Assessment Management — Tests + editor
+- [x] Question Bank Access — college tests and questions
+- [ ] Live Class Scheduling
+- [ ] Learning Material Upload
+- [ ] 🟡 Student Progress Monitoring — results per assignment only
+- [ ] 🟡 Student Performance Analytics — results table + filters + CSV; no analytics
+- [ ] Weak Student Identification
+- [ ] At-Risk Student Alerts
+- [ ] Individual Student Reports
+- [ ] Batch Comparison
+- [ ] Faculty Announcements
+- [ ] Student Messaging
+- [ ] Doubt Management
+- [ ] Doubt Resolution Queue
+- [ ] Office Hours Scheduling
+- [ ] 🟡 Grading Dashboard — results page (auto-graded only)
+- [ ] Manual Evaluation
+- [ ] Rubric-Based Evaluation
+- [ ] Bulk Grading
+- [ ] Feedback Templates
+- [ ] Plagiarism Review
+- [ ] Academic Intervention Tracking
+- [ ] Faculty Workload Management
+- [ ] Faculty Performance Analytics
+- [ ] Teaching Effectiveness Analytics
+- [ ] Faculty AI Assistant
+- [ ] AI Lesson Planner
+- [ ] AI Teaching Material Generator
+- [ ] AI Remedial Plan Generator
+
+### 24. Placement Officer & Training and Placement Cell
+- [ ] Placement Cell Dashboard
+- [ ] Student Eligibility Management
+- [ ] Company Management
+- [ ] Recruitment Drive Management
+- [ ] 🟡 Job Posting Management — Forge staff post jobs (`job_alerts`); not per college
+- [ ] Placement Registration
+- [ ] Resume Collection
+- [ ] Resume Screening
+- [ ] Eligibility Shortlisting
+- [x] Assessment Assignment — assign tests to batches (role permissions permitting)
+- [ ] 🟡 Recruitment Test Scheduling — scheduled assignments; not tied to a drive
+- [ ] Interview Scheduling
+- [ ] Interview Panel Management
+- [ ] Shortlist Management
+- [ ] Offer Management
+- [ ] Placement Status Tracking
+- [ ] Internship Tracking
+- [ ] Employer Communication
+- [ ] Company Visit Scheduling
+- [ ] Student Placement History
+- [ ] Placement Statistics
+- [ ] Branch-Wise Placement Reports
+- [ ] Package Statistics
+- [ ] Offer Letter Management
+- [ ] Placement Readiness Analytics
+- [ ] Training Completion Tracking
+- [ ] Placement Gap Analysis
+- [ ] Placement Outcome Forecasting
+- [ ] Alumni Placement Tracking
+- [ ] Employer Feedback
+- [ ] Placement Calendar
+- [ ] Placement Notification System
+- [ ] 🟡 Placement Data Export — results CSV per assignment
+
+### 25. Learning Analytics
+- [ ] 🟡 Student Learning Analytics — activity heatmap, solved breakdown for the learner
+- [ ] Cohort Analytics
+- [ ] 🟡 Course Analytics — admin Analytics page
+- [ ] Lesson Analytics
+- [ ] 🟡 Assessment Analytics — per-assignment results with violations
+- [ ] Coding Analytics
+- [ ] Skill Mastery Analytics
+- [ ] 🟡 Time-on-Task Analytics — `time_spent_seconds` on submissions, `study_time_total`; no view
+- [ ] 🟡 Learning Engagement Analytics — `analytics_events` pipeline; admin analytics
+- [ ] Learning Drop-Off Analysis
+- [ ] Course Completion Analytics
+- [ ] Question-Level Analytics
+- [ ] Topic-Level Analytics
+- [ ] Difficulty-Level Analytics
+- [ ] Score Distribution
+- [ ] Percentile Calculation
+- [ ] Rank Calculation
+- [ ] 🟡 Attempt Analysis — attempts stored with answers and violations
+- [ ] Accuracy Analysis
+- [ ] Speed Analysis
+- [ ] Improvement Tracking
+- [ ] Learning Gap Analysis
+- [ ] Student Benchmarking
+- [ ] Batch Benchmarking
+- [ ] Branch Benchmarking
+- [ ] College Benchmarking
+- [ ] Faculty Performance Analytics
+- [ ] Assessment Reliability Analytics
+- [ ] Placement Outcome Analytics
+- [ ] Predictive Learning Analytics
+- [ ] At-Risk Student Detection
+- [ ] Intervention Effectiveness Tracking
+- [ ] Custom Report Builder
+- [ ] Scheduled Reports
+- [x] Report Export — results CSV
+- [x] Dashboard Filters — results filters; admin list filters
+- [ ] Drill-Down Analytics
+- [ ] 🟡 Data Visualization — charts in admin dashboard/analytics
+- [ ] Historical Trend Analysis
+
+### 26. AI-Powered Analytics
+- [ ] AI Performance Analyst
+- [ ] AI Student Performance Summary
+- [ ] AI Faculty Performance Summary
+- [ ] AI Batch Performance Summary
+- [ ] AI Weakness Explanation
+- [ ] AI Root Cause Analysis
+- [ ] AI Learning Trend Detection
+- [ ] AI At-Risk Student Prediction
+- [ ] AI Dropout Risk Prediction
+- [ ] AI Performance Forecasting
+- [ ] AI Placement Readiness Prediction
+- [ ] AI Recommended Interventions
+- [ ] AI Remedial Learning Plan
+- [ ] AI Cohort Comparison
+- [ ] AI Question Quality Analysis
+- [ ] AI Assessment Difficulty Analysis
+- [ ] AI Learning Outcome Analysis
+- [ ] Natural Language Analytics Queries
+- [ ] Conversational Dashboard
+- [ ] Ask-Your-Data Assistant
+- [ ] Automated Insight Generation
+- [ ] Automated Report Narratives
+- [ ] Anomaly Detection
+- [ ] Prediction Confidence Scores
+- [ ] Explainable AI Insights
+- [ ] AI Recommendation Outcome Tracking
+
+### 27. Live Classes & Virtual Learning
+- [ ] Live Class Scheduling
+- [ ] Video Conferencing Integration
+- [ ] Live Streaming
+- [ ] Screen Sharing
+- [ ] Interactive Whiteboard
+- [ ] Live Code Sharing
+- [ ] Collaborative Code Editor
+- [ ] Live Polls
+- [ ] Live Quizzes
+- [ ] Live Attendance
+- [ ] Session Recording
+- [ ] Recording Playback
+- [ ] Live Chat
+- [ ] Q&A Panel
+- [ ] Breakout Rooms
+- [ ] Participant Management
+- [ ] Hand Raising
+- [ ] Session Notes
+- [ ] Lecture Transcripts
+- [ ] AI Live Captions
+- [ ] AI Lecture Summaries
+- [ ] AI Session Highlights
+- [ ] AI Action Item Extraction
+- [ ] Live Doubt Resolution
+- [ ] Webinar Management
+- [ ] Recurring Sessions
+- [ ] Session Feedback
+- [ ] Classroom Calendar
+
+### 28. Assignments & Homework
+- [x] Assignment Builder — Campus assignment dialog (test-based)
+- [ ] Coding Assignments
+- [ ] Written Assignments
+- [ ] 🟡 Project Assignments — build challenges exist, not assignable by colleges
+- [ ] File Upload Assignments
+- [ ] 🟡 GitHub Submission — for Forge projects; not as a college assignment
+- [ ] SQL Assignments
+- [ ] Notebook Assignments
+- [x] Assignment Scheduling — opens/closes
+- [x] Assignment Deadlines
+- [ ] Late Submission Rules
+- [x] Submission Attempts — `max_attempts`
+- [x] Draft Saving — answers autosave during an attempt
+- [ ] Assignment Version History
+- [x] Automated Grading
+- [ ] Manual Grading
+- [ ] Peer Grading
+- [ ] Rubric-Based Grading
+- [ ] AI-Assisted Grading
+- [ ] Similarity Detection
+- [ ] 🟡 Assignment Feedback — score + question map; no written feedback
+- [ ] Resubmission Workflow
+- [ ] 🟡 Assignment Analytics — results table
+- [ ] Assignment Templates
+- [ ] Assignment Duplication
+- [ ] Bulk Assignment Creation
+
+### 29. Attendance & Engagement
+- [ ] Manual Attendance
+- [ ] QR-Based Attendance
+- [ ] Session Attendance
+- [ ] Live Class Attendance
+- [ ] Attendance Reports
+- [ ] Attendance Rules
+- [ ] Attendance Threshold Alerts
+- [ ] Attendance Export
+- [ ] Participation Tracking
+- [x] Learning Activity Tracking — `analytics_events`, activity heatmap
+- [ ] Engagement Score
+- [ ] Session Participation Analytics
+- [ ] Absence Notifications
+- [ ] Attendance Correction Workflow
+- [ ] Faculty Attendance Dashboard
+- [ ] Student Attendance Dashboard
+- [ ] Attendance Integration APIs
+
+### 30. Gamification & Motivation
+- [x] Learning Streaks — `user_streaks`, streak freezes
+- [x] Daily Quests — `user_daily_quests`
+- [ ] 🟡 Weekly Missions — daily missions only
+- [x] XP Points
+- [x] Level System
+- [x] Achievement Badges — `user_badges`, `utils/badges.ts`
+- [ ] Skill Badges
+- [ ] 🟡 Milestone Rewards — phase completion celebration, signup bonus XP
+- [x] Leaderboards — build-challenge leaderboard; admin Leaderboard page
+- [ ] 🟡 Global Leaderboard — admin view only; no learner global board
+- [ ] College Leaderboard
+- [ ] Branch Leaderboard
+- [ ] Batch Leaderboard
+- [ ] Friends Leaderboard
+- [ ] 🟡 Coding Streaks — one streak for all activity
+- [ ] Challenge Streaks
+- [ ] 🟡 Achievement Collections — badges list
+- [x] Learning Challenges — build challenges
+- [ ] Coding Battles
+- [ ] One-on-One Challenges
+- [ ] Team Challenges
+- [ ] Seasonal Events
+- [ ] Learning Leagues
+- [x] Rank Progression — identity titles by level ("Novice Coder" …)
+- [ ] Personal Best Records
+- [ ] Comeback Challenges
+- [ ] Goal Completion Rewards
+- [ ] Habit Tracking
+- [x] Custom Gamification Rules — admin Gamification Settings (XP values, max daily XP)
+- [ ] 🟡 Anti-Farming Controls — max daily XP setting
+- [ ] Healthy Competition Settings
+
+### 31. Community & Collaboration
+- [ ] 🟡 Student Community — apprenticeship program community only
+- [ ] Course Discussion Boards
+- [ ] Topic Discussion Boards
+- [ ] Coding Discussion Forums
+- [ ] Doubt Forums
+- [ ] Peer Learning Groups
+- [ ] Study Groups
+- [ ] College Communities
+- [ ] Batch Communities
+- [ ] Private Groups
+- [ ] Public Groups
+- [ ] Direct Messaging
+- [ ] Group Messaging
+- [x] Threaded Discussions — `apprenticeship_posts` + replies
+- [ ] Mentions and Replies
+- [ ] Reactions
+- [x] Upvotes and Downvotes — `apprenticeship_post_upvotes` (upvotes)
+- [ ] Accepted Answers
+- [ ] Community Moderation
+- [ ] Community Guidelines
+- [ ] Reputation System
+- [ ] Community Leaderboards
+- [ ] Peer Mentorship
+- [ ] Peer Code Review
+- [ ] Collaborative Notes
+- [ ] Shared Problem Lists
+- [ ] Community Events
+- [ ] Hackathon Listings
+- [ ] Study Room Sessions
+- [ ] Spam Detection
+- [ ] Toxicity Moderation
+- [ ] Content Reporting
+- [ ] Community Analytics
+
+### 32. Certificates & Credentials
+- [x] Course Certificates — `certificates`, Certificates page
+- [ ] Assessment Certificates
+- [ ] Skill Certificates
+- [x] Project Certificates — apprenticeship / program certificates
+- [ ] 🟡 Internship Certificates — apprenticeship certificates serve this
+- [ ] Achievement Certificates
+- [ ] 🟡 Certificate Templates — fixed HTML templates (`certificate_v4.html`)
+- [ ] Certificate Builder
+- [x] Automated Certificate Issuance — issued on completion
+- [ ] QR-Based Verification
+- [x] Public Verification Page — `/certificates/:code`
+- [x] Unique Certificate IDs — `verification_code`
+- [x] Certificate Revocation — admin revoke (`DELETE /admin/certificates/:id`)
+- [ ] Certificate Expiry
+- [ ] Certificate Renewal
+- [ ] Digital Badges
+- [ ] Open Badges Support
+- [x] Credential Sharing — share actions on certificate pages
+- [x] LinkedIn Sharing — share to LinkedIn from certificates
+- [x] Certificate Download — PDF generation (`certificates.service.ts`)
+- [ ] 🟡 Credential Portfolio — Certificates page (private)
+- [ ] Verified Skill Credentials
+- [ ] Certificate Issuance Analytics
+- [ ] Certificate Fraud Detection
+
+### 33. Proctoring & Assessment Security
+- [x] Browser-Based Proctoring — Campus lockdown (`useLockdown.ts`) + server rules
+- [x] Full-Screen Enforcement — full-screen gate blocks the test until you return
+- [x] Tab-Switch Detection — `visibilitychange` → `tab_switch`
+- [x] Window Focus Detection — `blur` → `window_blur`
+- [x] Clipboard Event Monitoring — copy/cut/paste reported
+- [x] Copy-Paste Event Logging — stored in `campus.proctoring_events`
+- [ ] Screen Recording
+- [ ] Webcam Proctoring
+- [ ] Microphone Monitoring
+- [ ] Face Presence Detection
+- [ ] Multiple-Face Detection
+- [ ] Identity Verification
+- [ ] ID Document Verification
+- [ ] Face Match Verification
+- [ ] 🟡 Browser Compatibility Checks — falls back when full screen is unsupported; no pre-check
+- [ ] Device Compatibility Checks
+- [x] Network Interruption Recovery — answer retry queue, offline banner, resume
+- [x] Suspicious Activity Flags — warning/violation severity; auto-submit at the limit
+- [ ] 🟡 Candidate Incident Timeline — events stored with time; no timeline screen
+- [ ] 🟡 Proctor Dashboard — violations column on results; no live board
+- [ ] Live Proctoring
+- [ ] Automated Proctor Review
+- [ ] 🟡 Assessment Integrity Reports — violations per student in results/CSV
+- [x] Question Randomization
+- [x] Secure Question Delivery — correct answers never sent during an attempt
+- [x] Access Token Validation — JWT verified on every Campus request
+- [x] Test Session Locking — one open attempt per student; second tab refused
+- [ ] Question Leakage Monitoring
+- [ ] Plagiarism Detection
+- [ ] Code Similarity Detection
+- [ ] AI-Generated Code Detection Signals
+- [ ] Manual Incident Review
+- [ ] Appeal Workflow
+- [ ] 🟡 Proctoring Consent — rules shown + "I'm ready" checkbox; no formal consent record
+- [ ] Proctoring Retention Policies
+
+### 34. AI-Era Academic Integrity
+- [ ] AI Usage Policy Configuration
+- [ ] AI-Assisted Learning Disclosure
+- [ ] AI-Written Answer Detection Signals
+- [ ] AI-Code Similarity Analysis
+- [ ] Code Provenance Tracking
+- [ ] Solution Similarity Detection
+- [ ] Cross-Student Submission Comparison
+- [ ] Plagiarism Detection
+- [ ] Paraphrase Similarity Detection
+- [ ] Suspicious Submission Pattern Detection
+- [ ] Unusual Performance Change Detection
+- [ ] Question Leakage Detection
+- [ ] Assessment Exposure Tracking
+- [ ] Oral Code Defense
+- [ ] Follow-Up Verification Questions
+- [ ] Live Code Explanation
+- [x] Randomized Individual Assessments — per-student shuffled order
+- [ ] Personalized Question Variants
+- [ ] Process-Based Assessment
+- [ ] 🟡 Git Commit History Review — projects verified from the student's repo; no review UI
+- [ ] Assignment Version Tracking
+- [ ] Academic Integrity Case Management
+- [ ] Human Review Workflow
+- [ ] False Positive Review
+- [ ] Student Appeal Management
+
+### 35. Coding Contests & Hackathons
+- [ ] Contest Creation
+- [ ] Contest Scheduling
+- [ ] Contest Registration
+- [ ] Individual Contests
+- [ ] Team Contests
+- [ ] Timed Contests
+- [ ] Practice Contests
+- [ ] Rated Contests
+- [ ] Public Contests
+- [ ] Private Contests
+- [ ] Invitation-Only Contests
+- [ ] Contest Problem Sets
+- [ ] Contest Leaderboards
+- [ ] Live Scoreboard
+- [ ] Penalty-Based Ranking
+- [ ] ICPC-Style Scoring
+- [ ] Codeforces-Style Rating
+- [ ] Contest Standings
+- [ ] Virtual Participation
+- [ ] Contest Replay
+- [ ] Editorial Publishing
+- [ ] Post-Contest Analysis
+- [ ] Contest Certificates
+- [ ] Team Formation
+- [ ] Team Submissions
+- [ ] Anti-Cheating Controls
+- [ ] Contest Analytics
+- [ ] Campus Coding League
+- [ ] Inter-College Competitions
+- [ ] Automated Contest Scheduling
+
+### 36. SQL & Database Practice
+- [ ] SQL Playground
+- [ ] Browser-Based SQL Editor
+- [ ] SQL Query Execution
+- [ ] Sample Database Library
+- [ ] Schema Visualization
+- [ ] Table Explorer
+- [ ] Query Result Viewer
+- [ ] SQL Test Cases
+- [ ] SQL Query Evaluation
+- [ ] Database Challenges
+- [ ] Query Optimization Exercises
+- [ ] Execution Plan Visualization
+- [ ] SQL Interview Questions
+- [ ] Database Design Challenges
+- [ ] ER Diagram Exercises
+- [ ] Multiple SQL Dialects
+- [ ] SQL Hint System
+- [ ] AI SQL Explanation
+- [ ] AI Query Optimization
+- [ ] SQL Performance Analytics
+
+### 37. Data Science, AI & Machine Learning Labs
+- [ ] 🟡 Python Notebook Environment — Pyodide runtime exists (dev page only); no notebook
+- [ ] Jupyter Integration
+- [ ] Data Analysis Exercises
+- [ ] Pandas Practice
+- [ ] NumPy Practice
+- [ ] Data Visualization Exercises
+- [ ] Machine Learning Labs
+- [ ] Deep Learning Labs
+- [ ] AI Model Training Exercises
+- [ ] Dataset Library
+- [ ] Dataset Upload
+- [ ] Dataset Versioning
+- [ ] Model Evaluation
+- [ ] Notebook Execution
+- [ ] Notebook Grading
+- [ ] GPU Lab Integration
+- [ ] Resource Quotas
+- [ ] Environment Templates
+- [ ] Package Management
+- [ ] Experiment Tracking
+- [ ] Model Deployment Exercises
+- [ ] API Integration Labs
+- [ ] Prompt Engineering Labs
+- [ ] LLM Application Labs
+- [ ] RAG Application Labs
+- [ ] AI Agent Building Labs
+- [ ] Responsible AI Training
+- [ ] AI Safety Exercises
+- [ ] ML Project Portfolios
+
+### 38. Cloud, DevOps & Hands-On Labs
+- [ ] Cloud Learning Paths
+- [ ] Cloud Sandbox
+- [ ] Browser-Based Terminal
+- [ ] Linux Sandbox
+- [ ] 🟡 Docker Sandbox — projects run in Docker for verification, not as a learner sandbox
+- [ ] Kubernetes Labs
+- [ ] 🟡 Git Labs — build challenges are Git-based
+- [ ] CI/CD Labs
+- [ ] Infrastructure-as-Code Labs
+- [ ] Cloud Deployment Labs
+- [ ] Networking Labs
+- [ ] Database Administration Labs
+- [ ] Cybersecurity Labs
+- [ ] Temporary Lab Environments
+- [ ] Lab Provisioning
+- [ ] Lab Expiry
+- [ ] Lab Reset
+- [ ] Lab Snapshots
+- [ ] Lab Resource Limits
+- [ ] Environment Isolation
+- [ ] Lab Cost Monitoring
+- [ ] Lab Usage Quotas
+- [ ] 🟡 Lab Progress Tracking — build stage results
+- [x] Automated Lab Validation — Docker verification of each stage
+- [ ] 🟡 Lab Completion Certificates — program certificates
+
+### 39. Communication & Soft Skills
+- [ ] 🟡 Communication Skills Courses — "Learn English A to Z" published but empty
+- [ ] Business English Practice
+- [ ] Spoken English Practice
+- [ ] Group Discussion Practice
+- [ ] Presentation Skills
+- [ ] Public Speaking Practice
+- [ ] Email Writing Practice
+- [ ] Business Writing Practice
+- [ ] Listening Comprehension
+- [ ] Vocabulary Development
+- [ ] Pronunciation Practice
+- [ ] Interview Communication
+- [ ] Debate Practice
+- [ ] Workplace Communication
+- [ ] AI Conversation Partner
+- [ ] AI Speaking Feedback
+- [ ] AI Grammar Feedback
+- [ ] AI Pronunciation Feedback
+- [ ] AI Fluency Feedback
+- [ ] AI Presentation Evaluation
+- [ ] AI Group Discussion Simulation
+- [ ] Soft Skills Assessment
+- [ ] Communication Progress Analytics
+
+### 40. Notifications & Communication
+- [ ] 🟡 In-App Notifications — toasts only; no notification centre
+- [x] Email Notifications — Resend (`email.service.ts`)
+- [ ] SMS Notifications
+- [ ] Push Notifications
+- [ ] 🟡 WhatsApp Notifications — WhatsApp service + webhook; not used for alerts
+- [ ] Browser Notifications
+- [ ] 🟡 Notification Preferences — `receive_job_alerts` only
+- [ ] 🟡 Notification Templates — email templates in code
+- [ ] 🟡 Scheduled Notifications — cron job for job alerts
+- [ ] Automated Reminders
+- [ ] Deadline Reminders
+- [ ] Assessment Alerts
+- [ ] Assignment Alerts
+- [ ] Learning Streak Reminders
+- [ ] 🟡 Placement Alerts — job alerts
+- [ ] Course Announcements
+- [ ] Emergency Announcements
+- [ ] Batch-Wise Notifications
+- [ ] Role-Based Notifications
+- [ ] Notification Delivery Tracking
+- [ ] Notification Failure Handling
+- [ ] Notification Analytics
+- [ ] Quiet Hours
+- [ ] Digest Notifications
+
+### 41. Mobile Application & PWA
+- [ ] Student Mobile App
+- [ ] Faculty Mobile App
+- [ ] Admin Mobile App
+- [ ] Progressive Web App
+- [x] Responsive Web Interface — mobile layout + bottom nav; Campus exam verified at 390 px
+- [ ] Android Support
+- [ ] iOS Support
+- [x] Mobile Dashboard — responsive dashboard
+- [ ] Mobile Coding Practice
+- [x] Mobile Assessment Support — Campus exam with bottom-sheet palette on phones
+- [ ] Mobile Push Notifications
+- [ ] Offline Course Access
+- [ ] Offline Notes
+- [ ] 🟡 Offline Progress Queue — exam answers queue and retry while offline
+- [ ] Background Synchronization
+- [ ] Mobile File Upload
+- [ ] Camera-Based Upload
+- [ ] QR Code Scanning
+- [ ] 🟡 Deep Linking — normal web links only
+- [ ] Universal Links
+- [ ] Biometric Authentication
+- [ ] Low-Bandwidth Mode
+- [ ] Data Saver Mode
+- [ ] Mobile Accessibility
+- [ ] Mobile Analytics
+- [x] Cross-Device Progress Sync — all progress stored server-side
+- [x] Tablet Support — responsive layout
+
+### 42. Multilingual & Accessibility
+- [ ] Multilingual Interface
+- [ ] Hindi Interface
+- [ ] Hinglish Interface
+- [ ] Tamil Interface
+- [ ] Telugu Interface
+- [ ] Marathi Interface
+- [ ] Bengali Interface
+- [ ] Regional Language Content
+- [ ] AI Content Translation
+- [ ] AI Subtitle Translation
+- [ ] Bilingual Explanations
+- [ ] Language-Specific Glossary
+- [ ] 🟡 Localized Date Formats — browser locale for dates in Campus pages
+- [ ] Localized Number Formats
+- [ ] 🟡 Keyboard Navigation — Radix components; not audited
+- [ ] 🟡 Screen Reader Support — ARIA roles on the exam (radio/checkbox, live save status); not audited
+- [ ] 🟡 Accessible Forms — labelled inputs via shadcn; not audited
+- [ ] High Contrast Mode
+- [ ] Font Size Controls
+- [ ] Dyslexia-Friendly Display Options
+- [ ] Captions and Transcripts
+- [ ] Reduced Motion Mode
+- [ ] WCAG Accessibility Compliance
+- [ ] Accessibility Testing
+- [ ] Assistive Technology Support
+
+### 43. Notifications, Rewards & Referral Growth
+- [x] Referral Program — Referrals page
+- [x] Referral Codes — `referral_codes`
+- [x] Referral Links
+- [x] Referral Attribution — `referred_by`, `referrals`
+- [x] Referral Rewards — commission tiers, wallet
+- [x] Referral Fraud Detection — fraud score (IP/device), `>= 70` suspicious
+- [x] Referral Payout Management — `withdrawals`, admin Withdrawals page (UPI payouts)
+- [ ] Campus Ambassador Program
+- [ ] Student Ambassador Dashboard
+- [ ] Campus Representative Tracking
+- [ ] 🟡 Invite-a-Friend Campaigns — referral link sharing
+- [x] Achievement Sharing — share certificates / celebration
+- [ ] Social Sharing Cards
+- [ ] Shareable Progress Reports
+- [ ] Public Challenge Links
+- [ ] College Competition Invitations
+- [ ] Leaderboard Sharing
+- [ ] Viral Learning Challenges
+- [x] Referral Analytics — admin Referrals
+- [ ] Campaign Management
+- [ ] Growth Funnel Analytics
+- [ ] 🟡 User Acquisition Attribution — referrals only
+- [ ] 🟡 Activation Tracking — onboarding completion flag
+- [ ] Retention Tracking
+- [ ] Cohort Retention Analysis
+- [ ] Reactivation Campaigns
+- [x] Feedback Collection — `feedback` + admin page
+- [ ] NPS Surveys
+- [ ] In-App Surveys
+
+### 44. Admin Control Center
+- [x] Global Admin Dashboard — admin Dashboard
+- [ ] 🟡 Organization Admin Dashboard — Campus portal Overview
+- [ ] 🟡 Feature Flag Management — `feature_flags` table (5 flags, all off); no admin screen
+- [ ] 🟡 Feature Toggle Controls — same; plus `allow_signups` setting
+- [ ] Module Configuration
+- [ ] 🟡 Tenant Configuration — college branding only
+- [x] Dynamic Configuration — `system_settings` edited in admin Settings
+- [ ] JSON Configuration Editor
+- [ ] 🟡 Theme Configuration — CMS / site config; light/dark per user
+- [x] Branding Configuration — CMS, course page CMS; college branding
+- [ ] Custom Navigation Configuration
+- [x] User Management — admin Users, UserDetail
+- [ ] 🟡 Bulk User Operations — bulk deletion for challenges/courses; not users
+- [x] Role Management — admin roles
+- [x] Permission Management — admin Permissions
+- [x] Course Management
+- [x] Question Bank Management — admin Question Bank
+- [x] Assessment Management — admin Test Series / Tests
+- [ ] Content Moderation
+- [x] AI Model Configuration — admin AI Config (`ai_model`)
+- [x] AI Provider Configuration — provider keys in settings
+- [ ] 🟡 AI Prompt Management — system prompt in code
+- [x] AI Usage Limits — via plans/entitlements
+- [ ] AI Cost Budgets
+- [ ] 🟡 API Key Management — AI keys in settings only
+- [ ] Integration Management
+- [ ] 🟡 Email Configuration — env-based
+- [ ] 🟡 Notification Configuration — apprenticeship notifications page
+- [x] Payment Configuration — plans + prices in admin
+- [x] Subscription Configuration — admin Plans
+- [ ] 🟡 Referral Configuration — commission tiers in DB
+- [ ] 🟡 Certificate Configuration — admin Certificates (list/revoke)
+- [ ] 🟡 Proctoring Configuration — per assignment in Campus portal
+- [x] Audit Log Viewer — admin Audit Logs
+- [x] System Health Dashboard — admin System Health
+- [x] Error Monitoring — Sentry (API + web)
+- [ ] 🟡 Job Queue Monitoring — BullMQ; `job_logs`; no queue dashboard
+- [ ] 🟡 Background Task Monitoring — admin Tasks page
+- [ ] Data Export Controls
+- [ ] 🟡 Maintenance Mode — `maintenance_mode` setting exists; nothing enforces it
+- [ ] System Announcement Management
+- [ ] Backup Management
+- [ ] Restore Management
+- [ ] Tenant Usage Monitoring
+- [ ] 🟡 Admin Action History — admin audit logs
+- [ ] Approval Queue
+- [ ] Emergency Feature Disablement
+
+### 45. Payments & Monetization
+- [x] Subscription Management — `subscriptions`, Billing page
+- [x] Free Plan Management
+- [x] Premium Plan Management
+- [ ] Enterprise Plan Management
+- [ ] Per-Student Pricing
+- [ ] Usage-Based Pricing
+- [x] Feature-Based Pricing — `plan_entitlements`
+- [x] Course Purchases — per-course checkout (`CourseCheckoutModal.tsx`)
+- [ ] 🟡 Course Bundles — test series bundles in admin (0 live)
+- [ ] Assessment Credits
+- [ ] 🟡 AI Usage Credits — daily AI quota per plan
+- [ ] Coding Execution Credits
+- [ ] Team Licences
+- [ ] College Licences
+- [ ] Annual Contracts
+- [ ] Trial Periods
+- [x] Coupon Management — `coupons`, admin Coupons (race-safe usage)
+- [x] Promotional Discounts — coupons
+- [x] Razorpay Integration
+- [ ] Cashfree Integration
+- [x] UPI Payments — via Razorpay checkout; UPI payouts for referrals
+- [x] Payment Gateway Webhooks — Razorpay webhook with fallback activation
+- [ ] Invoice Generation
+- [ ] 🟡 GST-Compliant Billing — GST calculated on prices; no GST invoices
+- [ ] 🟡 Payment History — `payments` table; admin Revenue; no learner history page
+- [ ] Failed Payment Recovery
+- [ ] Refund Management
+- [ ] 🟡 Subscription Renewal — expiry dates; no auto-renew
+- [ ] Subscription Cancellation
+- [ ] Dunning Management
+- [x] Revenue Analytics — admin Revenue page
+- [ ] Customer Usage Analytics
+- [ ] 🟡 Billing Audit Logs — payments + idempotency keys
+
+### 46. SaaS & Enterprise Management
+- [x] Multi-Tenant Isolation — RLS + composite FKs; isolation suites in CI
+- [x] Tenant Provisioning — create college + owner
+- [ ] 🟡 Tenant Onboarding — roster upload; no guided onboarding
+- [ ] Tenant Offboarding
+- [x] Tenant Data Isolation
+- [x] Tenant-Level Branding
+- [ ] Tenant-Level Feature Access
+- [ ] Tenant Usage Limits
+- [ ] Tenant Billing
+- [ ] Tenant Analytics
+- [ ] Tenant Health Monitoring
+- [ ] Tenant Export
+- [ ] Tenant Backup
+- [ ] Tenant Restore
+- [ ] Custom Domain Management
+- [ ] Enterprise SSO
+- [ ] SCIM User Provisioning
+- [ ] API Access Management
+- [ ] Enterprise Audit Logs
+- [ ] Service-Level Agreements
+- [ ] Uptime Monitoring
+- [ ] Support Ticket Management
+- [ ] Enterprise Support Dashboard
+- [ ] Customer Success Dashboard
+- [ ] 🟡 Product Usage Analytics — `analytics_events`
+- [ ] Tenant-Level AI Budgets
+- [ ] Tenant-Level Retention Policies
+- [ ] Contract Management
+- [ ] Renewal Management
+
+### 47. Integrations & APIs
+- [x] REST API — Forge API, Campus API (`/campus/v1`)
+- [ ] GraphQL API
+- [ ] 🟡 Webhooks — incoming only (Razorpay, WhatsApp, GitHub)
+- [ ] 🟡 API Documentation — internal docs only
+- [x] API Versioning — `/v1`, `/v2` routes; `/campus/v1`
+- [x] API Rate Limiting
+- [ ] API Key Management
+- [x] OAuth 2.0 — Google + GitHub OAuth
+- [ ] OpenID Connect
+- [ ] SAML SSO
+- [ ] SCIM Provisioning
+- [ ] Moodle Integration
+- [ ] Open edX Integration
+- [ ] 🟡 Judge0 Integration — Java only; not deployed
+- [x] GitHub Integration
+- [ ] GitLab Integration
+- [ ] 🟡 Google Workspace Integration — Google Sheets service (`googleSheets.service.ts`)
+- [ ] Microsoft 365 Integration
+- [ ] Google Classroom Integration
+- [ ] Zoom Integration
+- [ ] BigBlueButton Integration
+- [ ] Google Meet Integration
+- [ ] Slack Integration
+- [ ] Discord Integration
+- [x] WhatsApp Business Integration — WhatsApp service + webhook
+- [x] Email Provider Integration — Resend
+- [ ] SMS Provider Integration
+- [x] Payment Gateway Integration — Razorpay
+- [ ] Plagiarism Detection Integration
+- [ ] ATS Integration
+- [ ] HRMS Integration
+- [ ] SIS Integration
+- [ ] ERP Integration
+- [ ] Calendar Integration
+- [ ] LTI 1.3 Integration
+- [ ] QTI Integration
+- [ ] SCORM Integration
+- [ ] xAPI Integration
+- [ ] 🟡 Data Import APIs — content import, roster import
+- [ ] 🟡 Data Export APIs — results CSV
+- [ ] Integration Health Monitoring
+- [ ] Webhook Retry Management
+- [ ] Integration Logs
+
+### 48. Data Management & Migration
+- [x] Student Data Import — roster CSV
+- [x] Faculty Data Import — roster CSV supports staff roles
+- [x] Course Data Import — staged content import
+- [x] Question Bank Import — staged import (admin)
+- [ ] 🟡 Assessment Import — via content import
+- [ ] Historical Result Import
+- [x] CSV Import
+- [ ] 🟡 Excel Import — spreadsheet import (admin)
+- [x] JSON Import — chapter JSON (`apps/api/data/chapters`)
+- [x] Bulk Data Validation — roster preview; staged import rows
+- [x] Duplicate Record Detection — roster flags emails already on file
+- [ ] Data Mapping
+- [ ] Data Transformation
+- [x] Migration Preview — roster preview; staged import batches
+- [x] Migration Validation — whole file refused while any line is wrong
+- [ ] 🟡 Migration Audit Logs — `content_import_batches`
+- [x] Failed Record Reports — per-line errors
+- [ ] Bulk Data Correction
+- [ ] Scheduled Synchronization
+- [ ] External System Synchronization
+- [ ] 🟡 Data Export — CSV results
+- [ ] Database Archival
+- [ ] Retention Policy Enforcement
+- [ ] Data Anonymization
+- [ ] 🟡 Data Deletion — soft-delete columns; permanent deletion for challenges/courses
+- [ ] 🟡 Backup and Restore — Supabase managed backups
+- [ ] 🟡 Disaster Recovery — rollback plan doc
+- [ ] Data Lineage
+- [ ] Data Quality Monitoring
+
+### 49. Security & Privacy
+- [x] Secure Authentication — Supabase Auth, JWT verified locally (ES256)
+- [x] Password Hashing — Supabase Auth
+- [ ] Multi-Factor Authentication
+- [x] Role-Based Access Control
+- [ ] Attribute-Based Access Control
+- [x] Least-Privilege Access — RLS; service-role key server-only; `asUser` first
+- [x] Tenant Isolation
+- [ ] 🟡 Database Encryption — Supabase at-rest encryption (platform)
+- [x] Encryption in Transit — HTTPS
+- [ ] 🟡 Secrets Management — env vars; gitignored
+- [x] API Security — auth middleware, zod validation, CORS allow-list
+- [x] Rate Limiting
+- [ ] 🟡 Brute-Force Protection — rate limits; leaked-password protection is off
+- [ ] Bot Protection
+- [ ] 🟡 CSRF Protection — bearer tokens (not cookies), so CSRF-safe by design
+- [x] XSS Protection — React escaping + helmet
+- [x] SQL Injection Protection — parameterised queries
+- [ ] SSRF Protection
+- [ ] 🟡 File Upload Validation — `user_files` with mime/size; limited
+- [ ] Malware Scanning
+- [ ] Dependency Vulnerability Scanning
+- [ ] Container Security Scanning
+- [x] Secure Code Execution — Judge0 isolation; `/execute/java` authenticated, env stripped
+- [ ] 🟡 Network Isolation — Judge0 guide; not deployed
+- [x] Audit Logging — admin audit logs; proctoring events
+- [ ] Immutable Security Logs
+- [ ] Data Access Auditing
+- [ ] Privacy Consent Management
+- [ ] Data Retention Controls
+- [ ] Data Deletion Workflows
+- [ ] Data Breach Response
+- [ ] Incident Management
+- [ ] Vulnerability Management
+- [ ] Penetration Testing
+- [x] Security Headers — helmet
+- [ ] WAF Integration
+- [ ] Backup Encryption
+- [ ] Disaster Recovery Testing
+- [ ] 🟡 Secrets Rotation — pending (exposed admin password, GitHub token key)
+- [x] Session Revocation — sign-out revokes the token
+- [ ] Security Alerts
+- [ ] Privacy Policy Management
+- [ ] Terms and Conditions Management
+- [ ] Data Processing Agreements
+- [ ] DPDP Act Compliance Workflows
+- [ ] GDPR Compliance Workflows
+- [ ] Security Reporting
+- [ ] Access Review Workflows
+
+### 50. Reliability & Platform Infrastructure
+- [x] Modular Architecture — monorepo apps + packages, API modules
+- [ ] 🟡 Service Health Monitoring — `/health` endpoints; admin System Health
+- [ ] 🟡 Application Performance Monitoring — Sentry
+- [x] Error Tracking — Sentry
+- [x] Structured Logging — logger with request IDs
+- [ ] Distributed Tracing
+- [x] Metrics Collection — prom-client metrics; Grafana dashboard JSON
+- [ ] Uptime Monitoring
+- [ ] SLA Monitoring
+- [ ] Database Monitoring
+- [x] Database Connection Pooling — pg pools (API, Campus API)
+- [ ] Database Query Optimization
+- [x] Cache Management — `cache.service.ts`
+- [x] Redis Integration
+- [x] Background Job Queues — BullMQ
+- [ ] 🟡 Event-Driven Processing — `core/events`
+- [ ] Message Broker Integration
+- [x] Retry Policies — BullMQ retries; token refresh retry
+- [ ] Dead-Letter Queues
+- [x] Idempotent Operations — `idempotency_keys`, Idempotency-Key header on payments/enrolment
+- [ ] Horizontal Scaling
+- [ ] Load Balancing
+- [ ] Autoscaling
+- [ ] CDN Integration
+- [x] Object Storage — Supabase Storage (certificate/notebook PDFs)
+- [ ] File Processing Pipelines
+- [ ] Video Processing Pipelines
+- [ ] Search Indexing
+- [ ] 🟡 Full-Text Search — `problems.search_vector`; not used in UI
+- [ ] 🟡 Backup Scheduling — Supabase managed
+- [ ] 🟡 Disaster Recovery — rollback plan doc
+- [ ] Point-in-Time Recovery
+- [x] Database Migration Management — `supabase/migrations`, tested in CI
+- [ ] Zero-Downtime Deployment
+- [ ] 🟡 Feature Flags — table, unused
+- [ ] Blue-Green Deployment
+- [ ] Canary Releases
+- [ ] 🟡 Rollback Management — `docs/release-rollback-plan.md`
+- [ ] 🟡 Environment Management — `.env.example` per app
+- [x] CI/CD Pipelines — `.github/workflows/db-tests.yml` (CI only; no CD)
+- [ ] Infrastructure as Code
+- [ ] Container Orchestration
+- [ ] Cost Monitoring
+- [ ] Capacity Planning
+- [x] Rate Limiting
+- [x] Graceful Degradation — Campus hides itself if its API is down; AI continues without context
+- [ ] Incident Alerts
+- [ ] Status Page
+- [ ] Maintenance Scheduling
+
+### 51. Search & Discovery
+- [ ] Global Search
+- [ ] 🟡 Course Search — catalog filtering
+- [ ] Lesson Search
+- [ ] 🟡 Question Search — admin question bank filters
+- [ ] 🟡 Coding Problem Search — Practice search filters topics, not individual problems
+- [ ] Company Search
+- [ ] Skill Search
+- [ ] Resource Search
+- [ ] Instructor Search
+- [ ] Community Search
+- [ ] Semantic Search
+- [ ] AI-Powered Search
+- [ ] Natural Language Search
+- [ ] Search Autocomplete
+- [ ] Search Suggestions
+- [x] Search Filters — difficulty, status, job filters
+- [ ] Search Ranking
+- [ ] Personalized Search
+- [ ] Similar Content Discovery
+- [ ] Related Question Discovery
+- [ ] Search History
+- [ ] Saved Searches
+- [ ] Search Analytics
+- [ ] Search Quality Feedback
+
+### 52. Content Creation & Management
+- [x] Content Management System — admin CMS Control, Course Page CMS
+- [ ] 🟡 Rich Text Editor — form fields
+- [ ] 🟡 Markdown Editor — markdown content rendered; no editor
+- [ ] Code Block Editor
+- [ ] Diagram Editor
+- [ ] Formula Editor
+- [ ] LaTeX Support
+- [ ] 🟡 Interactive Content Builder — visualizer steps defined in JSON
+- [x] Video Content Management — YouTube IDs, timestamps per chapter
+- [ ] PDF Content Management
+- [ ] 🟡 Image Content Management — cover images, background images
+- [ ] Audio Content Management
+- [ ] Content Versioning
+- [ ] Content Approval Workflow
+- [ ] 🟡 Content Scheduling — test `release_at` only
+- [ ] Content Expiry
+- [x] Content Tagging — categories, topics, patterns
+- [x] Content Reuse — Forge content `visibility`, shared tests
+- [ ] Content Duplication
+- [ ] Content Localization
+- [ ] Content Translation
+- [ ] Content Quality Review
+- [ ] Content Accessibility Review
+- [ ] Content Rights Management
+- [ ] Content Attribution
+- [ ] Content Copyright Tracking
+- [ ] Content Change History
+- [ ] Content Usage Analytics
+- [x] Content Archival — soft delete (`deleted_at`), archived assignments
+
+### 53. Library & Learning Resources
+- [ ] Digital Library
+- [ ] E-Book Library
+- [ ] PDF Library
+- [ ] 🟡 Video Library — lesson videos inside courses
+- [x] Lecture Notes Library — course notebook (auto-generated, editable, PDF)
+- [ ] Formula Sheets
+- [ ] Cheat Sheets
+- [ ] Interview Notes
+- [ ] Coding Templates
+- [ ] Algorithm Reference Library
+- [ ] API Reference Library
+- [ ] Documentation Library
+- [ ] Practice Worksheet Library
+- [ ] Case Study Library
+- [ ] 🟡 Curated Learning Resources — article links per chapter
+- [ ] Resource Bookmarks
+- [ ] 🟡 Personal Resource Collections — personal notebook
+- [ ] Shared Resource Collections
+- [x] Downloadable Resources — notebook PDF, certificate PDF
+- [x] Resource Access Controls — entitlements, premium gating
+- [ ] Resource Search
+- [ ] Resource Recommendations
+- [ ] Resource Ratings
+- [ ] Resource Feedback
+
+### 54. Mentorship & Human Support
+- [ ] Mentor Directory
+- [ ] Mentor Profiles
+- [ ] Mentor Matching
+- [ ] AI-Assisted Mentor Matching
+- [ ] Mentor Availability
+- [ ] Appointment Scheduling
+- [ ] One-on-One Mentoring
+- [ ] Group Mentoring
+- [ ] Career Mentoring
+- [ ] Technical Mentoring
+- [ ] Mock Interview Booking
+- [ ] Doubt-Clearing Sessions
+- [ ] Mentor Session Notes
+- [ ] Mentor Feedback
+- [ ] Mentorship Goals
+- [ ] Mentorship Progress Tracking
+- [ ] Mentor Ratings
+- [ ] Mentor Verification
+- [ ] Mentor Workload Management
+- [ ] Mentor Payments
+- [ ] Support Ticketing
+- [ ] Help Center
+- [ ] Knowledge Base
+- [ ] Live Support Chat
+- [ ] Support Escalation
+- [ ] 🟡 Issue Tracking — feedback/bug reports into admin Feedback
+- [x] Customer Feedback Management — admin Feedback page
+
+### 55. Parent & Guardian Portal
+- [ ] Parent Account Linking
+- [ ] Guardian Consent
+- [ ] Student Progress Overview
+- [ ] Course Completion Overview
+- [ ] Attendance Overview
+- [ ] Assessment Performance Overview
+- [ ] Learning Time Overview
+- [ ] Achievement Overview
+- [ ] Progress Notifications
+- [ ] Faculty Communication
+- [ ] Academic Alerts
+- [ ] Parent-Teacher Meeting Scheduling
+- [ ] Progress Report Downloads
+- [ ] Student Privacy Controls
+- [ ] Guardian Access Permissions
+
+### 56. Institutional Reports & Accreditation
+- [ ] 🟡 Academic Performance Reports — per-assignment results CSV
+- [ ] Student Outcome Reports
+- [ ] Course Outcome Reports
+- [ ] Program Outcome Reports
+- [ ] Course Outcome Mapping
+- [ ] Program Outcome Mapping
+- [ ] Learning Outcome Mapping
+- [ ] Assessment Outcome Mapping
+- [ ] CO-PO Mapping
+- [ ] Accreditation Evidence Management
+- [ ] Audit Evidence Repository
+- [ ] Faculty Activity Reports
+- [ ] Department Performance Reports
+- [ ] Semester Performance Reports
+- [ ] Graduate Employability Reports
+- [ ] Placement Outcome Reports
+- [ ] NAAC Documentation Support
+- [ ] NBA Documentation Support
+- [ ] NIRF Data Export Support
+- [ ] Custom Institutional Report Builder
+- [ ] Evidence Versioning
+- [ ] Evidence Approval Workflow
+- [ ] Accreditation Report Export
+
+### 57. Gamified Campus Ecosystem
+- [ ] Inter-College Leaderboards
+- [ ] Inter-Branch Competitions
+- [ ] Campus Coding League
+- [ ] Campus Skill Rankings
+- [ ] Team Formation
+- [ ] Student Clubs
+- [ ] Coding Clubs
+- [ ] AI Clubs
+- [ ] Open-Source Clubs
+- [ ] Campus Events
+- [ ] Technical Event Management
+- [ ] Hackathon Management
+- [ ] Competition Registration
+- [ ] Event Check-In
+- [ ] Event Certificates
+- [ ] Club Activity Tracking
+- [ ] Campus Ambassador Rankings
+- [ ] College Challenge Creation
+- [ ] Faculty Challenge Creation
+- [ ] Campus Achievement Wall
+- [ ] Campus Performance Benchmarking
+
+### 58. Innovation Features for the AI Era
+- [ ] Personal AI Learning Twin
+- [ ] AI Skill Graph
+- [ ] 🟡 Knowledge Graph — dashboard knowledge-graph widget (client-side, rule-based)
+- [ ] Prerequisite Dependency Graph
+- [ ] Adaptive Knowledge Mapping
+- [ ] Real-Time Learning Adaptation
+- [ ] AI Learning Path Simulation
+- [ ] AI Study Outcome Forecasting
+- [ ] AI-Generated Interactive Simulations
+- [ ] AI-Powered Virtual Labs
+- [ ] AI Pair Programmer
+- [ ] 🟡 AI Debugging Coach — mentor chat / apprenticeship AI help
+- [ ] AI Code Review Mentor
+- [ ] AI Interview Simulator
+- [ ] AI Career Simulator
+- [ ] AI Workplace Task Simulator
+- [ ] AI Personalized Project Generator
+- [ ] AI Code Defense Sessions
+- [ ] AI Concept Mastery Verification
+- [ ] AI Learning Gap Closure Tracking
+- [ ] AI Learning Outcome Verification
+- [ ] AI Human Mentor Escalation
+- [ ] AI Multimodal Learning
+- [ ] AI Voice-Based Coding Tutor
+- [ ] AI Screenshot-to-Explanation
+- [ ] AI Diagram-to-Code
+- [ ] AI Code-to-Flowchart
+- [ ] AI Code-to-Visualization
+- [ ] AI Repository Understanding
+- [ ] AI Pull Request Review
+- [ ] 🟡 AI Software Project Mentor — apprenticeship AI help
+- [ ] AI Agent Workflow Builder
+- [ ] AI Skill Passport
+- [ ] 🟡 Verified Skill Evidence — GitHub-verified project stages + verifiable certificates; not tied to skills
+- [ ] Evidence-Based Skill Graph
+- [ ] Personalized Placement Simulation
+- [ ] Continuous Skill Assessment
+- [ ] Real-Time Job Skill Matching
+- [ ] Industry Skill Demand Mapping
+- [ ] AI-Powered Curriculum Updates
+- [ ] Employer-Defined Skill Assessments
+- [ ] Competency-Based Credentials
+- [ ] Outcome-Based Learning Analytics
+
+### 59. Unique Differentiation & Competitive Advantage
+- [ ] Personalized Student Learning Twin
+- [ ] Verified Skill Passport
+- [ ] 🟡 Live Placement Readiness Index — client-side readiness score
+- [ ] Adaptive Company Preparation
+- [ ] Explainable Skill Gap Analysis
+- [ ] One-Click Remedial Learning Plan
+- [ ] Faculty Intervention Recommendations
+- [ ] Real-Time Cohort Intelligence
+- [ ] Cross-College Benchmarking
+- [ ] 🟡 Job-Ready Skill Verification — Docker-verified build challenges
+- [ ] 🟡 Evidence-Based Student Portfolio — projects + certificates (private)
+- [x] Practical Skill Challenges — staged build challenges verified by tests
+- [ ] Industry-Defined Assessments
+- [ ] Employer Skill Benchmarking
+- [x] Real-World Engineering Simulations — build-your-own-X stages
+- [ ] 🟡 AI-Assisted Project Evaluation — automated test verification (not AI)
+- [ ] Oral Skill Verification
+- [x] Personalized Assessment Variants — per-student shuffled questions/options
+- [ ] 🟡 Transparent Evaluation Reports — question-by-question result map
+- [ ] Learning Outcome Guarantees Tracking
+- [ ] Placement Outcome Tracking
+- [ ] Skill Improvement Attribution
+- [ ] Learning ROI Analytics
+- [ ] Student-to-Job Skill Mapping
+- [ ] 🟡 Faculty Time-Saving Automation — auto-grading, roster import
+- [ ] College ROI Dashboard
+- [ ] AI Cost Per Learner Analytics
+- [ ] Offline-First Learning
+- [ ] Low-Bandwidth Learning
+- [ ] Regional Language AI Learning
+- [ ] Open-Source Integration Marketplace
+- [ ] Institution Plugin Marketplace
+- [ ] Custom Workflow Builder
+- [ ] Public Developer API
+- [ ] Extensible Plugin Architecture
+
+### 60. Product Feedback & Continuous Improvement
+- [x] In-App Feedback — feedback submission → admin Feedback
+- [ ] Feature Request Portal
+- [ ] 🟡 Bug Reporting — via the same feedback flow
+- [ ] User Satisfaction Surveys
+- [ ] Student Feedback Analytics
+- [ ] Faculty Feedback Analytics
+- [x] Product Usage Analytics — `analytics_events` (now writing correctly), admin Analytics
+- [ ] Feature Adoption Tracking
+- [ ] 🟡 Feature Experimentation — admin Experiments page calls `/admin/experiments`, which doesn't exist
+- [ ] A/B Testing
+- [ ] Usability Testing
+- [ ] 🟡 User Journey Analytics — page-view / time-on-page events
+- [ ] Funnel Analysis
+- [ ] Session Replay with Privacy Controls
+- [ ] Product Changelog
+- [ ] Release Notes
+- [ ] Beta Feature Program
+- [ ] Early Access Program
+- [ ] Customer Advisory Program
+- [ ] Support Issue Analytics
+- [ ] Feedback-to-Roadmap Tracking
+- [ ] Product Roadmap Portal
+- [ ] Feature Deprecation Management
