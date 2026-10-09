@@ -21,6 +21,9 @@ import {
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isToday } from 'date-fns';
 import { useRoadmap } from '@/context/RoadmapContext';
 import { CollegeTestsWidget } from '@/features/campus/CollegeTestsWidget';
+import { GoalsAndStudy } from '@/features/dashboard/GoalsAndStudy';
+import { AssessmentPerformance } from '@/features/dashboard/AssessmentPerformance';
+import { ActivityFeed } from '@/features/dashboard/ActivityFeed';
 
 // ─── Activity Calendar (GitHub-style, real data) ───────────────────────────
 function ActivityCalendar({ heatmap }: { heatmap: { date: string; count: number; level: number }[] }) {
@@ -295,6 +298,8 @@ const Index = () => {
 
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
+          <GoalsAndStudy />
+          <AssessmentPerformance />
 
           {/* Continue Learning - Chapter Progress */}
           {chapters.length > 0 && (
@@ -486,6 +491,7 @@ const Index = () => {
           <CollegeTestsWidget />
 
           {dailyQuests && <DailyQuestsWidget data={dailyQuests} />}
+          <ActivityFeed />
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}

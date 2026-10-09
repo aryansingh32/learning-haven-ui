@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 451 done, 214 partly, 1,233 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 455 done, 210 partly, 1,233 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -365,3 +365,18 @@ stayed open after following a notification, swallowing the next click — it now
   (company, search, deleted hidden, company counts, daily pick and solved-today) — 9 tests; browser run of every filter,
   the daily card, the editorial, and a phone-width check.
 - **Left out:** full-text search over descriptions (`search_vector` still unused), saved searches, a daily streak.
+
+## Slice W2-D1 — dashboard: goals, study time, assessment performance, activity — built
+- **DB:** migration `20261024000001_learner_goals_study` — `public.study_time_daily` (seconds per learner per India day;
+  learners read their own, only the API writes; capped at 24 h a day) and `users.weekly_problem_goal` (1–100); the daily
+  minutes goal is the existing `daily_time_minutes`, now limited to 5–600.
+- **API (Forge):** `POST /users/study-time` also adds to today's row (one report capped at 4 h); `GET /users/me/insights`
+  (goals + progress, 14-day study chart data, recent test-series / course-test scores, activity feed of solves, failed tries,
+  chapters, certificates and tests) and `PUT /users/me/goals` (validated). Each feed source is its own query and a missing
+  table gives no rows, because live lacks `mock_test_attempts` and `problem_submissions` until their migrations run.
+- **Web:** dashboard gets "Your goals" (three progress tiles, edit dialog, study-time bar chart with goal line and a
+  screen-reader table), "Assessment performance" (merges released college results from the Campus API) and "Recent activity".
+- **Verified:** `learner_goals.sql` (own rows only, no browser writes, ranges; mutation-tested), `insights.test.ts`
+  (week maths, 14-day shaping, feed merge), the real controller + SQL run against the local database, and a browser run
+  (goals, chart, feed, validation, save + reload, phone width — fixed a 10px overflow from a truncated line).
+- **Left out:** server-side placement readiness and skill scores (still client-side), study-time breakdown by subject.

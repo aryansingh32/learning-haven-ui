@@ -53,6 +53,20 @@ router.get('/me/progress', authenticateUser, UsersController.getProgress);
 
 
 /**
+ * @route   GET /api/users/me/insights
+ * @desc    Dashboard: study time by day, goals, recent assessment results, activity feed
+ * @access  Private
+ */
+router.get('/me/insights', authenticateUser, UsersController.getInsights);
+
+/**
+ * @route   PUT /api/users/me/goals
+ * @desc    Set daily study minutes, weekly problems and the learning goal
+ * @access  Private
+ */
+router.put('/me/goals', authenticateUser, UsersController.updateGoals);
+
+/**
  * @route   POST /api/users/study-time
  * @desc    Update user study time
  * @access  Private

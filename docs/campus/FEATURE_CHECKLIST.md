@@ -31,7 +31,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
 | 2 | College, University & Organization Management | 15 | 2 | 12 | 29 |
 | 3 | Role-Based Access & Permissions | 16 | 0 | 8 | 24 |
-| 4 | Student Dashboard | 11 | 8 | 5 | 24 |
+| 4 | Student Dashboard | 15 | 4 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **451** (24%) | **214** (11%) | **1233** (65%) | **1898** |
+| | **All modules** | **455** (24%) | **210** (11%) | **1233** (65%) | **1898** |
 
 ---
 
@@ -179,7 +179,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Learning Progress Overview — continue-learning, phase progress
 - [x] Course Progress — chapter progress bars
 - [x] Coding Progress — problems solved + difficulty breakdown
-- [ ] 🟡 Assessment Performance — average college score on My College; not on the dashboard
+- [x] Assessment Performance — dashboard card: recent college test results (released), test series and course tests with scores and an average (`GET /users/me/insights`, W2-D1)
 - [ ] 🟡 Placement Readiness Score — career-readiness widget computed in the browser (`RoadmapContext.tsx`)
 - [ ] 🟡 Skill Proficiency Score — knowledge-graph widget, client-side
 - [ ] 🟡 Daily Learning Plan — mission hero suggests today's task; not a plan
@@ -193,9 +193,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Skill Radar
 - [ ] 🟡 Weak Topic Indicators — knowledge graph weak areas, adaptive-difficulty banner (rule-based)
 - [x] Recommended Next Action — mission hero; "Do this next" on My College
-- [ ] 🟡 Personal Learning Goals — `learning_goal`, `daily_time_minutes` captured at onboarding; no goal tracking
-- [ ] 🟡 Study Time Analytics — `study_time_total`, Pomodoro timer; no analytics view
-- [ ] 🟡 Recent Activity Feed — activity heatmap; no feed
+- [x] Personal Learning Goals — set a weekly problems goal, daily study minutes and a goal statement on the dashboard; progress bars for each (`PUT /users/me/goals`, `users.weekly_problem_goal`, W2-D1)
+- [x] Study Time Analytics — study time recorded per day (`study_time_daily`); dashboard chart of the last 14 days with the daily goal line, today, this week and goal days met (W2-D1)
+- [x] Recent Activity Feed — dashboard feed of solves, failed tries, chapters finished, certificates and tests taken, newest first (W2-D1)
 - [ ] Progress Comparison
 - [ ] Portfolio Dashboard
 - [ ] AI Learning Summary
