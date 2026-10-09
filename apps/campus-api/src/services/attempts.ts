@@ -29,7 +29,7 @@ import { JudgedLanguage, judgeCode, JudgeUnavailableError, languagesOf, StarterC
 interface QuestionRow {
   id: string;
   question_group_id: string | null;
-  question_type: 'mcq' | 'msq' | 'nat' | 'coding';
+  question_type: 'mcq' | 'msq' | 'nat' | 'coding' | 'tf' | 'fib' | 'descriptive';
   body: string;
   options: Array<{ id: string; text: string }> | null;
   correct_options: string[] | null;
@@ -41,8 +41,14 @@ interface QuestionRow {
   section_name: string | null;
   stimulus: string | null;
   starter_code: StarterCode;
-  judge_config: { compare?: string };
+  judge_config: { compare?: string; caseSensitive?: boolean };
+  text_answers: string[] | null;
+  max_words: number | null;
 }
+
+const TEXT_TYPES = new Set(['fib', 'descriptive']);
+const MAX_TEXT_ANSWER = 20_000;
+const wordCount = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
 
 interface TestCaseRow {
   question_id: string;
@@ -67,12 +73,13 @@ interface AttemptRow {
   total_questions: number;
   total_marks: string;
   attempt_number: number;
-  question_order: { questionIds: string[]; optionOrder: Record<string, string[]>; sections?: SnapshotSection[] } | null;
+  question_order: { questionIds: string[]; optionOrder: Record<string, string[]>; sections?: SnapshotSection[]; version?: string } | null;
   current_section: number;
   section_started_at: string | null;
   last_seen_at: string | null;
   violation_count: number;
   submit_reason: string | null;
+  feedback: string | null;
 }
 
 /** A timed section as dealt to this attempt (snapshot at start). */
@@ -98,6 +105,7 @@ interface AssignmentRow {
   result_release: 'immediately' | 'after_close' | 'manual';
   results_released_at: string | null;
   proctoring: Partial<ProctoringPolicy>;
+  paper_versions: number;
 }
 
 const toScoring = (q: QuestionRow): ScoringQuestion => ({
@@ -108,6 +116,8 @@ const toScoring = (q: QuestionRow): ScoringQuestion => ({
   nat_tolerance: Number(q.nat_tolerance ?? 0),
   marks: Number(q.marks),
   negative_marks: Number(q.negative_marks ?? 0),
+  text_answers: q.text_answers,
+  case_sensitive: q.judge_config?.caseSensitive === true,
 });
 
 export function resultsReleased(a: Pick<AssignmentRow, 'result_release' | 'closes_at' | 'results_released_at'>, now = new Date()) {
@@ -120,7 +130,7 @@ async function loadQuestions(db: Db, testId: string): Promise<QuestionRow[]> {
   const { rows } = await db.query<QuestionRow>(
     `select q.id, q.question_group_id, q.question_type, q.body, q.options, q.correct_options,
             q.nat_answer, q.nat_tolerance, q.marks, q.negative_marks, q.starter_code, q.judge_config,
-            tq.section_id, s.name as section_name, g.stimulus
+            q.text_answers, q.max_words, tq.section_id, s.name as section_name, g.stimulus
        from public.test_questions tq
        join public.testseries_questions q on q.id = tq.question_id
        left join public.test_sections s on s.id = tq.section_id
@@ -153,7 +163,7 @@ async function visibleAssignment(userId: string, assignmentId: string): Promise<
   return asUser(userId, async (db) => {
     const { rows } = await db.query<AssignmentRow>(
       `select id, org_id, test_id, title, instructions, opens_at, closes_at, duration_seconds, max_attempts,
-              shuffle_questions, shuffle_options, result_release, results_released_at, proctoring
+              shuffle_questions, shuffle_options, result_release, results_released_at, proctoring, paper_versions
          from campus.assignments
         where id = $1 and status = 'published' and campus.is_assignment_target(id)`,
       [assignmentId]
@@ -220,8 +230,11 @@ async function finalize(attempt: AttemptRow, reason: 'manual' | 'timeout' | 'vio
       return { row: fresh.rows[0], closedNow: false, needsJudge: false };
     }
     const coding = codingIds(questions);
+    const written = new Set(questions.filter((q) => q.question_type === 'descriptive').map((q) => q.id));
     let needsJudge = false;
     const answers = (rows[0].answers ?? []).map((a) => {
+      // Written answers wait for an evaluator.
+      if (written.has(a.question_id) && a.text_value?.trim()) return { ...a, grading: 'pending' as const };
       if (!coding.has(a.question_id) || !a.code?.trim()) return a;
       needsJudge = true;
       return { ...a, grading: 'pending' as const, tests_passed: null, tests_total: null };
@@ -394,6 +407,16 @@ export async function startAttempt(userId: string, assignmentId: string) {
 
   const attemptId = randomUUID();
   await asSystem(async (db) => {
+    // Paper versions: students are dealt A, B, C… in roll-number order, and
+    // everyone on one version gets the same questions in the same order.
+    let version: number | null = null;
+    if (assignment.paper_versions > 1) {
+      const { rows } = await db.query<{ user_id: string }>(
+        `select user_id from campus.assignment_students($1) order by roll_number nulls last, user_id`, [assignment.id]);
+      const i = rows.findIndex((r) => r.user_id === userId);
+      version = (i < 0 ? 0 : i) % assignment.paper_versions;
+    }
+    const seed = version === null ? attemptId : `${assignment.id}:paper:${version}`;
     const test = await db.query<{ duration_seconds: number; section_time_locked: boolean; draw_count: number | null }>(
       `select duration_seconds, section_time_locked, draw_count from public.tests where id = $1`, [assignment.test_id]);
     const allQuestions = await loadQuestions(db, assignment.test_id);
@@ -404,7 +427,7 @@ export async function startAttempt(userId: string, assignmentId: string) {
       `select id, draw_count from public.test_sections where test_id = $1 and draw_count is not null`, [assignment.test_id]);
     const drawCounts = new Map<string, number>(pools.rows.map((r) => [r.id, r.draw_count]));
     if (test.rows[0].draw_count) drawCounts.set('', test.rows[0].draw_count);
-    const questions = drawFromPools(allQuestions, drawCounts, attemptId);
+    const questions = drawFromPools(allQuestions, drawCounts, seed);
 
     // Accommodation: extra time for this student, on the test and on each timed section.
     const accommodation = await db.query<{ extra_percent: number }>(
@@ -416,8 +439,9 @@ export async function startAttempt(userId: string, assignmentId: string) {
     const order: AttemptRow['question_order'] & object = buildAttemptOrder(
       questions,
       { shuffleQuestions: assignment.shuffle_questions, shuffleOptions: assignment.shuffle_options },
-      attemptId
+      seed
     );
+    if (version !== null) order.version = String.fromCharCode(65 + version);
     if (test.rows[0].section_time_locked) {
       order.sections = (await timedSectionsFor(db, assignment.test_id, questions, order.questionIds))
         .map((x) => ({ ...x, durationSeconds: stretch(x.durationSeconds) }));
@@ -540,6 +564,7 @@ export async function getAttemptView(userId: string, attemptId: string) {
           id: q.id, type: q.question_type, body: q.body, options,
           marks: Number(q.marks), negativeMarks: Number(q.negative_marks ?? 0),
           section: q.section_name, passage: q.stimulus,
+          ...(q.question_type === 'descriptive' && q.max_words ? { maxWords: q.max_words } : {}),
           // Coding: starter code and sample tests only — hidden tests stay on the server.
           ...(q.question_type === 'coding' ? {
             languages: languagesOf(q.starter_code),
@@ -565,6 +590,7 @@ export async function getAttemptView(userId: string, attemptId: string) {
     sections: order.sections?.map((x) => ({ id: x.id, name: x.name, durationSeconds: x.durationSeconds, questionCount: x.questionIds.length })) ?? null,
     currentSection: clock ? { index: clock.index, endsAt: clock.endsAt.toISOString() } : null,
     submitReason: attempt.submit_reason,
+    paperVersion: order.version ?? null,
     result: attempt.status === 'completed' ? resultView(attempt, released, questions, order.questionIds) : undefined,
   };
 }
@@ -581,7 +607,12 @@ function resultView(attempt: AttemptRow, released: boolean, questions: QuestionR
     totalMarks: Number(attempt.total_marks),
     correctCount: attempt.correct_count,
     totalQuestions: attempt.total_questions,
-    perQuestion: scored.perQuestion,
+    // Evaluators' comments, per question and on the whole attempt.
+    perQuestion: scored.perQuestion.map((r) => {
+      const a = (attempt.answers ?? []).find((x) => x.question_id === r.questionId);
+      return a?.feedback ? { ...r, feedback: a.feedback } : r;
+    }),
+    feedback: attempt.feedback ?? null,
   };
 }
 
@@ -589,7 +620,10 @@ export async function saveAnswer(
   userId: string,
   attemptId: string,
   questionId: string,
-  payload: { selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: string | null; markedForReview?: boolean }
+  payload: {
+    selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: string | null;
+    textValue?: string | null; markedForReview?: boolean;
+  }
 ) {
   const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
   if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
@@ -599,8 +633,8 @@ export async function saveAnswer(
   const idx = answers.findIndex((a) => a.question_id === questionId);
   if (idx < 0) throw badRequest('That question is not part of this test.');
 
-  const question = await asSystem(async (db) => (await db.query<Pick<QuestionRow, 'options' | 'question_type' | 'starter_code'>>(
-    `select options, question_type, starter_code from public.testseries_questions where id = $1`, [questionId]
+  const question = await asSystem(async (db) => (await db.query<Pick<QuestionRow, 'options' | 'question_type' | 'starter_code' | 'max_words'>>(
+    `select options, question_type, starter_code, max_words from public.testseries_questions where id = $1`, [questionId]
   )).rows[0]);
   if (!question) throw badRequest('That question is not part of this test.');
 
@@ -623,11 +657,31 @@ export async function saveAnswer(
       code,
       language,
     };
+  } else if (TEXT_TYPES.has(question.question_type)) {
+    if (payload.code || payload.selectedOptions?.length || (payload.natValue !== undefined && payload.natValue !== null)) {
+      throw badRequest('Type your answer for this question.');
+    }
+    const previous = answers[idx];
+    const text = payload.textValue !== undefined ? payload.textValue : previous.text_value ?? null;
+    if (text && text.length > MAX_TEXT_ANSWER) throw badRequest('That answer is too long.');
+    if (text && question.question_type === 'fib' && text.length > 500) throw badRequest('Keep this answer short — a word or a phrase.');
+    if (text && question.max_words && wordCount(text) > question.max_words) {
+      throw badRequest(`Keep your answer within ${question.max_words} words.`);
+    }
+    const hasText = Boolean(text?.trim());
+    answers[idx] = {
+      question_id: questionId,
+      status: hasText ? (payload.markedForReview ? 'answered_marked' : 'answered') : (payload.markedForReview ? 'marked_for_review' : 'visited'),
+      selected_options: null,
+      nat_value: null,
+      text_value: text,
+    };
   } else {
     if (payload.code) throw badRequest('Only coding questions take code.');
+    if (payload.textValue) throw badRequest('Pick an option for this question.');
     if (payload.selectedOptions?.length) {
       const ids = new Set((question.options ?? []).map((o) => o.id));
-      const single = question.question_type === 'mcq';
+      const single = question.question_type === 'mcq' || question.question_type === 'tf';
       const valid = payload.selectedOptions.every((o) => ids.has(o)) && (!single || payload.selectedOptions.length === 1);
       if (!valid) throw badRequest('That answer is not one of the options.');
     }
@@ -755,4 +809,61 @@ export async function submitAttempt(userId: string, attemptId: string) {
     await finalize(attempt, expired ? 'timeout' : 'manual');
   }
   return getAttemptView(userId, attemptId);
+}
+
+/**
+ * An evaluator's marks and/or comment on one answer of a submitted attempt,
+ * then a rescore. `marks: null` clears a manual mark (back to automatic, or
+ * pending for written answers). Callers must already have proven access.
+ */
+export async function markAnswer(attemptId: string, questionId: string, change: { marks?: number | null; feedback?: string | null }) {
+  return asSystem(async (db) => {
+    const attempt = (await db.query<AttemptRow>(`select * from public.test_attempts where id = $1 for update`, [attemptId])).rows[0];
+    if (!attempt) throw notFound('Attempt not found.');
+    if (attempt.status !== 'completed') throw new HttpError(409, 'Marks can be given once the attempt is submitted.');
+    const questions = attemptQuestions(attempt, await loadQuestions(db, attempt.test_id));
+    const q = questions.find((x) => x.id === questionId);
+    if (!q) throw badRequest('That question is not part of this attempt.');
+    if (q.question_type === 'coding' && change.marks !== undefined) throw badRequest('Coding answers are marked by the judge. Use regrade instead.');
+    if (change.marks !== undefined && change.marks !== null && (change.marks < 0 || change.marks > Number(q.marks))) {
+      throw badRequest(`Give between 0 and ${Number(q.marks)} marks.`);
+    }
+    const answers = (attempt.answers ?? []).map((a) => {
+      if (a.question_id !== questionId) return a;
+      const next: AnswerState = { ...a };
+      if (change.feedback !== undefined) next.feedback = change.feedback?.trim() || null;
+      if (change.marks !== undefined) {
+        next.manual_marks = change.marks;
+        if (q.question_type === 'descriptive') next.grading = change.marks === null ? 'pending' : 'judged';
+      }
+      return next;
+    });
+    if (!answers.some((a) => a.question_id === questionId)) throw badRequest('That question is not part of this attempt.');
+    const { totalScore, correctCount, totalMarks } = rescore(questions, answers);
+    const { rows } = await db.query<AttemptRow>(
+      `update public.test_attempts set answers = $2::jsonb, score = $3, correct_count = $4, total_marks = $5 where id = $1 returning *`,
+      [attemptId, JSON.stringify(answers), totalScore, correctCount, totalMarks]);
+    return { attempt: rows[0], maxMarks: Number(q.marks) };
+  });
+}
+
+export async function setAttemptFeedback(attemptId: string, feedback: string | null) {
+  return asSystem(async (db) => {
+    const { rows } = await db.query<AttemptRow>(
+      `update public.test_attempts set feedback = $2 where id = $1 and status = 'completed' returning *`, [attemptId, feedback?.trim() || null]);
+    if (!rows[0]) throw new HttpError(409, 'Feedback can be given once the attempt is submitted.');
+    return rows[0];
+  });
+}
+
+/** Questions of a test with their marking information, for evaluators. */
+export async function markingQuestions(testId: string) {
+  return asSystem(async (db) => (await db.query<{
+    id: string; type: string; body: string; marks: string; rubric: string | null; text_answers: string[] | null; max_words: number | null;
+    judge_config: { caseSensitive?: boolean };
+  }>(
+    `select q.id, q.question_type as type, q.body, q.marks, q.rubric, q.text_answers, q.max_words, q.judge_config
+       from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
+      where tq.test_id = $1 and q.question_type in ('descriptive', 'fib')
+      order by tq.sort_order, q.created_at`, [testId])).rows);
 }

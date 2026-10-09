@@ -4,7 +4,7 @@
 
 import { parseCsv } from './roster';
 
-export type SheetQuestionType = 'mcq' | 'msq' | 'nat';
+export type SheetQuestionType = 'mcq' | 'msq' | 'nat' | 'tf' | 'fib' | 'descriptive';
 
 export interface SheetQuestion {
   line: number;
@@ -22,6 +22,11 @@ export interface SheetQuestion {
   topic: string | null;
   difficulty: 'easy' | 'medium' | 'hard' | null;
   explanation: string | null;
+  /** fib: accepted answers (Answer column, separated by |). */
+  textAnswers: string[];
+  /** descriptive: what earns marks (Answer or Rubric column). */
+  rubric: string | null;
+  tags: string[];
 }
 
 export interface SheetError { line: number; message: string }
@@ -39,7 +44,9 @@ const FIELDS: Record<string, string[]> = {
   marks: ['marks', 'mark', 'score', 'points'],
   negative: ['negative', 'negativemarks', 'negativemark', 'minus', 'penalty'],
   section: ['section', 'part'],
-  topic: ['topic', 'subject', 'chapter', 'tag'],
+  topic: ['topic', 'subject', 'chapter'],
+  tags: ['tags', 'tag', 'keywords', 'labels'],
+  rubric: ['rubric', 'markingscheme', 'modelanswer'],
   difficulty: ['difficulty', 'level'],
   explanation: ['explanation', 'solution', 'reason'],
 };
@@ -62,6 +69,9 @@ function parseType(raw: string | null): SheetQuestionType | null | 'bad' {
   if (['mcq', 'single', 'singlechoice', 'singlecorrect', 'scq'].includes(t)) return 'mcq';
   if (['msq', 'multiple', 'multiplechoice', 'multiplecorrect', 'mcqmultiple', 'mamcq'].includes(t)) return 'msq';
   if (['nat', 'numeric', 'number', 'numerical', 'integer'].includes(t)) return 'nat';
+  if (['tf', 'truefalse', 'trueorfalse', 'boolean', 'yesno'].includes(t)) return 'tf';
+  if (['fib', 'fillintheblank', 'fillintheblanks', 'blank', 'fillup', 'fillups', 'shortanswer', 'oneword'].includes(t)) return 'fib';
+  if (['descriptive', 'subjective', 'essay', 'longanswer', 'written', 'theory'].includes(t)) return 'descriptive';
   return 'bad';
 }
 
@@ -108,7 +118,7 @@ export function parseQuestionSheet(text: string): SheetParseResult {
     const correctRaw = get(col.correct);
 
     let type = parseType(get(col.type));
-    if (type === 'bad') return fail(`Unknown type "${get(col.type)}". Use mcq, msq or nat.`);
+    if (type === 'bad') return fail(`Unknown type "${get(col.type)}". Use mcq, msq, nat, tf, fib or descriptive.`);
     if (!type) type = options.length === 0 ? 'nat' : (correctRaw && parseCorrect(correctRaw, options)?.length ? (parseCorrect(correctRaw, options)!.length > 1 ? 'msq' : 'mcq') : 'mcq');
 
     const marks = num(get(col.marks)) ?? 1;
@@ -118,10 +128,32 @@ export function parseQuestionSheet(text: string): SheetParseResult {
 
     const diffRaw = get(col.difficulty)?.toLowerCase() ?? null;
     if (diffRaw && !['easy', 'medium', 'hard'].includes(diffRaw)) return fail('Difficulty must be easy, medium or hard.');
+    const tags = [...new Set((get(col.tags) ?? '').split(/[,;|]/).map((t) => t.trim().toLowerCase()).filter(Boolean))];
+    if (tags.length > 20) return fail('Use at most 20 tags.');
+    if (tags.some((t) => t.length > 40)) return fail('A tag is longer than 40 characters.');
     const common = {
-      line, type, body, marks, negativeMarks: type === 'mcq' ? negative : 0,
+      line, type, body, marks, negativeMarks: ['mcq', 'tf', 'fib'].includes(type) ? negative : 0,
       section: get(col.section), topic: get(col.topic), difficulty: diffRaw as SheetQuestion['difficulty'], explanation: get(col.explanation),
+      textAnswers: [] as string[], rubric: null as string | null, tags,
     };
+
+    if (type === 'tf') {
+      const v = norm(correctRaw ?? '');
+      const truth = ['true', 't', 'yes', 'y', 'a', '1'].includes(v) ? 0 : ['false', 'f', 'no', 'n', 'b', '2'].includes(v) ? 1 : -1;
+      if (truth < 0) return fail('A true/false question needs True or False in the Answer column.');
+      return void questions.push({ ...common, options: ['True', 'False'], correct: [truth], natAnswer: null, natTolerance: 0 });
+    }
+    if (type === 'fib') {
+      const accepted = (correctRaw ?? '').split('|').map((a) => a.trim()).filter(Boolean);
+      if (accepted.length === 0) return fail('A fill-in-the-blank needs the answer in the Answer column (several allowed, separated by |).');
+      if (accepted.length > 20 || accepted.some((a) => a.length > 200)) return fail('Use up to 20 accepted answers of up to 200 characters.');
+      return void questions.push({ ...common, textAnswers: accepted, options: [], correct: [], natAnswer: null, natTolerance: 0 });
+    }
+    if (type === 'descriptive') {
+      const rubric = get(col.rubric) ?? correctRaw;
+      if (rubric && rubric.length > 5000) return fail('The rubric is longer than 5,000 characters.');
+      return void questions.push({ ...common, rubric, options: [], correct: [], natAnswer: null, natTolerance: 0 });
+    }
 
     if (type === 'nat') {
       const answer = num(correctRaw);
@@ -145,8 +177,11 @@ export function parseQuestionSheet(text: string): SheetParseResult {
 
 /** A starter sheet for colleges (CSV; opens in Excel). */
 export const QUESTION_SHEET_TEMPLATE = [
-  'Type,Question,Option A,Option B,Option C,Option D,Answer,Marks,Negative marks,Section,Topic,Difficulty,Explanation',
-  'mcq,"A train covers 120 km in 2 hours. What is its speed?",40 km/h,60 km/h,80 km/h,100 km/h,B,1,0.25,Aptitude,Speed and distance,easy,Speed = distance / time = 60 km/h',
-  'msq,Which of these are O(1) on an array?,Index access,Linear search,Append (amortised),Binary search,"A,C",2,0,Technical,Arrays,medium,',
-  'nat,What is 15% of 240?,,,,,36,1,0,Aptitude,Percentages,easy,0.15 × 240 = 36',
+  'Type,Question,Option A,Option B,Option C,Option D,Answer,Marks,Negative marks,Section,Topic,Difficulty,Explanation,Tags',
+  'mcq,"A train covers 120 km in 2 hours. What is its speed?",40 km/h,60 km/h,80 km/h,100 km/h,B,1,0.25,Aptitude,Speed and distance,easy,Speed = distance / time = 60 km/h,"quant, speed"',
+  'msq,Which of these are O(1) on an array?,Index access,Linear search,Append (amortised),Binary search,"A,C",2,0,Technical,Arrays,medium,,arrays',
+  'nat,What is 15% of 240?,,,,,36,1,0,Aptitude,Percentages,easy,0.15 × 240 = 36,quant',
+  'tf,A stack is first-in first-out.,,,,,False,1,0,Technical,Stacks,easy,A stack is last-in first-out,data structures',
+  'fib,The process plants use to make food from sunlight is ___.,,,,,photosynthesis|photo synthesis,1,0,General,Biology,easy,,science',
+  'descriptive,"Explain the difference between a process and a thread, with an example.",,,,,"2 marks: definitions; 2 marks: memory sharing; 1 mark: example",5,0,Technical,Operating systems,medium,,os',
 ].join('\r\n');

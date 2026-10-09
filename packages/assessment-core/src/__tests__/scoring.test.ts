@@ -181,3 +181,43 @@ describe('scoreQuestion — coding (partial marks per test, no negative marking)
     expect(scoreQuestion(coding, judged(9, 3)).marksAwarded).toBe(10);
   });
 });
+
+describe('scoreQuestion — true/false, fill in the blank, written answers', () => {
+  const base = { correct_options: null, nat_answer: null, nat_tolerance: 0, marks: 2, negative_marks: 0.5 };
+  const answered = (extra: Record<string, unknown>) => ({ question_id: 'q', status: 'answered' as const, selected_options: null, nat_value: null, ...extra });
+
+  it('scores true/false like a single-answer question, with negative marks', () => {
+    const q = { ...base, id: 'q', question_type: 'tf' as const, correct_options: ['f'] };
+    expect(scoreQuestion(q, answered({ selected_options: ['f'] })).marksAwarded).toBe(2);
+    expect(scoreQuestion(q, answered({ selected_options: ['t'] })).marksAwarded).toBe(-0.5);
+  });
+
+  it('accepts any listed answer, ignoring case, spacing and a final full stop', () => {
+    const q = { ...base, id: 'q', question_type: 'fib' as const, text_answers: ['Photosynthesis', 'photo synthesis'] };
+    expect(scoreQuestion(q, answered({ text_value: '  photosynthesis. ' })).isCorrect).toBe(true);
+    expect(scoreQuestion(q, answered({ text_value: 'Photo   Synthesis' })).isCorrect).toBe(true);
+    expect(scoreQuestion(q, answered({ text_value: 'respiration' })).marksAwarded).toBe(-0.5);
+    expect(scoreQuestion(q, answered({ text_value: '   ' })).attempted).toBe(false);
+  });
+
+  it('lets an evaluator override an automatic mark (not for coding)', () => {
+    const q = { ...base, id: 'q', question_type: 'fib' as const, text_answers: ['photosynthesis'] };
+    expect(scoreQuestion(q, answered({ text_value: 'fotosynthesis', manual_marks: 1 })).marksAwarded).toBe(1);
+    const c = { ...base, id: 'c', question_type: 'coding' as const };
+    expect(scoreQuestion(c, answered({ code: 'x', grading: 'judged', tests_passed: 0, tests_total: 2, manual_marks: 2 })).marksAwarded).toBe(0);
+  });
+
+  it('respects case when the question asks for it', () => {
+    const q = { ...base, id: 'q', question_type: 'fib' as const, text_answers: ['NaCl'], case_sensitive: true };
+    expect(scoreQuestion(q, answered({ text_value: 'nacl' })).isCorrect).toBe(false);
+    expect(scoreQuestion(q, answered({ text_value: 'NaCl' })).isCorrect).toBe(true);
+  });
+
+  it('keeps written answers pending until marked, then clamps the marks', () => {
+    const q = { ...base, id: 'q', question_type: 'descriptive' as const };
+    expect(scoreQuestion(q, answered({ text_value: 'An essay' }))).toMatchObject({ pending: true, marksAwarded: 0, isCorrect: null });
+    expect(scoreQuestion(q, answered({ text_value: 'An essay', manual_marks: 1.5 })).marksAwarded).toBe(1.5);
+    expect(scoreQuestion(q, answered({ text_value: 'An essay', manual_marks: 9 })).marksAwarded).toBe(2);
+    expect(scoreQuestion(q, answered({ text_value: 'An essay', manual_marks: -3 })).marksAwarded).toBe(0);
+  });
+});

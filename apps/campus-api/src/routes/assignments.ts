@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { normalizePolicy } from '@repo/assessment-core';
+import { normalizePolicy, textAnswerMatches } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser, Db } from '../db';
 import { badRequest, HttpError, notFound } from '../errors';
 import { requireAnyPermission, requirePermission } from '../permissions';
-import { attemptProgress, AttemptRow, extendAttempt, forceSubmitAttempt, gradeCodingAnswers } from '../services/attempts';
+import { attemptProgress, AttemptRow, extendAttempt, forceSubmitAttempt, gradeCodingAnswers, markAnswer, markingQuestions, setAttemptFeedback } from '../services/attempts';
 import { judgeAvailable } from '../services/judge';
 
 export const assignmentsRouter = Router({ mergeParams: true });
@@ -22,7 +22,7 @@ assignmentsRouter.get('/', async (req, res) => {
             a.result_release as "resultRelease", a.results_released_at as "resultsReleasedAt",
             a.batch_id as "batchId", b.name as "batchName", a.test_id as "testId", t.title as "testTitle",
             a.section_id as "sectionId", (select s.name from campus.sections s where s.id = a.section_id) as "sectionName",
-            a.eligibility,
+            a.eligibility, a.paper_versions as "paperVersions",
             (select count(*) from campus.assignment_students(a.id))::int as "assigned",
             (select count(distinct x.user_id) from public.test_attempts x where x.assignment_id = a.id)::int as "started",
             (select count(distinct x.user_id) from public.test_attempts x
@@ -67,6 +67,7 @@ const assignmentBody = z.object({
   batchId: uuid,
   sectionId: uuid.nullable().optional(),
   eligibility: eligibilityBody.default({}),
+  paperVersions: z.number().int().min(1).max(4).default(1),
   testId: uuid,
   title: z.string().trim().min(3).max(200),
   instructions: z.string().trim().max(5000).nullable().optional(),
@@ -89,13 +90,13 @@ assignmentsRouter.post('/', async (req, res) => {
   const created = await asUser(userId, async (db) => (await db.query(
     `insert into campus.assignments
        (org_id, batch_id, test_id, title, instructions, opens_at, closes_at, duration_seconds, max_attempts,
-        shuffle_questions, shuffle_options, result_release, proctoring, status, created_by, section_id, eligibility)
-     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::jsonb, $14, $15, $16, $17::jsonb)
+        shuffle_questions, shuffle_options, result_release, proctoring, status, created_by, section_id, eligibility, paper_versions)
+     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::jsonb, $14, $15, $16, $17::jsonb, $18)
      returning id, title, status`,
     [orgId, a.batchId, a.testId, a.title, a.instructions ?? null, a.opensAt, a.closesAt,
      a.durationMinutes ? a.durationMinutes * 60 : null, a.maxAttempts, a.shuffleQuestions, a.shuffleOptions,
      a.resultRelease, JSON.stringify(normalizePolicy(a.proctoring)), a.publish ? 'published' : 'draft', userId,
-     a.sectionId ?? null, JSON.stringify(await withSubUnits(db, orgId, a.eligibility))]
+     a.sectionId ?? null, JSON.stringify(await withSubUnits(db, orgId, a.eligibility)), a.paperVersions]
   )).rows[0]);
   res.status(201).json(created);
 });
@@ -156,10 +157,12 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
     const attempts = (await db.query<{
       user_id: string; status: string; score: string | null; total_marks: string; submitted_at: string | null;
       violation_count: number; submit_reason: string | null; attempt_number: number; grading_pending: boolean;
-      review_outcome: string | null;
+      marking_pending: boolean; review_outcome: string | null; version: string | null;
     }>(
       `select t.user_id, t.status, t.score, t.total_marks, t.submitted_at, t.violation_count, t.submit_reason, t.attempt_number,
-              exists (select 1 from jsonb_array_elements(t.answers) a where a->>'grading' = 'pending') as grading_pending,
+              exists (select 1 from jsonb_array_elements(t.answers) a where a->>'grading' = 'pending' and coalesce(a->>'code', '') <> '') as grading_pending,
+              exists (select 1 from jsonb_array_elements(t.answers) a where a->>'grading' = 'pending' and coalesce(a->>'text_value', '') <> '') as marking_pending,
+              t.question_order->>'version' as version,
               (select r.outcome from campus.incident_reviews r where r.attempt_id = t.id order by r.created_at desc limit 1) as review_outcome
          from public.test_attempts t where t.assignment_id = $1`, [assignmentId])).rows;
     return { assignment, members, attempts };
@@ -192,6 +195,9 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
       submittedAt: best?.submitted_at ?? null,
       // Coding answers not judged yet (judge was down at submit) — see /regrade.
       gradingPending: done.some((a) => a.grading_pending),
+      // Written answers waiting for an evaluator.
+      markingPending: done.some((a) => a.marking_pending),
+      paperVersion: (best ?? mine[0])?.version ?? null,
       // The invigilator's latest decision on the attempt that counts (or the open one).
       review: (best ?? mine[0])?.review_outcome ?? null,
     };
@@ -207,6 +213,7 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
     lowestPercent: scored.length ? Math.min(...scored) : null,
     flagged: rows.filter((r) => r.violations > 0).length,
     gradingPending: rows.filter((r) => r.gradingPending).length,
+    markingPending: rows.filter((r) => r.markingPending).length,
   };
 
   if (req.query.format === 'csv') {
@@ -515,4 +522,97 @@ assignmentsRouter.delete('/:assignmentId/accommodations/:studentId', async (req,
     `delete from campus.assignment_accommodations where assignment_id = $1 and user_id = $2 and org_id = $3`,
     [uuid.parse(req.params.assignmentId), uuid.parse(req.params.studentId), orgId]));
   res.status(204).end();
+});
+
+// ── Marking written answers (evaluators) ────────────────────────────────────
+/**
+ * Every typed answer (written and fill-in-the-blank) of submitted attempts,
+ * grouped by question. With ?blind=1 names are left out (anonymous marking).
+ */
+assignmentsRouter.get('/:assignmentId/marking', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  await requirePermission(userId, orgId, 'assessments.grade');
+  const blind = req.query.blind === '1';
+  const data = await asUser(userId, async (db) => {
+    const a = (await db.query<{ id: string; title: string; test_id: string }>(
+      `select id, title, test_id from campus.assignments where id = $1 and org_id = $2`, [assignmentId, orgId])).rows[0];
+    if (!a) return null;
+    const attempts = (await db.query<AttemptRow>(
+      `select * from public.test_attempts where assignment_id = $1 and status = 'completed' order by submitted_at`, [assignmentId])).rows;
+    return { a, attempts };
+  });
+  if (!data) throw notFound('Assignment not found in this college.');
+  const questions = await markingQuestions(data.a.test_id);
+  const people = blind ? new Map() : await asSystem(async (db) => new Map((await db.query<{ user_id: string; full_name: string | null; roll_number: string | null }>(
+    `select u.id as user_id, u.full_name, m.roll_number from public.users u
+       left join campus.org_memberships m on m.user_id = u.id and m.org_id = $2
+      where u.id = any($1::uuid[])`, [data.attempts.map((t) => t.user_id), orgId])).rows.map((r) => [r.user_id, r])));
+  res.json({
+    assignment: { id: data.a.id, title: data.a.title },
+    blind,
+    questions: questions.map((q, qi) => {
+      const answers = data.attempts.flatMap((t, ti) => {
+        const ans = (t.answers ?? []).find((x) => x.question_id === q.id);
+        if (!ans || !ans.text_value?.trim()) return [];
+        const who = people.get(t.user_id);
+        return [{
+          attemptId: t.id,
+          student: blind ? `Script ${ti + 1}` : (who?.full_name ?? 'Student'),
+          rollNumber: blind ? null : who?.roll_number ?? null,
+          text: ans.text_value,
+          marks: ans.manual_marks ?? null,
+          feedback: ans.feedback ?? null,
+          // Fill-in-the-blank: what automatic checking decided (an evaluator may override it).
+          ...(q.type === 'fib' ? { autoCorrect: textAnswerMatches(ans.text_value, q.text_answers ?? [], q.judge_config?.caseSensitive === true) } : {}),
+        }];
+      });
+      return {
+        id: q.id, number: qi + 1, type: q.type, body: q.body, marks: Number(q.marks), rubric: q.rubric,
+        acceptedAnswers: q.text_answers, maxWords: q.max_words,
+        answers, pending: q.type === 'descriptive' ? answers.filter((x) => x.marks === null).length : 0,
+      };
+    }),
+  });
+});
+
+const markBody = z.object({
+  questionId: uuid,
+  marks: z.number().min(0).max(1000).nullable().optional(),
+  feedback: z.string().max(2000).nullable().optional(),
+}).refine((b) => b.marks !== undefined || b.feedback !== undefined, { message: 'Send marks or feedback.' });
+
+assignmentsRouter.put('/:assignmentId/attempts/:attemptId/marks', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  const attemptId = uuid.parse(req.params.attemptId);
+  const body = markBody.parse(req.body);
+  await requirePermission(userId, orgId, 'assessments.grade');
+  await visibleAttempt(userId, orgId, assignmentId, attemptId);
+  const { attempt, maxMarks } = await markAnswer(attemptId, body.questionId, { marks: body.marks, feedback: body.feedback });
+  await asSystem((db) => db.query(
+    `insert into campus.attempt_adjustments (org_id, attempt_id, kind, reason, actor_id, question_id) values ($1, $2, $3, $4, $5, $6)`,
+    [orgId, attemptId, body.marks !== undefined ? 'grade' : 'feedback',
+     body.marks !== undefined ? `Marked ${body.marks === null ? 'cleared' : `${body.marks}/${maxMarks}`}` : 'Comment added',
+     userId, body.questionId]));
+  res.json({ score: Number(attempt.score), totalMarks: Number(attempt.total_marks) });
+});
+
+const feedbackBody = z.object({ feedback: z.string().max(5000).nullable() });
+
+assignmentsRouter.put('/:assignmentId/attempts/:attemptId/feedback', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  const attemptId = uuid.parse(req.params.attemptId);
+  const { feedback } = feedbackBody.parse(req.body);
+  await requirePermission(userId, orgId, 'assessments.grade');
+  await visibleAttempt(userId, orgId, assignmentId, attemptId);
+  await setAttemptFeedback(attemptId, feedback);
+  await asSystem((db) => db.query(
+    `insert into campus.attempt_adjustments (org_id, attempt_id, kind, reason, actor_id) values ($1, $2, 'feedback', 'Overall feedback updated', $3)`,
+    [orgId, attemptId, userId]));
+  res.json({ ok: true });
 });

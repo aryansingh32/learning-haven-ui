@@ -19,12 +19,16 @@ testsRouter.get('/', async (req, res) => {
   await requirePermission(userId, orgId, 'assessments.create');
   const tests = await asUser(userId, async (db) => (await db.query<{
     id: string; title: string; duration_seconds: number; is_published: boolean; owner_org_id: string; created_at: string;
+    shared_to_me: boolean; shared_with: number;
   }>(
-    `select id, title, duration_seconds, is_published, owner_org_id, created_at
-       from public.tests
-      where deleted_at is null
-        and (owner_org_id = $1 or (owner_org_id = $2 and visibility = 'public' and is_published))
-      order by (owner_org_id = $1) desc, created_at desc`,
+    `select t.id, t.title, t.duration_seconds, t.is_published, t.owner_org_id, t.created_at,
+            exists (select 1 from campus.test_shares s where s.test_id = t.id and s.org_id = $1) as shared_to_me,
+            (select count(*) from campus.test_shares s where s.test_id = t.id and s.owner_org_id = $1)::int as shared_with
+       from public.tests t
+      where t.deleted_at is null
+        and (t.owner_org_id = $1 or (t.owner_org_id = $2 and t.visibility = 'public' and t.is_published)
+             or (t.is_published and exists (select 1 from campus.test_shares s where s.test_id = t.id and s.org_id = $1)))
+      order by (t.owner_org_id = $1) desc, t.created_at desc`,
     [orgId, FORGE]
   )).rows);
   // Question counts for Forge tests aren't visible to college staff via RLS; count by id.
@@ -32,12 +36,18 @@ testsRouter.get('/', async (req, res) => {
     `select test_id, count(*)::int as n from public.test_questions where test_id = any($1::uuid[]) group by test_id`,
     [tests.map((t) => t.id)]
   )).rows.map((r) => [r.test_id, r.n] as [string, number])));
+  // Other colleges' names aren't readable to staff under RLS; look up the sharers by id.
+  const sharers = new Map(tests.some((t) => t.shared_to_me) ? await asSystem(async (db) => (await db.query<{ id: string; name: string }>(
+    `select id, name from campus.organizations where id = any($1::uuid[])`,
+    [[...new Set(tests.filter((t) => t.shared_to_me).map((t) => t.owner_org_id))]])).rows.map((r) => [r.id, r.name] as [string, string])) : []);
   res.json(tests.map((t) => ({
     id: t.id,
     title: t.title,
     durationMinutes: Math.round(t.duration_seconds / 60),
     published: t.is_published,
-    source: t.owner_org_id === orgId ? 'college' : 'forge',
+    source: t.owner_org_id === orgId ? 'college' : t.shared_to_me ? 'shared' : 'forge',
+    sharedBy: t.shared_to_me ? sharers.get(t.owner_org_id) ?? null : null,
+    sharedWith: t.shared_with,
     questionCount: counts.get(t.id) ?? 0,
     createdAt: t.created_at,
   })));
@@ -78,7 +88,9 @@ testsRouter.get('/:testId', async (req, res) => {
       `select q.id, q.question_type as type, q.body, q.options, q.correct_options as "correctOptions",
               q.nat_answer as "natAnswer", q.nat_tolerance as "natTolerance", q.marks, q.negative_marks as "negativeMarks",
               q.topic, q.difficulty, q.explanation, q.starter_code as "starterCode",
-              q.judge_config->>'compare' as compare, tq.sort_order as "sortOrder", tq.section_id as "sectionId"
+              q.judge_config->>'compare' as compare, tq.sort_order as "sortOrder", tq.section_id as "sectionId",
+              q.tags, q.text_answers as "acceptedAnswers", coalesce((q.judge_config->>'caseSensitive')::boolean, false) as "caseSensitive",
+              q.rubric, q.max_words as "maxWords"
          from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
         where tq.test_id = $1 order by tq.sort_order, q.created_at`, [testId])).rows;
     // Authors see every test case, hidden ones included (RLS: content.create on this college).
@@ -203,7 +215,7 @@ testsRouter.patch('/:testId', async (req, res) => {
 
 const optionIds = 'abcdefghij'.split('');
 const questionBody = z.object({
-  type: z.enum(['mcq', 'msq', 'nat', 'coding']),
+  type: z.enum(['mcq', 'msq', 'nat', 'coding', 'tf', 'fib', 'descriptive']),
   body: z.string().trim().min(1).max(10_000),
   options: z.array(z.string().trim().min(1).max(2000)).min(2).max(10).optional(),
   correct: z.array(z.number().int().min(0).max(9)).optional(),
@@ -215,6 +227,15 @@ const questionBody = z.object({
   topic: z.string().trim().max(120).nullable().optional(),
   difficulty: z.enum(['easy', 'medium', 'hard']).nullable().optional(),
   explanation: z.string().trim().max(10_000).nullable().optional(),
+  tags: z.array(z.string().trim().toLowerCase().min(1).max(40)).max(20).default([]),
+  // tf: is the statement true?
+  answerTrue: z.boolean().optional(),
+  // fib: accepted answers; compared ignoring case unless caseSensitive
+  acceptedAnswers: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
+  caseSensitive: z.boolean().default(false),
+  // descriptive: marking guide and an optional word limit
+  rubric: z.string().trim().max(5000).nullable().optional(),
+  maxWords: z.number().int().min(1).max(5000).nullable().optional(),
   // coding only
   starterCode: z.object({
     javascript: z.string().max(20_000), python: z.string().max(20_000), java: z.string().max(20_000), cpp: z.string().max(20_000),
@@ -238,6 +259,15 @@ const questionBody = z.object({
     if (q.natAnswer === undefined) ctx.addIssue({ code: 'custom', path: ['natAnswer'], message: 'A numeric answer is required.' });
     return;
   }
+  if (q.type === 'tf') {
+    if (q.answerTrue === undefined) ctx.addIssue({ code: 'custom', path: ['answerTrue'], message: 'Say whether the statement is true or false.' });
+    return;
+  }
+  if (q.type === 'fib') {
+    if (!q.acceptedAnswers?.length) ctx.addIssue({ code: 'custom', path: ['acceptedAnswers'], message: 'Add at least one accepted answer.' });
+    return;
+  }
+  if (q.type === 'descriptive') return;
   if (!q.options) { ctx.addIssue({ code: 'custom', path: ['options'], message: 'Add at least two options.' }); return; }
   const correct = [...new Set(q.correct ?? [])];
   if (correct.some((i) => i >= q.options!.length)) ctx.addIssue({ code: 'custom', path: ['correct'], message: 'A correct answer points to a missing option.' });
@@ -252,21 +282,31 @@ testsRouter.post('/:testId/questions', async (req, res) => {
   const q = questionBody.parse(req.body);
   await requirePermission(userId, orgId, 'content.create');
   const choice = q.type === 'mcq' || q.type === 'msq';
-  const options = choice ? q.options!.map((text, i) => ({ id: optionIds[i], text })) : null;
-  const correct = choice ? [...new Set(q.correct!)].sort().map((i) => optionIds[i]) : null;
+  let options = choice ? q.options!.map((text, i) => ({ id: optionIds[i], text })) : null;
+  let correct = choice ? [...new Set(q.correct!)].sort().map((i) => optionIds[i]) : null;
+  if (q.type === 'tf') {
+    options = [{ id: 'a', text: 'True' }, { id: 'b', text: 'False' }];
+    correct = [q.answerTrue ? 'a' : 'b'];
+  }
   const coding = q.type === 'coding';
+  const judgeConfig = coding ? { compare: q.compare } : q.type === 'fib' && q.caseSensitive ? { caseSensitive: true } : {};
   const created = await asUser(userId, async (db) => {
     const owns = (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount;
     if (!owns) throw notFound('Test not found in this college.');
     const question = (await db.query<{ id: string }>(
       `insert into public.testseries_questions
          (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks,
-          topic, difficulty, explanation, owner_org_id, visibility, starter_code, judge_config)
-       values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private', $13::jsonb, $14::jsonb) returning id`,
+          topic, difficulty, explanation, owner_org_id, visibility, starter_code, judge_config,
+          tags, text_answers, rubric, max_words)
+       values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private', $13::jsonb, $14::jsonb,
+               $15, $16::jsonb, $17, $18) returning id`,
       [q.type, q.body, options ? JSON.stringify(options) : null, correct ? JSON.stringify(correct) : null,
-       q.type === 'nat' ? q.natAnswer ?? null : null, q.natTolerance ?? 0, q.marks, q.type === 'mcq' ? q.negativeMarks : 0,
+       q.type === 'nat' ? q.natAnswer ?? null : null, q.natTolerance ?? 0, q.marks,
+       ['mcq', 'tf', 'fib'].includes(q.type) ? q.negativeMarks : 0,
        q.topic ?? null, q.difficulty ?? null, q.explanation ?? null, orgId,
-       JSON.stringify(coding ? Object.fromEntries(Object.entries(q.starterCode!).filter(([, c]) => c?.trim())) : {}), JSON.stringify(coding ? { compare: q.compare } : {})]
+       JSON.stringify(coding ? Object.fromEntries(Object.entries(q.starterCode!).filter(([, c]) => c?.trim())) : {}), JSON.stringify(judgeConfig),
+       [...new Set(q.tags)], q.type === 'fib' ? JSON.stringify(q.acceptedAnswers) : null,
+       q.type === 'descriptive' ? q.rubric ?? null : null, q.type === 'descriptive' ? q.maxWords ?? null : null]
     )).rows[0];
     if (coding) {
       await db.query(
@@ -394,7 +434,7 @@ const importBody = z.object({ csv: z.string().min(1).max(5_000_000) });
 
 const summarize = (questions: SheetQuestion[]) => ({
   valid: questions.length,
-  byType: { mcq: questions.filter((q) => q.type === 'mcq').length, msq: questions.filter((q) => q.type === 'msq').length, nat: questions.filter((q) => q.type === 'nat').length },
+  byType: Object.fromEntries(['mcq', 'msq', 'nat', 'tf', 'fib', 'descriptive'].map((t) => [t, questions.filter((q) => q.type === t).length])),
   sections: [...new Set(questions.map((q) => q.section).filter(Boolean))] as string[],
 });
 
@@ -411,7 +451,10 @@ testsRouter.post('/:testId/questions/import/preview', async (req, res) => {
   res.json({
     summary: { ...summarize(questions), invalid: errors.length },
     errors,
-    sample: questions.slice(0, 5).map((q) => ({ line: q.line, type: q.type, body: q.body, options: q.options, correct: q.correct, natAnswer: q.natAnswer, marks: q.marks, section: q.section })),
+    sample: questions.slice(0, 5).map((q) => ({
+      line: q.line, type: q.type, body: q.body, options: q.options, correct: q.correct, natAnswer: q.natAnswer, marks: q.marks,
+      section: q.section, acceptedAnswers: q.textAnswers, tags: q.tags,
+    })),
   });
 });
 
@@ -447,15 +490,17 @@ testsRouter.post('/:testId/questions/import', async (req, res) => {
     }
     let order = (await db.query<{ n: number }>(`select coalesce(max(sort_order) + 1, 0)::int as n from public.test_questions where test_id = $1`, [testId])).rows[0].n;
     for (const q of questions) {
-      const options = q.type === 'nat' ? null : q.options.map((text, i) => ({ id: optionIds[i], text }));
-      const correct = q.type === 'nat' ? null : q.correct.map((i) => optionIds[i]);
+      const choice = q.options.length > 0;
+      const options = choice ? q.options.map((text, i) => ({ id: optionIds[i], text })) : null;
+      const correct = choice ? q.correct.map((i) => optionIds[i]) : null;
       const inserted = (await db.query<{ id: string }>(
         `insert into public.testseries_questions
            (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks,
-            topic, difficulty, explanation, owner_org_id, visibility)
-         values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private') returning id`,
+            topic, difficulty, explanation, owner_org_id, visibility, tags, text_answers, rubric)
+         values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private', $13, $14::jsonb, $15) returning id`,
         [q.type, q.body, options ? JSON.stringify(options) : null, correct ? JSON.stringify(correct) : null,
-         q.natAnswer, q.natTolerance, q.marks, q.negativeMarks, q.topic, q.difficulty, q.explanation, orgId])).rows[0];
+         q.natAnswer, q.natTolerance, q.marks, q.negativeMarks, q.topic, q.difficulty, q.explanation, orgId,
+         q.tags, q.type === 'fib' ? JSON.stringify(q.textAnswers) : null, q.rubric])).rows[0];
       await db.query(
         `insert into public.test_questions (test_id, question_id, sort_order, section_id) values ($1, $2, $3, $4)`,
         [testId, inserted.id, order++, q.section ? sections.get(q.section.toLowerCase()) ?? null : null]);
@@ -463,4 +508,97 @@ testsRouter.post('/:testId/questions/import', async (req, res) => {
     return { imported: questions.length, sectionsCreated: created };
   });
   res.status(201).json(result);
+});
+
+// ── Sharing a test with another college ─────────────────────────────────────
+testsRouter.get('/:testId/shares', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  await requirePermission(userId, orgId, 'content.create');
+  res.json(await asUser(userId, async (db) => (await db.query(
+    `select s.org_id as "orgId", o.name, o.slug, s.created_at as "sharedAt"
+       from campus.test_shares s join campus.organizations o on o.id = s.org_id
+      where s.test_id = $1 and s.owner_org_id = $2 order by o.name`, [testId, orgId])).rows));
+});
+
+const shareBody = z.object({ slug: z.string().trim().toLowerCase().min(2).max(63) });
+
+testsRouter.post('/:testId/shares', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const { slug } = shareBody.parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  // Colleges aren't listed to each other; staff share by the other college's short name.
+  const target = await asSystem(async (db) => (await db.query<{ id: string; name: string }>(
+    `select id, name from campus.organizations where slug = $1 and type = 'college' and status = 'active'`, [slug])).rows[0]);
+  if (!target) throw notFound(`No college with the short name "${slug}".`);
+  if (target.id === orgId) throw badRequest('That is your own college.');
+  await asUser(userId, (db) => db.query(
+    `insert into campus.test_shares (test_id, owner_org_id, org_id, created_by) values ($1, $2, $3, $4)`, [testId, orgId, target.id, userId]));
+  res.status(201).json({ orgId: target.id, name: target.name });
+});
+
+testsRouter.delete('/:testId/shares/:targetOrgId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  await requirePermission(userId, orgId, 'content.create');
+  const n = await asUser(userId, async (db) => (await db.query(
+    `delete from campus.test_shares where test_id = $1 and owner_org_id = $2 and org_id = $3`,
+    [uuid.parse(req.params.testId), orgId, uuid.parse(req.params.targetOrgId)])).rowCount);
+  if (!n) throw notFound('That share does not exist.');
+  res.status(204).end();
+});
+
+/**
+ * Copy a test shared with this college into its own bank (questions, sections,
+ * coding tests), so it can be edited. The copy is a draft owned by this college.
+ */
+testsRouter.post('/:testId/copy', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  await requirePermission(userId, orgId, 'content.create');
+  // Access: the share row must be visible to this college (RLS) — Forge tests can't be copied.
+  const shared = await asUser(userId, async (db) => (await db.query(
+    `select 1 from campus.test_shares where test_id = $1 and org_id = $2`, [testId, orgId])).rowCount);
+  if (!shared) throw notFound('Only tests another college shared with you can be copied.');
+  const copy = await asSystem(async (db) => {
+    const t = (await db.query(`select * from public.tests where id = $1 and deleted_at is null`, [testId])).rows[0];
+    if (!t) throw notFound('Test not found.');
+    const slug = `${String(t.slug).slice(0, 60)}-${randomBytes(4).toString('hex')}`;
+    const nt = (await db.query<{ id: string; title: string }>(
+      `insert into public.tests (slug, title, instructions, duration_seconds, owner_org_id, visibility, is_published, section_time_locked, draw_count)
+       values ($1, $2, $3, $4, $5, 'org', false, $6, $7) returning id, title`,
+      [slug, `${t.title} (copy)`, t.instructions, t.duration_seconds, orgId, t.section_time_locked, t.draw_count])).rows[0];
+    const sectionMap = new Map<string, string>();
+    for (const sec of (await db.query(`select * from public.test_sections where test_id = $1 order by sort_order`, [testId])).rows) {
+      const ns = (await db.query<{ id: string }>(
+        `insert into public.test_sections (test_id, name, sort_order, duration_seconds, draw_count) values ($1, $2, $3, $4, $5) returning id`,
+        [nt.id, sec.name, sec.sort_order, sec.duration_seconds, sec.draw_count])).rows[0];
+      sectionMap.set(sec.id, ns.id);
+    }
+    const links = (await db.query(
+      `select tq.sort_order, tq.section_id, q.* from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
+        where tq.test_id = $1 order by tq.sort_order`, [testId])).rows;
+    for (const q of links) {
+      const nq = (await db.query<{ id: string }>(
+        `insert into public.testseries_questions
+           (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks, topic, difficulty,
+            explanation, owner_org_id, visibility, starter_code, judge_config, tags, text_answers, rubric, max_words)
+         values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'private', $13, $14, $15, $16, $17, $18) returning id`,
+        [q.question_type, q.body, q.options ? JSON.stringify(q.options) : null, q.correct_options ? JSON.stringify(q.correct_options) : null,
+         q.nat_answer, q.nat_tolerance, q.marks, q.negative_marks, q.topic, q.difficulty, q.explanation, orgId,
+         JSON.stringify(q.starter_code ?? {}), JSON.stringify(q.judge_config ?? {}), q.tags ?? [],
+         q.text_answers ? JSON.stringify(q.text_answers) : null, q.rubric, q.max_words])).rows[0];
+      await db.query(
+        `insert into public.question_test_cases (question_id, input, expected_output, is_sample, sort_order)
+         select $2, input, expected_output, is_sample, sort_order from public.question_test_cases where question_id = $1`, [q.id, nq.id]);
+      await db.query(`insert into public.test_questions (test_id, question_id, sort_order, section_id) values ($1, $2, $3, $4)`,
+        [nt.id, nq.id, q.sort_order, q.section_id ? sectionMap.get(q.section_id) ?? null : null]);
+    }
+    return nt;
+  });
+  res.status(201).json(copy);
 });

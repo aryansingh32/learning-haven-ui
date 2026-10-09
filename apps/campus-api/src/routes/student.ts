@@ -109,6 +109,7 @@ const answerBody = z.object({
   natValue: z.number().finite().nullable().optional(),
   code: z.string().max(50_000, 'Code exceeds the 50 KB limit.').nullable().optional(),
   language: z.enum(JUDGED_LANGUAGES).nullable().optional(),
+  textValue: z.string().max(20_000, 'That answer is too long.').nullable().optional(),
   markedForReview: z.boolean().optional(),
 });
 

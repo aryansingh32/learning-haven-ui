@@ -32,6 +32,7 @@ const U = {
   facultyB: 'b0000000-0000-0000-0000-000000000002',
   forgeAdmin: 'f0000000-0000-0000-0000-000000000001',
   invigA: 'a0000000-0000-0000-0000-000000000003',
+  evalA: 'a0000000-0000-0000-0000-000000000004',
 };
 const ORG_A = 'aaaaaaaa-1111-0000-0000-00000000000a';
 const ORG_B = 'bbbbbbbb-1111-0000-0000-00000000000b';
@@ -948,5 +949,112 @@ describe('college structure (C1)', () => {
     const saved = await request(app).patch(`/campus/v1/orgs/${ORG_A}/settings`).set(await as(U.adminA)).send({ resultRelease: 'manual', maxViolations: 5 });
     expect(saved.body.defaults).toMatchObject({ resultRelease: 'manual', maxViolations: 5, shuffle: true });
     expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/settings`).set(await as(U.adminA))).status).toBe(404);
+  });
+});
+
+describe('question types, marking and sharing (C2a)', () => {
+  let qTest: string;
+  let qAssign: string;
+  const ids: Record<string, string> = {};
+
+  beforeAll(async () => {
+    await pool.query(`insert into campus.org_memberships (org_id, user_id, role) values ($1, $2, 'evaluator')`, [ORG_A, U.evalA]);
+  });
+
+  it('authors true/false, fill-in-the-blank and written questions with tags', async () => {
+    qTest = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Mixed paper', durationMinutes: 30 })).body.id;
+    const add = async (q: Record<string, unknown>) => request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/questions`).set(await as(U.facultyA)).send(q);
+    ids.tf = (await add({ type: 'tf', body: 'A stack is FIFO.', answerTrue: false, marks: 1, negativeMarks: 0.5, tags: ['DS', 'stacks'] })).body.id;
+    ids.fib = (await add({ type: 'fib', body: 'Plants make food by ___.', acceptedAnswers: ['photosynthesis'], marks: 2 })).body.id;
+    ids.essay = (await add({ type: 'descriptive', body: 'Define recursion.', rubric: 'Base case + step', maxWords: 5, marks: 5 })).body.id;
+    expect(Object.values(ids).every(Boolean)).toBe(true);
+    expect((await add({ type: 'fib', body: 'No answer ___' })).status).toBe(400);
+    expect((await add({ type: 'tf', body: 'Unsure' })).status).toBe(400);
+    const detail = (await request(app).get(`/campus/v1/orgs/${ORG_A}/tests/${qTest}`).set(await as(U.facultyA))).body;
+    expect(detail.questions.find((q: { id: string }) => q.id === ids.tf)).toMatchObject({ tags: ['ds', 'stacks'], options: [{ id: 'a', text: 'True' }, { id: 'b', text: 'False' }] });
+    expect(detail.questions.find((q: { id: string }) => q.id === ids.essay)).toMatchObject({ rubric: 'Base case + step', maxWords: 5 });
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/tests/${qTest}`).set(await as(U.facultyA)).send({ published: true })).status).toBe(200);
+  });
+
+  it('deals paper versions A and B to the batch', async () => {
+    qAssign = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: qTest, title: 'Mixed paper', opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 86_400_000),
+      publish: true, paperVersions: 2, resultRelease: 'immediately', maxAttempts: 1,
+      proctoring: { enabled: false },
+    })).body.id;
+    const v1 = (await request(app).post(`/campus/v1/my/assignments/${qAssign}/start`).set(await as(U.s1))).body;
+    const v2 = (await request(app).post(`/campus/v1/my/assignments/${qAssign}/start`).set(await as(U.s2))).body;
+    expect([v1.paperVersion, v2.paperVersion].sort()).toEqual(['A', 'B']);
+    ids.attempt = v1.attemptId;
+    // Answers never travel to the student.
+    const fib = v1.questions.find((q: { id: string }) => q.id === ids.fib);
+    expect(fib.acceptedAnswers).toBeUndefined();
+    expect(v1.questions.find((q: { id: string }) => q.id === ids.essay).maxWords).toBe(5);
+  });
+
+  it('checks typed answers and keeps written ones for an evaluator', async () => {
+    const put = async (qid: string, body: Record<string, unknown>) =>
+      request(app).put(`/campus/v1/my/attempts/${ids.attempt}/answers/${qid}`).set(await as(U.s1)).send(body);
+    expect((await put(ids.tf, { selectedOptions: ['b'] })).status).toBe(200);
+    expect((await put(ids.fib, { textValue: '  Photosynthesis. ' })).status).toBe(200);
+    expect((await put(ids.fib, { selectedOptions: ['a'] })).status).toBe(400);
+    const long = await put(ids.essay, { textValue: 'A function that calls itself again' });
+    expect(long.status).toBe(400);
+    expect(long.body.error).toMatch(/5 words/);
+    expect((await put(ids.essay, { textValue: 'Function calling itself' })).status).toBe(200);
+    const done = (await request(app).post(`/campus/v1/my/attempts/${ids.attempt}/submit`).set(await as(U.s1))).body;
+    expect(done.result.score).toBe(3); // tf 1 + fib 2; the essay waits
+    expect(done.result.perQuestion.find((r: { questionId: string }) => r.questionId === ids.essay)).toMatchObject({ pending: true });
+    const results = (await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/results`).set(await as(U.facultyA))).body;
+    expect(results.summary.markingPending).toBe(1);
+    expect(results.rows.find((r: { userId: string }) => r.userId === U.s1)).toMatchObject({ markingPending: true, gradingPending: false });
+  });
+
+  it('lets an evaluator mark written answers, blind if they like, on the record', async () => {
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/marking`).set(await as(U.invigA))).status).toBe(403);
+    const blind = (await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/marking?blind=1`).set(await as(U.evalA))).body;
+    const essay = blind.questions.find((q: { id: string }) => q.id === ids.essay);
+    expect(essay).toMatchObject({ rubric: 'Base case + step', pending: 1 });
+    expect(essay.answers[0]).toMatchObject({ student: 'Script 1', rollNumber: null, text: 'Function calling itself', marks: null });
+    expect(blind.questions.find((q: { id: string }) => q.id === ids.fib).answers[0].autoCorrect).toBe(true);
+
+    const mark = async (body: Record<string, unknown>) =>
+      request(app).put(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/attempts/${ids.attempt}/marks`).set(await as(U.evalA)).send(body);
+    expect((await mark({ questionId: ids.essay, marks: 7 })).status).toBe(400);
+    expect((await mark({ questionId: ids.essay, marks: 4, feedback: 'Mention the base case.' })).body).toMatchObject({ score: 7 });
+    expect((await request(app).put(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/attempts/${ids.attempt}/feedback`).set(await as(U.evalA))
+      .send({ feedback: 'Good work overall.' })).status).toBe(200);
+
+    const mine = (await request(app).get(`/campus/v1/my/attempts/${ids.attempt}`).set(await as(U.s1))).body.result;
+    expect(mine.score).toBe(7);
+    expect(mine.feedback).toBe('Good work overall.');
+    expect(mine.perQuestion.find((r: { questionId: string }) => r.questionId === ids.essay)).toMatchObject({ marksAwarded: 4, feedback: 'Mention the base case.' });
+    const results = (await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${qAssign}/results`).set(await as(U.facultyA))).body;
+    expect(results.summary.markingPending).toBe(0);
+    const { rows } = await pool.query(`select kind, reason from campus.attempt_adjustments where attempt_id = $1 order by created_at`, [ids.attempt]);
+    expect(rows).toEqual([{ kind: 'grade', reason: 'Marked 4/5' }, { kind: 'feedback', reason: 'Overall feedback updated' }]);
+  });
+
+  it('shares a test with another college, which may assign or copy it', async () => {
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares`).set(await as(U.facultyA)).send({ slug: 'nope' })).status).toBe(404);
+    const share = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares`).set(await as(U.facultyA)).send({ slug: 'college-b' });
+    expect(share.status).toBe(201);
+    const bList = (await request(app).get(`/campus/v1/orgs/${ORG_B}/tests`).set(await as(U.facultyB))).body;
+    expect(bList.find((t: { id: string }) => t.id === qTest)).toMatchObject({ source: 'shared', sharedBy: 'College A', questionCount: 3 });
+    // College B can't read the answers of the shared test…
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/tests/${qTest}`).set(await as(U.facultyB))).status).toBe(404);
+    // …but can assign it, or copy it into its own bank.
+    const assign = async () => request(app).post(`/campus/v1/orgs/${ORG_B}/assignments`).set(await as(U.facultyB)).send({
+      batchId: BATCH_B, testId: qTest, title: 'Borrowed', opensAt: new Date(), closesAt: new Date(Date.now() + 3_600_000) });
+    expect((await assign()).status).toBe(201);
+    const copy = await request(app).post(`/campus/v1/orgs/${ORG_B}/tests/${qTest}/copy`).set(await as(U.facultyB));
+    expect(copy.status).toBe(201);
+    const copied = (await request(app).get(`/campus/v1/orgs/${ORG_B}/tests/${copy.body.id}`).set(await as(U.facultyB))).body;
+    expect(copied).toMatchObject({ title: 'Mixed paper (copy)', published: false });
+    expect(copied.questions.map((q: { type: string }) => q.type).sort()).toEqual(['descriptive', 'fib', 'tf']);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/copy`).set(await as(U.facultyA))).status).toBe(404);
+
+    expect((await request(app).delete(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares/${ORG_B}`).set(await as(U.facultyA))).status).toBe(204);
+    expect((await assign()).status).toBe(400);
   });
 });

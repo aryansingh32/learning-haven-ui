@@ -3,7 +3,12 @@
 // most trust-critical part of this product -- is exhaustively unit
 // testable without mocking anything.
 
-export type QuestionType = 'mcq' | 'msq' | 'nat' | 'coding';
+export type QuestionType = 'mcq' | 'msq' | 'nat' | 'coding' | 'tf' | 'fib' | 'descriptive';
+
+/** Types a student answers by picking options. */
+export const OPTION_TYPES: readonly QuestionType[] = ['mcq', 'msq', 'tf'];
+/** Types a student answers by typing text. */
+export const TEXT_TYPES: readonly QuestionType[] = ['fib', 'descriptive'];
 export type AnswerStatus = 'not_visited' | 'visited' | 'answered' | 'marked_for_review' | 'answered_marked';
 
 export interface ScoringQuestion {
@@ -14,6 +19,9 @@ export interface ScoringQuestion {
   nat_tolerance: number;
   marks: number;
   negative_marks: number;
+  /** fib: accepted answers; compared ignoring case, spacing and punctuation at the ends unless caseSensitive. */
+  text_answers?: string[] | null;
+  case_sensitive?: boolean;
 }
 
 export interface AnswerState {
@@ -29,6 +37,12 @@ export interface AnswerState {
   tests_total?: number | null;
   /** 'pending' when the judge was unavailable at submit; staff can regrade. */
   grading?: 'judged' | 'pending' | null;
+  /** fib / descriptive: what the student typed. */
+  text_value?: string | null;
+  /** descriptive (or any question an evaluator overrides): marks given by a person. Never set by the client. */
+  manual_marks?: number | null;
+  /** An evaluator's comment on this answer. Never set by the client. */
+  feedback?: string | null;
 }
 
 export interface QuestionScoreResult {
@@ -58,8 +72,22 @@ function isAttempted(answer: AnswerState | undefined, questionType: QuestionType
   if (answer.status !== 'answered' && answer.status !== 'answered_marked') return false;
   if (questionType === 'nat') return answer.nat_value !== null && answer.nat_value !== undefined;
   if (questionType === 'coding') return typeof answer.code === 'string' && answer.code.trim().length > 0;
+  if (TEXT_TYPES.includes(questionType)) return typeof answer.text_value === 'string' && answer.text_value.trim().length > 0;
   return Array.isArray(answer.selected_options) && answer.selected_options.length > 0;
 }
+
+/** How a typed answer is compared: trimmed, inner spaces collapsed, trailing full stop dropped, case-folded. */
+export function normalizeTextAnswer(text: string, caseSensitive = false): string {
+  const t = text.normalize('NFKC').trim().replace(/\s+/g, ' ').replace(/[.。]+$/, '').trim();
+  return caseSensitive ? t : t.toLowerCase();
+}
+
+export function textAnswerMatches(given: string, accepted: string[], caseSensitive = false): boolean {
+  const g = normalizeTextAnswer(given, caseSensitive);
+  return g.length > 0 && accepted.some((a) => normalizeTextAnswer(a, caseSensitive) === g);
+}
+
+const clampMarks = (m: number, max: number) => Math.round(Math.max(0, Math.min(max, m)) * 100) / 100;
 
 export function scoreQuestion(question: ScoringQuestion, answer: AnswerState | undefined): QuestionScoreResult {
   const attempted = isAttempted(answer, question.question_type);
@@ -67,7 +95,24 @@ export function scoreQuestion(question: ScoringQuestion, answer: AnswerState | u
     return { questionId: question.id, attempted: false, isCorrect: null, marksAwarded: 0 };
   }
 
-  if (question.question_type === 'mcq') {
+  // An evaluator's marks win for any non-coding question (e.g. accepting a near-miss blank).
+  const manual = answer!.manual_marks;
+  if (manual !== null && manual !== undefined && question.question_type !== 'coding') {
+    const marks = clampMarks(manual, question.marks);
+    return { questionId: question.id, attempted: true, isCorrect: marks === question.marks, marksAwarded: marks };
+  }
+
+  if (question.question_type === 'descriptive') {
+    // Marked by a person; counts 0 (pending) until then.
+    return { questionId: question.id, attempted: true, isCorrect: null, marksAwarded: 0, pending: true };
+  }
+
+  if (question.question_type === 'fib') {
+    const ok = textAnswerMatches(answer!.text_value ?? '', question.text_answers ?? [], question.case_sensitive);
+    return { questionId: question.id, attempted: true, isCorrect: ok, marksAwarded: ok ? question.marks : -question.negative_marks };
+  }
+
+  if (question.question_type === 'mcq' || question.question_type === 'tf') {
     const selected = answer!.selected_options ?? [];
     const correct = question.correct_options ?? [];
     const isCorrect = selected.length === 1 && correct.length === 1 && selected[0] === correct[0];

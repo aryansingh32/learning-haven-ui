@@ -4,7 +4,7 @@ describe('parseQuestionSheet', () => {
   it('reads the template', () => {
     const r = parseQuestionSheet(QUESTION_SHEET_TEMPLATE);
     expect(r.errors).toEqual([]);
-    expect(r.questions.map((q) => [q.type, q.correct, q.natAnswer])).toEqual([['mcq', [1], null], ['msq', [0, 2], null], ['nat', [], 36]]);
+    expect(r.questions.slice(0, 3).map((q) => [q.type, q.correct, q.natAnswer])).toEqual([['mcq', [1], null], ['msq', [0, 2], null], ['nat', [], 36]]);
     expect(r.questions[0]).toMatchObject({ section: 'Aptitude', difficulty: 'easy', negativeMarks: 0.25, marks: 1 });
   });
 
@@ -42,5 +42,32 @@ describe('parseQuestionSheet', () => {
   it('ignores negative marks on questions where they do not apply', () => {
     const r = parseQuestionSheet('Type,Question,A,B,Answer,Negative marks\nmsq,Q,x,y,"A,B",1');
     expect(r.questions[0].negativeMarks).toBe(0);
+  });
+});
+
+describe('parseQuestionSheet — true/false, fill in the blank, written, tags', () => {
+  it('reads the new types and tags', () => {
+    const { questions, errors } = parseQuestionSheet([
+      'Type,Question,Answer,Marks,Tags,Rubric',
+      'True/False,The earth is flat.,F,1,"Science, myths",',
+      'fill in the blank,H2O is ___.,water|Water ,1,,',
+      'essay,Describe recursion.,,5,cs,"Base case 2, step 3"',
+    ].join('\n'));
+    expect(errors).toEqual([]);
+    expect(questions[0]).toMatchObject({ type: 'tf', options: ['True', 'False'], correct: [1], tags: ['science', 'myths'] });
+    expect(questions[1]).toMatchObject({ type: 'fib', textAnswers: ['water', 'Water'] });
+    expect(questions[2]).toMatchObject({ type: 'descriptive', rubric: 'Base case 2, step 3', marks: 5, tags: ['cs'] });
+  });
+
+  it('explains missing answers per line', () => {
+    const { errors } = parseQuestionSheet('Type,Question,Answer\ntf,Sky is blue.,maybe\nfib,Blank ___,\n');
+    expect(errors.map((e) => e.line)).toEqual([2, 3]);
+    expect(errors[0].message).toMatch(/True or False/);
+  });
+
+  it('the template parses cleanly', () => {
+    const { questions, errors } = parseQuestionSheet(QUESTION_SHEET_TEMPLATE);
+    expect(errors).toEqual([]);
+    expect(questions.map((q) => q.type)).toEqual(['mcq', 'msq', 'nat', 'tf', 'fib', 'descriptive']);
   });
 });

@@ -37,6 +37,13 @@ begin
   return n;
 end $$;
 
+create function pg_temp.check_true(actual boolean, label text) returns void
+language plpgsql as $$
+begin
+  if actual is not true then raise exception 'FAIL: % (got %)', label, actual; end if;
+  raise notice 'ok  %', label;
+end $$;
+
 create function pg_temp.act_as(uid uuid) returns void
 language sql as $$
   select set_config('request.jwt.claims', json_build_object('sub', uid, 'role', 'authenticated')::text, true);
@@ -431,6 +438,65 @@ select pg_temp.act_as('a2000000-0000-0000-0000-000000000003');
 set local role authenticated;
 select pg_temp.check_eq((select count(*) from campus.assignment_accommodations), 0, 'other students do not see it');
 reset role;
+
+-- ── C2a: question types, tags, paper versions, sharing ──────────────────────
+select pg_temp.check_denied(
+  $$insert into public.testseries_questions (question_type, body, owner_org_id) values ('fib', 'The capital of India is ___', 'aaaaaaaa-0000-0000-0000-00000000000a')$$,
+  'a fill-in-the-blank needs accepted answers');
+select pg_temp.check_denied(
+  $$insert into public.testseries_questions (question_type, body, options, correct_options, owner_org_id) values
+     ('tf', 'Water boils at 90°C', '[{"id":"a","text":"True"},{"id":"b","text":"False"},{"id":"c","text":"Maybe"}]', '["b"]', 'aaaaaaaa-0000-0000-0000-00000000000a')$$,
+  'a true/false question has exactly two options');
+select pg_temp.check_denied(
+  $$insert into public.testseries_questions (question_type, body, owner_org_id, tags) values
+     ('descriptive', 'Explain', 'aaaaaaaa-0000-0000-0000-00000000000a', (select array_agg('t' || g) from generate_series(1, 21) g))$$,
+  'at most 20 tags');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into public.testseries_questions (question_type, body, text_answers, owner_org_id, tags) values
+     ('fib', 'Delhi is the capital of ___', '["India"]', 'aaaaaaaa-0000-0000-0000-00000000000a', '{geography}')$$),
+  1, 'a fill-in-the-blank with an accepted answer is fine');
+select pg_temp.check_denied(
+  $$update campus.assignments set paper_versions = 5 where id = 'aaaaaaaa-0000-0000-0000-0000000000a1'$$,
+  'at most four paper versions');
+
+select pg_temp.act_as('b3000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_denied(
+  $$insert into campus.test_shares (test_id, owner_org_id, org_id) values
+     ('aaaaaaaa-0000-0000-0000-0000000000e1', 'aaaaaaaa-0000-0000-0000-00000000000a', 'bbbbbbbb-0000-0000-0000-00000000000b')$$,
+  'College B cannot share College A''s test with itself');
+select pg_temp.check_denied(
+  $$insert into campus.test_shares (test_id, owner_org_id, org_id) values
+     ('aaaaaaaa-0000-0000-0000-0000000000e1', 'bbbbbbbb-0000-0000-0000-00000000000b', 'aaaaaaaa-0000-0000-0000-00000000000a')$$,
+  'nor claim to own it');
+select pg_temp.check_eq((select count(*) from public.tests where id = 'aaaaaaaa-0000-0000-0000-0000000000e1'), 0, 'College B cannot see the unshared test');
+reset role;
+
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000002');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into campus.test_shares (test_id, owner_org_id, org_id) values
+     ('aaaaaaaa-0000-0000-0000-0000000000e1', 'aaaaaaaa-0000-0000-0000-00000000000a', 'bbbbbbbb-0000-0000-0000-00000000000b')$$),
+  1, 'College A faculty share their test with College B');
+reset role;
+
+select pg_temp.act_as('b3000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from public.tests where id = 'aaaaaaaa-0000-0000-0000-0000000000e1'), 1, 'College B now sees the shared test');
+select pg_temp.check_eq((select count(*) from public.testseries_questions where owner_org_id = 'aaaaaaaa-0000-0000-0000-00000000000a'), 0,
+  'but not its questions or answers');
+select pg_temp.check_true(campus.test_usable_by_org('aaaaaaaa-0000-0000-0000-0000000000e1', 'bbbbbbbb-0000-0000-0000-00000000000b'), 'and may assign it');
+select pg_temp.check_eq(pg_temp.rows_changed($$delete from campus.test_shares$$), 0, 'College B cannot withdraw the share');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$update public.tests set title = 'mine now' where id = 'aaaaaaaa-0000-0000-0000-0000000000e1'$$), 0, 'nor edit the shared test');
+reset role;
+
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000002');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed($$delete from campus.test_shares where org_id = 'bbbbbbbb-0000-0000-0000-00000000000b'$$), 1, 'the owner withdraws it');
+reset role;
+select pg_temp.check_true(not campus.test_usable_by_org('aaaaaaaa-0000-0000-0000-0000000000e1', 'bbbbbbbb-0000-0000-0000-00000000000b'), 'then it is not usable');
+
 
 rollback;
 
