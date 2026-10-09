@@ -307,7 +307,7 @@ features built on them fail there today:
 `20260823100001_user_resumes` (resume builder), `20260823100002_job_bookmarks`, `20260823200001_course_pricing`,
 `20260901000001_chapter_notes_and_notebook`, `20260901000002_quiz_answers`, `20260901000004_mock_test` (course mock test).
 (`20260216000002_advanced_admin`'s `roadmaps`, `roadmap_items`, `plans_config` are also absent — check whether that was intended.)
-Apply them, in date order, **before** the pending list below; `20260901000003` and `20260906000002` should be checked the same way.
+Apply them, in date order, **before** the pending list below (replayed cleanly on the live snapshot, then every pending migration, 2026-10-09); `20260901000003` and `20260906000002` should be checked the same way.
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
