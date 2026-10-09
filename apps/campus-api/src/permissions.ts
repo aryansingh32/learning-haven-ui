@@ -4,7 +4,7 @@ import { forbidden } from './errors';
 export type Permission =
   | 'org.manage' | 'org.billing' | 'members.manage' | 'members.view' | 'batches.manage'
   | 'content.create' | 'assessments.create' | 'assessments.grade' | 'assessments.invigilate'
-  | 'reports.view' | 'reports.export' | 'records.view';
+  | 'reports.view' | 'reports.export' | 'records.view' | 'placements.manage';
 
 /** Same rule the RLS policies use, asked up front so the user gets a clear 403. */
 export async function hasPermission(db: Db, orgId: string, permission: Permission): Promise<boolean> {

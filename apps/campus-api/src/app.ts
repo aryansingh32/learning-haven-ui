@@ -7,6 +7,9 @@ import { corsOrigins } from './env';
 import { errorHandler, HttpError } from './errors';
 import { analyticsRouter } from './routes/analytics';
 import { assignmentsRouter } from './routes/assignments';
+import { drivesRouter } from './routes/drives';
+import { env } from './env';
+import { runScheduler } from './services/notify';
 import { courseAssignmentsRouter, orgCoursesRouter } from './routes/courses';
 import { meRouter } from './routes/me';
 import { orgRouter } from './routes/org';
@@ -23,6 +26,12 @@ app.use(express.json({ limit: '3mb' })); // roster CSVs travel as JSON text
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
+// Reminders and email, for a cron service (or a timer in server.ts). Not a user route.
+app.post('/campus/internal/scheduler', async (req, res) => {
+  if (!env.CRON_SECRET || req.header('x-cron-secret') !== env.CRON_SECRET) return res.status(401).json({ error: 'Unauthorized' });
+  res.json(await runScheduler());
+});
+
 const api = express.Router();
 api.use(requireUser);
 api.use('/me', meRouter);
@@ -33,6 +42,7 @@ api.use('/orgs/:orgId/tests', testsRouter);
 api.use('/orgs/:orgId/assignments', assignmentsRouter);
 api.use('/orgs/:orgId/courses', orgCoursesRouter);
 api.use('/orgs/:orgId/analytics', analyticsRouter);
+api.use('/orgs/:orgId/drives', drivesRouter);
 api.use('/orgs/:orgId/course-assignments', courseAssignmentsRouter);
 app.use('/campus/v1', api);
 

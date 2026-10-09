@@ -6,9 +6,21 @@ import { asSystem, asUser } from '../db';
 import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
 import { JUDGED_LANGUAGES } from '../services/judge';
 import { myCourseAssignments } from './courses';
+import { myDrives, setMyRegistration } from './drives';
 
 export const studentRouter = Router();
 const uuid = z.string().uuid();
+
+/** Placement drives I'm eligible for, with my application. */
+studentRouter.get('/drives', async (req, res) => {
+  res.json(await myDrives(userOf(req)));
+});
+studentRouter.post('/drives/:id/apply', async (req, res) => {
+  res.json(await setMyRegistration(userOf(req), uuid.parse(req.params.id), true));
+});
+studentRouter.post('/drives/:id/withdraw', async (req, res) => {
+  res.json(await setMyRegistration(userOf(req), uuid.parse(req.params.id), false));
+});
 
 /** Courses my college gave my batches, with my chapter progress. */
 studentRouter.get('/course-assignments', async (req, res) => {

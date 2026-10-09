@@ -529,11 +529,11 @@ orgRouter.patch('/settings', async (req, res) => {
 
 // ── Custom roles ────────────────────────────────────────────────────────────
 const ASSIGNABLE_PERMISSIONS = ['members.manage', 'members.view', 'batches.manage', 'content.create', 'assessments.create',
-  'assessments.grade', 'assessments.invigilate', 'reports.view', 'reports.export', 'records.view'] as const;
+  'assessments.grade', 'assessments.invigilate', 'reports.view', 'reports.export', 'records.view', 'placements.manage'] as const;
 const roleBody = z.object({
   name: z.string().trim().min(2).max(60),
   description: z.string().trim().max(300).nullable().optional(),
-  permissions: z.array(z.enum(ASSIGNABLE_PERMISSIONS)).min(1).max(10),
+  permissions: z.array(z.enum(ASSIGNABLE_PERMISSIONS)).min(1).max(11),
 });
 
 orgRouter.get('/roles', async (req, res) => {
@@ -625,6 +625,7 @@ const ENTITY_LABEL: Record<string, string> = {
   question_test_cases: 'Coding test case', assignments: 'Assignment', course_assignments: 'Course assignment', test_shares: 'Test sharing',
   org_memberships: 'Member', batches: 'Batch', batch_members: 'Batch member', sections: 'Section', departments: 'Unit',
   custom_roles: 'Role', assignment_accommodations: 'Extra time', course_licences: 'Course licence',
+  placement_drives: 'Placement drive', drive_registrations: 'Drive application', drive_students: 'Drive applicants',
   results: 'Results', course_progress: 'Course progress', topic_marks: 'Topic-wise marks', students: 'Student list',
 };
 const activityQuery = z.object({

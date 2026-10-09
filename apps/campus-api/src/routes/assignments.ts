@@ -8,6 +8,7 @@ import { requireAnyPermission, requirePermission } from '../permissions';
 import { attemptProgress, AttemptRow, extendAttempt, forceSubmitAttempt, gradeCodingAnswers, markAnswer, markingQuestions, setAttemptFeedback } from '../services/attempts';
 import { judgeAvailable } from '../services/judge';
 import { logExport } from '../services/audit';
+import { notifyAssignmentPublished, notifyFeedback, notifyResultsReleased } from '../services/notify';
 
 export const assignmentsRouter = Router({ mergeParams: true });
 const uuid = z.string().uuid();
@@ -99,6 +100,7 @@ assignmentsRouter.post('/', async (req, res) => {
      a.resultRelease, JSON.stringify(normalizePolicy(a.proctoring)), a.publish ? 'published' : 'draft', userId,
      a.sectionId ?? null, JSON.stringify(await withSubUnits(db, orgId, a.eligibility)), a.paperVersions]
   )).rows[0]);
+  if (created.status === 'published') await notifyAssignmentPublished(created.id);
   res.status(201).json(created);
 });
 
@@ -128,6 +130,8 @@ assignmentsRouter.patch('/:assignmentId', async (req, res) => {
      body.releaseResults === true, body.eligibility ? JSON.stringify(await withSubUnits(db, orgId, body.eligibility)) : null]
   )).rows[0]);
   if (!updated) throw notFound('Assignment not found in this college.');
+  if (body.status === 'published') await notifyAssignmentPublished(updated.id);
+  if (body.releaseResults) await notifyResultsReleased(updated.id);
   res.json(updated);
 });
 
@@ -600,6 +604,7 @@ assignmentsRouter.put('/:assignmentId/attempts/:attemptId/marks', async (req, re
   await requirePermission(userId, orgId, 'assessments.grade');
   await visibleAttempt(userId, orgId, assignmentId, attemptId);
   const { attempt, maxMarks } = await markAnswer(attemptId, body.questionId, { marks: body.marks, feedback: body.feedback });
+  await notifyFeedback(attemptId);
   await asSystem((db) => db.query(
     `insert into campus.attempt_adjustments (org_id, attempt_id, kind, reason, actor_id, question_id) values ($1, $2, $3, $4, $5, $6)`,
     [orgId, attemptId, body.marks !== undefined ? 'grade' : 'feedback',
@@ -619,6 +624,7 @@ assignmentsRouter.put('/:assignmentId/attempts/:attemptId/feedback', async (req,
   await requirePermission(userId, orgId, 'assessments.grade');
   await visibleAttempt(userId, orgId, assignmentId, attemptId);
   await setAttemptFeedback(attemptId, feedback);
+  if (feedback?.trim()) await notifyFeedback(attemptId);
   await asSystem((db) => db.query(
     `insert into campus.attempt_adjustments (org_id, attempt_id, kind, reason, actor_id) values ($1, $2, 'feedback', 'Overall feedback updated', $3)`,
     [orgId, attemptId, userId]));

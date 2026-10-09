@@ -19,6 +19,14 @@ const schema = z.object({
   JUDGE0_JAVA_LANGUAGE_ID: z.coerce.number().default(62),
   JUDGE0_CPP_LANGUAGE_ID: z.coerce.number().default(54),
   JUDGE0_TIMEOUT_MS: z.coerce.number().default(20_000),
+  // Notifications: reminders run when something calls POST /campus/internal/scheduler
+  // with x-cron-secret (or every SCHEDULER_MINUTES inside the server). Email goes
+  // out through Resend when RESEND_API_KEY is set; without it, notifications are in-app only.
+  CRON_SECRET: z.string().min(16).optional(),
+  SCHEDULER_MINUTES: z.coerce.number().int().min(1).max(1440).optional(),
+  RESEND_API_KEY: z.string().min(1).optional(),
+  RESEND_FROM_EMAIL: z.string().default('Forge Campus <noreply@forge.dev>'),
+  APP_URL: z.string().url().default('http://localhost:5173'),
 });
 
 const parsed = schema.safeParse(process.env);

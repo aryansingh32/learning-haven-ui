@@ -1194,3 +1194,104 @@ describe('custom roles, activity log, consent and bulk actions (C2c)', () => {
       .send({ action: 'suspend', userIds: [U.s1] })).body.changed).toBe(0);
   });
 });
+
+describe('notifications and placement drives (C3)', () => {
+  // Email goes to Resend; capture the calls instead of sending anything.
+  const sent: Array<{ to: string; subject: string }> = [];
+  beforeAll(() => {
+    jest.spyOn(global, 'fetch').mockImplementation(async (url, init) => {
+      if (String(url).startsWith('https://api.resend.com/')) {
+        const b = JSON.parse(String((init as RequestInit).body));
+        sent.push({ to: b.to, subject: b.subject });
+        return new Response('{}', { status: 200 });
+      }
+      throw new Error(`Unexpected fetch to ${url}`);
+    });
+  });
+  afterAll(() => jest.restoreAllMocks());
+  const mine = async (who: string) => (await request(app).get('/campus/v1/me/notifications').set(await as(who))).body;
+  const assign = async (title: string, closesInMs: number) => (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+    batchId: BATCH_A, testId, title, opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + closesInMs), publish: true,
+  })).body.id;
+
+  it('tells students when a test is published, and lets them mark it read', async () => {
+    await assign('Notified test', 86_400_000 * 3);
+    const n = await mine(U.s1);
+    const row = n.rows.find((r: { title: string }) => r.title === 'New test: Notified test');
+    expect(row).toMatchObject({ kind: 'test_assigned' });
+    expect(row.link).toMatch(/^\/college\/tests\//);
+    expect((await mine(U.facultyA)).rows.some((r: { title: string }) => r.title === 'New test: Notified test')).toBe(false);
+    const before = n.unread;
+    expect((await request(app).post('/campus/v1/me/notifications/read').set(await as(U.s1)).send({ ids: [row.id] })).body.marked).toBe(1);
+    expect((await mine(U.s1)).unread).toBe(before - 1);
+    expect((await request(app).post('/campus/v1/me/notifications/read').set(await as(U.s2)).send({ ids: [row.id] })).body.marked).toBe(0);
+  });
+
+  it('respects muted kinds', async () => {
+    const saved = await request(app).put('/campus/v1/me/notification-preferences').set(await as(U.s1)).send({ mutedKinds: ['test_assigned'], dailyDigest: true });
+    expect(saved.body).toMatchObject({ emailEnabled: true, dailyDigest: true, mutedKinds: ['test_assigned'] });
+    await assign('Muted test', 86_400_000 * 3);
+    expect((await mine(U.s1)).rows.some((r: { title: string }) => r.title === 'New test: Muted test')).toBe(false);
+    await request(app).put('/campus/v1/me/notification-preferences').set(await as(U.s1)).send({ mutedKinds: [], dailyDigest: false });
+  });
+
+  it('sends each reminder once, from a scheduler that needs the secret', async () => {
+    await assign('Closing soon', 2 * 3_600_000);
+    expect((await request(app).post('/campus/internal/scheduler').set('x-cron-secret', 'wrong')).status).toBe(401);
+    const first = await request(app).post('/campus/internal/scheduler').set('x-cron-secret', 'test-cron-secret-0123456789');
+    expect(first.status).toBe(200);
+    expect(first.body.created).toBeGreaterThan(0);
+    expect((await mine(U.s1)).rows.filter((r: { title: string }) => r.title === 'Closing soon closes soon')).toHaveLength(1);
+    await request(app).post('/campus/internal/scheduler').set('x-cron-secret', 'test-cron-secret-0123456789');
+    expect((await mine(U.s1)).rows.filter((r: { title: string }) => r.title === 'Closing soon closes soon')).toHaveLength(1);
+  });
+
+  it('emails each notification once, and never when email is off', async () => {
+    expect(sent.some((m) => m.to === 's1@a.edu' && m.subject === 'Closing soon closes soon')).toBe(true); // from the runs above
+    await request(app).put('/campus/v1/me/notification-preferences').set(await as(U.s2)).send({ emailEnabled: false });
+    await assign('Email check', 86_400_000 * 3);
+    sent.length = 0;
+    await request(app).post('/campus/internal/scheduler').set('x-cron-secret', 'test-cron-secret-0123456789');
+    expect(sent.filter((m) => m.subject === 'New test: Email check').map((m) => m.to)).toEqual(['s1@a.edu']);
+    const { rows } = await pool.query(`select count(*)::int as n from public.notifications where user_id = $1 and emailed_at is null`, [U.s2]);
+    expect(rows[0].n).toBe(0); // email off: marked done, so they are never sent later
+    const before = sent.length;
+    await request(app).post('/campus/internal/scheduler').set('x-cron-secret', 'test-cron-secret-0123456789');
+    expect(sent.length).toBe(before); // nothing is emailed twice
+    await request(app).put('/campus/v1/me/notification-preferences').set(await as(U.s2)).send({ emailEnabled: true });
+  });
+
+  let driveId: string;
+  it('announces a drive to eligible students only, who then apply', async () => {
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/drives`).set(await as(U.facultyA)).send({ company: 'X', roleTitle: 'Y' })).status).toBe(403);
+    const d = await request(app).post(`/campus/v1/orgs/${ORG_A}/drives`).set(await as(U.adminA)).send({
+      company: 'Acme Systems', roleTitle: 'Graduate Engineer Trainee', ctc: '6.5 LPA', batchIds: [BATCH_A], eligibility: { minCgpa: 8 },
+      applyBy: new Date(Date.now() + 2 * 86_400_000), open: true,
+    });
+    expect(d.status).toBe(201);
+    driveId = d.body.id;
+    expect((await mine(U.s1)).rows.some((r: { kind: string; title: string }) => r.kind === 'drive_announced' && r.title.includes('Acme'))).toBe(true);
+    expect((await mine(U.s2)).rows.some((r: { title: string }) => r.title.includes('Acme'))).toBe(false); // CGPA 7.9
+    const list = (await request(app).get('/campus/v1/my/drives').set(await as(U.s1))).body;
+    expect(list[0]).toMatchObject({ company: 'Acme Systems', canApply: true, myStatus: null });
+    expect((await request(app).get('/campus/v1/my/drives').set(await as(U.s2))).body).toEqual([]);
+    expect((await request(app).post(`/campus/v1/my/drives/${driveId}/apply`).set(await as(U.s1))).body).toEqual({ status: 'registered' });
+    expect((await request(app).post(`/campus/v1/my/drives/${driveId}/apply`).set(await as(U.s2))).status).toBe(404); // not eligible: the drive is invisible
+  });
+
+  it('lets placement staff shortlist; the student hears; exports list applicants', async () => {
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/drives/${driveId}/decisions`).set(await as(U.facultyA))
+      .send({ userIds: [U.s1], status: 'shortlisted' })).status).toBe(403);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/drives/${driveId}/decisions`).set(await as(U.adminA))
+      .send({ userIds: [U.s1], status: 'shortlisted' })).body.changed).toBe(1);
+    expect((await mine(U.s1)).rows.some((r: { title: string }) => r.title === 'You are shortlisted: Acme Systems')).toBe(true);
+    const students = (await request(app).get(`/campus/v1/orgs/${ORG_A}/drives/${driveId}/students`).set(await as(U.adminA))).body.rows;
+    expect(students.find((r: { userId: string }) => r.userId === U.s1)).toMatchObject({ status: 'shortlisted', eligible: true, cgpa: 8.1 });
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/drives/${driveId}/students?format=csv`).set(await as(U.adminA));
+    expect(csv.text).toContain('"shortlisted"');
+    const drives = (await request(app).get(`/campus/v1/orgs/${ORG_A}/drives`).set(await as(U.facultyA))).body; // reports.view may look
+    expect(drives[0]).toMatchObject({ registered: 1, shortlisted: 1 });
+    expect((await request(app).post(`/campus/v1/my/drives/${driveId}/withdraw`).set(await as(U.s1))).status).toBe(400); // already shortlisted
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/drives`).set(await as(U.adminB))).status).toBe(403);
+  });
+});

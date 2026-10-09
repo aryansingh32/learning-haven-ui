@@ -5,6 +5,7 @@ import { asSystem, asUser, Db } from '../db';
 import { badRequest, notFound } from '../errors';
 import { requireAnyPermission, requirePermission } from '../permissions';
 import { logExport } from '../services/audit';
+import { notifyCourseAssigned } from '../services/notify';
 
 // Courses for colleges (slice D6). Forge's Learn courses and a college's own
 // courses can be given to a batch, whole or a few chapters, with a due date.
@@ -204,6 +205,7 @@ courseAssignmentsRouter.post('/', async (req, res) => {
     [orgId, body.batchId, body.courseId, chapterIds, body.title ?? course.title, body.instructions ?? null,
      body.dueAt ?? null, body.publish ? 'published' : 'draft', userId, body.sectionId ?? null]
   )).rows[0]);
+  if (created.status === 'published') await notifyCourseAssigned(created.id);
   res.status(201).json(created);
 });
 
@@ -236,6 +238,7 @@ courseAssignmentsRouter.patch('/:assignmentId', async (req, res) => {
      body.chapterIds !== undefined, body.chapterIds ? [...new Set(body.chapterIds)] : null]
   )).rows[0]);
   if (!updated) throw notFound('Course assignment not found in this college.');
+  if (body.status === 'published') await notifyCourseAssigned(updated.id);
   res.json(updated);
 });
 
