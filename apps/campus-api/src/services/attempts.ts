@@ -155,7 +155,7 @@ async function visibleAssignment(userId: string, assignmentId: string): Promise<
       `select id, org_id, test_id, title, instructions, opens_at, closes_at, duration_seconds, max_attempts,
               shuffle_questions, shuffle_options, result_release, results_released_at, proctoring
          from campus.assignments
-        where id = $1 and status = 'published' and campus.is_batch_member(batch_id)`,
+        where id = $1 and status = 'published' and campus.is_assignment_target(id)`,
       [assignmentId]
     );
     return rows[0] ?? null;

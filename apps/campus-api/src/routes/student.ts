@@ -35,7 +35,7 @@ studentRouter.get('/assignments', async (req, res) => {
          from campus.assignments a
          join campus.organizations o on o.id = a.org_id
          join campus.batches b on b.id = a.batch_id
-        where a.status = 'published' and campus.is_batch_member(a.batch_id)
+        where a.status = 'published' and campus.is_assignment_target(a.id)
         order by a.closes_at asc`,
       [userId]
     );

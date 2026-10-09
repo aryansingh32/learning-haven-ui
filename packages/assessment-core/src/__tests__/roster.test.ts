@@ -19,7 +19,7 @@ describe('parseRoster', () => {
         'Dr. Mehta,mehta@college.edu,,CSE,,Faculty\n'
     );
     expect(errors).toEqual([]);
-    expect(rows).toEqual([
+    expect(rows).toMatchObject([
       { line: 2, email: 'priya@college.edu', fullName: 'Priya Rao', rollNumber: '21CS001', department: 'CSE', batch: 'CSE-A', role: 'student' },
       { line: 3, email: 'mehta@college.edu', fullName: 'Dr. Mehta', rollNumber: null, department: 'CSE', batch: null, role: 'faculty' },
     ]);
@@ -70,5 +70,26 @@ describe('parseRoster', () => {
 
   it('reports an empty file', () => {
     expect(parseRoster('').errors[0].message).toBe('The file is empty.');
+  });
+});
+
+describe('parseRoster — sections and academic record', () => {
+  it('reads section separately when the file also has a batch', () => {
+    const { rows, errors } = parseRoster('Email,Batch,Section,CGPA,Backlogs,10th %,12th %\na@x.edu,CSE 2027,A,8.25,0,91%,88.5\n');
+    expect(errors).toEqual([]);
+    expect(rows[0]).toMatchObject({ batch: 'CSE 2027', section: 'A', cgpa: 8.25, backlogs: 0, tenthPercent: 91, twelfthPercent: 88.5 });
+  });
+
+  it('treats a lone Section column as the batch (older template)', () => {
+    const { rows } = parseRoster('Email,Section\na@x.edu,CSE-2027-A\n');
+    expect(rows[0]).toMatchObject({ batch: 'CSE-2027-A', section: null });
+  });
+
+  it('reports bad academic values by line', () => {
+    const { rows, errors } = parseRoster('Email,Batch,CGPA,Backlogs\na@x.edu,B,11,0\nb@x.edu,B,7,1.5\nc@x.edu,B,,\n');
+    expect(errors.map((e) => e.line)).toEqual([2, 3]);
+    expect(errors[0].message).toMatch(/CGPA "11"/);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ cgpa: null, backlogs: null });
   });
 });

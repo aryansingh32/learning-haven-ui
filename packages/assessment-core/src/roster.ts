@@ -14,7 +14,13 @@ export interface RosterRow {
   rollNumber: string | null;
   department: string | null;
   batch: string | null;
+  /** A section of the batch (only when the file also has a batch column). */
+  section: string | null;
   role: RosterRole;
+  cgpa: number | null;
+  backlogs: number | null;
+  tenthPercent: number | null;
+  twelfthPercent: number | null;
 }
 
 export interface RosterIssue {
@@ -48,10 +54,28 @@ const HEADER_ALIASES: Record<string, keyof Omit<RosterRow, 'line'>> = {
   dept: 'department',
   branch: 'department',
   batch: 'batch',
-  section: 'batch',
   class: 'batch',
+  section: 'section',
   role: 'role',
+  cgpa: 'cgpa',
+  gpa: 'cgpa',
+  'cgpa (out of 10)': 'cgpa',
+  backlogs: 'backlogs',
+  'active backlogs': 'backlogs',
+  arrears: 'backlogs',
+  '10th': 'tenthPercent',
+  '10th %': 'tenthPercent',
+  '10th percent': 'tenthPercent',
+  'class 10': 'tenthPercent',
+  ssc: 'tenthPercent',
+  '12th': 'twelfthPercent',
+  '12th %': 'twelfthPercent',
+  '12th percent': 'twelfthPercent',
+  'class 12': 'twelfthPercent',
+  hsc: 'twelfthPercent',
 };
+
+type Column = keyof Omit<RosterRow, 'line'>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -113,7 +137,12 @@ export function parseRoster(text: string): RosterParseResult {
     return { rows: [], errors: [{ line: 1, message: 'The file is empty.' }] };
   }
 
-  const header = table[0].cells.map((h) => HEADER_ALIASES[h.trim().toLowerCase().replace(/\s+/g, ' ')]);
+  const header: Array<Column | undefined> = table[0].cells.map((h) => HEADER_ALIASES[h.trim().toLowerCase().replace(/\s+/g, ' ')]);
+  // Files without a batch column use "Section" for the batch (older template).
+  if (!header.includes('batch')) {
+    const i = header.indexOf('section');
+    if (i >= 0) header[i] = 'batch';
+  }
   if (!header.includes('email')) {
     return { rows: [], errors: [{ line: table[0].line, message: 'Add an "email" column to the first row.' }] };
   }
@@ -126,7 +155,7 @@ export function parseRoster(text: string): RosterParseResult {
   const seenRoll = new Map<string, number>();
 
   table.slice(1).forEach(({ cells, line }) => {
-    const get = (key: keyof Omit<RosterRow, 'line'>) => clean(cells[header.indexOf(key)]);
+    const get = (key: Column) => clean(cells[header.indexOf(key)]);
 
     const email = (get('email') ?? '').toLowerCase();
     if (!email) {
@@ -158,6 +187,27 @@ export function parseRoster(text: string): RosterParseResult {
       seenRoll.set(key, line);
     }
 
+    const num = (key: Column, label: string, max: number, integer = false): number | null | 'bad' => {
+      const raw = get(key);
+      if (raw === null) return null;
+      const n = Number(raw.replace(/%$/, ''));
+      if (!Number.isFinite(n) || n < 0 || n > max || (integer && !Number.isInteger(n))) {
+        errors.push({ line, message: `${label} "${raw}" must be ${integer ? 'a whole number' : 'a number'} from 0 to ${max}.` });
+        return 'bad';
+      }
+      return n;
+    };
+    const cgpa = num('cgpa', 'CGPA', 10);
+    const backlogs = num('backlogs', 'Backlogs', 100, true);
+    const tenthPercent = num('tenthPercent', '10th %', 100);
+    const twelfthPercent = num('twelfthPercent', '12th %', 100);
+    if ([cgpa, backlogs, tenthPercent, twelfthPercent].includes('bad')) return;
+    const section = get('section');
+    if (section && !get('batch')) {
+      errors.push({ line, message: 'A section needs a batch on the same line.' });
+      return;
+    }
+
     seenEmail.set(email, line);
     rows.push({
       line,
@@ -166,7 +216,12 @@ export function parseRoster(text: string): RosterParseResult {
       rollNumber,
       department: get('department'),
       batch: get('batch'),
+      section,
       role: roleText as RosterRole,
+      cgpa: cgpa as number | null,
+      backlogs: backlogs as number | null,
+      tenthPercent: tenthPercent as number | null,
+      twelfthPercent: twelfthPercent as number | null,
     });
   });
 

@@ -488,7 +488,7 @@ describe('timed sections', () => {
       expect(r.status).toBe(201);
       sec[name] = r.body.id;
     }
-    expect((await request(app).post(`${url()}/sections`).set(await as(U.facultyB)).send({ name: 'x' })).status).toBe(403);
+    expect((await request(app).post(`${url()}/sections`).set(await as(U.facultyB)).send({ name: 'Engineering' })).status).toBe(403);
 
     for (const [key, section] of [['apt', 'Aptitude'], ['tech', 'Technical']] as const) {
       const r = await request(app).post(`${url()}/questions`).set(await as(U.facultyA))
@@ -831,5 +831,110 @@ describe('courses for colleges', () => {
       .send({ status: 'archived' });
     expect(archived.status).toBe(200);
     expect((await request(app).get('/campus/v1/my/course-assignments').set(await as(U.s1))).body).toEqual([]);
+  });
+});
+
+describe('college structure (C1)', () => {
+  let schoolId: string;
+  let sectionA: string;
+  let sectionB: string;
+  const my = async (who: string) => (await request(app).get('/campus/v1/my/assignments').set(await as(who))).body.map((a: { title: string }) => a.title);
+
+  it('builds a unit tree and refuses loops', async () => {
+    const school = await request(app).post(`/campus/v1/orgs/${ORG_A}/departments`).set(await as(U.adminA))
+      .send({ name: 'School of Engineering', code: 'SOE', kind: 'school' });
+    expect(school.status).toBe(201);
+    schoolId = school.body.id;
+    const depts = (await request(app).get(`/campus/v1/orgs/${ORG_A}/departments`).set(await as(U.adminA))).body;
+    const cse = depts.find((d: { code: string }) => d.code === 'CSE');
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/departments/${cse.id}`).set(await as(U.adminA))
+      .send({ parentId: schoolId })).body).toMatchObject({ parentId: schoolId, kind: 'department' });
+    const loop = await request(app).patch(`/campus/v1/orgs/${ORG_A}/departments/${schoolId}`).set(await as(U.adminA)).send({ parentId: cse.id });
+    expect(loop.status).toBe(400);
+    expect(loop.body.error).toMatch(/inside itself/);
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/departments/${schoolId}`).set(await as(U.facultyA))
+      .send({ name: 'Engineering' })).status).toBe(403);
+  });
+
+  it('splits a batch into sections and places students', async () => {
+    sectionA = (await request(app).post(`/campus/v1/orgs/${ORG_A}/batches/${BATCH_A}/sections`).set(await as(U.adminA)).send({ name: 'A' })).body.id;
+    sectionB = (await request(app).post(`/campus/v1/orgs/${ORG_A}/batches/${BATCH_A}/sections`).set(await as(U.adminA)).send({ name: 'B' })).body.id;
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/batches/${BATCH_A}/sections`).set(await as(U.adminA)).send({ name: 'A' })).status).toBe(409);
+    const put = await request(app).patch(`/campus/v1/orgs/${ORG_A}/batches/${BATCH_A}/members`).set(await as(U.adminA))
+      .send({ userIds: [U.s1], sectionId: sectionA });
+    expect(put.body.updated).toBe(1);
+    const batches = (await request(app).get(`/campus/v1/orgs/${ORG_A}/batches`).set(await as(U.facultyA))).body;
+    expect(batches.find((b: { id: string }) => b.id === BATCH_A).sections).toEqual([
+      { id: sectionA, name: 'A', students: 1 }, { id: sectionB, name: 'B', students: 0 },
+    ]);
+  });
+
+  it('keeps academic records to record keepers', async () => {
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/members/${U.s1}`).set(await as(U.adminA))
+      .send({ record: { cgpa: 6.4, backlogs: 0 } })).status).toBe(200);
+    const asAdmin = (await request(app).get(`/campus/v1/orgs/${ORG_A}/members?role=student`).set(await as(U.adminA))).body;
+    expect(asAdmin.find((m: { userId: string }) => m.userId === U.s1).record).toEqual({ cgpa: 6.4, backlogs: 0, tenthPercent: null, twelfthPercent: null });
+    const asFaculty = (await request(app).get(`/campus/v1/orgs/${ORG_A}/members?role=student`).set(await as(U.facultyA))).body;
+    expect(asFaculty.find((m: { userId: string }) => m.userId === U.s1).record).toBeUndefined();
+  });
+
+  it('gives tests to a section, or to eligible students only', async () => {
+    const make = async (title: string, extra: Record<string, unknown>) => (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, testId, title, opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 86_400_000), publish: true, ...extra })).body.id;
+    await make('Section B quiz', { sectionId: sectionB });
+    const drive = await make('Placement drive', { eligibility: { minCgpa: 7, maxBacklogs: 0 } });
+    expect(await my(U.s1)).not.toEqual(expect.arrayContaining(['Section B quiz']));
+    expect(await my(U.s1)).not.toEqual(expect.arrayContaining(['Placement drive']));
+    expect((await request(app).post(`/campus/v1/my/assignments/${drive}/start`).set(await as(U.s1))).status).toBe(404);
+
+    const list = (await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA))).body;
+    expect(list.find((a: { id: string }) => a.id === drive)).toMatchObject({ assigned: 0, eligibility: { minCgpa: 7, maxBacklogs: 0 } });
+
+    await request(app).patch(`/campus/v1/orgs/${ORG_A}/members/${U.s1}`).set(await as(U.adminA)).send({ record: { cgpa: 8.1 } });
+    expect(await my(U.s1)).toEqual(expect.arrayContaining(['Placement drive']));
+    const results = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${drive}/results`).set(await as(U.facultyA));
+    expect(results.body.summary.assigned).toBe(1);
+
+    const bad = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, testId, title: 'Bad rule', opensAt: new Date(), closesAt: new Date(Date.now() + 3_600_000), eligibility: { minIq: 100 } });
+    expect(bad.status).toBe(400);
+
+    const del = await request(app).delete(`/campus/v1/orgs/${ORG_A}/batches/${BATCH_A}/sections/${sectionB}`).set(await as(U.adminA));
+    expect(del.status).toBe(400);
+    expect(del.body.error).toMatch(/Archive them first/);
+  });
+
+  it('imports sections and marks with the roster; joining places the student', async () => {
+    const csv = 'Email,Name,Batch,Section,CGPA,Backlogs,12th %\ns2@a.edu,Student Two,CSE-2027-A,B,7.9,1,81\n';
+    const preview = await request(app).post(`/campus/v1/orgs/${ORG_A}/roster/preview`).set(await as(U.adminA)).send({ csv });
+    expect(preview.body.rows[0]).toMatchObject({ section: 'B', cgpa: 7.9, backlogs: 1 });
+    const wrong = await request(app).post(`/campus/v1/orgs/${ORG_A}/roster/preview`).set(await as(U.adminA))
+      .send({ csv: 'Email,Batch,Section\ns2@a.edu,CSE-2027-A,Z\n' });
+    expect(wrong.body.errors[0].message).toMatch(/no section "Z"/);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/roster/import`).set(await as(U.adminA)).send({ csv })).body.imported).toBe(1);
+
+    expect((await request(app).get('/campus/v1/me').set(await as(U.s2))).body.claimed).toBe(1);
+    const { rows } = await pool.query(
+      `select bm.section_id, m.cgpa::float, m.active_backlogs, m.twelfth_percent::float from campus.batch_members bm
+         join campus.org_memberships m on m.org_id = bm.org_id and m.user_id = bm.user_id where bm.user_id = $1`, [U.s2]);
+    expect(rows).toEqual([{ section_id: sectionB, cgpa: 7.9, active_backlogs: 1, twelfth_percent: 81 }]);
+    expect(await my(U.s2)).toEqual(expect.arrayContaining(['Section B quiz']));
+    expect(await my(U.s2)).not.toEqual(expect.arrayContaining(['Placement drive'])); // a backlog
+
+    // Re-uploading refreshes the record of someone who already joined.
+    const again = await request(app).post(`/campus/v1/orgs/${ORG_A}/roster/import`).set(await as(U.adminA))
+      .send({ csv: 'Email,Batch,Section,Backlogs\ns2@a.edu,CSE-2027-A,A,0\n' });
+    expect(again.body).toMatchObject({ skippedAlreadyJoined: 1, refreshed: 1 });
+    expect(await my(U.s2)).toEqual(expect.arrayContaining(['Placement drive']));
+    expect(await my(U.s2)).not.toEqual(expect.arrayContaining(['Section B quiz'])); // moved to section A
+  });
+
+  it('keeps college-wide defaults for new assignments', async () => {
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/settings`).set(await as(U.facultyA))).body.defaults)
+      .toMatchObject({ resultRelease: 'after_close', lockdown: true, maxViolations: 3 });
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/settings`).set(await as(U.facultyA)).send({ maxAttempts: 2 })).status).toBe(403);
+    const saved = await request(app).patch(`/campus/v1/orgs/${ORG_A}/settings`).set(await as(U.adminA)).send({ resultRelease: 'manual', maxViolations: 5 });
+    expect(saved.body.defaults).toMatchObject({ resultRelease: 'manual', maxViolations: 5, shuffle: true });
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/settings`).set(await as(U.adminA))).status).toBe(404);
   });
 });

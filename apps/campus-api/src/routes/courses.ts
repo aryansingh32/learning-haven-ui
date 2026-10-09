@@ -144,12 +144,11 @@ courseAssignmentsRouter.get('/', async (req, res) => {
   const orgId = orgIdOf(req);
   await requireAnyPermission(userId, orgId, ['assessments.create', 'reports.view']);
   const list = await asUser(userId, async (db) => (await db.query<AssignmentRow & {
-    title: string; status: string; created_at: string; batch_name: string; members: string[];
+    title: string; status: string; created_at: string; batch_name: string; section_name: string | null; members: string[];
   }>(
     `select a.id, a.batch_id, a.course_id, a.chapter_ids, a.due_at, a.title, a.status, a.created_at, b.name as batch_name,
-            coalesce((select array_agg(bm.user_id) from campus.batch_members bm
-                        join campus.org_memberships m on m.org_id = bm.org_id and m.user_id = bm.user_id
-                       where bm.batch_id = a.batch_id and m.role = 'student'), '{}') as members
+            (select s.name from campus.sections s where s.id = a.section_id) as section_name,
+            coalesce((select array_agg(s.user_id) from campus.course_assignment_students(a.id) s), '{}') as members
        from campus.course_assignments a join campus.batches b on b.id = a.batch_id
       where a.org_id = $1 and a.status <> 'archived'
       order by a.created_at desc`, [orgId])).rows);
@@ -164,7 +163,7 @@ courseAssignmentsRouter.get('/', async (req, res) => {
     const statuses = [...p.students.values()].map((s) => s.status);
     out.push({
       id: a.id, title: a.title, status: a.status, dueAt: a.due_at, createdAt: a.created_at,
-      batchId: a.batch_id, batchName: a.batch_name, courseId: a.course_id, courseTitle: titles.get(a.course_id) ?? null,
+      batchId: a.batch_id, batchName: a.batch_name, sectionName: a.section_name, courseId: a.course_id, courseTitle: titles.get(a.course_id) ?? null,
       chapters: p.chapters.length, wholeCourse: a.chapter_ids === null,
       assigned: a.members.length,
       completed: statuses.filter((s) => s === 'completed').length,
@@ -177,6 +176,7 @@ courseAssignmentsRouter.get('/', async (req, res) => {
 
 const createBody = z.object({
   batchId: uuid,
+  sectionId: uuid.nullable().optional(),
   courseId: uuid,
   chapterIds: z.array(uuid).min(1).max(500).nullable().optional(),
   title: z.string().trim().min(1).max(200).optional(),
@@ -197,11 +197,11 @@ courseAssignmentsRouter.post('/', async (req, res) => {
   const chapterIds = body.chapterIds ? [...new Set(body.chapterIds)] : null;
   // The trigger re-checks the course, the licence and the chapters.
   const created = await asUser(userId, async (db) => (await db.query(
-    `insert into campus.course_assignments (org_id, batch_id, course_id, chapter_ids, title, instructions, due_at, status, created_by)
-     values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    `insert into campus.course_assignments (org_id, batch_id, course_id, chapter_ids, title, instructions, due_at, status, created_by, section_id)
+     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
      returning id, title, status, due_at as "dueAt"`,
     [orgId, body.batchId, body.courseId, chapterIds, body.title ?? course.title, body.instructions ?? null,
-     body.dueAt ?? null, body.publish ? 'published' : 'draft', userId]
+     body.dueAt ?? null, body.publish ? 'published' : 'draft', userId, body.sectionId ?? null]
   )).rows[0]);
   res.status(201).json(created);
 });
@@ -252,9 +252,7 @@ courseAssignmentsRouter.get('/:assignmentId/progress', async (req, res) => {
         where a.id = $1 and a.org_id = $2`, [assignmentId, orgId])).rows[0];
     if (!assignment) return null;
     const members = (await db.query<{ user_id: string; roll_number: string | null }>(
-      `select bm.user_id, m.roll_number from campus.batch_members bm
-         join campus.org_memberships m on m.org_id = bm.org_id and m.user_id = bm.user_id
-        where bm.batch_id = $1 and m.role = 'student'`, [assignment.batch_id])).rows;
+      `select user_id, roll_number from campus.course_assignment_students($1)`, [assignment.id])).rows;
     return { assignment, members };
   });
   if (!data) throw notFound('Course assignment not found in this college.');
@@ -328,7 +326,7 @@ export async function myCourseAssignments(userId: string) {
        from campus.course_assignments a
        join campus.organizations o on o.id = a.org_id
        join campus.batches b on b.id = a.batch_id
-      where a.status = 'published' and campus.is_batch_member(a.batch_id)
+      where a.status = 'published' and campus.is_course_assignment_target(a.id)
       order by a.due_at asc nulls last, a.created_at desc`)).rows);
   if (list.length === 0) return [];
   const courses = new Map(await asSystem(async (db) => (await db.query<{ id: string; title: string; slug: string; cover_image: string | null }>(

@@ -21,7 +21,9 @@ assignmentsRouter.get('/', async (req, res) => {
     `select a.id, a.title, a.status, a.opens_at as "opensAt", a.closes_at as "closesAt", a.max_attempts as "maxAttempts",
             a.result_release as "resultRelease", a.results_released_at as "resultsReleasedAt",
             a.batch_id as "batchId", b.name as "batchName", a.test_id as "testId", t.title as "testTitle",
-            (select count(*) from campus.batch_members bm where bm.batch_id = a.batch_id)::int as "assigned",
+            a.section_id as "sectionId", (select s.name from campus.sections s where s.id = a.section_id) as "sectionName",
+            a.eligibility,
+            (select count(*) from campus.assignment_students(a.id))::int as "assigned",
             (select count(distinct x.user_id) from public.test_attempts x where x.assignment_id = a.id)::int as "started",
             (select count(distinct x.user_id) from public.test_attempts x
                where x.assignment_id = a.id and x.status = 'completed')::int as "submitted"
@@ -42,8 +44,18 @@ const proctoringBody = z.object({
   maxViolations: z.number().int().min(1).max(50).nullable(),
 }).partial();
 
+export const eligibilityBody = z.object({
+  minCgpa: z.number().min(0).max(10).optional(),
+  maxBacklogs: z.number().int().min(0).max(100).optional(),
+  minTenth: z.number().min(0).max(100).optional(),
+  minTwelfth: z.number().min(0).max(100).optional(),
+  departmentIds: z.array(uuid).max(50).optional(),
+}).strict();
+
 const assignmentBody = z.object({
   batchId: uuid,
+  sectionId: uuid.nullable().optional(),
+  eligibility: eligibilityBody.default({}),
   testId: uuid,
   title: z.string().trim().min(3).max(200),
   instructions: z.string().trim().max(5000).nullable().optional(),
@@ -66,12 +78,13 @@ assignmentsRouter.post('/', async (req, res) => {
   const created = await asUser(userId, async (db) => (await db.query(
     `insert into campus.assignments
        (org_id, batch_id, test_id, title, instructions, opens_at, closes_at, duration_seconds, max_attempts,
-        shuffle_questions, shuffle_options, result_release, proctoring, status, created_by)
-     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::jsonb, $14, $15)
+        shuffle_questions, shuffle_options, result_release, proctoring, status, created_by, section_id, eligibility)
+     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::jsonb, $14, $15, $16, $17::jsonb)
      returning id, title, status`,
     [orgId, a.batchId, a.testId, a.title, a.instructions ?? null, a.opensAt, a.closesAt,
      a.durationMinutes ? a.durationMinutes * 60 : null, a.maxAttempts, a.shuffleQuestions, a.shuffleOptions,
-     a.resultRelease, JSON.stringify(normalizePolicy(a.proctoring)), a.publish ? 'published' : 'draft', userId]
+     a.resultRelease, JSON.stringify(normalizePolicy(a.proctoring)), a.publish ? 'published' : 'draft', userId,
+     a.sectionId ?? null, JSON.stringify(a.eligibility)]
   )).rows[0]);
   res.status(201).json(created);
 });
@@ -81,6 +94,7 @@ const assignmentPatch = z.object({
   opensAt: z.coerce.date().optional(),
   closesAt: z.coerce.date().optional(),
   releaseResults: z.literal(true).optional(),
+  eligibility: eligibilityBody.optional(),
 });
 
 assignmentsRouter.patch('/:assignmentId', async (req, res) => {
@@ -93,11 +107,12 @@ assignmentsRouter.patch('/:assignmentId', async (req, res) => {
         status = coalesce($3, status),
         opens_at = coalesce($4, opens_at),
         closes_at = coalesce($5, closes_at),
-        results_released_at = case when $6::boolean then coalesce(results_released_at, now()) else results_released_at end
+        results_released_at = case when $6::boolean then coalesce(results_released_at, now()) else results_released_at end,
+        eligibility = coalesce($7::jsonb, eligibility)
       where id = $1 and org_id = $2
       returning id, status, opens_at as "opensAt", closes_at as "closesAt", results_released_at as "resultsReleasedAt"`,
     [uuid.parse(req.params.assignmentId), orgId, body.status ?? null, body.opensAt ?? null, body.closesAt ?? null,
-     body.releaseResults === true]
+     body.releaseResults === true, body.eligibility ? JSON.stringify(body.eligibility) : null]
   )).rows[0]);
   if (!updated) throw notFound('Assignment not found in this college.');
   res.json(updated);
@@ -126,9 +141,7 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
         where a.id = $1 and a.org_id = $2`, [assignmentId, orgId])).rows[0];
     if (!assignment) return null;
     const members = (await db.query<{ user_id: string; roll_number: string | null }>(
-      `select bm.user_id, m.roll_number from campus.batch_members bm
-         join campus.org_memberships m on m.org_id = bm.org_id and m.user_id = bm.user_id
-        where bm.batch_id = $1 and m.role = 'student'`, [assignment.batch_id])).rows;
+      `select user_id, roll_number from campus.assignment_students($1)`, [assignment.id])).rows;
     const attempts = (await db.query<{
       user_id: string; status: string; score: string | null; total_marks: string; submitted_at: string | null;
       violation_count: number; submit_reason: string | null; attempt_number: number; grading_pending: boolean;
@@ -295,11 +308,8 @@ assignmentsRouter.get('/:assignmentId/live', async (req, res) => {
   const data = await asSystem(async (db) => {
     const batch = (await db.query<{ name: string }>(`select name from campus.batches where id = $1`, [assignment.batch_id])).rows[0];
     const members = (await db.query<{ user_id: string; roll_number: string | null; full_name: string | null; email: string }>(
-      `select bm.user_id, m.roll_number, u.full_name, u.email
-         from campus.batch_members bm
-         join campus.org_memberships m on m.org_id = bm.org_id and m.user_id = bm.user_id
-         join public.users u on u.id = bm.user_id
-        where bm.batch_id = $1 and m.role = 'student'`, [assignment.batch_id])).rows;
+      `select s.user_id, s.roll_number, u.full_name, u.email
+         from campus.assignment_students($1) s join public.users u on u.id = s.user_id`, [assignmentId])).rows;
     const attempts = (await db.query<AttemptRow>(
       `select * from public.test_attempts where assignment_id = $1 order by attempt_number desc`, [assignmentId])).rows;
     const ids = attempts.map((a) => a.id);
@@ -476,8 +486,8 @@ assignmentsRouter.put('/:assignmentId/accommodations/:studentId', async (req, re
   await requirePermission(userId, orgId, 'assessments.create');
   const assignment = await visibleToStaff(userId, orgId, assignmentId);
   const inBatch = await asSystem(async (db) => (await db.query(
-    `select 1 from campus.batch_members where batch_id = $1 and user_id = $2`, [assignment.batch_id, studentId])).rowCount);
-  if (!inBatch) throw badRequest('That student is not in this assignment\'s batch.');
+    `select 1 from campus.assignment_students($1) where user_id = $2`, [assignmentId, studentId])).rowCount);
+  if (!inBatch) throw badRequest('That student is not taking this assignment.');
   await asUser(userId, (db) => db.query(
     `insert into campus.assignment_accommodations (org_id, assignment_id, user_id, extra_percent, note, created_by)
      values ($1, $2, $3, $4, $5, $6)
