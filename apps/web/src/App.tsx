@@ -52,6 +52,8 @@ const CBTTestPage = lazy(() => import("./pages/testseries/CBTTestPage"));
 const MyCollegePage = lazy(() => import("./pages/campus/MyCollegePage"));
 const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
 const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
+const CollegeDrivesPage = lazy(() => import('./pages/campus/CollegeDrivesPage'));
+const NotificationSettingsPage = lazy(() => import('./pages/settings/NotificationSettingsPage'));
 const ProblemPage = lazy(() => import("./pages/ProblemPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
@@ -166,6 +168,8 @@ const App = () => (
                         <Route path="/test-series" element={<TestSeriesCatalogPage />} />
                         <Route path="/college" element={<MyCollegePage />} />
                         <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
+                        <Route path="/college/drives" element={<CollegeDrivesPage />} />
+                        <Route path="/settings/notifications" element={<NotificationSettingsPage />} />
                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
                         <Route path="/projects" element={<ProjectsPage />} />

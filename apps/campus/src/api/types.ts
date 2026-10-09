@@ -3,7 +3,7 @@ export type Role = 'owner' | 'admin' | 'placement_officer' | 'faculty' | 'evalua
 export type Permission =
   | 'org.manage' | 'org.billing' | 'members.manage' | 'members.view' | 'batches.manage'
   | 'content.create' | 'assessments.create' | 'assessments.grade' | 'assessments.invigilate'
-  | 'reports.view' | 'reports.export' | 'records.view';
+  | 'reports.view' | 'reports.export' | 'records.view' | 'placements.manage';
 
 export interface Membership {
   orgId: string;
@@ -337,4 +337,18 @@ export interface CustomRole { id: string; name: string; description: string | nu
 export interface ActivityRow {
   id: number; at: string; action: 'create' | 'update' | 'delete' | 'export'; entity: string; what: string; entityId: string | null;
   summary: string | null; changes: Record<string, unknown> | null; actorId: string | null; actor: string | null;
+}
+
+// ── Placement drives (C3) ───────────────────────────────────────────────────
+export type DriveDecision = 'registered' | 'shortlisted' | 'selected' | 'rejected' | 'withdrawn';
+export interface Drive {
+  id: string; company: string; roleTitle: string; description: string | null; jobType: 'full_time' | 'internship' | 'internship_ppo';
+  ctc: string | null; location: string | null; batchIds: string[]; eligibility: Eligibility; applyBy: string | null;
+  status: 'draft' | 'open' | 'closed' | 'archived'; createdAt: string;
+  eligible: number; registered: number; shortlisted: number; selected: number;
+  rounds: Array<{ id: string; name: string; kind: string; assignmentId: string | null; scheduledAt: string | null }>;
+}
+export interface DriveStudent {
+  userId: string; name: string | null; email: string; rollNumber: string | null; department: string | null;
+  cgpa?: number | null; backlogs?: number | null; eligible: boolean; status: DriveDecision | null; registeredAt: string | null; note: string | null;
 }

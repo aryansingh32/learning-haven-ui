@@ -15,6 +15,7 @@ import { RoadmapProvider } from "@/context/RoadmapContext";
 import { GlobalAIAssistant } from "@/components/GlobalAIAssistant";
 import { EntitlementProvider } from "@/services/entitlement.service";
 import { useCampusMe } from "@/hooks/useCampus";
+import { NotificationBell } from "@/features/campus/NotificationBell";
 
 const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
@@ -87,11 +88,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Desktop Sidebar */}
       {!isMobile && (
         <aside className="fixed left-0 top-0 bottom-0 w-[260px] bg-sidebar z-30 flex flex-col border-r border-border/40">
-          <div className="p-6 border-b border-border/40">
-            <h1 className="font-display text-xl font-bold text-foreground tracking-tight">
-              <span className="text-gradient-golden">FORGE</span>
-            </h1>
-            <p className="text-meta text-muted-foreground mt-0.5 tracking-wide">From zero to hired</p>
+          <div className="p-6 border-b border-border/40 flex items-start justify-between gap-2">
+            <div>
+              <h1 className="font-display text-xl font-bold text-foreground tracking-tight">
+                <span className="text-gradient-golden">FORGE</span>
+              </h1>
+              <p className="text-meta text-muted-foreground mt-0.5 tracking-wide">From zero to hired</p>
+            </div>
+            <NotificationBell className="-mr-2 -mt-1" />
           </div>
 
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
@@ -171,11 +175,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <span className="text-gradient-golden">FORGE</span>
             </h1>
           </div>
+          <div className="flex items-center gap-1">
+          <NotificationBell />
           <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-secondary transition-colors">
             <motion.div key={theme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}>
               {theme === "light" ? <Moon className="h-4 w-4 text-muted-foreground" /> : <Sun className="h-4 w-4 text-muted-foreground" />}
             </motion.div>
           </button>
+          </div>
         </header>
       )}
 

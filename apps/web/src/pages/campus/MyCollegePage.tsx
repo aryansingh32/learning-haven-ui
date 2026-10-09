@@ -14,6 +14,7 @@ import {
   assignmentStatus, formatWhen, sortTodo, timeUntil, type AssignmentBucket, type AssignmentStatus,
 } from '@/features/campus/assignmentStatus';
 import { CollegeCoursesSection } from '@/features/campus/CollegeCourses';
+import { DrivesTeaser } from '@/features/campus/DrivesTeaser';
 
 const TONE: Record<AssignmentStatus['tone'], string> = {
   primary: 'bg-primary/10 text-primary border-primary/20',
@@ -279,6 +280,8 @@ export default function MyCollegePage() {
       </div>
 
       {nextUp && <NextUpCard a={nextUp} />}
+
+      <DrivesTeaser />
 
       <section className="card-glass rounded-2xl p-5 sm:p-6 border border-border/40">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-5">

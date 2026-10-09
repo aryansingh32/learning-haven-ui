@@ -19,6 +19,7 @@ const Marking = lazy(() => import('@/pages/Marking'));
 const Analysis = lazy(() => import('@/pages/Analysis'));
 const Insights = lazy(() => import('@/pages/Insights'));
 const Activity = lazy(() => import('@/pages/Activity'));
+const Placements = lazy(() => import('@/pages/Placements'));
 const StudentReport = lazy(() => import('@/pages/StudentReport'));
 const Courses = lazy(() => import('@/pages/Courses'));
 const CourseProgress = lazy(() => import('@/pages/CourseProgress'));
@@ -82,6 +83,8 @@ export default function App() {
             <Route path="assignments/:assignmentId/analysis" element={<Analysis />} />
             <Route path="insights" element={<Insights />} />
             <Route path="activity" element={<Activity />} />
+            <Route path="placements" element={<Placements />} />
+            <Route path="placements/:driveId" element={<Placements />} />
             <Route path="insights/students/:studentId" element={<StudentReport />} />
             <Route path="courses" element={<Courses />} />
             <Route path="courses/:assignmentId" element={<CourseProgress />} />

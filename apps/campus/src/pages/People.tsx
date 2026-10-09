@@ -383,6 +383,7 @@ const PERMISSION_INFO: Array<{ id: Permission; label: string; hint: string }> = 
   { id: 'reports.view', label: 'See results and insights', hint: 'Results, analysis, students at risk.' },
   { id: 'reports.export', label: 'Export reports', hint: 'Download results, placement and progress CSVs.' },
   { id: 'records.view', label: 'See academic records', hint: 'CGPA, backlogs and school marks.' },
+  { id: 'placements.manage', label: 'Run placement drives', hint: 'Create drives, shortlist and select students.' },
   { id: 'members.view', label: 'See people and batches', hint: 'The member list and who is in which batch.' },
   { id: 'batches.manage', label: 'Manage batches', hint: 'Create batches, sections and units; move students.' },
   { id: 'members.manage', label: 'Manage people', hint: 'Upload rosters, change roles, suspend people, define roles.' },
@@ -392,6 +393,7 @@ const PRESETS: Array<{ name: string; description: string; permissions: Permissio
   { name: 'Lab assistant', description: 'Runs lab tests and watches them live.', permissions: ['assessments.invigilate', 'members.view'] },
   { name: 'Grader', description: 'Marks written answers and sees results.', permissions: ['assessments.grade', 'reports.view'] },
   { name: 'Head of department', description: 'Results, insights and exports for their department.', permissions: ['reports.view', 'reports.export', 'records.view', 'members.view'] },
+  { name: 'Placement coordinator', description: 'Runs company drives and exports applicants.', permissions: ['placements.manage', 'reports.view', 'reports.export', 'records.view'] },
 ];
 
 /** Roles your college defines on top of the built-in ones. */

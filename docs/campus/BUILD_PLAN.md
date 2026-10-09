@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 426 done, 226 partly, 1,246 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 446 done, 219 partly, 1,233 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -336,3 +336,18 @@ table, roll-ups, at-risk order and reasons, 8-line placement CSV, student report
 
 **Verified:** 6 SQL suites (custom-role rule mutation-checked), Campus API 74, browser run. Found: the test stub of
 `auth.uid()` broke on an empty setting — now matches Supabase's (checked on live).
+
+## Slice C3 — notifications and placement drives — built
+
+- **Notifications** (`public.notifications`, `notification_preferences`): created by the servers only (people can only
+  mark theirs read; links stay in-app; dedupe keys). Events: test published, results released, course assigned,
+  feedback, drive opened, shortlisted/selected. Scheduler (`POST /campus/internal/scheduler` with `x-cron-secret`, or
+  `SCHEDULER_MINUTES`): tests closing in 24 h, results out after close, courses due in 48 h, last day to apply; then
+  email through Resend (one each, or a daily digest; nothing when email is off). Forge app: bell + Settings → Notifications.
+- **Placement drives** (`campus.placement_drives`, rounds, registrations, `placements.manage`): staff create and open a
+  drive (batches + eligibility) → eligible students are told; students apply/withdraw while open; staff shortlist/select
+  (students notified); rounds can be college tests; applicants CSV. Forge app: My College → Placement drives.
+
+**Verified:** 8 SQL suites (drive self-selection mutation-checked), Campus API 80 (email via a mocked Resend), browser
+run (drive opened → bell → apply; ineligible student sees nothing; shortlist → notified; mute saved). Found: the bell
+stayed open after following a notification, swallowing the next click — it now closes.

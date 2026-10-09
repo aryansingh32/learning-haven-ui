@@ -39,19 +39,19 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 38 | 4 | 15 | 57 |
+| 12 | Assessment Engine | 39 | 3 | 15 | 57 |
 | 13 | Question Bank Management | 18 | 0 | 24 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
-| 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
+| 17 | Company-Wise Placement Preparation | 2 | 3 | 22 | 27 |
 | 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
 | 19 | Resume & Portfolio Builder | 7 | 3 | 16 | 26 |
 | 20 | Interview Preparation | 0 | 1 | 27 | 28 |
 | 21 | System Design & Software Engineering | 2 | 3 | 25 | 30 |
 | 22 | Project-Based Learning | 10 | 3 | 15 | 28 |
 | 23 | Faculty & Trainer Portal | 14 | 1 | 20 | 35 |
-| 24 | Placement Officer & Training and Placement Cell | 2 | 2 | 29 | 33 |
+| 24 | Placement Officer & Training and Placement Cell | 10 | 0 | 23 | 33 |
 | 25 | Learning Analytics | 8 | 5 | 26 | 39 |
 | 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
@@ -67,7 +67,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 37 | Data Science, AI & Machine Learning Labs | 0 | 1 | 28 | 29 |
 | 38 | Cloud, DevOps & Hands-On Labs | 1 | 4 | 20 | 25 |
 | 39 | Communication & Soft Skills | 0 | 1 | 22 | 23 |
-| 40 | Notifications & Communication | 1 | 6 | 17 | 24 |
+| 40 | Notifications & Communication | 11 | 3 | 10 | 24 |
 | 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **426** (22%) | **226** (12%) | **1246** (66%) | **1898** |
+| | **All modules** | **446** (23%) | **219** (12%) | **1233** (65%) | **1898** |
 
 ---
 
@@ -572,7 +572,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Randomized Question Sets — different order per student
 - [x] Multiple Assessment Versions — named paper versions A–D per assignment, dealt in roll order, same questions/order per version; shown in results (C2a); pools add variety within a version
 - [x] Test Scheduling — assignment scheduling in portal
-- [ ] 🟡 Assessment Invitations — assigned to a batch; no invite emails
+- [x] Assessment Invitations — publishing a test notifies every student it is for, in the app (bell) and by email (C3)
 - [ ] Access Codes
 - [x] Candidate Eligibility Rules — per assignment: min CGPA, max backlogs, min 10th/12th, departments (a school covers its units); ineligible students don't see the test and aren't counted (C1)
 - [x] Test Instructions — faculty instructions + rules screen
@@ -766,7 +766,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Eligibility Checker
 - [ ] Placement Calendar
 - [x] Placement Opportunity Feed — Jobs page + `job_alerts`, apprenticeships tab
-- [ ] 🟡 Hiring Drive Notifications — `receive_job_alerts` preference + cron job; drives not modelled
+- [x] Hiring Drive Notifications — eligible students are notified when a drive opens, on the last day to apply, and when shortlisted/selected (C3); `receive_job_alerts` for Forge jobs
 
 ### 18. AI Career Intelligence
 - [ ] 🟡 AI Career Coach — mentor chat can discuss careers
@@ -953,21 +953,21 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 24. Placement Officer & Training and Placement Cell
 - [ ] Placement Cell Dashboard
-- [ ] Student Eligibility Management
+- [x] Student Eligibility Management — academic records + eligibility rules (CGPA, backlogs, 10th/12th, departments, batches) on tests and drives (C1, C3)
 - [ ] Company Management
-- [ ] Recruitment Drive Management
-- [ ] 🟡 Job Posting Management — Forge staff post jobs (`job_alerts`); not per college
-- [ ] Placement Registration
+- [x] Recruitment Drive Management — Placements: create/open/close drives, rounds, eligible vs applied, counts, CSV (C3)
+- [x] Job Posting Management — Forge staff post jobs (`job_alerts`); colleges post their own placement drives with role, CTC, location, type and eligibility (C3)
+- [x] Placement Registration — eligible students apply/withdraw in My College → Placement drives; the database refuses ineligible or late applications (C3)
 - [ ] Resume Collection
 - [ ] Resume Screening
-- [ ] Eligibility Shortlisting
+- [x] Eligibility Shortlisting — only eligible students can see and apply; staff shortlist from the applicant list (C3)
 - [x] Assessment Assignment — assign tests to batches (role permissions permitting)
-- [ ] 🟡 Recruitment Test Scheduling — scheduled assignments; not tied to a drive
+- [x] Recruitment Test Scheduling — drive rounds with dates; a round can be a college test assignment, opened from the student's drive page (C3)
 - [ ] Interview Scheduling
 - [ ] Interview Panel Management
-- [ ] Shortlist Management
+- [x] Shortlist Management — select applicants → shortlist / select / not taken forward; each student is notified; history in the activity log (C3)
 - [ ] Offer Management
-- [ ] Placement Status Tracking
+- [x] Placement Status Tracking — per-drive status per student (applied, shortlisted, selected, not taken forward, withdrew), visible to the student and staff (C3)
 - [ ] Internship Tracking
 - [ ] Employer Communication
 - [ ] Company Visit Scheduling
@@ -1428,30 +1428,30 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Communication Progress Analytics
 
 ### 40. Notifications & Communication
-- [ ] 🟡 In-App Notifications — toasts only; no notification centre
+- [x] In-App Notifications — notification bell in the Forge app: unread count, list, mark read, links into the app (C3)
 - [x] Email Notifications — Resend (`email.service.ts`)
 - [ ] SMS Notifications
 - [ ] Push Notifications
 - [ ] 🟡 WhatsApp Notifications — WhatsApp service + webhook; not used for alerts
 - [ ] Browser Notifications
-- [ ] 🟡 Notification Preferences — `receive_job_alerts` only
+- [x] Notification Preferences — email on/off, daily digest, and per-kind on/off for 10 kinds (Settings → Notifications, C3); `receive_job_alerts`
 - [ ] 🟡 Notification Templates — email templates in code
-- [ ] 🟡 Scheduled Notifications — cron job for job alerts
-- [ ] Automated Reminders
-- [ ] Deadline Reminders
-- [ ] Assessment Alerts
-- [ ] Assignment Alerts
+- [x] Scheduled Notifications — scheduler endpoint (cron or in-process): tests closing, results out, courses due, last day to apply; idempotent (C3); job-alert cron
+- [x] Automated Reminders — the scheduler's reminders, each sent once per person (dedupe keys) (C3)
+- [x] Deadline Reminders — 24 h before a test closes (if not submitted), 48 h before a course is due, last day to apply to a drive (C3)
+- [x] Assessment Alerts — new test, closing soon, results released (C3)
+- [x] Assignment Alerts — new test and course assignments, closing/due reminders (C3)
 - [ ] Learning Streak Reminders
-- [ ] 🟡 Placement Alerts — job alerts
+- [x] Placement Alerts — job alerts, drive announcements and application updates (C3)
 - [ ] Course Announcements
 - [ ] Emergency Announcements
-- [ ] Batch-Wise Notifications
+- [x] Batch-Wise Notifications — notifications go to an assignment's or drive's audience: batch, section, eligibility (C3)
 - [ ] Role-Based Notifications
-- [ ] Notification Delivery Tracking
+- [ ] 🟡 Notification Delivery Tracking — in-app read state and `emailed_at` per notification (C3); no provider delivery/bounce webhooks
 - [ ] Notification Failure Handling
 - [ ] Notification Analytics
 - [ ] Quiet Hours
-- [ ] Digest Notifications
+- [x] Digest Notifications — daily email digest option instead of one email per notification (C3)
 
 ### 41. Mobile Application & PWA
 - [ ] Student Mobile App

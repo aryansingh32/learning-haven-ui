@@ -221,12 +221,35 @@ export interface MyCourseAssignment {
   percent: number;
 }
 
+export type NotificationKind =
+  | 'test_assigned' | 'test_closing' | 'result_released' | 'feedback' | 'course_assigned' | 'course_due'
+  | 'drive_announced' | 'drive_update' | 'job_alert' | 'announcement';
+export interface AppNotification { id: string; kind: NotificationKind; title: string; body: string | null; link: string | null; readAt: string | null; createdAt: string }
+export interface NotificationPreferences { emailEnabled: boolean; dailyDigest: boolean; mutedKinds: NotificationKind[] }
+
+export type DriveStatus = 'registered' | 'shortlisted' | 'selected' | 'rejected' | 'withdrawn';
+export interface MyDrive {
+  id: string; company: string; roleTitle: string; description: string | null; jobType: 'full_time' | 'internship' | 'internship_ppo';
+  ctc: string | null; location: string | null; applyBy: string | null; status: 'open' | 'closed'; orgName: string;
+  canApply: boolean; myStatus: DriveStatus | null;
+  rounds: Array<{ name: string; kind: string; scheduledAt: string | null; assignmentId: string | null }>;
+}
+
 // ── Calls ───────────────────────────────────────────────────────────────
 
 /** Also attaches any roster entries the college pre-registered for this email. */
 export const fetchCampusMe = (): Promise<CampusMe> => client.get('/me');
 
 export const fetchMyAssignments = (): Promise<MyAssignment[]> => client.get('/my/assignments');
+
+export const fetchNotifications = (): Promise<{ unread: number; rows: AppNotification[] }> => client.get('/me/notifications');
+export const markNotificationsRead = (body: { ids: string[] } | { all: true }): Promise<{ marked: number }> => client.post('/me/notifications/read', body);
+export const fetchNotificationPreferences = (): Promise<NotificationPreferences> => client.get('/me/notification-preferences');
+export const saveNotificationPreferences = (p: Partial<NotificationPreferences>): Promise<NotificationPreferences> => client.put('/me/notification-preferences', p);
+
+export const fetchMyDrives = (): Promise<MyDrive[]> => client.get('/my/drives');
+export const applyToDrive = (id: string): Promise<{ status: DriveStatus }> => client.post(`/my/drives/${id}/apply`);
+export const withdrawFromDrive = (id: string): Promise<{ status: DriveStatus }> => client.post(`/my/drives/${id}/withdraw`);
 
 export const fetchMyCourseAssignments = (): Promise<MyCourseAssignment[]> => client.get('/my/course-assignments');
 
