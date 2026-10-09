@@ -1,30 +1,32 @@
 # Forge / Forge Campus — session handoff
 
-**Last updated: 2026-10-10.** Resume on branch **`ccr-f94ce2b7-q10f2w`** — it contains everything
-(launch fixes → Campus phase 0 → phase 1 → student Campus UI → in-app practice + server judge).
+**Last updated: 2026-10-11.** Resume on branch **`ccr-f94ce2b7-q10f2w`** — it contains everything
+(launch fixes → Campus phase 0 → phase 1 → student Campus UI → in-app practice + server judge → coding questions
+in Campus tests).
 Working tree was clean and pushed at the end of the last session.
 
 **Read next, in this order:**
 1. This file — state, rules, what's left.
-2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slice A1 is done; **next is B1**.
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (351 done, 266 partly, 1,281 not done).
+2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1 and B1 are done; **next is A2** (§8.3).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (355 done, 266 partly, 1,277 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
 
 ---
 
-## 0. Status at a glance (2026-10-10)
+## 0. Status at a glance (2026-10-11)
 
 | Area | State |
 |---|---|
 | Campus staff portal + Campus API (phase 1, slices A–D) | ✅ built, tested; **not deployed** |
 | Student side of Campus in `apps/web` (slice E): My College, proctored exam, results | ✅ built, browser-verified |
 | In-app coding practice `/problems/:slug` + server judge (BUILD_PLAN slice A1) | ✅ built, browser-verified |
-| Live DB migration `20261010000001_problem_judging.sql` | ⏳ **not applied** — owner is running it in the Supabase SQL editor; verify after (§8.1) |
-| Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API |
+| Coding questions in Campus tests (slice B1): shared `packages/judge`, portal form, exam editor, partial marks, regrade | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging.sql`, `20261011000001_campus_coding_questions.sql` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
-| Next slice | **B1 · coding questions in Campus tests** (owner chose this) — design in §8.2 |
+| Next slice | **A2 · C/C++ on the judge + per-test scores in practice**, then A4 content drafts (§8.3) |
 
 ### Owner decisions recorded (2026-10-10)
 - Apply the problem-judging migration: **yes** (owner runs it themselves; Claude verifies).
@@ -71,7 +73,7 @@ Stacked branches, all pushed to origin, each containing the one before:
 1. `chore/launch-fixes-and-test-series` — test-series feature + first audit fixes
 2. `feat/campus-phase-0` — Judge0, API client/auth fixes, RLS lockdown, Campus tenancy
 3. `feat/campus-phase-1` — Phase 1 (assessment-core, Campus API, Campus portal)
-4. **`ccr-f94ce2b7-q10f2w`** — student Campus UI, platform audit + checklist + build plan, in-app practice + judge (**work here**)
+4. **`ccr-f94ce2b7-q10f2w`** — student Campus UI, platform audit + checklist + build plan, in-app practice + judge, shared judge package + coding questions in Campus tests (**work here**)
 
 **Merge into `main` in that order before running/deploying the Forge API from `main`.** The live database
 is already locked down (§4); `main`'s API still uses the public anon key server-side and will fail on the
@@ -83,7 +85,7 @@ work — cherry-pick its security/money-path commits (5853694, 703a30e) rather t
 
 ## 4. Live database (Supabase project `learningheaven`, ref `wxrxnqhjkwlxvmaopvlv`, ap-south-1)
 
-Applied via the Supabase MCP (in order), all verified after applying (`20261010000001_problem_judging` is **pending**, §8.1):
+Applied via the Supabase MCP (in order), all verified after applying (`20261010000001_problem_judging` and `20261011000001_campus_coding_questions` are **pending**, §8.1):
 
 | Migration | Effect |
 |---|---|
@@ -147,6 +149,20 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 - Bugs fixed: Practice linked to a non-existent page; Practice status menu never worked; premium always "free";
   old submit trusted the browser; editor reset (and lost autosave) on refetch; ProgressRing NaN on 0/0.
 
+### 2026-10-11 — Slice B1: coding questions in Campus tests (commits b195a9b, 0bceef3, 8d40365)
+- `packages/judge` (`@repo/judge`): harnesses + Judge0 client + dev-only local runner with an explicit `JudgeConfig`;
+  `apps/api/.../problemJudge.service.ts` is now a thin wrapper; `apps/campus-api/src/services/judge.ts` builds the
+  Campus config (new env `JUDGE0_*`, see `.env.example`).
+- Migration `20261011000001_campus_coding_questions.sql`: `question_type 'coding'`, `starter_code`, `judge_config`,
+  `public.question_test_cases` (RLS via `campus.can_author_question()`; students/anon: nothing). 12 new SQL checks.
+- `assessment-core` scoring: coding = marks × passed/total, no negatives, 0 while pending.
+- Campus API: coding authoring (`routes/tests.ts`), attempt view sends starter code + samples only, code saves,
+  `POST /my/attempts/:id/questions/:qid/run` (samples, 3 s cooldown), `finalize()` closes first then judges
+  (`gradeCodingAnswers`), `POST /orgs/:org/assignments/:id/regrade` (needs `assessments.grade` + `reports.view`),
+  results flag `gradingPending`.
+- Web: `features/campus/CodingQuestion.tsx` in `CampusExamPage`; lockdown listeners now capture-phase (blocks paste
+  in Monaco; drop counts as paste); result page shows tests passed. Portal: coding form, summary, Grade now banner.
+
 ## 6. Architecture rules for Campus (keep these)
 
 - Campus API: `asUser(userId, fn)` runs as Postgres role `authenticated` with JWT claims → **RLS decides**. Use for every user-requested read/write.
@@ -154,16 +170,19 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 - Students never receive correct answers while an attempt is open; scoring uses server-saved answers only; deadline = `least(start + duration, closes_at)`.
 - JWT verified locally with `jose` (ES256 via the project JWKS; HS256 secret only for tests).
 - Every new campus table: `org_id`, RLS on, composite FKs so rows can't mix colleges, and checks added to the SQL suites. Mutation-test new policies (break the rule, confirm a test fails).
+- Code judging goes through `@repo/judge` only. Hidden tests never leave the server; students get samples only.
+  Grading coding answers happens after the attempt is closed, so answers can't change mid-judging.
 
 ## 7. Run and test locally
 
 ```bash
 pnpm install                         # builds packages/assessment-core via prepare
-pnpm --filter @repo/assessment-core test   # 46 tests
-pnpm --filter @repo/api test               # 86 jest tests (incl. judge tests that run real node/python3/java)
+pnpm --filter @repo/assessment-core test   # 52 tests
+pnpm --filter @repo/judge test             # 14 tests (runs real node/python3/java)
+pnpm --filter @repo/api test               # 86 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 3 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 22 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 29 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -181,7 +200,7 @@ cd apps/web && npx vite build              # must pass
 
 Env needed (not in repo; see each app's `.env.example`): `apps/api/.env` (Supabase URL/keys, DATABASE_URL,
 REDIS_URL, Razorpay, JUDGE0_URL/JUDGE0_AUTH_TOKEN), `apps/campus-api/.env` (DATABASE_URL, SUPABASE_URL,
-CORS_ORIGINS), `apps/campus/.env` (VITE_FORGE_API_URL, VITE_CAMPUS_API_URL, VITE_STUDENT_APP_URL),
+CORS_ORIGINS, optional JUDGE0_URL/JUDGE0_AUTH_TOKEN), `apps/campus/.env` (VITE_FORGE_API_URL, VITE_CAMPUS_API_URL, VITE_STUDENT_APP_URL),
 `apps/web/.env` (see `apps/web/.env.example`; `VITE_CAMPUS_API_URL` in production, Vite proxies `/campus/v1` in dev).
 Redis must be running for the Forge API.
 
@@ -198,44 +217,37 @@ where p.deleted_at is null group by p.slug, p.judge_config, p.starter_code order
 Expect 8 rows, 5–6 tests, 2 samples, `has_starter = true`. Also confirm RLS is on for `problem_test_cases` with no
 policies, and run the security advisor.
 
-### 8.2 Next slice — B1: coding questions in Campus tests (owner chose this)
-Goal: faculty add a **coding** question (statement, starter code, sample + hidden tests, marks); students answer it
-in the proctored exam with the same editor; scored on the server, partial marks per test passed.
-Design sketch (reuse, don't fork):
-- DB (new migration, additive): `testseries_questions.question_type` gains `coding`; new
-  `campus`-owned or public `question_test_cases` (question_id, input, expected_output, is_sample, weight) with RLS
-  like `problem_test_cases` (server-only); `question_type='coding'` rows carry `starter_code`, `judge_config`.
-  Add checks to `apps/api/supabase/tests/campus_assessments.sql` (students can't read hidden tests; other colleges
-  can't read them at all). Mutation-test.
-- Judge: move the harness/runner from `apps/api/.../problemJudge.service.ts` into something both APIs can use
-  (e.g. `packages/judge` or a Campus-API copy that imports `compareOutputs` from assessment-core) — Campus API
-  needs `JUDGE0_URL` too; dev uses the local runner.
-- `assessment-core` scoring: a coding answer stores `{ code, language, passed, total }`; marks = marks × passed/total
-  (partial), no negative marking for coding.
-- Campus API: faculty question create/edit accepts coding + tests (`routes/tests.ts`); student
-  `PUT /my/attempts/:id/answers/:qid` accepts `{ code, language }`; new `POST /my/attempts/:id/run/:qid` (samples
-  only, rate-limited); final judging of every coding answer happens in `finalize()` before scoring.
-- Portal (`apps/campus/src/pages/TestEditor.tsx`): coding question form (statement, starter code per language,
-  tests table, marks). Student exam (`apps/web/src/pages/campus/CampusExamPage.tsx`): render the `CodeWorkspace`
-  editor for coding questions inside the existing exam layout (autosave via the existing answer endpoint; Run uses
-  the new run endpoint; no Submit button — the attempt submit judges it). Lockdown must keep working (paste is
-  blocked by policy — check Monaco paste is also caught).
-- Results: per-question marks and tests passed; faculty results CSV gets the coding score.
+Then for `20261011000001_campus_coding_questions` (apply **after** the one above):
+```sql
+select conname, pg_get_constraintdef(oid) from pg_constraint
+ where conrelid = 'public.testseries_questions'::regclass
+   and conname in ('testseries_questions_question_type_check', 'chk_mcq_msq_options', 'testseries_questions_coding_check');
+select relrowsecurity from pg_class where oid = 'public.question_test_cases'::regclass;          -- true
+select policyname from pg_policies where tablename = 'question_test_cases';                      -- 1 staff policy
+select has_table_privilege('anon', 'public.question_test_cases', 'select');                      -- false
+```
+Existing question rows are untouched (the migration only widens checks and adds columns with defaults).
+
+### 8.2 B1 — done (2026-10-11)
+See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
+coding question after creation, C/C++, per-test weights, plagiarism, showing code on the result page).
 
 ### 8.3 Then (BUILD_PLAN order)
-- A2: C/C++ on the judge; per-test partial score for practice too.
+- **A2 (next):** C/C++ on the judge (`packages/judge`: add a C/C++ harness reading `name = value` inputs; Judge0 ids
+  50 C / 54 C++; local runner via gcc/g++ if present); per-test partial score shown in practice; Campus coding
+  questions can then allow C/C++ too (add the languages to `JUDGED_LANGUAGES`, the migration check, portal list).
 - A4 content: Claude drafts ~75 original DSA problems with tests + aptitude question bank → owner's team reviews →
   import. (Don't copy LeetCode statements verbatim; write originals.)
 - B2–B5, C1–C4, D1–D5 per `BUILD_PLAN.md`.
 
 ### 8.4 Deploy (owner)
 - Judge0 on its own VM (cgroup v1, privileged Docker) per `infra/judge0/README.md`; set `JUDGE0_URL`/`JUDGE0_AUTH_TOKEN`
-  on the Forge API (and later the Campus API for B1).
+  on the Forge API **and the Campus API** (coding questions; without it production marks them "grading pending").
 - Campus API + portal (e.g. Railway); add portal and web origins to Campus API `CORS_ORIGINS`; set
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the problem-judging migration (§8.1), then tell Claude to verify
+- Run the two pending migrations in order (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings
@@ -252,7 +264,10 @@ Pilot college and its exam date; pricing (per student per year vs month); webcam
 - ~870 web TS errors from React 19 types leaking into React 18 web app (BH-005); build still passes
 - Resume page horizontal scroll on mobile; placeholder "Johan Smith" resume
 - CI does not run the Forge API jest suite (only SQL suites, assessment-core, Campus API) — worth adding
-- Monaco loads from unpkg at runtime; consider bundling it
+- Monaco loads from unpkg at runtime; consider bundling it (a college exam on a blocked network would lose the editor)
+- `apps/web` and `apps/campus` `tsc -b` print a `baseUrl` deprecation (TS5101) when a global TypeScript 6 is picked up; use
+  the local `node_modules/.bin/tsc` (5.9) — the build itself passes
+- Campus coding questions can't be edited after creation (delete + re-add)
 - Practice page `Star`/bookmark and company filter not built; solution text exists for 0 problems
 
 ## 9. Working style the owner prefers

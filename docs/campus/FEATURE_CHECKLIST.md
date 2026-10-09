@@ -1,6 +1,6 @@
 # Master feature checklist — verified against the code and the live database
 
-Verified 2026-10-09 on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
+Verified 2026-10-09 (updated after slice B1) on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
 the live Supabase database (read-only counts) for content.
 
 - `[x]` **Done** — built *and* reachable by the people it's for. Evidence after the dash.
@@ -34,10 +34,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 25 | 8 | 25 | 58 |
 | 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 27 | 9 | 21 | 57 |
-| 13 | Question Bank Management | 9 | 6 | 27 | 42 |
+| 12 | Assessment Engine | 29 | 8 | 20 | 57 |
+| 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
-| 15 | Online Judge & Evaluation Engine | 12 | 8 | 11 | 31 |
+| 15 | Online Judge & Evaluation Engine | 13 | 9 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
 | 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
 | 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **351** (18%) | **266** (14%) | **1281** (67%) | **1898** |
+| | **All modules** | **355** (19%) | **266** (14%) | **1277** (67%) | **1898** |
 
 ---
 
@@ -538,7 +538,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Practice Assessments — course mock tests from quiz pools; retakes
 - [x] Mock Tests — `MockTestPage.tsx`, `mock-test.service.ts`
 - [ ] 🟡 Placement Assessments — engine supports them; no placement content
-- [ ] Coding Assessments
+- [x] Coding Assessments — Campus tests mix coding with MCQ/MSQ/NAT; judged on the server after submit (slice B1)
 - [ ] 🟡 Aptitude Assessments — MCQ/NAT engine ready; no aptitude content
 - [x] Technical Assessments — MCQ/MSQ/NAT technical tests
 - [ ] Personality Assessments
@@ -551,7 +551,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Option Randomization — per-attempt option shuffle (Campus)
 - [ ] Difficulty-Based Selection
 - [x] Negative Marking — per question
-- [ ] 🟡 Partial Marking — MSQ is all-or-nothing; no partial credit
+- [x] Partial Marking — coding questions: marks × tests passed / total (B1); MSQ stays all-or-nothing
 - [ ] 🟡 Section Time Limits — `test_sections.duration_seconds` column; not enforced in the exam UI
 - [x] Global Time Limits
 - [x] Question Navigation — palette
@@ -596,7 +596,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Fill-in-the-Blank Questions — numeric answers (NAT) only
 - [ ] Short-Answer Questions
 - [ ] Long-Answer Questions
-- [ ] Coding Questions
+- [x] Coding Questions — Campus question type `coding`: starter code per language, sample + hidden tests (`question_test_cases`, staff-only RLS)
 - [ ] SQL Questions
 - [ ] Output Prediction Questions
 - [ ] Debugging Questions
@@ -666,10 +666,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] AI Question Leakage Detection
 
 ### 15. Online Judge & Evaluation Engine
-- [ ] 🟡 Multi-Language Code Judge — server judge for JavaScript, Python, Java (Judge0 in production, local runner in development); Judge0 not deployed yet
+- [ ] 🟡 Multi-Language Code Judge — shared `@repo/judge` for JavaScript, Python, Java, used by Forge practice and Campus tests (Judge0 in production, local runner in development); Judge0 not deployed yet; no C/C++
 - [x] Test Case Evaluation — every test judged on the server
 - [x] Hidden Test Case Evaluation — included in every Submit
-- [ ] Partial Test Case Scoring
+- [x] Partial Test Case Scoring — Campus coding questions score per passed test
 - [ ] 🟡 Custom Scoring Rules — per-problem compare mode (exact / any order / any order nested); no weights
 - [x] Time Limit Enforcement — judge time limit (Judge0 limits; 10 s locally)
 - [ ] 🟡 Memory Limit Enforcement — Judge0 defaults
@@ -693,7 +693,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Evaluation Retry — BullMQ job retries
 - [ ] 🟡 Evaluation Audit Logs — `build_stage_results`, `job_logs`
 - [ ] Judge Health Monitoring
-- [ ] Judge Failure Recovery
+- [ ] 🟡 Judge Failure Recovery — Campus: if the judge is down at submit, coding answers are kept as "grading pending" and staff press Grade now; no automatic retry
 - [x] Submission Rate Limiting — rate limit on execution
 - [ ] Execution Cost Monitoring
 - [ ] Judge Capacity Monitoring

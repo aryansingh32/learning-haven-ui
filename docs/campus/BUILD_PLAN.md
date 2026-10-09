@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 321 done, 285 partly, 1,292 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 355 done, 266 partly, 1,277 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -25,7 +25,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 ## Track B — Assessments for colleges (modules 12, 13, 33)
 | Slice | What | Reuses |
 |---|---|---|
-| B1 · Coding questions in Campus tests | Question type `coding` with test cases; exam screen embeds the A1 editor; scored by the A2 judge; partial marks per test | A1/A2, `assessment-core`, Campus exam screen |
+| **B1 · Coding questions in Campus tests** ✅ *built; migration not yet applied to the live DB* | Question type `coding` with test cases; exam screen embeds the A1 editor; scored by the shared judge; partial marks per test | A1, `packages/judge`, `assessment-core`, Campus exam screen |
 | B2 · Question pools & per-student extra time | Draw N of M per attempt; `attempt_overrides` | `buildAttemptOrder` |
 | B3 · Section timers & locking | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
 | B4 · College question import | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
@@ -80,3 +80,42 @@ still works).
 
 **Next:** A2 (C/C++ on the judge, partial scores per test), then A4 content (more problems with tests), then B1
 (coding questions in Campus tests, reusing this judge).
+
+---
+
+## Slice B1 — built
+
+- **Shared judge** `packages/judge` (`@repo/judge`): the A1 harnesses, Judge0 client and dev-only local runner, now
+  taking an explicit `JudgeConfig`. The Forge API's `problemJudge.service.ts` is a thin wrapper over it; the Campus
+  API uses it too (new env `JUDGE0_URL`, `JUDGE0_AUTH_TOKEN`, language ids, `JUDGE0_TIMEOUT_MS`).
+- **Data** (additive migration `20261011000001_campus_coding_questions.sql`): `testseries_questions` accepts
+  `question_type = 'coding'` with `starter_code` (per language; its keys are the allowed languages) and
+  `judge_config.compare`; a coding row must have starter code and a known compare mode. New
+  `public.question_test_cases` (sample + hidden tests). RLS: only staff with `content.create` in the college that
+  owns the question (never Forge-owned questions); students and anon have nothing.
+- **Scoring** (`assessment-core`): coding answers carry `code`, `language` and the judge's `tests_passed` /
+  `tests_total`; marks = marks × passed / total, no negative marking; 0 while `grading = 'pending'`.
+- **Campus API:** faculty create coding questions with tests (≥ 1 sample); the attempt view sends starter code,
+  languages and **sample tests only**; `PUT …/answers/:qid` accepts `{code, language}`;
+  `POST /my/attempts/:id/questions/:qid/run` runs the samples (3 s cooldown per attempt). Submit **closes the attempt
+  first** (no answer can change while judging), then judges every coding answer on all tests and rescores. If the
+  judge is down, those answers stay "grading pending" and staff press **Grade now**
+  (`POST /orgs/:org/assignments/:id/regrade`, `{rejudge: true}` re-runs all, e.g. after fixing a test); results show
+  who is pending.
+- **UI:** exam screen splits into statement + examples | Monaco editor + sample-run results; code autosaves per
+  language; reload restores it. Lockdown listens in the capture phase so paste/copy/right-click are blocked inside
+  Monaco too (and drag-dropped text). Result page shows tests passed per coding question. Portal: coding form
+  (languages, starter code, compare mode, sample/hidden tests), question summary, pending banner + Grade now.
+
+**Status:** built and verified — shared judge 14 tests; assessment-core 52; Forge API 86; Campus API 29 integration
+tests (7 new: authoring rules, no hidden tests in the student view, Run on samples + cooldown, language rules,
+partial marks 4/6 on submit, regrade permissions and pending → judged, students can't read test cases in SQL);
+SQL suites pass with 12 new checks (mutation-tested); browser run against the real Campus API: hidden tests absent
+from the page, paste into the editor blocked, wrong answer caught on samples, Python partial solution saved and
+restored after reload, submit → 4/5 tests, 10/12 marks; portal authoring and results.
+
+**To go live:** apply `20261011000001_campus_coding_questions.sql` (after `20261010000001_problem_judging.sql`),
+deploy Judge0 and set `JUDGE0_URL` on the **Campus API** as well as the Forge API.
+
+**Not in B1 (later):** editing a coding question after creation (delete + re-add today), C/C++ (A2), per-test
+weights, plagiarism checks across submissions, showing students their code on the result page.
