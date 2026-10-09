@@ -128,7 +128,9 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({
                                 isAccepted ? "text-emerald-500" : "text-rose-500"
                               )}>{executionResult.status}</h4>
                               <p className="text-xs text-zinc-500 mt-1 font-medium tracking-wide">
-                                {executionResult.executionTime != null ? `Execution time: ${executionResult.executionTime}ms` : "—"}
+                                {executionResult.judged
+                                  ? `Passed ${executionResult.judged.passed} of ${executionResult.judged.total} tests, including hidden ones`
+                                  : executionResult.executionTime != null ? `Execution time: ${executionResult.executionTime}ms` : "—"}
                               </p>
                             </div>
                           </div>
@@ -157,14 +159,19 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({
                                 )}
                               >
                                 <div className="flex items-center justify-between mb-3">
-                                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Case {idx + 1}</span>
+                                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{res.label ?? `Case ${idx + 1}`}</span>
                                   {res.passed ? (
                                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
                                   ) : (
                                     <XCircle className="h-3.5 w-3.5 text-rose-500" />
                                   )}
                                 </div>
-                                {!res.passed && (
+                                {!res.passed && res.hidden && (
+                                  <p className="text-[11px] text-rose-300/80 leading-relaxed">
+                                    {res.error || "Your output didn't match on this hidden test. Check edge cases (empty input, duplicates, negatives)."}
+                                  </p>
+                                )}
+                                {!res.passed && !res.hidden && (
                                   <div className="space-y-3 mt-4">
                                     <div>
                                       <label className="text-[9px] font-bold text-rose-500/50 uppercase block mb-1">Expected</label>

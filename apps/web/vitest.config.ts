@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: "@", replacement: path.resolve(__dirname, "./src") },
+      { find: "@repo/assessment-core", replacement: path.resolve(__dirname, "../../packages/assessment-core/src/index.ts") },
       // Specs in ../../tests/frontend sit outside this package, so bare imports
       // would otherwise fail to resolve; point them at this app's node_modules.
       { find: /^(react|react-dom|react-router-dom|sonner|@tanstack\/react-query|@testing-library\/[^/]+)(\/.*)?$/, replacement: path.resolve(__dirname, "node_modules") + "/$1$2" },

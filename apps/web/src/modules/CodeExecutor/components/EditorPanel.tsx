@@ -29,6 +29,8 @@ interface EditorPanelProps {
     showSubmit?: boolean;
     allowLanguageSwitch?: boolean;
     variant?: 'leetcode' | 'hackerrank';
+    /** Limit the language picker (defaults to every supported language). */
+    languages?: SupportedLanguage[];
 }
 
 const MONACO_LANG: Record<SupportedLanguage, string> = {
@@ -54,6 +56,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     showSubmit = true,
     allowLanguageSwitch = true,
     variant = 'leetcode',
+    languages,
 }) => {
     const toolbarClass = variant === 'hackerrank'
         ? "bg-emerald-950/40 border-emerald-500/10"
@@ -82,7 +85,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                             <SelectValue placeholder="Language" />
                         </SelectTrigger>
                         <SelectContent className="bg-zinc-900 border-zinc-800 shadow-2xl">
-                            {LANGUAGE_OPTIONS.map(opt => (
+                            {LANGUAGE_OPTIONS.filter(opt => !languages || languages.includes(opt.value)).map(opt => (
                                 <SelectItem key={opt.value} value={opt.value} className="text-xs focus:bg-zinc-800">{opt.label}</SelectItem>
                             ))}
                         </SelectContent>

@@ -28,6 +28,11 @@ export interface CodeWorkspaceProps {
     resetOnQuestionChange?: boolean;
     header?: React.ReactNode;
     className?: string;
+    /** Replace the default question panel (e.g. with tabs for hints and solution). */
+    questionPanel?: React.ReactNode;
+    languages?: SupportedLanguage[];
+    onSubmit?: (code: string, language: SupportedLanguage) => Promise<import('./types').ExecutionResult>;
+    storageKey?: string;
 }
 
 const HackerrankTabs: React.FC = () => {
@@ -67,6 +72,10 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
     resetOnQuestionChange = true,
     header,
     className,
+    questionPanel: customQuestionPanel,
+    languages,
+    onSubmit,
+    storageKey,
 }) => {
     const {
         language,
@@ -90,6 +99,8 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
         resetCodeOnLanguageChange,
         resetOnQuestionChange,
         onSolved,
+        onSubmit,
+        storageKey,
     });
 
     const editorPanel = (
@@ -108,6 +119,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
             showSubmit={showSubmit}
             allowLanguageSwitch={allowLanguageSwitch}
             variant={layout}
+            languages={languages}
         />
     );
 
@@ -123,7 +135,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
         <div className="h-full w-full bg-zinc-950" />
     );
 
-    const questionPanel = showQuestion ? (
+    const questionPanel = showQuestion && customQuestionPanel ? customQuestionPanel : showQuestion ? (
         <div className="h-full flex flex-col">
             {layout === 'hackerrank' && <HackerrankTabs />}
             <QuestionPanel question={question} />

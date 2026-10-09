@@ -16,6 +16,8 @@ const difficultyColor: Record<string, string> = {
 
 import { NotesModal } from "@/components/NotesModal";
 import { useApiMutation } from "@/hooks/useApi";
+import { api } from "@/services/api.svc";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { CheckCircle, HelpCircle, RotateCcw } from "lucide-react";
 import {
@@ -287,20 +289,29 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
     `/problems?topic=${encodeURIComponent(topicName)}&limit=100`
   );
 
+  const navigate = useNavigate();
   const { mutate: updateStatus } = useApiMutation(
-    '/status',
-    'POST',
+    ({ problem_id, status }: { problem_id: string; status: 'solved' | 'tried' | 'revision'; slug: string }) =>
+      api.post(`/problems/${problem_id}/status`, { status }),
     {
       onSuccess: () => {
         refetch();
         toast.success("Status updated");
       },
-      onError: () => toast.error("Failed to update status")
+      onError: (e: any, vars) => {
+        // Problems with tests are marked solved by the judge, not by hand.
+        if (e?.status === 409) {
+          toast.info("Submit your code to mark it solved — opening the problem.");
+          navigate(`/problems/${vars.slug}`);
+          return;
+        }
+        toast.error(e?.message || "Failed to update status");
+      }
     }
   );
 
-  const handleStatusChange = (problemId: string, status: 'solved' | 'tried' | 'revision') => {
-    updateStatus({ problem_id: problemId, status });
+  const handleStatusChange = (problem: { id: string; slug: string }, status: 'solved' | 'tried' | 'revision') => {
+    updateStatus({ problem_id: problem.id, status, slug: problem.slug });
   };
 
   const problems = data?.problems || [];
@@ -353,13 +364,13 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
-                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'solved')}>
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem, 'solved')}>
                       <CheckCircle className="mr-2 h-4 w-4 text-success" /> Solved
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'tried')}>
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem, 'tried')}>
                       <HelpCircle className="mr-2 h-4 w-4 text-orange-500" /> Tried
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleStatusChange(problem.id, 'revision')}>
+                    <DropdownMenuItem onClick={() => handleStatusChange(problem, 'revision')}>
                       <RotateCcw className="mr-2 h-4 w-4 text-purple-500" /> Revision
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -375,21 +386,13 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
-                      onClick={() => {
-                        // BUG-027 fix: Open resource URL if available, otherwise navigate to problem
-                        if ((problem as any).resource_url) {
-                          window.open((problem as any).resource_url, '_blank', 'noopener,noreferrer');
-                        } else {
-                          // Navigate to practice problem page
-                          window.open(`/problems/${problem.id}`, '_blank', 'noopener,noreferrer');
-                        }
-                      }}
+                      onClick={() => navigate(`/problems/${problem.slug}`)}
                       className="p-1 rounded-md bg-secondary hover:bg-muted transition-colors"
                     >
                       <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Open Resource</TooltipContent>
+                  <TooltipContent>Open problem</TooltipContent>
                 </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -407,20 +410,13 @@ function TopicProblems({ topicName, onOpenNotes }: { topicName: string; onOpenNo
                 </Tooltip>
               </div>
               <div className="col-span-2 flex justify-center">
-                {/* BH-006: Removed dead external "Solve" link — problem.link never existed
-                    in the schema. Problems are solved in-app. Button now marks as "tried"
-                    if not already solved, giving the learner a direct status action. */}
+                {/* Opens the in-app workspace (/problems/:slug); solved problems can be re-practised. */}
                 <button
-                  onClick={() => {
-                    if (problem.status !== 'solved') {
-                      handleStatusChange(problem.id, 'tried');
-                    }
-                  }}
-                  disabled={problem.status === 'solved'}
+                  onClick={() => navigate(`/problems/${problem.slug}`)}
                   className={cn(
                     "px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all shadow-sm block text-center",
                     problem.status === 'solved'
-                      ? "bg-success/20 text-success cursor-default"
+                      ? "bg-success/20 text-success hover:bg-success/30"
                       : "gradient-golden text-primary-foreground hover:shadow-md"
                   )}
                 >

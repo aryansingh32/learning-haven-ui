@@ -4,6 +4,7 @@ import { runCpp } from "./cpp";
 import { runJava } from "./java";
 import { ExecutionResult, SupportedLanguage, QuestionData } from "../types";
 import { logger } from "../logger";
+import { compareOutputs } from "@repo/assessment-core";
 
 
 export const executeCode = async (
@@ -54,6 +55,20 @@ export const executeCode = async (
                 output: `Language "${language}" is not supported. Available: JavaScript, Python, C++, C, Java.`,
                 executionTime: 0
             };
+    }
+
+    // Re-check with the problem's compare rule (e.g. "any order"), the same one the server judge uses.
+    if (question.compareMode && question.compareMode !== 'exact' && result.testCaseResults?.length) {
+        const rechecked = result.testCaseResults.map((r) => ({
+            ...r,
+            passed: r.passed || (!/^(Runtime Error|Parse error)/.test(r.actualOutput) && compareOutputs(r.actualOutput, r.expectedOutput, question.compareMode)),
+        }));
+        const allPassed = rechecked.every((r) => r.passed);
+        result = {
+            ...result,
+            testCaseResults: rechecked,
+            status: result.status === 'Wrong Answer' && allPassed ? 'Accepted' : result.status,
+        };
     }
 
     const totalDuration = Math.round(performance.now() - startTime);

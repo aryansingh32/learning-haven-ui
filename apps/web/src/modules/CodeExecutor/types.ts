@@ -7,8 +7,12 @@ export interface TestCase {
     isHidden?: boolean;
 }
 
+export type CompareMode = 'exact' | 'unordered' | 'unordered_deep';
+
 export interface QuestionData {
     id: string;
+    /** How outputs are compared (same rule the server judge uses). Defaults to exact. */
+    compareMode?: CompareMode;
     title: string;
     description: string; // Markdown
     difficulty: Difficulty;
@@ -42,5 +46,11 @@ export interface ExecutionResult {
         input: string;
         actualOutput: string;
         expectedOutput: string;
+        /** Hidden server tests: shown as pass/fail only. */
+        hidden?: boolean;
+        label?: string;
+        error?: string;
     }[];
+    /** Set when the result came from the server judge (Submit). */
+    judged?: { passed: number; total: number };
 }

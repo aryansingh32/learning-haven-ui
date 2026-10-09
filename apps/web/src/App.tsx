@@ -52,6 +52,7 @@ const CBTTestPage = lazy(() => import("./pages/testseries/CBTTestPage"));
 const MyCollegePage = lazy(() => import("./pages/campus/MyCollegePage"));
 const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
 const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
+const ProblemPage = lazy(() => import("./pages/ProblemPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
 const ResumePage = lazy(() => import("./pages/ResumePage"));
@@ -119,6 +120,16 @@ const App = () => (
                 }
               />
               <Route path="/build/:slug/workspace" element={<RedirectBuildWorkspaceSlug />} />
+
+              {/* Full-screen coding workspace for a practice problem */}
+              <Route
+                path="/problems/:slug"
+                element={
+                  <ProtectedRoute>
+                    <ProblemPage />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Full-screen college (Forge Campus) test — proctored, no nav chrome */}
               <Route

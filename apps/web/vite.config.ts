@@ -65,6 +65,8 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        // Shared judging/scoring rules, compiled from source so web and API can't drift.
+        "@repo/assessment-core": path.resolve(__dirname, "../../packages/assessment-core/src/index.ts"),
       },
     },
     // Pre-bundle JSCPP and its CJS dependencies so Vite's

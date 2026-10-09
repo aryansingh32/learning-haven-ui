@@ -13,7 +13,8 @@ interface ProgressRingProps {
 export function ProgressRing({ value, max = 100, size = 120, strokeWidth = 10, className, label, sublabel }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const progress = Math.min(value / max, 1);
+  // Guard 0/0 (e.g. a topic with no problems yet), which would draw NaN.
+  const progress = max > 0 && Number.isFinite(value) ? Math.min(Math.max(value / max, 0), 1) : 0;
   const offset = circumference - progress * circumference;
 
   return (
