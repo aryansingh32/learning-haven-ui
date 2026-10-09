@@ -1,7 +1,9 @@
 # Forge / Forge Campus — session handoff
 
 Last updated: 2026-10-09. Work branch: **`feat/campus-phase-1`** (contains everything below); the student UI
-(Slice E) is on **`ccr-f94ce2b7-q10f2w`**, stacked on it. Full feature audit: `docs/campus/PLATFORM_AUDIT.md`.
+(Slice E) is on **`ccr-f94ce2b7-q10f2w`**, stacked on it. Full feature audit: `docs/campus/PLATFORM_AUDIT.md`;
+item-by-item status: `FEATURE_CHECKLIST.md`; build order: `BUILD_PLAN.md` (slice A1 in-app practice is built).
+**Pending live migration:** `20261010000001_problem_judging.sql` (not yet applied to Supabase — owner to approve).
 Plan doc (shared, with architecture + roadmap diagrams): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
 
 ---

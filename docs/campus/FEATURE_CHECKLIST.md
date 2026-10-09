@@ -12,7 +12,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 (college) apps; "Forge" = the learner app/admin/API.
 
 > **Two facts that change the picture**
-> 1. **The in-app code editor is not reachable by learners.** Monaco, the 4 runtimes and the test-case console
+> 1. ~~**The in-app code editor is not reachable by learners.**~~ *Fixed by slice A1 (`/problems/:slug`, server judge).* Originally: Monaco, the 4 runtimes and the test-case console
 >    are only mounted on `/test-editor`, a developer page. Practice problems open an external link
 >    (`resource_url`, e.g. LeetCode) or `/problems/:id` — and **no `/problems/:id` route exists**. Projects are
 >    coded locally and pushed to GitHub.
@@ -31,13 +31,13 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
-| 9 | Online Coding IDE | 8 | 22 | 28 | 58 |
-| 10 | Coding Practice Platform | 10 | 11 | 22 | 43 |
+| 9 | Online Coding IDE | 25 | 8 | 25 | 58 |
+| 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 27 | 9 | 21 | 57 |
 | 13 | Question Bank Management | 9 | 6 | 27 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
-| 15 | Online Judge & Evaluation Engine | 2 | 12 | 17 | 31 |
+| 15 | Online Judge & Evaluation Engine | 12 | 8 | 11 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
 | 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
 | 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **321** (16%) | **285** (15%) | **1292** (68%) | **1898** |
+| | **All modules** | **351** (18%) | **266** (14%) | **1281** (67%) | **1898** |
 
 ---
 
@@ -366,40 +366,40 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Code Refactoring Exercises
 
 ### 9. Online Coding IDE
-*All 🟡 items here exist in `apps/web/src/modules/CodeExecutor` but are only mounted on the developer page `/test-editor`.*
-- [ ] 🟡 Browser-Based Code Editor — dev page only
-- [ ] 🟡 Monaco Editor Integration — dev page only
-- [ ] 🟡 Multi-Language Editor — C/C++, Java, JS, Python; dev page only
-- [ ] 🟡 Syntax Highlighting — Monaco; dev page only
-- [ ] 🟡 Intelligent Autocomplete — Monaco default; dev page only
+*Updated with slice A1: the editor now runs in the learner-facing practice workspace `/problems/:slug`. Remaining 🟡 items are still only on the developer page `/test-editor`.*
+- [x] Browser-Based Code Editor — in-app practice at `/problems/:slug`
+- [x] Monaco Editor Integration — practice workspace
+- [x] Multi-Language Editor — JavaScript, Python, Java on judged problems (C/C++ run-only on the dev page)
+- [x] Syntax Highlighting — Monaco
+- [x] Intelligent Autocomplete — Monaco
 - [ ] Code Formatting
-- [ ] 🟡 Code Folding — Monaco default; dev page only
+- [x] Code Folding — Monaco
 - [ ] Multi-Tab Editor
 - [ ] Multiple File Support
 - [ ] Project Explorer
 - [ ] Terminal Emulator
 - [ ] 🟡 Standard Input Support — Judge0 / Java executor accept stdin
-- [ ] 🟡 Standard Output Panel — `ConsolePanel.tsx`; dev page only
+- [x] Standard Output Panel — console tab in the practice workspace
 - [ ] Custom Test Input
-- [ ] 🟡 Run Code — dev page only
-- [ ] Submit Code
+- [x] Run Code — runs the examples in the browser
+- [x] Submit Code — judged on the server against every test (`POST /problems/:id/judge`)
 - [ ] Code Execution History
-- [ ] 🟡 Execution Time Display — in result types; dev page only
+- [x] Execution Time Display — shown for Run and Submit
 - [ ] 🟡 Memory Usage Display — in result types; dev page only
-- [ ] 🟡 Compiler Error Display — dev page only
-- [ ] 🟡 Runtime Error Display — dev page only
-- [ ] 🟡 Test Case Results — Test Cases tab in `ConsolePanel.tsx`; dev page only
+- [x] Compiler Error Display — Compilation Error verdict with the message
+- [x] Runtime Error Display — per-test error text
+- [x] Test Case Results — per-example results; hidden tests as pass/fail
 - [ ] Code Diff Viewer
 - [ ] Code Version History
-- [ ] Autosave
-- [ ] Code Recovery
+- [x] Autosave — code saved per problem and language
+- [x] Code Recovery — saved code restored after a refresh (verified)
 - [ ] Keyboard Shortcuts
 - [ ] 🟡 Theme Customization — dark editor theme only
 - [ ] Font Customization
 - [ ] Editor Accessibility
-- [ ] 🟡 Resizable Panels — `ResizeLayout.tsx`; dev page only
+- [x] Resizable Panels — practice workspace
 - [ ] Full-Screen Editor
-- [ ] 🟡 Split-Screen Editor — question/editor/console split; dev page only
+- [x] Split-Screen Editor — problem / editor / console
 - [ ] Mobile Coding Support
 - [ ] AI Code Completion
 - [ ] 🟡 AI Code Explanation — apprenticeship "AI help" endpoint (`ai-help.controller.ts`)
@@ -431,7 +431,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Coding Problem Library — Practice page + admin Problems; only 8 problems live
 - [x] Topic-Wise Problems — grouped by topic on Practice
 - [x] Difficulty-Wise Problems — easy/medium/hard filter
-- [ ] 🟡 Company-Wise Problems — `problems.companies` filled for 8 problems; no company filter in UI
+- [ ] 🟡 Company-Wise Problems — companies shown on the problem page; no company filter yet
 - [x] Pattern-Wise Problems — `patterns`, `problem_patterns`, admin Patterns
 - [ ] Interview Problems
 - [x] Beginner Problems — easy filter
@@ -457,10 +457,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Official Solutions — `solution_code` column; not shown
 - [ ] Community Solutions
 - [ ] AI-Generated Hints
-- [ ] 🟡 Progressive Hints — `problems.hints` filled for 8 problems; not shown on Practice
-- [ ] Hidden Test Cases
+- [x] Progressive Hints — Hints tab reveals one at a time
+- [x] Hidden Test Cases — `problem_test_cases.is_sample = false`, server-only (RLS), never sent to the browser
 - [ ] Custom Test Cases
-- [ ] Sample Test Cases
+- [x] Sample Test Cases — shown as examples and used by Run
 - [ ] Problem Discussion Forum
 - [ ] Upvoting and Downvoting
 - [ ] Problem Reporting
@@ -666,21 +666,21 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] AI Question Leakage Detection
 
 ### 15. Online Judge & Evaluation Engine
-- [ ] 🟡 Multi-Language Code Judge — Judge0 wired for Java only; Judge0 not deployed
-- [ ] 🟡 Test Case Evaluation — build-challenge stages run tests in Docker; no per-question test cases
-- [ ] Hidden Test Case Evaluation
+- [ ] 🟡 Multi-Language Code Judge — server judge for JavaScript, Python, Java (Judge0 in production, local runner in development); Judge0 not deployed yet
+- [x] Test Case Evaluation — every test judged on the server
+- [x] Hidden Test Case Evaluation — included in every Submit
 - [ ] Partial Test Case Scoring
-- [ ] Custom Scoring Rules
-- [ ] 🟡 Time Limit Enforcement — Judge0 + build `timeout_seconds`
+- [ ] 🟡 Custom Scoring Rules — per-problem compare mode (exact / any order / any order nested); no weights
+- [x] Time Limit Enforcement — judge time limit (Judge0 limits; 10 s locally)
 - [ ] 🟡 Memory Limit Enforcement — Judge0 defaults
-- [ ] 🟡 Compilation Error Detection — Judge0/Java executor return compile errors
-- [ ] 🟡 Runtime Error Detection — returned by executor
-- [ ] Time Limit Exceeded Detection
+- [x] Compilation Error Detection — Compilation Error verdict (JS/Python syntax, javac)
+- [x] Runtime Error Detection — per-test errors
+- [x] Time Limit Exceeded Detection — Time Limit Exceeded verdict
 - [ ] Memory Limit Exceeded Detection
-- [ ] Wrong Answer Detection
-- [ ] Accepted Verdict
-- [ ] 🟡 Output Comparison — build stages compare test output
-- [ ] Floating-Point Tolerance
+- [x] Wrong Answer Detection — verified: hard-coded answers fail hidden tests
+- [x] Accepted Verdict — solve + XP recorded only on Accepted
+- [x] Output Comparison — shared `compareOutputs()` (JSON / Python / Java print styles)
+- [x] Floating-Point Tolerance — 1e-6 relative
 - [ ] Special Judge Support
 - [ ] Interactive Judge Support
 - [ ] Custom Checker Support
