@@ -380,7 +380,7 @@ function assertInCurrentSection(attempt: AttemptRow, questionId: string) {
   if (!current.questionIds.includes(questionId)) throw new HttpError(423, 'That section has closed — its answers can no longer be changed.');
 }
 
-export async function startAttempt(userId: string, assignmentId: string) {
+export async function startAttempt(userId: string, assignmentId: string, consent?: { rules: string[] }) {
   const assignment = await visibleAssignment(userId, assignmentId);
   if (!assignment) throw notFound('Assignment not found.');
 
@@ -463,11 +463,12 @@ export async function startAttempt(userId: string, assignmentId: string) {
       await db.query(
         `insert into public.test_attempts
            (id, user_id, test_id, assignment_id, org_id, attempt_number, status, started_at,
-            expires_at, answers, total_questions, total_marks, question_order, current_section, section_started_at)
+            expires_at, answers, total_questions, total_marks, question_order, current_section, section_started_at, consent)
          values ($1, $2, $3, $4, $5, $6, 'in_progress', now(),
-                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now())`,
+                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now(), $13::jsonb)`,
         [attemptId, userId, assignment.test_id, assignment.id, assignment.org_id, used + 1,
-         duration, closesBy.toISOString(), JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order)]
+         duration, closesBy.toISOString(), JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order),
+         consent ? JSON.stringify({ at: new Date().toISOString(), rules: consent.rules }) : null]
       );
     } catch (err) {
       if ((err as { code?: string }).code === '23505') {

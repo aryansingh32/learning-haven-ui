@@ -1131,3 +1131,66 @@ describe('analytics (C2b)', () => {
     expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/overview`).set(await as(U.invigA))).status).toBe(403);
   });
 });
+
+describe('custom roles, activity log, consent and bulk actions (C2c)', () => {
+  let roleId: string;
+
+  it('lets an admin define a Question setter role that replaces the base permissions', async () => {
+    const bad = await request(app).post(`/campus/v1/orgs/${ORG_A}/roles`).set(await as(U.adminA)).send({ name: 'Boss', permissions: ['org.manage'] });
+    expect(bad.status).toBe(400);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/roles`).set(await as(U.facultyA)).send({ name: 'Setter', permissions: ['content.create'] })).status).toBe(403);
+    roleId = (await request(app).post(`/campus/v1/orgs/${ORG_A}/roles`).set(await as(U.adminA))
+      .send({ name: 'Question setter', description: 'Writes questions only', permissions: ['content.create'] })).body.id;
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_A}/members/${U.invigA}`).set(await as(U.adminA)).send({ customRoleId: roleId })).status).toBe(200);
+    const me = (await request(app).get('/campus/v1/me').set(await as(U.invigA))).body.memberships.find((m: { orgId: string }) => m.orgId === ORG_A);
+    expect(me).toMatchObject({ customRoleName: 'Question setter', permissions: ['content.create'] });
+    // Can now write a test, and no longer invigilate.
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.invigA)).send({ title: 'Setter test', durationMinutes: 10 })).status).toBe(201);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.invigA))).status).toBe(403);
+    const roles = (await request(app).get(`/campus/v1/orgs/${ORG_A}/roles`).set(await as(U.adminA))).body;
+    expect(roles).toEqual([expect.objectContaining({ name: 'Question setter', members: 1 })]);
+    // Removing the role gives the base role back.
+    expect((await request(app).delete(`/campus/v1/orgs/${ORG_A}/roles/${roleId}`).set(await as(U.adminA))).status).toBe(204);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.invigA))).status).toBe(200);
+  });
+
+  it('keeps an activity log of changes and exports, for admins only', async () => {
+    await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students?format=csv`).set(await as(U.adminA));
+    const log = await request(app).get(`/campus/v1/orgs/${ORG_A}/activity?limit=500`).set(await as(U.adminA));
+    expect(log.status).toBe(200);
+    const rows = log.body.rows as Array<{ action: string; entity: string; what: string; actor: string; summary: string | null; changes: Record<string, unknown> | null }>;
+    expect(rows.find((r) => r.entity === 'students' && r.action === 'export')).toMatchObject({ actor: 'admina' });
+    expect(rows.find((r) => r.entity === 'tests' && r.summary === 'Setter test')).toMatchObject({ action: 'create', actor: 'inviga' });
+    expect(rows.find((r) => r.entity === 'custom_roles' && r.action === 'delete')).toBeTruthy();
+    expect(rows.find((r) => r.entity === 'org_memberships' && r.changes && 'cgpa' in r.changes)).toBeTruthy(); // record edits from C1
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/activity?entity=tests`).set(await as(U.adminA))).body.rows.every((r: { entity: string }) => r.entity === 'tests')).toBe(true);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/activity`).set(await as(U.facultyA))).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/activity`).set(await as(U.adminB))).status).toBe(403);
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/activity?format=csv`).set(await as(U.adminA));
+    expect(csv.text).toContain('"Student list"');
+  });
+
+  it('records the exam rules a student agreed to', async () => {
+    const a = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId, title: 'Consent check', opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), publish: true,
+    })).body.id;
+    const v = (await request(app).post(`/campus/v1/my/assignments/${a}/start`).set(await as(U.s1))
+      .send({ consent: { rules: ['Full screen', 'No copy or paste'] } })).body;
+    const { rows } = await pool.query(`select consent from public.test_attempts where id = $1`, [v.attemptId]);
+    expect(rows[0].consent).toMatchObject({ rules: ['Full screen', 'No copy or paste'] });
+    expect(new Date(rows[0].consent.at).getTime()).toBeGreaterThan(Date.now() - 60_000);
+  });
+
+  it('applies one action to many members, never to the caller or the owner', async () => {
+    const res = await request(app).post(`/campus/v1/orgs/${ORG_A}/members/bulk`).set(await as(U.adminA))
+      .send({ action: 'suspend', userIds: [U.s2, U.adminA] });
+    expect(res.body).toEqual({ changed: 1, skipped: 1 });
+    expect((await request(app).get('/campus/v1/my/assignments').set(await as(U.s2))).body).toEqual([]);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/members/bulk`).set(await as(U.adminA))
+      .send({ action: 'activate', userIds: [U.s2] })).body.changed).toBe(1);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/members/bulk`).set(await as(U.facultyA))
+      .send({ action: 'suspend', userIds: [U.s2] })).status).toBe(403);
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_B}/members/bulk`).set(await as(U.adminB))
+      .send({ action: 'suspend', userIds: [U.s1] })).body.changed).toBe(0);
+  });
+});

@@ -270,9 +270,11 @@ orgRouter.get('/members', async (req, res) => {
   const role = typeof req.query.role === 'string' ? req.query.role : null;
   const { rows, records } = await asUser(userId, async (db) => ({ records: await hasPermission(db, orgId, 'records.view'), rows: (await db.query<{
     user_id: string; role: string; status: string; roll_number: string | null; department: string | null; department_id: string | null;
+    custom_role_id: string | null; custom_role_name: string | null;
     batches: string[] | null; cgpa: string | null; active_backlogs: number | null; tenth_percent: string | null; twelfth_percent: string | null;
   }>(
     `select m.user_id, m.role, m.status, m.roll_number, d.name as department, m.department_id,
+            m.custom_role_id, (select cr.name from campus.custom_roles cr where cr.id = m.custom_role_id) as custom_role_name,
             m.cgpa, m.active_backlogs, m.tenth_percent, m.twelfth_percent,
             (select array_agg(b.name order by b.name) from campus.batch_members bm
                join campus.batches b on b.id = bm.batch_id where bm.org_id = m.org_id and bm.user_id = m.user_id) as batches
@@ -286,6 +288,7 @@ orgRouter.get('/members', async (req, res) => {
   res.json(rows.map((r) => ({
     userId: r.user_id, role: r.role, status: r.status, rollNumber: r.roll_number,
     department: r.department, departmentId: r.department_id, batches: r.batches ?? [], ...names.get(r.user_id),
+    customRoleId: r.custom_role_id, customRoleName: r.custom_role_name,
     // Marks are for staff who keep academic records (admin, placement officer).
     ...(records && r.role === 'student' ? {
       record: { cgpa: num(r.cgpa), backlogs: r.active_backlogs, tenthPercent: num(r.tenth_percent), twelfthPercent: num(r.twelfth_percent) },
@@ -298,6 +301,7 @@ const memberPatch = z.object({
   status: z.enum(['active', 'suspended']).optional(),
   rollNumber: z.string().trim().max(40).nullable().optional(),
   departmentId: uuid.nullable().optional(),
+  customRoleId: uuid.nullable().optional(),
   record: z.object({
     cgpa: z.number().min(0).max(10).nullable(),
     backlogs: z.number().int().min(0).max(100).nullable(),
@@ -322,14 +326,16 @@ orgRouter.patch('/members/:memberId', async (req, res) => {
         cgpa = case when $9::boolean then $10::numeric else cgpa end,
         active_backlogs = case when $11::boolean then $12::integer else active_backlogs end,
         tenth_percent = case when $13::boolean then $14::numeric else tenth_percent end,
-        twelfth_percent = case when $15::boolean then $16::numeric else twelfth_percent end
+        twelfth_percent = case when $15::boolean then $16::numeric else twelfth_percent end,
+        custom_role_id = case when $17::boolean then $18::uuid else custom_role_id end
       where org_id = $1 and user_id = $2 returning user_id`,
     [orgId, memberId, body.role ?? null, body.status ?? null, body.rollNumber !== undefined, body.rollNumber ?? null,
      body.departmentId !== undefined, body.departmentId ?? null,
      body.record?.cgpa !== undefined, body.record?.cgpa ?? null,
      body.record?.backlogs !== undefined, body.record?.backlogs ?? null,
      body.record?.tenthPercent !== undefined, body.record?.tenthPercent ?? null,
-     body.record?.twelfthPercent !== undefined, body.record?.twelfthPercent ?? null]
+     body.record?.twelfthPercent !== undefined, body.record?.twelfthPercent ?? null,
+     body.customRoleId !== undefined, body.customRoleId ?? null]
   )).rowCount);
   if (!updated) throw notFound('Member not found, or you cannot change them.');
   res.json({ ok: true });
@@ -519,4 +525,143 @@ orgRouter.patch('/settings', async (req, res) => {
       where id = $1 returning settings`, [orgId, JSON.stringify(body)])).rows[0]);
   if (!row) throw notFound('College not found.');
   res.json({ defaults: { ...DEFAULTS, ...(row.settings.defaults ?? {}) } });
+});
+
+// ── Custom roles ────────────────────────────────────────────────────────────
+const ASSIGNABLE_PERMISSIONS = ['members.manage', 'members.view', 'batches.manage', 'content.create', 'assessments.create',
+  'assessments.grade', 'assessments.invigilate', 'reports.view', 'reports.export', 'records.view'] as const;
+const roleBody = z.object({
+  name: z.string().trim().min(2).max(60),
+  description: z.string().trim().max(300).nullable().optional(),
+  permissions: z.array(z.enum(ASSIGNABLE_PERMISSIONS)).min(1).max(10),
+});
+
+orgRouter.get('/roles', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  res.json(await asUser(userId, async (db) => (await db.query(
+    `select cr.id, cr.name, cr.description, cr.permissions, cr.created_at as "createdAt",
+            (select count(*) from campus.org_memberships m where m.custom_role_id = cr.id)::int as members
+       from campus.custom_roles cr where cr.org_id = $1 order by cr.name`, [orgId])).rows));
+});
+
+orgRouter.post('/roles', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const body = roleBody.parse(req.body);
+  await requirePermission(userId, orgId, 'members.manage');
+  res.status(201).json(await asUser(userId, async (db) => (await db.query(
+    `insert into campus.custom_roles (org_id, name, description, permissions) values ($1, $2, $3, $4) returning id, name`,
+    [orgId, body.name, body.description ?? null, [...new Set(body.permissions)]])).rows[0]));
+});
+
+orgRouter.patch('/roles/:roleId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const body = roleBody.partial().parse(req.body);
+  await requirePermission(userId, orgId, 'members.manage');
+  const row = await asUser(userId, async (db) => (await db.query(
+    `update campus.custom_roles set name = coalesce($3, name), description = case when $4::boolean then $5 else description end,
+            permissions = coalesce($6, permissions)
+      where id = $1 and org_id = $2 returning id, name, permissions`,
+    [uuid.parse(req.params.roleId), orgId, body.name ?? null, body.description !== undefined, body.description ?? null,
+     body.permissions ? [...new Set(body.permissions)] : null])).rows[0]);
+  if (!row) throw notFound('Role not found.');
+  res.json(row);
+});
+
+orgRouter.delete('/roles/:roleId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  await requirePermission(userId, orgId, 'members.manage');
+  // Members with this role fall back to their base role.
+  const n = await asUser(userId, async (db) => (await db.query(
+    `delete from campus.custom_roles where id = $1 and org_id = $2`, [uuid.parse(req.params.roleId), orgId])).rowCount);
+  if (!n) throw notFound('Role not found.');
+  res.status(204).end();
+});
+
+// ── Bulk actions on members ─────────────────────────────────────────────────
+const bulkBody = z.discriminatedUnion('action', [
+  z.object({ action: z.literal('suspend'), userIds: z.array(uuid).min(1).max(1000) }),
+  z.object({ action: z.literal('activate'), userIds: z.array(uuid).min(1).max(1000) }),
+  z.object({ action: z.literal('role'), userIds: z.array(uuid).min(1).max(1000), role: z.enum(['admin', 'placement_officer', 'faculty', 'evaluator', 'invigilator', 'student']) }),
+  z.object({ action: z.literal('customRole'), userIds: z.array(uuid).min(1).max(1000), customRoleId: uuid.nullable() }),
+  z.object({ action: z.literal('addToBatch'), userIds: z.array(uuid).min(1).max(1000), batchId: uuid }),
+  z.object({ action: z.literal('removeFromBatch'), userIds: z.array(uuid).min(1).max(1000), batchId: uuid }),
+]);
+
+/** One action on many people at once. Never touches the caller or the owner; RLS decides the rest. */
+orgRouter.post('/members/bulk', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const body = bulkBody.parse(req.body);
+  const ids = body.userIds.filter((id) => id !== userId);
+  const batchAction = body.action === 'addToBatch' || body.action === 'removeFromBatch';
+  await requirePermission(userId, orgId, batchAction ? 'batches.manage' : 'members.manage');
+  const changed = await asUser(userId, async (db) => {
+    const q = (sql: string, extra: unknown[] = []) => db.query(sql, [orgId, ids, ...extra]);
+    switch (body.action) {
+      case 'suspend': return (await q(`update campus.org_memberships set status = 'suspended' where org_id = $1 and user_id = any($2::uuid[]) and role <> 'owner'`)).rowCount;
+      case 'activate': return (await q(`update campus.org_memberships set status = 'active' where org_id = $1 and user_id = any($2::uuid[]) and role <> 'owner'`)).rowCount;
+      case 'role': return (await q(`update campus.org_memberships set role = $3::campus.org_role,
+                                      custom_role_id = case when $3 = 'student' then null else custom_role_id end
+                                     where org_id = $1 and user_id = any($2::uuid[]) and role <> 'owner'`, [body.role])).rowCount;
+      case 'customRole': return (await q(`update campus.org_memberships set custom_role_id = $3 where org_id = $1 and user_id = any($2::uuid[])
+                                           and role not in ('owner', 'student')`, [body.customRoleId])).rowCount;
+      case 'addToBatch': return (await q(`insert into campus.batch_members (batch_id, org_id, user_id)
+                                           select $3, $1, m.user_id from campus.org_memberships m
+                                            where m.org_id = $1 and m.user_id = any($2::uuid[]) and m.role = 'student'
+                                           on conflict do nothing`, [body.batchId])).rowCount;
+      case 'removeFromBatch': return (await q(`delete from campus.batch_members where org_id = $1 and user_id = any($2::uuid[]) and batch_id = $3`, [body.batchId])).rowCount;
+    }
+  });
+  res.json({ changed, skipped: body.userIds.length - (changed ?? 0) });
+});
+
+// ── Activity log ────────────────────────────────────────────────────────────
+const ENTITY_LABEL: Record<string, string> = {
+  tests: 'Test', testseries_questions: 'Question', test_questions: 'Question in test', test_sections: 'Test section',
+  question_test_cases: 'Coding test case', assignments: 'Assignment', course_assignments: 'Course assignment', test_shares: 'Test sharing',
+  org_memberships: 'Member', batches: 'Batch', batch_members: 'Batch member', sections: 'Section', departments: 'Unit',
+  custom_roles: 'Role', assignment_accommodations: 'Extra time', course_licences: 'Course licence',
+  results: 'Results', course_progress: 'Course progress', topic_marks: 'Topic-wise marks', students: 'Student list',
+};
+const activityQuery = z.object({
+  entity: z.string().max(60).optional(),
+  actorId: uuid.optional(),
+  before: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().min(1).max(500).default(100),
+  format: z.enum(['csv']).optional(),
+});
+
+orgRouter.get('/activity', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const q = activityQuery.parse(req.query);
+  await requireAnyPermission(userId, orgId, ['org.manage', 'members.manage']);
+  const rows = await asUser(userId, async (db) => (await db.query<{
+    id: string; actor_id: string | null; action: string; entity: string; entity_id: string | null; summary: string | null; changes: unknown; created_at: string;
+  }>(
+    `select id, actor_id, action, entity, entity_id, summary, changes, created_at from campus.audit_log
+      where org_id = $1 and ($2::text is null or entity = $2) and ($3::uuid is null or actor_id = $3) and ($4::bigint is null or id < $4)
+      order by id desc limit $5`,
+    [orgId, q.entity ?? null, q.actorId ?? null, q.before ?? null, q.format ? 5000 : q.limit])).rows);
+  const actors = await people([...new Set(rows.map((r) => r.actor_id).filter((x): x is string => Boolean(x)))]);
+  const out = rows.map((r) => ({
+    id: Number(r.id), at: r.created_at, action: r.action, entity: r.entity, what: ENTITY_LABEL[r.entity] ?? r.entity,
+    entityId: r.entity_id, summary: r.summary, changes: r.changes,
+    actorId: r.actor_id, actor: r.actor_id ? actors.get(r.actor_id)?.fullName ?? actors.get(r.actor_id)?.email ?? null : 'System',
+  }));
+  if (q.format === 'csv') {
+    const esc = (v: unknown) => {
+      const t = v === null || v === undefined ? '' : typeof v === 'string' ? v : JSON.stringify(v);
+      return `"${(/^[=+\-@\t\r]/.test(t) ? `'${t}` : t).replace(/"/g, '""')}"`;
+    };
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', 'attachment; filename="activity.csv"');
+    return res.send('\uFEFF' + [['When', 'Who', 'Action', 'What', 'Item', 'Changes'], ...out.map((r) => [new Date(r.at).toISOString(), r.actor, r.action, r.what, r.summary, r.changes])]
+      .map((cols) => cols.map(esc).join(',')).join('\r\n'));
+  }
+  res.json({ rows: out, next: out.length === q.limit ? out.at(-1)!.id : null });
 });

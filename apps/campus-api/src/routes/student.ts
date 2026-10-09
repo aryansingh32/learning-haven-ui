@@ -94,9 +94,15 @@ studentRouter.get('/assignments', async (req, res) => {
   }));
 });
 
+const startBody = z.object({
+  // The rules the student agreed to on the start screen (e.g. "Full screen", "No copy or paste").
+  consent: z.object({ rules: z.array(z.string().max(200)).max(20) }).optional(),
+}).default({});
+
 studentRouter.post('/assignments/:id/start', async (req, res) => {
   const userId = userOf(req);
-  res.status(201).json(await startAttempt(userId, uuid.parse(req.params.id)));
+  const body = startBody.parse(req.body ?? {});
+  res.status(201).json(await startAttempt(userId, uuid.parse(req.params.id), body.consent));
 });
 
 studentRouter.get('/attempts/:id', async (req, res) => {

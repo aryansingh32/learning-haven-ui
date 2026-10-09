@@ -7,6 +7,7 @@ import { badRequest, HttpError, notFound } from '../errors';
 import { requireAnyPermission, requirePermission } from '../permissions';
 import { attemptProgress, AttemptRow, extendAttempt, forceSubmitAttempt, gradeCodingAnswers, markAnswer, markingQuestions, setAttemptFeedback } from '../services/attempts';
 import { judgeAvailable } from '../services/judge';
+import { logExport } from '../services/audit';
 
 export const assignmentsRouter = Router({ mergeParams: true });
 const uuid = z.string().uuid();
@@ -218,6 +219,7 @@ assignmentsRouter.get('/:assignmentId/results', async (req, res) => {
 
   if (req.query.format === 'csv') {
     await requirePermission(userId, orgId, 'reports.export');
+    await logExport(orgId, userId, 'results', `Results of ${data.assignment.title} (${data.assignment.batch_name})`);
     const header = ['Roll number', 'Name', 'Email', 'Status', 'Score', 'Out of', 'Percent', 'Attempts', 'Violations', 'Review', 'How it ended', 'Submitted at'];
     const esc = (v: unknown) => {
       const s = v === null || v === undefined ? '' : String(v);

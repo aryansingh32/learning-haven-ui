@@ -15,8 +15,12 @@ meRouter.get('/', async (req, res) => {
     const memberships = await db.query(
       `select o.id as "orgId", o.name as "orgName", o.slug, o.type, o.logo_url as "logoUrl", o.brand_color as "brandColor",
               m.role, m.roll_number as "rollNumber", m.department_id as "departmentId",
-              coalesce((select array_agg(rp.permission order by rp.permission)
-                          from campus.role_permissions rp where rp.role = m.role), '{}') as permissions
+              m.custom_role_id as "customRoleId", (select cr.name from campus.custom_roles cr where cr.id = m.custom_role_id) as "customRoleName",
+              -- A custom role replaces the base role's permissions (same rule as campus.user_permissions).
+              coalesce(case when m.custom_role_id is not null
+                         then (select array(select unnest(cr.permissions) order by 1) from campus.custom_roles cr where cr.id = m.custom_role_id)
+                         else (select array_agg(rp.permission order by rp.permission) from campus.role_permissions rp where rp.role = m.role) end,
+                       '{}') as permissions
          from campus.org_memberships m
          join campus.organizations o on o.id = m.org_id
         where m.user_id = $1 and m.status = 'active' and o.status = 'active'

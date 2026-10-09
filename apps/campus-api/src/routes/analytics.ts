@@ -6,6 +6,7 @@ import { asSystem, asUser, Db } from '../db';
 import { notFound } from '../errors';
 import { hasPermission, requirePermission } from '../permissions';
 import { analysisQuestions } from '../services/attempts';
+import { logExport } from '../services/audit';
 import { courseProgress } from './courses';
 
 // College analytics (slice C2b): item analysis per test, students at risk,
@@ -80,6 +81,7 @@ analyticsRouter.get('/assignments/:assignmentId', async (req, res) => {
   if (req.query.format === 'csv') {
     // Topic-wise marks per student: for remedial groups.
     await requirePermission(userId, orgId, 'reports.export');
+    await logExport(orgId, userId, 'topic_marks', `Topic-wise marks: ${data.a.title} (${data.a.batch_name})`);
     const people = await names(best.map((t) => t.user_id), orgId);
     const tags = analysis.tags.map((t) => t.tag);
     return sendCsv(res, `${data.a.title}-${data.a.batch_name}-topics`, ['Roll number', 'Name', 'Email', 'Score %', ...tags.map((t) => `${t} %`)],
@@ -210,6 +212,7 @@ analyticsRouter.get('/students', async (req, res) => {
     // The placement export: one line per student with marks, tests and (for record keepers) the academic record.
     await requirePermission(userId, orgId, 'reports.export');
     const withRecord = rows.some((r) => r.record);
+    await logExport(orgId, userId, 'students', `Student list (${rows.length} students${withRecord ? ', with academic records' : ''})`);
     return sendCsv(res, 'students', [
       'Roll number', 'Name', 'Email', 'Department', 'Batches', ...(withRecord ? ['CGPA', 'Backlogs', '10th %', '12th %'] : []),
       'Tests assigned', 'Tests taken', 'Missed', 'Average %', 'Courses completed', 'Courses assigned', 'Overdue courses', 'Risk', 'Why',

@@ -4,6 +4,7 @@ import { userOf } from '../auth';
 import { asSystem, asUser, Db } from '../db';
 import { badRequest, notFound } from '../errors';
 import { requireAnyPermission, requirePermission } from '../permissions';
+import { logExport } from '../services/audit';
 
 // Courses for colleges (slice D6). Forge's Learn courses and a college's own
 // courses can be given to a batch, whole or a few chapters, with a due date.
@@ -287,6 +288,7 @@ courseAssignmentsRouter.get('/:assignmentId/progress', async (req, res) => {
 
   if (req.query.format === 'csv') {
     await requirePermission(userId, orgId, 'reports.export');
+    await logExport(orgId, userId, 'course_progress', `Course progress: ${assignment.title} (${assignment.batch_name})`);
     const esc = (v: unknown) => {
       const s = v === null || v === undefined ? '' : String(v);
       const safe = /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
