@@ -15,6 +15,8 @@ export interface Membership {
   role: Role;
   rollNumber: string | null;
   permissions: Permission[];
+  customRoleId?: string | null;
+  customRoleName?: string | null;
 }
 
 export interface Me {
@@ -66,6 +68,8 @@ export interface Member {
   batches: string[];
   /** Only for staff who keep academic records. */
   record?: AcademicRecord;
+  customRoleId?: string | null;
+  customRoleName?: string | null;
   fullName?: string | null;
   email?: string;
 }
@@ -326,4 +330,11 @@ export interface StudentReport {
   tests: Array<{ assignmentId: string; title: string; closesAt: string; closed: boolean; score: number | null; totalMarks: number | null; percent: number | null; rank: number | null; of: number; batchAverage: number | null }>;
   courses: Array<{ id: string; title: string; dueAt: string | null; status: StudentCourseStatus; completedChapters: number; totalChapters: number; percent: number }>;
   topics: Array<{ tag: string; percent: number | null; possible: number }>;
+}
+
+// ── Roles and activity (C2c) ────────────────────────────────────────────────
+export interface CustomRole { id: string; name: string; description: string | null; permissions: Permission[]; members: number; createdAt: string }
+export interface ActivityRow {
+  id: number; at: string; action: 'create' | 'update' | 'delete' | 'export'; entity: string; what: string; entityId: string | null;
+  summary: string | null; changes: Record<string, unknown> | null; actorId: string | null; actor: string | null;
 }

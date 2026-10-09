@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Download, FileUp, Search } from 'lucide-react';
-import { api, ApiError, patch, post } from '@/api/client';
-import type { AcademicRecord, Department, Member, Role, RosterEntry, RosterIssue, RosterPreview } from '@/api/types';
+import { api, ApiError, del, patch, post } from '@/api/client';
+import type { AcademicRecord, Batch, CustomRole, Department, Member, Permission, Role, RosterEntry, RosterIssue, RosterPreview } from '@/api/types';
 import { ROLE_LABEL } from '@/api/types';
 import { EmptyState, ErrorNote, Field, Loading, PageHeader } from '@/components/common';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -30,10 +30,12 @@ export default function People() {
           <TabsTrigger value="members">Members</TabsTrigger>
           {can('members.manage') && <TabsTrigger value="upload">Upload roster</TabsTrigger>}
           {can('members.manage') && <TabsTrigger value="pending">Waiting to join</TabsTrigger>}
+          {can('members.manage') && <TabsTrigger value="roles">Roles</TabsTrigger>}
         </TabsList>
         <TabsContent value="members" className="mt-4"><Members orgId={orgId!} canManage={can('members.manage')} /></TabsContent>
         {can('members.manage') && <TabsContent value="upload" className="mt-4"><RosterUpload orgId={orgId!} /></TabsContent>}
         {can('members.manage') && <TabsContent value="pending" className="mt-4"><Pending orgId={orgId!} /></TabsContent>}
+        {can('members.manage') && <TabsContent value="roles" className="mt-4"><Roles orgId={orgId!} /></TabsContent>}
       </Tabs>
     </>
   );
@@ -47,6 +49,17 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
   const members = useQuery({ queryKey: ['members', orgId], queryFn: () => api<Member[]>(`/orgs/${orgId}/members`) });
   const departments = useQuery({ queryKey: ['departments', orgId], queryFn: () => api<Department[]>(`/orgs/${orgId}/departments`) });
   const [editing, setEditing] = useState<Member | null>(null);
+  const roles = useQuery({ queryKey: ['roles', orgId], queryFn: () => api<CustomRole[]>(`/orgs/${orgId}/roles`), enabled: canManage });
+  const batches = useQuery({ queryKey: ['batches', orgId], queryFn: () => api<Batch[]>(`/orgs/${orgId}/batches`), enabled: canManage });
+  const [picked, setPicked] = useState<Set<string>>(new Set());
+  const bulk = useMutation({
+    mutationFn: (body: Record<string, unknown>) => post<{ changed: number; skipped: number }>(`/orgs/${orgId}/members/bulk`, { ...body, userIds: [...picked] }),
+    onSuccess: (r) => {
+      toast.success(`${r.changed} updated${r.skipped ? ` · ${r.skipped} skipped (you, the owner, or not applicable)` : ''}`);
+      setPicked(new Set()); qc.invalidateQueries({ queryKey: ['members', orgId] }); qc.invalidateQueries({ queryKey: ['batches', orgId] });
+    },
+    onError: (e) => toast.error(e.message),
+  });
 
   const update = useMutation({
     mutationFn: ({ userId, body }: { userId: string; body: Partial<Pick<Member, 'role' | 'status'>> | Record<string, unknown> }) =>
@@ -80,10 +93,51 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
         </select>
       </div>
       <p className="text-xs text-muted-foreground">{filtered.length} of {members.data!.length} people</p>
+      {canManage && picked.size > 0 && (
+        <div className="sticky top-2 z-10 flex flex-wrap items-center gap-2 rounded-lg border bg-card p-3 text-sm shadow-sm" role="toolbar" aria-label="Bulk actions">
+          <span className="font-medium">{picked.size} selected</span>
+          <Button size="sm" variant="outline" disabled={bulk.isPending} onClick={() => bulk.mutate({ action: 'suspend' })}>Suspend</Button>
+          <Button size="sm" variant="outline" disabled={bulk.isPending} onClick={() => bulk.mutate({ action: 'activate' })}>Restore</Button>
+          <select aria-label="Set role" value="" disabled={bulk.isPending} className="rounded-md border bg-card px-2 py-1"
+            onChange={(e) => e.target.value && bulk.mutate({ action: 'role', role: e.target.value })}>
+            <option value="">Set role…</option>
+            {ASSIGNABLE.map((r) => <option key={r} value={r}>{ROLE_LABEL[r]}</option>)}
+          </select>
+          {(roles.data ?? []).length > 0 && (
+            <select aria-label="Set custom role" value="" disabled={bulk.isPending} className="rounded-md border bg-card px-2 py-1"
+              onChange={(e) => e.target.value && bulk.mutate({ action: 'customRole', customRoleId: e.target.value === 'none' ? null : e.target.value })}>
+              <option value="">Custom role…</option>
+              <option value="none">None (base role)</option>
+              {roles.data!.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+            </select>
+          )}
+          {(batches.data ?? []).length > 0 && (
+            <>
+              <select aria-label="Add to batch" value="" disabled={bulk.isPending} className="rounded-md border bg-card px-2 py-1"
+                onChange={(e) => e.target.value && bulk.mutate({ action: 'addToBatch', batchId: e.target.value })}>
+                <option value="">Add to batch…</option>
+                {batches.data!.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+              </select>
+              <select aria-label="Remove from batch" value="" disabled={bulk.isPending} className="rounded-md border bg-card px-2 py-1"
+                onChange={(e) => e.target.value && bulk.mutate({ action: 'removeFromBatch', batchId: e.target.value })}>
+                <option value="">Remove from batch…</option>
+                {batches.data!.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+              </select>
+            </>
+          )}
+          <Button size="sm" variant="ghost" className="ml-auto" onClick={() => setPicked(new Set())}>Clear</Button>
+        </div>
+      )}
       <div className="overflow-x-auto rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
+              {canManage && (
+                <TableHead className="w-8">
+                  <input type="checkbox" aria-label="Select everyone shown" checked={filtered.length > 0 && filtered.every((m) => picked.has(m.userId))}
+                    onChange={(e) => setPicked(e.target.checked ? new Set(filtered.map((m) => m.userId)) : new Set())} />
+                </TableHead>
+              )}
               <TableHead>Name</TableHead><TableHead>Roll no.</TableHead><TableHead>Department</TableHead>
               <TableHead>Batches</TableHead>{showRecord && <TableHead>Academic record</TableHead>}<TableHead>Role</TableHead><TableHead>Status</TableHead>
             </TableRow>
@@ -94,6 +148,12 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
               const editable = canManage && !isMe && m.role !== 'owner';
               return (
                 <TableRow key={m.userId}>
+                  {canManage && (
+                    <TableCell>
+                      <input type="checkbox" aria-label={`Select ${m.fullName ?? m.email}`} checked={picked.has(m.userId)}
+                        onChange={() => setPicked((p) => { const n = new Set(p); if (n.has(m.userId)) n.delete(m.userId); else n.add(m.userId); return n; })} />
+                    </TableCell>
+                  )}
                   <TableCell><p className="font-medium">{m.fullName ?? '—'}</p><p className="text-xs text-muted-foreground">{m.email}</p></TableCell>
                   <TableCell className="tabular">{m.rollNumber ?? '—'}</TableCell>
                   <TableCell>{m.department ?? '—'}</TableCell>
@@ -115,6 +175,13 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
                         {ASSIGNABLE.map((r) => <option key={r} value={r}>{ROLE_LABEL[r]}</option>)}
                       </select>
                     ) : ROLE_LABEL[m.role]}
+                    {editable && m.role !== 'student' && (roles.data ?? []).length > 0 ? (
+                      <select aria-label={`Custom role for ${m.email}`} value={m.customRoleId ?? ''} className="ml-2 rounded-md border bg-card px-2 py-1 text-sm"
+                        onChange={(e) => update.mutate({ userId: m.userId, body: { customRoleId: e.target.value || null } })}>
+                        <option value="">No custom role</option>
+                        {roles.data!.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+                      </select>
+                    ) : m.customRoleName ? <span className="ml-2 text-xs text-muted-foreground">as {m.customRoleName}</span> : null}
                   </TableCell>
                   <TableCell>
                     {editable ? (
@@ -305,5 +372,94 @@ function RecordDialog({ member, departments, onClose, onSave, saving }: {
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+
+const PERMISSION_INFO: Array<{ id: Permission; label: string; hint: string }> = [
+  { id: 'content.create', label: 'Write tests and questions', hint: 'Create and edit the college\'s tests, questions and coding problems.' },
+  { id: 'assessments.create', label: 'Assign tests and courses', hint: 'Give tests and courses to batches, set times and rules.' },
+  { id: 'assessments.grade', label: 'Mark answers', hint: 'Mark written answers and give feedback.' },
+  { id: 'assessments.invigilate', label: 'Invigilate', hint: 'Watch live tests, give extra time, end attempts, review incidents.' },
+  { id: 'reports.view', label: 'See results and insights', hint: 'Results, analysis, students at risk.' },
+  { id: 'reports.export', label: 'Export reports', hint: 'Download results, placement and progress CSVs.' },
+  { id: 'records.view', label: 'See academic records', hint: 'CGPA, backlogs and school marks.' },
+  { id: 'members.view', label: 'See people and batches', hint: 'The member list and who is in which batch.' },
+  { id: 'batches.manage', label: 'Manage batches', hint: 'Create batches, sections and units; move students.' },
+  { id: 'members.manage', label: 'Manage people', hint: 'Upload rosters, change roles, suspend people, define roles.' },
+];
+const PRESETS: Array<{ name: string; description: string; permissions: Permission[] }> = [
+  { name: 'Question setter', description: 'Writes questions; cannot see results or students.', permissions: ['content.create'] },
+  { name: 'Lab assistant', description: 'Runs lab tests and watches them live.', permissions: ['assessments.invigilate', 'members.view'] },
+  { name: 'Grader', description: 'Marks written answers and sees results.', permissions: ['assessments.grade', 'reports.view'] },
+  { name: 'Head of department', description: 'Results, insights and exports for their department.', permissions: ['reports.view', 'reports.export', 'records.view', 'members.view'] },
+];
+
+/** Roles your college defines on top of the built-in ones. */
+function Roles({ orgId }: { orgId: string }) {
+  const qc = useQueryClient();
+  const key = ['roles', orgId];
+  const roles = useQuery({ queryKey: key, queryFn: () => api<CustomRole[]>(`/orgs/${orgId}/roles`) });
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [perms, setPerms] = useState<Permission[]>([]);
+  const create = useMutation({
+    mutationFn: () => post(`/orgs/${orgId}/roles`, { name, description: description || null, permissions: perms }),
+    onSuccess: () => { toast.success(`Role "${name}" created`); setName(''); setDescription(''); setPerms([]); qc.invalidateQueries({ queryKey: key }); },
+    onError: (e) => toast.error(e.message),
+  });
+  const remove = useMutation({
+    mutationFn: (id: string) => del(`/orgs/${orgId}/roles/${id}`),
+    onSuccess: () => { toast.success('Role removed — its members are back on their base role'); qc.invalidateQueries({ queryKey: key }); qc.invalidateQueries({ queryKey: ['members', orgId] }); },
+    onError: (e) => toast.error(e.message),
+  });
+  const label = (p: Permission) => PERMISSION_INFO.find((x) => x.id === p)?.label ?? p;
+  return (
+    <div className="grid gap-6 lg:grid-cols-2">
+      <section>
+        <h2 className="font-semibold">Your roles</h2>
+        <p className="mb-3 text-sm text-muted-foreground">Give a staff member a custom role to replace their built-in role's permissions with exactly these.</p>
+        {roles.isLoading ? <Loading /> : (roles.data ?? []).length === 0 ? (
+          <EmptyState title="No custom roles yet">Start from a preset on the right.</EmptyState>
+        ) : (
+          <ul className="space-y-2">
+            {roles.data!.map((r) => (
+              <li key={r.id} className="rounded-lg border bg-card p-3 text-sm">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-medium">{r.name} <span className="font-normal text-muted-foreground">· {r.members} {r.members === 1 ? 'person' : 'people'}</span></p>
+                  <Button size="sm" variant="ghost" onClick={() => { if (window.confirm(`Remove the role "${r.name}"?`)) remove.mutate(r.id); }}>Remove</Button>
+                </div>
+                {r.description && <p className="text-muted-foreground">{r.description}</p>}
+                <p className="mt-1 flex flex-wrap gap-1">{r.permissions.map((p) => <span key={p} className="rounded bg-secondary px-1.5 text-xs">{label(p)}</span>)}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section className="rounded-lg border bg-card p-4">
+        <h2 className="font-semibold">New role</h2>
+        <div className="mt-2 flex flex-wrap gap-1 text-sm">
+          <span className="text-muted-foreground">Presets:</span>
+          {PRESETS.map((p) => (
+            <button key={p.name} className="rounded-md border px-2 py-0.5 hover:bg-accent" onClick={() => { setName(p.name); setDescription(p.description); setPerms(p.permissions); }}>{p.name}</button>
+          ))}
+        </div>
+        <form className="mt-3 space-y-3" onSubmit={(e) => { e.preventDefault(); if (perms.length === 0) { toast.error('Pick at least one permission.'); return; } create.mutate(); }}>
+          <Field label="Name" htmlFor="role-name"><Input id="role-name" required minLength={2} maxLength={60} value={name} onChange={(e) => setName(e.target.value)} /></Field>
+          <Field label="What it is for (optional)" htmlFor="role-desc"><Input id="role-desc" maxLength={300} value={description} onChange={(e) => setDescription(e.target.value)} /></Field>
+          <fieldset className="space-y-1.5">
+            <legend className="mb-1 text-sm font-medium">Can</legend>
+            {PERMISSION_INFO.map((p) => (
+              <label key={p.id} className="flex items-start gap-2 text-sm">
+                <input type="checkbox" className="mt-1" checked={perms.includes(p.id)}
+                  onChange={(e) => setPerms((x) => (e.target.checked ? [...x, p.id] : x.filter((y) => y !== p.id)))} />
+                <span><span className="font-medium">{p.label}</span><br /><span className="text-xs text-muted-foreground">{p.hint}</span></span>
+              </label>
+            ))}
+          </fieldset>
+          <p className="text-xs text-muted-foreground">College settings and billing stay with the owner and can't be given through a role.</p>
+          <Button type="submit" disabled={create.isPending}>Create role</Button>
+        </form>
+      </section>
+    </div>
   );
 }

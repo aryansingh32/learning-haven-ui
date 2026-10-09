@@ -647,11 +647,39 @@ orgRouter.get('/activity', async (req, res) => {
       where org_id = $1 and ($2::text is null or entity = $2) and ($3::uuid is null or actor_id = $3) and ($4::bigint is null or id < $4)
       order by id desc limit $5`,
     [orgId, q.entity ?? null, q.actorId ?? null, q.before ?? null, q.format ? 5000 : q.limit])).rows);
-  const actors = await people([...new Set(rows.map((r) => r.actor_id).filter((x): x is string => Boolean(x)))]);
+  // Name the people and roles that rows refer to by id (members, batch members, custom-role changes).
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const personIds = new Set<string>();
+  const roleIds = new Set<string>();
+  for (const r of rows) {
+    if (r.actor_id) personIds.add(r.actor_id);
+    if (r.summary && UUID.test(r.summary)) personIds.add(r.summary);
+    const ch = r.changes as Record<string, unknown> | null;
+    const cr = ch?.custom_role_id as { from?: string; to?: string } | string | undefined;
+    for (const v of typeof cr === 'object' && cr ? [cr.from, cr.to] : [cr]) if (typeof v === 'string') roleIds.add(v);
+  }
+  const actors = await people([...personIds]);
+  const roleNames = new Map(roleIds.size === 0 ? [] : await asSystem(async (db) => (await db.query<{ id: string; name: string }>(
+    `select id, name from campus.custom_roles where org_id = $1 and id = any($2::uuid[])`, [orgId, [...roleIds]])).rows.map((x) => [x.id, x.name] as [string, string])));
+  const NOISE = new Set(['slug', 'sort_order', 'added_at', 'is_free', 'is_sectional', 'judge_config', 'nat_tolerance', 'joined_at', 'claimed_at']);
+  const tidy = (changes: unknown) => {
+    if (!changes || typeof changes !== 'object') return changes;
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(changes as Record<string, unknown>)) {
+      if (NOISE.has(k)) continue;
+      if (k === 'custom_role_id') {
+        const name = (id: unknown) => (typeof id === 'string' ? roleNames.get(id) ?? 'a removed role' : 'none');
+        const fromTo = v as { from?: unknown; to?: unknown } | null;
+        out.custom_role = fromTo && typeof fromTo === 'object' && 'from' in fromTo ? { from: name(fromTo.from), to: name(fromTo.to) } : name(v);
+      } else out[k] = v;
+    }
+    return out;
+  };
+  const who = (id: string) => actors.get(id)?.fullName ?? actors.get(id)?.email ?? null;
   const out = rows.map((r) => ({
     id: Number(r.id), at: r.created_at, action: r.action, entity: r.entity, what: ENTITY_LABEL[r.entity] ?? r.entity,
-    entityId: r.entity_id, summary: r.summary, changes: r.changes,
-    actorId: r.actor_id, actor: r.actor_id ? actors.get(r.actor_id)?.fullName ?? actors.get(r.actor_id)?.email ?? null : 'System',
+    entityId: r.entity_id, summary: r.summary && UUID.test(r.summary) ? who(r.summary) ?? r.summary : r.summary, changes: tidy(r.changes),
+    actorId: r.actor_id, actor: r.actor_id ? who(r.actor_id) : 'System',
   }));
   if (q.format === 'csv') {
     const esc = (v: unknown) => {

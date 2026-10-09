@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom';
-import { BarChart3, BookOpenCheck, ClipboardList, GraduationCap, LayoutDashboard, LogOut, Menu, Settings, Users, UsersRound, X } from 'lucide-react';
+import { BarChart3, BookOpenCheck, ClipboardList, GraduationCap, History, LayoutDashboard, LogOut, Menu, Settings, Users, UsersRound, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { Permission } from '@/api/types';
 import { ROLE_LABEL } from '@/api/types';
@@ -16,6 +16,7 @@ const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permissi
   { to: 'tests', label: 'Tests', icon: BookOpenCheck, needs: 'content.create' },
   { to: 'batches', label: 'Batches', icon: UsersRound, needs: 'members.view' },
   { to: 'people', label: 'People', icon: Users, needs: 'members.view' },
+  { to: 'activity', label: 'Activity', icon: History, needs: ['org.manage', 'members.manage'] },
   { to: 'settings', label: 'Settings', icon: Settings, needs: ['org.manage', 'members.manage'] },
 ];
 
@@ -56,7 +57,7 @@ export default function Layout() {
             : <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground">{membership.orgName.slice(0, 2).toUpperCase()}</div>}
           <div className="min-w-0">
             <p className="line-clamp-2 text-sm font-semibold leading-snug">{membership.orgName}</p>
-            <p className="text-xs text-muted-foreground">{ROLE_LABEL[membership.role]}</p>
+            <p className="text-xs text-muted-foreground">{membership.customRoleName ?? ROLE_LABEL[membership.role]}</p>
           </div>
         </div>
         {staffOrgs.length > 1 && (

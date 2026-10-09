@@ -30,7 +30,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 |---|---|---:|---:|---:|---:|
 | 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
 | 2 | College, University & Organization Management | 15 | 2 | 12 | 29 |
-| 3 | Role-Based Access & Permissions | 13 | 3 | 8 | 24 |
+| 3 | Role-Based Access & Permissions | 16 | 0 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
@@ -39,7 +39,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 37 | 5 | 15 | 57 |
+| 12 | Assessment Engine | 38 | 4 | 15 | 57 |
 | 13 | Question Bank Management | 18 | 0 | 24 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
@@ -60,7 +60,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
 | 32 | Certificates & Credentials | 9 | 3 | 12 | 24 |
-| 33 | Proctoring & Assessment Security | 16 | 3 | 16 | 35 |
+| 33 | Proctoring & Assessment Security | 18 | 1 | 16 | 35 |
 | 34 | AI-Era Academic Integrity | 1 | 1 | 23 | 25 |
 | 35 | Coding Contests & Hackathons | 0 | 0 | 30 | 30 |
 | 36 | SQL & Database Practice | 0 | 0 | 20 | 20 |
@@ -73,7 +73,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
 | 44 | Admin Control Center | 20 | 14 | 13 | 47 |
 | 45 | Payments & Monetization | 12 | 6 | 15 | 33 |
-| 46 | SaaS & Enterprise Management | 4 | 2 | 23 | 29 |
+| 46 | SaaS & Enterprise Management | 5 | 1 | 23 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
 | 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
 | 49 | Security & Privacy | 14 | 7 | 27 | 48 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **419** (22%) | **233** (12%) | **1246** (66%) | **1898** |
+| | **All modules** | **426** (22%) | **226** (12%) | **1246** (66%) | **1898** |
 
 ---
 
@@ -162,17 +162,17 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Student Dashboard — Forge dashboard + My College
 - [ ] Parent Dashboard
 - [x] Evaluator Dashboard — portal Marking page for `assessments.grade`: question-by-question queue with rubric, marks and comments, blind option, overall feedback (C2a)
-- [ ] 🟡 Question Setter Dashboard — faculty test editor; no separate role view
+- [x] Question Setter Dashboard — a custom role (preset 'Question setter' = write tests only) shows just Tests in the portal; RLS and the API follow it (C2c)
 - [x] Proctor Dashboard — invigilator role works end to end: live board, timeline, reviews, extra time, end attempt (B5)
 - [ ] Auditor Dashboard
-- [ ] 🟡 Custom Role Builder — Forge admin can create roles (`Permissions.tsx`); colleges cannot
+- [x] Custom Role Builder — Forge admin roles (`Permissions.tsx`); colleges build their own roles from 10 permissions with presets, assign them per person or in bulk (C2c)
 - [x] Permission Matrix — role → permission keys (`role_permissions`, admin Permissions page)
 - [x] Module-Level Permissions — permission keys per area (content, assessments, members…)
 - [x] Action-Level Permissions — e.g. `assessments.create`, `members.manage`
 - [ ] Approval Workflows
 - [x] Delegated Administration — the owner appoints admins; admins manage members (incl. appointing admins), batches and defaults; roles map to permissions
 - [ ] Impersonation Audit
-- [ ] 🟡 Access Audit Logs — `admin_audit_logs` for Forge admin actions; no access log for Campus
+- [x] Access Audit Logs — Forge `admin_audit_logs`; Campus Activity log: every change to people, roles, batches, tests and assignments, and every export, with who and when, filter + CSV (C2c)
 
 ### 4. Student Dashboard
 - [x] Personalized Student Dashboard — `pages/Index.tsx`
@@ -591,7 +591,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Re-evaluation Requests
 - [x] Grace Period Management — invigilators add extra time per student during the test (also extends the current timed section); audited
 - [x] Accommodation Settings — per-student extra time (%) on an assignment, applied to the test and each timed section; plus live extra time by invigilators
-- [ ] 🟡 Assessment Audit Logs — proctoring events, extra time / force-submit (`campus.attempt_adjustments`), incident reviews, submit reason; no change log for test edits
+- [x] Assessment Audit Logs — proctoring events, extra time / force-submit / marking (`campus.attempt_adjustments`), incident reviews, and the Activity log of test, question and test-case edits (C2c)
 
 ### 13. Question Bank Management
 - [x] Centralized Question Bank — `testseries_questions`, admin Question Bank page (0 questions live)
@@ -1241,7 +1241,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Identity Verification
 - [ ] ID Document Verification
 - [ ] Face Match Verification
-- [ ] 🟡 Browser Compatibility Checks — falls back when full screen is unsupported; no pre-check
+- [x] Browser Compatibility Checks — device check on the start screen: connection, storage, full screen (when required), screen width (C2c)
 - [ ] Device Compatibility Checks
 - [x] Network Interruption Recovery — answer retry queue, offline banner, resume
 - [x] Suspicious Activity Flags — warning/violation severity; auto-submit at the limit
@@ -1260,7 +1260,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] AI-Generated Code Detection Signals
 - [x] Manual Incident Review — invigilator records no issue / warning / malpractice with a note (append-only, signed)
 - [ ] Appeal Workflow
-- [ ] 🟡 Proctoring Consent — rules shown + "I'm ready" checkbox; no formal consent record
+- [x] Proctoring Consent — the student agrees to the listed rules before starting; the rules and time are stored with the attempt (`test_attempts.consent`, C2c)
 - [ ] Proctoring Retention Policies
 
 ### 34. AI-Era Academic Integrity
@@ -1553,7 +1553,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Branding Configuration — CMS, course page CMS; college branding
 - [ ] Custom Navigation Configuration
 - [x] User Management — admin Users, UserDetail
-- [ ] 🟡 Bulk User Operations — bulk deletion for challenges/courses; not users
+- [ ] 🟡 Bulk User Operations — Campus People: select many → suspend, restore, role, custom role, add to / remove from batch (C2c); Forge admin Users still one at a time
 - [x] Role Management — admin roles
 - [x] Permission Management — admin Permissions
 - [x] Course Management
@@ -1627,7 +1627,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 46. SaaS & Enterprise Management
 - [x] Multi-Tenant Isolation — RLS + composite FKs; isolation suites in CI
 - [x] Tenant Provisioning — create college + owner
-- [ ] 🟡 Tenant Onboarding — roster upload; no guided onboarding
+- [x] Tenant Onboarding — roster upload plus a 'Set up your college' checklist on Overview (branding, units, batches, staff, roster, first test, first assignment) (C2c)
 - [ ] Tenant Offboarding
 - [x] Tenant Data Isolation
 - [x] Tenant-Level Branding

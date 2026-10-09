@@ -230,8 +230,9 @@ export const fetchMyAssignments = (): Promise<MyAssignment[]> => client.get('/my
 
 export const fetchMyCourseAssignments = (): Promise<MyCourseAssignment[]> => client.get('/my/course-assignments');
 
-export const startAssignment = (assignmentId: string): Promise<AttemptView> =>
-  client.post(`/my/assignments/${assignmentId}/start`);
+/** Starting records the exam rules the student agreed to on the start screen. */
+export const startAssignment = (assignmentId: string, rules: string[] = []): Promise<AttemptView> =>
+  client.post(`/my/assignments/${assignmentId}/start`, { consent: { rules } });
 
 // Opening an attempt whose time ran out submits (and judges) it, so allow time.
 export const fetchAttemptView = (attemptId: string): Promise<AttemptView> => client.get(`/my/attempts/${attemptId}`, { timeout: 120_000 });

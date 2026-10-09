@@ -18,6 +18,7 @@ const LiveBoard = lazy(() => import('@/pages/LiveBoard'));
 const Marking = lazy(() => import('@/pages/Marking'));
 const Analysis = lazy(() => import('@/pages/Analysis'));
 const Insights = lazy(() => import('@/pages/Insights'));
+const Activity = lazy(() => import('@/pages/Activity'));
 const StudentReport = lazy(() => import('@/pages/StudentReport'));
 const Courses = lazy(() => import('@/pages/Courses'));
 const CourseProgress = lazy(() => import('@/pages/CourseProgress'));
@@ -80,6 +81,7 @@ export default function App() {
             <Route path="assignments/:assignmentId/marking" element={<Marking />} />
             <Route path="assignments/:assignmentId/analysis" element={<Analysis />} />
             <Route path="insights" element={<Insights />} />
+            <Route path="activity" element={<Activity />} />
             <Route path="insights/students/:studentId" element={<StudentReport />} />
             <Route path="courses" element={<Courses />} />
             <Route path="courses/:assignmentId" element={<CourseProgress />} />

@@ -151,9 +151,13 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
             </div>
           )}
 
+          <BrowserCheck needsFullscreen={Boolean(p?.enabled && p.requireFullscreen)} />
+
           <label className="flex items-start gap-3 text-sm cursor-pointer">
             <Checkbox checked={ack} onCheckedChange={(v) => setAck(v === true)} className="mt-0.5" />
-            <span className="text-foreground">I have read the instructions and I'm ready to begin.</span>
+            <span className="text-foreground">
+              I have read the instructions and I'm ready to begin.{p?.enabled ? ' I agree to the proctoring rules above; my agreement is recorded with the test.' : ''}
+            </span>
           </label>
 
           <Button className="w-full h-12 text-base" disabled={!ack || starting} onClick={onStart}>
@@ -163,6 +167,49 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
           </Button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** The rules shown on the start screen, as recorded with the student's consent. */
+function examRules(p: MyAssignment['proctoring'] | undefined): string[] {
+  if (!p?.enabled) return ['Answers save automatically; the test submits when time runs out'];
+  return [
+    ...(p.requireFullscreen ? ['Runs in full screen'] : []),
+    'Switching tabs or apps is recorded',
+    ...(p.maxViolations !== null ? [`Submits automatically after ${p.maxViolations} violations`] : []),
+    ...(p.blockClipboard ? ['Copy, paste and right-click are off'] : []),
+  ];
+}
+
+/** Quick checks before a test, so problems show up before the clock starts. */
+function BrowserCheck({ needsFullscreen }: { needsFullscreen: boolean }) {
+  const [online, setOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
+  useEffect(() => {
+    const on = () => setOnline(true); const off = () => setOnline(false);
+    window.addEventListener('online', on); window.addEventListener('offline', off);
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
+  }, []);
+  const storage = useMemo(() => {
+    try { localStorage.setItem('__campus_check', '1'); localStorage.removeItem('__campus_check'); return true; } catch { return false; }
+  }, []);
+  const checks = [
+    { ok: online, label: online ? 'Connected to the internet' : "You're offline — connect before you begin" },
+    { ok: storage, label: storage ? 'Browser storage works' : 'Your browser blocks storage (private mode?). Answers still save to the server, but use a normal window if you can.', warn: true },
+    ...(needsFullscreen ? [{ ok: fullscreenSupported(), label: fullscreenSupported() ? 'Full screen is available' : "This browser can't go full screen — the test will run in a normal window", warn: true }] : []),
+    { ok: window.innerWidth >= 360, label: window.innerWidth >= 360 ? 'Screen is wide enough' : 'Your screen is very narrow — turn your phone sideways or use a laptop', warn: true },
+  ];
+  return (
+    <div className="rounded-xl border border-border/50 bg-background/50 p-4 text-sm" aria-live="polite">
+      <p className="mb-2 font-bold text-foreground">Device check</p>
+      <ul className="space-y-1">
+        {checks.map((c) => (
+          <li key={c.label} className="flex items-start gap-2">
+            {c.ok ? <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" /> : <Info className={cn('mt-0.5 h-4 w-4 shrink-0', c.warn ? 'text-reward' : 'text-red-600 dark:text-red-400')} />}
+            <span className={c.ok ? 'text-muted-foreground' : 'text-foreground'}>{c.label}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -920,7 +967,7 @@ export default function CampusExamPage() {
     // Ask for full screen inside the click, before the network call, so the browser allows it.
     if (assignment.proctoring?.enabled && assignment.proctoring.requireFullscreen) await enterFullscreen();
     try {
-      const view = await startAssignment(assignmentId);
+      const view = await startAssignment(assignmentId, examRules(assignment.proctoring));
       if (view.status === 'completed') {
         exitFullscreen();
         navigate(`/college/attempts/${view.attemptId}`, { replace: true });

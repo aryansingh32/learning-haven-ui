@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Circle } from 'lucide-react';
 import { api } from '@/api/client';
-import type { Assignment, Batch, Org } from '@/api/types';
+import type { Assignment, Batch, Department, Member, Org, TestSummary } from '@/api/types';
 import { EmptyState, ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,8 @@ export default function Overview() {
         description="What's happening across your batches."
         actions={can('assessments.create') && <Button asChild><Link to="../assignments?new=1">New assignment</Link></Button>}
       />
+
+      {can('members.manage') && <GettingStarted orgId={orgId!} org={org.data!} batches={batches.data} assignments={assignments.data} />}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Active students" value={org.data?.activeStudents ?? 0}
@@ -88,5 +90,41 @@ export default function Overview() {
         </section>
       )}
     </>
+  );
+}
+
+/** First steps for a new college; disappears once they are all done. */
+function GettingStarted({ orgId, org, batches, assignments }: { orgId: string; org: Org; batches?: Batch[]; assignments?: Assignment[] }) {
+  const departments = useQuery({ queryKey: ['departments', orgId], queryFn: () => api<Department[]>(`/orgs/${orgId}/departments`) });
+  const tests = useQuery({ queryKey: ['tests', orgId], queryFn: () => api<TestSummary[]>(`/orgs/${orgId}/tests`) });
+  const members = useQuery({ queryKey: ['members', orgId], queryFn: () => api<Member[]>(`/orgs/${orgId}/members`) });
+  if (!departments.data || !batches || !tests.data || !members.data || !assignments) return null;
+  const steps = [
+    { done: Boolean(org.logoUrl || org.brandColor), label: 'Add your logo and colour', to: '../settings' },
+    { done: departments.data.length > 0, label: 'Add departments or branches', to: '../batches' },
+    { done: batches.length > 0, label: 'Create batches (and sections)', to: '../batches' },
+    { done: members.data.some((m) => m.role !== 'student' && m.role !== 'owner'), label: 'Invite faculty and staff', to: '../people' },
+    { done: org.activeStudents > 0, label: 'Upload your student roster', to: '../people' },
+    { done: tests.data.some((t) => t.source === 'college') || assignments.length > 0, label: 'Write a test or pick one from the Forge library', to: '../tests' },
+    { done: assignments.length > 0, label: 'Assign a test to a batch', to: '../assignments?new=1' },
+  ];
+  const left = steps.filter((x) => !x.done).length;
+  if (left === 0) return null;
+  return (
+    <section className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-5" aria-labelledby="start-title">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="start-title" className="font-semibold">Set up {org.name}</h2>
+        <span className="text-sm text-muted-foreground">{steps.length - left} of {steps.length} done</span>
+      </div>
+      <ol className="mt-3 grid gap-2 sm:grid-cols-2">
+        {steps.map((x) => (
+          <li key={x.label}>
+            <Link to={x.to} className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm ${x.done ? 'text-muted-foreground line-through' : 'hover:bg-background'}`}>
+              {x.done ? <CheckCircle2 className="h-4 w-4 text-success" aria-label="Done" /> : <Circle className="h-4 w-4 text-muted-foreground" aria-label="To do" />} {x.label}
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
