@@ -42,6 +42,11 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 ## Track D — College operations (modules 2, 23, 24, 25, 40)
 D1 placement-officer dashboard (batch/department rollups, CSV) · D2 notifications centre + "new test / closes in 24h / result out" emails · D3 academic year & semester on batches · D4 faculty at-risk list and per-student report · D5 announcements.
 
+**D6 · Courses for colleges** (added 2026-10-12, after checking Learn vs Campus): catalogue and course pages honour
+`owner_org_id`/`visibility` (and hide unpublished courses); assign a course or chapters to a batch with a due date;
+faculty see per-student chapter progress; a college licence unlocks premium Forge courses for its students
+(entitlement via membership, one source of truth with problems).
+
 ## Track E — AI that saves time (modules 6, 7, 14, 26)
 E1 AI question drafting into a review queue (never auto-publish) · E2 AI explain-my-error in the editor · E3 batch result summary for faculty · E4 Hinglish mode in the mentor.
 

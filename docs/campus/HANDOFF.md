@@ -296,6 +296,10 @@ Pilot college and its exam date; pricing (per student per year vs month); webcam
 - `apps/web` and `apps/campus` `tsc -b` print a `baseUrl` deprecation (TS5101) when a global TypeScript 6 is picked up; use
   the local `node_modules/.bin/tsc` (5.9) — the build itself passes
 - Campus coding questions can't be edited after creation (delete + re-add)
+- **Courses and Campus are not connected** (checked 2026-10-12, see FEATURE_CHECKLIST fact 3). Before any college
+  course exists: `CoursesService.listCourses` filters only `is_published` and `getCourse` returns any course by id/slug
+  (unpublished drafts too) — both ignore `owner_org_id`/`visibility`, so an `org`/`private` course would be public.
+  Chapter paywall reads `users.current_plan`, while problems use entitlements (`hasPaidPlan`) — two sources of truth.
 - Judge integrity rule (keep it): **expected outputs never enter the learner's program** — not on stdin, not in the
   generated source (the program can read its own source file). Answers are compared in TypeScript. With that rule,
   anything learner code prints in place of the judge's line it could equally have returned, so in-process output

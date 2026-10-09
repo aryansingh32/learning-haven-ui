@@ -18,6 +18,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 >    coded locally and pushed to GitHub.
 > 2. **Content is thin in the live database:** 8 practice problems (Arrays & Hashing 6, Two Pointers 1, Binary
 >    Search 1), 6 published courses / 72 chapters, 0 test series, 0 test-series questions.
+> 3. **Courses (Learn) and Campus are separate products in one app** (checked 2026-10-12). They share the learner
+>    app, the account and the sidebar, and Campus results link to Practice — but no data connects them: Campus has
+>    no course/chapter code at all; faculty can't assign a course or see course progress; course access follows the
+>    student's own plan, not their college; the catalogue ignores the `owner_org_id`/`visibility` columns. Live DB:
+>    6 courses (all Forge, public; "Learn English A to Z" has 0 chapters; two HTML/CSS courses with 21 chapters each
+>    look duplicated), 0 colleges, 0 memberships.
 
 ## Summary
 
@@ -113,7 +119,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Account Deletion — `users.deleted_at` column exists, no deletion flow
 
 ### 2. College, University & Organization Management
-- [x] Multi-Tenant Architecture — `campus` schema, RLS isolation, 36 + 43 SQL checks in CI
+- [x] Multi-Tenant Architecture — `campus` schema, RLS isolation, 36 + 79 + 11 SQL checks in CI
 - [x] College Registration — Forge staff create a college + owner (`campus-api/routes/platform.ts`, portal Platform page)
 - [ ] University Management
 - [x] Organization Management — `campus.organizations` (platform / college)
@@ -121,7 +127,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Branch Management — departments double as branches; no separate branch entity
 - [ ] Semester Management
 - [ ] Academic Year Management
-- [ ] 🟡 Course Management — Forge admin manages courses; colleges cannot yet
+- [ ] 🟡 Course Management — Forge admin only. `courses.owner_org_id`/`visibility` exist (all 6 live courses: Forge, public) but no college UI, and the catalogue ignores visibility (checked 2026-10-12)
 - [x] Batch Management — `campus.batches`, members, faculty
 - [ ] 🟡 Section Management — use a batch per section; no section entity
 - [ ] Classroom Management
@@ -630,7 +636,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Question Exposure Tracking
 - [ ] Question Retirement
 - [x] Question Bank Permissions — `owner_org_id` + `visibility`, RLS
-- [ ] 🟡 Question Bank Sharing — visibility levels exist; no sharing/licensing flow
+- [ ] 🟡 Question Bank Sharing — colleges can assign Forge's public tests; no sharing between colleges
 
 ### 14. AI Assessment Generation
 - [ ] AI Assessment Generator
@@ -911,7 +917,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 23. Faculty & Trainer Portal
 - [ ] 🟡 Faculty Dashboard — Campus portal overview
-- [ ] Course Assignment
+- [ ] Course Assignment — Campus assigns tests only; a course or chapter can't be given to a batch
 - [x] Batch Assignment — tests assigned to batches
 - [x] Student Roster — People page, batch members
 - [ ] Attendance Management
@@ -919,8 +925,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Assessment Management — Tests + editor
 - [x] Question Bank Access — college tests and questions
 - [ ] Live Class Scheduling
-- [ ] Learning Material Upload
-- [ ] 🟡 Student Progress Monitoring — results per assignment only
+- [ ] Learning Material Upload — colleges can't add lessons or files
+- [ ] 🟡 Student Progress Monitoring — test results per assignment; faculty can't see students' course/chapter progress
 - [ ] 🟡 Student Performance Analytics — results table + filters + CSV; no analytics
 - [ ] Weak Student Identification
 - [ ] At-Risk Student Alerts
@@ -984,7 +990,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 25. Learning Analytics
 - [ ] 🟡 Student Learning Analytics — activity heatmap, solved breakdown for the learner
 - [ ] Cohort Analytics
-- [ ] 🟡 Course Analytics — admin Analytics page
+- [ ] 🟡 Course Analytics — Forge admin Analytics page; none per college or batch
 - [ ] Lesson Analytics
 - [ ] 🟡 Assessment Analytics — per-assignment results with violations
 - [ ] Coding Analytics
@@ -1598,7 +1604,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 AI Usage Credits — daily AI quota per plan
 - [ ] Coding Execution Credits
 - [ ] Team Licences
-- [ ] College Licences
+- [ ] College Licences — course access follows each student's own plan (`users.current_plan`); a college can't unlock premium courses (e.g. DSA Foundations) for its students
 - [ ] Annual Contracts
 - [ ] Trial Periods
 - [x] Coupon Management — `coupons`, admin Coupons (race-safe usage)
