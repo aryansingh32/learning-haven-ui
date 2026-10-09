@@ -49,6 +49,9 @@ const NotebookPage = lazy(() => import("./pages/NotebookPage"));
 const MockTestPage = lazy(() => import("./pages/MockTestPage"));
 const TestSeriesCatalogPage = lazy(() => import("./pages/testseries/TestSeriesCatalogPage"));
 const CBTTestPage = lazy(() => import("./pages/testseries/CBTTestPage"));
+const MyCollegePage = lazy(() => import("./pages/campus/MyCollegePage"));
+const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
+const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
 const ResumePage = lazy(() => import("./pages/ResumePage"));
@@ -117,6 +120,16 @@ const App = () => (
               />
               <Route path="/build/:slug/workspace" element={<RedirectBuildWorkspaceSlug />} />
 
+              {/* Full-screen college (Forge Campus) test — proctored, no nav chrome */}
+              <Route
+                path="/college/tests/:assignmentId"
+                element={
+                  <ProtectedRoute>
+                    <CampusExamPage />
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Full-screen CBT exam (no nav chrome, matches the workspace pattern above) */}
               <Route
                 path="/test-series/tests/:testId"
@@ -140,6 +153,8 @@ const App = () => (
                         <Route path="/course/:courseId/notebook" element={<NotebookPage />} />
                         <Route path="/course/:courseId/mock-test" element={<MockTestPage />} />
                         <Route path="/test-series" element={<TestSeriesCatalogPage />} />
+                        <Route path="/college" element={<MyCollegePage />} />
+                        <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
                         <Route path="/projects" element={<ProjectsPage />} />

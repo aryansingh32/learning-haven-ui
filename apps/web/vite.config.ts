@@ -30,6 +30,20 @@ export default defineConfig(({ mode }) => {
             });
           },
         },
+        // Forge Campus API (college tests). Only used when VITE_CAMPUS_API_URL is unset.
+        "/campus/v1": {
+          target: env.CAMPUS_API_URL || "http://localhost:5100",
+          changeOrigin: true,
+          configure: (proxy, _options) => {
+            proxy.on("error", (err, _req, res) => {
+              console.log("[Vite] Campus API proxy error (is apps/campus-api running?):", err.message);
+              if (res && typeof (res as any).writeHead === 'function') {
+                (res as any).writeHead(503, { 'Content-Type': 'application/json' });
+                (res as any).end(JSON.stringify({ error: 'College services are unavailable right now.' }));
+              }
+            });
+          },
+        },
         // Proxy all other API requests to backend (Java execution, auth, etc.)
         "/api": {
           target: apiTarget,

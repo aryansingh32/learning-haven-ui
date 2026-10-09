@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isToday } from 'date-fns';
 import { useRoadmap } from '@/context/RoadmapContext';
+import { CollegeTestsWidget } from '@/features/campus/CollegeTestsWidget';
 
 // ─── Activity Calendar (GitHub-style, real data) ───────────────────────────
 function ActivityCalendar({ heatmap }: { heatmap: { date: string; count: number; level: number }[] }) {
@@ -481,6 +482,9 @@ const Index = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* College tests (Forge Campus students only) */}
+          <CollegeTestsWidget />
+
           {dailyQuests && <DailyQuestsWidget data={dailyQuests} />}
           <motion.div
             initial={{ opacity: 0, y: 12 }}

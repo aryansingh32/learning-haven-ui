@@ -1,7 +1,7 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Bot, Gift, Award,
-  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ import type { Identity } from "@/lib/gamification";
 import { RoadmapProvider } from "@/context/RoadmapContext";
 import { GlobalAIAssistant } from "@/components/GlobalAIAssistant";
 import { EntitlementProvider } from "@/services/entitlement.service";
+import { useCampusMe } from "@/hooks/useCampus";
 
 const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
@@ -24,6 +25,9 @@ const primaryNav = [
   { to: "/ai-coach", icon: Bot, label: "Mentor" },
   { to: "/profile", icon: Trophy, label: "Profile" },
 ];
+
+// Shown only to students whose college uses Forge Campus.
+const collegeNavItem = { to: "/college", icon: GraduationCap, label: "My College" };
 
 const careerNav = [
   { to: "/resume", icon: FileText, label: "Resume" },
@@ -40,6 +44,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { user, logout } = useAuth();
   const { data: identity } = useApiQuery<Identity>(['user-identity'], '/users/me/identity');
+  const { isStudent } = useCampusMe();
+  // The mobile bottom bar stays as it is; My College lives in the sidebar and drawer.
+  const sidebarNav = isStudent ? [primaryNav[0], collegeNavItem, ...primaryNav.slice(1)] : primaryNav;
 
   const renderNavItem = (item: typeof primaryNav[0], onClick?: () => void) => (
     <RouterNavLink
@@ -89,7 +96,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
             <p className="text-caption font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
-            {primaryNav.map((item) => renderNavItem(item))}
+            {sidebarNav.map((item) => renderNavItem(item))}
 
             <div className="pt-3 mt-3 border-t border-border/30">
               <p className="text-caption font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">Career Center</p>
@@ -197,7 +204,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               </div>
               <nav className="flex-1 p-3 space-y-0.5">
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
-                {primaryNav.map((item) => renderNavItem(item, () => setSidebarOpen(false)))}
+                {sidebarNav.map((item) => renderNavItem(item, () => setSidebarOpen(false)))}
                 <div className="pt-3 mt-3 border-t border-border/30">
                   <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-1 pb-1">Career Center</p>
                   {careerNav.map((item) => (
