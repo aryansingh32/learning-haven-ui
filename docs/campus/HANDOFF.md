@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (378 done, 260 partly, 1,260 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (387 done, 251 partly, 1,260 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -30,8 +30,9 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Practice submission history + editor settings/shortcuts/full screen (slice A3); `submissions` insert hole closed | ✅ built, browser-verified |
 | Question pools (N of M) and per-student extra time (slice B2) | ✅ built, browser-verified |
 | College question import from Excel/CSV; Excel roster upload (slice B4) | ✅ built, browser-verified |
+| College structure (slice C1): unit tree, sections, academic records, eligibility rules, college defaults | ✅ built, browser-verified |
 | Courses for colleges (slice D6): Learn ↔ Campus connected — assign courses/chapters, chapter progress, college licences, catalogue honours visibility | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
@@ -196,8 +197,8 @@ pnpm --filter @repo/assessment-core test   # 68 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 4 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 53 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 5 SQL suites
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 60 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -266,6 +267,12 @@ Then `select count(*) from public.courses where is_published and deleted_at is n
 same number the catalogue showed before (6). Deploy the Forge API with this branch only **after** this migration:
 without it `CourseAccessService` falls back to the old rule (own plan only) and logs nothing.
 
+Then `20261018000001_campus_structure`: table `campus.sections` (RLS on, 2 policies); columns `departments.kind/parent_id`,
+`org_memberships.cgpa/active_backlogs/tenth_percent/twelfth_percent`, `assignments.section_id/eligibility`;
+`select count(*) from pg_policies where policyname = 'assignment_student_select';` → 1 and its `qual` uses
+`is_assignment_target`. Existing students still see their tests: `select count(*) from campus.assignments a where not exists
+(select 1 from campus.batch_members bm where bm.batch_id = a.batch_id);` is unaffected (rules default to `{}`).
+
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
 coding question after creation, C/C++, per-test weights, plagiarism, showing code on the result page).
@@ -284,7 +291,7 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the eight pending migrations in order (`20261010000001` … `20261017000001`) (§8.1), then tell Claude to verify
+- Run the nine pending migrations in order (`20261010000001` … `20261018000001`) (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings

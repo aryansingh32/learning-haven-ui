@@ -34,7 +34,15 @@ export interface Org {
   activeStudents: number;
 }
 
-export interface Department { id: string; name: string; code: string }
+export type UnitKind = 'school' | 'department' | 'branch';
+export interface Department { id: string; name: string; code: string; kind: UnitKind; parentId: string | null; students: number; batches: number }
+export interface Section { id: string; name: string; students: number }
+export interface AcademicRecord { cgpa: number | null; backlogs: number | null; tenthPercent: number | null; twelfthPercent: number | null }
+export interface Eligibility { minCgpa?: number; maxBacklogs?: number; minTenth?: number; minTwelfth?: number; departmentIds?: string[] }
+export interface CollegeDefaults {
+  resultRelease: 'immediately' | 'after_close' | 'manual'; shuffle: boolean; maxAttempts: number;
+  lockdown: boolean; maxViolations: number | null; courseDueDays: number;
+}
 
 export interface Batch {
   id: string;
@@ -45,6 +53,7 @@ export interface Batch {
   departmentId: string | null;
   departmentName: string | null;
   studentCount: number;
+  sections: Section[];
 }
 
 export interface Member {
@@ -53,7 +62,10 @@ export interface Member {
   status: 'active' | 'suspended' | 'invited';
   rollNumber: string | null;
   department: string | null;
+  departmentId: string | null;
   batches: string[];
+  /** Only for staff who keep academic records. */
+  record?: AcademicRecord;
   fullName?: string | null;
   email?: string;
 }
@@ -62,7 +74,7 @@ export interface RosterIssue { line: number; message: string }
 export interface RosterPreview {
   errors: RosterIssue[];
   summary: { valid: number; new: number; alreadyRegistered: number; invalid: number };
-  rows: Array<{ line: number; email: string; fullName: string | null; rollNumber: string | null; department: string | null; batch: string | null; role: Role; existing: 'pending' | 'claimed' | null }>;
+  rows: Array<{ line: number; email: string; fullName: string | null; rollNumber: string | null; department: string | null; batch: string | null; section: string | null; cgpa: number | null; backlogs: number | null; role: Role; existing: 'pending' | 'claimed' | null }>;
 }
 
 export interface RosterEntry {
@@ -137,6 +149,9 @@ export interface Assignment {
   batchName: string;
   testId: string;
   testTitle: string | null;
+  sectionId: string | null;
+  sectionName: string | null;
+  eligibility: Eligibility;
   assigned: number;
   started: number;
   submitted: number;
@@ -235,7 +250,7 @@ export interface CollegeCourseDetail extends CollegeCourse { chapterList: Course
 
 export interface CourseAssignment {
   id: string; title: string; status: 'draft' | 'published' | 'archived'; dueAt: string | null; createdAt: string;
-  batchId: string; batchName: string; courseId: string; courseTitle: string | null; chapters: number; wholeCourse: boolean;
+  batchId: string; batchName: string; sectionName: string | null; courseId: string; courseTitle: string | null; chapters: number; wholeCourse: boolean;
   assigned: number; completed: number; inProgress: number; overdue: number;
 }
 export type StudentCourseStatus = 'not_started' | 'in_progress' | 'completed' | 'overdue';

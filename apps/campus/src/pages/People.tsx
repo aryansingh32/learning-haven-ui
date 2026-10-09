@@ -5,9 +5,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Download, FileUp, Search } from 'lucide-react';
 import { api, ApiError, patch, post } from '@/api/client';
-import type { Member, Role, RosterEntry, RosterIssue, RosterPreview } from '@/api/types';
+import type { AcademicRecord, Department, Member, Role, RosterEntry, RosterIssue, RosterPreview } from '@/api/types';
 import { ROLE_LABEL } from '@/api/types';
-import { EmptyState, ErrorNote, Loading, PageHeader } from '@/components/common';
+import { EmptyState, ErrorNote, Field, Loading, PageHeader } from '@/components/common';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCampus, useOrg } from '@/context/CampusContext';
 
-const TEMPLATE = 'Email,Name,Roll No,Department,Batch,Role\nstudent@college.edu,Priya Rao,21CS001,CSE,CSE-2027-A,student\nfaculty@college.edu,Dr. Mehta,,CSE,,faculty\n';
+const TEMPLATE = 'Email,Name,Roll No,Department,Batch,Section,Role,CGPA,Backlogs,10th %,12th %\nstudent@college.edu,Priya Rao,21CS001,CSE,CSE 2027,A,student,8.4,0,91,88\nfaculty@college.edu,Dr. Mehta,,CSE,,,faculty,,,,\n';
 const ASSIGNABLE: Role[] = ['admin', 'placement_officer', 'faculty', 'evaluator', 'invigilator', 'student'];
 
 export default function People() {
@@ -44,9 +45,11 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
   const [q, setQ] = useState('');
   const [role, setRole] = useState<'all' | Role>('all');
   const members = useQuery({ queryKey: ['members', orgId], queryFn: () => api<Member[]>(`/orgs/${orgId}/members`) });
+  const departments = useQuery({ queryKey: ['departments', orgId], queryFn: () => api<Department[]>(`/orgs/${orgId}/departments`) });
+  const [editing, setEditing] = useState<Member | null>(null);
 
   const update = useMutation({
-    mutationFn: ({ userId, body }: { userId: string; body: Partial<Pick<Member, 'role' | 'status'>> }) =>
+    mutationFn: ({ userId, body }: { userId: string; body: Partial<Pick<Member, 'role' | 'status'>> | Record<string, unknown> }) =>
       patch(`/orgs/${orgId}/members/${userId}`, body),
     onSuccess: () => { toast.success('Saved'); qc.invalidateQueries({ queryKey: ['members', orgId] }); },
     onError: (e) => toast.error(e.message),
@@ -60,6 +63,9 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
   if (members.isLoading) return <Loading />;
   if (members.error) return <ErrorNote error={members.error} />;
   if ((members.data ?? []).length === 0) return <EmptyState title="Nobody here yet">Upload a roster to add students and staff.</EmptyState>;
+  const showRecord = (members.data ?? []).some((m) => m.record);
+  const fmt = (r?: AcademicRecord) => r && [r.cgpa !== null && `CGPA ${r.cgpa}`, r.backlogs !== null && `${r.backlogs} backlog${r.backlogs === 1 ? '' : 's'}`]
+    .filter(Boolean).join(' · ');
 
   return (
     <div className="space-y-3">
@@ -79,7 +85,7 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead><TableHead>Roll no.</TableHead><TableHead>Department</TableHead>
-              <TableHead>Batches</TableHead><TableHead>Role</TableHead><TableHead>Status</TableHead>
+              <TableHead>Batches</TableHead>{showRecord && <TableHead>Academic record</TableHead>}<TableHead>Role</TableHead><TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -92,6 +98,16 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
                   <TableCell className="tabular">{m.rollNumber ?? '—'}</TableCell>
                   <TableCell>{m.department ?? '—'}</TableCell>
                   <TableCell className="max-w-48 truncate">{m.batches.join(', ') || '—'}</TableCell>
+                  {showRecord && (
+                    <TableCell className="whitespace-nowrap">
+                      {m.record ? (
+                        <button className="text-left hover:underline" onClick={() => canManage && setEditing(m)} disabled={!canManage}
+                          aria-label={`Academic record of ${m.fullName ?? m.email}`}>
+                          {fmt(m.record) || <span className="text-muted-foreground">{canManage ? 'Add' : '—'}</span>}
+                        </button>
+                      ) : '—'}
+                    </TableCell>
+                  )}
                   <TableCell>
                     {editable ? (
                       <select aria-label={`Role for ${m.email}`} value={m.role} className="rounded-md border bg-card px-2 py-1 text-sm"
@@ -114,6 +130,10 @@ function Members({ orgId, canManage }: { orgId: string; canManage: boolean }) {
         </Table>
       </div>
       {canManage && <p className="text-xs text-muted-foreground">Click a status to suspend or restore someone. Suspended people lose access immediately.</p>}
+      {editing && (
+        <RecordDialog member={editing} departments={departments.data ?? []} onClose={() => setEditing(null)}
+          onSave={(body) => update.mutate({ userId: editing.userId, body }, { onSuccess: () => setEditing(null) })} saving={update.isPending} />
+      )}
     </div>
   );
 }
@@ -197,12 +217,12 @@ function RosterUpload({ orgId }: { orgId: string }) {
             <div className="mt-4 space-y-3">
               <div className="max-h-80 overflow-auto rounded-md border">
                 <Table>
-                  <TableHeader><TableRow><TableHead>Email</TableHead><TableHead>Name</TableHead><TableHead>Roll no.</TableHead><TableHead>Department</TableHead><TableHead>Batch</TableHead><TableHead>Role</TableHead></TableRow></TableHeader>
+                  <TableHeader><TableRow><TableHead>Email</TableHead><TableHead>Name</TableHead><TableHead>Roll no.</TableHead><TableHead>Department</TableHead><TableHead>Batch</TableHead><TableHead>CGPA</TableHead><TableHead>Role</TableHead></TableRow></TableHeader>
                   <TableBody>
                     {preview.rows.map((r) => (
                       <TableRow key={r.line}>
                         <TableCell>{r.email}</TableCell><TableCell>{r.fullName ?? '—'}</TableCell><TableCell className="tabular">{r.rollNumber ?? '—'}</TableCell>
-                        <TableCell>{r.department ?? '—'}</TableCell><TableCell>{r.batch ?? '—'}</TableCell><TableCell>{ROLE_LABEL[r.role]}</TableCell>
+                        <TableCell>{r.department ?? '—'}</TableCell><TableCell>{r.batch ? `${r.batch}${r.section ? ` · ${r.section}` : ""}` : "—"}</TableCell><TableCell className="tabular">{r.cgpa ?? "—"}{r.backlogs ? ` (${r.backlogs} backlog${r.backlogs === 1 ? "" : "s"})` : ""}</TableCell><TableCell>{ROLE_LABEL[r.role]}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -243,5 +263,47 @@ function Pending({ orgId }: { orgId: string }) {
         </Table>
       </div>
     </div>
+  );
+}
+
+/** CGPA, backlogs and school marks — used by eligibility rules on placement tests. */
+function RecordDialog({ member, departments, onClose, onSave, saving }: {
+  member: Member; departments: Department[]; onClose: () => void; saving: boolean;
+  onSave: (body: { departmentId: string | null; record: AcademicRecord }) => void;
+}) {
+  const r = member.record!;
+  const [cgpa, setCgpa] = useState(r.cgpa?.toString() ?? '');
+  const [backlogs, setBacklogs] = useState(r.backlogs?.toString() ?? '');
+  const [tenth, setTenth] = useState(r.tenthPercent?.toString() ?? '');
+  const [twelfth, setTwelfth] = useState(r.twelfthPercent?.toString() ?? '');
+  const [departmentId, setDepartmentId] = useState(member.departmentId ?? '');
+  const n = (v: string) => (v.trim() === '' ? null : Number(v));
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Academic record · {member.fullName ?? member.email}</DialogTitle></DialogHeader>
+        <form className="space-y-4" onSubmit={(e) => {
+          e.preventDefault();
+          onSave({ departmentId: departmentId || null, record: { cgpa: n(cgpa), backlogs: n(backlogs), tenthPercent: n(tenth), twelfthPercent: n(twelfth) } });
+        }}>
+          <Field label="Department or branch" htmlFor="r-dept">
+            <select id="r-dept" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
+              <option value="">None</option>
+              {departments.map((d) => <option key={d.id} value={d.id}>{d.name} ({d.code})</option>)}
+            </select>
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="CGPA (out of 10)" htmlFor="r-cgpa"><Input id="r-cgpa" type="number" step="0.01" min={0} max={10} value={cgpa} onChange={(e) => setCgpa(e.target.value)} /></Field>
+            <Field label="Active backlogs" htmlFor="r-back"><Input id="r-back" type="number" min={0} max={100} value={backlogs} onChange={(e) => setBacklogs(e.target.value)} /></Field>
+            <Field label="10th %" htmlFor="r-10"><Input id="r-10" type="number" step="0.01" min={0} max={100} value={tenth} onChange={(e) => setTenth(e.target.value)} /></Field>
+            <Field label="12th / diploma %" htmlFor="r-12"><Input id="r-12" type="number" step="0.01" min={0} max={100} value={twelfth} onChange={(e) => setTwelfth(e.target.value)} /></Field>
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+            <Button type="submit" disabled={saving}>Save</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

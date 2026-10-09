@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Plus, Radio } from 'lucide-react';
 import { api, patch, post } from '@/api/client';
-import type { Assignment, Batch, TestSummary } from '@/api/types';
+import type { Assignment, Batch, CollegeDefaults, Department, Eligibility, TestSummary } from '@/api/types';
 import { EmptyState, ErrorNote, Field, formatDateTime, Loading, PageHeader, toLocalInput } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -59,7 +59,10 @@ export default function Assignments() {
                   <tr key={a.id} className="hover:bg-accent/40">
                     <td className="px-4 py-3">
                       <Link to={can('reports.view') ? a.id : `${a.id}/live`} className="font-medium hover:underline">{a.title}</Link>
-                      <p className="text-xs text-muted-foreground">{a.batchName} · {a.testTitle ?? 'Test'}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {a.batchName}{a.sectionName ? ` · Section ${a.sectionName}` : ''} · {a.testTitle ?? 'Test'}
+                        {Object.keys(a.eligibility ?? {}).length > 0 && <> · <span className="font-medium text-foreground">{eligibilityText(a.eligibility)}</span></>}
+                      </p>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{formatDateTime(a.opensAt)} – {formatDateTime(a.closesAt)}</td>
                     <td className="px-4 py-3"><Badge variant={state.variant}>{state.label}</Badge></td>
@@ -92,9 +95,31 @@ export default function Assignments() {
   );
 }
 
+function eligibilityText(e: Eligibility, departments?: Department[]) {
+  const parts = [
+    e.minCgpa !== undefined && `CGPA ≥ ${e.minCgpa}`,
+    e.maxBacklogs !== undefined && (e.maxBacklogs === 0 ? 'no backlogs' : `≤ ${e.maxBacklogs} backlogs`),
+    e.minTenth !== undefined && `10th ≥ ${e.minTenth}%`,
+    e.minTwelfth !== undefined && `12th ≥ ${e.minTwelfth}%`,
+    e.departmentIds?.length && (departments
+      ? departments.filter((d) => e.departmentIds!.includes(d.id)).map((d) => d.code).join('/')
+      : `${e.departmentIds.length} department${e.departmentIds.length === 1 ? '' : 's'}`),
+  ].filter(Boolean);
+  return parts.length ? `Eligible: ${parts.join(', ')}` : '';
+}
+
 function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onClose: () => void; orgId: string; onCreated: () => void }) {
   const tests = useQuery({ queryKey: ['tests', orgId], queryFn: () => api<TestSummary[]>(`/orgs/${orgId}/tests`), enabled: open });
   const batches = useQuery({ queryKey: ['batches', orgId], queryFn: () => api<Batch[]>(`/orgs/${orgId}/batches`), enabled: open });
+  const departments = useQuery({ queryKey: ['departments', orgId], queryFn: () => api<Department[]>(`/orgs/${orgId}/departments`), enabled: open });
+  const settings = useQuery({ queryKey: ['org-settings', orgId], queryFn: () => api<{ defaults: CollegeDefaults }>(`/orgs/${orgId}/settings`), enabled: open });
+  const [sectionId, setSectionId] = useState('');
+  const [rules, setRules] = useState(false);
+  const [minCgpa, setMinCgpa] = useState('');
+  const [maxBacklogs, setMaxBacklogs] = useState('');
+  const [minTenth, setMinTenth] = useState('');
+  const [minTwelfth, setMinTwelfth] = useState('');
+  const [deptIds, setDeptIds] = useState<string[]>([]);
 
   const [testId, setTestId] = useState('');
   const [batchId, setBatchId] = useState('');
@@ -116,12 +141,29 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
     setClosesAt(toLocalInput(new Date(start.getTime() + 2 * 3_600_000)));
   }, [open]);
 
+  // Start from the college's defaults.
+  const defaults = settings.data?.defaults;
+  useEffect(() => {
+    if (!open || !defaults) return;
+    setMaxAttempts(String(defaults.maxAttempts));
+    setShuffle(defaults.shuffle);
+    setRelease(defaults.resultRelease);
+    setProctored(defaults.lockdown);
+    setMaxViolations(String(defaults.maxViolations ?? 3));
+  }, [open, defaults]);
+  const sections = (batches.data ?? []).find((b) => b.id === batchId)?.sections ?? [];
+  const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
+  const eligibility: Eligibility = rules ? Object.fromEntries(Object.entries({
+    minCgpa: num(minCgpa), maxBacklogs: num(maxBacklogs), minTenth: num(minTenth), minTwelfth: num(minTwelfth),
+    departmentIds: deptIds.length ? deptIds : undefined,
+  }).filter(([, v]) => v !== undefined)) : {};
+
   const usable = (tests.data ?? []).filter((t) => t.questionCount > 0 && (t.source === 'forge' || t.published));
   const chosen = usable.find((t) => t.id === testId);
 
   const create = useMutation({
     mutationFn: (publish: boolean) => post(`/orgs/${orgId}/assignments`, {
-      testId, batchId, title: title || chosen?.title, instructions: instructions || null,
+      testId, batchId, sectionId: sectionId || null, eligibility, title: title || chosen?.title, instructions: instructions || null,
       opensAt: new Date(opensAt).toISOString(), closesAt: new Date(closesAt).toISOString(),
       durationMinutes: duration ? Number(duration) : null, maxAttempts: Number(maxAttempts),
       shuffleQuestions: shuffle, shuffleOptions: shuffle, resultRelease: release, publish,
@@ -141,7 +183,7 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader><DialogTitle>New assignment</DialogTitle></DialogHeader>
-        {(tests.isLoading || batches.isLoading) ? <Loading /> : (
+        {(tests.isLoading || batches.isLoading || settings.isLoading) ? <Loading /> : (
           <form onSubmit={(e) => submit(e, true)} className="space-y-4">
             <Field label="Test" htmlFor="as-test" hint={usable.length === 0 ? 'Publish a test with questions first, or use one from the Forge library.' : undefined}>
               <select id="as-test" required value={testId} onChange={(e) => setTestId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
@@ -150,11 +192,19 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
               </select>
             </Field>
             <Field label="Batch" htmlFor="as-batch">
-              <select id="as-batch" required value={batchId} onChange={(e) => setBatchId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
+              <select id="as-batch" required value={batchId} onChange={(e) => { setBatchId(e.target.value); setSectionId(''); }} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
                 <option value="" disabled>Choose a batch</option>
                 {(batches.data ?? []).filter((b) => b.status === 'active').map((b) => <option key={b.id} value={b.id}>{b.name} ({b.studentCount} students)</option>)}
               </select>
             </Field>
+            {sections.length > 0 && (
+              <Field label="Section" htmlFor="as-section">
+                <select id="as-section" value={sectionId} onChange={(e) => setSectionId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
+                  <option value="">Whole batch</option>
+                  {sections.map((x) => <option key={x.id} value={x.id}>Section {x.name} ({x.students} students)</option>)}
+                </select>
+              </Field>
+            )}
             <Field label="Title students see" htmlFor="as-title">
               <Input id="as-title" maxLength={200} value={title} placeholder={chosen?.title ?? 'e.g. Week 3 — Arrays'} onChange={(e) => setTitle(e.target.value)} />
             </Field>
@@ -191,6 +241,37 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
                 <Field label="Auto-submit after this many violations" htmlFor="as-viol">
                   <Input id="as-viol" type="number" min={1} max={50} value={maxViolations} onChange={(e) => setMaxViolations(e.target.value)} className="w-24" />
                 </Field>
+              )}
+            </div>
+
+            <div className="space-y-3 rounded-md border p-4">
+              <div className="flex items-center justify-between gap-4">
+                <label htmlFor="as-rules" className="text-sm"><span className="font-medium">Eligibility rules</span><br /><span className="text-muted-foreground">For placement drives: only students who meet these see the test. Students without a record don't qualify.</span></label>
+                <Switch id="as-rules" checked={rules} onCheckedChange={setRules} />
+              </div>
+              {rules && (
+                <>
+                  <div className="grid gap-3 sm:grid-cols-4">
+                    <Field label="Min CGPA" htmlFor="el-cgpa"><Input id="el-cgpa" type="number" step="0.1" min={0} max={10} value={minCgpa} onChange={(e) => setMinCgpa(e.target.value)} /></Field>
+                    <Field label="Max backlogs" htmlFor="el-back"><Input id="el-back" type="number" min={0} max={100} value={maxBacklogs} onChange={(e) => setMaxBacklogs(e.target.value)} /></Field>
+                    <Field label="Min 10th %" htmlFor="el-10"><Input id="el-10" type="number" min={0} max={100} value={minTenth} onChange={(e) => setMinTenth(e.target.value)} /></Field>
+                    <Field label="Min 12th %" htmlFor="el-12"><Input id="el-12" type="number" min={0} max={100} value={minTwelfth} onChange={(e) => setMinTwelfth(e.target.value)} /></Field>
+                  </div>
+                  {(departments.data ?? []).length > 0 && (
+                    <fieldset className="text-sm">
+                      <legend className="mb-1 font-medium">Departments (none ticked = any)</legend>
+                      <div className="flex flex-wrap gap-3">
+                        {departments.data!.map((d) => (
+                          <label key={d.id} className="flex items-center gap-1.5">
+                            <input type="checkbox" checked={deptIds.includes(d.id)}
+                              onChange={(e) => setDeptIds((x) => (e.target.checked ? [...x, d.id] : x.filter((i) => i !== d.id)))} /> {d.code}
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
+                  {Object.keys(eligibility).length > 0 && <p className="text-xs text-muted-foreground">{eligibilityText(eligibility, departments.data)}</p>}
+                </>
               )}
             </div>
 

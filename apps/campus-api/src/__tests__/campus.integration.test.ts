@@ -929,6 +929,18 @@ describe('college structure (C1)', () => {
     expect(await my(U.s2)).not.toEqual(expect.arrayContaining(['Section B quiz'])); // moved to section A
   });
 
+  it('a rule naming a school covers the departments inside it', async () => {
+    const res = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, testId, title: 'School-wide drive', opensAt: new Date(), closesAt: new Date(Date.now() + 3_600_000),
+              eligibility: { departmentIds: [schoolId] } });
+    expect(res.status).toBe(201);
+    const depts = (await request(app).get(`/campus/v1/orgs/${ORG_A}/departments`).set(await as(U.adminA))).body;
+    const cse = depts.find((d: { code: string }) => d.code === 'CSE');
+    const row = (await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA))).body
+      .find((x: { id: string }) => x.id === res.body.id);
+    expect(row.eligibility.departmentIds.sort()).toEqual([schoolId, cse.id].sort());
+  });
+
   it('keeps college-wide defaults for new assignments', async () => {
     expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/settings`).set(await as(U.facultyA))).body.defaults)
       .toMatchObject({ resultRelease: 'after_close', lockdown: true, maxViolations: 3 });

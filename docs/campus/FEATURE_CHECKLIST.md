@@ -28,9 +28,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 | # | Module | ✅ Done | 🟡 Partly | ❌ Not done | Total |
 |---|---|---:|---:|---:|---:|
-| 1 | Student Identity & Account Management | 8 | 5 | 10 | 23 |
-| 2 | College, University & Organization Management | 10 | 7 | 12 | 29 |
-| 3 | Role-Based Access & Permissions | 9 | 7 | 8 | 24 |
+| 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
+| 2 | College, University & Organization Management | 14 | 3 | 12 | 29 |
+| 3 | Role-Based Access & Permissions | 10 | 6 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
@@ -39,7 +39,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 34 | 7 | 16 | 57 |
+| 12 | Assessment Engine | 35 | 6 | 16 | 57 |
 | 13 | Question Bank Management | 12 | 4 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
@@ -71,7 +71,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
-| 44 | Admin Control Center | 17 | 17 | 13 | 47 |
+| 44 | Admin Control Center | 19 | 15 | 13 | 47 |
 | 45 | Payments & Monetization | 12 | 6 | 15 | 33 |
 | 46 | SaaS & Enterprise Management | 4 | 2 | 23 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **378** (20%) | **260** (14%) | **1260** (66%) | **1898** |
+| | **All modules** | **387** (20%) | **251** (13%) | **1260** (66%) | **1898** |
 
 ---
 
@@ -100,7 +100,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Single Sign-On (SSO)
 - [ ] Multi-Factor Authentication
 - [x] Student Profile — `ProfilePage.tsx`
-- [ ] 🟡 Academic Profile — `users.college_name`, `year_of_study`; Campus roll number + department; no academic record (CGPA, backlogs)
+- [x] Academic Profile — `users.college_name`/`year_of_study`; Campus roll number, unit, CGPA, active backlogs, 10th/12th % (portal edit + roster columns, C1)
 - [ ] 🟡 Skills Profile — skills only inside the resume builder
 - [x] Resume Profile — resume builder saved server-side (`resume.service.ts`)
 - [x] GitHub Profile Integration — GitHub OAuth connection for projects (`githubOAuth.ts`, `apprenticeship_github_connections`)
@@ -123,19 +123,19 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] University Management
 - [x] Organization Management — `campus.organizations` (platform / college)
 - [x] Department Management — `campus.departments`, portal Batches/Departments page
-- [ ] 🟡 Branch Management — departments double as branches; no separate branch entity
+- [x] Branch Management — units with a kind (school / department / branch) in a tree; rosters and eligibility use them (C1)
 - [ ] Semester Management
 - [ ] Academic Year Management
 - [ ] 🟡 Course Management — Forge admin authors courses; the catalogue and course pages honour `owner_org_id`/`visibility` and hide drafts, and colleges assign courses from a portal library (D6). Colleges can't author their own courses yet
 - [x] Batch Management — `campus.batches`, members, faculty
-- [ ] 🟡 Section Management — use a batch per section; no section entity
+- [x] Section Management — `campus.sections` inside a batch; place students, give tests/courses to one section (C1)
 - [ ] Classroom Management
 - [x] Faculty Management — memberships with role `faculty`, `batch_faculty`
 - [x] Student Enrollment — roster entries claimed on sign-in; batch members
 - [x] Bulk Student Import — roster upload with preview and per-line errors (portal People page)
 - [x] CSV/Excel Import — roster and question imports read .xlsx (first sheet) and .csv, with preview and per-line errors
 - [ ] Student Data Synchronization
-- [ ] 🟡 Organizational Hierarchy — org → department → batch; no deeper levels
+- [x] Organizational Hierarchy — college → school → department → branch (up to 4 levels, no loops) → batch → section (C1)
 - [ ] Campus Management
 - [ ] Multi-Campus Management
 - [ ] Academic Calendar
@@ -144,7 +144,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Organization Branding — logo + brand colour (portal Settings; shown on student My College)
 - [ ] Custom Domain Support
 - [ ] 🟡 White-Label Platform — logo/colour only
-- [ ] 🟡 Tenant-Level Configuration — branding; proctoring is set per assignment
+- [x] Tenant-Level Configuration — branding, plus college defaults for results, attempts, shuffle, lockdown, violations and course due days (Settings, C1)
 - [ ] 🟡 Tenant-Level Analytics — portal overview counts; no analytics
 - [ ] Organization-Level Billing
 
@@ -170,7 +170,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Module-Level Permissions — permission keys per area (content, assessments, members…)
 - [x] Action-Level Permissions — e.g. `assessments.create`, `members.manage`
 - [ ] Approval Workflows
-- [ ] 🟡 Delegated Administration — college owner appoints admins
+- [x] Delegated Administration — the owner appoints admins; admins manage members (incl. appointing admins), batches and defaults; roles map to permissions
 - [ ] Impersonation Audit
 - [ ] 🟡 Access Audit Logs — `admin_audit_logs` for Forge admin actions; no access log for Campus
 
@@ -574,7 +574,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Test Scheduling — assignment scheduling in portal
 - [ ] 🟡 Assessment Invitations — assigned to a batch; no invite emails
 - [ ] Access Codes
-- [ ] 🟡 Candidate Eligibility Rules — batch membership only
+- [x] Candidate Eligibility Rules — per assignment: min CGPA, max backlogs, min 10th/12th, departments (a school covers its units); ineligible students don't see the test and aren't counted (C1)
 - [x] Test Instructions — faculty instructions + rules screen
 - [ ] Assessment Preview
 - [x] Draft Assessments — assignment/test status draft vs published
@@ -1546,7 +1546,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Feature Flag Management — `feature_flags` table (5 flags, all off); no admin screen
 - [ ] 🟡 Feature Toggle Controls — same; plus `allow_signups` setting
 - [ ] Module Configuration
-- [ ] 🟡 Tenant Configuration — college branding only
+- [x] Tenant Configuration — college branding and exam/course defaults (Settings, C1)
 - [x] Dynamic Configuration — `system_settings` edited in admin Settings
 - [ ] JSON Configuration Editor
 - [ ] 🟡 Theme Configuration — CMS / site config; light/dark per user
@@ -1573,7 +1573,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Subscription Configuration — admin Plans
 - [ ] 🟡 Referral Configuration — commission tiers in DB
 - [ ] 🟡 Certificate Configuration — admin Certificates (list/revoke)
-- [ ] 🟡 Proctoring Configuration — per assignment in Campus portal
+- [x] Proctoring Configuration — per assignment in the portal, starting from the college's lockdown defaults (Settings, C1)
 - [x] Audit Log Viewer — admin Audit Logs
 - [x] System Health Dashboard — admin System Health
 - [x] Error Monitoring — Sentry (API + web)

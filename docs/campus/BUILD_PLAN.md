@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 378 done, 260 partly, 1,260 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 387 done, 251 partly, 1,260 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -279,3 +279,21 @@ dashboard card's new course rows were checked by build only (the stubbed Forge A
 
 **Not built:** colleges authoring their own Learn courses in the portal; due-date reminders (D2); course analytics
 beyond completion (time spent, quiz scores per chapter); withdrawing assigned courses when a licence ends.
+
+## Slice C1 — college structure — built (first slice of "partly done → done")
+
+- **Database** (`20261018000001_campus_structure`): units get a kind (school/department/branch) and a parent (no loops,
+  4 levels); `campus.sections` in a batch, `batch_members.section_id`; tests and course assignments can target a section
+  (`on delete restrict`, so results never vanish); CGPA, backlogs, 10th/12th on memberships and roster entries; eligibility
+  rules on assignments; `campus.assignment_students()` / `is_assignment_target()` — one audience rule for student
+  policies, attempt start, results, live board, accommodations and course progress. `tests/campus_structure.sql`, mutation-checked.
+- **API:** unit CRUD, section CRUD + moving students, record edits (visible only with `records.view`), roster columns
+  Section/CGPA/Backlogs/10th %/12th % (a re-upload refreshes students who already joined), `/settings` defaults (owner or
+  admin), section + eligibility on assignments (a school in a rule covers its units), section on course assignments.
+- **Portal:** Batches (sections, select-and-move, unit tree), People (academic record dialog), Settings (defaults;
+  branding stays owner-only), assignment dialog (section, eligibility with a plain-language summary, defaults pre-filled),
+  course assign dialog (section, default due days).
+
+**Verified:** assessment-core 71; Campus API 60 (7 new); 5 SQL suites; browser run — nested CSE under a school, two
+sections, records for three students, defaults pre-filled, a section-B test and a CGPA ≥ 7 / no-backlog / CSE drive:
+each student saw exactly the tests meant for them.

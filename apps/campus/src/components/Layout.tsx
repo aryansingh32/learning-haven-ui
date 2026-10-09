@@ -15,7 +15,7 @@ const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permissi
   { to: 'tests', label: 'Tests', icon: BookOpenCheck, needs: 'content.create' },
   { to: 'batches', label: 'Batches', icon: UsersRound, needs: 'members.view' },
   { to: 'people', label: 'People', icon: Users, needs: 'members.view' },
-  { to: 'settings', label: 'Settings', icon: Settings, needs: 'org.manage' },
+  { to: 'settings', label: 'Settings', icon: Settings, needs: ['org.manage', 'members.manage'] },
 ];
 
 export default function Layout() {

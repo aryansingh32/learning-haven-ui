@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { normalizePolicy } from '@repo/assessment-core';
 import { userOf } from '../auth';
-import { asSystem, asUser } from '../db';
+import { asSystem, asUser, Db } from '../db';
 import { badRequest, HttpError, notFound } from '../errors';
 import { requireAnyPermission, requirePermission } from '../permissions';
 import { attemptProgress, AttemptRow, extendAttempt, forceSubmitAttempt, gradeCodingAnswers } from '../services/attempts';
@@ -44,6 +44,17 @@ const proctoringBody = z.object({
   maxViolations: z.number().int().min(1).max(50).nullable(),
 }).partial();
 
+/** A rule naming a school or department also covers the units inside it. */
+async function withSubUnits(db: Db, orgId: string, e: z.infer<typeof eligibilityBody>) {
+  if (!e.departmentIds?.length) return e;
+  const { rows } = await db.query<{ id: string }>(
+    `with recursive u as (
+       select id from campus.departments where org_id = $1 and id = any($2::uuid[])
+       union select d.id from campus.departments d join u on d.parent_id = u.id where d.org_id = $1)
+     select id from u`, [orgId, e.departmentIds]);
+  return { ...e, departmentIds: rows.map((r) => r.id) };
+}
+
 export const eligibilityBody = z.object({
   minCgpa: z.number().min(0).max(10).optional(),
   maxBacklogs: z.number().int().min(0).max(100).optional(),
@@ -84,7 +95,7 @@ assignmentsRouter.post('/', async (req, res) => {
     [orgId, a.batchId, a.testId, a.title, a.instructions ?? null, a.opensAt, a.closesAt,
      a.durationMinutes ? a.durationMinutes * 60 : null, a.maxAttempts, a.shuffleQuestions, a.shuffleOptions,
      a.resultRelease, JSON.stringify(normalizePolicy(a.proctoring)), a.publish ? 'published' : 'draft', userId,
-     a.sectionId ?? null, JSON.stringify(a.eligibility)]
+     a.sectionId ?? null, JSON.stringify(await withSubUnits(db, orgId, a.eligibility))]
   )).rows[0]);
   res.status(201).json(created);
 });
@@ -112,7 +123,7 @@ assignmentsRouter.patch('/:assignmentId', async (req, res) => {
       where id = $1 and org_id = $2
       returning id, status, opens_at as "opensAt", closes_at as "closesAt", results_released_at as "resultsReleasedAt"`,
     [uuid.parse(req.params.assignmentId), orgId, body.status ?? null, body.opensAt ?? null, body.closesAt ?? null,
-     body.releaseResults === true, body.eligibility ? JSON.stringify(body.eligibility) : null]
+     body.releaseResults === true, body.eligibility ? JSON.stringify(await withSubUnits(db, orgId, body.eligibility)) : null]
   )).rows[0]);
   if (!updated) throw notFound('Assignment not found in this college.');
   res.json(updated);

@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { BookOpen, Lock } from 'lucide-react';
 import { api, patch, post } from '@/api/client';
-import type { Batch, CollegeCourse, CollegeCourseDetail, CourseAssignment } from '@/api/types';
+import type { Batch, CollegeCourse, CollegeCourseDetail, CollegeDefaults, CourseAssignment } from '@/api/types';
 import { EmptyState, ErrorNote, Field, formatDateTime, Loading, PageHeader, toLocalInput } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -56,7 +56,7 @@ export default function Courses() {
                   <tr key={a.id} className="hover:bg-accent/40">
                     <td className="px-4 py-3">
                       {can('reports.view') ? <Link to={a.id} className="font-medium hover:underline">{a.title}</Link> : <span className="font-medium">{a.title}</span>}
-                      <p className="text-xs text-muted-foreground">{a.batchName} · {a.wholeCourse ? `whole course (${a.chapters} chapters)` : `${a.chapters} chapter${a.chapters === 1 ? '' : 's'}`}</p>
+                      <p className="text-xs text-muted-foreground">{a.batchName}{a.sectionName ? ` · Section ${a.sectionName}` : ''} · {a.wholeCourse ? `whole course (${a.chapters} chapters)` : `${a.chapters} chapter${a.chapters === 1 ? '' : 's'}`}</p>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{a.dueAt ? formatDateTime(a.dueAt) : 'No due date'}</td>
                     <td className="px-4 py-3">
@@ -115,22 +115,26 @@ export default function Courses() {
 function AssignCourse({ course, orgId, onClose, onCreated }: { course: CollegeCourse; orgId: string; onClose: () => void; onCreated: () => void }) {
   const detail = useQuery({ queryKey: ['course', orgId, course.id], queryFn: () => api<CollegeCourseDetail>(`/orgs/${orgId}/courses/${course.id}`) });
   const batches = useQuery({ queryKey: ['batches', orgId], queryFn: () => api<Batch[]>(`/orgs/${orgId}/batches`) });
+  const settings = useQuery({ queryKey: ['org-settings', orgId], queryFn: () => api<{ defaults: CollegeDefaults }>(`/orgs/${orgId}/settings`) });
   const [batchId, setBatchId] = useState('');
+  const [sectionId, setSectionId] = useState('');
   const [title, setTitle] = useState('');
   const [instructions, setInstructions] = useState('');
   const [dueAt, setDueAt] = useState('');
   const [whole, setWhole] = useState(true);
   const [picked, setPicked] = useState<Set<string>>(new Set());
 
+  const dueDays = settings.data?.defaults.courseDueDays ?? 14; // the college's default
   useEffect(() => {
-    setDueAt(toLocalInput(new Date(Date.now() + 14 * 86_400_000))); // two weeks by default
-  }, []);
+    setDueAt(toLocalInput(new Date(Date.now() + dueDays * 86_400_000)));
+  }, [dueDays]);
+  const sections = (batches.data ?? []).find((b) => b.id === batchId)?.sections ?? [];
   const chapters = useMemo(() => detail.data?.chapterList ?? [], [detail.data]);
   const toggle = (id: string) => setPicked((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   const create = useMutation({
     mutationFn: (publish: boolean) => post(`/orgs/${orgId}/course-assignments`, {
-      batchId, courseId: course.id, title: title || undefined, instructions: instructions || null,
+      batchId, sectionId: sectionId || null, courseId: course.id, title: title || undefined, instructions: instructions || null,
       dueAt: dueAt ? new Date(dueAt).toISOString() : null,
       chapterIds: whole ? null : chapters.filter((c) => picked.has(c.id)).map((c) => c.id), publish,
     }),
@@ -152,11 +156,19 @@ function AssignCourse({ course, orgId, onClose, onCreated }: { course: CollegeCo
         {(detail.isLoading || batches.isLoading) ? <Loading /> : detail.error ? <ErrorNote error={detail.error} /> : (
           <form onSubmit={(e) => submit(e, true)} className="space-y-4">
             <Field label="Batch" htmlFor="ca-batch">
-              <select id="ca-batch" required value={batchId} onChange={(e) => setBatchId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
+              <select id="ca-batch" required value={batchId} onChange={(e) => { setBatchId(e.target.value); setSectionId(''); }} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
                 <option value="" disabled>Choose a batch</option>
                 {(batches.data ?? []).filter((b) => b.status === 'active').map((b) => <option key={b.id} value={b.id}>{b.name} ({b.studentCount} students)</option>)}
               </select>
             </Field>
+            {sections.length > 0 && (
+              <Field label="Section" htmlFor="ca-section">
+                <select id="ca-section" value={sectionId} onChange={(e) => setSectionId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
+                  <option value="">Whole batch</option>
+                  {sections.map((x) => <option key={x.id} value={x.id}>Section {x.name}</option>)}
+                </select>
+              </Field>
+            )}
             <Field label="Title students see" htmlFor="ca-title">
               <Input id="ca-title" maxLength={200} value={title} placeholder={course.title} onChange={(e) => setTitle(e.target.value)} />
             </Field>
