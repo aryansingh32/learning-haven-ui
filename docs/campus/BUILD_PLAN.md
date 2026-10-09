@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 400 done, 245 partly, 1,253 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 419 done, 233 partly, 1,246 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -297,3 +297,16 @@ beyond completion (time spent, quiz scores per chapter); withdrawing assigned co
 **Verified:** assessment-core 71; Campus API 60 (7 new); 5 SQL suites; browser run — nested CSE under a school, two
 sections, records for three students, defaults pre-filled, a section-B test and a CGPA ≥ 7 / no-backlog / CSE drive:
 each student saw exactly the tests meant for them.
+
+## Slice C2b — analytics — built
+
+No migration. `assessment-core/analytics.ts`: difficulty (share correct), separation (top vs bottom 27%), option picks,
+10-point score distribution, tag/topic marks overall and per student (pool-aware); `assessRisk` — an explainable flag from
+average (<40% at risk, <55% watch), missed tests, falling scores, overdue courses, malpractice.
+API `/orgs/:id/analytics`: `/assignments/:id` (+ topic-wise CSV), `/students` (+ placement CSV), `/students/:id`, `/overview`.
+Portal: Analysis page from Results, Insights (College trends + roll-ups; Students with risk filter), Student report.
+Charts are small dependency-free components (`components/charts.tsx`): one series in the college colour, hover/focus
+tooltip, table view; the default colour passed the palette validator against the light surface.
+
+**Verified:** core 88, Campus API 70, browser run with 8 students over 4 closed tests (analysis numbers, tooltip and
+table, roll-ups, at-risk order and reasons, 8-line placement CSV, student report with rank).

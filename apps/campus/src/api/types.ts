@@ -289,3 +289,41 @@ export interface MarkingQuestion {
 }
 export interface MarkingScript { attemptId: string; student: string; rollNumber: string | null; score: number; totalMarks: number; feedback: string | null }
 export interface Marking { assignment: { id: string; title: string }; blind: boolean; scripts: MarkingScript[]; questions: MarkingQuestion[] }
+
+// ── Analytics (C2b) ─────────────────────────────────────────────────────────
+export interface QuestionAnalysis {
+  questionId: string; number: number; type: QuestionType; body: string; section: string | null; marks: number; tags: string[];
+  dealt: number; attempted: number; correct: number; pending: number;
+  difficulty: number | null; discrimination: number | null; averageMarks: number | null;
+  optionPicks?: Record<string, number>; options: Array<{ id: string; text: string; correct: boolean }> | null; flag: string | null;
+}
+export interface AssignmentAnalysis {
+  assignment: { id: string; title: string; batch: string };
+  summary: { assigned: number; submitted: number; participation: number | null; average: number | null; median: number | null; highest: number | null; lowest: number | null };
+  distribution: Array<{ from: number; to: number; count: number }>;
+  questions: QuestionAnalysis[];
+  tags: Array<{ tag: string; questions: number; earned: number; possible: number; percent: number | null }>;
+}
+export type RiskLevel = 'high' | 'medium' | 'low';
+export interface StudentInsight {
+  userId: string; rollNumber: string | null; name: string | null; email: string | null; department: string | null; batches: string[];
+  assigned: number; taken: number; missed: number; averagePercent: number | null; lastTestAt: string | null;
+  overdueCourses: number; coursesCompleted: number; coursesAssigned: number; malpractice: boolean;
+  risk: { level: RiskLevel; reasons: string[]; averagePercent: number | null; missed: number };
+  record?: AcademicRecord;
+}
+export interface StudentsInsight { days: number; summary: { students: number; high: number; medium: number; averagePercent: number | null }; rows: StudentInsight[] }
+export interface Rollup { name: string; students: number; averagePercent: number | null; participation: number | null; atRisk: number; coursesCompleted: number; coursesAssigned: number }
+export interface CollegeOverview {
+  months: Array<{ month: string; tests: number; assigned: number; submitted: number; participation: number | null; averagePercent: number | null }>;
+  byBatch: Rollup[]; byDepartment: Rollup[];
+}
+export interface StudentReport {
+  student: { userId: string; name: string | null; email: string | null; rollNumber: string | null; department: string | null };
+  record?: AcademicRecord;
+  risk: { level: RiskLevel; reasons: string[] };
+  averagePercent: number | null;
+  tests: Array<{ assignmentId: string; title: string; closesAt: string; closed: boolean; score: number | null; totalMarks: number | null; percent: number | null; rank: number | null; of: number; batchAverage: number | null }>;
+  courses: Array<{ id: string; title: string; dueAt: string | null; status: StudentCourseStatus; completedChapters: number; totalChapters: number; percent: number }>;
+  topics: Array<{ tag: string; percent: number | null; possible: number }>;
+}

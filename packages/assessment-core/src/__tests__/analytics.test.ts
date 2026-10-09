@@ -61,3 +61,9 @@ describe('assessRisk', () => {
     expect(assessRisk({ scores: [72, 75, 80], overdueCourses: 0, malpractice: false })).toMatchObject({ level: 'low', reasons: [] });
   });
 });
+
+describe('assessRisk — a failing average alone', () => {
+  it('is enough to be at risk', () => {
+    expect(assessRisk({ scores: [37.5, 37.5], overdueCourses: 0, malpractice: false }).level).toBe('high');
+  });
+});

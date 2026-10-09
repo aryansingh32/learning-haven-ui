@@ -137,7 +137,7 @@ export function assessRisk(input: StudentRiskInput): StudentRisk {
   const avg = taken.length ? round(taken.reduce((a, b) => a + b, 0) / taken.length, 1) : null;
   const reasons: string[] = [];
   let points = 0;
-  if (avg !== null && avg < 40) { reasons.push(`average ${avg}% (below 40%)`); points += 2; }
+  if (avg !== null && avg < 40) { reasons.push(`average ${avg}% (below 40%)`); points += 3; }
   else if (avg !== null && avg < 55) { reasons.push(`average ${avg}% (below 55%)`); points += 1; }
   if (missed >= 2) { reasons.push(`missed ${missed} tests`); points += 2; }
   else if (missed === 1) { reasons.push('missed a test'); points += 1; }

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { AlertTriangle, ArrowLeft, Download, Hourglass, PenLine, Radio, RefreshCw } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, BarChart3, Download, Hourglass, PenLine, Radio, RefreshCw } from 'lucide-react';
 import { api, del, download, post, put } from '@/api/client';
 import type { Accommodation, ResultRow, Results } from '@/api/types';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
@@ -66,6 +66,7 @@ export default function AssignmentResults() {
       <PageHeader title={assignment.title} description={assignment.batch}
         actions={<>
           <Button variant="outline" asChild><Link to="live"><Radio className="mr-2 h-4 w-4" /> Live view</Link></Button>
+          <Button variant="outline" asChild><Link to="analysis"><BarChart3 className="mr-2 h-4 w-4" /> Analysis</Link></Button>
           {can('assessments.grade') && <Button variant="outline" asChild><Link to="marking"><PenLine className="mr-2 h-4 w-4" /> Marking</Link></Button>}
           {can('reports.export') && <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" /> Export CSV</Button>}
         </>} />

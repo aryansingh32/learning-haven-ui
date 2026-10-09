@@ -29,8 +29,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | # | Module | ✅ Done | 🟡 Partly | ❌ Not done | Total |
 |---|---|---:|---:|---:|---:|
 | 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
-| 2 | College, University & Organization Management | 14 | 3 | 12 | 29 |
-| 3 | Role-Based Access & Permissions | 11 | 5 | 8 | 24 |
+| 2 | College, University & Organization Management | 15 | 2 | 12 | 29 |
+| 3 | Role-Based Access & Permissions | 13 | 3 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
@@ -50,12 +50,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 20 | Interview Preparation | 0 | 1 | 27 | 28 |
 | 21 | System Design & Software Engineering | 2 | 3 | 25 | 30 |
 | 22 | Project-Based Learning | 10 | 3 | 15 | 28 |
-| 23 | Faculty & Trainer Portal | 9 | 3 | 23 | 35 |
-| 24 | Placement Officer & Training and Placement Cell | 1 | 3 | 29 | 33 |
-| 25 | Learning Analytics | 2 | 8 | 29 | 39 |
+| 23 | Faculty & Trainer Portal | 14 | 1 | 20 | 35 |
+| 24 | Placement Officer & Training and Placement Cell | 2 | 2 | 29 | 33 |
+| 25 | Learning Analytics | 8 | 5 | 26 | 39 |
 | 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
-| 28 | Assignments & Homework | 9 | 4 | 13 | 26 |
+| 28 | Assignments & Homework | 10 | 3 | 13 | 26 |
 | 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
 | 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
@@ -71,7 +71,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
-| 44 | Admin Control Center | 19 | 15 | 13 | 47 |
+| 44 | Admin Control Center | 20 | 14 | 13 | 47 |
 | 45 | Payments & Monetization | 12 | 6 | 15 | 33 |
 | 46 | SaaS & Enterprise Management | 4 | 2 | 23 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
@@ -83,12 +83,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 53 | Library & Learning Resources | 3 | 3 | 18 | 24 |
 | 54 | Mentorship & Human Support | 1 | 1 | 25 | 27 |
 | 55 | Parent & Guardian Portal | 0 | 0 | 15 | 15 |
-| 56 | Institutional Reports & Accreditation | 0 | 1 | 22 | 23 |
+| 56 | Institutional Reports & Accreditation | 2 | 0 | 21 | 23 |
 | 57 | Gamified Campus Ecosystem | 0 | 0 | 21 | 21 |
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **400** (21%) | **245** (13%) | **1253** (66%) | **1898** |
+| | **All modules** | **419** (22%) | **233** (12%) | **1246** (66%) | **1898** |
 
 ---
 
@@ -145,7 +145,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Custom Domain Support
 - [ ] 🟡 White-Label Platform — logo/colour only
 - [x] Tenant-Level Configuration — branding, plus college defaults for results, attempts, shuffle, lockdown, violations and course due days (Settings, C1)
-- [ ] 🟡 Tenant-Level Analytics — portal overview counts; no analytics
+- [x] Tenant-Level Analytics — portal Insights → College: monthly tests, participation and average; roll-ups by batch and department (C2b)
 - [ ] Organization-Level Billing
 
 ### 3. Role-Based Access & Permissions
@@ -154,9 +154,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Super Admin — `users.role = super_admin`
 - [x] Organization Admin — college `owner` / `admin` roles
 - [x] College Admin — `admin` role
-- [ ] 🟡 Placement Officer — role exists, no screens
+- [x] Placement Officer — Insights (college trends, students with risk, academic records) and the placement CSV; placement officers have reports + records + export (C2b)
 - [ ] HOD Dashboard
-- [ ] 🟡 Faculty Dashboard — portal Overview, Assignments, Results; no at-risk view
+- [x] Faculty Dashboard — portal Overview, Assignments, Results, Marking, and Insights with an at-risk list that explains each flag (C2b)
 - [ ] Trainer Dashboard
 - [ ] Mentor Dashboard
 - [x] Student Dashboard — Forge dashboard + My College
@@ -915,7 +915,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Project-Based Certifications — apprenticeship + program certificates
 
 ### 23. Faculty & Trainer Portal
-- [ ] 🟡 Faculty Dashboard — Campus portal overview
+- [x] Faculty Dashboard — Campus portal: Overview, Assignments, Results, Marking, Insights (at-risk list), per-test Analysis (C2b)
 - [x] Course Assignment — portal Courses: a course or chosen chapters to a batch with a due date (`campus.course_assignments`, D6)
 - [x] Batch Assignment — tests assigned to batches
 - [x] Student Roster — People page, batch members
@@ -926,11 +926,11 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Live Class Scheduling
 - [ ] Learning Material Upload — colleges can't add lessons or files
 - [x] Student Progress Monitoring — test results per assignment, and per-student chapter progress on assigned courses with status/overdue and CSV (D6)
-- [ ] 🟡 Student Performance Analytics — results table + filters + CSV; no analytics
-- [ ] Weak Student Identification
+- [x] Student Performance Analytics — Insights → Students (average, tests taken, courses, risk) and a per-student report with rank and topics (C2b)
+- [x] Weak Student Identification — Insights → Students: at-risk and to-watch flags from average, missed tests, falling scores, overdue courses, malpractice — each with its reason (C2b)
 - [ ] At-Risk Student Alerts
-- [ ] Individual Student Reports
-- [ ] Batch Comparison
+- [x] Individual Student Reports — student report: every test with score, rank and batch average; courses; topic strengths and gaps; academic record (C2b)
+- [x] Batch Comparison — Insights → College: batches side by side (students, average, participation, at risk, courses done) (C2b)
 - [ ] Faculty Announcements
 - [ ] Student Messaging
 - [ ] Doubt Management
@@ -984,27 +984,27 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Employer Feedback
 - [ ] Placement Calendar
 - [ ] Placement Notification System
-- [ ] 🟡 Placement Data Export — results CSV per assignment
+- [x] Placement Data Export — placement CSV: one line per student with department, batches, CGPA/backlogs/10th/12th (record keepers), tests, average, courses, risk (C2b)
 
 ### 25. Learning Analytics
 - [ ] 🟡 Student Learning Analytics — activity heatmap, solved breakdown for the learner
-- [ ] Cohort Analytics
+- [x] Cohort Analytics — batch and department roll-ups over a chosen period; filters by batch (C2b)
 - [ ] 🟡 Course Analytics — Forge admin Analytics page; per batch: completion counts and average chapters done per assigned course (D6); no time or quiz analytics
 - [ ] Lesson Analytics
-- [ ] 🟡 Assessment Analytics — per-assignment results with violations
+- [x] Assessment Analytics — per-test Analysis: participation, average/median/range, score distribution, item analysis, topics (C2b)
 - [ ] Coding Analytics
 - [ ] Skill Mastery Analytics
 - [ ] 🟡 Time-on-Task Analytics — `time_spent_seconds` on submissions, `study_time_total`; no view
 - [ ] 🟡 Learning Engagement Analytics — `analytics_events` pipeline; admin analytics
 - [ ] Learning Drop-Off Analysis
 - [ ] 🟡 Course Completion Analytics — completed / in progress / not started / overdue per course assignment, CSV (D6); no trends
-- [ ] Question-Level Analytics
-- [ ] Topic-Level Analytics
+- [x] Question-Level Analytics — per question: share correct, separation (top vs bottom 27%), answered, options picked, plain-language flags (C2b)
+- [x] Topic-Level Analytics — marks by tag/topic per test (weakest first), per student in the topic-wise CSV and the student report (C2b)
 - [ ] Difficulty-Level Analytics
 - [ ] Score Distribution
 - [ ] Percentile Calculation
 - [ ] Rank Calculation
-- [ ] 🟡 Attempt Analysis — attempts stored with answers and violations
+- [x] Attempt Analysis — item analysis over each student's best attempt (pool-aware), option choices, per-student topic marks (C2b)
 - [ ] Accuracy Analysis
 - [ ] Speed Analysis
 - [ ] Improvement Tracking
@@ -1024,7 +1024,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Report Export — results CSV
 - [x] Dashboard Filters — results filters; admin list filters
 - [ ] Drill-Down Analytics
-- [ ] 🟡 Data Visualization — charts in admin dashboard/analytics
+- [x] Data Visualization — admin dashboard/analytics charts; Campus column and bar charts with hover/focus tooltips and a table view (C2b)
 - [ ] Historical Trend Analysis
 
 ### 26. AI-Powered Analytics
@@ -1108,7 +1108,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Similarity Detection
 - [x] Assignment Feedback — per-question comments and overall written feedback from evaluators, shown on the student's result (C2a)
 - [ ] Resubmission Workflow
-- [ ] 🟡 Assignment Analytics — results table
+- [x] Assignment Analytics — results table plus the Analysis page (distribution, item analysis, topics, topic-wise CSV) (C2b)
 - [ ] Assignment Templates
 - [ ] Assignment Duplication
 - [ ] Bulk Assignment Creation
@@ -1542,7 +1542,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 44. Admin Control Center
 - [x] Global Admin Dashboard — admin Dashboard
-- [ ] 🟡 Organization Admin Dashboard — Campus portal Overview
+- [x] Organization Admin Dashboard — Campus portal Overview + Insights (trends, roll-ups, at-risk students) (C2b)
 - [ ] 🟡 Feature Flag Management — `feature_flags` table (5 flags, all off); no admin screen
 - [ ] 🟡 Feature Toggle Controls — same; plus `allow_signups` setting
 - [ ] Module Configuration
@@ -1962,7 +1962,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Guardian Access Permissions
 
 ### 56. Institutional Reports & Accreditation
-- [ ] 🟡 Academic Performance Reports — per-assignment results CSV
+- [x] Academic Performance Reports — per-assignment results CSV, topic-wise CSV, placement/performance CSV across tests, batch and department roll-ups (C2b)
 - [ ] Student Outcome Reports
 - [ ] Course Outcome Reports
 - [ ] Program Outcome Reports
@@ -1974,7 +1974,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Accreditation Evidence Management
 - [ ] Audit Evidence Repository
 - [ ] Faculty Activity Reports
-- [ ] Department Performance Reports
+- [x] Department Performance Reports — Insights → College by department: students, average, participation, at risk, courses (C2b)
 - [ ] Semester Performance Reports
 - [ ] Graduate Employability Reports
 - [ ] Placement Outcome Reports
