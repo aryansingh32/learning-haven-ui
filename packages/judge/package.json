@@ -1,0 +1,29 @@
+{
+  "name": "@repo/judge",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Server-side code judge shared by the Forge API and the Campus API: per-language harnesses (JavaScript, Python, Java), Judge0 client, development-only local runner, verdicts that never reveal hidden tests.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@repo/assessment-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.19.19",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": ["<rootDir>/src"]
+  }
+}

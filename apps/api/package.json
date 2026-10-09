@@ -21,6 +21,7 @@
     "@octokit/webhooks": "^14.2.0",
     "@openrouter/sdk": "^0.12.35",
     "@repo/assessment-core": "workspace:*",
+    "@repo/judge": "workspace:*",
     "@sentry/node": "^10.38.0",
     "@supabase/supabase-js": "^2.95.3",
     "@types/multer": "^2.2.0",

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@repo/assessment-core": "workspace:*",
+    "@repo/judge": "workspace:*",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^4.22.1",
