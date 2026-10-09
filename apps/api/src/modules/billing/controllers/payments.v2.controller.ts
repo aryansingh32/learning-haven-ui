@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthRequest } from '../../../middleware/auth';
 import { PaymentsV2Service } from '../services/payments.v2.service';
+import { InvoiceService, InvoiceError, cleanBillingProfile } from '../services/invoice.service';
 import { verifyWebhookSignature } from '../../../config/razorpay';
 import logger from '../../../config/logger';
 import { pool } from '../../../config/database';
@@ -202,6 +203,41 @@ export class PaymentsV2Controller {
       return ok(res, history);
     } catch (error) {
       logger.error('Payment history error:', error);
+      return serverError(res);
+    }
+  }
+
+  /** GET /v2/payments/invoices/:paymentId — the GST invoice for one of your payments (issued on first view). */
+  static async getInvoice(req: Request, res: Response) {
+    try {
+      const paymentId = String(req.params.paymentId);
+      if (!/^[0-9a-f-]{36}$/i.test(paymentId)) return res.status(404).json({ success: false, error: 'Payment not found' });
+      return ok(res, await InvoiceService.getForUser((req as AuthRequest).user!.id, paymentId));
+    } catch (error: any) {
+      if (error instanceof InvoiceError) return res.status(error.status).json({ success: false, error: error.message });
+      logger.error('Invoice error:', error);
+      return serverError(res);
+    }
+  }
+
+  /** GET /v2/payments/billing-profile */
+  static async getBillingProfile(req: Request, res: Response) {
+    try {
+      return ok(res, await InvoiceService.getProfile((req as AuthRequest).user!.id));
+    } catch (error) {
+      logger.error('Billing profile error:', error);
+      return serverError(res);
+    }
+  }
+
+  /** PUT /v2/payments/billing-profile — name, state and GSTIN printed on future invoices. */
+  static async saveBillingProfile(req: Request, res: Response) {
+    const cleaned = cleanBillingProfile(req.body ?? {});
+    if ('error' in cleaned) return res.status(400).json({ success: false, error: cleaned.error });
+    try {
+      return ok(res, await InvoiceService.saveProfile((req as AuthRequest).user!.id, cleaned.value));
+    } catch (error) {
+      logger.error('Save billing profile error:', error);
       return serverError(res);
     }
   }

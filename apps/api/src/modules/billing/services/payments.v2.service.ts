@@ -1,5 +1,6 @@
 import { pool } from '../../../config/database';
 import { calculateGST, getSubscriptionEndDate } from '../../../utils/plans';
+import { InvoiceService } from './invoice.service';
 import razorpay, { verifyPaymentSignature, verifyWebhookSignature } from '../../../config/razorpay';
 import redis from '../../../config/redis';
 import { env } from '../../../config/env';
@@ -336,6 +337,8 @@ export class PaymentsV2Service {
       await CacheService.del(`user_plan:${userId}`);
       await CacheService.delPattern(`plan_entitlements:*`);
 
+      await InvoiceService.issueQuietly(payment.id);
+
       // Enqueue jobs
       await monetizationQueue.add('referral.check-and-activate', { userId, paymentId: payment.id });
       await monetizationQueue.add('payment.welcome-email', { userId, planName: plan.name });
@@ -437,6 +440,7 @@ export class PaymentsV2Service {
           );
 
           await client.query('COMMIT');
+          await InvoiceService.issueQuietly(payment.id);
 
           // Invalidate entitlement caches
           await CacheService.delPattern(`entitlements:${payment.user_id}`);
@@ -538,14 +542,18 @@ export class PaymentsV2Service {
    * Get payment history.
    */
   static async getPaymentHistory(userId: string) {
-    const result = await pool.query(
-      `SELECT p.id, p.amount, p.discount_amount, p.tax_amount, p.final_amount, p.currency, p.status, p.created_at, p.billing_cycle, p.razorpay_payment_id, pl.name as plan_name
+    const query = (withInvoices: boolean) => pool.query(
+      `SELECT p.id, p.amount, p.discount_amount, p.tax_amount, p.final_amount, p.currency, p.status, p.created_at, p.billing_cycle, p.razorpay_payment_id, pl.name as plan_name,
+              p.description, ${withInvoices ? 'inv.invoice_no' : 'null::text as invoice_no'}
        FROM public.payments p
        JOIN public.plans pl ON pl.id = p.plan_id
+       ${withInvoices ? 'LEFT JOIN public.invoices inv ON inv.payment_id = p.id' : ''}
        WHERE p.user_id = $1
        ORDER BY p.created_at DESC`,
       [userId]
     );
+    // Before the invoices migration is applied the history still works, just without invoice numbers.
+    const result = await query(true).catch((e) => (e?.code === '42P01' ? query(false) : Promise.reject(e)));
     return result.rows;
   }
 }

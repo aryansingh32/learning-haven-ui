@@ -76,5 +76,8 @@ router.post(
 router.post('/cancel-subscription', authenticateUser, PaymentsV2Controller.cancelSubscription);
 
 router.get('/history', authenticateUser, PaymentsV2Controller.getPaymentHistory);
+router.get('/invoices/:paymentId', authenticateUser, PaymentsV2Controller.getInvoice);
+router.get('/billing-profile', authenticateUser, PaymentsV2Controller.getBillingProfile);
+router.put('/billing-profile', authenticateUser, PaymentsV2Controller.saveBillingProfile);
 
 export default router;

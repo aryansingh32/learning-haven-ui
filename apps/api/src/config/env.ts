@@ -39,6 +39,10 @@ const envSchema = z.object({
   RAZORPAY_KEY_ID: z.string().min(1, 'RAZORPAY_KEY_ID is required'),
   RAZORPAY_KEY_SECRET: z.string().min(1, 'RAZORPAY_KEY_SECRET is required'),
   RAZORPAY_WEBHOOK_SECRET: z.string().min(1).optional(),
+  // Seller details printed on GST invoices (not secret). Invoices are issued only when these are set.
+  SELLER_LEGAL_NAME: z.string().min(1).optional(),
+  SELLER_GSTIN: z.string().regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/, 'SELLER_GSTIN is not a valid GSTIN').optional(),
+  SELLER_ADDRESS: z.string().min(1).optional(),
 
   // ── Email ─────────────────────────────────────────────────
   RESEND_API_KEY: z.string().min(1).optional(),

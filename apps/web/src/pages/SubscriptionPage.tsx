@@ -8,9 +8,11 @@
  * - Entitlement summary
  */
 
+import { BillingDetailsCard } from '@/features/billing/BillingDetailsCard';
+import { unwrap } from '@/features/billing/billing.service';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Shield, Crown, Zap, CreditCard, Calendar, ArrowRight,
   ChevronDown, AlertTriangle, Check, Loader2, Receipt,
@@ -33,11 +35,14 @@ export default function SubscriptionPage() {
   const { data: subscription, isLoading: subLoading, refetch: refetchSub } = useApiQuery<any>(
     ['current-subscription-v2'],
     '/v2/payments/subscription',
+    { select: unwrap },
   );
 
   const { data: orders, isLoading: ordersLoading } = useApiQuery<any[]>(
     ['user-orders-v2'],
     '/v2/payments/history',
+    // The v2 endpoints answer { success, data }; the list is in data.
+    { select: unwrap<any[]> },
   );
 
   const cancelMutation = useApiMutation<any, void>(
@@ -221,6 +226,8 @@ export default function SubscriptionPage() {
         )}
       </AnimatePresence>
 
+      <BillingDetailsCard />
+
       {/* Order History */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -290,6 +297,12 @@ export default function SubscriptionPage() {
                   )}>
                     {(order.status === 'captured' || order.status === 'paid') ? 'Paid' : order.status === 'failed' ? 'Failed' : 'Pending'}
                   </span>
+                  {(order.status === 'captured' || order.status === 'paid') && Number(order.final_amount) > 0 && (
+                    <Link to={`/billing/invoices/${order.id}`} className="block text-[11px] font-semibold text-primary hover:underline mt-0.5"
+                      aria-label={`Invoice for ${order.plan_name || 'this order'}${order.invoice_no ? ` (${order.invoice_no})` : ''}`}>
+                      Invoice
+                    </Link>
+                  )}
                 </div>
               </motion.div>
             ))}

@@ -36,6 +36,7 @@ const Onboarding = lazy(() => import("@/pages/Onboarding"));
 const CoursePreview = lazy(() => import("@/pages/CoursePreview"));
 const CodeExecutorTest = lazy(() => import("@/modules/CodeExecutor/test-page"));
 const Index = lazy(() => import("./pages/Index"));
+const InvoicePage = lazy(() => import("./pages/InvoicePage"));
 const TopicsPage = lazy(() => import("./pages/TopicsPage"));
 const AICoachPage = lazy(() => import("./pages/AICoachPage"));
 const ReferralsPage = lazy(() => import("./pages/ReferralsPage"));
@@ -129,6 +130,16 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <ProblemPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Printable GST invoice — no nav chrome */}
+              <Route
+                path="/billing/invoices/:paymentId"
+                element={
+                  <ProtectedRoute>
+                    <InvoicePage />
                   </ProtectedRoute>
                 }
               />

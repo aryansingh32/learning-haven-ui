@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 455 done, 210 partly, 1,233 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 457 done, 208 partly, 1,233 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -380,3 +380,21 @@ stayed open after following a notification, swallowing the next click — it now
   (week maths, 14-day shaping, feed merge), the real controller + SQL run against the local database, and a browser run
   (goals, chart, feed, validation, save + reload, phone width — fixed a 10px overflow from a truncated line).
 - **Left out:** server-side placement readiness and skill scores (still client-side), study-time breakdown by subject.
+
+## Slice W2-B1 — GST invoices, billing details, payment history — built
+- **DB:** migration `20261025000001_gst_invoices` — `billing_profiles` (name, state, GSTIN; learners edit their own; a GSTIN must
+  match its state), `invoices` (one per captured paid payment; unbroken numbering per Indian financial year
+  `FG/2026-27/000001` from `invoice_counters`; seller/buyer frozen; CGST+SGST when the place of supply is the seller's state,
+  else IGST; totals must add up; cannot be edited or deleted), `issue_invoice(payment, seller)` (idempotent, locks the
+  payment, service role only), `india_fy()`.
+- **API (Forge):** invoices are issued right after capture (verify and webhook paths; never fails the payment) or on first
+  view; `GET /v2/payments/invoices/:paymentId`, `GET/PUT /v2/payments/billing-profile`; history includes the invoice number
+  and still works before the migration. Seller details come from `SELLER_LEGAL_NAME` / `SELLER_GSTIN` / `SELLER_ADDRESS`;
+  with them unset no invoice is issued (the page says so).
+- **Web:** Billing page — "Billing details" card and an Invoice link per paid order; printable invoice page
+  (`/billing/invoices/:paymentId`, Print → Save as PDF). Fixed a real bug: the page never unwrapped `{ success, data }`, so
+  order history always read "No orders yet" and the active plan never showed.
+- **Verified:** `invoices.sql` (numbering, idempotency, FY boundary, tax split, unpaid/free refused, immutability, RLS; three
+  mutations caught), `invoice.test.ts`, browser run (details validation, invoice content and amounts, print view, reopen
+  keeps the number, unpaid order, phone width).
+- **Left out:** emailing the invoice PDF, credit notes for refunds, auto-renew (needs Razorpay subscriptions — owner).

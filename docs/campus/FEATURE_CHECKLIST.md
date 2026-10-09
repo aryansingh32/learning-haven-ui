@@ -72,7 +72,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
 | 44 | Admin Control Center | 20 | 14 | 13 | 47 |
-| 45 | Payments & Monetization | 12 | 6 | 15 | 33 |
+| 45 | Payments & Monetization | 14 | 4 | 15 | 33 |
 | 46 | SaaS & Enterprise Management | 5 | 1 | 23 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
 | 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **455** (24%) | **210** (11%) | **1233** (65%) | **1898** |
+| | **All modules** | **457** (24%) | **208** (11%) | **1233** (65%) | **1898** |
 
 ---
 
@@ -1613,8 +1613,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] UPI Payments — via Razorpay checkout; UPI payouts for referrals
 - [x] Payment Gateway Webhooks — Razorpay webhook with fallback activation
 - [ ] Invoice Generation
-- [ ] 🟡 GST-Compliant Billing — GST calculated on prices; no GST invoices
-- [ ] 🟡 Payment History — `payments` table; admin Revenue; no learner history page
+- [x] GST-Compliant Billing — GST tax invoices: numbered per financial year (FG/2026-27/000001), CGST+SGST or IGST by place of supply, buyer GSTIN for B2B, immutable once issued, printable / save as PDF (`/billing/invoices/:paymentId`, migration 20261025000001, W2-B1); needs `SELLER_LEGAL_NAME` + `SELLER_GSTIN` set
+- [x] Payment History — Billing page order history (fixed: it never showed orders because the `{ success, data }` envelope wasn't unwrapped) with an Invoice link per paid order (W2-B1)
 - [ ] Failed Payment Recovery
 - [ ] Refund Management
 - [ ] 🟡 Subscription Renewal — expiry dates; no auto-renew
