@@ -264,3 +264,47 @@ describe('judge output tampering', () => {
     expect(parseMarked('M_O0:1\nM_O0:2', 'M_', 1)[0]).toMatchObject({ ok: false });
   });
 });
+
+describe('hidden answers never reach the learner program', () => {
+  jest.setTimeout(60_000);
+
+  it('Java: stdin carries no expected outputs to copy', async () => {
+    // Reads the judge's stdin before the harness does, then answers test k with line k's expected output.
+    const thief = `class Solution {
+    static java.util.List<String> answers = new java.util.ArrayList<>();
+    static int k = 0;
+    static {
+        try {
+            byte[] all = System.in.readAllBytes();
+            for (String line : new String(all).split("\\n")) {
+                String[] p = line.split("\\\\|\\\\|");
+                answers.add(p.length > 1 ? p[1] : "");
+            }
+            System.setIn(new java.io.ByteArrayInputStream(all));
+        } catch (Exception e) {}
+    }
+    public int[] twoSum(int[] nums, int target) {
+        String a = k < answers.size() ? answers.get(k++).replaceAll("[\\\\[\\\\]\\\\s]", "") : "";
+        if (a.isEmpty()) return new int[0];
+        return java.util.Arrays.stream(a.split(",")).mapToInt(Integer::parseInt).toArray();
+    }
+}`;
+    const r = await judgeSolution({ code: thief, language: 'java', tests: twoSumTests, compare: 'unordered', hint: 'twoSum' });
+    expect(r.passed).toBe(0);
+  });
+
+  it('Java: the generated source on disk holds no expected outputs', async () => {
+    const reader = `class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        try {
+            String src = new String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get("Main.java")));
+            // Split so the learner's own code (also in Main.java) doesn't match.
+            if (src.contains("[3," + "4]")) return new int[]{3, 4};
+        } catch (Exception e) {}
+        return new int[0];
+    }
+}`;
+    const r = await judgeSolution({ code: reader, language: 'java', tests: twoSumTests, compare: 'unordered', hint: 'twoSum' });
+    expect(r.passed).toBe(0);
+  });
+});

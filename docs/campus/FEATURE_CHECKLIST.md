@@ -1749,7 +1749,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Malware Scanning
 - [ ] Dependency Vulnerability Scanning
 - [ ] Container Security Scanning
-- [x] Secure Code Execution — Judge0 isolation; endpoints authenticated, env stripped; forged judge-result lines fail the test (in-process tampering still possible, see HANDOFF §8.7)
+- [x] Secure Code Execution — Judge0 isolation; endpoints authenticated, env stripped; expected outputs never enter the learner's program (stdin or source); forged result lines fail the test
 - [ ] 🟡 Network Isolation — Judge0 guide; not deployed
 - [x] Audit Logging — admin audit logs; proctoring events
 - [ ] Immutable Security Logs

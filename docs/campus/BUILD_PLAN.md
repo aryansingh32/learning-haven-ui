@@ -133,8 +133,9 @@ weights, plagiarism checks across submissions, showing students their code on th
 - **Security fix (affects A1 and B1):** a learner could read the judge's per-run marker (e.g. JavaScript
   `Function.caller` exposes the harness source) and print fake "passed" lines before the real one. A second result
   line for a test now fails that test. Mutation-checked: without the fix the forger passes 2 hidden tests.
-  *Still possible in-process:* replacing `print` / `console.log` to hide the real line. Only running the learner's
-  code in a separate process from the harness closes that — tracked in HANDOFF §8.7.
+  *Follow-up (2026-10-12):* the real risk was answer leakage, not forged lines — the Java judge sent expected outputs
+  on stdin and in the source file. Fixed; the program now receives inputs only, so a forged line can't do better
+  than an honest return value.
 - **Practice:** `POST /api/problems/:id/run` (samples only, server side, never records anything); the workspace sends
   C++ Run there (the browser can't run a C++ Solution class) and keeps JS/Python/Java Run in the browser. Problems
   offer the languages they have starter code for; migration `20261012000001_problem_cpp_starters.sql` adds C++

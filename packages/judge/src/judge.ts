@@ -87,9 +87,11 @@ async function judgeJava(config: JudgeConfig, code: string, tests: JudgeTest[], 
   if (!/class\s+Solution\s*\{/.test(code)) {
     return failedRun(tests, 'Compilation Error', 'Keep the Solution class from the starter code — the judge calls its method.', 0);
   }
-  const cases = tests.map((t) => ({ input: t.input, output: t.expected }));
+  // Inputs only: expected outputs never enter the learner's program (it could read
+  // its own stdin or source file). Answers are compared here, outside it.
+  const cases = tests.map((t) => ({ input: t.input, output: '' }));
   const source = prepareForJudge0(wrapJavaCode(code, cases));
-  const run = await runProgram(config, 'java', source, cases.map((c) => `${c.input}||${c.output}`).join('\n'));
+  const run = await runProgram(config, 'java', source, cases.map((c) => `${c.input}||`).join('\n'));
 
   if (run.outcome === 'compile_error') return failedRun(tests, 'Compilation Error', run.compileOutput || 'Your code did not compile.', 0);
   if (run.outcome === 'time_limit') return failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs);

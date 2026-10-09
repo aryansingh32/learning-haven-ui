@@ -277,10 +277,11 @@ Pilot college and its exam date; pricing (per student per year vs month); webcam
 - `apps/web` and `apps/campus` `tsc -b` print a `baseUrl` deprecation (TS5101) when a global TypeScript 6 is picked up; use
   the local `node_modules/.bin/tsc` (5.9) — the build itself passes
 - Campus coding questions can't be edited after creation (delete + re-add)
-- **Judge tamper-resistance (security, medium):** duplicate result lines now fail a test, but learner code in the same
-  process can still replace `print`/`console.log` to hide the judge's real line and print a forged one. Fix: run the
-  learner's function in a child process (or a separate Judge0 run per test) so the harness's output channel is out of
-  reach. Matters most for proctored Campus tests.
+- Judge integrity rule (keep it): **expected outputs never enter the learner's program** — not on stdin, not in the
+  generated source (the program can read its own source file). Answers are compared in TypeScript. With that rule,
+  anything learner code prints in place of the judge's line it could equally have returned, so in-process output
+  tampering gains nothing. Fixed 2026-10-12: the Java judge used to send expected outputs on stdin and in the source
+  (a test proved a no-logic solution passed every hidden test).
 - Practice page `Star`/bookmark and company filter not built; solution text exists for 0 problems
 
 ## 9. Working style the owner prefers
