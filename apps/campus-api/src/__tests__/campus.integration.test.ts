@@ -1060,3 +1060,74 @@ describe('question types, marking and sharing (C2a)', () => {
     expect((await assign()).status).toBe(400);
   });
 });
+
+describe('analytics (C2b)', () => {
+  let closed: string;
+
+  beforeAll(async () => {
+    // A test both students were given; s1 takes it, s2 misses it; then it closes.
+    closed = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId, title: 'Closed weekly test', opensAt: new Date(Date.now() - 3_600_000), closesAt: new Date(Date.now() + 3_600_000),
+      publish: true, resultRelease: 'immediately', proctoring: { enabled: false },
+    })).body.id;
+    const view = (await request(app).post(`/campus/v1/my/assignments/${closed}/start`).set(await as(U.s1))).body;
+    const mcq = view.questions.find((q: { type: string }) => q.type === 'mcq');
+    const correct = (await pool.query(`select correct_options from public.testseries_questions where id = $1`, [mcq.id])).rows[0].correct_options[0];
+    await request(app).put(`/campus/v1/my/attempts/${view.attemptId}/answers/${mcq.id}`).set(await as(U.s1)).send({ selectedOptions: [correct] });
+    await request(app).post(`/campus/v1/my/attempts/${view.attemptId}/submit`).set(await as(U.s1));
+    await pool.query(`update campus.assignments set opens_at = now() - interval '2 hours', closes_at = now() - interval '1 minute' where id = $1`, [closed]);
+  });
+
+  it('analyses each question of a test', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/assignments/${closed}`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    expect(res.body.summary).toMatchObject({ assigned: 2, submitted: 1, participation: 50 });
+    expect(res.body.questions).toHaveLength(4); // three authored + one added while a test was running
+    const mcq = res.body.questions.find((q: { type: string }) => q.type === 'mcq');
+    expect(mcq).toMatchObject({ dealt: 1, correct: 1, difficulty: 1 });
+    expect(mcq.options.filter((o: { correct: boolean }) => o.correct)).toHaveLength(1);
+    expect(res.body.distribution).toHaveLength(10);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/assignments/${closed}?format=csv`).set(await as(U.facultyA))).status).toBe(403);
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/assignments/${closed}?format=csv`).set(await as(U.adminA));
+    expect(csv.status).toBe(200);
+    expect(csv.text).toContain('"Score %"');
+  });
+
+  it('lists students with what puts them at risk, and exports for placements', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students?batchId=${BATCH_A}`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    const s1 = res.body.rows.find((r: { userId: string }) => r.userId === U.s1);
+    const s2 = res.body.rows.find((r: { userId: string }) => r.userId === U.s2);
+    expect(s1).toMatchObject({ taken: 1 });
+    expect(s1.record).toBeUndefined(); // faculty don't see academic records
+    expect(s2.missed).toBeGreaterThanOrEqual(1);
+    expect(s2.risk.reasons.join(' ')).toMatch(/missed/);
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students?format=csv`).set(await as(U.adminA));
+    expect(csv.status).toBe(200);
+    expect(csv.text).toContain('"CGPA"');
+    expect(csv.text).toContain('"s2@a.edu"');
+  });
+
+  it("gives one student's report with rank and topics", async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students/${U.s1}`).set(await as(U.adminA));
+    expect(res.status).toBe(200);
+    expect(res.body.student).toMatchObject({ rollNumber: '21CS001' });
+    expect(res.body.record).toMatchObject({ cgpa: 8.1 });
+    expect(res.body.tests.find((t: { assignmentId: string }) => t.assignmentId === closed)).toMatchObject({ rank: 1, of: 1 });
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students/${U.facultyA}`).set(await as(U.adminA))).status).toBe(404);
+  });
+
+  it('rolls the college up by month, batch and department', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/overview?months=3`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    expect(res.body.months).toHaveLength(3);
+    expect(res.body.months.at(-1).tests).toBeGreaterThanOrEqual(1);
+    expect(res.body.byBatch.map((b: { name: string }) => b.name)).toContain('CSE-2027-A');
+  });
+
+  it('keeps analytics inside the college', async () => {
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/students`).set(await as(U.adminB))).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/analytics/assignments/${closed}`).set(await as(U.adminB))).status).toBe(404);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/analytics/overview`).set(await as(U.invigA))).status).toBe(403);
+  });
+});

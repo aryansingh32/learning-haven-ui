@@ -6,3 +6,4 @@ export * from './judging';
 export * from './sections';
 export * from './pools';
 export * from './questionSheet';
+export * from './analytics';

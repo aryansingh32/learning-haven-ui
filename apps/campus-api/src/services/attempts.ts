@@ -44,6 +44,8 @@ interface QuestionRow {
   judge_config: { compare?: string; caseSensitive?: boolean };
   text_answers: string[] | null;
   max_words: number | null;
+  tags: string[];
+  topic: string | null;
 }
 
 const TEXT_TYPES = new Set(['fib', 'descriptive']);
@@ -130,7 +132,7 @@ async function loadQuestions(db: Db, testId: string): Promise<QuestionRow[]> {
   const { rows } = await db.query<QuestionRow>(
     `select q.id, q.question_group_id, q.question_type, q.body, q.options, q.correct_options,
             q.nat_answer, q.nat_tolerance, q.marks, q.negative_marks, q.starter_code, q.judge_config,
-            q.text_answers, q.max_words, tq.section_id, s.name as section_name, g.stimulus
+            q.text_answers, q.max_words, q.tags, q.topic, tq.section_id, s.name as section_name, g.stimulus
        from public.test_questions tq
        join public.testseries_questions q on q.id = tq.question_id
        left join public.test_sections s on s.id = tq.section_id
@@ -868,4 +870,13 @@ export async function markingQuestions(testId: string) {
          from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
         where tq.test_id = $1) x
       where x.type in ('descriptive', 'fib') order by x.number`, [testId])).rows);
+}
+
+/** A test's questions in the shape item analysis needs (answers included — staff only). */
+export async function analysisQuestions(testId: string) {
+  return asSystem(async (db) => (await loadQuestions(db, testId)).map((q, i) => ({
+    ...toScoring(q),
+    options: q.options, tags: q.tags ?? [], topic: q.topic,
+    number: i + 1, body: q.body, section: q.section_name,
+  })));
 }
