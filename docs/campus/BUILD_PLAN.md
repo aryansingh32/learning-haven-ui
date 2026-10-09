@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 372 done, 263 partly, 1,263 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 375 done, 260 partly, 1,263 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -28,7 +28,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 | **B1 · Coding questions in Campus tests** ✅ *built; migration not yet applied to the live DB* | Question type `coding` with test cases; exam screen embeds the A1 editor; scored by the shared judge; partial marks per test | A1, `packages/judge`, `assessment-core`, Campus exam screen |
 | **B2 · Question pools & per-student extra time** ✅ *built; migration not yet applied* | Draw N of M per attempt; `assignment_accommodations` | `buildAttemptOrder` |
 | **B3 · Section timers & locking** ✅ *built (Campus); migration not yet applied* | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
-| B4 · College question import | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
+| **B4 · College question import** ✅ *built* | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
 | **B5 · Live invigilator board** ✅ *built; migration not yet applied* | live board (5 s polling + student heartbeats), timeline, reviews, extra time, end attempt | proctoring events |
 
 ## Track C — The loop: skills, readiness, remediation (modules 4, 6, 17, 18, 58, 59)
@@ -227,3 +227,20 @@ submit, settings applied and remembered, Ctrl+Enter, Format, full screen in and 
 
 **Verified:** assessment-core 63 (4 new); SQL checks (9 new, mutation-tested); Campus API 44 (3 new); browser:
 portal pool + extra time, student intro (25 min) and 3 of 8 questions dealt.
+
+---
+
+## Slice B4 — college question import — built
+
+- **Parser** (`assessment-core/questionSheet.ts`): one question per row; forgiving headers (Question / Option A or A /
+  Answer or Key…), answers as a letter, several letters, a number, or the option's text; infers the type when there
+  is no Type column; strict per-line errors; up to 500 rows. Template included.
+- **API:** `POST …/tests/:id/questions/import/preview` (writes nothing) and `…/import` (all or nothing, creates
+  missing sections, RLS as the faculty member).
+- **Portal:** "Import from Excel" on the test editor (template download, preview with errors and the first questions,
+  import). `.xlsx` is read in the browser (`src/lib/sheets.ts`, unzip with `fflate` 0.8.2 + the sheet XML) and sent
+  as CSV; the roster upload now takes `.xlsx` too. Old binary `.xls` is refused with "Save as .xlsx or .csv".
+  No new dependency on the API side.
+
+**Verified:** assessment-core 68 (5 new); Campus API 47 (3 new); browser with real Excel files: bad sheet shows
+line 7 and blocks import, good sheet imports 5 questions into created sections; Excel roster preview flags line 4.

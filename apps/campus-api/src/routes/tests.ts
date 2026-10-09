@@ -5,6 +5,7 @@ import { userOf } from '../auth';
 import { asSystem, asUser, Db } from '../db';
 import { badRequest, notFound } from '../errors';
 import { requirePermission } from '../permissions';
+import { parseQuestionSheet, SheetQuestion } from '@repo/assessment-core';
 
 export const testsRouter = Router({ mergeParams: true });
 const uuid = z.string().uuid();
@@ -386,4 +387,80 @@ testsRouter.patch('/:testId/questions/:questionId', async (req, res) => {
     if (!rowCount) throw notFound('Question not found in this test.');
   });
   res.json({ ok: true });
+});
+
+// ── Question import (CSV; the portal converts Excel to CSV first) ────────────
+const importBody = z.object({ csv: z.string().min(1).max(5_000_000) });
+
+const summarize = (questions: SheetQuestion[]) => ({
+  valid: questions.length,
+  byType: { mcq: questions.filter((q) => q.type === 'mcq').length, msq: questions.filter((q) => q.type === 'msq').length, nat: questions.filter((q) => q.type === 'nat').length },
+  sections: [...new Set(questions.map((q) => q.section).filter(Boolean))] as string[],
+});
+
+/** Check a sheet without writing anything. */
+testsRouter.post('/:testId/questions/import/preview', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const { csv } = importBody.parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  const owns = await asUser(userId, async (db) => (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount);
+  if (!owns) throw notFound('Test not found in this college.');
+  const { questions, errors } = parseQuestionSheet(csv);
+  res.json({
+    summary: { ...summarize(questions), invalid: errors.length },
+    errors,
+    sample: questions.slice(0, 5).map((q) => ({ line: q.line, type: q.type, body: q.body, options: q.options, correct: q.correct, natAnswer: q.natAnswer, marks: q.marks, section: q.section })),
+  });
+});
+
+/**
+ * Add every question in the sheet to the test, all or nothing: any bad line
+ * refuses the whole file. Sections named in the sheet are created if missing.
+ */
+testsRouter.post('/:testId/questions/import', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const testId = uuid.parse(req.params.testId);
+  const { csv } = importBody.parse(req.body);
+  await requirePermission(userId, orgId, 'content.create');
+  const { questions, errors } = parseQuestionSheet(csv);
+  if (errors.length) throw badRequest(`Fix ${errors.length} ${errors.length === 1 ? 'line' : 'lines'} first — nothing was imported.`, errors);
+  if (questions.length === 0) throw badRequest('The sheet has no questions.');
+
+  const optionIds = 'abcdefghij'.split('');
+  const result = await asUser(userId, async (db) => {
+    const owns = (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount;
+    if (!owns) throw notFound('Test not found in this college.');
+    const sections = new Map((await db.query<{ id: string; name: string }>(
+      `select id, name from public.test_sections where test_id = $1`, [testId])).rows.map((r) => [r.name.trim().toLowerCase(), r.id]));
+    let created = 0;
+    for (const name of new Set(questions.map((q) => q.section).filter((x): x is string => Boolean(x)))) {
+      if (sections.has(name.toLowerCase())) continue;
+      const row = (await db.query<{ id: string }>(
+        `insert into public.test_sections (test_id, name, sort_order)
+         values ($1, $2, coalesce((select max(sort_order) + 1 from public.test_sections where test_id = $1), 0)) returning id`,
+        [testId, name])).rows[0];
+      sections.set(name.toLowerCase(), row.id);
+      created++;
+    }
+    let order = (await db.query<{ n: number }>(`select coalesce(max(sort_order) + 1, 0)::int as n from public.test_questions where test_id = $1`, [testId])).rows[0].n;
+    for (const q of questions) {
+      const options = q.type === 'nat' ? null : q.options.map((text, i) => ({ id: optionIds[i], text }));
+      const correct = q.type === 'nat' ? null : q.correct.map((i) => optionIds[i]);
+      const inserted = (await db.query<{ id: string }>(
+        `insert into public.testseries_questions
+           (question_type, body, options, correct_options, nat_answer, nat_tolerance, marks, negative_marks,
+            topic, difficulty, explanation, owner_org_id, visibility)
+         values ($1, $2, $3::jsonb, $4::jsonb, $5, $6, $7, $8, $9, $10, $11, $12, 'private') returning id`,
+        [q.type, q.body, options ? JSON.stringify(options) : null, correct ? JSON.stringify(correct) : null,
+         q.natAnswer, q.natTolerance, q.marks, q.negativeMarks, q.topic, q.difficulty, q.explanation, orgId])).rows[0];
+      await db.query(
+        `insert into public.test_questions (test_id, question_id, sort_order, section_id) values ($1, $2, $3, $4)`,
+        [testId, inserted.id, order++, q.section ? sections.get(q.section.toLowerCase()) ?? null : null]);
+    }
+    return { imported: questions.length, sectionsCreated: created };
+  });
+  res.status(201).json(result);
 });

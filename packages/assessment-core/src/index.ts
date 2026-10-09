@@ -5,3 +5,4 @@ export * from './proctoring';
 export * from './judging';
 export * from './sections';
 export * from './pools';
+export * from './questionSheet';

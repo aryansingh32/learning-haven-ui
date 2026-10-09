@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { ImportQuestions } from '@/components/ImportQuestions';
 
 const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer', coding: 'Coding' };
 
@@ -85,6 +86,7 @@ export default function TestEditor() {
         description={`${t.questions.length} questions${dealt < t.questions.length ? ` (each student gets ${dealt})` : ''} · ${totalMarks} marks · ${t.sectionTimeLocked ? `${timedMinutes} minutes in timed sections` : `${t.durationMinutes} minutes`}`}
         actions={
           <>
+            <ImportQuestions orgId={orgId!} testId={testId!} onImported={refresh} />
             <Badge variant={t.published ? 'secondary' : 'outline'}>{t.published ? 'Published' : 'Draft'}</Badge>
             <Button variant={t.published ? 'outline' : 'default'} disabled={publish.isPending} onClick={() => publish.mutate(!t.published)}>
               {t.published ? 'Unpublish' : 'Publish'}

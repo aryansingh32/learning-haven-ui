@@ -1,3 +1,4 @@
+import { readSpreadsheet, SPREADSHEET_ACCEPT } from '@/lib/sheets';
 import { useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -145,7 +146,8 @@ function RosterUpload({ orgId }: { orgId: string }) {
   async function onFile(file: File | undefined) {
     if (!file) return;
     if (file.size > 2_000_000) { toast.error('That file is over 2 MB. Split it into smaller files.'); return; }
-    const text = await file.text();
+    let text: string;
+    try { text = await readSpreadsheet(file); } catch (e) { toast.error((e as Error).message); return; }
     setCsv(text); setFileName(file.name); check.mutate(text);
   }
 
@@ -159,14 +161,14 @@ function RosterUpload({ orgId }: { orgId: string }) {
   return (
     <div className="space-y-4">
       <div className="rounded-lg border bg-card p-5">
-        <h2 className="font-semibold">Upload a CSV</h2>
+        <h2 className="font-semibold">Upload Excel or CSV</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           One person per row. Only <span className="font-medium text-foreground">Email</span> is required; Name, Roll No, Department (code or name),
-          Batch and Role are optional. Excel: File → Save As → CSV. People join when they sign in with a <em>verified</em> email.
+          Batch and Role are optional. People join when they sign in with a <em>verified</em> email.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
-          <Button onClick={() => fileRef.current?.click()} disabled={check.isPending}><FileUp className="mr-2 h-4 w-4" /> Choose CSV file</Button>
+          <input ref={fileRef} type="file" accept={SPREADSHEET_ACCEPT} className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
+          <Button onClick={() => fileRef.current?.click()} disabled={check.isPending}><FileUp className="mr-2 h-4 w-4" /> Choose .xlsx or .csv</Button>
           <Button variant="outline" onClick={downloadTemplate}><Download className="mr-2 h-4 w-4" /> Template</Button>
           {fileName && <span className="self-center text-sm text-muted-foreground">{fileName}</span>}
         </div>
@@ -179,7 +181,7 @@ function RosterUpload({ orgId }: { orgId: string }) {
             <Badge variant="secondary">{preview.summary.valid} ready</Badge>
             <Badge variant="outline">{preview.summary.new} new</Badge>
             {preview.summary.alreadyRegistered > 0 && <Badge variant="outline">{preview.summary.alreadyRegistered} already registered (updated)</Badge>}
-            {preview.errors.length > 0 && <Badge variant="destructive">{preview.errors.length} problems</Badge>}
+            {preview.errors.length > 0 && <Badge variant="destructive">{preview.errors.length} {preview.errors.length === 1 ? 'problem' : 'problems'}</Badge>}
           </div>
 
           {preview.errors.length > 0 ? (

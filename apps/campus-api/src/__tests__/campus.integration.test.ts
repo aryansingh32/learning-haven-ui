@@ -682,3 +682,44 @@ describe('question pools and accommodations', () => {
     expect(done.body.result).toMatchObject({ totalMarks: 4, totalQuestions: 2 });
   });
 });
+
+describe('question import', () => {
+  let tid: string;
+  const url = () => `/campus/v1/orgs/${ORG_A}/tests/${tid}/questions/import`;
+  const SHEET = [
+    'Type,Question,Option A,Option B,Option C,Answer,Marks,Negative marks,Section,Topic,Difficulty',
+    'mcq,Speed of a train covering 120 km in 2 h?,40,60,80,B,1,0.25,Aptitude,Speed,easy',
+    'msq,Which are prime?,2,4,5,"A,C",2,,Aptitude,Numbers,medium',
+    'nat,15% of 240?,,,,36,1,,Quant,Percentages,easy',
+  ].join('\n');
+
+  it('previews a sheet without writing anything', async () => {
+    tid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Imported bank', durationMinutes: 30 })).body.id;
+    const bad = SHEET + '\nmcq,Broken,x,y,,Z,1,,,,';
+    const r = await request(app).post(`${url()}/preview`).set(await as(U.facultyA)).send({ csv: bad });
+    expect(r.status).toBe(200);
+    expect(r.body.summary).toMatchObject({ valid: 3, invalid: 1, byType: { mcq: 1, msq: 1, nat: 1 }, sections: ['Aptitude', 'Quant'] });
+    expect(r.body.errors).toEqual([expect.objectContaining({ line: 5 })]);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/tests/${tid}`).set(await as(U.facultyA))).body.questions).toHaveLength(0);
+    // The whole file is refused while any line is wrong.
+    const refused = await request(app).post(url()).set(await as(U.facultyA)).send({ csv: bad });
+    expect(refused.status).toBe(400);
+    expect(refused.body.details).toHaveLength(1);
+  });
+
+  it('imports every question with its section, answers and marks', async () => {
+    const r = await request(app).post(url()).set(await as(U.facultyA)).send({ csv: SHEET });
+    expect(r.status).toBe(201);
+    expect(r.body).toEqual({ imported: 3, sectionsCreated: 2 });
+    const detail = (await request(app).get(`/campus/v1/orgs/${ORG_A}/tests/${tid}`).set(await as(U.facultyA))).body;
+    expect(detail.sections.map((s: { name: string; questionCount: number }) => [s.name, s.questionCount])).toEqual([['Aptitude', 2], ['Quant', 1]]);
+    expect(detail.questions.find((q: { type: string }) => q.type === 'msq')).toMatchObject({ correctOptions: ['a', 'c'], marks: 2 });
+    expect(detail.questions.find((q: { type: string }) => q.type === 'mcq')).toMatchObject({ correctOptions: ['b'], negativeMarks: 0.25 });
+    expect(detail.questions.find((q: { type: string }) => q.type === 'nat')).toMatchObject({ natAnswer: 36 });
+  });
+
+  it('is limited to the college that owns the test', async () => {
+    expect((await request(app).post(`/campus/v1/orgs/${ORG_B}/tests/${tid}/questions/import`).set(await as(U.facultyB)).send({ csv: SHEET })).status).toBe(404);
+    expect((await request(app).post(url()).set(await as(U.s1)).send({ csv: SHEET })).status).toBe(403);
+  });
+});

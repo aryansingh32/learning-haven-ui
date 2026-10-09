@@ -24,7 +24,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | # | Module | ✅ Done | 🟡 Partly | ❌ Not done | Total |
 |---|---|---:|---:|---:|---:|
 | 1 | Student Identity & Account Management | 8 | 5 | 10 | 23 |
-| 2 | College, University & Organization Management | 9 | 8 | 12 | 29 |
+| 2 | College, University & Organization Management | 10 | 7 | 12 | 29 |
 | 3 | Role-Based Access & Permissions | 9 | 7 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
@@ -35,7 +35,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 34 | 7 | 16 | 57 |
-| 13 | Question Bank Management | 10 | 6 | 26 | 42 |
+| 13 | Question Bank Management | 12 | 4 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **372** (20%) | **263** (14%) | **1263** (67%) | **1898** |
+| | **All modules** | **375** (20%) | **260** (14%) | **1263** (67%) | **1898** |
 
 ---
 
@@ -128,7 +128,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Faculty Management — memberships with role `faculty`, `batch_faculty`
 - [x] Student Enrollment — roster entries claimed on sign-in; batch members
 - [x] Bulk Student Import — roster upload with preview and per-line errors (portal People page)
-- [ ] 🟡 CSV/Excel Import — CSV only
+- [x] CSV/Excel Import — roster and question imports read .xlsx (first sheet) and .csv, with preview and per-line errors
 - [ ] Student Data Synchronization
 - [ ] 🟡 Organizational Hierarchy — org → department → batch; no deeper levels
 - [ ] Campus Management
@@ -619,8 +619,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Question Review Workflow
 - [x] Question Import — staged content import (admin)
 - [x] Bulk Question Upload — staged import
-- [ ] 🟡 Excel Question Import — spreadsheet-based import (admin only; not for colleges)
-- [ ] 🟡 CSV Question Import — admin only
+- [x] Excel Question Import — colleges import .xlsx/.csv question banks into a test (B4); admin staged import for Forge
+- [x] CSV Question Import — colleges and admin; forgiving headers and answer styles, all-or-nothing with line-by-line errors
 - [ ] QTI Import and Export
 - [ ] Question Duplication Detection
 - [ ] Question Quality Scoring
