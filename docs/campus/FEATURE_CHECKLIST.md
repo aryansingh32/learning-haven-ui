@@ -30,7 +30,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 |---|---|---:|---:|---:|---:|
 | 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
 | 2 | College, University & Organization Management | 14 | 3 | 12 | 29 |
-| 3 | Role-Based Access & Permissions | 10 | 6 | 8 | 24 |
+| 3 | Role-Based Access & Permissions | 11 | 5 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
@@ -39,8 +39,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 35 | 6 | 16 | 57 |
-| 13 | Question Bank Management | 12 | 4 | 26 | 42 |
+| 12 | Assessment Engine | 37 | 5 | 15 | 57 |
+| 13 | Question Bank Management | 18 | 0 | 24 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
@@ -50,12 +50,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 20 | Interview Preparation | 0 | 1 | 27 | 28 |
 | 21 | System Design & Software Engineering | 2 | 3 | 25 | 30 |
 | 22 | Project-Based Learning | 10 | 3 | 15 | 28 |
-| 23 | Faculty & Trainer Portal | 7 | 3 | 25 | 35 |
+| 23 | Faculty & Trainer Portal | 9 | 3 | 23 | 35 |
 | 24 | Placement Officer & Training and Placement Cell | 1 | 3 | 29 | 33 |
 | 25 | Learning Analytics | 2 | 8 | 29 | 39 |
 | 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
-| 28 | Assignments & Homework | 7 | 4 | 15 | 26 |
+| 28 | Assignments & Homework | 9 | 4 | 13 | 26 |
 | 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
 | 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **387** (20%) | **251** (13%) | **1260** (66%) | **1898** |
+| | **All modules** | **400** (21%) | **245** (13%) | **1253** (66%) | **1898** |
 
 ---
 
@@ -161,7 +161,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Mentor Dashboard
 - [x] Student Dashboard — Forge dashboard + My College
 - [ ] Parent Dashboard
-- [ ] 🟡 Evaluator Dashboard — role exists, no screens (no subjective grading yet)
+- [x] Evaluator Dashboard — portal Marking page for `assessments.grade`: question-by-question queue with rubric, marks and comments, blind option, overall feedback (C2a)
 - [ ] 🟡 Question Setter Dashboard — faculty test editor; no separate role view
 - [x] Proctor Dashboard — invigilator role works end to end: live board, timeline, reviews, extra time, end attempt (B5)
 - [ ] Auditor Dashboard
@@ -570,7 +570,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Question Dependencies
 - [x] Section Locking — Campus: one section at a time, no going back; only the current section's questions are sent (B3)
 - [x] Randomized Question Sets — different order per student
-- [ ] 🟡 Multiple Assessment Versions — question pools give students different question sets; no named versions (A/B papers)
+- [x] Multiple Assessment Versions — named paper versions A–D per assignment, dealt in roll order, same questions/order per version; shown in results (C2a); pools add variety within a version
 - [x] Test Scheduling — assignment scheduling in portal
 - [ ] 🟡 Assessment Invitations — assigned to a batch; no invite emails
 - [ ] Access Codes
@@ -586,7 +586,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Assessment Archiving — assignment status `archived`
 - [ ] Assessment Expiry
 - [x] Automated Evaluation — server-side scoring on saved answers; coding answers judged on every test after submit
-- [ ] Manual Evaluation
+- [x] Manual Evaluation — evaluators give marks per written answer and may override a fill-in-the-blank; every change audited (C2a)
 - [ ] Hybrid Evaluation
 - [ ] Re-evaluation Requests
 - [x] Grace Period Management — invigilators add extra time per student during the test (also extends the current timed section); audited
@@ -597,10 +597,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Centralized Question Bank — `testseries_questions`, admin Question Bank page (0 questions live)
 - [x] MCQ Question Builder
 - [x] Multiple-Select Questions — MSQ
-- [ ] 🟡 True/False Questions — as a 2-option MCQ
-- [ ] 🟡 Fill-in-the-Blank Questions — numeric answers (NAT) only
-- [ ] Short-Answer Questions
-- [ ] Long-Answer Questions
+- [x] True/False Questions — `tf` type (scored like single choice, negative marks allowed); portal form, exam, import (C2a)
+- [x] Fill-in-the-Blank Questions — `fib` type: several accepted answers, ignores case/spacing/final full stop unless case-sensitive; evaluator can override (C2a)
+- [x] Short-Answer Questions — `fib` for a word or phrase; `descriptive` with a word limit for short written answers (C2a)
+- [x] Long-Answer Questions — `descriptive` written answers with rubric and optional word limit, marked by an evaluator (C2a)
 - [x] Coding Questions — Campus question type `coding`: starter code per language, sample + hidden tests (`question_test_cases`, staff-only RLS)
 - [ ] SQL Questions
 - [ ] Output Prediction Questions
@@ -614,7 +614,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Image-Based Questions
 - [ ] Diagram-Based Questions
 - [ ] Spreadsheet Questions
-- [ ] 🟡 Question Tagging — topic field
+- [x] Question Tagging — free-text tags per question (GIN index), tag filter in the test editor, Tags column in the import sheet (C2a)
 - [x] Topic Mapping — `topic`
 - [x] Difficulty Classification — easy/medium/hard
 - [ ] Learning Outcome Mapping
@@ -635,7 +635,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Question Exposure Tracking
 - [ ] Question Retirement
 - [x] Question Bank Permissions — `owner_org_id` + `visibility`, RLS
-- [ ] 🟡 Question Bank Sharing — colleges can assign Forge's public tests; no sharing between colleges
+- [x] Question Bank Sharing — a college shares a test with another college by short name; they can assign it or copy it into their bank; owner can withdraw (C2a)
 
 ### 14. AI Assessment Generation
 - [ ] AI Assessment Generator
@@ -936,9 +936,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Doubt Management
 - [ ] Doubt Resolution Queue
 - [ ] Office Hours Scheduling
-- [ ] 🟡 Grading Dashboard — results page with "grading pending" flags and Grade now; auto-graded only
-- [ ] Manual Evaluation
-- [ ] Rubric-Based Evaluation
+- [x] Grading Dashboard — results flag coding grading and written marking pending; Marking page for written answers; Grade now for coding (C2a)
+- [x] Manual Evaluation — evaluators give marks per written answer and may override a fill-in-the-blank; every change audited (C2a)
+- [ ] 🟡 Rubric-Based Evaluation — a text rubric per written question is shown beside each answer; no per-criterion scoring
 - [ ] Bulk Grading
 - [ ] Feedback Templates
 - [ ] Plagiarism Review
@@ -1101,12 +1101,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Draft Saving — answers autosave during an attempt
 - [ ] Assignment Version History
 - [x] Automated Grading
-- [ ] Manual Grading
+- [x] Manual Grading — Marking page: marks and comment per answer, overall feedback, audit in `campus.attempt_adjustments` (C2a)
 - [ ] Peer Grading
-- [ ] Rubric-Based Grading
+- [ ] 🟡 Rubric-Based Grading — text rubric per written question shown to evaluators; no per-criterion scoring
 - [ ] AI-Assisted Grading
 - [ ] Similarity Detection
-- [ ] 🟡 Assignment Feedback — score, question map, tests passed per coding question; no written feedback
+- [x] Assignment Feedback — per-question comments and overall written feedback from evaluators, shown on the student's result (C2a)
 - [ ] Resubmission Workflow
 - [ ] 🟡 Assignment Analytics — results table
 - [ ] Assignment Templates
