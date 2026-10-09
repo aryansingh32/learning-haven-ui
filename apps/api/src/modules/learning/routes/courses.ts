@@ -3,6 +3,7 @@ import { CoursesController } from '../controllers/courses.controller';
 import { authenticateUser, optionalAuth } from '../../../middleware/auth';
 import { ChaptersService } from '../services/chapters.service';
 import { accessService } from '../../entitlements/access.service';
+import { LearningGateService } from '../services/learningGate.service';
 
 const router = Router();
 
@@ -45,7 +46,17 @@ router.get('/:courseId/chapters', authenticateUser, async (req: any, res: any) =
         // Individual chapters are paywalled within getCourseChaptersForUser.
 
         const chapters = await ChaptersService.getCourseChaptersForUser(userId, courseId);
-        return res.json({ chapters });
+        // What this course needs first, and whether it's blocked for this learner.
+        const start = await LearningGateService.checkCourseStart(userId, courseId);
+        const drip = await LearningGateService.dripSettings(userId, courseId);
+        return res.json({
+            chapters,
+            prerequisites: start.prerequisites,
+            prerequisites_blocked: start.blocked,
+            prerequisites_exemption: start.exemption,
+            prerequisites_message: start.message,
+            drip: { interval_days: drip.intervalDays, started_at: drip.startedAt },
+        });
     } catch (error: any) {
         if (error?.message === 'Course not found') return res.status(404).json({ error: 'Course not found' });
         return res.status(500).json({ error: error.message || 'Failed to fetch course chapters' });

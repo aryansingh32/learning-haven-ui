@@ -2,22 +2,24 @@ import { PDFDocument, rgb, StandardFonts, PDFFont, PDFPage } from 'pdf-lib';
 import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
 import { MockTestService } from './mock-test.service';
+import { HighlightsService } from './highlights.service';
+import { CourseAccessService } from './courseAccess.service';
+import { isMissingObject } from './learningGate.service';
 
 export class NotebookService {
     static async getChapterNotes(userId: string, chapterId: string) {
-        const { data, error } = await supabase
-            .from('chapter_notes')
-            .select('content, updated_at')
-            .eq('user_id', userId)
-            .eq('chapter_id', chapterId)
-            .maybeSingle();
-
-        if (error) {
+        try {
+            const { rows } = await pool.query(
+                'SELECT content, updated_at FROM public.chapter_notes WHERE user_id = $1 AND chapter_id = $2',
+                [userId, chapterId]
+            );
+            return { content: rows[0]?.content || '', updated_at: rows[0]?.updated_at || null };
+        } catch (error) {
+            // chapter_notes may not exist yet on an older database: no notes.
+            if (isMissingObject(error)) return { content: '', updated_at: null };
             logger.error('Get chapter notes error:', { userId, chapterId, error });
             throw new Error('Failed to fetch chapter notes');
         }
-
-        return { content: data?.content || '', updated_at: data?.updated_at || null };
     }
 
     static async saveChapterNotes(userId: string, chapterId: string, content: string) {
@@ -30,27 +32,20 @@ export class NotebookService {
             throw new Error('Chapter not found');
         }
 
-        const { data, error } = await supabase
-            .from('chapter_notes')
-            .upsert(
-                {
-                    user_id: userId,
-                    chapter_id: chapterId,
-                    course_id: courseId,
-                    content,
-                    updated_at: new Date().toISOString(),
-                },
-                { onConflict: 'user_id,chapter_id' }
-            )
-            .select('content, updated_at')
-            .single();
-
-        if (error) {
+        try {
+            const { rows } = await pool.query(
+                `INSERT INTO public.chapter_notes (user_id, chapter_id, course_id, content, updated_at)
+                 VALUES ($1, $2, $3, $4, now())
+                 ON CONFLICT (user_id, chapter_id) DO UPDATE SET content = EXCLUDED.content, updated_at = now()
+                 RETURNING content, updated_at`,
+                [userId, chapterId, courseId, content]
+            );
+            return rows[0];
+        } catch (error) {
+            if (isMissingObject(error)) throw new Error('Notes are not available yet');
             logger.error('Save chapter notes error:', { userId, chapterId, error });
             throw new Error('Failed to save chapter notes');
         }
-
-        return data;
     }
 
     /**
@@ -108,7 +103,8 @@ export class NotebookService {
             [courseId]
         );
         const course = courseResult.rows[0];
-        if (!course) {
+        const access = course ? await CourseAccessService.loadCourse(courseId) : null;
+        if (!course || !access || !(await CourseAccessService.canSeeCourse(userId, access))) {
             throw new Error('Course not found');
         }
 
@@ -127,11 +123,17 @@ export class NotebookService {
                   )
                 : Promise.resolve({ rows: [] }),
             chapterIds.length
-                ? pool.query(
-                      'SELECT chapter_id, content, updated_at FROM public.chapter_notes WHERE user_id = $1 AND chapter_id = ANY($2)',
-                      [userId, chapterIds]
-                  )
-                : Promise.resolve({ rows: [] }),
+                ? pool
+                      .query(
+                          'SELECT chapter_id, content, updated_at FROM public.chapter_notes WHERE user_id = $1 AND chapter_id = ANY($2)',
+                          [userId, chapterIds]
+                      )
+                      // chapter_notes may not exist yet on an older database: the notebook still works.
+                      .catch((err) => {
+                          if (isMissingObject(err)) return { rows: [] as any[] };
+                          throw err;
+                      })
+                : Promise.resolve({ rows: [] as any[] }),
             chapterIds.length
                 ? pool.query(
                       `SELECT DISTINCT ON (chapter_id) chapter_id, content
@@ -141,8 +143,9 @@ export class NotebookService {
                       [chapterIds]
                   )
                 : Promise.resolve({ rows: [] }),
-            supabase.from('users').select('full_name').eq('id', userId).maybeSingle(),
+            pool.query('SELECT full_name FROM public.users WHERE id = $1', [userId]),
         ]);
+        const highlightsByChapter = await HighlightsService.listForCourse(userId, chapterIds);
 
         const progressByChapter = new Map<string, any>();
         progressResult.rows.forEach((row: any) => progressByChapter.set(row.chapter_id, row));
@@ -181,16 +184,20 @@ export class NotebookService {
                 quiz_answers: Array.isArray(progress?.quiz_answers) ? progress.quiz_answers : [],
                 task_response: progress?.task_response || null,
                 task_submitted_at: progress?.task_submitted_at || null,
+                highlights: (highlightsByChapter.get(chapter.id) || []).map((h) => ({
+                    id: h.id, text: h.text, color: h.color, created_at: h.created_at,
+                })),
             };
         });
 
         const completedCount = entries.filter((e) => e.status === 'COMPLETED').length;
         const mockTest = await MockTestService.getLatestMockTest(userId, courseId);
-        const hasContent = entries.some((e) => e.notes || e.task_response || e.quiz_score) || Boolean(mockTest);
+        const hasContent =
+            entries.some((e) => e.notes || e.task_response || e.quiz_score || e.highlights.length) || Boolean(mockTest);
 
         return {
             course: { id: course.id, title: course.title, slug: course.slug },
-            learner_name: (userResult.data as any)?.full_name || 'Learner',
+            learner_name: userResult.rows[0]?.full_name || 'Learner',
             generated_at: new Date().toISOString(),
             total_chapters: chapters.length,
             completed_chapters: completedCount,

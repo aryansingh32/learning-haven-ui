@@ -87,6 +87,9 @@ router.put('/chapter/:chapterId/notes', authenticateUser, async (req: any, res: 
         if (err.message === 'Chapter not found') {
             return res.status(404).json({ error: err.message });
         }
+        if (err.message === 'Notes are not available yet') {
+            return res.status(503).json({ error: err.message });
+        }
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 });

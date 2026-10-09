@@ -7,6 +7,7 @@ import { requireAdmin, requireSuperAdmin } from '../../../middleware/requireAdmi
 import { adminLogging } from '../../../middleware/adminLogging';
 import { AdminPermissionsController } from '../controllers/admin.permissions.controller';
 import { ContentImportController } from '../controllers/contentImport.controller';
+import { CourseLearningController } from '../controllers/courseLearning.controller';
 import adminTestSeriesRoutes from '../../testseries/admin/admin-testseries.routes';
 
 const router = Router();
@@ -78,6 +79,9 @@ router.post('/courses', AdminController.createCourse);
 router.post('/courses/bulk-delete', AdminController.bulkDeleteCourses);
 router.put('/courses/reorder', AdminController.reorderCourses);
 router.put('/courses/:id', AdminController.updateCourse);
+router.get('/courses/:id/learning-settings', CourseLearningController.getSettings);
+router.put('/courses/:id/learning-settings', CourseLearningController.saveSettings);
+router.get('/courses/:id/export', CourseLearningController.exportCourse);
 router.delete('/courses/:id', AdminController.deleteCourse);
 router.post('/courses/:id/items', AdminController.addCourseItem);
 router.delete('/courses/:id/items/:itemId', AdminController.removeCourseItem);
