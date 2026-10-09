@@ -12,6 +12,9 @@ jest.mock('../modules/learning/services/submissions.service', () => ({
 jest.mock('../modules/learning/services/status.service', () => ({
   StatusService: { updateStatus: jest.fn(), getStatus: jest.fn() },
 }));
+jest.mock('../modules/learning/services/submissionHistory.service', () => ({
+  SubmissionHistoryService: { record: jest.fn(), list: jest.fn() },
+}));
 jest.mock('../modules/entitlements/entitlements.repository', () => ({
   EntitlementsRepository: { getUserPlanAndEntitlements: jest.fn() },
 }));
@@ -22,6 +25,7 @@ import { ProblemsService } from '../modules/learning/services/problems.service';
 import { SubmissionsService } from '../modules/learning/services/submissions.service';
 import { StatusService } from '../modules/learning/services/status.service';
 import { EntitlementsRepository } from '../modules/entitlements/entitlements.repository';
+import { SubmissionHistoryService } from '../modules/learning/services/submissionHistory.service';
 
 const mocked = <T>(fn: T) => fn as unknown as jest.Mock;
 
@@ -132,5 +136,28 @@ describe('POST /problems/:id/run', () => {
     mocked(ProblemsService.getJudgeData).mockResolvedValue({ ...containsDuplicate, problem: { ...containsDuplicate.problem, is_premium: true } });
     const res = await call(JudgeController.run, { code: CORRECT, language: 'javascript' });
     expect(res.statusCode).toBe(403);
+  });
+});
+
+describe('submission history', () => {
+  jest.setTimeout(30_000);
+
+  it('records every judged submission, wrong ones included', async () => {
+    await call(JudgeController.judge, { code: 'function containsDuplicate() { return true; }', language: 'javascript' });
+    expect(SubmissionHistoryService.record).toHaveBeenCalledWith(expect.objectContaining({
+      userId: 'u1', problemId: 'p1', language: 'javascript', verdict: 'Wrong Answer', passed: 1, total: 2,
+    }));
+  });
+
+  it('does not record sample runs', async () => {
+    await call(JudgeController.run, { code: CORRECT, language: 'javascript' });
+    expect(SubmissionHistoryService.record).not.toHaveBeenCalled();
+  });
+
+  it('lists only the caller\'s own history', async () => {
+    mocked(SubmissionHistoryService.list).mockResolvedValue([{ id: 's1', verdict: 'Accepted' }]);
+    const res = await call(JudgeController.history, {});
+    expect(SubmissionHistoryService.list).toHaveBeenCalledWith('u1', 'p1');
+    expect(res.body.submissions).toHaveLength(1);
   });
 });

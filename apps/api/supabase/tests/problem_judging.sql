@@ -52,6 +52,26 @@ set local role anon;
 select pg_temp.check_eq((select count(*) from public.problem_test_cases where not is_sample), 0, 'anonymous visitors cannot read hidden tests');
 reset role;
 
+-- Submission history: learners read only their own; only the API writes.
+insert into auth.users (id, email, email_confirmed_at) values ('c1000000-0000-0000-0000-000000000002', 'other@p.test', now());
+insert into public.users (id, email, full_name) values ('c1000000-0000-0000-0000-000000000002', 'other@p.test', 'other');
+insert into public.problem_submissions (user_id, problem_id, language, code, verdict, passed, total) values
+  ('c1000000-0000-0000-0000-000000000001', 'ccccc000-0000-0000-0000-000000000001', 'python', 'x', 'Wrong Answer', 1, 2),
+  ('c1000000-0000-0000-0000-000000000002', 'ccccc000-0000-0000-0000-000000000001', 'python', 'y', 'Accepted', 2, 2);
+select set_config('request.jwt.claims', json_build_object('sub', 'c1000000-0000-0000-0000-000000000001', 'role', 'authenticated')::text, true);
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from public.problem_submissions), 1, 'a learner reads only their own submission history');
+select pg_temp.check_denied($$insert into public.problem_submissions (user_id, problem_id, language, code, verdict, passed, total)
+  values ('c1000000-0000-0000-0000-000000000001', 'ccccc000-0000-0000-0000-000000000001', 'python', 'z', 'Accepted', 2, 2)$$,
+  'a learner cannot write an "Accepted" into their history');
+select pg_temp.check_denied($$insert into public.submissions (user_id, problem_id, language, solved)
+  values ('c1000000-0000-0000-0000-000000000001', 'ccccc000-0000-0000-0000-000000000001', 'python', true)$$,
+  'a learner cannot mark a problem solved by inserting a submission');
+reset role;
+select pg_temp.check_denied($$insert into public.problem_submissions (user_id, problem_id, language, code, verdict, passed, total)
+  values ('c1000000-0000-0000-0000-000000000001', 'ccccc000-0000-0000-0000-000000000001', 'python', 'z', 'Accepted', 3, 2)$$,
+  'passed can never exceed total');
+
 -- Judge settings are validated.
 select pg_temp.check_denied($$update public.problems set judge_config = '{"compare": "fuzzy"}' where slug = 'judge-check'$$,
   'an unknown compare mode is refused');

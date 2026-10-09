@@ -60,6 +60,13 @@ router.post('/:id/judge', authenticateUser, submissionRateLimit, JudgeController
 router.post('/:id/run', authenticateUser, submissionRateLimit, JudgeController.run);
 
 /**
+ * @route   GET /api/problems/:id/submissions
+ * @desc    The signed-in learner's judged submissions for this problem
+ * @access  Private
+ */
+router.get('/:id/submissions', authenticateUser, JudgeController.history);
+
+/**
  * @route   POST /api/problems/:id/status
  * @desc    Mark a problem tried / for revision (solved only for problems without tests)
  * @access  Private

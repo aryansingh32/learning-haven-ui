@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 366 done, 261 partly, 1,271 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 370 done, 263 partly, 1,265 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -19,7 +19,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 |---|---|---|---|
 | **A1 · In-app practice** ✅ *built; migration not yet applied to the live DB* | `/problems/:slug` workspace: statement, examples, constraints, companies, complexity, progressive hints, solution after solving; Run on sample tests in the browser; **Submit judged on the server** against sample + hidden tests; solve → XP/streak; Practice opens it | `modules/CodeExecutor` (Monaco, 5 runtimes), problems API, XP service, Judge0 client | Browser editor, Monaco, multi-language, run/submit, test-case results, hidden/sample tests, progressive hints, editorials, company tags, solved tracking, compile/runtime errors, accepted/wrong-answer verdicts |
 | **A2 · Judge0 for every language** ✅ *C++ built; C not yet* | One judge service (C, C++, Java, JS, Python); language map; TLE/MLE/WA/CE verdicts; per-test partial score | A1 judge | Multi-language judge, verdict detection, partial scoring, runtime config |
-| A3 · Submissions & editor quality | Submission history tab, code autosave per problem/language, reset, keyboard shortcuts, font size, light/dark editor | `submissions` table | Execution history, autosave, recovery, shortcuts, theme/font |
+| **A3 · Submissions & editor quality** ✅ *built; migration not yet applied* | Submission history tab, code autosave per problem/language, reset, keyboard shortcuts, font size, light/dark editor | `submissions` table | Execution history, autosave, recovery, shortcuts, theme/font |
 | A4 · Content | 75 core problems (Blind-75 style) with tests across the 22 taught DSA topics; company tags; POTD | admin Problems, content import | Problem library, curated sheets, POTD, company-wise |
 
 ## Track B — Assessments for colleges (modules 12, 13, 33)
@@ -194,3 +194,19 @@ tests; port when it gets content.
 
 **Verified:** SQL checks (10 new, mutation-tested); Campus API 41 (6 new); browser with a real invigilator account:
 board, timeline, review, +15 min (time left 44:57 → 59:57), end attempt, student redirected with the notice.
+
+---
+
+## Slice A3 — submissions & editor quality — built
+
+- **Data** (`20261015000001_practice_submission_history.sql`): `public.problem_submissions` — every judged practice
+  submission (code, verdict, passed/total, time); learners read their own, only the API writes. **Security fix:**
+  dropped "Users can insert own submissions" on `public.submissions` (a learner could mark a problem solved
+  through the public API key without being judged; nothing in the apps used it).
+- **API:** the judge records every submission (best effort); `GET /api/problems/:id/submissions`.
+- **UI:** Submissions tab (newest first, expand to see and copy code); editor settings (font size, word wrap,
+  Format code for JavaScript, shortcut list), Ctrl/⌘+Enter run, Ctrl/⌘+Shift+Enter submit, full-screen editor
+  (disabled inside proctored exams, where leaving full screen counts as a violation). Prefs persist per browser.
+
+**Verified:** SQL checks (4 new, mutation-tested); Forge API 92 (3 new); browser: history after a wrong and a right
+submit, settings applied and remembered, Ctrl+Enter, Format, full screen in and out.

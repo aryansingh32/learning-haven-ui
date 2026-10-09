@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Lightbulb, BookOpen, FileText, Lock, CheckCircle2, Building2, Gauge, Bot, Loader2, Eye } from 'lucide-react';
+import { Lightbulb, BookOpen, FileText, Lock, CheckCircle2, Building2, Gauge, Bot, Loader2, Eye, XCircle, Copy, History } from 'lucide-react';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import type { QuestionData } from '@/modules/CodeExecutor';
-import { fetchHints, fetchSolution, type ProblemDetail } from './practice.service';
+import { fetchHints, fetchSolution, fetchSubmissions, type ProblemDetail, type SubmissionRecord } from './practice.service';
 
-type Tab = 'description' | 'hints' | 'solution';
+type Tab = 'description' | 'hints' | 'solution' | 'submissions';
 
 const DIFF_STYLE: Record<string, string> = {
   Easy: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -175,12 +176,63 @@ function Solution({ problem }: { problem: ProblemDetail }) {
   );
 }
 
+const LANG_LABEL: Record<string, string> = { javascript: 'JavaScript', python: 'Python', java: 'Java', cpp: 'C++', c: 'C' };
+
+function when(iso: string) {
+  const d = new Date(iso);
+  const mins = Math.round((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins} min ago`;
+  if (mins < 60 * 24) return `${Math.round(mins / 60)} h ago`;
+  return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+}
+
+function Submissions({ problem }: { problem: ProblemDetail }) {
+  const query = useQuery({ queryKey: ['problem-submissions', problem.id], queryFn: () => fetchSubmissions(problem.id), retry: false });
+  const [open, setOpen] = useState<string | null>(null);
+  if (query.isLoading) return <div className="p-6 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-500" /></div>;
+  if (query.isError) return <p className="p-6 text-sm text-zinc-500">Couldn't load your submissions.</p>;
+  const list = query.data?.submissions ?? [];
+  if (list.length === 0) {
+    return <p className="p-6 text-center text-sm text-zinc-500">No submissions yet. Press <span className="text-zinc-300 font-semibold">Submit</span> to have your code judged on every test.</p>;
+  }
+  return (
+    <ul className="p-3 space-y-2">
+      {list.map((s: SubmissionRecord) => {
+        const ok = s.verdict === 'Accepted';
+        const expanded = open === s.id;
+        return (
+          <li key={s.id} className="rounded-lg border border-white/5 bg-zinc-900/40">
+            <button type="button" onClick={() => setOpen(expanded ? null : s.id)} aria-expanded={expanded}
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-left">
+              {ok ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+              <span className={cn('text-sm font-semibold', ok ? 'text-emerald-400' : 'text-rose-300')}>{s.verdict}</span>
+              <span className="text-xs text-zinc-500 tabular-nums">{s.passed}/{s.total} tests</span>
+              <span className="ml-auto text-xs text-zinc-500">{LANG_LABEL[s.language] ?? s.language} · {when(s.created_at)}</span>
+            </button>
+            {expanded && (
+              <div className="px-3 pb-3 space-y-2">
+                <pre className="text-xs font-mono text-zinc-200 bg-black/40 border border-white/5 rounded-lg p-3 overflow-x-auto max-h-72">{s.code}</pre>
+                <Button size="sm" variant="secondary" className="h-7 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs"
+                  onClick={() => { void navigator.clipboard?.writeText(s.code).then(() => toast.success('Code copied')); }}>
+                  <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy code
+                </Button>
+              </div>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function ProblemDetailPanel({ problem, question }: { problem: ProblemDetail; question: QuestionData }) {
   const [tab, setTab] = useState<Tab>('description');
   const tabs: Array<{ key: Tab; label: string; icon: React.ElementType }> = [
     { key: 'description', label: 'Description', icon: FileText },
     { key: 'hints', label: `Hints${problem.hint_count ? ` (${problem.hint_count})` : ''}`, icon: Lightbulb },
     { key: 'solution', label: 'Solution', icon: BookOpen },
+    ...(problem.judged ? [{ key: 'submissions' as Tab, label: 'Submissions', icon: History }] : []),
   ];
   return (
     <div className="h-full flex flex-col bg-zinc-950">
@@ -204,6 +256,7 @@ export function ProblemDetailPanel({ problem, question }: { problem: ProblemDeta
         {tab === 'description' && <Description problem={problem} question={question} />}
         {tab === 'hints' && <Hints problem={problem} />}
         {tab === 'solution' && <Solution problem={problem} />}
+        {tab === 'submissions' && <Submissions problem={problem} />}
       </ScrollArea>
     </div>
   );

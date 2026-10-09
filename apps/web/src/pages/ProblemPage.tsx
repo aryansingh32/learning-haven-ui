@@ -34,6 +34,7 @@ export default function ProblemPage() {
     void queryClient.invalidateQueries({ queryKey: ['problem', slug] });
     void queryClient.invalidateQueries({ queryKey: ['problems'] });
     void queryClient.invalidateQueries({ queryKey: ['user-profile-stats'] });
+    void queryClient.invalidateQueries({ queryKey: ['problem-submissions'] });
   }, [queryClient, slug]);
 
   const submit = useCallback(async (code: string, language: SupportedLanguage) => {

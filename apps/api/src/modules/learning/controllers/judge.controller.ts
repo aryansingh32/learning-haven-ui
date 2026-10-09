@@ -10,6 +10,7 @@ import {
 import { ProblemsService } from '../services/problems.service';
 import { StatusService } from '../services/status.service';
 import { SubmissionsService } from '../services/submissions.service';
+import { SubmissionHistoryService } from '../services/submissionHistory.service';
 
 const judgeBody = z.object({
     code: z.string().min(1, 'Write some code first.').max(50_000, 'Code exceeds the 50 KB limit.'),
@@ -52,6 +53,11 @@ export class JudgeController {
                 compare,
                 hint: functionHint(language, problem.starter_code?.[language]),
                 tests: tests.map((t) => ({ input: t.input, expected: t.expected_output, isSample: t.is_sample })),
+            });
+
+            await SubmissionHistoryService.record({
+                userId, problemId, language, code,
+                verdict: result.verdict, passed: result.passed, total: result.total, timeMs: result.timeMs,
             });
 
             let xpGained = 0;
@@ -111,6 +117,20 @@ export class JudgeController {
             if (err instanceof JudgeUnavailableError) return res.status(503).json({ error: err.message, code: 'JUDGE_UNAVAILABLE' });
             logger.error('Run request failed', { problemId, error: err instanceof Error ? err.message : String(err) });
             return res.status(500).json({ error: 'Could not run your code. Please try again.' });
+        }
+    }
+
+    /**
+     * GET /api/problems/:id/submissions
+     * The learner's own judged submissions for this problem, newest first.
+     */
+    static async history(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        try {
+            return res.json({ submissions: await SubmissionHistoryService.list(userId, req.params.id as string) });
+        } catch (err) {
+            logger.error('Submission history failed', { problemId: req.params.id, error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not load your submissions.' });
         }
     }
 

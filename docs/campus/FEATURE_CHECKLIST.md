@@ -31,8 +31,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
-| 9 | Online Coding IDE | 25 | 9 | 24 | 58 |
-| 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
+| 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
+| 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 32 | 7 | 18 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **366** (19%) | **261** (14%) | **1271** (67%) | **1898** |
+| | **All modules** | **370** (19%) | **263** (14%) | **1265** (67%) | **1898** |
 
 ---
 
@@ -372,7 +372,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Multi-Language Editor — JavaScript, Python, Java, C++ on judged problems (C run-only on the dev page)
 - [x] Syntax Highlighting — Monaco
 - [x] Intelligent Autocomplete — Monaco
-- [ ] Code Formatting
+- [ ] 🟡 Code Formatting — Format code for JavaScript (Monaco); none for Python/Java/C++
 - [x] Code Folding — Monaco
 - [ ] Multi-Tab Editor
 - [ ] Multiple File Support
@@ -383,22 +383,22 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Custom Test Input
 - [x] Run Code — runs the examples (in the browser; C++ and Campus tests on the server, samples only)
 - [x] Submit Code — judged on the server against every test (`POST /problems/:id/judge`)
-- [ ] Code Execution History
+- [ ] 🟡 Code Execution History — every judged submission is kept (A3); sample runs aren't
 - [x] Execution Time Display — shown for Run and Submit
 - [ ] 🟡 Memory Usage Display — in result types; dev page only
 - [x] Compiler Error Display — Compilation Error verdict with the message
 - [x] Runtime Error Display — per-test error text
 - [x] Test Case Results — per-example results; hidden tests as pass/fail
 - [ ] Code Diff Viewer
-- [ ] Code Version History
+- [ ] 🟡 Code Version History — each judged submission's code is kept and viewable; no diff between versions
 - [x] Autosave — code saved per problem and language
 - [x] Code Recovery — saved code restored after a refresh (verified)
-- [ ] Keyboard Shortcuts
-- [ ] 🟡 Theme Customization — light/dark editor toggle; no other themes
-- [ ] Font Customization
+- [x] Keyboard Shortcuts — Ctrl/⌘+Enter run, Ctrl/⌘+Shift+Enter submit, plus Monaco's; listed in editor settings
+- [ ] 🟡 Theme Customization — light/dark editor toggle, font size, word wrap; no other themes
+- [x] Font Customization — editor font size 11–24, remembered per browser
 - [ ] Editor Accessibility
 - [x] Resizable Panels — practice workspace
-- [ ] Full-Screen Editor
+- [x] Full-Screen Editor — full-screen toggle in practice (off in proctored exams)
 - [x] Split-Screen Editor — problem / editor / console
 - [ ] 🟡 Mobile Coding Support — Campus coding questions stack statement and editor on phones; practice workspace is desktop-first
 - [ ] AI Code Completion
@@ -451,7 +451,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Solved Problem Tracking — `user_problem_status`
 - [x] Unsolved Problem Tracking — status per problem
 - [x] Reattempt Tracking — "marked for revision"
-- [ ] 🟡 Solution Submission History — accepted code saved in `submissions`; no history screen
+- [x] Solution Submission History — Submissions tab: every judged submission with verdict, tests passed, language, time and code (`problem_submissions`)
 - [ ] Multiple Language Solutions
 - [ ] 🟡 Editorials — `solution_explanation` column; 0 problems have one; not shown
 - [ ] 🟡 Official Solutions — `solution_code` column; not shown

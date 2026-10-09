@@ -43,6 +43,17 @@ export const fetchProblem = (slug: string): Promise<ProblemDetail> => api.get(`/
 export const fetchHints = (id: string): Promise<{ hints: string[] }> => api.get(`/problems/${id}/hints`);
 export const fetchSolution = (id: string): Promise<{ solution_code: Record<string, string> | null; solution_explanation: string | null }> =>
   api.get(`/problems/${id}/solution`);
+export interface SubmissionRecord {
+  id: string;
+  language: SupportedLanguage;
+  code: string;
+  verdict: ExecutionResult['status'];
+  passed: number;
+  total: number;
+  time_ms: number | null;
+  created_at: string;
+}
+export const fetchSubmissions = (id: string): Promise<{ submissions: SubmissionRecord[] }> => api.get(`/problems/${id}/submissions`);
 export const setProblemStatus = (id: string, status: 'tried' | 'revision' | 'solved') => api.post(`/problems/${id}/status`, { status });
 
 const DIFFICULTY: Record<ProblemDetail['difficulty'], QuestionData['difficulty']> = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };

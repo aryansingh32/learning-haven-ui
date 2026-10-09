@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Editor, { OnMount, loader } from '@monaco-editor/react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,9 @@ loader.config({
         vs: 'https://unpkg.com/monaco-editor@0.44.0/min/vs'
     }
 });
-import { Moon, Sun, Play, Send, RotateCcw, Settings } from "lucide-react";
+import { Moon, Sun, Play, Send, RotateCcw, Settings, Maximize2, Minimize2, Minus, Plus, Wand2 } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
 import { SupportedLanguage } from '../types';
 import { LANGUAGE_OPTIONS, DEFAULT_CODE_TEMPLATES } from '../constants';
 import { cn } from "@/lib/utils";
@@ -31,7 +33,29 @@ interface EditorPanelProps {
     variant?: 'leetcode' | 'hackerrank';
     /** Limit the language picker (defaults to every supported language). */
     languages?: SupportedLanguage[];
+    /** Offer a full-screen toggle (off in proctored exams, where leaving full screen counts). */
+    allowFullscreen?: boolean;
 }
+
+interface EditorPrefs { fontSize: number; wordWrap: boolean }
+const PREFS_KEY = 'forge-editor-prefs';
+const DEFAULT_PREFS: EditorPrefs = { fontSize: 15, wordWrap: false };
+
+/** Font size and word wrap, remembered in this browser. */
+function useEditorPrefs(): [EditorPrefs, (p: Partial<EditorPrefs>) => void] {
+    const [prefs, setPrefs] = useState<EditorPrefs>(() => {
+        try { return { ...DEFAULT_PREFS, ...JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') }; } catch { return DEFAULT_PREFS; }
+    });
+    const update = (p: Partial<EditorPrefs>) => setPrefs((prev) => {
+        const next = { ...prev, ...p, fontSize: Math.min(24, Math.max(11, p.fontSize ?? prev.fontSize)) };
+        try { localStorage.setItem(PREFS_KEY, JSON.stringify(next)); } catch { /* storage unavailable */ }
+        return next;
+    });
+    return [prefs, update];
+}
+
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
+const MOD = isMac ? '⌘' : 'Ctrl';
 
 const MONACO_LANG: Record<SupportedLanguage, string> = {
     javascript: 'javascript',
@@ -57,14 +81,38 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     allowLanguageSwitch = true,
     variant = 'leetcode',
     languages,
+    allowFullscreen = true,
 }) => {
+    const [prefs, setPrefs] = useEditorPrefs();
+    const rootRef = useRef<HTMLDivElement>(null);
+    const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
+    const [fullscreen, setFullscreen] = useState(false);
+    // Shortcuts are registered once at mount; refs keep them calling the latest handlers.
+    const runRef = useRef(onRun);
+    const submitRef = useRef(onSubmit);
+    runRef.current = showRun && !isExecuting ? onRun : () => undefined;
+    submitRef.current = showSubmit && !isExecuting ? onSubmit : () => undefined;
+
+    useEffect(() => {
+        const onChange = () => setFullscreen(document.fullscreenElement === rootRef.current);
+        document.addEventListener('fullscreenchange', onChange);
+        return () => document.removeEventListener('fullscreenchange', onChange);
+    }, []);
+    const toggleFullscreen = () => {
+        if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+        else void rootRef.current?.requestFullscreen?.().catch(() => undefined);
+    };
+    const canFormat = language === 'javascript';
+    const format = () => { void editorRef.current?.getAction('editor.action.formatDocument')?.run(); };
     const toolbarClass = variant === 'hackerrank'
         ? "bg-emerald-950/40 border-emerald-500/10"
         : "bg-zinc-900/40 border-border/40";
     const editorBgClass = variant === 'hackerrank' ? "bg-zinc-950" : "bg-zinc-950";
 
     const handleEditorDidMount: OnMount = (editor, monaco) => {
-        // Custom monaco theme setup could go here
+        editorRef.current = editor;
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runRef.current());
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => submitRef.current());
         monaco.editor.defineTheme('learning-haven-dark', {
             base: 'vs-dark',
             inherit: true,
@@ -76,7 +124,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     };
 
     return (
-        <div className={`flex flex-col h-full ${editorBgClass}`}>
+        <div ref={rootRef} className={`flex flex-col h-full ${editorBgClass}`}>
             {/* Header / Toolbar */}
             <div className={`flex items-center justify-between px-3 py-1.5 border-b backdrop-blur-md ${toolbarClass}`}>
                 <div className="flex items-center gap-2">
@@ -114,13 +162,47 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                         {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
                     </Button>
 
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/50 rounded-md"
-                    >
-                        <Settings className="h-3.5 w-3.5" />
-                    </Button>
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="ghost" size="icon" aria-label="Editor settings"
+                                className="h-7 w-7 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/50 rounded-md">
+                                <Settings className="h-3.5 w-3.5" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent align="end" className="w-64 bg-zinc-900 border-zinc-800 text-zinc-200 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-semibold">Font size</span>
+                                <div className="flex items-center gap-1">
+                                    <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Smaller text" onClick={() => setPrefs({ fontSize: prefs.fontSize - 1 })}><Minus className="h-3.5 w-3.5" /></Button>
+                                    <span className="w-8 text-center text-xs tabular-nums" aria-live="polite">{prefs.fontSize}</span>
+                                    <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Bigger text" onClick={() => setPrefs({ fontSize: prefs.fontSize + 1 })}><Plus className="h-3.5 w-3.5" /></Button>
+                                </div>
+                            </div>
+                            <label className="flex items-center justify-between text-xs font-semibold">
+                                Word wrap
+                                <Switch checked={prefs.wordWrap} onCheckedChange={(v) => setPrefs({ wordWrap: v })} aria-label="Word wrap" />
+                            </label>
+                            {canFormat && (
+                                <Button variant="secondary" size="sm" className="w-full h-8 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs" onClick={format}>
+                                    <Wand2 className="h-3.5 w-3.5 mr-1.5" /> Format code
+                                </Button>
+                            )}
+                            <div className="space-y-1 border-t border-zinc-800 pt-3 text-[11px] text-zinc-400">
+                                <p className="font-semibold text-zinc-300">Shortcuts</p>
+                                {showRun && <p className="flex justify-between"><span>Run</span><kbd className="font-mono">{MOD} + Enter</kbd></p>}
+                                {showSubmit && <p className="flex justify-between"><span>Submit</span><kbd className="font-mono">{MOD} + Shift + Enter</kbd></p>}
+                                <p className="flex justify-between"><span>Find</span><kbd className="font-mono">{MOD} + F</kbd></p>
+                                <p className="flex justify-between"><span>Comment line</span><kbd className="font-mono">{MOD} + /</kbd></p>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+
+                    {allowFullscreen && (
+                        <Button variant="ghost" size="icon" onClick={toggleFullscreen} aria-label={fullscreen ? 'Exit full screen' : 'Full screen editor'}
+                            className="h-7 w-7 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/50 rounded-md">
+                            {fullscreen ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
+                        </Button>
+                    )}
 
                     <div className="w-px h-4 bg-zinc-800 mx-1" />
 
@@ -163,8 +245,9 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                     loading={<div className="h-full w-full bg-zinc-950 animate-pulse" />}
                     options={{
                         minimap: { enabled: false },
-                        fontSize: 15,
-                        lineHeight: 24,
+                        fontSize: prefs.fontSize,
+                        lineHeight: Math.round(prefs.fontSize * 1.6),
+                        wordWrap: prefs.wordWrap ? 'on' : 'off',
                         padding: { top: 20 },
                         scrollBeyondLastLine: false,
                         automaticLayout: true,

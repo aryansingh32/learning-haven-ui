@@ -101,6 +101,7 @@ export function CodingQuestion({
             onReset={onReset}
             isExecuting={running}
             showSubmit={false}
+            allowFullscreen={false}
             allowLanguageSwitch={(q.languages?.length ?? 0) > 1}
           />
         </div>

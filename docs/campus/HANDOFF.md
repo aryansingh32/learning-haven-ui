@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (366 done, 261 partly, 1,271 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (370 done, 263 partly, 1,265 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -27,7 +27,8 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Judge: hidden expected outputs never reach learner programs (Java leak fixed) | ✅ |
 | Timed, locked sections in Campus tests (slice B3) | ✅ built, browser-verified |
 | Live invigilation board, timeline, reviews, extra time, end attempt (slice B5) | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Practice submission history + editor settings/shortcuts/full screen (slice A3); `submissions` insert hole closed | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review), then B2–B5 (§8.3) |
@@ -190,7 +191,7 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 pnpm install                         # builds packages/assessment-core via prepare
 pnpm --filter @repo/assessment-core test   # 59 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
-pnpm --filter @repo/api test               # 89 jest tests
+pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 3 SQL suites
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 41 integration tests
@@ -247,6 +248,9 @@ Then `20261013000001_campus_section_timing`: `test_attempts` has `current_sectio
 
 Then `20261014000001_campus_invigilation`: tables `campus.attempt_adjustments`, `campus.incident_reviews` exist with
 RLS on; `test_attempts.last_seen_at` exists; run the security advisor.
+
+Then `20261015000001_practice_submission_history`: `public.problem_submissions` exists with RLS on and one select
+policy; `select count(*) from pg_policies where tablename = 'submissions' and cmd = 'INSERT';` → 0.
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
