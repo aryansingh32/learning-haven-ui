@@ -1,6 +1,7 @@
 # Forge / Forge Campus — session handoff
 
-Last updated: 2026-10-09. Work branch: **`feat/campus-phase-1`** (contains everything below).
+Last updated: 2026-10-09. Work branch: **`feat/campus-phase-1`** (contains everything below); the student UI
+(Slice E) is on **`ccr-f94ce2b7-q10f2w`**, stacked on it. Full feature audit: `docs/campus/PLATFORM_AUDIT.md`.
 Plan doc (shared, with architecture + roadmap diagrams): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
 
 ---
@@ -112,8 +113,10 @@ VITE_STUDENT_APP_URL; dev uses the Vite proxy). Redis must be running for the Fo
 
 ## 8. Next — what still needs doing
 
-### 8.1 Slice E (finishes Phase 1): student side in `apps/web`
-Students can't take Campus tests in the browser yet; the API already supports it.
+### 8.1 Slice E (finishes Phase 1): student side in `apps/web` — ✅ DONE on `ccr-f94ce2b7-q10f2w`
+Built and verified end to end (see `docs/campus/PLATFORM_AUDIT.md` §7): `/college`, `/college/tests/:id`,
+`/college/attempts/:id`, sidebar entry + dashboard card for students only. Next priorities: audit §5.
+The original brief, kept for reference:
 - "My college" page: `GET /campus/v1/my/assignments` (state upcoming/open/closed, attempts used, results when released). Call `GET /campus/v1/me` once after sign-in (claims roster entries).
 - Exam screen (full-screen route, no app chrome, like `/test-series/tests/:id`), reusing the CBT UI ideas from `apps/web/src/pages/testseries/CBTTestPage.tsx`:
   - `POST /my/assignments/:id/start` → questions (no answers), `expiresAt`, `serverNow`, `proctoring` policy, `violationCount`
