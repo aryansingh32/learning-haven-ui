@@ -160,6 +160,11 @@ export class ProblemsService {
                 status: data.user_problem_status?.[0]?.status || null,
                 solved: data.user_problem_status?.[0]?.status === 'solved',
                 notes: data.user_notes?.[0] || null,
+                // In-app practice: only sample tests leave the server.
+                starter_code: data.starter_code || {},
+                compare: data.judge_config?.compare || 'exact',
+                hint_count: Array.isArray(data.hints) ? data.hints.length : 0,
+                ...(await ProblemsService.getSampleTests(data.id)),
             };
 
             // Cache for 10 minutes
@@ -170,6 +175,53 @@ export class ProblemsService {
             logger.error('Error fetching problem:', { slug, error });
             throw error;
         }
+    }
+
+    /** Sample tests for the problem page, and whether the problem can be judged at all. */
+    static async getSampleTests(problem_id: string) {
+        const { data, error } = await supabase
+            .from('problem_test_cases')
+            .select('input, expected_output, is_sample, explanation, sort_order')
+            .eq('problem_id', problem_id)
+            .order('sort_order');
+        if (error) {
+            // e.g. deployed before the problem_judging migration: the page still works, just without the judge.
+            logger.warn('Sample tests unavailable', { problem_id, error: error.message });
+            return { judged: false, test_count: 0, sample_tests: [] };
+        }
+        const rows = data ?? [];
+        return {
+            judged: rows.length > 0,
+            test_count: rows.length,
+            sample_tests: rows.filter((r) => r.is_sample).map((r) => ({
+                input: r.input, output: r.expected_output, explanation: r.explanation,
+            })),
+        };
+    }
+
+    /** Everything the judge needs, hidden tests included. Server use only. */
+    static async getJudgeData(problem_id: string) {
+        const { data: problem, error } = await supabase
+            .from('problems')
+            .select('id, slug, is_premium, starter_code, judge_config')
+            .eq('id', problem_id)
+            .is('deleted_at', null)
+            .maybeSingle();
+        if (error) throw error;
+        if (!problem) return null;
+        const { data: tests, error: testsError } = await supabase
+            .from('problem_test_cases')
+            .select('input, expected_output, is_sample')
+            .eq('problem_id', problem_id)
+            .order('sort_order');
+        if (testsError) throw testsError;
+        return { problem, tests: tests ?? [] };
+    }
+
+    /** Drop the cached problem pages for this user so status/solve shows immediately. */
+    static async invalidateProblemCache(slug: string, user_id: string) {
+        await CacheService.del(`problem:${slug}:${user_id}`);
+        await CacheService.delPattern(`problems:*`);
     }
 
     /**

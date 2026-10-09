@@ -1,0 +1,103 @@
+import { Request, Response } from 'express';
+import { z } from 'zod';
+import { CompareMode, isCompareMode } from '@repo/assessment-core';
+import { AuthRequest } from '../../../middleware/auth';
+import logger from '../../../config/logger';
+import { EntitlementsRepository } from '../../entitlements/entitlements.repository';
+import {
+    functionHint, JUDGED_LANGUAGES, judgeSolution, JudgeUnavailableError,
+} from '../../execution/services/problemJudge.service';
+import { ProblemsService } from '../services/problems.service';
+import { StatusService } from '../services/status.service';
+import { SubmissionsService } from '../services/submissions.service';
+
+const judgeBody = z.object({
+    code: z.string().min(1, 'Write some code first.').max(50_000, 'Code exceeds the 50 KB limit.'),
+    language: z.enum(JUDGED_LANGUAGES),
+});
+
+const statusBody = z.object({ status: z.enum(['solved', 'tried', 'revision']) });
+
+/** Premium problems need any paid plan (the plan lives in entitlements, not on req.user). */
+export async function hasPaidPlan(userId: string): Promise<boolean> {
+    const info = await EntitlementsRepository.getUserPlanAndEntitlements(userId);
+    return Boolean(info.planSlug) && info.planSlug !== 'free';
+}
+
+export class JudgeController {
+    /**
+     * POST /api/problems/:id/judge
+     * Judge a solution on every test (hidden included). Solve + XP only when all pass.
+     */
+    static async judge(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        const problemId = req.params.id as string;
+        const parsed = judgeBody.safeParse(req.body);
+        if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0]?.message || 'Invalid request' });
+        const { code, language } = parsed.data;
+
+        try {
+            const data = await ProblemsService.getJudgeData(problemId);
+            if (!data) return res.status(404).json({ error: 'Problem not found' });
+            const { problem, tests } = data;
+            if (problem.is_premium && !(await hasPaidPlan(userId))) {
+                return res.status(403).json({ error: 'This problem is part of Forge Pro.', code: 'PREMIUM_REQUIRED' });
+            }
+            if (tests.length === 0) return res.status(409).json({ error: 'This problem has no tests yet, so it can\'t be judged.' });
+
+            const compare: CompareMode = isCompareMode(problem.judge_config?.compare) ? problem.judge_config.compare : 'exact';
+            const result = await judgeSolution({
+                code,
+                language,
+                compare,
+                hint: functionHint(language, problem.starter_code?.[language]),
+                tests: tests.map((t) => ({ input: t.input, expected: t.expected_output, isSample: t.is_sample })),
+            });
+
+            let xpGained = 0;
+            let firstSolve = false;
+            if (result.verdict === 'Accepted') {
+                const submission = await SubmissionsService.submitSolution(userId, problemId, code, language);
+                xpGained = submission.xp_gained;
+                firstSolve = submission.is_first_solve;
+                await StatusService.updateStatus(userId, problemId, 'solved');
+            } else {
+                // First failed attempt marks it "tried"; never downgrade solved / revision.
+                const current = await StatusService.getStatus(userId, problemId).catch(() => null);
+                if (!current) await StatusService.updateStatus(userId, problemId, 'tried');
+            }
+            await ProblemsService.invalidateProblemCache(problem.slug, userId);
+
+            return res.json({ ...result, xpGained, firstSolve });
+        } catch (err) {
+            if (err instanceof JudgeUnavailableError) return res.status(503).json({ error: err.message, code: 'JUDGE_UNAVAILABLE' });
+            logger.error('Judge request failed', { problemId, error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not judge your solution. Please try again.' });
+        }
+    }
+
+    /**
+     * POST /api/problems/:id/status
+     * Track tried / revision. "Solved" is only self-reported for problems the judge can't check.
+     */
+    static async setStatus(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        const problemId = req.params.id as string;
+        const parsed = statusBody.safeParse(req.body);
+        if (!parsed.success) return res.status(400).json({ error: 'Status must be solved, tried or revision.' });
+
+        try {
+            const data = await ProblemsService.getJudgeData(problemId);
+            if (!data) return res.status(404).json({ error: 'Problem not found' });
+            if (parsed.data.status === 'solved' && data.tests.length > 0) {
+                return res.status(409).json({ error: 'Submit your code to mark this problem solved.', code: 'JUDGE_REQUIRED' });
+            }
+            const status = await StatusService.updateStatus(userId, problemId, parsed.data.status);
+            await ProblemsService.invalidateProblemCache(data.problem.slug, userId);
+            return res.json(status);
+        } catch (err) {
+            logger.error('Set problem status failed', { problemId, error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not update the status.' });
+        }
+    }
+}

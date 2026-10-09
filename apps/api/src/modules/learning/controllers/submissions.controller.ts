@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthRequest } from '../../../middleware/auth';
 import { SubmissionsService } from '../services/submissions.service';
+import { ProblemsService } from '../services/problems.service';
 import logger from '../../../config/logger';
 
 export class SubmissionsController {
@@ -12,6 +13,12 @@ export class SubmissionsController {
             const user_id = (req as AuthRequest).user!.id;
             const problem_id = req.params.id as string;
             const { code, language, time_spent_seconds } = req.body;
+
+            // Problems with tests are solved through the judge, not on the browser's word.
+            const judgeData = await ProblemsService.getJudgeData(problem_id);
+            if (judgeData && judgeData.tests.length > 0) {
+                return res.status(409).json({ error: 'Submit your code to be judged.', code: 'JUDGE_REQUIRED' });
+            }
 
             const result = await SubmissionsService.submitSolution(
                 user_id,

@@ -80,12 +80,12 @@ export function prepareForJudge0(source: string): string {
     return `${demoted}\n\nclass Main {\n    public static void main(String[] args) throws Exception {\n        ${owner}.main(args);\n    }\n}\n`;
 }
 
-async function submit(source: string, stdin: string): Promise<Judge0Submission> {
+async function submit(source: string, stdin: string, languageId: number = env.JUDGE0_JAVA_LANGUAGE_ID): Promise<Judge0Submission> {
     const createRes = await fetch(`${baseUrl()}/submissions?base64_encoded=true&wait=false`, {
         method: 'POST',
         headers: headers(),
         body: JSON.stringify({
-            language_id: env.JUDGE0_JAVA_LANGUAGE_ID,
+            language_id: languageId,
             source_code: b64(source),
             stdin: b64(stdin),
             ...LIMITS,
@@ -185,4 +185,28 @@ export async function isJudge0Healthy(): Promise<boolean> {
     } catch {
         return false;
     }
+}
+
+export interface ProgramRun {
+    stdout: string;
+    stderr: string;
+    compileOutput: string;
+    /** 'ok' | 'compile_error' | 'time_limit' | 'runtime_error' */
+    outcome: 'ok' | 'compile_error' | 'time_limit' | 'runtime_error';
+    timeMs: number;
+}
+
+/** Run any program on Judge0 (one submission, all input on stdin). */
+export async function runOnJudge0(languageId: number, source: string, stdin: string): Promise<ProgramRun> {
+    const sub = await submit(source, stdin, languageId);
+    const outcome: ProgramRun['outcome'] = sub.status.id === STATUS.COMPILATION_ERROR ? 'compile_error'
+        : sub.status.id === STATUS.TIME_LIMIT ? 'time_limit'
+        : sub.status.id >= 7 ? 'runtime_error' : 'ok';
+    return {
+        stdout: sub.stdout || '',
+        stderr: (sub.stderr || sub.message || (outcome === 'ok' ? '' : sub.status.description) || '').trim(),
+        compileOutput: (sub.compile_output || '').trim(),
+        outcome,
+        timeMs: ms(sub),
+    };
 }

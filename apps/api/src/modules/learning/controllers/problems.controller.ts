@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthRequest } from '../../../middleware/auth';
 import { ProblemsService } from '../services/problems.service';
+import { hasPaidPlan } from './judge.controller';
 import logger from '../../../config/logger';
 
 export class ProblemsController {
@@ -57,7 +58,8 @@ export class ProblemsController {
     static async getHints(req: Request, res: Response) {
         try {
             const id = req.params.id as string;
-            const user_plan = (req as AuthRequest).user?.current_plan || 'free';
+            // req.user carries no plan; read it from entitlements.
+            const user_plan = (await hasPaidPlan((req as AuthRequest).user!.id)) ? 'paid' : 'free';
 
             const hints = await ProblemsService.getHints(id, user_plan);
 
@@ -79,7 +81,8 @@ export class ProblemsController {
     static async getSolution(req: Request, res: Response) {
         try {
             const id = req.params.id as string;
-            const user_plan = (req as AuthRequest).user?.current_plan || 'free';
+            // req.user carries no plan; read it from entitlements.
+            const user_plan = (await hasPaidPlan((req as AuthRequest).user!.id)) ? 'paid' : 'free';
 
             const solution = await ProblemsService.getSolution(id, user_plan);
 
