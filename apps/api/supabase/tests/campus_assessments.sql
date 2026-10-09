@@ -355,6 +355,44 @@ select pg_temp.check_eq(pg_temp.rows_changed(
   0, 'a student cannot move their own section clock');
 reset role;
 
+-- ── Live invigilation (slice B5) ────────────────────────────────────────────
+insert into auth.users (id, email, email_confirmed_at) values ('a1000000-0000-0000-0000-000000000009', 'invig@a.test', now());
+insert into public.users (id, email, full_name) values ('a1000000-0000-0000-0000-000000000009', 'invig@a.test', 'invig');
+insert into campus.org_memberships (org_id, user_id, role) values ('aaaaaaaa-0000-0000-0000-00000000000a', 'a1000000-0000-0000-0000-000000000009', 'invigilator');
+
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000009');
+set local role authenticated;
+select pg_temp.check_eq(((select count(*) from public.test_attempts where org_id = 'aaaaaaaa-0000-0000-0000-00000000000a') > 0)::int, 1, 'an invigilator sees College A attempts');
+select pg_temp.check_eq(((select count(*) from campus.assignments where org_id = 'aaaaaaaa-0000-0000-0000-00000000000a') > 0)::int, 1, 'an invigilator sees College A assignments');
+select pg_temp.check_eq((select count(*) from campus.assignments where org_id <> 'aaaaaaaa-0000-0000-0000-00000000000a'), 0, 'an invigilator sees no other college''s assignments');
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into campus.incident_reviews (org_id, attempt_id, reviewer_id, outcome, note)
+    select org_id, id, 'a1000000-0000-0000-0000-000000000009', 'warning', 'Looked away often' from public.test_attempts
+     where org_id = 'aaaaaaaa-0000-0000-0000-00000000000a' limit 1$$),
+  1, 'an invigilator records a review on a College A attempt');
+select pg_temp.check_denied(
+  $$insert into campus.incident_reviews (org_id, attempt_id, reviewer_id, outcome)
+    select org_id, id, 'a1000000-0000-0000-0000-000000000002', 'no_issue' from public.test_attempts
+     where org_id = 'aaaaaaaa-0000-0000-0000-00000000000a' limit 1$$,
+  'a review cannot be signed with someone else''s name');
+select pg_temp.check_eq(pg_temp.rows_changed($$update public.test_attempts set score = 99$$), 0, 'an invigilator cannot change attempts');
+select pg_temp.check_denied($$update campus.incident_reviews set outcome = 'no_issue'$$, 'reviews are append-only (no update at all)');
+reset role;
+
+select pg_temp.act_as('a2000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from campus.incident_reviews), 0, 'a student cannot read incident reviews');
+select pg_temp.check_denied(
+  $$insert into campus.attempt_adjustments (org_id, attempt_id, kind, minutes, reason)
+    select org_id, id, 'extend', 60, 'give me time' from public.test_attempts where user_id = 'a2000000-0000-0000-0000-000000000001' limit 1$$,
+  'a student cannot give themselves extra time');
+reset role;
+
+select pg_temp.act_as('b3000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from campus.incident_reviews), 0, 'College B cannot read College A incident reviews');
+reset role;
+
 rollback;
 
 \o

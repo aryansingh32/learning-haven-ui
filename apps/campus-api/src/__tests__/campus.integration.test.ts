@@ -31,6 +31,7 @@ const U = {
   adminB: 'b0000000-0000-0000-0000-000000000001',
   facultyB: 'b0000000-0000-0000-0000-000000000002',
   forgeAdmin: 'f0000000-0000-0000-0000-000000000001',
+  invigA: 'a0000000-0000-0000-0000-000000000003',
 };
 const ORG_A = 'aaaaaaaa-1111-0000-0000-00000000000a';
 const ORG_B = 'bbbbbbbb-1111-0000-0000-00000000000b';
@@ -51,8 +52,8 @@ beforeAll(async () => {
   await pool.query(`insert into campus.batches (id, org_id, name) values ($1, $2, 'CSE-2027-A'), ($3, $4, 'B1')`, [BATCH_A, ORG_A, BATCH_B, ORG_B]);
   await pool.query(
     `insert into campus.org_memberships (org_id, user_id, role) values
-       ($1, $2, 'admin'), ($1, $3, 'faculty'), ($4, $5, 'admin'), ($4, $6, 'faculty')`,
-    [ORG_A, U.adminA, U.facultyA, ORG_B, U.adminB, U.facultyB]
+       ($1, $2, 'admin'), ($1, $3, 'faculty'), ($4, $5, 'admin'), ($4, $6, 'faculty'), ($1, $7, 'invigilator')`,
+    [ORG_A, U.adminA, U.facultyA, ORG_B, U.adminB, U.facultyB, U.invigA]
   );
 });
 
@@ -544,5 +545,90 @@ describe('timed sections', () => {
     const done = await request(app).post(`/campus/v1/my/attempts/${attemptId}/sections/finish`).set(await as(U.s1));
     expect(done.body).toMatchObject({ status: 'completed', submitReason: 'manual' });
     expect(done.body.result).toMatchObject({ score: 2, totalMarks: 3 });
+  });
+});
+
+describe('live invigilation', () => {
+  let aid: string;
+  let attemptId: string;
+  const live = async (who = U.invigA) => request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/live`).set(await as(who));
+  const act = async (path: string, body: object, who = U.invigA) =>
+    request(app).post(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/attempts/${attemptId}/${path}`).set(await as(who)).send(body);
+
+  it('shows who is taking the test right now', async () => {
+    const t = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Invigilated quiz', durationMinutes: 30 })).body.id;
+    await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${t}/questions`).set(await as(U.facultyA)).send({ type: 'nat', body: 'Two plus two?', natAnswer: 4 });
+    await request(app).patch(`/campus/v1/orgs/${ORG_A}/tests/${t}`).set(await as(U.facultyA)).send({ published: true });
+    aid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: t, title: 'Invigilated quiz', publish: true, resultRelease: 'immediately',
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), proctoring: { maxViolations: 5, warnFirst: true },
+    })).body.id;
+
+    expect((await live()).body.summary).toMatchObject({ assigned: 1, notStarted: 1, active: 0 });
+    attemptId = (await request(app).post(`/campus/v1/my/assignments/${aid}/start`).set(await as(U.s1))).body.attemptId;
+    expect((await request(app).post(`/campus/v1/my/attempts/${attemptId}/heartbeat`).set(await as(U.s1))).status).toBe(200);
+
+    const board = await live();
+    expect(board.status).toBe(200);
+    expect(board.body.summary).toMatchObject({ active: 1, notStarted: 0 });
+    expect(board.body.rows[0]).toMatchObject({ rollNumber: '21CS001', status: 'active', answered: 0, total: 1, violations: 0, attemptId });
+  });
+
+  it('flags a student who has dropped off', async () => {
+    await pool.query(`update public.test_attempts set last_seen_at = now() - interval '3 minutes' where id = $1`, [attemptId]);
+    expect((await live()).body.rows[0].status).toBe('offline');
+    await request(app).put(`/campus/v1/my/attempts/${attemptId}/answers/${(await request(app).get(`/campus/v1/my/attempts/${attemptId}`).set(await as(U.s1))).body.questions[0].id}`)
+      .set(await as(U.s1)).send({ natValue: 4 });
+    expect((await live()).body.rows[0]).toMatchObject({ status: 'active', answered: 1 });
+  });
+
+  it('counts violations until someone reviews them', async () => {
+    for (let i = 0; i < 2; i++) await request(app).post(`/campus/v1/my/attempts/${attemptId}/events`).set(await as(U.s1)).send({ type: 'tab_switch' });
+    let board = (await live()).body;
+    expect(board.rows[0]).toMatchObject({ violations: 1, lastEvent: { type: 'tab_switch', severity: 'violation' } });
+    expect(board.summary.needsReview).toBe(1);
+
+    expect((await act('reviews', { outcome: 'warning', note: 'Switched tabs twice; spoke to the student.' })).status).toBe(201);
+    board = (await live()).body;
+    expect(board.summary.needsReview).toBe(0);
+    expect(board.rows[0].review).toMatchObject({ outcome: 'warning' });
+  });
+
+  it('gives a student extra time, on the record', async () => {
+    const before = new Date((await request(app).get(`/campus/v1/my/attempts/${attemptId}`).set(await as(U.s1))).body.expiresAt).getTime();
+    expect((await act('extend', { minutes: 10, reason: 'x' })).status).toBe(400);
+    const r = await act('extend', { minutes: 10, reason: 'Power cut in lab 3' });
+    expect(r.status).toBe(200);
+    const after = new Date((await request(app).get(`/campus/v1/my/attempts/${attemptId}`).set(await as(U.s1))).body.expiresAt).getTime();
+    expect(after - before).toBe(10 * 60_000);
+    expect((await live()).body.rows[0].extraMinutes).toBe(10);
+  });
+
+  it('keeps the board to the college staff who may watch', async () => {
+    expect((await live(U.facultyB)).status).toBe(403);
+    expect((await live(U.s1)).status).toBe(403);
+    expect((await act('extend', { minutes: 60, reason: 'more time please' }, U.s1)).status).toBe(403);
+    expect((await act('reviews', { outcome: 'no_issue' }, U.adminB)).status).toBe(403);
+    expect((await live(U.facultyA)).status).toBe(200); // reports.view may watch too
+    const list = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.invigA));
+    expect(list.body.map((x: { id: string }) => x.id)).toContain(aid);
+  });
+
+  it('lets an invigilator end an attempt; the timeline shows everything in order', async () => {
+    expect((await act('force-submit', { reason: 'Phone found on desk' })).status).toBe(200);
+    const view = await request(app).get(`/campus/v1/my/attempts/${attemptId}`).set(await as(U.s1));
+    expect(view.body).toMatchObject({ status: 'completed', submitReason: 'invigilator' });
+    expect((await act('force-submit', { reason: 'again please' })).status).toBe(409);
+
+    const timeline = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/attempts/${attemptId}/timeline`).set(await as(U.invigA));
+    const kinds = timeline.body.items.map((i: { kind: string }) => i.kind);
+    expect(kinds[0]).toBe('started');
+    expect(kinds.slice(-1)[0]).toBe('submitted');
+    expect(kinds).toEqual(expect.arrayContaining(['event', 'review', 'extend', 'force_submit']));
+    expect(timeline.body.items.find((i: { kind: string }) => i.kind === 'review')).toMatchObject({ outcome: 'warning', by: 'inviga' });
+
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/results?format=csv`).set(await as(U.adminA));
+    expect(csv.text).toContain('"Warning"');
+    expect(csv.text).toContain('"Ended by invigilator"');
   });
 });

@@ -16,3 +16,12 @@ export async function requirePermission(userId: string, orgId: string, permissio
   const ok = await asUser(userId, (db) => hasPermission(db, orgId, permission));
   if (!ok) throw forbidden();
 }
+
+/** At least one of the permissions (e.g. invigilators or report viewers may watch a live test). */
+export async function requireAnyPermission(userId: string, orgId: string, permissions: Permission[]): Promise<void> {
+  const ok = await asUser(userId, async (db) => {
+    for (const p of permissions) if (await hasPermission(db, orgId, p)) return true;
+    return false;
+  });
+  if (!ok) throw forbidden();
+}

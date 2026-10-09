@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { normalizePolicy, PROCTORING_EVENTS } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
-import { finishCurrentSection, getAttemptView, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
+import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
 import { JUDGED_LANGUAGES } from '../services/judge';
 
 export const studentRouter = Router();
@@ -117,6 +117,12 @@ const runBody = z.object({
 studentRouter.post('/attempts/:id/questions/:questionId/run', async (req, res) => {
   const userId = userOf(req);
   res.json(await runSamples(userId, uuid.parse(req.params.id), uuid.parse(req.params.questionId), runBody.parse(req.body)));
+});
+
+/** "Still here" every 30 s while the exam is open, so invigilators see who dropped off. */
+studentRouter.post('/attempts/:id/heartbeat', async (req, res) => {
+  const userId = userOf(req);
+  res.json(await heartbeat(userId, uuid.parse(req.params.id)));
 });
 
 /** Finish the current timed section early and move on (no going back). */

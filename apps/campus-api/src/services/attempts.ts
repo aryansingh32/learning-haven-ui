@@ -69,6 +69,7 @@ interface AttemptRow {
   question_order: { questionIds: string[]; optionOrder: Record<string, string[]>; sections?: SnapshotSection[] } | null;
   current_section: number;
   section_started_at: string | null;
+  last_seen_at: string | null;
   violation_count: number;
   submit_reason: string | null;
 }
@@ -203,7 +204,7 @@ function rescore(questions: QuestionRow[], answers: AnswerState[]) {
  * answers count as "grading pending" (0 marks) until the judge has run.
  * Idempotent under races: only the request that closes the attempt grades it.
  */
-async function finalize(attempt: AttemptRow, reason: 'manual' | 'timeout' | 'violations' | 'closed'): Promise<AttemptRow> {
+async function finalize(attempt: AttemptRow, reason: 'manual' | 'timeout' | 'violations' | 'closed' | 'invigilator'): Promise<AttemptRow> {
   const closed = await asSystem(async (db) => {
     const questions = attemptQuestions(attempt, await loadQuestions(db, attempt.test_id));
     const { rows } = await db.query<AttemptRow>(
@@ -435,8 +436,61 @@ export async function startAttempt(userId: string, assignmentId: string) {
   return getAttemptView(userId, attemptId);
 }
 
+/** Progress of an attempt for staff views (answered count, current timed section). */
+export function attemptProgress(attempt: AttemptRow) {
+  const answered = (attempt.answers ?? []).filter((x) => x.status === 'answered' || x.status === 'answered_marked').length;
+  const clock = attempt.status === 'in_progress' ? clockOf(attempt) : null;
+  const section = clock ? attempt.question_order!.sections![clock.index] : null;
+  return {
+    answered,
+    total: attempt.total_questions,
+    section: clock && section ? { index: clock.index, count: attempt.question_order!.sections!.length, name: section.name, endsAt: clock.endsAt.toISOString() } : null,
+  };
+}
+
+export type { AttemptRow };
+
+/** The student is still here: the live board shows who has dropped off. */
+async function touch(attemptId: string) {
+  await asSystem((db) => db.query(`update public.test_attempts set last_seen_at = now() where id = $1 and status = 'in_progress'`, [attemptId]));
+}
+
+export async function heartbeat(userId: string, attemptId: string) {
+  const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+  if (attempt.status === 'in_progress') await touch(attemptId);
+  return { status: attempt.status, expiresAt: attempt.expires_at };
+}
+
+/**
+ * Give one student extra time (e.g. after a power cut). Also extends the
+ * current timed section, so the minutes land where the student is.
+ * Callers must already have proven the invigilator may act on this attempt.
+ */
+export async function extendAttempt(attemptId: string, minutes: number) {
+  return asSystem(async (db) => {
+    const { rows } = await db.query<AttemptRow>(
+      `update public.test_attempts
+          set expires_at = expires_at + make_interval(mins => $2),
+              section_started_at = case when question_order ? 'sections' then section_started_at + make_interval(mins => $2) else section_started_at end
+        where id = $1 and status = 'in_progress' and expires_at > now()
+        returning *`,
+      [attemptId, minutes]
+    );
+    if (!rows[0]) throw new HttpError(409, 'This attempt has already ended.');
+    return rows[0];
+  });
+}
+
+/** End an attempt now (e.g. malpractice). Scored on what was saved. */
+export async function forceSubmitAttempt(attemptId: string) {
+  const attempt = await asSystem(async (db) => (await db.query<AttemptRow>(`select * from public.test_attempts where id = $1`, [attemptId])).rows[0]);
+  if (!attempt || attempt.status !== 'in_progress') throw new HttpError(409, 'This attempt has already ended.');
+  return finalize(attempt, 'invigilator');
+}
+
 export async function getAttemptView(userId: string, attemptId: string) {
   const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+  if (attempt.status === 'in_progress') await touch(attemptId);
   const assignment = await assignmentFor(attempt);
   const policy = normalizePolicy(assignment.proctoring);
   const released = resultsReleased(assignment);
@@ -572,7 +626,7 @@ export async function saveAnswer(
 
   const updated = await asSystem(async (db) => {
     const { rowCount } = await db.query(
-      `update public.test_attempts set answers = $2::jsonb
+      `update public.test_attempts set answers = $2::jsonb, last_seen_at = now()
         where id = $1 and status = 'in_progress' and expires_at > now()`,
       [attemptId, JSON.stringify(answers)]
     );
