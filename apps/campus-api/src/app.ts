@@ -6,6 +6,7 @@ import { requireUser } from './auth';
 import { corsOrigins } from './env';
 import { errorHandler, HttpError } from './errors';
 import { assignmentsRouter } from './routes/assignments';
+import { courseAssignmentsRouter, orgCoursesRouter } from './routes/courses';
 import { meRouter } from './routes/me';
 import { orgRouter } from './routes/org';
 import { platformRouter } from './routes/platform';
@@ -29,6 +30,8 @@ api.use('/platform', platformRouter);
 api.use('/orgs/:orgId', orgRouter);
 api.use('/orgs/:orgId/tests', testsRouter);
 api.use('/orgs/:orgId/assignments', assignmentsRouter);
+api.use('/orgs/:orgId/courses', orgCoursesRouter);
+api.use('/orgs/:orgId/course-assignments', courseAssignmentsRouter);
 app.use('/campus/v1', api);
 
 app.use((_req, _res, next) => next(new HttpError(404, 'Not found')));

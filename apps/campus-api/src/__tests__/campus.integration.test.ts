@@ -723,3 +723,113 @@ describe('question import', () => {
     expect((await request(app).post(url()).set(await as(U.s1)).send({ csv: SHEET })).status).toBe(403);
   });
 });
+
+describe('courses for colleges', () => {
+  const FREE = 'cccccccc-0000-0000-0000-000000000001';
+  const PREMIUM = 'cccccccc-0000-0000-0000-000000000002';
+  const OWN_B = 'cccccccc-0000-0000-0000-000000000003';
+  const CH = ['cccccccc-0000-0000-0000-0000000000c1', 'cccccccc-0000-0000-0000-0000000000c2', 'cccccccc-0000-0000-0000-0000000000c3'];
+  const PCH = 'cccccccc-0000-0000-0000-0000000000d1';
+  let courseAssignmentId: string;
+
+  beforeAll(async () => {
+    await pool.query(
+      `insert into public.courses (id, title, slug, is_premium, is_published) values
+         ($1, 'Python basics', 'py-basics', false, true), ($2, 'System design', 'sys-design', true, true)`, [FREE, PREMIUM]);
+    await pool.query(
+      `insert into public.courses (id, title, slug, is_published, owner_org_id, visibility) values ($1, 'B only', 'b-only', true, $2, 'org')`,
+      [OWN_B, ORG_B]);
+    await pool.query(
+      `insert into public.chapters (id, course_id, chapter_number, title) values
+         ($1, $4, 1, 'Variables'), ($2, $4, 2, 'Loops'), ($3, $4, 3, 'Functions'), ($5, $6, 1, 'Scaling')`,
+      [CH[0], CH[1], CH[2], FREE, PCH, PREMIUM]);
+  });
+
+  it('shows a college Forge public courses with the premium ones locked', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/courses`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    const ids = res.body.map((c: { id: string }) => c.id);
+    expect(ids).toEqual(expect.arrayContaining([FREE, PREMIUM]));
+    expect(ids).not.toContain(OWN_B);
+    expect(res.body.find((c: { id: string }) => c.id === PREMIUM)).toMatchObject({ isPremium: true, licensed: false });
+    expect(res.body.find((c: { id: string }) => c.id === FREE)).toMatchObject({ chapters: 3, licensed: true });
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/courses/${OWN_B}`).set(await as(U.facultyA))).status).toBe(404);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/courses`).set(await as(U.s1))).status).toBe(403);
+  });
+
+  it('assigns two chapters of a course to a batch', async () => {
+    const wrong = await request(app).post(`/campus/v1/orgs/${ORG_A}/course-assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, courseId: FREE, chapterIds: [PCH] });
+    expect(wrong.status).toBe(400);
+    const otherBatch = await request(app).post(`/campus/v1/orgs/${ORG_A}/course-assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_B, courseId: FREE });
+    expect(otherBatch.status).toBe(400);
+    const res = await request(app).post(`/campus/v1/orgs/${ORG_A}/course-assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, courseId: FREE, chapterIds: [CH[0], CH[1]], dueAt: new Date(Date.now() + 86_400_000).toISOString(), publish: true });
+    expect(res.status).toBe(201);
+    expect(res.body.title).toBe('Python basics');
+    courseAssignmentId = res.body.id;
+  });
+
+  it('needs a Forge licence for a premium course', async () => {
+    const send = async () => request(app).post(`/campus/v1/orgs/${ORG_A}/course-assignments`).set(await as(U.facultyA))
+      .send({ batchId: BATCH_A, courseId: PREMIUM });
+    expect((await send()).status).toBe(400);
+    expect((await request(app).post(`/campus/v1/platform/colleges/${ORG_A}/licences`).set(await as(U.adminA))
+      .send({ courseId: PREMIUM })).status).toBe(403);
+    const lic = await request(app).post(`/campus/v1/platform/colleges/${ORG_A}/licences`).set(await as(U.forgeAdmin))
+      .send({ courseId: PREMIUM, note: 'Pilot' });
+    expect(lic.status).toBe(201);
+    const list = await request(app).get(`/campus/v1/platform/colleges/${ORG_A}/licences`).set(await as(U.forgeAdmin));
+    expect(list.body).toEqual([expect.objectContaining({ courseId: PREMIUM, courseTitle: 'System design', active: true })]);
+    const draft = await send();
+    expect(draft.status).toBe(201);
+    expect(draft.body.status).toBe('draft');
+    expect((await request(app).delete(`/campus/v1/platform/colleges/${ORG_A}/licences/${lic.body.id}`).set(await as(U.forgeAdmin))).status).toBe(204);
+    expect((await send()).status).toBe(400);
+  });
+
+  it('shows the student their assigned course and own progress only', async () => {
+    await pool.query(
+      `insert into public.user_chapter_progress (user_id, chapter_id, status, completed_at) values ($1, $2, 'COMPLETED', now())`,
+      [U.s1, CH[0]]);
+    const res = await request(app).get('/campus/v1/my/course-assignments').set(await as(U.s1));
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(1); // drafts stay hidden
+    expect(res.body[0]).toMatchObject({
+      courseId: FREE, orgName: 'College A', status: 'in_progress', completedChapters: 1, totalChapters: 2, percent: 50,
+    });
+    expect(res.body[0].chapters.map((c: { done: boolean }) => c.done)).toEqual([true, false]);
+    expect((await request(app).get('/campus/v1/my/course-assignments').set(await as(U.s2))).body).toEqual([]);
+  });
+
+  it('gives faculty each student’s chapter progress, and a CSV for exporters', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/course-assignments/${courseAssignmentId}/progress`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    expect(res.body.chapters.map((c: { title: string }) => c.title)).toEqual(['Variables', 'Loops']);
+    expect(res.body.rows).toEqual([expect.objectContaining({ userId: U.s1, completedChapters: 1, chapters: [true, false] })]);
+    expect(res.body.summary).toMatchObject({ assigned: 1, inProgress: 1, completed: 0 });
+
+    await pool.query(`insert into public.user_chapter_progress (user_id, chapter_id, status, completed_at) values ($1, $2, 'COMPLETED', now())`, [U.s1, CH[1]]);
+    const list = await request(app).get(`/campus/v1/orgs/${ORG_A}/course-assignments`).set(await as(U.facultyA));
+    expect(list.body.find((a: { id: string }) => a.id === courseAssignmentId)).toMatchObject({ assigned: 1, completed: 1, chapters: 2 });
+
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/course-assignments/${courseAssignmentId}/progress?format=csv`)
+      .set(await as(U.facultyA))).status).toBe(403); // faculty may view, not export
+    const csv = await request(app).get(`/campus/v1/orgs/${ORG_A}/course-assignments/${courseAssignmentId}/progress?format=csv`).set(await as(U.adminA));
+    expect(csv.status).toBe(200);
+    expect(csv.text).toContain('"Completed"');
+    expect(csv.text).toContain('"Ch 2: Loops"');
+  });
+
+  it('keeps course assignments inside their college', async () => {
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/course-assignments/${courseAssignmentId}/progress`).set(await as(U.adminB))).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/course-assignments/${courseAssignmentId}/progress`).set(await as(U.adminB))).status).toBe(404);
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_B}/course-assignments/${courseAssignmentId}`).set(await as(U.adminB))
+      .send({ status: 'archived' })).status).toBe(404);
+    const archived = await request(app).patch(`/campus/v1/orgs/${ORG_A}/course-assignments/${courseAssignmentId}`).set(await as(U.facultyA))
+      .send({ status: 'archived' });
+    expect(archived.status).toBe(200);
+    expect((await request(app).get('/campus/v1/my/course-assignments').set(await as(U.s1))).body).toEqual([]);
+  });
+});

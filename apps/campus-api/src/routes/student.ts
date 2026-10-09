@@ -5,9 +5,15 @@ import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
 import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
 import { JUDGED_LANGUAGES } from '../services/judge';
+import { myCourseAssignments } from './courses';
 
 export const studentRouter = Router();
 const uuid = z.string().uuid();
+
+/** Courses my college gave my batches, with my chapter progress. */
+studentRouter.get('/course-assignments', async (req, res) => {
+  res.json(await myCourseAssignments(userOf(req)));
+});
 
 /** Published assignments for every batch I'm in, with my attempt status. */
 studentRouter.get('/assignments', async (req, res) => {
