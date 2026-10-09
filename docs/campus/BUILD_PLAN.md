@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 360 done, 263 partly, 1,275 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 366 done, 261 partly, 1,271 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -29,7 +29,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 | B2 · Question pools & per-student extra time | Draw N of M per attempt; `attempt_overrides` | `buildAttemptOrder` |
 | **B3 · Section timers & locking** ✅ *built (Campus); migration not yet applied* | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
 | B4 · College question import | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
-| B5 · Live invigilator board | Supabase Realtime over `proctoring_events` | proctoring events |
+| **B5 · Live invigilator board** ✅ *built; migration not yet applied* | live board (5 s polling + student heartbeats), timeline, reviews, extra time, end attempt | proctoring events |
 
 ## Track C — The loop: skills, readiness, remediation (modules 4, 6, 17, 18, 58, 59)
 | Slice | What |
@@ -174,3 +174,23 @@ flow including the clock running out, portal panel.
 
 **Not covered:** the Forge Test Series CBT (`apps/web` test series) still ignores section timing — it has 0 live
 tests; port when it gets content.
+
+---
+
+## Slice B5 — live invigilation — built
+
+- **Data** (`20261014000001_campus_invigilation.sql`): invigilators read their college's assignments, attempts and
+  batch roster; `test_attempts.last_seen_at`; `campus.attempt_adjustments` (extra time / force-submit audit);
+  `campus.incident_reviews` (append-only, signed by the reviewer); submit reason `invigilator`.
+- **API:** `GET …/assignments/:id/live` (everyone in the batch: writing / offline / not started / submitted,
+  answered, current section, time left, violations, last event, review, extra minutes); `extend` (also extends the
+  current timed section), `force-submit`, `reviews`, `timeline`; student `heartbeat` every 30 s; last-seen stamped on
+  every student request. Results + CSV show the review. Invigilators can open the assignment list.
+- **UI:** portal Live board (stat tiles, filters, per-student actions, timeline dialog), Live links on open
+  assignments and results; invigilator navigation; the exam notices an ended attempt within a heartbeat and the
+  student's result explains it.
+- **Why polling, not Supabase Realtime:** the portal talks only to the Campus API (RLS via `asUser`); 5 s polling of
+  one indexed query per board is cheap at college scale and needs no new channel to secure.
+
+**Verified:** SQL checks (10 new, mutation-tested); Campus API 41 (6 new); browser with a real invigilator account:
+board, timeline, review, +15 min (time left 44:57 → 59:57), end attempt, student redirected with the notice.

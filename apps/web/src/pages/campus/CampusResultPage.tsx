@@ -15,6 +15,7 @@ const REASON: Record<string, { icon: React.ElementType; text: string; tone: stri
   timeout: { icon: Clock, text: 'Time ran out, so we submitted the answers you had saved.', tone: 'text-reward bg-reward/10 border-reward/30' },
   violations: { icon: ShieldAlert, text: 'This test was submitted automatically after repeated proctoring violations.', tone: 'text-red-600 dark:text-red-400 bg-red-500/10 border-red-500/30' },
   closed: { icon: Clock, text: 'The test window closed, so we submitted the answers you had saved.', tone: 'text-reward bg-reward/10 border-reward/30' },
+  invigilator: { icon: ShieldAlert, text: 'Your invigilator ended this attempt. It was scored on the answers you had saved. Speak to your faculty if you think this is a mistake.', tone: 'text-red-600 dark:text-red-400 bg-red-500/10 border-red-500/30' },
 };
 
 function encouragement(percent: number) {

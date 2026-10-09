@@ -14,6 +14,7 @@ const Tests = lazy(() => import('@/pages/Tests'));
 const TestEditor = lazy(() => import('@/pages/TestEditor'));
 const Assignments = lazy(() => import('@/pages/Assignments'));
 const AssignmentResults = lazy(() => import('@/pages/AssignmentResults'));
+const LiveBoard = lazy(() => import('@/pages/LiveBoard'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const Platform = lazy(() => import('@/pages/Platform'));
 
@@ -69,6 +70,7 @@ export default function App() {
             <Route path="tests/:testId" element={<TestEditor />} />
             <Route path="assignments" element={<Assignments />} />
             <Route path="assignments/:assignmentId" element={<AssignmentResults />} />
+            <Route path="assignments/:assignmentId/live" element={<LiveBoard />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

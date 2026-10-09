@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Plus } from 'lucide-react';
+import { Plus, Radio } from 'lucide-react';
 import { api, patch, post } from '@/api/client';
 import type { Assignment, Batch, TestSummary } from '@/api/types';
 import { EmptyState, ErrorNote, Field, formatDateTime, Loading, PageHeader, toLocalInput } from '@/components/common';
@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { assignmentState } from './Overview';
+import { useOrg } from '@/context/CampusContext';
 
 export default function Assignments() {
   const { orgId } = useParams();
@@ -21,6 +22,9 @@ export default function Assignments() {
   const creating = params.get('new') === '1';
   const setCreating = (v: boolean) => setParams(v ? { new: '1' } : {}, { replace: true });
   const assignments = useQuery({ queryKey: ['assignments', orgId], queryFn: () => api<Assignment[]>(`/orgs/${orgId}/assignments`) });
+  const { can } = useOrg(orgId);
+  const author = can('assessments.create');
+  const watcher = can('assessments.invigilate') || can('reports.view');
 
   const change = useMutation({
     mutationFn: ({ id, body }: { id: string; body: Record<string, unknown> }) => patch(`/orgs/${orgId}/assignments/${id}`, body),
@@ -35,10 +39,10 @@ export default function Assignments() {
   return (
     <>
       <PageHeader title="Assignments" description="Tests given to a batch, with a time window and exam rules."
-        actions={<Button onClick={() => setCreating(true)}><Plus className="mr-2 h-4 w-4" /> New assignment</Button>} />
+        actions={author && <Button onClick={() => setCreating(true)}><Plus className="mr-2 h-4 w-4" /> New assignment</Button>} />
 
       {assignments.data!.length === 0 ? (
-        <EmptyState title="Nothing assigned yet" action={<Button variant="outline" onClick={() => setCreating(true)}>Assign a test</Button>}>
+        <EmptyState title="Nothing assigned yet" action={author && <Button variant="outline" onClick={() => setCreating(true)}>Assign a test</Button>}>
           Pick a test and a batch, set when it opens and closes, and choose the exam rules.
         </EmptyState>
       ) : (
@@ -54,18 +58,23 @@ export default function Assignments() {
                 return (
                   <tr key={a.id} className="hover:bg-accent/40">
                     <td className="px-4 py-3">
-                      <Link to={a.id} className="font-medium hover:underline">{a.title}</Link>
+                      <Link to={can('reports.view') ? a.id : `${a.id}/live`} className="font-medium hover:underline">{a.title}</Link>
                       <p className="text-xs text-muted-foreground">{a.batchName} · {a.testTitle ?? 'Test'}</p>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{formatDateTime(a.opensAt)} – {formatDateTime(a.closesAt)}</td>
                     <td className="px-4 py-3"><Badge variant={state.variant}>{state.label}</Badge></td>
                     <td className="px-4 py-3 text-right tabular">{a.submitted}/{a.assigned}</td>
                     <td className="whitespace-nowrap px-4 py-3 text-right">
-                      {a.status === 'draft' && <Button size="sm" onClick={() => change.mutate({ id: a.id, body: { status: 'published' } })}>Publish</Button>}
-                      {a.status === 'published' && !closed && now >= new Date(a.opensAt) && (
+                      {watcher && a.status === 'published' && !closed && now >= new Date(a.opensAt) && (
+                        <Button size="sm" variant="default" className="mr-2" asChild>
+                          <Link to={`${a.id}/live`}><Radio className="mr-1.5 h-3.5 w-3.5" /> Live</Link>
+                        </Button>
+                      )}
+                      {author && a.status === 'draft' && <Button size="sm" onClick={() => change.mutate({ id: a.id, body: { status: 'published' } })}>Publish</Button>}
+                      {author && a.status === 'published' && !closed && now >= new Date(a.opensAt) && (
                         <Button size="sm" variant="outline" onClick={() => change.mutate({ id: a.id, body: { closesAt: new Date().toISOString() } })}>Close now</Button>
                       )}
-                      {a.resultRelease === 'manual' && !a.resultsReleasedAt && a.status === 'published' && (
+                      {author && a.resultRelease === 'manual' && !a.resultsReleasedAt && a.status === 'published' && (
                         <Button size="sm" variant="outline" className="ml-2" onClick={() => change.mutate({ id: a.id, body: { releaseResults: true } })}>Release results</Button>
                       )}
                     </td>

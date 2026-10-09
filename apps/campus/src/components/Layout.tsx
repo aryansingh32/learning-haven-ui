@@ -7,9 +7,10 @@ import { ROLE_LABEL } from '@/api/types';
 import { useBrandColor, useCampus, useOrg } from '@/context/CampusContext';
 import { cn } from '@/lib/utils';
 
-const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permission }> = [
+const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permission | Permission[] }> = [
   { to: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { to: 'assignments', label: 'Assignments', icon: ClipboardList, needs: 'assessments.create' },
+  // Authors, invigilators and report viewers all work from the assignment list.
+  { to: 'assignments', label: 'Assignments', icon: ClipboardList, needs: ['assessments.create', 'assessments.invigilate', 'reports.view'] },
   { to: 'tests', label: 'Tests', icon: BookOpenCheck, needs: 'content.create' },
   { to: 'batches', label: 'Batches', icon: UsersRound, needs: 'members.view' },
   { to: 'people', label: 'People', icon: Users, needs: 'members.view' },
@@ -28,7 +29,7 @@ export default function Layout() {
 
   const nav = (
     <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Main">
-      {NAV.filter((n) => !n.needs || can(n.needs)).map(({ to, label, icon: Icon }) => (
+      {NAV.filter((n) => !n.needs || (Array.isArray(n.needs) ? n.needs.some((p) => can(p)) : can(n.needs))).map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
           to={`/o/${orgId}/${to}`}

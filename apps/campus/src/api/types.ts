@@ -149,9 +149,10 @@ export interface ResultRow {
   percent: number | null;
   attempts: number;
   violations: number;
-  submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | null;
+  submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | 'invigilator' | null;
   submittedAt: string | null;
   gradingPending: boolean;
+  review: ReviewOutcome | null;
 }
 
 export interface Results {
@@ -173,3 +174,41 @@ export const ROLE_LABEL: Record<Role, string> = {
   invigilator: 'Invigilator',
   student: 'Student',
 };
+
+export type LiveStatus = 'not_started' | 'active' | 'offline' | 'submitted';
+export type ReviewOutcome = 'no_issue' | 'warning' | 'malpractice';
+
+export interface LiveRow {
+  userId: string;
+  name: string | null;
+  email: string;
+  rollNumber: string | null;
+  status: LiveStatus;
+  attemptId: string | null;
+  startedAt: string | null;
+  expiresAt: string | null;
+  submittedAt: string | null;
+  submitReason: string | null;
+  lastSeenAt: string | null;
+  answered: number;
+  total: number;
+  section: { index: number; count: number; name: string; endsAt: string } | null;
+  violations: number;
+  lastEvent: { type: string; severity: 'warning' | 'violation'; at: string } | null;
+  review: { outcome: ReviewOutcome; at: string } | null;
+  extraMinutes: number;
+}
+
+export interface LiveBoard {
+  assignment: { id: string; title: string; batch: string; opensAt: string; closesAt: string };
+  serverNow: string;
+  summary: { assigned: number; notStarted: number; active: number; offline: number; submitted: number; needsReview: number };
+  rows: LiveRow[];
+}
+
+export type TimelineItem =
+  | { at: string; kind: 'started' }
+  | { at: string; kind: 'event'; type: string; severity: 'warning' | 'violation' }
+  | { at: string; kind: 'extend' | 'force_submit'; minutes: number | null; reason: string; by: string | null }
+  | { at: string; kind: 'review'; outcome: ReviewOutcome; note: string | null; by: string | null }
+  | { at: string; kind: 'submitted'; reason: string | null };

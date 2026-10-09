@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useMyAssignments } from '@/hooks/useCampus';
 import {
-  CampusApiError, fetchAttemptView, finishCampusSection, reportProctoringEvent, runCampusCode, saveCampusAnswer, startAssignment, submitCampusAttempt,
+  CampusApiError, campusHeartbeat, fetchAttemptView, finishCampusSection, reportProctoringEvent, runCampusCode, saveCampusAnswer, startAssignment, submitCampusAttempt,
   type AnswerStatus, type AttemptAnswer, type AttemptView, type CodeLanguage, type ExamQuestion, type MyAssignment, type ProctoringEvent,
 } from '@/services/campus.service';
 import { CodingQuestion } from '@/features/campus/CodingQuestion';
@@ -490,6 +490,22 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
     if (!a || a.status === 'not_visited') queueSave(q.id, { markedForReview: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
+
+  // ── Heartbeat: lets invigilators see who is still connected; also notices
+  // an attempt ended elsewhere (an invigilator, or another tab). ──
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (finished.current) return;
+      campusHeartbeat(attemptId).then((r) => {
+        if (r.status === 'completed' && !finished.current) {
+          toast.info('This test has been submitted.');
+          finished.current = true;
+          toResult('closed');
+        }
+      }).catch(() => { /* offline: the board shows it */ });
+    }, 30_000);
+    return () => clearInterval(id);
+  }, [attemptId, toResult]);
 
   // ── Leaving the page mid-test ──
   useEffect(() => {

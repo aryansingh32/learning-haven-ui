@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { AlertTriangle, ArrowLeft, Download, Hourglass, RefreshCw } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Download, Hourglass, Radio, RefreshCw } from 'lucide-react';
 import { api, download, post } from '@/api/client';
 import type { ResultRow, Results } from '@/api/types';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
@@ -15,8 +15,8 @@ const STATUS: Record<ResultRow['status'], { label: string; variant: 'secondary' 
   in_progress: { label: 'In progress', variant: 'default' },
   not_attempted: { label: 'Not attempted', variant: 'outline' },
 };
-const ENDED: Record<NonNullable<ResultRow['submitReason']>, string> = {
-  manual: 'Submitted', timeout: 'Time ran out', violations: 'Auto-submitted', closed: 'Closed',
+const ENDED: Record<string, string> = {
+  manual: 'Submitted', timeout: 'Time ran out', violations: 'Auto-submitted', closed: 'Closed', invigilator: 'Ended by invigilator',
 };
 
 type SortKey = 'roll' | 'score' | 'violations';
@@ -64,7 +64,10 @@ export default function AssignmentResults() {
         <ArrowLeft className="h-4 w-4" /> Assignments
       </Link>
       <PageHeader title={assignment.title} description={assignment.batch}
-        actions={can('reports.export') && <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" /> Export CSV</Button>} />
+        actions={<>
+          <Button variant="outline" asChild><Link to="live"><Radio className="mr-2 h-4 w-4" /> Live view</Link></Button>
+          {can('reports.export') && <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" /> Export CSV</Button>}
+        </>} />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Submitted" value={`${summary.submitted}/${summary.assigned}`} hint={summary.notAttempted ? `${summary.notAttempted} not attempted` : 'Everyone has attempted'} />
@@ -128,6 +131,9 @@ export default function AssignmentResults() {
                   {r.violations > 0
                     ? <span className="inline-flex items-center gap-1 font-medium text-warning"><AlertTriangle className="h-3.5 w-3.5" />{r.violations}</span>
                     : <span className="text-muted-foreground">0</span>}
+                  {r.review && <span className={`block text-xs font-medium ${r.review === 'malpractice' ? 'text-destructive' : r.review === 'warning' ? 'text-warning' : 'text-success'}`}>
+                    {r.review === 'no_issue' ? 'Reviewed: no issue' : r.review === 'warning' ? 'Reviewed: warning' : 'Reviewed: malpractice'}
+                  </span>}
                 </td>
                 <td className="px-4 py-2.5 text-muted-foreground">
                   {r.submitReason ? <>{ENDED[r.submitReason]}<span className="block text-xs">{formatDateTime(r.submittedAt)}</span></> : '—'}

@@ -25,7 +25,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 |---|---|---:|---:|---:|---:|
 | 1 | Student Identity & Account Management | 8 | 5 | 10 | 23 |
 | 2 | College, University & Organization Management | 9 | 8 | 12 | 29 |
-| 3 | Role-Based Access & Permissions | 8 | 8 | 8 | 24 |
+| 3 | Role-Based Access & Permissions | 9 | 7 | 8 | 24 |
 | 4 | Student Dashboard | 11 | 8 | 5 | 24 |
 | 5 | Learning Management System | 16 | 11 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
@@ -34,7 +34,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 25 | 9 | 24 | 58 |
 | 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 31 | 6 | 20 | 57 |
+| 12 | Assessment Engine | 32 | 7 | 18 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
@@ -55,7 +55,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
 | 32 | Certificates & Credentials | 9 | 3 | 12 | 24 |
-| 33 | Proctoring & Assessment Security | 12 | 5 | 18 | 35 |
+| 33 | Proctoring & Assessment Security | 16 | 3 | 16 | 35 |
 | 34 | AI-Era Academic Integrity | 1 | 1 | 23 | 25 |
 | 35 | Coding Contests & Hackathons | 0 | 0 | 30 | 30 |
 | 36 | SQL & Database Practice | 0 | 0 | 20 | 20 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **360** (19%) | **263** (14%) | **1275** (67%) | **1898** |
+| | **All modules** | **366** (19%) | **261** (14%) | **1271** (67%) | **1898** |
 
 ---
 
@@ -158,7 +158,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Parent Dashboard
 - [ ] 🟡 Evaluator Dashboard — role exists, no screens (no subjective grading yet)
 - [ ] 🟡 Question Setter Dashboard — faculty test editor; no separate role view
-- [ ] 🟡 Proctor Dashboard — `invigilator` role + events stored; no live board
+- [x] Proctor Dashboard — invigilator role works end to end: live board, timeline, reviews, extra time, end attempt (B5)
 - [ ] Auditor Dashboard
 - [ ] 🟡 Custom Role Builder — Forge admin can create roles (`Permissions.tsx`); colleges cannot
 - [x] Permission Matrix — role → permission keys (`role_permissions`, admin Permissions page)
@@ -584,9 +584,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Manual Evaluation
 - [ ] Hybrid Evaluation
 - [ ] Re-evaluation Requests
-- [ ] Grace Period Management
-- [ ] Accommodation Settings
-- [ ] 🟡 Assessment Audit Logs — proctoring events + submit reason per attempt; no change log
+- [x] Grace Period Management — invigilators add extra time per student during the test (also extends the current timed section); audited
+- [ ] 🟡 Accommodation Settings — extra time can be given live; no pre-set per-student accommodations yet (B2)
+- [ ] 🟡 Assessment Audit Logs — proctoring events, extra time / force-submit (`campus.attempt_adjustments`), incident reviews, submit reason; no change log for test edits
 
 ### 13. Question Bank Management
 - [x] Centralized Question Bank — `testseries_questions`, admin Question Bank page (0 questions live)
@@ -1240,11 +1240,11 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Device Compatibility Checks
 - [x] Network Interruption Recovery — answer retry queue, offline banner, resume
 - [x] Suspicious Activity Flags — warning/violation severity; auto-submit at the limit
-- [ ] 🟡 Candidate Incident Timeline — events stored with time; no timeline screen
-- [ ] 🟡 Proctor Dashboard — violations column on results; no live board
-- [ ] Live Proctoring
+- [x] Candidate Incident Timeline — per-attempt timeline: start, proctoring events, staff actions, reviews, submit (B5)
+- [x] Proctor Dashboard — live board per assignment: writing / offline / submitted, progress, section, time left, violations, last event; refreshes every 5 s
+- [ ] 🟡 Live Proctoring — live status board with heartbeats and staff actions; no webcam/video
 - [ ] Automated Proctor Review
-- [ ] 🟡 Assessment Integrity Reports — violations per student in results/CSV
+- [x] Assessment Integrity Reports — violations, review decision and how the attempt ended, per student in results and CSV; timeline per attempt
 - [x] Question Randomization
 - [x] Secure Question Delivery — correct answers and hidden test cases never sent to the browser
 - [x] Access Token Validation — JWT verified on every Campus request
@@ -1253,7 +1253,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Plagiarism Detection
 - [ ] Code Similarity Detection
 - [ ] AI-Generated Code Detection Signals
-- [ ] Manual Incident Review
+- [x] Manual Incident Review — invigilator records no issue / warning / malpractice with a note (append-only, signed)
 - [ ] Appeal Workflow
 - [ ] 🟡 Proctoring Consent — rules shown + "I'm ready" checkbox; no formal consent record
 - [ ] Proctoring Retention Policies

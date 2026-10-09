@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (360 done, 263 partly, 1,275 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (366 done, 261 partly, 1,271 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -26,7 +26,8 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | C++ on the judge (slice A2): practice (server Run + Submit) and Campus coding questions; forged-result fix | ✅ built, browser-verified |
 | Judge: hidden expected outputs never reach learner programs (Java leak fixed) | ✅ |
 | Timed, locked sections in Campus tests (slice B3) | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Live invigilation board, timeline, reviews, extra time, end attempt (slice B5) | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review), then B2–B5 (§8.3) |
@@ -192,7 +193,7 @@ pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/ja
 pnpm --filter @repo/api test               # 89 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 3 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 35 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 41 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -206,7 +207,8 @@ cd apps/web && npx vite build              # must pass
   sandbox, unpkg is blocked — route `https://unpkg.com/monaco-editor@0.44.0/min/vs/**` to
   `node_modules/.pnpm/monaco-editor@*/node_modules/monaco-editor/min/vs`. Vite needs `--host 127.0.0.1` (no IPv6).
 - **Sandbox gotcha:** `pkill -f <pattern>` kills your own shell if the command line contains the pattern — put
-  kill commands in a script file and run it on its own.
+  kill commands in a script file and run it on its own. A Campus API left running keeps port 5100 and the new one
+  dies with EADDRINUSE (check `ps -eo pid,lstart,args | grep src/server.ts`) — the old code then answers your test.
 
 Env needed (not in repo; see each app's `.env.example`): `apps/api/.env` (Supabase URL/keys, DATABASE_URL,
 REDIS_URL, Razorpay, JUDGE0_URL/JUDGE0_AUTH_TOKEN), `apps/campus-api/.env` (DATABASE_URL, SUPABASE_URL,
@@ -242,6 +244,9 @@ Then `20261012000001_problem_cpp_starters`: `select count(*) from public.problem
 
 Then `20261013000001_campus_section_timing`: `test_attempts` has `current_section`, `section_started_at`;
 `select tgname from pg_trigger where tgname = 'test_questions_section_matches';` → 1 row.
+
+Then `20261014000001_campus_invigilation`: tables `campus.attempt_adjustments`, `campus.incident_reviews` exist with
+RLS on; `test_attempts.last_seen_at` exists; run the security advisor.
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a

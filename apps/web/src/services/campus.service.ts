@@ -173,7 +173,7 @@ export interface AttemptView {
   violationCount: number;
   questions: ExamQuestion[];
   answers?: AttemptAnswer[];
-  submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | null;
+  submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | 'invigilator' | null;
   result?: AttemptResult;
   /** Timed sections: the plan, and where this attempt is. Questions are the current section's only. */
   sections?: Array<{ id: string; name: string; durationSeconds: number; questionCount: number }> | null;
@@ -215,6 +215,10 @@ export const runCampusCode = (attemptId: string, questionId: string, body: { cod
 
 export const reportProctoringEvent = (attemptId: string, type: ProctoringEvent): Promise<EventResult> =>
   client.post(`/my/attempts/${attemptId}/events`, { type });
+
+/** "Still here" ping so invigilators can see who has dropped off. */
+export const campusHeartbeat = (attemptId: string): Promise<{ status: 'in_progress' | 'completed'; expiresAt: string }> =>
+  client.post(`/my/attempts/${attemptId}/heartbeat`);
 
 /** Finish the current timed section early; returns the next section (or the result after the last). */
 export const finishCampusSection = (attemptId: string): Promise<AttemptView> =>
