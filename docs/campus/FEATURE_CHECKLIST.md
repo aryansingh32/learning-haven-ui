@@ -1,6 +1,6 @@
 # Master feature checklist — verified against the code and the live database
 
-Verified 2026-10-09 (updated after slices B1 and A2) on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
+Verified 2026-10-09; re-checked 2026-10-12 after slices B1 and A2, on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
 the live Supabase database (read-only counts) for content.
 
 - `[x]` **Done** — built *and* reachable by the people it's for. Evidence after the dash.
@@ -31,13 +31,13 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
-| 9 | Online Coding IDE | 25 | 8 | 25 | 58 |
+| 9 | Online Coding IDE | 25 | 9 | 24 | 58 |
 | 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 29 | 8 | 20 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
-| 15 | Online Judge & Evaluation Engine | 14 | 8 | 9 | 31 |
+| 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
 | 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
 | 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
@@ -50,7 +50,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 25 | Learning Analytics | 2 | 7 | 30 | 39 |
 | 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
-| 28 | Assignments & Homework | 6 | 4 | 16 | 26 |
+| 28 | Assignments & Homework | 7 | 4 | 15 | 26 |
 | 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
 | 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **356** (19%) | **265** (14%) | **1277** (67%) | **1898** |
+| | **All modules** | **358** (19%) | **265** (14%) | **1275** (67%) | **1898** |
 
 ---
 
@@ -336,9 +336,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 8. Programming Language Learning
 - [ ] 🟡 C Programming — JSCPP runs C in the browser, only on the dev `/test-editor` page; no C course
 - [ ] 🟡 C++ Programming — C++ judged in practice and Campus tests (slice A2); no C++ course
-- [ ] 🟡 Java Programming — Judge0 backend (`judge0.service.ts`); no learner editor; no Java course
-- [ ] 🟡 Python Programming — Pyodide runtime on the dev page; no Python course
-- [ ] 🟡 JavaScript Programming — runtime on the dev page; "Programming Foundations" course
+- [ ] 🟡 Java Programming — judged in practice (`/problems/:slug`) and Campus coding questions; no Java course
+- [ ] 🟡 Python Programming — in-browser Run + server judge in practice and Campus coding questions; no Python course
+- [ ] 🟡 JavaScript Programming — judged in practice and Campus coding questions; "Programming Foundations" course
 - [ ] TypeScript Programming
 - [ ] Go Programming
 - [ ] Rust Programming
@@ -381,7 +381,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Standard Input Support — Judge0 / Java executor accept stdin
 - [x] Standard Output Panel — console tab in the practice workspace
 - [ ] Custom Test Input
-- [x] Run Code — runs the examples in the browser
+- [x] Run Code — runs the examples (in the browser; C++ and Campus tests on the server, samples only)
 - [x] Submit Code — judged on the server against every test (`POST /problems/:id/judge`)
 - [ ] Code Execution History
 - [x] Execution Time Display — shown for Run and Submit
@@ -394,13 +394,13 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Autosave — code saved per problem and language
 - [x] Code Recovery — saved code restored after a refresh (verified)
 - [ ] Keyboard Shortcuts
-- [ ] 🟡 Theme Customization — dark editor theme only
+- [ ] 🟡 Theme Customization — light/dark editor toggle; no other themes
 - [ ] Font Customization
 - [ ] Editor Accessibility
 - [x] Resizable Panels — practice workspace
 - [ ] Full-Screen Editor
 - [x] Split-Screen Editor — problem / editor / console
-- [ ] Mobile Coding Support
+- [ ] 🟡 Mobile Coding Support — Campus coding questions stack statement and editor on phones; practice workspace is desktop-first
 - [ ] AI Code Completion
 - [ ] 🟡 AI Code Explanation — apprenticeship "AI help" endpoint (`ai-help.controller.ts`)
 - [ ] 🟡 AI Debugging Assistant — same apprenticeship AI help
@@ -420,8 +420,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Repository Import — starter repositories per challenge (`starter_repo_url`)
 - [x] Project Templates — starter repos / build stages
 - [x] Containerized Code Execution — Docker verification worker for build challenges (`verification.worker.ts`)
-- [x] Sandboxed Execution — Judge0 for Java; production refuses without it
-- [x] Execution Quotas — auth + rate limit on `/execute/java`
+- [x] Sandboxed Execution — Judge0 for every judged language (`@repo/judge`); production refuses without it
+- [x] Execution Quotas — auth + rate limits on `/execute/java`, `/problems/:id/judge` and `/run`; Campus Run 3 s cooldown per attempt
 - [x] Runtime Isolation — Judge0 runs code off the API host
 - [ ] 🟡 Network Isolation — Judge0 setup guide (`infra/judge0/README.md`); Judge0 not deployed yet
 - [ ] 🟡 Resource Limits — Judge0 limits + build-challenge `timeout_seconds`; Judge0 not deployed yet
@@ -443,7 +443,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] DSA Roadmaps — "DSA Foundations" and "DSA Patterns Mastery" courses
 - [ ] Blind 75-Style Problem Lists
 - [ ] 🟡 NeetCode-Style Learning Paths — pattern chapters (two pointers, sliding window…); few linked problems
-- [ ] 🟡 LeetCode-Style Practice Lists — problems link out to external sites
+- [ ] 🟡 LeetCode-Style Practice Lists — in-app LeetCode-style workspace; only 8 problems
 - [ ] Problem Bookmarks
 - [x] Problem Notes — `user_notes` (notes, pattern notes, mistake log), `NotesModal.tsx`
 - [ ] Personal Problem Collections
@@ -451,7 +451,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Solved Problem Tracking — `user_problem_status`
 - [x] Unsolved Problem Tracking — status per problem
 - [x] Reattempt Tracking — "marked for revision"
-- [ ] 🟡 Solution Submission History — `submissions` stores code; no history screen (problems are solved externally)
+- [ ] 🟡 Solution Submission History — accepted code saved in `submissions`; no history screen
 - [ ] Multiple Language Solutions
 - [ ] 🟡 Editorials — `solution_explanation` column; 0 problems have one; not shown
 - [ ] 🟡 Official Solutions — `solution_code` column; not shown
@@ -580,7 +580,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Assessment Publication — publish tests/assignments
 - [x] Assessment Archiving — assignment status `archived`
 - [ ] Assessment Expiry
-- [x] Automated Evaluation — server-side scoring on saved answers
+- [x] Automated Evaluation — server-side scoring on saved answers; coding answers judged on every test after submit
 - [ ] Manual Evaluation
 - [ ] Hybrid Evaluation
 - [ ] Re-evaluation Requests
@@ -673,7 +673,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Custom Scoring Rules — per-problem compare mode (exact / any order / any order nested); no weights
 - [x] Time Limit Enforcement — judge time limit (Judge0 limits; 10 s locally)
 - [ ] 🟡 Memory Limit Enforcement — Judge0 defaults
-- [x] Compilation Error Detection — Compilation Error verdict (JS/Python syntax, javac)
+- [x] Compilation Error Detection — Compilation Error verdict (JS/Python syntax, javac, g++ with line numbers)
 - [x] Runtime Error Detection — per-test errors
 - [x] Time Limit Exceeded Detection — Time Limit Exceeded verdict
 - [ ] Memory Limit Exceeded Detection
@@ -690,11 +690,11 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Distributed Judge Workers
 - [ ] Judge Scaling
 - [ ] 🟡 Submission Retry — BullMQ job retries
-- [ ] 🟡 Evaluation Retry — BullMQ job retries
+- [x] Evaluation Retry — Campus "Grade now" re-judges pending coding answers (`rejudge` re-runs all); BullMQ job retries for builds
 - [ ] 🟡 Evaluation Audit Logs — `build_stage_results`, `job_logs`
 - [ ] Judge Health Monitoring
 - [ ] 🟡 Judge Failure Recovery — Campus: if the judge is down at submit, coding answers are kept as "grading pending" and staff press Grade now; no automatic retry
-- [x] Submission Rate Limiting — rate limit on execution
+- [x] Submission Rate Limiting — rate limits on execution, judge and run endpoints; Campus Run cooldown
 - [ ] Execution Cost Monitoring
 - [ ] Judge Capacity Monitoring
 
@@ -931,7 +931,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Doubt Management
 - [ ] Doubt Resolution Queue
 - [ ] Office Hours Scheduling
-- [ ] 🟡 Grading Dashboard — results page (auto-graded only)
+- [ ] 🟡 Grading Dashboard — results page with "grading pending" flags and Grade now; auto-graded only
 - [ ] Manual Evaluation
 - [ ] Rubric-Based Evaluation
 - [ ] Bulk Grading
@@ -1082,7 +1082,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 28. Assignments & Homework
 - [x] Assignment Builder — Campus assignment dialog (test-based)
-- [ ] Coding Assignments
+- [x] Coding Assignments — college assignments can include judged coding questions (B1)
 - [ ] Written Assignments
 - [ ] 🟡 Project Assignments — build challenges exist, not assignable by colleges
 - [ ] File Upload Assignments
@@ -1101,7 +1101,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Rubric-Based Grading
 - [ ] AI-Assisted Grading
 - [ ] Similarity Detection
-- [ ] 🟡 Assignment Feedback — score + question map; no written feedback
+- [ ] 🟡 Assignment Feedback — score, question map, tests passed per coding question; no written feedback
 - [ ] Resubmission Workflow
 - [ ] 🟡 Assignment Analytics — results table
 - [ ] Assignment Templates
@@ -1226,7 +1226,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Full-Screen Enforcement — full-screen gate blocks the test until you return
 - [x] Tab-Switch Detection — `visibilitychange` → `tab_switch`
 - [x] Window Focus Detection — `blur` → `window_blur`
-- [x] Clipboard Event Monitoring — copy/cut/paste reported
+- [x] Clipboard Event Monitoring — copy/cut/paste reported and blocked, inside the code editor too (capture phase); dropped text counts as paste
 - [x] Copy-Paste Event Logging — stored in `campus.proctoring_events`
 - [ ] Screen Recording
 - [ ] Webcam Proctoring
@@ -1246,7 +1246,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Automated Proctor Review
 - [ ] 🟡 Assessment Integrity Reports — violations per student in results/CSV
 - [x] Question Randomization
-- [x] Secure Question Delivery — correct answers never sent during an attempt
+- [x] Secure Question Delivery — correct answers and hidden test cases never sent to the browser
 - [x] Access Token Validation — JWT verified on every Campus request
 - [x] Test Session Locking — one open attempt per student; second tab refused
 - [ ] Question Leakage Monitoring
@@ -1664,7 +1664,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] SCIM Provisioning
 - [ ] Moodle Integration
 - [ ] Open edX Integration
-- [ ] 🟡 Judge0 Integration — Java only; not deployed
+- [ ] 🟡 Judge0 Integration — JavaScript, Python, Java, C++ via `@repo/judge` (both APIs); not deployed
 - [x] GitHub Integration
 - [ ] GitLab Integration
 - [ ] 🟡 Google Workspace Integration — Google Sheets service (`googleSheets.service.ts`)
@@ -1749,7 +1749,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Malware Scanning
 - [ ] Dependency Vulnerability Scanning
 - [ ] Container Security Scanning
-- [x] Secure Code Execution — Judge0 isolation; `/execute/java` authenticated, env stripped
+- [x] Secure Code Execution — Judge0 isolation; endpoints authenticated, env stripped; forged judge-result lines fail the test (in-process tampering still possible, see HANDOFF §8.7)
 - [ ] 🟡 Network Isolation — Judge0 guide; not deployed
 - [x] Audit Logging — admin audit logs; proctoring events
 - [ ] Immutable Security Logs
@@ -2068,7 +2068,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 AI-Assisted Project Evaluation — automated test verification (not AI)
 - [ ] Oral Skill Verification
 - [x] Personalized Assessment Variants — per-student shuffled questions/options
-- [ ] 🟡 Transparent Evaluation Reports — question-by-question result map
+- [ ] 🟡 Transparent Evaluation Reports — question-by-question result map; tests passed per coding question
 - [ ] Learning Outcome Guarantees Tracking
 - [ ] Placement Outcome Tracking
 - [ ] Skill Improvement Attribution
