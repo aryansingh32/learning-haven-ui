@@ -81,7 +81,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             <div className={`flex items-center justify-between px-3 py-1.5 border-b backdrop-blur-md ${toolbarClass}`}>
                 <div className="flex items-center gap-2">
                     <Select value={language} onValueChange={(val) => setLanguage(val as SupportedLanguage)} disabled={!allowLanguageSwitch}>
-                        <SelectTrigger className="w-[120px] h-7 bg-transparent border-none hover:bg-zinc-800/50 transition-colors text-xs font-semibold focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <SelectTrigger className="w-[120px] h-7 bg-transparent border-none text-zinc-200 hover:bg-zinc-800/50 transition-colors text-xs font-semibold focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed">
                             <SelectValue placeholder="Language" />
                         </SelectTrigger>
                         <SelectContent className="bg-zinc-900 border-zinc-800 shadow-2xl">

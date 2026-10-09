@@ -81,7 +81,7 @@ export interface TestSummary {
 
 export interface Question {
   id: string;
-  type: 'mcq' | 'msq' | 'nat';
+  type: 'mcq' | 'msq' | 'nat' | 'coding';
   body: string;
   options: Array<{ id: string; text: string }> | null;
   correctOptions: string[] | null;
@@ -91,7 +91,14 @@ export interface Question {
   negativeMarks: number;
   topic: string | null;
   difficulty: 'easy' | 'medium' | 'hard' | null;
+  // coding only
+  starterCode?: Partial<Record<CodeLanguage, string>>;
+  compare?: CompareMode;
+  tests?: Array<{ input: string; expected: string; isSample: boolean }>;
 }
+
+export type CodeLanguage = 'python' | 'java' | 'javascript';
+export type CompareMode = 'exact' | 'unordered' | 'unordered_deep';
 
 export interface TestDetail {
   id: string;
@@ -133,6 +140,7 @@ export interface ResultRow {
   violations: number;
   submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | null;
   submittedAt: string | null;
+  gradingPending: boolean;
 }
 
 export interface Results {
@@ -140,6 +148,7 @@ export interface Results {
   summary: {
     assigned: number; submitted: number; notAttempted: number;
     averagePercent: number | null; highestPercent: number | null; lowestPercent: number | null; flagged: number;
+    gradingPending: number;
   };
   rows: ResultRow[];
 }

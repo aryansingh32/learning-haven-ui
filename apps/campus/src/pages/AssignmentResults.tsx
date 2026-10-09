@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { AlertTriangle, ArrowLeft, Download } from 'lucide-react';
-import { api, download } from '@/api/client';
+import { AlertTriangle, ArrowLeft, Download, Hourglass, RefreshCw } from 'lucide-react';
+import { api, download, post } from '@/api/client';
 import type { ResultRow, Results } from '@/api/types';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +30,16 @@ export default function AssignmentResults() {
     queryKey: ['results', assignmentId],
     queryFn: () => api<Results>(`/orgs/${orgId}/assignments/${assignmentId}/results`),
     refetchInterval: 30_000, // live-ish while a test is running
+  });
+  const qc = useQueryClient();
+  const regrade = useMutation({
+    mutationFn: () => post<{ attempts: number; judged: number; pending: number }>(`/orgs/${orgId}/assignments/${assignmentId}/regrade`, {}),
+    onSuccess: (r) => {
+      if (r.pending) toast.warning(`${r.judged} graded; ${r.pending} still pending — the code judge stopped responding.`);
+      else toast.success(r.judged ? `Graded ${r.judged} coding ${r.judged === 1 ? 'answer' : 'answers'}` : 'Nothing was waiting to be graded');
+      qc.invalidateQueries({ queryKey: ['results', assignmentId] });
+    },
+    onError: (e) => toast.error(e.message),
   });
 
   const rows = useMemo(() => {
@@ -63,6 +73,20 @@ export default function AssignmentResults() {
         <Stat label="Flagged" value={summary.flagged} hint="Left the test at least once" tone={summary.flagged ? 'warning' : undefined} />
       </div>
 
+      {summary.gradingPending > 0 && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
+          <p className="flex items-center gap-2">
+            <Hourglass className="h-4 w-4 text-warning" aria-hidden />
+            {summary.gradingPending} {summary.gradingPending === 1 ? 'student has' : 'students have'} coding answers waiting to be graded — the code judge was unavailable when they submitted. Their scores count those questions as 0 for now.
+          </p>
+          {can('assessments.grade') && can('reports.view') && (
+            <Button size="sm" onClick={() => regrade.mutate()} disabled={regrade.isPending}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${regrade.isPending ? 'animate-spin' : ''}`} /> Grade now
+            </Button>
+          )}
+        </div>
+      )}
+
       <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap gap-1 text-sm" role="tablist" aria-label="Filter students">
           {([['all', 'All'], ['submitted', 'Submitted'], ['in_progress', 'In progress'], ['not_attempted', 'Not attempted'], ['flagged', 'Flagged']] as const).map(([v, label]) => (
@@ -95,7 +119,10 @@ export default function AssignmentResults() {
                   <p className="text-xs tabular text-muted-foreground">{r.rollNumber ?? r.email}</p>
                 </td>
                 <td className="px-4 py-2.5"><Badge variant={STATUS[r.status].variant}>{STATUS[r.status].label}</Badge></td>
-                <td className="px-4 py-2.5 text-right tabular">{r.score === null ? '—' : `${r.score}/${r.totalMarks}`}</td>
+                <td className="px-4 py-2.5 text-right tabular">
+                  {r.score === null ? '—' : `${r.score}/${r.totalMarks}`}
+                  {r.gradingPending && <span className="block text-xs text-warning">grading pending</span>}
+                </td>
                 <td className="px-4 py-2.5 text-right tabular">{r.percent === null ? '—' : `${r.percent}%`}</td>
                 <td className="px-4 py-2.5 text-right tabular">
                   {r.violations > 0

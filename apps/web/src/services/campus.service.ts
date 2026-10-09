@@ -97,17 +97,36 @@ export interface AttemptAnswer {
   status: AnswerStatus;
   selected_options: string[] | null;
   nat_value: number | null;
+  /** coding questions: the saved program and its language. */
+  code?: string | null;
+  language?: CodeLanguage | null;
 }
+
+export type CodeLanguage = 'python' | 'java' | 'javascript';
 
 export interface ExamQuestion {
   id: string;
-  type: 'mcq' | 'msq' | 'nat';
+  type: 'mcq' | 'msq' | 'nat' | 'coding';
   body: string;
   options: Array<{ id: string; text: string }> | null;
   marks: number;
   negativeMarks: number;
   section: string | null;
   passage: string | null;
+  /** coding only: allowed languages, their starter code, and the sample tests (hidden tests never reach the browser). */
+  languages?: CodeLanguage[];
+  starterCode?: Partial<Record<CodeLanguage, string>>;
+  samples?: Array<{ input: string; expected: string }>;
+}
+
+/** What running code on a coding question's sample tests returned. */
+export interface CodeRunResult {
+  verdict: 'Accepted' | 'Wrong Answer' | 'Runtime Error' | 'Compilation Error' | 'Time Limit Exceeded';
+  passed: number;
+  total: number;
+  tests: Array<{ index: number; passed: boolean; isSample: boolean; actual?: string; error?: string }>;
+  message?: string;
+  timeMs: number;
 }
 
 export interface ProctoringPolicy {
@@ -123,6 +142,10 @@ export interface QuestionResult {
   attempted: boolean;
   isCorrect: boolean | null;
   marksAwarded: number;
+  /** coding only */
+  testsPassed?: number;
+  testsTotal?: number;
+  pending?: boolean;
 }
 
 export type AttemptResult =
@@ -171,20 +194,26 @@ export const fetchMyAssignments = (): Promise<MyAssignment[]> => client.get('/my
 export const startAssignment = (assignmentId: string): Promise<AttemptView> =>
   client.post(`/my/assignments/${assignmentId}/start`);
 
-export const fetchAttemptView = (attemptId: string): Promise<AttemptView> => client.get(`/my/attempts/${attemptId}`);
+// Opening an attempt whose time ran out submits (and judges) it, so allow time.
+export const fetchAttemptView = (attemptId: string): Promise<AttemptView> => client.get(`/my/attempts/${attemptId}`, { timeout: 120_000 });
 
 export const saveCampusAnswer = (
   attemptId: string,
   questionId: string,
-  body: { selectedOptions?: string[] | null; natValue?: number | null; markedForReview?: boolean }
+  body: { selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: CodeLanguage | null; markedForReview?: boolean }
 ): Promise<{ questionId: string; status: AnswerStatus }> =>
   client.put(`/my/attempts/${attemptId}/answers/${questionId}`, body);
+
+/** Run code on the sample tests only. Doesn't save or score anything. */
+export const runCampusCode = (attemptId: string, questionId: string, body: { code: string; language: CodeLanguage }): Promise<CodeRunResult> =>
+  client.post(`/my/attempts/${attemptId}/questions/${questionId}/run`, body, { timeout: 60_000 });
 
 export const reportProctoringEvent = (attemptId: string, type: ProctoringEvent): Promise<EventResult> =>
   client.post(`/my/attempts/${attemptId}/events`, { type });
 
+// Submitting judges any coding answers on the server, which can take a while.
 export const submitCampusAttempt = (attemptId: string): Promise<AttemptView> =>
-  client.post(`/my/attempts/${attemptId}/submit`);
+  client.post(`/my/attempts/${attemptId}/submit`, undefined, { timeout: 120_000 });
 
 /** Colleges where this person is a student (staff roles use the Campus portal). */
 export const studentMemberships = (me: CampusMe | undefined) =>

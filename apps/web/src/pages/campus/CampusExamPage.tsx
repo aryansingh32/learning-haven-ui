@@ -17,13 +17,18 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useMyAssignments } from '@/hooks/useCampus';
 import {
-  CampusApiError, reportProctoringEvent, saveCampusAnswer, startAssignment, submitCampusAttempt,
-  type AnswerStatus, type AttemptAnswer, type AttemptView, type ExamQuestion, type MyAssignment, type ProctoringEvent,
+  CampusApiError, reportProctoringEvent, runCampusCode, saveCampusAnswer, startAssignment, submitCampusAttempt,
+  type AnswerStatus, type AttemptAnswer, type AttemptView, type CodeLanguage, type ExamQuestion, type MyAssignment, type ProctoringEvent,
 } from '@/services/campus.service';
+import { CodingQuestion } from '@/features/campus/CodingQuestion';
 import { enterFullscreen, exitFullscreen, fullscreenSupported, useLockdown } from '@/features/campus/useLockdown';
 import { assignmentStatus, formatWhen } from '@/features/campus/assignmentStatus';
 
-type SavePayload = { selectedOptions?: string[] | null; natValue?: number | null; markedForReview?: boolean };
+type SavePayload = {
+  selectedOptions?: string[] | null; natValue?: number | null;
+  code?: string | null; language?: CodeLanguage | null;
+  markedForReview?: boolean;
+};
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 const LETTERS = 'ABCDEFGHIJ';
@@ -38,7 +43,8 @@ function formatClock(totalSeconds: number) {
 
 /** Same rule the server applies, so the palette updates instantly. */
 function statusFor(payload: SavePayload): AnswerStatus {
-  const hasAnswer = Boolean(payload.selectedOptions?.length) || (payload.natValue !== undefined && payload.natValue !== null);
+  const hasAnswer = Boolean(payload.selectedOptions?.length) || (payload.natValue !== undefined && payload.natValue !== null)
+    || Boolean(payload.code?.trim());
   if (hasAnswer) return payload.markedForReview ? 'answered_marked' : 'answered';
   return payload.markedForReview ? 'marked_for_review' : 'visited';
 }
@@ -285,6 +291,9 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [finishing, setFinishing] = useState(false);
   const [hasBeenFullscreen, setHasBeenFullscreen] = useState(false);
+  // Coding questions: chosen language per question, and edited code per question + language.
+  const [codeLang, setCodeLang] = useState<Record<string, CodeLanguage>>({});
+  const [codeText, setCodeText] = useState<Record<string, string>>({});
 
   // Server-corrected clock: the server decides when time is up.
   const clockOffset = useRef(new Date(initial.serverNow).getTime() - Date.now());
@@ -296,6 +305,9 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
   const inFlight = useRef(false);
   const retryTimer = useRef<ReturnType<typeof setTimeout>>();
   const natTimer = useRef<ReturnType<typeof setTimeout>>();
+  const codeTimer = useRef<ReturnType<typeof setTimeout>>();
+  /** Code typed but not yet queued (saves are debounced while typing). */
+  const codePending = useRef<{ qid: string; payload: SavePayload } | null>(null);
   const finished = useRef(false);
 
   const q = questions[current];
@@ -305,6 +317,11 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
     finished.current = true;
     setFinishing(true);
     // Last chance to get unsaved answers in before the server scores.
+    clearTimeout(codeTimer.current);
+    if (codePending.current) {
+      pending.current.set(codePending.current.qid, codePending.current.payload);
+      codePending.current = null;
+    }
     for (const [qid, payload] of pending.current) {
       try { await saveCampusAnswer(attemptId, qid, payload); } catch { /* scored on what the server already has */ }
     }
@@ -354,22 +371,39 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
 
   const queueSave = useCallback((qid: string, payload: SavePayload) => {
     pending.current.set(qid, payload);
-    setAnswers((prev) => ({
-      ...prev,
-      [qid]: {
-        question_id: qid,
-        status: statusFor(payload),
-        selected_options: payload.selectedOptions?.length ? payload.selectedOptions : null,
-        nat_value: payload.natValue ?? null,
-      },
-    }));
+    setAnswers((prev) => {
+      // The server keeps saved code when a save (e.g. mark for review) doesn't send any.
+      const code = payload.code !== undefined ? payload.code : prev[qid]?.code ?? null;
+      const language = payload.language !== undefined ? payload.language : prev[qid]?.language ?? null;
+      return {
+        ...prev,
+        [qid]: {
+          question_id: qid,
+          status: statusFor({ ...payload, code }),
+          selected_options: payload.selectedOptions?.length ? payload.selectedOptions : null,
+          nat_value: payload.natValue ?? null,
+          code,
+          language,
+        },
+      };
+    });
     void flush();
   }, [flush]);
+
+  const commitCode = useCallback(() => {
+    clearTimeout(codeTimer.current);
+    const next = codePending.current;
+    codePending.current = null;
+    if (next) queueSave(next.qid, next.payload);
+  }, [queueSave]);
 
   useEffect(() => {
     const online = () => void flush();
     window.addEventListener('online', online);
-    return () => { window.removeEventListener('online', online); clearTimeout(retryTimer.current); clearTimeout(natTimer.current); };
+    return () => {
+      window.removeEventListener('online', online);
+      clearTimeout(retryTimer.current); clearTimeout(natTimer.current); clearTimeout(codeTimer.current);
+    };
   }, [flush]);
 
   // ── Timer ──
@@ -433,8 +467,22 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
   const a = answers[q.id];
   const marked = isMarked(a?.status);
 
+  // ── Coding helpers ──
+  const savedCode = (x: ExamQuestion, lang: CodeLanguage) => (answers[x.id]?.language === lang ? answers[x.id]?.code ?? undefined : undefined);
+  const langOf = (x: ExamQuestion): CodeLanguage =>
+    codeLang[x.id] ?? answers[x.id]?.language ?? x.languages?.[0] ?? 'python';
+  /** The student's own code for this language, if they wrote any (undefined = still the starter). */
+  const ownCode = (x: ExamQuestion, lang: CodeLanguage) => codeText[`${x.id}:${lang}`] ?? savedCode(x, lang);
+  const editorCode = (x: ExamQuestion, lang: CodeLanguage) => ownCode(x, lang) ?? x.starterCode?.[lang] ?? '';
+
   const payloadFor = (overrides: Partial<{ selected: string[]; nat: string; marked: boolean }> = {}): SavePayload => {
     const m = overrides.marked ?? marked;
+    if (q.type === 'coding') {
+      const lang = langOf(q);
+      const own = ownCode(q, lang);
+      // Without code of their own in this language, leave the saved answer as it is.
+      return own !== undefined ? { code: own, language: lang, markedForReview: m } : { markedForReview: m };
+    }
     if (q.type === 'nat') {
       const raw = (overrides.nat ?? natDraft).trim();
       const n = raw === '' ? null : Number(raw);
@@ -472,14 +520,52 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
     if (p.natValue !== savedValue) queueSave(q.id, p);
   };
 
+  const commitDrafts = () => { commitNatNow(); commitCode(); };
+
+  const onCode = (value: string) => {
+    const lang = langOf(q);
+    setCodeText((prev) => ({ ...prev, [`${q.id}:${lang}`]: value }));
+    if (codePending.current && codePending.current.qid !== q.id) commitCode();
+    codePending.current = { qid: q.id, payload: { code: value, language: lang, markedForReview: marked } };
+    clearTimeout(codeTimer.current);
+    codeTimer.current = setTimeout(commitCode, 1200);
+  };
+
+  const onLanguage = (lang: CodeLanguage) => {
+    commitCode();
+    setCodeLang((prev) => ({ ...prev, [q.id]: lang }));
+    // Switching to a language they already wrote code in makes that the answer.
+    const own = ownCode(q, lang);
+    if (own !== undefined) queueSave(q.id, { code: own, language: lang, markedForReview: marked });
+  };
+
+  const runCode = async (code: string, language: CodeLanguage) => {
+    try {
+      return await runCampusCode(attemptId, q.id, { code, language });
+    } catch (e) {
+      if (e instanceof CampusApiError && e.status === 409) void finish('timeout');
+      throw e;
+    }
+  };
+
   const go = (i: number) => {
-    commitNatNow();
+    commitDrafts();
     setCurrent(Math.max(0, Math.min(questions.length - 1, i)));
     setPaletteOpen(false);
   };
 
-  const toggleMark = () => queueSave(q.id, payloadFor({ marked: !marked }));
-  const clear = () => { setNatDraft(''); queueSave(q.id, { selectedOptions: null, natValue: null, markedForReview: marked }); };
+  const toggleMark = () => { commitCode(); queueSave(q.id, payloadFor({ marked: !marked })); };
+  const clear = () => {
+    setNatDraft('');
+    if (q.type === 'coding') {
+      if (codePending.current?.qid === q.id) { clearTimeout(codeTimer.current); codePending.current = null; }
+      setCodeText((prev) => Object.fromEntries(Object.entries(prev).filter(([k]) => !k.startsWith(`${q.id}:`))));
+      queueSave(q.id, { code: null, language: null, markedForReview: marked });
+      return;
+    }
+    queueSave(q.id, { selectedOptions: null, natValue: null, markedForReview: marked });
+  };
+  const coding = q.type === 'coding';
 
   const answeredCount = questions.filter((x) => isAnswered(answers[x.id]?.status)).length;
   const markedCount = questions.filter((x) => isMarked(answers[x.id]?.status)).length;
@@ -524,7 +610,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
           <Clock className="w-4 h-4" /> {formatClock(remaining)}
         </div>
 
-        <Button size="sm" variant="destructive" className="hidden sm:inline-flex" onClick={() => { commitNatNow(); setConfirmOpen(true); }} disabled={finishing}>
+        <Button size="sm" variant="destructive" className="hidden sm:inline-flex" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>
           Submit
         </Button>
       </header>
@@ -536,15 +622,26 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-3xl mx-auto p-4 sm:p-8 pb-28">
-            <QuestionView q={q} index={current} total={questions.length} answer={a} natDraft={natDraft} onSelect={onSelect} onNat={onNat} />
-          </div>
-        </main>
+        {coding ? (
+          <main className="flex-1 overflow-y-auto lg:overflow-hidden">
+            <CodingQuestion
+              key={q.id}
+              q={q} index={current} total={questions.length}
+              language={langOf(q)} code={editorCode(q, langOf(q))}
+              onCode={onCode} onLanguage={onLanguage} onReset={clear} run={runCode}
+            />
+          </main>
+        ) : (
+          <main className="flex-1 overflow-y-auto">
+            <div className="max-w-3xl mx-auto p-4 sm:p-8 pb-28">
+              <QuestionView q={q} index={current} total={questions.length} answer={a} natDraft={natDraft} onSelect={onSelect} onNat={onNat} />
+            </div>
+          </main>
+        )}
 
-        <aside className="hidden lg:block w-72 shrink-0 border-l border-border/60 bg-card p-5 overflow-y-auto space-y-5">
+        <aside className={cn(coding ? 'hidden xl:block' : 'hidden lg:block', 'w-72 shrink-0 border-l border-border/60 bg-card p-5 overflow-y-auto space-y-5')}>
           <Palette questions={questions} answers={answers} current={current} onJump={go} />
-          <Button className="w-full" variant="destructive" onClick={() => { commitNatNow(); setConfirmOpen(true); }} disabled={finishing}>Submit test</Button>
+          <Button className="w-full" variant="destructive" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>Submit test</Button>
         </aside>
       </div>
 
@@ -567,7 +664,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
           {current < questions.length - 1 ? (
             <Button size="sm" onClick={() => go(current + 1)}>Next <ArrowRight className="w-4 h-4 ml-1.5" /></Button>
           ) : (
-            <Button size="sm" variant="destructive" onClick={() => { commitNatNow(); setConfirmOpen(true); }} disabled={finishing}>Finish test</Button>
+            <Button size="sm" variant="destructive" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>Finish test</Button>
           )}
         </div>
       </footer>
@@ -578,7 +675,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
           <SheetHeader><SheetTitle>All questions</SheetTitle></SheetHeader>
           <div className="pt-4 space-y-5">
             <Palette questions={questions} answers={answers} current={current} onJump={go} />
-            <Button className="w-full" variant="destructive" onClick={() => { setPaletteOpen(false); setConfirmOpen(true); }}>Submit test</Button>
+            <Button className="w-full" variant="destructive" onClick={() => { setPaletteOpen(false); commitDrafts(); setConfirmOpen(true); }}>Submit test</Button>
           </div>
         </SheetContent>
       </Sheet>

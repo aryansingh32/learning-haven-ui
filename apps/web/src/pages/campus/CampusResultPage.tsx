@@ -69,6 +69,8 @@ export default function CampusResultPage() {
   const correct = released?.perQuestion.filter((q) => q.isCorrect === true).length ?? 0;
   const wrong = released?.perQuestion.filter((q) => q.attempted && q.isCorrect === false).length ?? 0;
   const skipped = released?.perQuestion.filter((q) => !q.attempted).length ?? 0;
+  const coding = (released?.perQuestion ?? []).map((q, i) => ({ q, i })).filter(({ q }) => q.testsTotal !== undefined || q.pending);
+  const gradingPending = coding.some(({ q }) => q.pending);
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -136,11 +138,13 @@ export default function CampusResultPage() {
               {released.perQuestion.map((q, i) => (
                 <div
                   key={q.questionId}
-                  title={`Q${i + 1}: ${q.attempted ? (q.isCorrect ? 'correct' : 'wrong') : 'skipped'} (${q.marksAwarded >= 0 ? '+' : ''}${q.marksAwarded})`}
+                  title={`Q${i + 1}: ${q.pending ? 'grading pending' : q.testsTotal ? `${q.testsPassed}/${q.testsTotal} tests passed` : q.attempted ? (q.isCorrect ? 'correct' : 'wrong') : 'skipped'} (${q.marksAwarded >= 0 ? '+' : ''}${q.marksAwarded})`}
                   className={cn(
                     'h-10 rounded-lg flex flex-col items-center justify-center text-[11px] font-bold border',
                     q.isCorrect === true && 'bg-success/10 text-success border-success/30',
-                    q.attempted && q.isCorrect === false && 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30',
+                    q.attempted && q.isCorrect === false && (q.pending || q.marksAwarded > 0)
+                      ? 'bg-reward/10 text-reward border-reward/30'
+                      : q.attempted && q.isCorrect === false && 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30',
                     !q.attempted && 'bg-secondary text-muted-foreground border-border',
                   )}
                 >
@@ -149,6 +153,25 @@ export default function CampusResultPage() {
                 </div>
               ))}
             </div>
+            {coding.length > 0 && (
+              <ul className="mt-4 space-y-1.5 text-sm">
+                {coding.map(({ q, i }) => (
+                  <li key={q.questionId} className="flex items-center justify-between gap-3 rounded-lg bg-secondary/40 px-3 py-2">
+                    <span className="font-semibold text-foreground">Q{i + 1} · Coding</span>
+                    <span className="text-muted-foreground">
+                      {q.pending ? 'Grading pending'
+                        : !q.attempted ? 'Not answered'
+                        : `${q.testsPassed}/${q.testsTotal} tests passed · +${q.marksAwarded}`}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {gradingPending && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Some code hasn't been graded yet because the code judge was busy. Those questions count as 0 until your faculty grades them — your score will update.
+              </p>
+            )}
           </section>
         </>
       )}

@@ -2,16 +2,32 @@ import { useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { ArrowLeft, Check, Plus, Trash2, X } from 'lucide-react';
+import { ArrowLeft, Check, Code2, EyeOff, Plus, Trash2, X } from 'lucide-react';
 import { api, del, patch, post } from '@/api/client';
-import type { Question, TestDetail } from '@/api/types';
+import type { CodeLanguage, CompareMode, Question, TestDetail } from '@/api/types';
 import { ErrorNote, Field, Loading, PageHeader } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer' };
+const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer', coding: 'Coding' };
+
+const LANGUAGES: Array<{ id: CodeLanguage; label: string }> = [
+  { id: 'python', label: 'Python' }, { id: 'java', label: 'Java' }, { id: 'javascript', label: 'JavaScript' },
+];
+// The judge calls the student's function with each test's named inputs, so
+// parameter names in the starter code must match the test inputs.
+const STARTER: Record<CodeLanguage, string> = {
+  python: 'class Solution:\n    def solve(self, nums):\n        pass\n',
+  java: 'class Solution {\n    public int solve(int[] nums) {\n        \n    }\n}\n',
+  javascript: '/**\n * @param {number[]} nums\n * @return {number}\n */\nfunction solve(nums) {\n  \n}\n',
+};
+const COMPARE_LABEL: Record<CompareMode, string> = {
+  exact: 'Exact output',
+  unordered: 'Any order (list items)',
+  unordered_deep: 'Any order (nested lists too)',
+};
 
 export default function TestEditor() {
   const { orgId, testId } = useParams();
@@ -76,6 +92,7 @@ export default function TestEditor() {
                   </ul>
                 )}
                 {q.type === 'nat' && <p className="mt-2 text-sm font-medium text-success">Answer: {q.natAnswer}{q.natTolerance ? ` ± ${q.natTolerance}` : ''}</p>}
+                {q.type === 'coding' && <CodingSummary q={q} />}
                 <p className="mt-2 text-xs text-muted-foreground">
                   {TYPE_LABEL[q.type]} · {q.marks} {q.marks === 1 ? 'mark' : 'marks'}{q.negativeMarks ? ` · −${q.negativeMarks} if wrong` : ''}
                 </p>
@@ -93,6 +110,100 @@ export default function TestEditor() {
   );
 }
 
+function CodingSummary({ q }: { q: Question }) {
+  const tests = q.tests ?? [];
+  const samples = tests.filter((t) => t.isSample).length;
+  return (
+    <div className="mt-2 space-y-2 text-sm">
+      <p className="text-muted-foreground">
+        <Code2 className="mr-1 inline h-3.5 w-3.5" aria-hidden />
+        {LANGUAGES.filter((l) => q.starterCode?.[l.id] !== undefined).map((l) => l.label).join(', ')}
+        {' · '}{samples} sample, {tests.length - samples} hidden {tests.length - samples === 1 ? 'test' : 'tests'}
+        {' · '}{COMPARE_LABEL[q.compare ?? 'exact']}
+      </p>
+      <ul className="space-y-1 font-mono text-xs">
+        {tests.map((t, i) => (
+          <li key={i} className="flex flex-wrap items-center gap-2">
+            {!t.isSample && <EyeOff className="h-3.5 w-3.5 text-muted-foreground" aria-label="Hidden from students" />}
+            <span>{t.input}</span><span className="text-muted-foreground">→</span><span className="text-success">{t.expected}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+type TestRow = { input: string; expected: string; isSample: boolean };
+
+function CodingFields({ starter, setStarter, compare, setCompare, tests, setTests }: {
+  starter: Partial<Record<CodeLanguage, string>>; setStarter: (s: Partial<Record<CodeLanguage, string>>) => void;
+  compare: CompareMode; setCompare: (c: CompareMode) => void;
+  tests: TestRow[]; setTests: (t: TestRow[]) => void;
+}) {
+  const toggleLang = (l: CodeLanguage) => {
+    const next = { ...starter };
+    if (next[l] !== undefined) delete next[l]; else next[l] = STARTER[l];
+    setStarter(next);
+  };
+  const setTest = (i: number, patch: Partial<TestRow>) => setTests(tests.map((t, j) => (j === i ? { ...t, ...patch } : t)));
+  return (
+    <div className="space-y-4">
+      <fieldset>
+        <legend className="text-sm font-medium">Languages students may use</legend>
+        <div className="mt-2 flex flex-wrap gap-4 text-sm">
+          {LANGUAGES.map((l) => (
+            <label key={l.id} className="flex items-center gap-2">
+              <input type="checkbox" checked={starter[l.id] !== undefined} onChange={() => toggleLang(l.id)} className="h-4 w-4 accent-[var(--color-primary)]" />
+              {l.label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      {LANGUAGES.filter((l) => starter[l.id] !== undefined).map((l) => (
+        <Field key={l.id} label={`${l.label} starter code`} htmlFor={`q-starter-${l.id}`}
+          hint="Students start from this. Keep the function name and parameter names — tests call it with them.">
+          <Textarea id={`q-starter-${l.id}`} rows={6} spellCheck={false} className="font-mono text-xs"
+            value={starter[l.id]} onChange={(e) => setStarter({ ...starter, [l.id]: e.target.value })} />
+        </Field>
+      ))}
+
+      <Field label="How answers are compared" htmlFor="q-compare">
+        <select id="q-compare" value={compare} onChange={(e) => setCompare(e.target.value as CompareMode)} className="rounded-md border bg-card px-3 py-2 text-sm">
+          {(Object.keys(COMPARE_LABEL) as CompareMode[]).map((c) => <option key={c} value={c}>{COMPARE_LABEL[c]}</option>)}
+        </select>
+      </Field>
+
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-medium">Test cases <span className="font-normal text-muted-foreground">— inputs as <code>name = value</code>, e.g. <code>nums = [2,7,11,15], target = 9</code>. Samples are shown to students; the rest stay hidden. Marks are split across all tests.</span></legend>
+        {tests.map((t, i) => (
+          <div key={i} className="flex flex-wrap items-center gap-2">
+            <Input value={t.input} placeholder="Input, e.g. nums = [1,2,3]" aria-label={`Test ${i + 1} input`} className="min-w-48 flex-1 font-mono text-xs"
+              onChange={(e) => setTest(i, { input: e.target.value })} />
+            <Input value={t.expected} placeholder="Expected output" aria-label={`Test ${i + 1} expected output`} className="w-48 font-mono text-xs"
+              onChange={(e) => setTest(i, { expected: e.target.value })} />
+            <label className="flex items-center gap-1 text-sm">
+              <input type="checkbox" checked={t.isSample} onChange={(e) => setTest(i, { isSample: e.target.checked })} className="h-4 w-4 accent-[var(--color-primary)]" />
+              Sample
+            </label>
+            {tests.length > 1 && (
+              <Button type="button" size="icon" variant="ghost" aria-label={`Remove test ${i + 1}`}
+                onClick={() => setTests(tests.filter((_, j) => j !== i))}><X className="h-4 w-4" /></Button>
+            )}
+          </div>
+        ))}
+        {tests.length < 50 && (
+          <Button type="button" variant="ghost" size="sm" onClick={() => setTests([...tests, { input: '', expected: '', isSample: false }])}>
+            <Plus className="mr-1 h-4 w-4" /> Add test
+          </Button>
+        )}
+      </fieldset>
+    </div>
+  );
+}
+
+const NEW_TESTS: TestRow[] = [{ input: '', expected: '', isSample: true }, { input: '', expected: '', isSample: false }];
+
 function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId: string; onAdded: () => void; number: number }) {
   const [type, setType] = useState<Question['type']>('mcq');
   const [body, setBody] = useState('');
@@ -102,11 +213,20 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
   const [natTolerance, setNatTolerance] = useState('0');
   const [marks, setMarks] = useState('1');
   const [negative, setNegative] = useState('0');
+  const [starter, setStarter] = useState<Partial<Record<CodeLanguage, string>>>({ python: STARTER.python, java: STARTER.java });
+  const [compare, setCompare] = useState<CompareMode>('exact');
+  const [tests, setTests] = useState<TestRow[]>(NEW_TESTS);
 
-  const reset = () => { setBody(''); setOptions(['', '', '', '']); setCorrect([]); setNatAnswer(''); setNatTolerance('0'); };
+  const reset = () => { setBody(''); setOptions(['', '', '', '']); setCorrect([]); setNatAnswer(''); setNatTolerance('0'); setTests(NEW_TESTS); };
   const add = useMutation({
     mutationFn: () => {
       const filled = options.map((o, i) => ({ o: o.trim(), i })).filter((x) => x.o);
+      if (type === 'coding') {
+        return post(`/orgs/${orgId}/tests/${testId}/questions`, {
+          type, body, marks: Number(marks), starterCode: starter, compare,
+          tests: tests.filter((t) => t.input.trim() && t.expected.trim()),
+        });
+      }
       return post(`/orgs/${orgId}/tests/${testId}/questions`, type === 'nat'
         ? { type, body, natAnswer: Number(natAnswer), natTolerance: Number(natTolerance), marks: Number(marks) }
         : {
@@ -122,7 +242,12 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
   const toggle = (i: number) => setCorrect((c) => type === 'mcq' ? [i] : c.includes(i) ? c.filter((x) => x !== i) : [...c, i]);
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (type !== 'nat' && correct.length === 0) { toast.error('Mark the correct answer.'); return; }
+    if (type === 'coding') {
+      const filled = tests.filter((t) => t.input.trim() && t.expected.trim());
+      if (Object.keys(starter).length === 0) { toast.error('Pick at least one language.'); return; }
+      if (filled.length === 0) { toast.error('Add at least one test case with an input and expected output.'); return; }
+      if (!filled.some((t) => t.isSample)) { toast.error('Mark at least one test as a sample so students can try their code.'); return; }
+    } else if (type !== 'nat' && correct.length === 0) { toast.error('Mark the correct answer.'); return; }
     add.mutate();
   };
 
@@ -131,7 +256,7 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-semibold">Question {number}</h2>
         <div className="flex rounded-md border p-0.5 text-sm" role="radiogroup" aria-label="Question type">
-          {(['mcq', 'msq', 'nat'] as const).map((t) => (
+          {(['mcq', 'msq', 'nat', 'coding'] as const).map((t) => (
             <button key={t} type="button" role="radio" aria-checked={type === t}
               onClick={() => { setType(t); setCorrect([]); }}
               className={`rounded px-3 py-1 ${type === t ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
@@ -145,7 +270,9 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
         <Textarea id="q-body" required rows={3} value={body} onChange={(e) => setBody(e.target.value)} />
       </Field>
 
-      {type !== 'nat' ? (
+      {type === 'coding' ? (
+        <CodingFields starter={starter} setStarter={setStarter} compare={compare} setCompare={setCompare} tests={tests} setTests={setTests} />
+      ) : type !== 'nat' ? (
         <fieldset className="space-y-2">
           <legend className="text-sm font-medium">Options <span className="font-normal text-muted-foreground">— {type === 'mcq' ? 'tick the one correct answer' : 'tick every correct answer'}</span></legend>
           {options.map((o, i) => (

@@ -84,29 +84,40 @@ export function useLockdown({ policy, active, onEvent, onBlocked }: Options) {
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('blur', onBlur);
 
+    // Capture phase, and stop the event there: the code editor (Monaco) handles
+    // clipboard and right-click itself, so a bubbling listener would be too late.
     const block = (type: ProctoringEvent) => (e: Event) => {
       e.preventDefault();
+      e.stopPropagation();
       onBlockedRef.current?.(type);
       report(type);
     };
     const onCopy = block('copy');
     const onPaste = block('paste');
     const onMenu = block('context_menu');
+    // Dropping text into the page is pasting by another name.
+    const onDrop = (e: DragEvent) => { if (e.dataTransfer?.types.includes('text/plain')) onPaste(e); };
+    const onDragOver = (e: DragEvent) => e.preventDefault();
+    const capture = { capture: true };
     if (policy?.blockClipboard) {
-      document.addEventListener('copy', onCopy);
-      document.addEventListener('cut', onCopy);
-      document.addEventListener('paste', onPaste);
-      document.addEventListener('contextmenu', onMenu);
+      document.addEventListener('copy', onCopy, capture);
+      document.addEventListener('cut', onCopy, capture);
+      document.addEventListener('paste', onPaste, capture);
+      document.addEventListener('contextmenu', onMenu, capture);
+      document.addEventListener('drop', onDrop, capture);
+      document.addEventListener('dragover', onDragOver, capture);
     }
 
     return () => {
       clearTimeout(blurTimer);
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('blur', onBlur);
-      document.removeEventListener('copy', onCopy);
-      document.removeEventListener('cut', onCopy);
-      document.removeEventListener('paste', onPaste);
-      document.removeEventListener('contextmenu', onMenu);
+      document.removeEventListener('copy', onCopy, capture);
+      document.removeEventListener('cut', onCopy, capture);
+      document.removeEventListener('paste', onPaste, capture);
+      document.removeEventListener('contextmenu', onMenu, capture);
+      document.removeEventListener('drop', onDrop, capture);
+      document.removeEventListener('dragover', onDragOver, capture);
     };
   }, [enabled, policy?.blockClipboard, report]);
 
