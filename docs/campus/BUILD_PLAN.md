@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 358 done, 265 partly, 1,275 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 360 done, 263 partly, 1,275 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -27,7 +27,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 |---|---|---|
 | **B1 · Coding questions in Campus tests** ✅ *built; migration not yet applied to the live DB* | Question type `coding` with test cases; exam screen embeds the A1 editor; scored by the shared judge; partial marks per test | A1, `packages/judge`, `assessment-core`, Campus exam screen |
 | B2 · Question pools & per-student extra time | Draw N of M per attempt; `attempt_overrides` | `buildAttemptOrder` |
-| B3 · Section timers & locking | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
+| **B3 · Section timers & locking** ✅ *built (Campus); migration not yet applied* | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
 | B4 · College question import | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
 | B5 · Live invigilator board | Supabase Realtime over `proctoring_events` | proctoring events |
 
@@ -152,3 +152,25 @@ to the server and catches a wrong answer, Submit accepted 6/6 with XP, JavaScrip
 
 **Left for later:** C (LeetCode-style C signatures pass arrays as pointer + size — needs its own harness), `pair`,
 `map`, linked-list/tree inputs, per-test weights.
+
+---
+
+## Slice B3 — timed, locked sections (Campus) — built
+
+- **Rules** (`assessment-core/sections.ts`): one section at a time; when its time is up the next starts *at that
+  moment* (being offline buys nothing); finishing early forfeits the rest; never past the attempt deadline.
+- **Data** (`20261013000001_campus_section_timing.sql`): `test_attempts.current_section`, `section_started_at`; a
+  question can only sit in a section of its own test (trigger); section durations 1 min–24 h.
+- **API:** section CRUD, move questions, the "timed sections" switch, publish refuses incomplete setups. An attempt
+  snapshots its sections at start and lasts their sum; only the current section's questions are sent; answers
+  elsewhere get 423; automatic and early (`POST /my/attempts/:id/sections/finish`) moves. `/my/assignments` lists the
+  section plan.
+- **UI:** instructions list the sections; exam shows "Section n of m", the section clock, "Finish section" with a
+  no-going-back confirmation, and moves on by itself. Portal: Sections panel, switch, grouping, section mover/picker.
+
+**Verified:** assessment-core 59 tests (7 new); SQL checks (5 new, mutation-tested); Campus API 35 (5 new: build,
+publish rules, plan shown, current-section-only + 423, automatic move, finish last → submit); browser: full student
+flow including the clock running out, portal panel.
+
+**Not covered:** the Forge Test Series CBT (`apps/web` test series) still ignores section timing — it has 0 live
+tests; port when it gets content.

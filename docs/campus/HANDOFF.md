@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (358 done, 265 partly, 1,275 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (360 done, 263 partly, 1,275 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -24,7 +24,9 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | In-app coding practice `/problems/:slug` + server judge (BUILD_PLAN slice A1) | ✅ built, browser-verified |
 | Coding questions in Campus tests (slice B1): shared `packages/judge`, portal form, exam editor, partial marks, regrade | ✅ built, browser-verified |
 | C++ on the judge (slice A2): practice (server Run + Submit) and Campus coding questions; forged-result fix | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging.sql`, `20261011000001_campus_coding_questions.sql`, `20261012000001_problem_cpp_starters.sql` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Judge: hidden expected outputs never reach learner programs (Java leak fixed) | ✅ |
+| Timed, locked sections in Campus tests (slice B3) | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review), then B2–B5 (§8.3) |
@@ -185,12 +187,12 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 
 ```bash
 pnpm install                         # builds packages/assessment-core via prepare
-pnpm --filter @repo/assessment-core test   # 52 tests
-pnpm --filter @repo/judge test             # 22 tests (runs real node/python3/java/g++)
+pnpm --filter @repo/assessment-core test   # 59 tests
+pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 89 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 3 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 30 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 35 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -237,6 +239,9 @@ select has_table_privilege('anon', 'public.question_test_cases', 'select');     
 Existing question rows are untouched (the migration only widens checks and adds columns with defaults).
 
 Then `20261012000001_problem_cpp_starters`: `select count(*) from public.problems where starter_code ? 'cpp';` → 8.
+
+Then `20261013000001_campus_section_timing`: `test_attempts` has `current_section`, `section_started_at`;
+`select tgname from pg_trigger where tgname = 'test_questions_section_matches';` → 1 row.
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a

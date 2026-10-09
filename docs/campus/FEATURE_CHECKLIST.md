@@ -34,7 +34,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 25 | 9 | 24 | 58 |
 | 10 | Coding Practice Platform | 13 | 10 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 29 | 8 | 20 | 57 |
+| 12 | Assessment Engine | 31 | 6 | 20 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **358** (19%) | **265** (14%) | **1275** (67%) | **1898** |
+| | **All modules** | **360** (19%) | **263** (14%) | **1275** (67%) | **1898** |
 
 ---
 
@@ -552,7 +552,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Difficulty-Based Selection
 - [x] Negative Marking — per question
 - [x] Partial Marking — coding questions: marks × tests passed / total (B1); MSQ stays all-or-nothing
-- [ ] 🟡 Section Time Limits — `test_sections.duration_seconds` column; not enforced in the exam UI
+- [x] Section Time Limits — Campus: each timed section has its own server-enforced clock (B3); Forge Test Series CBT not yet
 - [x] Global Time Limits
 - [x] Question Navigation — palette
 - [x] Question Flagging — mark for review
@@ -563,7 +563,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Attempt Limits — `max_attempts`
 - [x] Retake Policies — attempts up to the limit, Retake button
 - [ ] Question Dependencies
-- [ ] 🟡 Section Locking — `tests.section_time_locked` column; not enforced
+- [x] Section Locking — Campus: one section at a time, no going back; only the current section's questions are sent (B3)
 - [x] Randomized Question Sets — different order per student
 - [ ] Multiple Assessment Versions
 - [x] Test Scheduling — assignment scheduling in portal
