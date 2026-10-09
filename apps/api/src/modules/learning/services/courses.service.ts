@@ -16,7 +16,8 @@ export class CoursesService {
             const params: any[] = [];
             
             if (!includeUnpublished) {
-                queryStr += ' WHERE c.is_published = true';
+                // The public catalogue: published, not deleted, and public (college courses stay with their college).
+                queryStr += " WHERE c.is_published = true AND c.deleted_at IS NULL AND c.visibility = 'public'";
             }
             
             queryStr += ' ORDER BY c.order_index ASC, c.created_at DESC';

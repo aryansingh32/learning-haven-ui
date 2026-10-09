@@ -136,7 +136,7 @@ export class PaymentsV2Service {
     const courseRes = await pool.query(
       `SELECT id, title, price, currency, is_individually_purchasable
          FROM public.courses
-         WHERE id =  AND is_published = true`,
+         WHERE id = $1 AND is_published = true`,
       [courseId]
     );
     if (courseRes.rows.length === 0) throw new Error('Course not found or not published');
@@ -148,8 +148,8 @@ export class PaymentsV2Service {
     // 2. Check if already entitled
     const entitled = await pool.query(
       `SELECT 1 FROM public.user_entitlements
-         WHERE user_id =  AND feature_key = 'course_access'
-           AND resource_type = 'course' AND resource_id =  AND bool_value = true`,
+         WHERE user_id = $1 AND feature_key = 'course_access'
+           AND resource_type = 'course' AND resource_id = $2 AND bool_value = true`,
       [userId, courseId]
     );
     if (entitled.rows.length > 0) throw new Error('You already have access to this course');
@@ -189,7 +189,7 @@ export class PaymentsV2Service {
       `INSERT INTO public.payments (
            user_id, plan_id, amount, discount_amount, tax_amount, final_amount,
            status, razorpay_order_id, coupon_id, coupon_code, billing_cycle, description, metadata
-         ) VALUES (, NULL, , , , , , , , , 0, 1, 2)
+         ) VALUES ($1, NULL, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
          RETURNING id`,
       [
         userId, course.price, discountAmount, gstInfo.gst_amount, finalAmountInPaise,

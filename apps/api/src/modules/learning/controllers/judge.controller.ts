@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { CompareMode, isCompareMode } from '@repo/assessment-core';
 import { AuthRequest } from '../../../middleware/auth';
 import logger from '../../../config/logger';
-import { EntitlementsRepository } from '../../entitlements/entitlements.repository';
+import { CourseAccessService } from '../services/courseAccess.service';
 import {
     functionHint, JUDGED_LANGUAGES, judgeSolution, JudgeUnavailableError,
 } from '../../execution/services/problemJudge.service';
@@ -19,10 +19,9 @@ const judgeBody = z.object({
 
 const statusBody = z.object({ status: z.enum(['solved', 'tried', 'revision']) });
 
-/** Premium problems need any paid plan (the plan lives in entitlements, not on req.user). */
+/** Premium problems need any paid plan — the same rule as premium courses. */
 export async function hasPaidPlan(userId: string): Promise<boolean> {
-    const info = await EntitlementsRepository.getUserPlanAndEntitlements(userId);
-    return Boolean(info.planSlug) && info.planSlug !== 'free';
+    return CourseAccessService.hasPaidPlan(userId);
 }
 
 export class JudgeController {

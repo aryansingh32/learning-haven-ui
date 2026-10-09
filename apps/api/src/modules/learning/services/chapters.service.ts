@@ -1,3 +1,4 @@
+import { CourseAccessService } from './courseAccess.service';
 import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
 import { updateStreak } from '../../../utils/streak';
@@ -137,13 +138,13 @@ export class ChaptersService {
                 'SELECT * FROM public.chapter_content WHERE chapter_id = $1',
                 [chapterId]
             );
-            const content = contentResult.rows[0];
+            let content = contentResult.rows[0];
 
             const stepsResult = await pool.query(
                 'SELECT * FROM public.steps WHERE chapter_id = $1 ORDER BY step_number ASC',
                 [chapterId]
             );
-            const steps = stepsResult.rows;
+            let steps = stepsResult.rows;
 
             const progressResult = await pool.query(
                 'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = $2',
@@ -175,29 +176,31 @@ export class ChaptersService {
 
             const { data: user } = await supabase
                 .from('users')
-                .select('full_name, streak_count, skip_tokens_remaining, current_plan')
+                .select('full_name, streak_count, skip_tokens_remaining')
                 .eq('id', userId)
                 .maybeSingle();
 
-            const { data: course } = await supabase
-                .from('courses')
-                .select('is_premium')
-                .eq('id', chapter.course_id)
-                .maybeSingle();
+            const course = chapter.course_id ? await CourseAccessService.loadCourse(chapter.course_id) : null;
+            // College courses and drafts: only for the people they're meant for.
+            if (course && !(await CourseAccessService.canSeeCourse(userId, course))) {
+                throw new Error('Chapter not found');
+            }
 
-            // Paywall logic
-            const isFreeUser = user?.current_plan === 'free';
-            const isPremiumCourse = course?.is_premium === true;
-            
-            // If premium course, free users can't access ANY chapters (unless completed previously)
-            // They also can't even see chapter > 4.
-            if (isPremiumCourse && isFreeUser) {
+            // Paywall: premium chapters need a paid plan, the course itself, or a college licence.
+            // Without access, chapters past 4 don't exist for you and earlier ones show only their title.
+            let paywalled = false;
+            if (course?.is_premium && !(await CourseAccessService.hasPremiumAccess(userId, course))) {
                 if (chapter.chapter_number > 4) {
                     throw new Error('Chapter not found');
                 }
                 if (progress?.status !== 'COMPLETED') {
                     progress = { ...progress, status: 'LOCKED_PAYWALL' };
+                    paywalled = true;
                 }
+            }
+            if (paywalled) {
+                content = null;
+                steps = [];
             }
 
             const celebration = ChaptersService.buildCelebrationMeta(chapter, steps);
@@ -241,6 +244,8 @@ export class ChaptersService {
     }
 
     static async getCourseChaptersForUser(userId: string, courseId: string) {
+        const course = await CourseAccessService.loadCourse(courseId);
+        if (!course || !(await CourseAccessService.canSeeCourse(userId, course))) throw new Error('Course not found');
         try {
             const chaptersResult = await pool.query(
                 'SELECT * FROM public.chapters WHERE course_id = $1 ORDER BY chapter_number ASC',
@@ -277,20 +282,8 @@ export class ChaptersService {
                 progressByChapter.set(row.chapter_id, row);
             });
 
-            const { data: user } = await supabase
-                .from('users')
-                .select('current_plan')
-                .eq('id', userId)
-                .maybeSingle();
-
-            const { data: course } = await supabase
-                .from('courses')
-                .select('is_premium')
-                .eq('id', courseId)
-                .maybeSingle();
-
-            const isFreeUser = user?.current_plan === 'free';
             const isPremiumCourse = course?.is_premium === true;
+            const isFreeUser = isPremiumCourse && !(await CourseAccessService.hasPremiumAccess(userId, course!));
 
             return chapters.map(chapter => {
                 const prog = progressByChapter.get(chapter.id);

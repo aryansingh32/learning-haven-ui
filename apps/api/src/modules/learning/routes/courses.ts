@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CoursesController } from '../controllers/courses.controller';
-import { authenticateUser } from '../../../middleware/auth';
+import { authenticateUser, optionalAuth } from '../../../middleware/auth';
 import { ChaptersService } from '../services/chapters.service';
 import { accessService } from '../../entitlements/access.service';
 
@@ -47,6 +47,7 @@ router.get('/:courseId/chapters', authenticateUser, async (req: any, res: any) =
         const chapters = await ChaptersService.getCourseChaptersForUser(userId, courseId);
         return res.json({ chapters });
     } catch (error: any) {
+        if (error?.message === 'Course not found') return res.status(404).json({ error: 'Course not found' });
         return res.status(500).json({ error: error.message || 'Failed to fetch course chapters' });
     }
 });
@@ -56,6 +57,6 @@ router.get('/:courseId/chapters', authenticateUser, async (req: any, res: any) =
  * @desc    Get course detail with items
  * @access  Public
  */
-router.get('/:idOrSlug', CoursesController.getCourse);
+router.get('/:idOrSlug', optionalAuth, CoursesController.getCourse);
 
 export default router;

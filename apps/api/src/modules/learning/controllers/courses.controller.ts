@@ -1,3 +1,4 @@
+import { CourseAccessService } from '../services/courseAccess.service';
 import { Request, Response } from 'express';
 import { CoursesService } from '../services/courses.service';
 import logger from '../../../config/logger';
@@ -22,6 +23,12 @@ export class CoursesController {
     static async getCourse(req: Request, res: Response) {
         try {
             const course = await CoursesService.getCourse(req.params.idOrSlug as string);
+            // Drafts and college courses are only for the people they're meant for.
+            const userId = (req as any).user?.id as string | undefined;
+            const isAdmin = ['admin', 'super_admin'].includes((req as any).user?.role);
+            if (!course || (!isAdmin && !(await CourseAccessService.canSeeCourse(userId, course)))) {
+                return res.status(404).json({ error: 'Course not found' });
+            }
             res.json(course);
         } catch (error) {
             logger.error('Get course error:', error);

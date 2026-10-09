@@ -15,6 +15,16 @@ jest.mock('../modules/learning/services/status.service', () => ({
 jest.mock('../modules/learning/services/submissionHistory.service', () => ({
   SubmissionHistoryService: { record: jest.fn(), list: jest.fn() },
 }));
+// The shared paid-plan rule (tested in courseAccess.test.ts), driven by the entitlements mock here.
+jest.mock('../modules/learning/services/courseAccess.service', () => ({
+  CourseAccessService: {
+    hasPaidPlan: async (userId: string) => {
+      const { EntitlementsRepository } = jest.requireMock('../modules/entitlements/entitlements.repository');
+      const info = await EntitlementsRepository.getUserPlanAndEntitlements(userId);
+      return Boolean(info.planSlug) && info.planSlug !== 'free';
+    },
+  },
+}));
 jest.mock('../modules/entitlements/entitlements.repository', () => ({
   EntitlementsRepository: { getUserPlanAndEntitlements: jest.fn() },
 }));
