@@ -68,6 +68,9 @@ export default function Settings() {
         </Field>
         <Button type="submit" disabled={save.isPending}>Save settings</Button>
       </form>}
+      <p className="mt-6 max-w-xl text-sm text-muted-foreground">
+        Your college's short name is <code className="rounded bg-secondary px-1.5 py-0.5 text-foreground">{org.data!.slug}</code>. Give it to another college that wants to share tests with you.
+      </p>
       <DefaultsForm orgId={orgId!} />
     </>
   );

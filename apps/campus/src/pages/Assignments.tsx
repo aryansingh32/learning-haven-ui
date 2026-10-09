@@ -58,7 +58,7 @@ export default function Assignments() {
                 return (
                   <tr key={a.id} className="hover:bg-accent/40">
                     <td className="px-4 py-3">
-                      <Link to={can('reports.view') ? a.id : `${a.id}/live`} className="font-medium hover:underline">{a.title}</Link>
+                      <Link to={can('reports.view') ? a.id : can('assessments.invigilate') ? `${a.id}/live` : `${a.id}/marking`} className="font-medium hover:underline">{a.title}</Link>
                       <p className="text-xs text-muted-foreground">
                         {a.batchName}{a.sectionName ? ` · Section ${a.sectionName}` : ''} · {a.testTitle ?? 'Test'}
                         {Object.keys(a.eligibility ?? {}).length > 0 && <> · <span className="font-medium text-foreground">{eligibilityText(a.eligibility)}</span></>}
@@ -120,6 +120,7 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
   const [minTenth, setMinTenth] = useState('');
   const [minTwelfth, setMinTwelfth] = useState('');
   const [deptIds, setDeptIds] = useState<string[]>([]);
+  const [versions, setVersions] = useState('1');
 
   const [testId, setTestId] = useState('');
   const [batchId, setBatchId] = useState('');
@@ -158,12 +159,12 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
     departmentIds: deptIds.length ? deptIds : undefined,
   }).filter(([, v]) => v !== undefined)) : {};
 
-  const usable = (tests.data ?? []).filter((t) => t.questionCount > 0 && (t.source === 'forge' || t.published));
+  const usable = (tests.data ?? []).filter((t) => t.questionCount > 0 && (t.source !== 'college' || t.published));
   const chosen = usable.find((t) => t.id === testId);
 
   const create = useMutation({
     mutationFn: (publish: boolean) => post(`/orgs/${orgId}/assignments`, {
-      testId, batchId, sectionId: sectionId || null, eligibility, title: title || chosen?.title, instructions: instructions || null,
+      testId, batchId, sectionId: sectionId || null, eligibility, paperVersions: Number(versions), title: title || chosen?.title, instructions: instructions || null,
       opensAt: new Date(opensAt).toISOString(), closesAt: new Date(closesAt).toISOString(),
       durationMinutes: duration ? Number(duration) : null, maxAttempts: Number(maxAttempts),
       shuffleQuestions: shuffle, shuffleOptions: shuffle, resultRelease: release, publish,
@@ -188,7 +189,7 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
             <Field label="Test" htmlFor="as-test" hint={usable.length === 0 ? 'Publish a test with questions first, or use one from the Forge library.' : undefined}>
               <select id="as-test" required value={testId} onChange={(e) => setTestId(e.target.value)} className="w-full rounded-md border bg-card px-3 py-2 text-sm">
                 <option value="" disabled>Choose a test</option>
-                {usable.map((t) => <option key={t.id} value={t.id}>{t.source === 'forge' ? 'Forge · ' : ''}{t.title} ({t.questionCount} Q, {t.durationMinutes} min)</option>)}
+                {usable.map((t) => <option key={t.id} value={t.id}>{t.source === 'forge' ? 'Forge · ' : t.source === 'shared' ? `${t.sharedBy ?? 'Shared'} · ` : ''}{t.title} ({t.questionCount} Q, {t.durationMinutes} min)</option>)}
               </select>
             </Field>
             <Field label="Batch" htmlFor="as-batch">
@@ -229,6 +230,11 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
             </Field>
 
             <div className="space-y-3 rounded-md border p-4">
+              <Field label="Paper versions" htmlFor="as-versions" hint="With 2–4, students are dealt papers A, B, C… in roll-number order; everyone on a version gets the same questions in the same order.">
+                <select id="as-versions" value={versions} onChange={(e) => setVersions(e.target.value)} className="w-40 rounded-md border bg-card px-3 py-2 text-sm">
+                  <option value="1">Off (own order each)</option><option value="2">2 (A, B)</option><option value="3">3 (A–C)</option><option value="4">4 (A–D)</option>
+                </select>
+              </Field>
               <div className="flex items-center justify-between gap-4">
                 <label htmlFor="as-shuffle" className="text-sm"><span className="font-medium">Shuffle questions and options</span><br /><span className="text-muted-foreground">Each student gets a different order.</span></label>
                 <Switch id="as-shuffle" checked={shuffle} onCheckedChange={setShuffle} />

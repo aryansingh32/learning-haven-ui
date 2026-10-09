@@ -516,10 +516,15 @@ testsRouter.get('/:testId/shares', async (req, res) => {
   const orgId = orgIdOf(req);
   const testId = uuid.parse(req.params.testId);
   await requirePermission(userId, orgId, 'content.create');
-  res.json(await asUser(userId, async (db) => (await db.query(
-    `select s.org_id as "orgId", o.name, o.slug, s.created_at as "sharedAt"
-       from campus.test_shares s join campus.organizations o on o.id = s.org_id
-      where s.test_id = $1 and s.owner_org_id = $2 order by o.name`, [testId, orgId])).rows));
+  const shares = await asUser(userId, async (db) => (await db.query<{ org_id: string; created_at: string }>(
+    `select org_id, created_at from campus.test_shares where test_id = $1 and owner_org_id = $2`, [testId, orgId])).rows);
+  // Other colleges' rows are hidden by RLS; their names are read by the ids just proven.
+  const orgs = shares.length === 0 ? [] : await asSystem(async (db) => (await db.query<{ id: string; name: string; slug: string }>(
+    `select id, name, slug from campus.organizations where id = any($1::uuid[])`, [shares.map((x) => x.org_id)])).rows);
+  res.json(shares.map((x) => {
+    const o = orgs.find((y) => y.id === x.org_id);
+    return { orgId: x.org_id, name: o?.name ?? null, slug: o?.slug ?? null, sharedAt: x.created_at };
+  }).sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 });
 
 const shareBody = z.object({ slug: z.string().trim().toLowerCase().min(2).max(63) });

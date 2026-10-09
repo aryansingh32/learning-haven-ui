@@ -860,10 +860,12 @@ export async function setAttemptFeedback(attemptId: string, feedback: string | n
 export async function markingQuestions(testId: string) {
   return asSystem(async (db) => (await db.query<{
     id: string; type: string; body: string; marks: string; rubric: string | null; text_answers: string[] | null; max_words: number | null;
-    judge_config: { caseSensitive?: boolean };
+    judge_config: { caseSensitive?: boolean }; number: number;
   }>(
-    `select q.id, q.question_type as type, q.body, q.marks, q.rubric, q.text_answers, q.max_words, q.judge_config
-       from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
-      where tq.test_id = $1 and q.question_type in ('descriptive', 'fib')
-      order by tq.sort_order, q.created_at`, [testId])).rows);
+    `select * from (
+       select q.id, q.question_type as type, q.body, q.marks, q.rubric, q.text_answers, q.max_words, q.judge_config,
+              row_number() over (order by tq.sort_order, q.created_at)::int as number
+         from public.test_questions tq join public.testseries_questions q on q.id = tq.question_id
+        where tq.test_id = $1) x
+      where x.type in ('descriptive', 'fib') order by x.number`, [testId])).rows);
 }

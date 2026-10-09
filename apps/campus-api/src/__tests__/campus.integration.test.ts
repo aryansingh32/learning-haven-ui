@@ -1039,6 +1039,8 @@ describe('question types, marking and sharing (C2a)', () => {
     expect((await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares`).set(await as(U.facultyA)).send({ slug: 'nope' })).status).toBe(404);
     const share = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares`).set(await as(U.facultyA)).send({ slug: 'college-b' });
     expect(share.status).toBe(201);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/tests/${qTest}/shares`).set(await as(U.facultyA))).body)
+      .toEqual([expect.objectContaining({ orgId: ORG_B, name: 'College B', slug: 'college-b' })]);
     const bList = (await request(app).get(`/campus/v1/orgs/${ORG_B}/tests`).set(await as(U.facultyB))).body;
     expect(bList.find((t: { id: string }) => t.id === qTest)).toMatchObject({ source: 'shared', sharedBy: 'College A', questionCount: 3 });
     // College B can't read the answers of the shared test…

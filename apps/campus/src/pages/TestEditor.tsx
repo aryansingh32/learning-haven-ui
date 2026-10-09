@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { ArrowLeft, Check, Clock, Code2, EyeOff, Layers, Plus, Trash2, X } from 'lucide-react';
+import { ArrowLeft, Check, Clock, Code2, EyeOff, Layers, Plus, Share2, Tag, Trash2, X } from 'lucide-react';
 import { api, del, patch, post } from '@/api/client';
 import type { CodeLanguage, CompareMode, Question, TestDetail, TestSection } from '@/api/types';
 import { ErrorNote, Field, Loading, PageHeader } from '@/components/common';
@@ -13,7 +13,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { ImportQuestions } from '@/components/ImportQuestions';
 
-const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer', coding: 'Coding' };
+const TYPE_LABEL: Record<Question['type'], string> = {
+  mcq: 'Single choice', msq: 'Multiple choice', tf: 'True / false', nat: 'Numeric answer', fib: 'Fill in the blank', descriptive: 'Written answer', coding: 'Coding',
+};
+const TYPES: Array<Question['type']> = ['mcq', 'msq', 'tf', 'nat', 'fib', 'descriptive', 'coding'];
+const WITH_NEGATIVE = new Set<Question['type']>(['mcq', 'tf', 'fib']);
 
 const LANGUAGES: Array<{ id: CodeLanguage; label: string }> = [
   { id: 'python', label: 'Python' }, { id: 'java', label: 'Java' }, { id: 'cpp', label: 'C++' }, { id: 'javascript', label: 'JavaScript' },
@@ -37,6 +41,7 @@ export default function TestEditor() {
   const qc = useQueryClient();
   const key = ['test', orgId, testId];
   const test = useQuery({ queryKey: key, queryFn: () => api<TestDetail>(`/orgs/${orgId}/tests/${testId}`) });
+  const [tagFilter, setTagFilter] = useState<string | null>(null);
   const refresh = () => { qc.invalidateQueries({ queryKey: key }); qc.invalidateQueries({ queryKey: ['tests', orgId] }); };
 
   const publish = useMutation({
@@ -69,10 +74,12 @@ export default function TestEditor() {
     Math.min(t.sections.length ? Infinity : t.drawCount ?? Infinity, t.questions.filter((q) => !q.sectionId || !t.sections.some((x) => x.id === q.sectionId)).length),
   ].reduce((a, b) => a + b, 0);
   const timedMinutes = t.sections.reduce((s, x) => s + (x.durationMinutes ?? 0), 0);
+  const allTags = [...new Set(t.questions.flatMap((q) => q.tags ?? []))].sort();
+  const shown = (q: Question) => !tagFilter || (q.tags ?? []).includes(tagFilter);
   // Questions grouped by section, in section order; unsectioned ones last.
   const groups: Array<{ section: TestSection | null; questions: Question[] }> = [
-    ...t.sections.map((section) => ({ section, questions: t.questions.filter((q) => q.sectionId === section.id) })),
-    { section: null, questions: t.questions.filter((q) => !q.sectionId || !t.sections.some((x) => x.id === q.sectionId)) },
+    ...t.sections.map((section) => ({ section, questions: t.questions.filter((q) => q.sectionId === section.id && shown(q)) })),
+    { section: null, questions: t.questions.filter((q) => (!q.sectionId || !t.sections.some((x) => x.id === q.sectionId)) && shown(q)) },
   ].filter((g) => g.section || g.questions.length > 0);
   let number = 0;
 
@@ -97,6 +104,20 @@ export default function TestEditor() {
       {t.published && <p className="-mt-3 mb-5 text-sm text-muted-foreground">Students already taking this test keep the questions they started with; edits apply to attempts that start afterwards.</p>}
 
       <SectionsPanel orgId={orgId!} testId={testId!} test={t} onChange={refresh} />
+      <SharePanel orgId={orgId!} testId={testId!} published={t.published} />
+
+      {allTags.length > 0 && (
+        <div className="mb-4 flex flex-wrap items-center gap-1.5 text-sm" role="group" aria-label="Filter by tag">
+          <Tag className="h-4 w-4 text-muted-foreground" aria-hidden />
+          <button onClick={() => setTagFilter(null)} className={`rounded-md px-2 py-0.5 ${!tagFilter ? 'bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent'}`}>All</button>
+          {allTags.map((tag) => (
+            <button key={tag} onClick={() => setTagFilter(tag === tagFilter ? null : tag)} aria-pressed={tag === tagFilter}
+              className={`rounded-md px-2 py-0.5 ${tag === tagFilter ? 'bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent'}`}>
+              {tag} <span className="text-xs">{t.questions.filter((q) => q.tags?.includes(tag)).length}</span>
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="space-y-6">
         {groups.map((g) => (
@@ -133,6 +154,17 @@ export default function TestEditor() {
                           </ul>
                         )}
                         {q.type === 'nat' && <p className="mt-2 text-sm font-medium text-success">Answer: {q.natAnswer}{q.natTolerance ? ` ± ${q.natTolerance}` : ''}</p>}
+                        {q.type === 'fib' && (
+                          <p className="mt-2 text-sm font-medium text-success">Accepted: {(q.acceptedAnswers ?? []).join(' · ')}{q.caseSensitive ? ' (case matters)' : ''}</p>
+                        )}
+                        {q.type === 'descriptive' && (
+                          <p className="mt-2 text-sm text-muted-foreground">
+                            Marked by an evaluator{q.maxWords ? ` · up to ${q.maxWords} words` : ''}{q.rubric ? <><br /><span className="text-foreground">Rubric:</span> {q.rubric}</> : ''}
+                          </p>
+                        )}
+                        {(q.tags ?? []).length > 0 && (
+                          <p className="mt-2 flex flex-wrap gap-1">{q.tags.map((tag) => <span key={tag} className="rounded bg-secondary px-1.5 text-xs text-muted-foreground">{tag}</span>)}</p>
+                        )}
                         {q.type === 'coding' && <CodingSummary q={q} />}
                         <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                           <span>{TYPE_LABEL[q.type]} · {q.marks} {q.marks === 1 ? 'mark' : 'marks'}{q.negativeMarks ? ` · −${q.negativeMarks} if wrong` : ''}</span>
@@ -353,8 +385,18 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
   const [starter, setStarter] = useState<Partial<Record<CodeLanguage, string>>>({ python: STARTER.python, java: STARTER.java });
   const [compare, setCompare] = useState<CompareMode>('exact');
   const [tests, setTests] = useState<TestRow[]>(NEW_TESTS);
+  const [tags, setTags] = useState('');
+  const [answerTrue, setAnswerTrue] = useState<boolean | null>(null);
+  const [accepted, setAccepted] = useState('');
+  const [caseSensitive, setCaseSensitive] = useState(false);
+  const [rubric, setRubric] = useState('');
+  const [maxWords, setMaxWords] = useState('');
 
-  const reset = () => { setBody(''); setOptions(['', '', '', '']); setCorrect([]); setNatAnswer(''); setNatTolerance('0'); setTests(NEW_TESTS); };
+  const reset = () => {
+    setBody(''); setOptions(['', '', '', '']); setCorrect([]); setNatAnswer(''); setNatTolerance('0'); setTests(NEW_TESTS);
+    setAnswerTrue(null); setAccepted(''); setRubric(''); setMaxWords('');
+  };
+  const tagList = tags.split(',').map((x) => x.trim().toLowerCase()).filter(Boolean);
   // Default to the last section, so adding a run of questions to one section is quick.
   const section = sectionId === null ? null
     : sectionId && sections.some((x) => x.id === sectionId) ? sectionId
@@ -362,16 +404,26 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
   const add = useMutation({
     mutationFn: () => {
       const filled = options.map((o, i) => ({ o: o.trim(), i })).filter((x) => x.o);
+      const common = { type, body, marks: Number(marks), sectionId: section, tags: tagList };
       if (type === 'coding') {
         return post(`/orgs/${orgId}/tests/${testId}/questions`, {
-          type, body, marks: Number(marks), starterCode: starter, compare, sectionId: section,
-          tests: tests.filter((t) => t.input.trim() && t.expected.trim()),
+          ...common, starterCode: starter, compare, tests: tests.filter((t) => t.input.trim() && t.expected.trim()),
         });
       }
+      if (type === 'tf') return post(`/orgs/${orgId}/tests/${testId}/questions`, { ...common, answerTrue, negativeMarks: Number(negative) });
+      if (type === 'fib') {
+        return post(`/orgs/${orgId}/tests/${testId}/questions`, {
+          ...common, negativeMarks: Number(negative), caseSensitive,
+          acceptedAnswers: accepted.split('\n').map((a) => a.trim()).filter(Boolean),
+        });
+      }
+      if (type === 'descriptive') {
+        return post(`/orgs/${orgId}/tests/${testId}/questions`, { ...common, rubric: rubric || null, maxWords: maxWords ? Number(maxWords) : null });
+      }
       return post(`/orgs/${orgId}/tests/${testId}/questions`, type === 'nat'
-        ? { type, body, natAnswer: Number(natAnswer), natTolerance: Number(natTolerance), marks: Number(marks), sectionId: section }
+        ? { ...common, natAnswer: Number(natAnswer), natTolerance: Number(natTolerance) }
         : {
-            type, body, marks: Number(marks), negativeMarks: Number(negative), sectionId: section,
+            ...common, negativeMarks: Number(negative),
             options: filled.map((x) => x.o),
             correct: correct.map((c) => filled.findIndex((x) => x.i === c)).filter((c) => c >= 0),
           });
@@ -388,7 +440,11 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
       if (Object.keys(starter).length === 0) { toast.error('Pick at least one language.'); return; }
       if (filled.length === 0) { toast.error('Add at least one test case with an input and expected output.'); return; }
       if (!filled.some((t) => t.isSample)) { toast.error('Mark at least one test as a sample so students can try their code.'); return; }
-    } else if (type !== 'nat' && correct.length === 0) { toast.error('Mark the correct answer.'); return; }
+    } else if (type === 'tf') {
+      if (answerTrue === null) { toast.error('Say whether the statement is true or false.'); return; }
+    } else if (type === 'fib') {
+      if (!accepted.trim()) { toast.error('Add at least one accepted answer.'); return; }
+    } else if ((type === 'mcq' || type === 'msq') && correct.length === 0) { toast.error('Mark the correct answer.'); return; }
     add.mutate();
   };
 
@@ -396,8 +452,8 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
     <form onSubmit={submit} className="mt-6 space-y-4 rounded-lg border border-dashed bg-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-semibold">Question {number}</h2>
-        <div className="flex rounded-md border p-0.5 text-sm" role="radiogroup" aria-label="Question type">
-          {(['mcq', 'msq', 'nat', 'coding'] as const).map((t) => (
+        <div className="flex flex-wrap rounded-md border p-0.5 text-sm" role="radiogroup" aria-label="Question type">
+          {TYPES.map((t) => (
             <button key={t} type="button" role="radio" aria-checked={type === t}
               onClick={() => { setType(t); setCorrect([]); }}
               className={`rounded px-3 py-1 ${type === t ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
@@ -422,6 +478,28 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
 
       {type === 'coding' ? (
         <CodingFields starter={starter} setStarter={setStarter} compare={compare} setCompare={setCompare} tests={tests} setTests={setTests} />
+      ) : type === 'tf' ? (
+        <fieldset className="flex gap-4 text-sm">
+          <legend className="mb-1 text-sm font-medium">The statement is</legend>
+          <label className="flex items-center gap-1.5"><input type="radio" name="tf" checked={answerTrue === true} onChange={() => setAnswerTrue(true)} /> True</label>
+          <label className="flex items-center gap-1.5"><input type="radio" name="tf" checked={answerTrue === false} onChange={() => setAnswerTrue(false)} /> False</label>
+        </fieldset>
+      ) : type === 'fib' ? (
+        <div className="space-y-2">
+          <Field label="Accepted answers" htmlFor="q-accepted" hint="One per line. Spacing, a final full stop and (unless you tick below) capital letters are ignored.">
+            <Textarea id="q-accepted" rows={3} value={accepted} onChange={(e) => setAccepted(e.target.value)} placeholder={'photosynthesis\nphoto synthesis'} />
+          </Field>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={caseSensitive} onChange={(e) => setCaseSensitive(e.target.checked)} /> Capital letters matter (e.g. chemical formulas)</label>
+        </div>
+      ) : type === 'descriptive' ? (
+        <div className="space-y-3">
+          <Field label="Rubric (for evaluators)" htmlFor="q-rubric" hint="What earns marks. Students don't see it.">
+            <Textarea id="q-rubric" rows={3} maxLength={5000} value={rubric} onChange={(e) => setRubric(e.target.value)} placeholder="2 marks: definition · 2 marks: example · 1 mark: diagram" />
+          </Field>
+          <Field label="Word limit (optional)" htmlFor="q-words">
+            <Input id="q-words" type="number" min={1} max={5000} value={maxWords} onChange={(e) => setMaxWords(e.target.value)} className="w-32" />
+          </Field>
+        </div>
       ) : type !== 'nat' ? (
         <fieldset className="space-y-2">
           <legend className="text-sm font-medium">Options <span className="font-normal text-muted-foreground">— {type === 'mcq' ? 'tick the one correct answer' : 'tick every correct answer'}</span></legend>
@@ -450,14 +528,67 @@ function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: stri
 
       <div className="flex flex-wrap gap-4">
         <Field label="Marks" htmlFor="q-marks"><Input id="q-marks" type="number" step="0.5" min={0.5} max={100} required value={marks} onChange={(e) => setMarks(e.target.value)} className="w-24" /></Field>
-        {type === 'mcq' && (
+        {WITH_NEGATIVE.has(type) && (
           <Field label="Negative marks" htmlFor="q-neg" hint="Deducted for a wrong answer.">
             <Input id="q-neg" type="number" step="0.25" min={0} max={100} value={negative} onChange={(e) => setNegative(e.target.value)} className="w-24" />
           </Field>
         )}
       </div>
 
+      <Field label="Tags (optional)" htmlFor="q-tags" hint="Separate with commas, e.g. arrays, tcs-2025. Use them to filter and to see topic-wise results.">
+        <Input id="q-tags" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="arrays, easy" />
+      </Field>
+
       <Button type="submit" disabled={add.isPending}>Add question</Button>
     </form>
+  );
+}
+
+/** Let another college use this test (assign it, or copy it into their bank). */
+function SharePanel({ orgId, testId, published }: { orgId: string; testId: string; published: boolean }) {
+  const qc = useQueryClient();
+  const key = ['test-shares', testId];
+  const shares = useQuery({ queryKey: key, queryFn: () => api<Array<{ orgId: string; name: string; slug: string; sharedAt: string }>>(`/orgs/${orgId}/tests/${testId}/shares`) });
+  const [open, setOpen] = useState(false);
+  const [slug, setSlug] = useState('');
+  const add = useMutation({
+    mutationFn: () => post<{ name: string }>(`/orgs/${orgId}/tests/${testId}/shares`, { slug }),
+    onSuccess: (r) => { toast.success(`Shared with ${r.name}`); setSlug(''); qc.invalidateQueries({ queryKey: key }); },
+    onError: (e) => toast.error(e.message),
+  });
+  const remove = useMutation({
+    mutationFn: (target: string) => del(`/orgs/${orgId}/tests/${testId}/shares/${target}`),
+    onSuccess: () => { toast.success('Sharing stopped'); qc.invalidateQueries({ queryKey: key }); },
+    onError: (e) => toast.error(e.message),
+  });
+  const list = shares.data ?? [];
+  return (
+    <div className="mb-5 rounded-lg border bg-card p-4 text-sm">
+      <button className="flex w-full items-center justify-between gap-2 text-left" onClick={() => setOpen(!open)} aria-expanded={open}>
+        <span className="flex items-center gap-2 font-medium"><Share2 className="h-4 w-4" /> Share with another college</span>
+        <span className="text-muted-foreground">{list.length ? `Shared with ${list.map((x) => x.name).join(', ')}` : 'Not shared'}</span>
+      </button>
+      {open && (
+        <div className="mt-3 space-y-3">
+          <p className="text-muted-foreground">They can assign it to their students{published ? '' : ' once you publish it'}, or copy it into their own bank to edit. They never see your students' results.</p>
+          {list.length > 0 && (
+            <ul className="space-y-1">
+              {list.map((x) => (
+                <li key={x.orgId} className="flex items-center justify-between gap-2">
+                  <span>{x.name} <span className="text-muted-foreground">({x.slug})</span></span>
+                  <Button size="sm" variant="ghost" onClick={() => remove.mutate(x.orgId)} disabled={remove.isPending}>Stop sharing</Button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <form className="flex flex-wrap items-end gap-2" onSubmit={(e) => { e.preventDefault(); if (slug.trim()) add.mutate(); }}>
+            <Field label="Their short name" htmlFor="share-slug" hint="Ask the other college — they see it on their Settings page.">
+              <Input id="share-slug" value={slug} onChange={(e) => setSlug(e.target.value.toLowerCase())} placeholder="e.g. svce" className="w-56" />
+            </Field>
+            <Button type="submit" variant="outline" disabled={add.isPending}>Share</Button>
+          </form>
+        </div>
+      )}
+    </div>
   );
 }

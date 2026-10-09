@@ -8,11 +8,12 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { downloadText, QUESTION_TEMPLATE, readSpreadsheet, SPREADSHEET_ACCEPT } from '@/lib/sheets';
 
 interface Preview {
-  summary: { valid: number; invalid: number; byType: { mcq: number; msq: number; nat: number }; sections: string[] };
+  summary: { valid: number; invalid: number; byType: Record<string, number>; sections: string[] };
   errors: Array<{ line: number; message: string }>;
-  sample: Array<{ line: number; type: string; body: string; options: string[]; correct: number[]; natAnswer: number | null; marks: number; section: string | null }>;
+  sample: Array<{ line: number; type: string; body: string; options: string[]; correct: number[]; natAnswer: number | null; marks: number; section: string | null; acceptedAnswers?: string[]; tags?: string[] }>;
 }
 
+const TYPE_WORD: Record<string, string> = { mcq: 'single', msq: 'multiple', tf: 'true/false', nat: 'numeric', fib: 'fill in the blank', descriptive: 'written' };
 const LETTERS = 'ABCDEFGHIJ';
 
 /** Bring a college's question bank in from Excel or CSV: preview first, then all-or-nothing import. */
@@ -77,7 +78,9 @@ export function ImportQuestions({ orgId, testId, onImported }: { orgId: string; 
               <>
                 <div className="flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-1 font-medium text-success"><CheckCircle2 className="h-4 w-4" /> {preview.summary.valid} ready</span>
-                  <span className="text-muted-foreground">{preview.summary.byType.mcq} single · {preview.summary.byType.msq} multiple · {preview.summary.byType.nat} numeric</span>
+                  <span className="text-muted-foreground">
+                    {Object.entries(TYPE_WORD).filter(([t]) => preview.summary.byType[t]).map(([t, w]) => `${preview.summary.byType[t]} ${w}`).join(' · ')}
+                  </span>
                   {preview.summary.sections.length > 0 && <span className="text-muted-foreground">Sections: {preview.summary.sections.join(', ')}</span>}
                   {preview.summary.invalid > 0 && <span className="inline-flex items-center gap-1 font-medium text-destructive"><AlertTriangle className="h-4 w-4" /> {preview.summary.invalid} to fix</span>}
                 </div>
@@ -98,7 +101,14 @@ export function ImportQuestions({ orgId, testId, onImported }: { orgId: string; 
                           <p className="font-medium">{q.body}</p>
                           <p className="text-xs text-muted-foreground">
                             {q.type.toUpperCase()} · {q.marks} {q.marks === 1 ? 'mark' : 'marks'}{q.section ? ` · ${q.section}` : ''} · answer:{' '}
-                            <span className="text-success">{q.type === 'nat' ? q.natAnswer : q.correct.map((i) => `${LETTERS[i]} (${q.options[i]})`).join(', ')}</span>
+                            <span className="text-success">
+                              {q.type === 'nat' ? q.natAnswer
+                                : q.type === 'fib' ? (q.acceptedAnswers ?? []).join(' | ')
+                                : q.type === 'descriptive' ? 'marked by an evaluator'
+                                : q.type === 'tf' ? q.options[q.correct[0]]
+                                : q.correct.map((i) => `${LETTERS[i]} (${q.options[i]})`).join(', ')}
+                            </span>
+                            {q.tags?.length ? ` · tags: ${q.tags.join(', ')}` : ''}
                           </p>
                         </li>
                       ))}

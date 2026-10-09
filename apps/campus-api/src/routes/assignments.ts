@@ -16,7 +16,7 @@ assignmentsRouter.get('/', async (req, res) => {
   const userId = userOf(req);
   const orgId = orgIdOf(req);
   // Authors, invigilators and report viewers all need the list; RLS decides the rows.
-  await requireAnyPermission(userId, orgId, ['assessments.create', 'assessments.invigilate', 'reports.view']);
+  await requireAnyPermission(userId, orgId, ['assessments.create', 'assessments.invigilate', 'reports.view', 'assessments.grade']);
   res.json(await asUser(userId, async (db) => (await db.query(
     `select a.id, a.title, a.status, a.opens_at as "opensAt", a.closes_at as "closesAt", a.max_attempts as "maxAttempts",
             a.result_release as "resultRelease", a.results_released_at as "resultsReleasedAt",
@@ -549,17 +549,22 @@ assignmentsRouter.get('/:assignmentId/marking', async (req, res) => {
     `select u.id as user_id, u.full_name, m.roll_number from public.users u
        left join campus.org_memberships m on m.user_id = u.id and m.org_id = $2
       where u.id = any($1::uuid[])`, [data.attempts.map((t) => t.user_id), orgId])).rows.map((r) => [r.user_id, r])));
+  const label = (t: AttemptRow, i: number) => (blind ? `Script ${i + 1}` : (people.get(t.user_id)?.full_name ?? 'Student'));
   res.json({
     assignment: { id: data.a.id, title: data.a.title },
     blind,
-    questions: questions.map((q, qi) => {
+    scripts: data.attempts.map((t, i) => ({
+      attemptId: t.id, student: label(t, i), rollNumber: blind ? null : people.get(t.user_id)?.roll_number ?? null,
+      score: Number(t.score), totalMarks: Number(t.total_marks), feedback: t.feedback,
+    })),
+    questions: questions.map((q) => {
       const answers = data.attempts.flatMap((t, ti) => {
         const ans = (t.answers ?? []).find((x) => x.question_id === q.id);
         if (!ans || !ans.text_value?.trim()) return [];
         const who = people.get(t.user_id);
         return [{
           attemptId: t.id,
-          student: blind ? `Script ${ti + 1}` : (who?.full_name ?? 'Student'),
+          student: label(t, ti),
           rollNumber: blind ? null : who?.roll_number ?? null,
           text: ans.text_value,
           marks: ans.manual_marks ?? null,
@@ -569,7 +574,8 @@ assignmentsRouter.get('/:assignmentId/marking', async (req, res) => {
         }];
       });
       return {
-        id: q.id, number: qi + 1, type: q.type, body: q.body, marks: Number(q.marks), rubric: q.rubric,
+        // Position in the test as authored (students may have seen a shuffled order).
+        id: q.id, number: q.number, type: q.type, body: q.body, marks: Number(q.marks), rubric: q.rubric,
         acceptedAnswers: q.text_answers, maxWords: q.max_words,
         answers, pending: q.type === 'descriptive' ? answers.filter((x) => x.marks === null).length : 0,
       };

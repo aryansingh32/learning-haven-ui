@@ -87,16 +87,27 @@ export interface TestSummary {
   title: string;
   durationMinutes: number;
   published: boolean;
-  source: 'college' | 'forge';
+  source: 'college' | 'forge' | 'shared';
+  sharedBy?: string | null;
+  sharedWith?: number;
   questionCount: number;
 }
 
+export type QuestionType = 'mcq' | 'msq' | 'nat' | 'coding' | 'tf' | 'fib' | 'descriptive';
+
 export interface Question {
   id: string;
-  type: 'mcq' | 'msq' | 'nat' | 'coding';
+  type: QuestionType;
   body: string;
   options: Array<{ id: string; text: string }> | null;
   correctOptions: string[] | null;
+  tags: string[];
+  /** fib */
+  acceptedAnswers?: string[] | null;
+  caseSensitive?: boolean;
+  /** descriptive */
+  rubric?: string | null;
+  maxWords?: number | null;
   natAnswer: number | null;
   natTolerance: number;
   marks: number;
@@ -171,6 +182,8 @@ export interface ResultRow {
   submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | 'invigilator' | null;
   submittedAt: string | null;
   gradingPending: boolean;
+  markingPending: boolean;
+  paperVersion: string | null;
   review: ReviewOutcome | null;
 }
 
@@ -180,6 +193,7 @@ export interface Results {
     assigned: number; submitted: number; notAttempted: number;
     averagePercent: number | null; highestPercent: number | null; lowestPercent: number | null; flagged: number;
     gradingPending: number;
+    markingPending: number;
   };
   rows: ResultRow[];
 }
@@ -263,3 +277,15 @@ export interface CourseProgressReport {
     completedChapters: number; totalChapters: number; percent: number; lastActivity: string | null; completedAt: string | null; chapters: boolean[];
   }>;
 }
+
+// ── Marking written answers ─────────────────────────────────────────────────
+export interface MarkingAnswer {
+  attemptId: string; student: string; rollNumber: string | null; text: string;
+  marks: number | null; feedback: string | null; autoCorrect?: boolean;
+}
+export interface MarkingQuestion {
+  id: string; number: number; type: 'descriptive' | 'fib'; body: string; marks: number; rubric: string | null;
+  acceptedAnswers: string[] | null; maxWords: number | null; answers: MarkingAnswer[]; pending: number;
+}
+export interface MarkingScript { attemptId: string; student: string; rollNumber: string | null; score: number; totalMarks: number; feedback: string | null }
+export interface Marking { assignment: { id: string; title: string }; blind: boolean; scripts: MarkingScript[]; questions: MarkingQuestion[] }

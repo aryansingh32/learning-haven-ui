@@ -70,8 +70,12 @@ export default function CampusResultPage() {
   const correct = released?.perQuestion.filter((q) => q.isCorrect === true).length ?? 0;
   const wrong = released?.perQuestion.filter((q) => q.attempted && q.isCorrect === false).length ?? 0;
   const skipped = released?.perQuestion.filter((q) => !q.attempted).length ?? 0;
-  const coding = (released?.perQuestion ?? []).map((q, i) => ({ q, i })).filter(({ q }) => q.testsTotal !== undefined || q.pending);
+  const numbered = (released?.perQuestion ?? []).map((q, i) => ({ q, i }));
+  // Coding results carry test counts; a pending answer without them is a written one waiting for an evaluator.
+  const coding = numbered.filter(({ q }) => q.testsTotal !== undefined);
   const gradingPending = coding.some(({ q }) => q.pending);
+  const markingPending = numbered.filter(({ q }) => q.pending && q.testsTotal === undefined);
+  const comments = numbered.filter(({ q }) => q.feedback);
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -168,12 +172,37 @@ export default function CampusResultPage() {
                 ))}
               </ul>
             )}
+            {markingPending.length > 0 && (
+              <p className="mt-3 rounded-lg bg-primary/5 px-3 py-2 text-xs text-muted-foreground">
+                <Hourglass className="mr-1 inline w-3.5 h-3.5" aria-hidden />
+                Written {markingPending.length === 1 ? 'answer' : 'answers'} to question {markingPending.map(({ i }) => i + 1).join(', ')} {markingPending.length === 1 ? 'is' : 'are'} waiting for an evaluator.
+                They count as 0 until marked — your score will update.
+              </p>
+            )}
             {gradingPending && (
               <p className="mt-3 text-xs text-muted-foreground">
                 Some code hasn't been graded yet because the code judge was busy. Those questions count as 0 until your faculty grades them — your score will update.
               </p>
             )}
           </section>
+
+          {(released.feedback || comments.length > 0) && (
+            <section className="card-glass rounded-2xl p-5 sm:p-6 border border-primary/20 bg-primary/5" aria-labelledby="feedback-title">
+              <h2 id="feedback-title" className="text-sm font-display font-bold text-foreground mb-3">Feedback from your faculty</h2>
+              {released.feedback && <p className="text-sm text-foreground whitespace-pre-wrap">{released.feedback}</p>}
+              {comments.length > 0 && (
+                <ul className="mt-3 space-y-2 text-sm">
+                  {comments.map(({ q, i }) => (
+                    <li key={q.questionId} className="rounded-lg bg-background/60 px-3 py-2">
+                      <span className="font-semibold text-foreground">Q{i + 1}</span>
+                      <span className="text-muted-foreground"> · {q.marksAwarded} marks</span>
+                      <p className="mt-0.5 text-foreground whitespace-pre-wrap">{q.feedback}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          )}
         </>
       )}
 

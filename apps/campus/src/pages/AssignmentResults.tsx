@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { AlertTriangle, ArrowLeft, Download, Hourglass, Radio, RefreshCw } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Download, Hourglass, PenLine, Radio, RefreshCw } from 'lucide-react';
 import { api, del, download, post, put } from '@/api/client';
 import type { Accommodation, ResultRow, Results } from '@/api/types';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
@@ -66,6 +66,7 @@ export default function AssignmentResults() {
       <PageHeader title={assignment.title} description={assignment.batch}
         actions={<>
           <Button variant="outline" asChild><Link to="live"><Radio className="mr-2 h-4 w-4" /> Live view</Link></Button>
+          {can('assessments.grade') && <Button variant="outline" asChild><Link to="marking"><PenLine className="mr-2 h-4 w-4" /> Marking</Link></Button>}
           {can('reports.export') && <Button variant="outline" onClick={exportCsv}><Download className="mr-2 h-4 w-4" /> Export CSV</Button>}
         </>} />
 
@@ -87,6 +88,15 @@ export default function AssignmentResults() {
               <RefreshCw className={`mr-2 h-4 w-4 ${regrade.isPending ? 'animate-spin' : ''}`} /> Grade now
             </Button>
           )}
+        </div>
+      )}
+
+      {summary.markingPending > 0 && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 text-sm">
+          <p className="flex items-center gap-2"><PenLine className="h-4 w-4 text-primary" aria-hidden />
+            {summary.markingPending} {summary.markingPending === 1 ? 'student has' : 'students have'} written answers to mark. Their scores count those questions as 0 until then.
+          </p>
+          {can('assessments.grade') && <Button size="sm" asChild><Link to="marking">Mark answers</Link></Button>}
         </div>
       )}
 
@@ -121,12 +131,13 @@ export default function AssignmentResults() {
               <tr key={r.userId}>
                 <td className="px-4 py-2.5">
                   <p className="font-medium">{r.name ?? r.email}</p>
-                  <p className="text-xs tabular text-muted-foreground">{r.rollNumber ?? r.email}</p>
+                  <p className="text-xs tabular text-muted-foreground">{r.rollNumber ?? r.email}{r.paperVersion ? ` · Paper ${r.paperVersion}` : ''}</p>
                 </td>
                 <td className="px-4 py-2.5"><Badge variant={STATUS[r.status].variant}>{STATUS[r.status].label}</Badge></td>
                 <td className="px-4 py-2.5 text-right tabular">
                   {r.score === null ? '—' : `${r.score}/${r.totalMarks}`}
                   {r.gradingPending && <span className="block text-xs text-warning">grading pending</span>}
+                  {r.markingPending && <span className="block text-xs text-primary">marking pending</span>}
                 </td>
                 <td className="px-4 py-2.5 text-right tabular">{r.percent === null ? '—' : `${r.percent}%`}</td>
                 <td className="px-4 py-2.5 text-right tabular">

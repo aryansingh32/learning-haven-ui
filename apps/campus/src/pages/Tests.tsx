@@ -23,6 +23,7 @@ export default function Tests() {
   if (tests.error) return <ErrorNote error={tests.error} />;
   const own = (tests.data ?? []).filter((t) => t.source === 'college');
   const forge = (tests.data ?? []).filter((t) => t.source === 'forge');
+  const shared = (tests.data ?? []).filter((t) => t.source === 'shared');
 
   return (
     <>
@@ -32,16 +33,21 @@ export default function Tests() {
         <TabsList>
           <TabsTrigger value="college">Your tests ({own.length})</TabsTrigger>
           <TabsTrigger value="forge">Forge library ({forge.length})</TabsTrigger>
+          {shared.length > 0 && <TabsTrigger value="shared">Shared with you ({shared.length})</TabsTrigger>}
         </TabsList>
         <TabsContent value="college" className="mt-4">
           {own.length === 0
             ? <EmptyState title="No tests yet" action={can('content.create') && <Button variant="outline" onClick={() => setCreating(true)}>Write your first test</Button>}>
-                Add single-choice, multiple-choice and numeric questions, then publish and assign it.
+                Add single-choice, multiple-choice, true/false, numeric, fill-in-the-blank, written and coding questions, then publish and assign it.
               </EmptyState>
             : <TestList tests={own} linkable />}
         </TabsContent>
         <TabsContent value="forge" className="mt-4">
           {forge.length === 0 ? <EmptyState title="The Forge library is empty for now" /> : <TestList tests={forge} />}
+        </TabsContent>
+        <TabsContent value="shared" className="mt-4">
+          <p className="mb-3 text-sm text-muted-foreground">Other colleges shared these. Assign them as they are, or copy one into your tests to edit it.</p>
+          <TestList tests={shared} orgId={orgId!} canCopy={can('content.create')} />
         </TabsContent>
       </Tabs>
       <NewTest open={creating} onClose={() => setCreating(false)} orgId={orgId!} />
@@ -49,7 +55,13 @@ export default function Tests() {
   );
 }
 
-function TestList({ tests, linkable }: { tests: TestSummary[]; linkable?: boolean }) {
+function TestList({ tests, linkable, orgId, canCopy }: { tests: TestSummary[]; linkable?: boolean; orgId?: string; canCopy?: boolean }) {
+  const navigate = useNavigate();
+  const copy = useMutation({
+    mutationFn: (id: string) => post<{ id: string }>(`/orgs/${orgId}/tests/${id}/copy`, {}),
+    onSuccess: (t) => { toast.success('Copied into your tests as a draft'); navigate(t.id); },
+    onError: (e) => toast.error(e.message),
+  });
   return (
     <ul className="divide-y rounded-lg border bg-card">
       {tests.map((t) => {
@@ -57,9 +69,15 @@ function TestList({ tests, linkable }: { tests: TestSummary[]; linkable?: boolea
           <>
             <div className="min-w-0 flex-1">
               <p className="truncate font-medium">{t.title}</p>
-              <p className="text-xs text-muted-foreground">{t.questionCount} questions · {t.durationMinutes} min</p>
+              <p className="text-xs text-muted-foreground">
+                {t.questionCount} questions · {t.durationMinutes} min
+                {t.sharedBy ? ` · shared by ${t.sharedBy}` : ''}{t.sharedWith ? ` · shared with ${t.sharedWith} ${t.sharedWith === 1 ? 'college' : 'colleges'}` : ''}
+              </p>
             </div>
             {t.source === 'college' && <Badge variant={t.published ? 'secondary' : 'outline'}>{t.published ? 'Published' : 'Draft'}</Badge>}
+            {t.source === 'shared' && canCopy && (
+              <Button size="sm" variant="outline" disabled={copy.isPending} onClick={() => copy.mutate(t.id)}>Copy to my tests</Button>
+            )}
           </>
         );
         return (

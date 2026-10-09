@@ -25,13 +25,16 @@ import { enterFullscreen, exitFullscreen, fullscreenSupported, useLockdown } fro
 import { assignmentStatus, formatWhen } from '@/features/campus/assignmentStatus';
 
 type SavePayload = {
-  selectedOptions?: string[] | null; natValue?: number | null;
+  selectedOptions?: string[] | null; natValue?: number | null; textValue?: string | null;
   code?: string | null; language?: CodeLanguage | null;
   markedForReview?: boolean;
 };
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 const LETTERS = 'ABCDEFGHIJ';
+const TEXT_TYPES = new Set(['fib', 'descriptive']);
+const SINGLE = new Set(['mcq', 'tf']);
+const countWords = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
 
 function formatClock(totalSeconds: number) {
   const s = Math.max(0, Math.floor(totalSeconds));
@@ -44,7 +47,7 @@ function formatClock(totalSeconds: number) {
 /** Same rule the server applies, so the palette updates instantly. */
 function statusFor(payload: SavePayload): AnswerStatus {
   const hasAnswer = Boolean(payload.selectedOptions?.length) || (payload.natValue !== undefined && payload.natValue !== null)
-    || Boolean(payload.code?.trim());
+    || Boolean(payload.code?.trim()) || Boolean(payload.textValue?.trim());
   if (hasAnswer) return payload.markedForReview ? 'answered_marked' : 'answered';
   return payload.markedForReview ? 'marked_for_review' : 'visited';
 }
@@ -167,10 +170,11 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
 // ─── One question ────────────────────────────────────────────────────────
 
 function QuestionView({
-  q, index, total, answer, natDraft, onSelect, onNat,
+  q, index, total, answer, natDraft, onSelect, onNat, textDraft, onText,
 }: {
   q: ExamQuestion; index: number; total: number; answer?: AttemptAnswer; natDraft: string;
   onSelect: (optionId: string) => void; onNat: (value: string) => void;
+  textDraft: string; onText: (value: string) => void;
 }) {
   const selected = answer?.selected_options ?? [];
   return (
@@ -192,15 +196,15 @@ function QuestionView({
 
       <p className="text-lg leading-relaxed text-foreground whitespace-pre-wrap">{q.body}</p>
 
-      {(q.type === 'mcq' || q.type === 'msq') && (
-        <div className="space-y-2.5" role={q.type === 'mcq' ? 'radiogroup' : 'group'}>
+      {(q.type === 'mcq' || q.type === 'msq' || q.type === 'tf') && (
+        <div className="space-y-2.5" role={SINGLE.has(q.type) ? 'radiogroup' : 'group'}>
           {q.options?.map((opt, i) => {
             const on = selected.includes(opt.id);
             return (
               <button
                 key={opt.id}
                 type="button"
-                role={q.type === 'mcq' ? 'radio' : 'checkbox'}
+                role={SINGLE.has(q.type) ? 'radio' : 'checkbox'}
                 aria-checked={on}
                 onClick={() => onSelect(opt.id)}
                 className={cn(
@@ -210,7 +214,7 @@ function QuestionView({
               >
                 <span className={cn(
                   'w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold border transition-colors',
-                  q.type === 'mcq' ? 'rounded-full' : 'rounded-lg',
+                  SINGLE.has(q.type) ? 'rounded-full' : 'rounded-lg',
                   on ? 'bg-primary text-primary-foreground border-primary' : 'bg-secondary text-muted-foreground border-border',
                 )}>
                   {on && q.type === 'msq' ? <Check className="w-4 h-4" /> : LETTERS[i]}
@@ -219,6 +223,26 @@ function QuestionView({
               </button>
             );
           })}
+        </div>
+      )}
+
+      {q.type === 'fib' && (
+        <div className="max-w-md space-y-1.5">
+          <label htmlFor={`fib-${q.id}`} className="text-xs font-semibold text-muted-foreground">Type the missing word or phrase</label>
+          <Input id={`fib-${q.id}`} type="text" autoComplete="off" spellCheck={false} maxLength={500} value={textDraft}
+            onChange={(e) => onText(e.target.value)} className="h-12 text-lg" />
+        </div>
+      )}
+
+      {q.type === 'descriptive' && (
+        <div className="space-y-1.5">
+          <label htmlFor={`essay-${q.id}`} className="text-xs font-semibold text-muted-foreground">Write your answer — an evaluator marks it after you submit</label>
+          <textarea id={`essay-${q.id}`} rows={10} value={textDraft} onChange={(e) => onText(e.target.value)}
+            className="w-full rounded-xl border border-border/60 bg-background/60 p-3 text-base leading-relaxed text-foreground focus:outline-none focus:ring-2 focus:ring-primary" />
+          <p className={cn('text-xs', q.maxWords && countWords(textDraft) > q.maxWords ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-muted-foreground')} aria-live="polite">
+            {countWords(textDraft)} {countWords(textDraft) === 1 ? 'word' : 'words'}{q.maxWords ? ` of ${q.maxWords}` : ''}
+            {q.maxWords && countWords(textDraft) > q.maxWords ? ' — shorten it to save' : ''}
+          </p>
         </div>
       )}
 
@@ -304,6 +328,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
   );
   const [current, setCurrent] = useState(0);
   const [natDraft, setNatDraft] = useState('');
+  const [textDraft, setTextDraft] = useState('');
   const [saveState, setSaveState] = useState<SaveState>('idle');
   const [violations, setViolations] = useState(initial.violationCount);
   const [warning, setWarning] = useState<null | { kind: 'warning' | 'violation'; count: number; max: number | null }>(null);
@@ -333,6 +358,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
   const inFlight = useRef(false);
   const retryTimer = useRef<ReturnType<typeof setTimeout>>();
   const natTimer = useRef<ReturnType<typeof setTimeout>>();
+  const textTimer = useRef<ReturnType<typeof setTimeout>>();
   const codeTimer = useRef<ReturnType<typeof setTimeout>>();
   /** Code typed but not yet queued (saves are debounced while typing). */
   const codePending = useRef<{ qid: string; payload: SavePayload } | null>(null);
@@ -436,15 +462,17 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
       // The server keeps saved code when a save (e.g. mark for review) doesn't send any.
       const code = payload.code !== undefined ? payload.code : prev[qid]?.code ?? null;
       const language = payload.language !== undefined ? payload.language : prev[qid]?.language ?? null;
+      const text = payload.textValue !== undefined ? payload.textValue : prev[qid]?.text_value ?? null;
       return {
         ...prev,
         [qid]: {
           question_id: qid,
-          status: statusFor({ ...payload, code }),
+          status: statusFor({ ...payload, code, textValue: text }),
           selected_options: payload.selectedOptions?.length ? payload.selectedOptions : null,
           nat_value: payload.natValue ?? null,
           code,
           language,
+          text_value: text,
         },
       };
     });
@@ -463,7 +491,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
     window.addEventListener('online', online);
     return () => {
       window.removeEventListener('online', online);
-      clearTimeout(retryTimer.current); clearTimeout(natTimer.current); clearTimeout(codeTimer.current);
+      clearTimeout(retryTimer.current); clearTimeout(natTimer.current); clearTimeout(codeTimer.current); clearTimeout(textTimer.current);
     };
   }, [flush]);
 
@@ -488,6 +516,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
     if (!q) return;
     const a = answers[q.id];
     setNatDraft(a?.nat_value !== null && a?.nat_value !== undefined ? String(a.nat_value) : '');
+    setTextDraft(a?.text_value ?? '');
     if (!a || a.status === 'not_visited') queueSave(q.id, { markedForReview: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
@@ -561,6 +590,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
       // Without code of their own in this language, leave the saved answer as it is.
       return own !== undefined ? { code: own, language: lang, markedForReview: m } : { markedForReview: m };
     }
+    if (TEXT_TYPES.has(q.type)) return { textValue: textDraft.trim() ? textDraft : null, markedForReview: m };
     if (q.type === 'nat') {
       const raw = (overrides.nat ?? natDraft).trim();
       const n = raw === '' ? null : Number(raw);
@@ -572,7 +602,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
 
   const onSelect = (optionId: string) => {
     const prev = a?.selected_options ?? [];
-    const selected = q.type === 'mcq'
+    const selected = SINGLE.has(q.type)
       ? (prev[0] === optionId ? [] : [optionId])
       : prev.includes(optionId) ? prev.filter((o) => o !== optionId) : [...prev, optionId];
     queueSave(q.id, payloadFor({ selected }));
@@ -598,7 +628,26 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
     if (p.natValue !== savedValue) queueSave(q.id, p);
   };
 
-  const commitDrafts = () => { commitNatNow(); commitCode(); };
+  const tooLong = (x: ExamQuestion, text: string) => x.type === 'descriptive' && !!x.maxWords && countWords(text) > x.maxWords;
+  const onText = (value: string) => {
+    setTextDraft(value);
+    clearTimeout(textTimer.current);
+    const qid = q.id;
+    const question = q;
+    textTimer.current = setTimeout(() => {
+      if (tooLong(question, value)) return; // the server would refuse it; the counter says why
+      queueSave(qid, { textValue: value.trim() ? value : null, markedForReview: isMarked(answers[qid]?.status) });
+    }, 800);
+  };
+  const commitTextNow = () => {
+    if (!TEXT_TYPES.has(q.type)) return;
+    clearTimeout(textTimer.current);
+    if (tooLong(q, textDraft)) return;
+    const saved = a?.text_value ?? '';
+    if (textDraft !== saved) queueSave(q.id, payloadFor());
+  };
+
+  const commitDrafts = () => { commitNatNow(); commitTextNow(); commitCode(); };
 
   const onCode = (value: string) => {
     const lang = langOf(q);
@@ -636,13 +685,15 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
   const toggleMark = () => { commitCode(); queueSave(q.id, payloadFor({ marked: !marked })); };
   const clear = () => {
     setNatDraft('');
+    setTextDraft('');
+    clearTimeout(textTimer.current);
     if (q.type === 'coding') {
       if (codePending.current?.qid === q.id) { clearTimeout(codeTimer.current); codePending.current = null; }
       setCodeText((prev) => Object.fromEntries(Object.entries(prev).filter(([k]) => !k.startsWith(`${q.id}:`))));
       queueSave(q.id, { code: null, language: null, markedForReview: marked });
       return;
     }
-    queueSave(q.id, { selectedOptions: null, natValue: null, markedForReview: marked });
+    queueSave(q.id, TEXT_TYPES.has(q.type) ? { textValue: null, markedForReview: marked } : { selectedOptions: null, natValue: null, markedForReview: marked });
   };
   const coding = q.type === 'coding';
 
@@ -718,7 +769,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
         ) : (
           <main className="flex-1 overflow-y-auto">
             <div className="max-w-3xl mx-auto p-4 sm:p-8 pb-28">
-              <QuestionView q={q} index={current} total={questions.length} answer={a} natDraft={natDraft} onSelect={onSelect} onNat={onNat} />
+              <QuestionView q={q} index={current} total={questions.length} answer={a} natDraft={natDraft} onSelect={onSelect} onNat={onNat} textDraft={textDraft} onText={onText} />
             </div>
           </main>
         )}
@@ -735,7 +786,7 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
           <Button variant="outline" size="sm" onClick={() => go(current - 1)} disabled={current === 0} aria-label="Previous question">
             <ArrowLeft className="w-4 h-4 sm:mr-1.5" /><span className="hidden sm:inline">Previous</span>
           </Button>
-          <Button variant="ghost" size="sm" onClick={clear} disabled={!isAnswered(a?.status) && natDraft === ''}>
+          <Button variant="ghost" size="sm" onClick={clear} disabled={!isAnswered(a?.status) && natDraft === '' && textDraft === ''}>
             <Eraser className="w-4 h-4 sm:mr-1.5" /><span className="hidden sm:inline">Clear</span>
           </Button>
           <Button variant={marked ? 'secondary' : 'ghost'} size="sm" onClick={toggleMark} className={cn(marked && 'text-purple-600 dark:text-purple-300')}>

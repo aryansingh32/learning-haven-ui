@@ -104,15 +104,19 @@ export interface AttemptAnswer {
   /** coding questions: the saved program and its language. */
   code?: string | null;
   language?: CodeLanguage | null;
+  /** fill-in-the-blank and written answers */
+  text_value?: string | null;
 }
 
 export type CodeLanguage = 'python' | 'java' | 'cpp' | 'javascript';
 
 export interface ExamQuestion {
   id: string;
-  type: 'mcq' | 'msq' | 'nat' | 'coding';
+  type: 'mcq' | 'msq' | 'nat' | 'coding' | 'tf' | 'fib' | 'descriptive';
   body: string;
   options: Array<{ id: string; text: string }> | null;
+  /** descriptive: word limit, if any */
+  maxWords?: number;
   marks: number;
   negativeMarks: number;
   section: string | null;
@@ -150,6 +154,8 @@ export interface QuestionResult {
   testsPassed?: number;
   testsTotal?: number;
   pending?: boolean;
+  /** an evaluator's comment on this answer */
+  feedback?: string;
 }
 
 export type AttemptResult =
@@ -161,6 +167,8 @@ export type AttemptResult =
       correctCount: number | null;
       totalQuestions: number;
       perQuestion: QuestionResult[];
+      /** an evaluator's overall comment */
+      feedback?: string | null;
     };
 
 export interface AttemptView {
@@ -231,7 +239,7 @@ export const fetchAttemptView = (attemptId: string): Promise<AttemptView> => cli
 export const saveCampusAnswer = (
   attemptId: string,
   questionId: string,
-  body: { selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: CodeLanguage | null; markedForReview?: boolean }
+  body: { selectedOptions?: string[] | null; natValue?: number | null; textValue?: string | null; code?: string | null; language?: CodeLanguage | null; markedForReview?: boolean }
 ): Promise<{ questionId: string; status: AnswerStatus }> =>
   client.put(`/my/attempts/${attemptId}/answers/${questionId}`, body);
 
