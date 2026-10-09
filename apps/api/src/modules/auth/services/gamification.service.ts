@@ -4,6 +4,7 @@ import { ChaptersService } from '../../learning/services/chapters.service';
 import { calculateLevel } from '../../../utils/xp';
 import { DEFAULT_GAMIFICATION_CONFIG, GamificationConfig } from '../../../utils/gamification.constants';
 import logger from '../../../config/logger';
+import { AchievementsService } from './achievements.service';
 
 type ChapterRow = {
     id: string;
@@ -214,6 +215,28 @@ export class GamificationService {
         };
     }
 
+    /** Quests the server checks from real activity; they can't be marked complete by hand. */
+    static readonly AUTO_VERIFIED_QUESTS = ['read_concept', 'solve_problem', 'complete_challenge'];
+
+    /**
+     * Pays the all-quests bonus once per day, as a gamification reward (paid once, within the daily XP limit).
+     * True when it is paid (now or before). Before migration 20261026000001 it falls back to the XP ledger.
+     */
+    static async payDailyBonus(userId: string, day: string, bonusXp: number): Promise<boolean> {
+        try {
+            const { cap } = await AchievementsService.settings();
+            const status = await AchievementsService.grant(userId, `daily_quest:${day}`, 'daily_quest', bonusXp, null, cap);
+            if (status !== null) return status === 'paid' || status === 'already_paid';
+            // BH-007: atomic increment_xp with an idempotency key (when the XP ledger is installed)
+            await pool.query(`SELECT public.increment_xp($1, $2, $3, $4)`, [userId, bonusXp, 'daily_quest', `daily_quest_bonus:${userId}:${day}`]);
+            await CacheService.del(`user:${userId}:stats`);
+            return true;
+        } catch (err) {
+            logger.warn('Daily quest bonus not paid', { userId, code: (err as any)?.code });
+            return false;
+        }
+    }
+
     static todayDateStr() {
         return new Date().toISOString().split('T')[0];
     }
@@ -293,17 +316,11 @@ export class GamificationService {
             );
             row = update;
 
-            if (allComplete && !row.rows[0].reward_claimed) {
-                // BH-007: Use atomic increment_xp to add to ledger for auditability
-                await pool.query(
-                    `SELECT public.increment_xp($1, $2, $3, $4)`,
-                    [userId, bonusXp, 'daily_quest', `daily_quest_bonus:${userId}:${today}`]
-                );
+            if (allComplete && !row.rows[0].reward_claimed && (await this.payDailyBonus(userId, today, bonusXp))) {
                 await pool.query(
                     `UPDATE public.user_daily_quests SET reward_claimed = true WHERE id = $1`,
                     [row.rows[0].id]
                 );
-                await CacheService.del(`user:${userId}:stats`);
                 row.rows[0].reward_claimed = true;
             }
         }

@@ -2,6 +2,7 @@ import { supabase } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import { calculateXP, calculateLevel, calculateStreakBonus } from '../../../utils/xp';
 import logger from '../../../config/logger';
+import { AchievementsService } from '../../auth/services/achievements.service';
 
 export class SubmissionsService {
     /**
@@ -231,39 +232,12 @@ export class SubmissionsService {
     }
 
     /**
-     * Get leaderboard
+     * Public all-time leaderboard (GET /leaderboard). Same privacy rules as the learner board
+     * (W2-G1): first name + initial and XP only, opted-out learners, admins and banned accounts left out.
      */
     static async getLeaderboard(limit: number = 100) {
-        // Try cache first
-        const cacheKey = `leaderboard:${limit}`;
-        const cached = await CacheService.get(cacheKey);
-        if (cached) {
-            return cached;
-        }
-
         try {
-            const { data, error } = await supabase
-                .from('users')
-                .select('id, full_name, avatar_url, xp, level, streak')
-                .order('xp', { ascending: false })
-                .limit(limit);
-
-            if (error) throw error;
-
-            const leaderboard = data?.map((user, index) => ({
-                rank: index + 1,
-                user_id: user.id,
-                full_name: user.full_name,
-                avatar_url: user.avatar_url,
-                xp: user.xp,
-                level: user.level,
-                streak: user.streak,
-            })) || [];
-
-            // Cache for 10 minutes
-            await CacheService.set(cacheKey, leaderboard, 600);
-
-            return leaderboard;
+            return await AchievementsService.publicTop(Math.min(100, Math.max(1, Math.floor(limit) || 100)));
         } catch (error) {
             logger.error('Get leaderboard error:', error);
             throw new Error('Failed to fetch leaderboard');

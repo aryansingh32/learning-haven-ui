@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UsersController } from '../controllers/users.controller';
-import { GamificationController } from '../controllers/gamification.controller';
+import { GamificationController, AchievementsController } from '../controllers/gamification.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
 import { updateProfileSchema } from '../../../utils/validators';
@@ -128,6 +128,34 @@ router.get('/me/identity', authenticateUser, GamificationController.getIdentity)
  * @access  Private
  */
 router.get('/me/mentor-context', authenticateUser, GamificationController.getMentorContext);
+
+/**
+ * @route   GET /api/users/me/achievements
+ * @desc    Weekly missions (India week), coding streak, milestones (awarded here, once), badge collections
+ * @access  Private
+ */
+router.get('/me/achievements', authenticateUser, AchievementsController.get);
+
+/**
+ * @route   POST /api/users/me/missions/:key/claim
+ * @desc    Claim a finished weekly mission's XP (once; held to the daily XP limit)
+ * @access  Private
+ */
+router.post('/me/missions/:key/claim', authenticateUser, AchievementsController.claimMission);
+
+/**
+ * @route   GET /api/users/leaderboard?period=all|week&limit=50
+ * @desc    Learner leaderboard: privacy-safe names, opted-out learners left out, plus the caller's own rank
+ * @access  Private
+ */
+router.get('/leaderboard', authenticateUser, AchievementsController.leaderboard);
+
+/**
+ * @route   PUT /api/users/me/leaderboard-visibility   { hidden: boolean }
+ * @desc    Opt out of (or back into) the leaderboards
+ * @access  Private
+ */
+router.put('/me/leaderboard-visibility', authenticateUser, AchievementsController.setLeaderboardVisibility);
 
 export default router;
 
