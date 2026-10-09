@@ -1,6 +1,6 @@
 # Master feature checklist — verified against the code and the live database
 
-Verified 2026-10-09 (updated after slice B1) on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
+Verified 2026-10-09 (updated after slices B1 and A2) on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
 the live Supabase database (read-only counts) for content.
 
 - `[x]` **Done** — built *and* reachable by the people it's for. Evidence after the dash.
@@ -37,7 +37,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 12 | Assessment Engine | 29 | 8 | 20 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
-| 15 | Online Judge & Evaluation Engine | 13 | 9 | 9 | 31 |
+| 15 | Online Judge & Evaluation Engine | 14 | 8 | 9 | 31 |
 | 16 | Aptitude & Employability Training | 0 | 2 | 31 | 33 |
 | 17 | Company-Wise Placement Preparation | 1 | 4 | 22 | 27 |
 | 18 | AI Career Intelligence | 0 | 3 | 20 | 23 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **355** (19%) | **266** (14%) | **1277** (67%) | **1898** |
+| | **All modules** | **356** (19%) | **265** (14%) | **1277** (67%) | **1898** |
 
 ---
 
@@ -335,7 +335,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 8. Programming Language Learning
 - [ ] 🟡 C Programming — JSCPP runs C in the browser, only on the dev `/test-editor` page; no C course
-- [ ] 🟡 C++ Programming — JSCPP runtime on the dev page; no C++ course
+- [ ] 🟡 C++ Programming — C++ judged in practice and Campus tests (slice A2); no C++ course
 - [ ] 🟡 Java Programming — Judge0 backend (`judge0.service.ts`); no learner editor; no Java course
 - [ ] 🟡 Python Programming — Pyodide runtime on the dev page; no Python course
 - [ ] 🟡 JavaScript Programming — runtime on the dev page; "Programming Foundations" course
@@ -369,7 +369,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 *Updated with slice A1: the editor now runs in the learner-facing practice workspace `/problems/:slug`. Remaining 🟡 items are still only on the developer page `/test-editor`.*
 - [x] Browser-Based Code Editor — in-app practice at `/problems/:slug`
 - [x] Monaco Editor Integration — practice workspace
-- [x] Multi-Language Editor — JavaScript, Python, Java on judged problems (C/C++ run-only on the dev page)
+- [x] Multi-Language Editor — JavaScript, Python, Java, C++ on judged problems (C run-only on the dev page)
 - [x] Syntax Highlighting — Monaco
 - [x] Intelligent Autocomplete — Monaco
 - [ ] Code Formatting
@@ -666,7 +666,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] AI Question Leakage Detection
 
 ### 15. Online Judge & Evaluation Engine
-- [ ] 🟡 Multi-Language Code Judge — shared `@repo/judge` for JavaScript, Python, Java, used by Forge practice and Campus tests (Judge0 in production, local runner in development); Judge0 not deployed yet; no C/C++
+- [ ] 🟡 Multi-Language Code Judge — shared `@repo/judge` for JavaScript, Python, Java, C++, used by Forge practice and Campus tests (Judge0 in production, local runner in development); Judge0 not deployed yet; no C
 - [x] Test Case Evaluation — every test judged on the server
 - [x] Hidden Test Case Evaluation — included in every Submit
 - [x] Partial Test Case Scoring — Campus coding questions score per passed test
@@ -685,7 +685,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Interactive Judge Support
 - [ ] Custom Checker Support
 - [ ] 🟡 Multi-File Compilation — build challenges run whole repos in Docker
-- [ ] 🟡 Language Runtime Configuration — `JUDGE0_JAVA_LANGUAGE_ID`, build-challenge languages
+- [x] Language Runtime Configuration — `JUDGE0_{JS,PYTHON,JAVA,CPP}_LANGUAGE_ID` on both APIs, C++ compiler options; build-challenge languages
 - [x] Judge Queue Management — BullMQ verification queue
 - [ ] Distributed Judge Workers
 - [ ] Judge Scaling

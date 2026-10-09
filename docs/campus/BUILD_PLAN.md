@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 355 done, 266 partly, 1,277 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 356 done, 265 partly, 1,277 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -18,7 +18,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 | Slice | What | Reuses | Checklist items |
 |---|---|---|---|
 | **A1 · In-app practice** ✅ *built; migration not yet applied to the live DB* | `/problems/:slug` workspace: statement, examples, constraints, companies, complexity, progressive hints, solution after solving; Run on sample tests in the browser; **Submit judged on the server** against sample + hidden tests; solve → XP/streak; Practice opens it | `modules/CodeExecutor` (Monaco, 5 runtimes), problems API, XP service, Judge0 client | Browser editor, Monaco, multi-language, run/submit, test-case results, hidden/sample tests, progressive hints, editorials, company tags, solved tracking, compile/runtime errors, accepted/wrong-answer verdicts |
-| A2 · Judge0 for every language | One judge service (C, C++, Java, JS, Python); language map; TLE/MLE/WA/CE verdicts; per-test partial score | A1 judge | Multi-language judge, verdict detection, partial scoring, runtime config |
+| **A2 · Judge0 for every language** ✅ *C++ built; C not yet* | One judge service (C, C++, Java, JS, Python); language map; TLE/MLE/WA/CE verdicts; per-test partial score | A1 judge | Multi-language judge, verdict detection, partial scoring, runtime config |
 | A3 · Submissions & editor quality | Submission history tab, code autosave per problem/language, reset, keyboard shortcuts, font size, light/dark editor | `submissions` table | Execution history, autosave, recovery, shortcuts, theme/font |
 | A4 · Content | 75 core problems (Blind-75 style) with tests across the 22 taught DSA topics; company tags; POTD | admin Problems, content import | Problem library, curated sheets, POTD, company-wise |
 
@@ -119,3 +119,35 @@ deploy Judge0 and set `JUDGE0_URL` on the **Campus API** as well as the Forge AP
 
 **Not in B1 (later):** editing a coding question after creation (delete + re-add today), C/C++ (A2), per-test
 weights, plagiarism checks across submissions, showing students their code on the result page.
+
+---
+
+## Slice A2 — C++ built (C not yet)
+
+- **Judge** (`packages/judge/src/cpp.ts`): C++ has no reflection, so the `Solution` method's signature is read from
+  the code and each test's `name = value` input is turned into typed C++ literals at generation time — `int`,
+  `long long`, `double`, `bool`, `char`, `string` and (nested) `vector`s of those. Results print JSON-style, so
+  `compareOutputs()` treats them like every other language. The learner's `cout` is captured per test; a crash only
+  fails the tests it didn't reach. Judge0 language 54 (GCC) with `-O2 -std=gnu++17`; `g++` locally in development.
+  Clear messages for unsupported types, a learner-written `main()`, and compiler errors (no generated-file paths).
+- **Security fix (affects A1 and B1):** a learner could read the judge's per-run marker (e.g. JavaScript
+  `Function.caller` exposes the harness source) and print fake "passed" lines before the real one. A second result
+  line for a test now fails that test. Mutation-checked: without the fix the forger passes 2 hidden tests.
+  *Still possible in-process:* replacing `print` / `console.log` to hide the real line. Only running the learner's
+  code in a separate process from the harness closes that — tracked in HANDOFF §8.7.
+- **Practice:** `POST /api/problems/:id/run` (samples only, server side, never records anything); the workspace sends
+  C++ Run there (the browser can't run a C++ Solution class) and keeps JS/Python/Java Run in the browser. Problems
+  offer the languages they have starter code for; migration `20261012000001_problem_cpp_starters.sql` adds C++
+  starters to the 8 live problems.
+- **Campus:** coding questions may allow C++ (portal, API, exam screen).
+
+**Status:** verified — judge 22 tests (C++: vectors/strings/nested/doubles/bools/long long, compile errors, unsupported
+types, `main()`, exceptions, crash mid-run; tampering); Forge API 89 (run endpoint: samples only, nothing recorded,
+C++, premium); Campus API 30 (C++ answer with an `int` overflow scores 1/2 tests); all 8 live problems' seeded tests
+pass with correct C++ solutions (scratch DB with every migration applied); browser: C++ offered in practice, Run goes
+to the server and catches a wrong answer, Submit accepted 6/6 with XP, JavaScript Run stays in the browser.
+
+**To go live:** apply `20261012000001_problem_cpp_starters.sql` after `20261010000001_problem_judging.sql`.
+
+**Left for later:** C (LeetCode-style C signatures pass arrays as pointer + size — needs its own harness), `pair`,
+`map`, linked-list/tree inputs, per-test weights.
