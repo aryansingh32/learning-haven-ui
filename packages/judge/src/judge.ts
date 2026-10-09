@@ -6,7 +6,9 @@ import { compareOutputs, CompareMode } from '@repo/assessment-core';
 import { JudgedLanguage, JudgeResult, JudgeTest, TestVerdict, Verdict, javascriptHarness, parseMarked, pythonHarness } from './harness';
 import { parseHarnessOutput, prepareForJudge0, wrapJavaCode } from './java';
 import { cppHarness, CppSignatureError } from './cpp';
-import { canJudge, JudgeConfig, JudgeUnavailableError, runProgram } from './runner';
+import { canJudge, JudgeConfig, JudgeUnavailableError, ProgramRun, runProgram } from './runner';
+
+const memoryOf = (run: ProgramRun) => (run.memoryKb ? { memoryKb: run.memoryKb } : {});
 
 function summarize(tests: JudgeTest[], verdicts: TestVerdict[], timeMs: number, message?: string): JudgeResult {
   const passed = verdicts.filter((v) => v.passed).length;
@@ -36,11 +38,11 @@ async function judgeScript(config: JudgeConfig, language: 'javascript' | 'python
   const source = language === 'javascript' ? javascriptHarness(code, hint, marker) : pythonHarness(code, hint, marker);
   const run = await runProgram(config, language, source, JSON.stringify(tests.map((t) => t.input)));
 
-  if (run.outcome === 'time_limit') return failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs);
+  if (run.outcome === 'time_limit') return { ...failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs), ...memoryOf(run) };
   const outputs = parseMarked(run.stdout, marker, tests.length);
   if (outputs.every((o) => o === null)) {
     const syntax = /SyntaxError|IndentationError/.test(run.stderr);
-    return failedRun(tests, syntax ? 'Compilation Error' : 'Runtime Error', run.stderr || 'Your code did not produce any result.', run.timeMs);
+    return { ...failedRun(tests, syntax ? 'Compilation Error' : 'Runtime Error', run.stderr || 'Your code did not produce any result.', run.timeMs), ...memoryOf(run) };
   }
   const verdicts = tests.map((t, i) => {
     const o = outputs[i];
@@ -48,7 +50,7 @@ async function judgeScript(config: JudgeConfig, language: 'javascript' | 'python
     if (!o.ok) return verdictFor(t, i, false, undefined, o.text);
     return verdictFor(t, i, compareOutputs(o.text, t.expected, compare), o.text);
   });
-  return summarize(tests, verdicts, run.timeMs);
+  return { ...summarize(tests, verdicts, run.timeMs), ...memoryOf(run) };
 }
 
 async function judgeCpp(config: JudgeConfig, code: string, tests: JudgeTest[], compare: CompareMode, hint: string): Promise<JudgeResult> {
@@ -66,16 +68,16 @@ async function judgeCpp(config: JudgeConfig, code: string, tests: JudgeTest[], c
   const run = await runProgram(config, 'cpp', source, '');
 
   if (run.outcome === 'compile_error') return failedRun(tests, 'Compilation Error', cleanCompilerOutput(run.compileOutput), 0);
-  if (run.outcome === 'time_limit') return failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs);
+  if (run.outcome === 'time_limit') return { ...failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs), ...memoryOf(run) };
   const outputs = parseMarked(run.stdout, marker, tests.length);
-  if (outputs.every((o) => o === null)) return failedRun(tests, 'Runtime Error', run.stderr || 'Your code crashed before finishing the first test.', run.timeMs);
+  if (outputs.every((o) => o === null)) return { ...failedRun(tests, 'Runtime Error', run.stderr || 'Your code crashed before finishing the first test.', run.timeMs), ...memoryOf(run) };
   const verdicts = tests.map((t, i) => {
     const o = outputs[i];
     if (!o) return verdictFor(t, i, false, undefined, 'Your code crashed or stopped before reaching this test.');
     if (!o.ok) return verdictFor(t, i, false, undefined, o.text);
     return verdictFor(t, i, compareOutputs(o.text, t.expected, compare), o.text);
   });
-  return summarize(tests, verdicts, run.timeMs);
+  return { ...summarize(tests, verdicts, run.timeMs), ...memoryOf(run) };
 }
 
 /** Compiler errors mention the generated file; keep only what helps the learner. */
@@ -94,9 +96,9 @@ async function judgeJava(config: JudgeConfig, code: string, tests: JudgeTest[], 
   const run = await runProgram(config, 'java', source, cases.map((c) => `${c.input}||`).join('\n'));
 
   if (run.outcome === 'compile_error') return failedRun(tests, 'Compilation Error', run.compileOutput || 'Your code did not compile.', 0);
-  if (run.outcome === 'time_limit') return failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs);
+  if (run.outcome === 'time_limit') return { ...failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs), ...memoryOf(run) };
   const rows = parseHarnessOutput(run.stdout).testCaseResults ?? [];
-  if (rows.length === 0) return failedRun(tests, 'Runtime Error', run.stderr || 'Your code did not produce any result.', run.timeMs);
+  if (rows.length === 0) return { ...failedRun(tests, 'Runtime Error', run.stderr || 'Your code did not produce any result.', run.timeMs), ...memoryOf(run) };
 
   const verdicts = tests.map((t, i) => {
     const row = rows[i];
@@ -104,7 +106,7 @@ async function judgeJava(config: JudgeConfig, code: string, tests: JudgeTest[], 
     if (row.actualOutput.startsWith('Runtime Error')) return verdictFor(t, i, false, undefined, row.actualOutput);
     return verdictFor(t, i, compareOutputs(row.actualOutput, t.expected, compare), row.actualOutput);
   });
-  return summarize(tests, verdicts, run.timeMs);
+  return { ...summarize(tests, verdicts, run.timeMs), ...memoryOf(run) };
 }
 
 export interface JudgeRequest {

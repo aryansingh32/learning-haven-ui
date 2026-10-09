@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { ProblemsController } from '../controllers/problems.controller';
 import { SubmissionsController } from '../controllers/submissions.controller';
 import { JudgeController } from '../controllers/judge.controller';
-import { submissionRateLimit } from '../../../middleware/rateLimit';
+import { submissionRateLimit, writeRateLimit } from '../../../middleware/rateLimit';
 import { authenticateUser, optionalAuth } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
 import { getProblemsSchema, getProblemSchema, submitSolutionSchema } from '../../../utils/validators';
@@ -79,6 +79,20 @@ router.post('/:id/run', authenticateUser, submissionRateLimit, JudgeController.r
  * @access  Private
  */
 router.get('/:id/submissions', authenticateUser, JudgeController.history);
+
+/**
+ * @route   GET /api/problems/:id/runs
+ * @desc    The signed-in learner's recent runs on this problem (browser and server)
+ * @access  Private
+ */
+router.get('/:id/runs', authenticateUser, JudgeController.runs);
+
+/**
+ * @route   POST /api/problems/:id/runs
+ * @desc    Keep a run done in the browser in the learner's run history (history only)
+ * @access  Private
+ */
+router.post('/:id/runs', authenticateUser, writeRateLimit, JudgeController.reportRun);
 
 /**
  * @route   POST /api/problems/:id/status

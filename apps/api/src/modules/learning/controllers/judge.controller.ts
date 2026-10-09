@@ -11,6 +11,8 @@ import { ProblemsService } from '../services/problems.service';
 import { StatusService } from '../services/status.service';
 import { SubmissionsService } from '../services/submissions.service';
 import { SubmissionHistoryService } from '../services/submissionHistory.service';
+import { EditorPrefsService, RunHistoryService } from '../services/runHistory.service';
+import { browserRunSchema, editorPrefsSchema, isBadReference, isMissingRelation, runBodySchema, shapeCustomRun } from '../services/practiceRuns';
 
 const judgeBody = z.object({
     code: z.string().min(1, 'Write some code first.').max(50_000, 'Code exceeds the 50 KB limit.'),
@@ -56,7 +58,7 @@ export class JudgeController {
 
             await SubmissionHistoryService.record({
                 userId, problemId, language, code,
-                verdict: result.verdict, passed: result.passed, total: result.total, timeMs: result.timeMs,
+                verdict: result.verdict, passed: result.passed, total: result.total, timeMs: result.timeMs, memoryKb: result.memoryKb,
             });
 
             let xpGained = 0;
@@ -83,15 +85,17 @@ export class JudgeController {
 
     /**
      * POST /api/problems/:id/run
-     * Run a solution on the SAMPLE tests only, on the server. For languages the
-     * browser can't run (C++). Never records a solve, status or XP.
+     * Run a solution on the server, on the SAMPLE tests — or on one custom input the
+     * learner typed (optionally with the output they expect). For languages the
+     * browser can't run (C++, Java). Never records a solve, status or XP; the run
+     * is kept in the learner's run history.
      */
     static async run(req: Request, res: Response) {
         const userId = (req as AuthRequest).user!.id as string;
         const problemId = req.params.id as string;
-        const parsed = judgeBody.safeParse(req.body);
+        const parsed = runBodySchema.safeParse(req.body);
         if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0]?.message || 'Invalid request' });
-        const { code, language } = parsed.data;
+        const { code, language, input, expected } = parsed.data;
 
         try {
             const data = await ProblemsService.getJudgeData(problemId);
@@ -101,7 +105,7 @@ export class JudgeController {
                 return res.status(403).json({ error: 'This problem is part of Forge Pro.', code: 'PREMIUM_REQUIRED' });
             }
             const samples = tests.filter((t) => t.is_sample);
-            if (samples.length === 0) return res.status(409).json({ error: 'This problem has no sample tests to run.' });
+            if (input === undefined && samples.length === 0) return res.status(409).json({ error: 'This problem has no sample tests to run.' });
 
             const compare: CompareMode = isCompareMode(problem.judge_config?.compare) ? problem.judge_config.compare : 'exact';
             const result = await judgeSolution({
@@ -109,13 +113,91 @@ export class JudgeController {
                 language,
                 compare,
                 hint: functionHint(language, problem.starter_code?.[language]),
-                tests: samples.map((t) => ({ input: t.input, expected: t.expected_output, isSample: true })),
+                tests: input !== undefined
+                    ? [{ input, expected: expected ?? '', isSample: true }]
+                    : samples.map((t) => ({ input: t.input, expected: t.expected_output, isSample: true })),
+            });
+
+            if (input !== undefined) {
+                const custom = shapeCustomRun(result, input, expected);
+                await RunHistoryService.recordQuietly({
+                    userId, problemId, language, source: 'server', kind: 'custom', code, input,
+                    output: custom.custom.output ?? custom.custom.error, verdict: custom.verdict,
+                    passed: custom.passed, total: custom.total, timeMs: result.timeMs, memoryKb: result.memoryKb,
+                });
+                return res.json(custom);
+            }
+            await RunHistoryService.recordQuietly({
+                userId, problemId, language, source: 'server', kind: 'examples', code, output: result.message ?? null,
+                verdict: result.verdict, passed: result.passed, total: result.total, timeMs: result.timeMs, memoryKb: result.memoryKb,
             });
             return res.json(result);
         } catch (err) {
             if (err instanceof JudgeUnavailableError) return res.status(503).json({ error: err.message, code: 'JUDGE_UNAVAILABLE' });
             logger.error('Run request failed', { problemId, error: err instanceof Error ? err.message : String(err) });
             return res.status(500).json({ error: 'Could not run your code. Please try again.' });
+        }
+    }
+
+    /**
+     * GET /api/problems/:id/runs
+     * The learner's recent runs on this problem (browser and server), newest first.
+     */
+    static async runs(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        try {
+            return res.json({ runs: await RunHistoryService.list(userId, req.params.id as string) });
+        } catch (err) {
+            if (isBadReference(err)) return res.json({ runs: [] });
+            logger.error('Run history failed', { problemId: req.params.id, error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not load your runs.' });
+        }
+    }
+
+    /**
+     * POST /api/problems/:id/runs
+     * Keep a run the browser did (JavaScript / Python) in the learner's history.
+     * History only: nothing here counts toward a solve, status or XP.
+     */
+    static async reportRun(req: Request, res: Response) {
+        const userId = (req as AuthRequest).user!.id as string;
+        const problemId = req.params.id as string;
+        const parsed = browserRunSchema.safeParse(req.body);
+        if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0]?.message || 'Invalid run' });
+        const r = parsed.data;
+        try {
+            await RunHistoryService.record({
+                userId, problemId, language: r.language, source: 'browser', kind: r.kind, code: r.code, input: r.input ?? null,
+                output: r.output ?? null, verdict: r.verdict, passed: r.passed, total: r.total, timeMs: r.time_ms ?? null,
+            });
+            return res.status(201).json({ ok: true });
+        } catch (err) {
+            if (isBadReference(err)) return res.status(404).json({ error: 'Problem not found' });
+            if (isMissingRelation(err)) return res.status(202).json({ ok: false, reason: 'Run history is not available yet.' });
+            return res.status(500).json({ error: 'Could not keep this run.' });
+        }
+    }
+
+    /** GET /api/users/me/editor-preferences */
+    static async getEditorPrefs(req: Request, res: Response) {
+        try {
+            return res.json(await EditorPrefsService.get((req as AuthRequest).user!.id as string));
+        } catch (err) {
+            logger.error('Editor preferences failed', { error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not load your editor settings.' });
+        }
+    }
+
+    /** PUT /api/users/me/editor-preferences — theme, font size (11–24), word wrap. */
+    static async saveEditorPrefs(req: Request, res: Response) {
+        const parsed = editorPrefsSchema.safeParse(req.body);
+        if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0]?.message || 'Invalid settings' });
+        try {
+            return res.json(await EditorPrefsService.save((req as AuthRequest).user!.id as string, parsed.data));
+        } catch (err) {
+            if (isMissingRelation(err)) return res.status(503).json({ error: 'Editor settings can not be saved on this server yet.' });
+            logger.error('Saving editor preferences failed', { error: err instanceof Error ? err.message : String(err) });
+            return res.status(500).json({ error: 'Could not save your editor settings.' });
         }
     }
 

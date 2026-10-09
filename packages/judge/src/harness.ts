@@ -31,6 +31,8 @@ export interface JudgeResult {
   /** Compiler / interpreter message when the program didn't run at all. */
   message?: string;
   timeMs: number;
+  /** Peak memory of the whole run in KB (all tests run in one program), when the runner reports it. */
+  memoryKb?: number;
 }
 
 
