@@ -393,6 +393,45 @@ set local role authenticated;
 select pg_temp.check_eq((select count(*) from campus.incident_reviews), 0, 'College B cannot read College A incident reviews');
 reset role;
 
+-- ── Pools and accommodations (slice B2) ─────────────────────────────────────
+select pg_temp.act_as('a1000000-0000-0000-0000-000000000002');
+set local role authenticated;
+select pg_temp.check_eq(pg_temp.rows_changed(
+  $$insert into campus.assignment_accommodations (org_id, assignment_id, user_id, extra_percent, note)
+    values ('aaaaaaaa-0000-0000-0000-00000000000a', 'aaaaaaaa-0000-0000-0000-0000000000a1', 'a2000000-0000-0000-0000-000000000001', 25, 'Scribe')$$),
+  1, 'A faculty gives a College A student 25% extra time');
+select pg_temp.check_denied(
+  $$insert into campus.assignment_accommodations (org_id, assignment_id, user_id, extra_percent)
+    values ('aaaaaaaa-0000-0000-0000-00000000000a', 'aaaaaaaa-0000-0000-0000-0000000000a1', 'b3000000-0000-0000-0000-000000000001', 25)$$,
+  'extra time only for members of the same college');
+select pg_temp.check_denied(
+  $$insert into campus.assignment_accommodations (org_id, assignment_id, user_id, extra_percent)
+    values ('bbbbbbbb-0000-0000-0000-00000000000b', 'aaaaaaaa-0000-0000-0000-0000000000a1', 'a2000000-0000-0000-0000-000000000003', 25)$$,
+  'an accommodation cannot claim another college for a College A assignment');
+select pg_temp.check_denied(
+  $$update campus.assignment_accommodations set extra_percent = 150$$,
+  'extra time is capped at 100%');
+select pg_temp.check_denied(
+  $$update public.test_sections set draw_count = 0 where test_id = 'aaaaaaaa-0000-0000-0000-0000000000e1'$$,
+  'a pool deals at least one question');
+reset role;
+
+select pg_temp.act_as('b3000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from campus.assignment_accommodations), 0, 'College B sees no College A accommodations');
+reset role;
+
+select pg_temp.act_as('a2000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from campus.assignment_accommodations), 1, 'a student sees their own accommodation');
+select pg_temp.check_eq(pg_temp.rows_changed($$update campus.assignment_accommodations set extra_percent = 100$$), 0, 'a student cannot raise their own extra time');
+reset role;
+
+select pg_temp.act_as('a2000000-0000-0000-0000-000000000003');
+set local role authenticated;
+select pg_temp.check_eq((select count(*) from campus.assignment_accommodations), 0, 'other students do not see it');
+reset role;
+
 rollback;
 
 \o

@@ -632,3 +632,53 @@ describe('live invigilation', () => {
     expect(csv.text).toContain('"Ended by invigilator"');
   });
 });
+
+describe('question pools and accommodations', () => {
+  let tid: string;
+  let aid: string;
+  const url = () => `/campus/v1/orgs/${ORG_A}/tests/${tid}`;
+
+  it('deals N of M questions per pool, with publish rules that keep totals fair', async () => {
+    tid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Pooled quiz', durationMinutes: 20 })).body.id;
+    const pool = (await request(app).post(`${url()}/sections`).set(await as(U.facultyA)).send({ name: 'Aptitude pool', drawCount: 2 })).body.id;
+    for (let i = 1; i <= 5; i++) {
+      await request(app).post(`${url()}/questions`).set(await as(U.facultyA)).send({ type: 'nat', body: `Pool q${i}`, natAnswer: i, marks: 2, sectionId: pool });
+    }
+    const odd = (await request(app).post(`${url()}/questions`).set(await as(U.facultyA)).send({ type: 'nat', body: 'Odd marks', natAnswer: 1, marks: 5, sectionId: pool })).body.id;
+    const refused = await request(app).patch(url()).set(await as(U.facultyA)).send({ published: true });
+    expect(refused.status).toBe(400);
+    expect(refused.body.error).toMatch(/same marks/);
+    await request(app).delete(`${url()}/questions/${odd}`).set(await as(U.facultyA));
+    await request(app).patch(`${url()}/sections/${pool}`).set(await as(U.facultyA)).send({ drawCount: 9 });
+    expect((await request(app).patch(url()).set(await as(U.facultyA)).send({ published: true })).body.error).toMatch(/only 5/);
+    await request(app).patch(`${url()}/sections/${pool}`).set(await as(U.facultyA)).send({ drawCount: 2 });
+    expect((await request(app).patch(url()).set(await as(U.facultyA)).send({ published: true })).status).toBe(200);
+    expect((await request(app).get(url()).set(await as(U.facultyA))).body.sections[0]).toMatchObject({ drawCount: 2, questionCount: 5 });
+
+    aid = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: tid, title: 'Pooled quiz', publish: true, resultRelease: 'immediately',
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000),
+    })).body.id;
+  });
+
+  it('gives a named student extra time, shown before they start', async () => {
+    const put = async (body: object, who = U.facultyA, student = U.s1) =>
+      request(app).put(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/accommodations/${student}`).set(await as(who)).send(body);
+    expect((await put({ extraPercent: 25, note: 'Scribe' }, U.facultyA, U.s2)).status).toBe(400); // not in the batch
+    expect((await put({ extraPercent: 25 }, U.facultyB)).status).toBe(403);
+    expect((await put({ extraPercent: 25, note: 'Scribe' })).status).toBe(200);
+    const list = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${aid}/accommodations`).set(await as(U.facultyA));
+    expect(list.body).toEqual([expect.objectContaining({ userId: U.s1, extraPercent: 25, rollNumber: '21CS001' })]);
+    const mine = (await request(app).get('/campus/v1/my/assignments').set(await as(U.s1))).body.find((a: { id: string }) => a.id === aid);
+    expect(mine).toMatchObject({ extraPercent: 25, durationMinutes: 25 });
+  });
+
+  it('starts the attempt with the drawn questions and the longer clock', async () => {
+    const start = await request(app).post(`/campus/v1/my/assignments/${aid}/start`).set(await as(U.s1));
+    expect(start.body.questions).toHaveLength(2);
+    const minutes = (new Date(start.body.expiresAt).getTime() - new Date(start.body.startedAt).getTime()) / 60_000;
+    expect(minutes).toBeCloseTo(25, 0);
+    const done = await request(app).post(`/campus/v1/my/attempts/${start.body.attemptId}/submit`).set(await as(U.s1));
+    expect(done.body.result).toMatchObject({ totalMarks: 4, totalQuestions: 2 });
+  });
+});

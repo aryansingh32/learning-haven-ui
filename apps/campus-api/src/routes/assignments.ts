@@ -443,3 +443,55 @@ assignmentsRouter.get('/:assignmentId/attempts/:attemptId/timeline', async (req,
   ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime());
   res.json({ items });
 });
+
+// ── Accommodations (extra time for named students) ─────────────────────────
+assignmentsRouter.get('/:assignmentId/accommodations', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  await requireAnyPermission(userId, orgId, ['assessments.create', 'reports.view', 'assessments.invigilate']);
+  await visibleToStaff(userId, orgId, assignmentId);
+  const rows = await asUser(userId, async (db) => (await db.query<{ user_id: string; extra_percent: number; note: string | null }>(
+    `select user_id, extra_percent, note from campus.assignment_accommodations where assignment_id = $1 and org_id = $2`,
+    [assignmentId, orgId])).rows);
+  const people = new Map(rows.length === 0 ? [] : await asSystem(async (db) => (await db.query<{ id: string; name: string; roll_number: string | null }>(
+    `select u.id, coalesce(u.full_name, u.email) as name, m.roll_number
+       from public.users u left join campus.org_memberships m on m.user_id = u.id and m.org_id = $2
+      where u.id = any($1::uuid[])`, [rows.map((r) => r.user_id), orgId])).rows.map((p) => [p.id, p] as const)));
+  res.json(rows.map((r) => ({
+    userId: r.user_id, name: people.get(r.user_id)?.name ?? null, rollNumber: people.get(r.user_id)?.roll_number ?? null,
+    extraPercent: r.extra_percent, note: r.note,
+  })));
+});
+
+const accommodationBody = z.object({ extraPercent: z.number().int().min(1).max(100), note: z.string().trim().max(500).nullable().optional() });
+
+/** Set a student's extra time. Applies to attempts started after this. */
+assignmentsRouter.put('/:assignmentId/accommodations/:studentId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  const studentId = uuid.parse(req.params.studentId);
+  const body = accommodationBody.parse(req.body);
+  await requirePermission(userId, orgId, 'assessments.create');
+  const assignment = await visibleToStaff(userId, orgId, assignmentId);
+  const inBatch = await asSystem(async (db) => (await db.query(
+    `select 1 from campus.batch_members where batch_id = $1 and user_id = $2`, [assignment.batch_id, studentId])).rowCount);
+  if (!inBatch) throw badRequest('That student is not in this assignment\'s batch.');
+  await asUser(userId, (db) => db.query(
+    `insert into campus.assignment_accommodations (org_id, assignment_id, user_id, extra_percent, note, created_by)
+     values ($1, $2, $3, $4, $5, $6)
+     on conflict (assignment_id, user_id) do update set extra_percent = excluded.extra_percent, note = excluded.note`,
+    [orgId, assignmentId, studentId, body.extraPercent, body.note ?? null, userId]));
+  res.json({ ok: true });
+});
+
+assignmentsRouter.delete('/:assignmentId/accommodations/:studentId', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  await requirePermission(userId, orgId, 'assessments.create');
+  await asUser(userId, (db) => db.query(
+    `delete from campus.assignment_accommodations where assignment_id = $1 and user_id = $2 and org_id = $3`,
+    [uuid.parse(req.params.assignmentId), uuid.parse(req.params.studentId), orgId]));
+  res.status(204).end();
+});

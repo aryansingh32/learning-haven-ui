@@ -4,3 +4,4 @@ export * from './roster';
 export * from './proctoring';
 export * from './judging';
 export * from './sections';
+export * from './pools';

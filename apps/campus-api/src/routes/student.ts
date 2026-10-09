@@ -24,7 +24,8 @@ studentRouter.get('/assignments', async (req, res) => {
                  order by x.attempt_number desc limit 1) as latest_status,
               (select max(x.score) from public.test_attempts x where x.assignment_id = a.id and x.user_id = $1
                  and x.status = 'completed') as best_score,
-              (select max(x.total_marks) from public.test_attempts x where x.assignment_id = a.id and x.user_id = $1) as total_marks
+              (select max(x.total_marks) from public.test_attempts x where x.assignment_id = a.id and x.user_id = $1) as total_marks,
+              (select c.extra_percent from campus.assignment_accommodations c where c.assignment_id = a.id and c.user_id = $1) as extra_percent
          from campus.assignments a
          join campus.organizations o on o.id = a.org_id
          join campus.batches b on b.id = a.batch_id
@@ -68,9 +69,11 @@ studentRouter.get('/assignments', async (req, res) => {
       batch: r.batch_name,
       opensAt: r.opens_at,
       closesAt: r.closes_at,
-      durationMinutes: Math.round(((testInfo.get(r.test_id)?.sections ? testInfo.get(r.test_id)!.duration : r.duration_seconds ?? testInfo.get(r.test_id)?.duration) ?? 0) / 60),
+      durationMinutes: Math.round(((testInfo.get(r.test_id)?.sections ? testInfo.get(r.test_id)!.duration : r.duration_seconds ?? testInfo.get(r.test_id)?.duration) ?? 0) * (1 + (r.extra_percent ?? 0) / 100) / 60),
+      // Extra time granted to this student (already included in durationMinutes).
+      extraPercent: r.extra_percent ?? 0,
       // So the student knows before starting: one section at a time, no going back.
-      timedSections: testInfo.get(r.test_id)?.sections ?? null,
+      timedSections: testInfo.get(r.test_id)?.sections?.map((x) => ({ ...x, minutes: Math.round(x.minutes * (1 + (r.extra_percent ?? 0) / 100)) })) ?? null,
       state: now < new Date(r.opens_at) ? 'upcoming' : now >= new Date(r.closes_at) ? 'closed' : 'open',
       maxAttempts: r.max_attempts,
       attemptsUsed: r.attempts_used,

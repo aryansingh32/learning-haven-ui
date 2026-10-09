@@ -19,6 +19,7 @@ import {
   ScoringQuestion,
   sectionClock,
   finishSection,
+  drawFromPools,
   shouldAutoSubmit,
 } from '@repo/assessment-core';
 import { asSystem, asUser, Db } from '../db';
@@ -393,10 +394,23 @@ export async function startAttempt(userId: string, assignmentId: string) {
 
   const attemptId = randomUUID();
   await asSystem(async (db) => {
-    const test = await db.query<{ duration_seconds: number; section_time_locked: boolean }>(
-      `select duration_seconds, section_time_locked from public.tests where id = $1`, [assignment.test_id]);
-    const questions = await loadQuestions(db, assignment.test_id);
-    if (questions.length === 0) throw badRequest('This test has no questions yet. Ask your faculty.');
+    const test = await db.query<{ duration_seconds: number; section_time_locked: boolean; draw_count: number | null }>(
+      `select duration_seconds, section_time_locked, draw_count from public.tests where id = $1`, [assignment.test_id]);
+    const allQuestions = await loadQuestions(db, assignment.test_id);
+    if (allQuestions.length === 0) throw badRequest('This test has no questions yet. Ask your faculty.');
+
+    // Pools: deal N of M per section (seeded by this attempt), before ordering.
+    const pools = await db.query<{ id: string; draw_count: number }>(
+      `select id, draw_count from public.test_sections where test_id = $1 and draw_count is not null`, [assignment.test_id]);
+    const drawCounts = new Map<string, number>(pools.rows.map((r) => [r.id, r.draw_count]));
+    if (test.rows[0].draw_count) drawCounts.set('', test.rows[0].draw_count);
+    const questions = drawFromPools(allQuestions, drawCounts, attemptId);
+
+    // Accommodation: extra time for this student, on the test and on each timed section.
+    const accommodation = await db.query<{ extra_percent: number }>(
+      `select extra_percent from campus.assignment_accommodations where assignment_id = $1 and user_id = $2`, [assignment.id, userId]);
+    const extraPercent = accommodation.rows[0]?.extra_percent ?? 0;
+    const stretch = (seconds: number) => Math.ceil(seconds * (1 + extraPercent / 100));
 
     let duration = assignment.duration_seconds ?? test.rows[0].duration_seconds;
     const order: AttemptRow['question_order'] & object = buildAttemptOrder(
@@ -405,10 +419,15 @@ export async function startAttempt(userId: string, assignmentId: string) {
       attemptId
     );
     if (test.rows[0].section_time_locked) {
-      order.sections = await timedSectionsFor(db, assignment.test_id, questions, order.questionIds);
+      order.sections = (await timedSectionsFor(db, assignment.test_id, questions, order.questionIds))
+        .map((x) => ({ ...x, durationSeconds: stretch(x.durationSeconds) }));
       // A timed-section test lasts exactly as long as its sections.
       duration = order.sections.reduce((sum, x) => sum + x.durationSeconds, 0);
+    } else {
+      duration = stretch(duration);
     }
+    // Extra time may run past the closing time by the same proportion.
+    const closesBy = new Date(new Date(assignment.closes_at).getTime() + Math.ceil(duration * extraPercent / (100 + extraPercent)) * 1000);
     const initialAnswers: AnswerState[] = order.questionIds.map((id) => ({
       question_id: id, status: 'not_visited', selected_options: null, nat_value: null,
     }));
@@ -422,7 +441,7 @@ export async function startAttempt(userId: string, assignmentId: string) {
          values ($1, $2, $3, $4, $5, $6, 'in_progress', now(),
                  least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now())`,
         [attemptId, userId, assignment.test_id, assignment.id, assignment.org_id, used + 1,
-         duration, assignment.closes_at, JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order)]
+         duration, closesBy.toISOString(), JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order)]
       );
     } catch (err) {
       if ((err as { code?: string }).code === '23505') {

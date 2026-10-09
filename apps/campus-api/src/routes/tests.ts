@@ -70,7 +70,7 @@ testsRouter.get('/:testId', async (req, res) => {
   const testId = uuid.parse(req.params.testId);
   const result = await asUser(userId, async (db) => {
     const test = (await db.query(
-      `select id, title, instructions, duration_seconds, is_published, section_time_locked from public.tests
+      `select id, title, instructions, duration_seconds, is_published, section_time_locked, draw_count from public.tests
         where id = $1 and owner_org_id = $2 and deleted_at is null`, [testId, orgId])).rows[0];
     if (!test) return null;
     const questions = (await db.query(
@@ -86,7 +86,7 @@ testsRouter.get('/:testId', async (req, res) => {
         where question_id = any($1::uuid[]) order by sort_order, created_at`,
       [questions.filter((q) => q.type === 'coding').map((q) => q.id)])).rows;
     const sections = (await db.query(
-      `select id, name, duration_seconds, sort_order from public.test_sections where test_id = $1 order by sort_order, created_at`,
+      `select id, name, duration_seconds, draw_count, sort_order from public.test_sections where test_id = $1 order by sort_order, created_at`,
       [testId])).rows;
     return { ...test, sections, questions: questions.map((q) => q.type === 'coding'
       ? { ...q, tests: cases.filter((c) => c.question_id === q.id).map(({ question_id: _q, ...c }) => c) }
@@ -97,8 +97,11 @@ testsRouter.get('/:testId', async (req, res) => {
     id: result.id, title: result.title, instructions: result.instructions,
     durationMinutes: Math.round(result.duration_seconds / 60), published: result.is_published,
     sectionTimeLocked: result.section_time_locked,
-    sections: result.sections.map((x: { id: string; name: string; duration_seconds: number | null }) => ({
+    // Pool for questions not in any section: deal this many of them to each student.
+    drawCount: result.draw_count,
+    sections: result.sections.map((x: { id: string; name: string; duration_seconds: number | null; draw_count: number | null }) => ({
       id: x.id, name: x.name, durationMinutes: x.duration_seconds === null ? null : Math.round(x.duration_seconds / 60),
+      drawCount: x.draw_count,
       questionCount: result.questions.filter((q: { sectionId: string | null }) => q.sectionId === x.id).length,
     })),
     questions: result.questions.map((q: Record<string, unknown>) => ({
@@ -111,7 +114,35 @@ testsRouter.get('/:testId', async (req, res) => {
   });
 });
 
-const testPatch = testBody.partial().extend({ published: z.boolean().optional(), sectionTimeLocked: z.boolean().optional() });
+const testPatch = testBody.partial().extend({
+  published: z.boolean().optional(),
+  sectionTimeLocked: z.boolean().optional(),
+  drawCount: z.number().int().min(1).max(500).nullable().optional(),
+});
+
+/** Why the test's question pools aren't valid yet (null when they are). */
+async function poolProblem(db: Db, testId: string): Promise<string | null> {
+  const { rows } = await db.query<{ name: string; draw: number; size: number; marks: number; grouped: number }>(
+    `with pools as (
+       select s.id, s.name, s.draw_count as draw from public.test_sections s where s.test_id = $1 and s.draw_count is not null
+       union all
+       select null, 'Questions not in a section', t.draw_count from public.tests t where t.id = $1 and t.draw_count is not null
+     )
+     select p.name, p.draw,
+            count(q.question_id)::int as size,
+            count(distinct qq.marks)::int as marks,
+            count(qq.question_group_id)::int as grouped
+       from pools p
+       left join public.test_questions q on q.test_id = $1 and q.section_id is not distinct from p.id
+       left join public.testseries_questions qq on qq.id = q.question_id
+      group by p.id, p.name, p.draw`, [testId]);
+  for (const r of rows) {
+    if (r.draw > r.size) return `${r.name}: it deals ${r.draw} questions but has only ${r.size}.`;
+    if (r.marks > 1) return `${r.name}: give every question in a pool the same marks, so all students can score the same total.`;
+    if (r.grouped > 0) return `${r.name}: passage-based questions can't be in a pool yet.`;
+  }
+  return null;
+}
 
 /** Why a timed-section test can't be published yet (null when it can). */
 async function timedSectionProblem(db: Db, testId: string): Promise<string | null> {
@@ -144,11 +175,14 @@ testsRouter.patch('/:testId', async (req, res) => {
       const { rows } = await db.query<{ n: number }>(`select count(*)::int as n from public.test_questions where test_id = $1`, [testId]);
       if (rows[0].n === 0) throw badRequest('Add at least one question before publishing.');
     }
+    if (body.drawCount !== undefined) {
+      await db.query(`update public.tests set draw_count = $3 where id = $1 and owner_org_id = $2`, [testId, orgId, body.drawCount]);
+    }
     if (body.sectionTimeLocked !== undefined) {
       await db.query(`update public.tests set section_time_locked = $3 where id = $1 and owner_org_id = $2`, [testId, orgId, body.sectionTimeLocked]);
     }
     if (body.published) {
-      const problem = await timedSectionProblem(db, testId);
+      const problem = (await timedSectionProblem(db, testId)) ?? (await poolProblem(db, testId));
       if (problem) throw badRequest(problem);
     }
     const { rowCount } = await db.query(
@@ -276,6 +310,8 @@ testsRouter.delete('/:testId/questions/:questionId', async (req, res) => {
 const sectionBody = z.object({
   name: z.string().trim().min(1).max(120),
   durationMinutes: z.number().int().min(1).max(1440).nullable().optional(),
+  /** Deal this many of the section's questions to each student (a pool). */
+  drawCount: z.number().int().min(1).max(500).nullable().optional(),
 });
 
 testsRouter.post('/:testId/sections', async (req, res) => {
@@ -288,10 +324,10 @@ testsRouter.post('/:testId/sections', async (req, res) => {
     const owns = (await db.query(`select 1 from public.tests where id = $1 and owner_org_id = $2`, [testId, orgId])).rowCount;
     if (!owns) throw notFound('Test not found in this college.');
     return (await db.query(
-      `insert into public.test_sections (test_id, name, duration_seconds, sort_order)
-       values ($1, $2, $3, coalesce((select max(sort_order) + 1 from public.test_sections where test_id = $1), 0))
+      `insert into public.test_sections (test_id, name, duration_seconds, draw_count, sort_order)
+       values ($1, $2, $3, $4, coalesce((select max(sort_order) + 1 from public.test_sections where test_id = $1), 0))
        returning id, name`,
-      [testId, body.name, body.durationMinutes ? body.durationMinutes * 60 : null]
+      [testId, body.name, body.durationMinutes ? body.durationMinutes * 60 : null, body.drawCount ?? null]
     )).rows[0];
   });
   res.status(201).json(created);
@@ -308,11 +344,12 @@ testsRouter.patch('/:testId/sections/:sectionId', async (req, res) => {
     const { rowCount } = await db.query(
       `update public.test_sections s set
           name = coalesce($3, s.name),
-          duration_seconds = case when $4::boolean then $5 else s.duration_seconds end
+          duration_seconds = case when $4::boolean then $5 else s.duration_seconds end,
+          draw_count = case when $7::boolean then $8 else s.draw_count end
         from public.tests t
         where s.id = $1 and s.test_id = $2 and t.id = s.test_id and t.owner_org_id = $6`,
       [sectionId, testId, body.name ?? null, body.durationMinutes !== undefined,
-       body.durationMinutes ? body.durationMinutes * 60 : null, orgId]
+       body.durationMinutes ? body.durationMinutes * 60 : null, orgId, body.drawCount !== undefined, body.drawCount ?? null]
     );
     if (!rowCount) throw notFound('Section not found in this test.');
   });
