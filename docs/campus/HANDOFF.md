@@ -31,8 +31,11 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Question pools (N of M) and per-student extra time (slice B2) | ✅ built, browser-verified |
 | College question import from Excel/CSV; Excel roster upload (slice B4) | ✅ built, browser-verified |
 | College structure (slice C1): unit tree, sections, academic records, eligibility rules, college defaults | ✅ built, browser-verified |
+| Question types, marking, paper versions, test sharing (slice C2a) | ✅ built, browser-verified |
+| Analytics (slice C2b): per-test item analysis, Insights (trends, roll-ups, at-risk students), student report, placement CSV | ✅ built, browser-verified |
+| Activity log, custom roles, consent record, device check, onboarding checklist, bulk member actions (slice C2c) | ✅ built, browser-verified |
 | Courses for colleges (slice D6): Learn ↔ Campus connected — assign courses/chapters, chapter progress, college licences, catalogue honours visibility | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
@@ -197,8 +200,8 @@ pnpm --filter @repo/assessment-core test   # 68 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 5 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 60 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 6 SQL suites
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 74 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -273,6 +276,15 @@ Then `20261018000001_campus_structure`: table `campus.sections` (RLS on, 2 polic
 `is_assignment_target`. Existing students still see their tests: `select count(*) from campus.assignments a where not exists
 (select 1 from campus.batch_members bm where bm.batch_id = a.batch_id);` is unaffected (rules default to `{}`).
 
+Then `20261019000001_campus_question_types`: `testseries_questions` columns `text_answers, rubric, max_words, tags` and the
+type check includes `tf, fib, descriptive`; `campus.assignments.paper_versions`; table `campus.test_shares` (RLS on, 2 policies);
+`test_attempts.feedback`; `pg_get_functiondef('campus.test_usable_by_org(uuid,uuid)'::regprocedure)` mentions `test_shares`.
+
+Then `20261020000001_campus_audit_roles`: tables `campus.custom_roles` and `campus.audit_log` (RLS on); columns
+`org_memberships.custom_role_id`, `test_attempts.consent`; `select count(*) from pg_trigger where tgname = 'audit_row';` → 16;
+`select campus.user_permissions(org_id, user_id) from campus.org_memberships limit 5;` returns the built-in role's permissions.
+(Checked on live first: `auth.uid()` treats an empty setting as no user, which the trigger relies on.)
+
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
 coding question after creation, C/C++, per-test weights, plagiarism, showing code on the result page).
@@ -291,7 +303,7 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the nine pending migrations in order (`20261010000001` … `20261018000001`) (§8.1), then tell Claude to verify
+- Run the eleven pending migrations in order (`20261010000001` … `20261020000001`) (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings

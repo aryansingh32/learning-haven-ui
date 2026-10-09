@@ -298,6 +298,20 @@ beyond completion (time spent, quiz scores per chapter); withdrawing assigned co
 sections, records for three students, defaults pre-filled, a section-B test and a CGPA ≥ 7 / no-backlog / CSE drive:
 each student saw exactly the tests meant for them.
 
+## Slice C2a — question types, marking, paper versions, sharing — built
+
+- **Types:** `tf` (true/false), `fib` (typed answer vs. accepted answers — case, spacing and a final full stop ignored
+  unless case-sensitive), `descriptive` (written answer with rubric and word limit, pending until an evaluator marks it).
+  Tags on every question; the import sheet reads the new types and a Tags column.
+- **Marking:** `/assignments/:id/marking` (`assessments.grade`): one question at a time, rubric beside each answer, marks +
+  comment, blind option, overall feedback, fill-in-the-blank override; every mark audited. Students see marks and comments.
+- **Paper versions:** 1–4 per assignment, dealt in roll order, one seed per version.
+- **Sharing:** share a test with another college by short name; they assign or copy it; answers stay hidden; withdraw any time.
+
+**Verified:** core 79, Campus API 65, SQL (sharing mutation-checked), browser run (all three types, blind marking 4/5 → 7/8,
+feedback on the student's result, share + copy). Fixed during the run: share list read another college's row under RLS;
+the Marking page jumped tabs after a save.
+
 ## Slice C2b — analytics — built
 
 No migration. `assessment-core/analytics.ts`: difficulty (share correct), separation (top vs bottom 27%), option picks,
@@ -310,3 +324,15 @@ tooltip, table view; the default colour passed the palette validator against the
 
 **Verified:** core 88, Campus API 70, browser run with 8 students over 4 closed tests (analysis numbers, tooltip and
 table, roll-ups, at-risk order and reasons, 8-line placement CSV, student report with rank).
+
+## Slice C2c — activity log, custom roles, consent, onboarding, bulk actions — built
+
+- **Custom roles** (`campus.custom_roles`): built from 10 permissions (owner-only ones excluded), presets (Question setter,
+  Lab assistant, Grader, Head of department); a custom role replaces the base role's permissions;
+  `campus.user_permissions()` is the one rule behind `has_org_permission` and course visibility.
+- **Activity log** (`campus.audit_log`): one trigger on 16 tables records changed columns with the actor; the API adds
+  exports. Activity page (owner/admin) with filters, names, older pages, CSV.
+- **Consent** stored with each attempt; **device check** before the exam; **onboarding** checklist; **bulk actions** on People.
+
+**Verified:** 6 SQL suites (custom-role rule mutation-checked), Campus API 74, browser run. Found: the test stub of
+`auth.uid()` broke on an empty setting — now matches Supabase's (checked on live).
