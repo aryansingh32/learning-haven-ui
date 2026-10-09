@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
   ArrowLeft, ArrowRight, Clock, Loader2, ShieldCheck, Maximize, Flag, Eraser, CheckCircle2,
-  AlertTriangle, LayoutGrid, CloudOff, Check, ShieldAlert, BookOpenText, Info,
+  AlertTriangle, LayoutGrid, CloudOff, Check, ShieldAlert, BookOpenText, Info, Layers,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useMyAssignments } from '@/hooks/useCampus';
 import {
-  CampusApiError, reportProctoringEvent, runCampusCode, saveCampusAnswer, startAssignment, submitCampusAttempt,
+  CampusApiError, fetchAttemptView, finishCampusSection, reportProctoringEvent, runCampusCode, saveCampusAnswer, startAssignment, submitCampusAttempt,
   type AnswerStatus, type AttemptAnswer, type AttemptView, type CodeLanguage, type ExamQuestion, type MyAssignment, type ProctoringEvent,
 } from '@/services/campus.service';
 import { CodingQuestion } from '@/features/campus/CodingQuestion';
@@ -117,6 +117,21 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
               <li className="flex gap-2"><Check className="w-4 h-4 text-success shrink-0 mt-0.5" /><span>When time runs out, your saved answers are submitted automatically.</span></li>
             </ul>
           </div>
+
+          {a.timedSections && a.timedSections.length > 0 && (
+            <div className="rounded-xl border border-primary/20 bg-background/50 p-4 space-y-2 text-sm">
+              <p className="font-bold text-foreground flex items-center gap-2"><Layers className="w-4 h-4 text-primary" /> Timed sections</p>
+              <p className="text-muted-foreground">You'll take one section at a time. When a section's time is up — or you finish it — the next one starts, and you can't go back.</p>
+              <ol className="space-y-1">
+                {a.timedSections.map((x, i) => (
+                  <li key={i} className="flex justify-between rounded-lg bg-secondary/40 px-3 py-1.5">
+                    <span className="text-foreground font-medium">{i + 1}. {x.name}</span>
+                    <span className="text-muted-foreground tabular-nums">{x.minutes} min</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
           {p?.enabled && (
             <div className="rounded-xl border border-reward/30 bg-reward/5 p-4 space-y-2 text-sm">
@@ -273,7 +288,11 @@ function Palette({
 
 // ─── The exam ────────────────────────────────────────────────────────────
 
-function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeName?: string }) {
+function ExamRunner({ initial, collegeName, onSectionChange }: {
+  initial: AttemptView; collegeName?: string;
+  /** Timed sections: called with the attempt's next section once this one has closed. */
+  onSectionChange?: (view: AttemptView) => void;
+}) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const attemptId = initial.attemptId;
@@ -295,9 +314,17 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
   const [codeLang, setCodeLang] = useState<Record<string, CodeLanguage>>({});
   const [codeText, setCodeText] = useState<Record<string, string>>({});
 
+  // Timed sections: the clock counts down the current section, not the whole test.
+  const sections = initial.sections && initial.currentSection ? initial.sections : null;
+  const sectionIndex = initial.currentSection?.index ?? 0;
+  const section = sections?.[sectionIndex] ?? null;
+  const nextSection = sections?.[sectionIndex + 1] ?? null;
+  // "Finish section" instead of "Submit" until the last section.
+  const midSections = Boolean(sections && nextSection);
+
   // Server-corrected clock: the server decides when time is up.
   const clockOffset = useRef(new Date(initial.serverNow).getTime() - Date.now());
-  const expiresAt = new Date(initial.expiresAt).getTime();
+  const expiresAt = new Date(sections ? initial.currentSection!.endsAt : initial.expiresAt).getTime();
   const secondsLeft = () => (expiresAt - (Date.now() + clockOffset.current)) / 1000;
   const [remaining, setRemaining] = useState(secondsLeft);
 
@@ -312,11 +339,8 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
 
   const q = questions[current];
 
-  const finish = useCallback(async (reason: 'manual' | 'timeout' | 'violations') => {
-    if (finished.current) return;
-    finished.current = true;
-    setFinishing(true);
-    // Last chance to get unsaved answers in before the server scores.
+  /** Last chance to get unsaved answers in before the server scores or closes a section. */
+  const drainSaves = useCallback(async () => {
     clearTimeout(codeTimer.current);
     if (codePending.current) {
       pending.current.set(codePending.current.qid, codePending.current.payload);
@@ -326,6 +350,43 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
       try { await saveCampusAnswer(attemptId, qid, payload); } catch { /* scored on what the server already has */ }
     }
     pending.current.clear();
+  }, [attemptId]);
+
+  const toResult = useCallback((reason: string) => {
+    exitFullscreen();
+    void queryClient.invalidateQueries({ queryKey: ['campus-my-assignments'] });
+    navigate(`/college/attempts/${attemptId}`, { replace: true, state: { justSubmitted: true, reason } });
+  }, [attemptId, navigate, queryClient]);
+
+  /** Leave the current timed section: early (student's choice) or because its time is up. */
+  const leaveSection = useCallback(async (mode: 'early' | 'timeout') => {
+    if (finished.current) return;
+    finished.current = true;
+    setFinishing(true);
+    await drainSaves();
+    try {
+      const view = mode === 'early' ? await finishCampusSection(attemptId) : await fetchAttemptView(attemptId);
+      if (view.status === 'completed') return toResult(mode === 'early' ? 'manual' : 'timeout');
+      if (view.currentSection?.index === sectionIndex) {
+        // The server's clock hasn't closed the section yet: keep going; the timer asks again.
+        finished.current = false;
+        setFinishing(false);
+        return;
+      }
+      if (mode === 'timeout') toast.info(`Time's up for ${section?.name ?? 'that section'} — on to the next one.`);
+      onSectionChange?.(view);
+    } catch (e) {
+      finished.current = false;
+      setFinishing(false);
+      toast.error((e as Error).message || 'Could not move to the next section. Check your connection and try again.');
+    }
+  }, [attemptId, drainSaves, onSectionChange, sectionIndex, section?.name, toResult]);
+
+  const finish = useCallback(async (reason: 'manual' | 'timeout' | 'violations') => {
+    if (finished.current) return;
+    finished.current = true;
+    setFinishing(true);
+    await drainSaves();
     try {
       if (reason !== 'violations') await submitCampusAttempt(attemptId);
     } catch (e) {
@@ -337,10 +398,8 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
         return;
       }
     }
-    exitFullscreen();
-    void queryClient.invalidateQueries({ queryKey: ['campus-my-assignments'] });
-    navigate(`/college/attempts/${attemptId}`, { replace: true, state: { justSubmitted: true, reason } });
-  }, [attemptId, navigate, queryClient]);
+    toResult(reason);
+  }, [attemptId, drainSaves, toResult]);
 
   // ── Autosave queue ──
   const flush = useCallback(async () => {
@@ -363,11 +422,12 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
     } catch (e) {
       inFlight.current = false;
       if (e instanceof CampusApiError && e.status === 409) { void finish('timeout'); return; }
+      if (e instanceof CampusApiError && e.status === 423) { pending.current.delete(qid); void leaveSection('timeout'); return; }
       setSaveState('error');
       clearTimeout(retryTimer.current);
       retryTimer.current = setTimeout(() => void flush(), 4000);
     }
-  }, [attemptId, finish]);
+  }, [attemptId, finish, leaveSection]);
 
   const queueSave = useCallback((qid: string, payload: SavePayload) => {
     pending.current.set(qid, payload);
@@ -412,14 +472,15 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
     const id = setInterval(() => {
       const left = secondsLeft();
       setRemaining(left);
-      if (left <= 300 && left > 60 && !warned.current.five) { warned.current.five = true; toast.warning('5 minutes left.'); }
-      if (left <= 60 && left > 0 && !warned.current.one) { warned.current.one = true; toast.warning('1 minute left — your answers are saved.'); }
+      const where = sections ? ' in this section' : '';
+      if (left <= 300 && left > 60 && !warned.current.five) { warned.current.five = true; toast.warning(`5 minutes left${where}.`); }
+      if (left <= 60 && left > 0 && !warned.current.one) { warned.current.one = true; toast.warning(`1 minute left${where} — your answers are saved.`); }
       // A short grace lets the server's clock decide, so the attempt is recorded as timed out, not submitted early.
-      if (left <= -1.5) void finish('timeout');
+      if (left <= -1.5) void (sections ? leaveSection('timeout') : finish('timeout'));
     }, 1000);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finish]);
+  }, [finish, leaveSection]);
 
   // ── Opening a question marks it seen and loads its numeric draft ──
   useEffect(() => {
@@ -544,6 +605,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
       return await runCampusCode(attemptId, q.id, { code, language });
     } catch (e) {
       if (e instanceof CampusApiError && e.status === 409) void finish('timeout');
+      if (e instanceof CampusApiError && e.status === 423) void leaveSection('timeout');
       throw e;
     }
   };
@@ -579,6 +641,11 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
         <div className="min-w-0 flex-1">
           <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider truncate">{collegeName ?? 'College test'}</p>
           <h1 className="text-sm font-bold text-foreground truncate">{initial.assignment.title}</h1>
+          {section && sections && (
+            <p className="text-[11px] font-semibold text-primary truncate flex items-center gap-1">
+              <Layers className="w-3 h-3" /> Section {sectionIndex + 1} of {sections.length} · {section.name}
+            </p>
+          )}
         </div>
 
         <div className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground" aria-live="polite">
@@ -605,13 +672,13 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
             'flex items-center gap-1.5 font-mono text-base font-bold px-3 py-1 rounded-lg tabular-nums',
             low ? 'bg-destructive text-destructive-foreground animate-pulse' : lowish ? 'bg-reward/15 text-reward' : 'bg-secondary text-foreground',
           )}
-          aria-label="Time left"
+          aria-label={sections ? 'Time left in this section' : 'Time left'}
         >
           <Clock className="w-4 h-4" /> {formatClock(remaining)}
         </div>
 
-        <Button size="sm" variant="destructive" className="hidden sm:inline-flex" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>
-          Submit
+        <Button size="sm" variant={midSections ? 'default' : 'destructive'} className="hidden sm:inline-flex" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>
+          {midSections ? 'Finish section' : 'Submit'}
         </Button>
       </header>
 
@@ -641,7 +708,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
 
         <aside className={cn(coding ? 'hidden xl:block' : 'hidden lg:block', 'w-72 shrink-0 border-l border-border/60 bg-card p-5 overflow-y-auto space-y-5')}>
           <Palette questions={questions} answers={answers} current={current} onJump={go} />
-          <Button className="w-full" variant="destructive" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>Submit test</Button>
+          <Button className="w-full" variant={midSections ? 'default' : 'destructive'} onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>{midSections ? 'Finish section' : 'Submit test'}</Button>
         </aside>
       </div>
 
@@ -664,7 +731,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
           {current < questions.length - 1 ? (
             <Button size="sm" onClick={() => go(current + 1)}>Next <ArrowRight className="w-4 h-4 ml-1.5" /></Button>
           ) : (
-            <Button size="sm" variant="destructive" onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>Finish test</Button>
+            <Button size="sm" variant={midSections ? 'default' : 'destructive'} onClick={() => { commitDrafts(); setConfirmOpen(true); }} disabled={finishing}>{midSections ? 'Finish section' : 'Finish test'}</Button>
           )}
         </div>
       </footer>
@@ -675,7 +742,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
           <SheetHeader><SheetTitle>All questions</SheetTitle></SheetHeader>
           <div className="pt-4 space-y-5">
             <Palette questions={questions} answers={answers} current={current} onJump={go} />
-            <Button className="w-full" variant="destructive" onClick={() => { setPaletteOpen(false); commitDrafts(); setConfirmOpen(true); }}>Submit test</Button>
+            <Button className="w-full" variant={midSections ? 'default' : 'destructive'} onClick={() => { setPaletteOpen(false); commitDrafts(); setConfirmOpen(true); }}>{midSections ? 'Finish section' : 'Submit test'}</Button>
           </div>
         </SheetContent>
       </Sheet>
@@ -684,7 +751,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Submit your test?</AlertDialogTitle>
+            <AlertDialogTitle>{midSections ? `Finish ${section?.name}?` : 'Submit your test?'}</AlertDialogTitle>
             <AlertDialogDescription asChild>
               <div className="space-y-3 text-sm">
                 <div className="grid grid-cols-3 gap-2 text-center">
@@ -692,14 +759,19 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
                   <div className="rounded-xl bg-secondary p-2"><p className="text-lg font-bold text-foreground">{questions.length - answeredCount}</p><p className="text-[11px]">Unanswered</p></div>
                   <div className="rounded-xl bg-purple-500/10 p-2"><p className="text-lg font-bold text-purple-600 dark:text-purple-300">{markedCount}</p><p className="text-[11px]">For review</p></div>
                 </div>
-                <p>You still have <strong className="text-foreground">{formatClock(remaining)}</strong>. Once you submit, you can't change your answers.</p>
+                {midSections ? (
+                  <p>You still have <strong className="text-foreground">{formatClock(remaining)}</strong> in this section. You can't come back to it — <strong className="text-foreground">{nextSection?.name}</strong> starts right away with its own {Math.round((nextSection?.durationSeconds ?? 0) / 60)} {Math.round((nextSection?.durationSeconds ?? 0) / 60) === 1 ? 'minute' : 'minutes'}.</p>
+                ) : (
+                  <p>You still have <strong className="text-foreground">{formatClock(remaining)}</strong>. Once you submit, you can't change your answers.</p>
+                )}
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Keep working</AlertDialogCancel>
-            <AlertDialogAction onClick={() => void finish('manual')}>
-              {finishing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null} Submit now
+            {/* Timed sections end through the section endpoint, so the last one is recorded correctly too. */}
+            <AlertDialogAction onClick={() => void (sections ? leaveSection('early') : finish('manual'))}>
+              {finishing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null} {midSections ? 'Finish section' : 'Submit now'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -756,7 +828,7 @@ function ExamRunner({ initial, collegeName }: { initial: AttemptView; collegeNam
       {finishing && (
         <div className="fixed inset-0 z-[70] bg-background/90 backdrop-blur-sm flex flex-col items-center justify-center gap-3">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <p className="text-sm font-semibold text-foreground">Submitting your answers…</p>
+          <p className="text-sm font-semibold text-foreground">{midSections ? 'Saving this section…' : 'Submitting your answers…'}</p>
         </div>
       )}
     </div>
@@ -795,7 +867,10 @@ export default function CampusExamPage() {
     }
   };
 
-  if (attempt) return <ExamRunner initial={attempt} collegeName={assignment?.college} />;
+  if (attempt) {
+    // A new section remounts the runner with that section's questions and clock.
+    return <ExamRunner key={`${attempt.attemptId}:${attempt.currentSection?.index ?? 0}`} initial={attempt} collegeName={assignment?.college} onSectionChange={setAttempt} />;
+  }
 
   if (assignments.isLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-depth"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;

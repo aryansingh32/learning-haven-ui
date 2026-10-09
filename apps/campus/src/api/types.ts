@@ -95,6 +95,14 @@ export interface Question {
   starterCode?: Partial<Record<CodeLanguage, string>>;
   compare?: CompareMode;
   tests?: Array<{ input: string; expected: string; isSample: boolean }>;
+  sectionId: string | null;
+}
+
+export interface TestSection {
+  id: string;
+  name: string;
+  durationMinutes: number | null;
+  questionCount: number;
 }
 
 export type CodeLanguage = 'python' | 'java' | 'cpp' | 'javascript';
@@ -106,6 +114,9 @@ export interface TestDetail {
   instructions: string | null;
   durationMinutes: number;
   published: boolean;
+  /** Students take one section at a time, each with its own timer, and can't go back. */
+  sectionTimeLocked: boolean;
+  sections: TestSection[];
   questions: Question[];
 }
 

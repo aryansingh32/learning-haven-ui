@@ -88,6 +88,8 @@ export interface MyAssignment {
   bestScore: number | null;
   totalMarks: number | null;
   proctoring: ProctoringPolicy;
+  /** Set when the test runs one timed section at a time (no going back). */
+  timedSections?: Array<{ name: string; minutes: number }> | null;
 }
 
 export type AnswerStatus = 'not_visited' | 'visited' | 'answered' | 'marked_for_review' | 'answered_marked';
@@ -173,6 +175,9 @@ export interface AttemptView {
   answers?: AttemptAnswer[];
   submitReason: 'manual' | 'timeout' | 'violations' | 'closed' | null;
   result?: AttemptResult;
+  /** Timed sections: the plan, and where this attempt is. Questions are the current section's only. */
+  sections?: Array<{ id: string; name: string; durationSeconds: number; questionCount: number }> | null;
+  currentSection?: { index: number; endsAt: string } | null;
 }
 
 export type ProctoringEvent = 'tab_switch' | 'window_blur' | 'fullscreen_exit' | 'copy' | 'paste' | 'context_menu';
@@ -210,6 +215,10 @@ export const runCampusCode = (attemptId: string, questionId: string, body: { cod
 
 export const reportProctoringEvent = (attemptId: string, type: ProctoringEvent): Promise<EventResult> =>
   client.post(`/my/attempts/${attemptId}/events`, { type });
+
+/** Finish the current timed section early; returns the next section (or the result after the last). */
+export const finishCampusSection = (attemptId: string): Promise<AttemptView> =>
+  client.post(`/my/attempts/${attemptId}/sections/finish`, undefined, { timeout: 120_000 });
 
 // Submitting judges any coding answers on the server, which can take a while.
 export const submitCampusAttempt = (attemptId: string): Promise<AttemptView> =>

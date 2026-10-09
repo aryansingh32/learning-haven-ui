@@ -2,14 +2,15 @@ import { useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { ArrowLeft, Check, Code2, EyeOff, Plus, Trash2, X } from 'lucide-react';
+import { ArrowLeft, Check, Clock, Code2, EyeOff, Layers, Plus, Trash2, X } from 'lucide-react';
 import { api, del, patch, post } from '@/api/client';
-import type { CodeLanguage, CompareMode, Question, TestDetail } from '@/api/types';
+import type { CodeLanguage, CompareMode, Question, TestDetail, TestSection } from '@/api/types';
 import { ErrorNote, Field, Loading, PageHeader } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
 
 const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer', coding: 'Coding' };
 
@@ -47,11 +48,24 @@ export default function TestEditor() {
     onSuccess: () => { toast.success('Question removed'); refresh(); },
     onError: (e) => toast.error(e.message),
   });
+  const move = useMutation({
+    mutationFn: ({ questionId, sectionId }: { questionId: string; sectionId: string | null }) =>
+      patch(`/orgs/${orgId}/tests/${testId}/questions/${questionId}`, { sectionId }),
+    onSuccess: refresh,
+    onError: (e) => toast.error(e.message),
+  });
 
   if (test.isLoading) return <Loading />;
   if (test.error) return <ErrorNote error={test.error} />;
   const t = test.data!;
   const totalMarks = t.questions.reduce((s, q) => s + q.marks, 0);
+  const timedMinutes = t.sections.reduce((s, x) => s + (x.durationMinutes ?? 0), 0);
+  // Questions grouped by section, in section order; unsectioned ones last.
+  const groups: Array<{ section: TestSection | null; questions: Question[] }> = [
+    ...t.sections.map((section) => ({ section, questions: t.questions.filter((q) => q.sectionId === section.id) })),
+    { section: null, questions: t.questions.filter((q) => !q.sectionId || !t.sections.some((x) => x.id === q.sectionId)) },
+  ].filter((g) => g.section || g.questions.length > 0);
+  let number = 0;
 
   return (
     <>
@@ -60,7 +74,7 @@ export default function TestEditor() {
       </Link>
       <PageHeader
         title={t.title}
-        description={`${t.questions.length} questions · ${totalMarks} marks · ${t.durationMinutes} minutes`}
+        description={`${t.questions.length} questions · ${totalMarks} marks · ${t.sectionTimeLocked ? `${timedMinutes} minutes in timed sections` : `${t.durationMinutes} minutes`}`}
         actions={
           <>
             <Badge variant={t.published ? 'secondary' : 'outline'}>{t.published ? 'Published' : 'Draft'}</Badge>
@@ -72,41 +86,69 @@ export default function TestEditor() {
       />
       {t.published && <p className="-mt-3 mb-5 text-sm text-muted-foreground">Students already taking this test keep the questions they started with; edits apply to attempts that start afterwards.</p>}
 
-      <ol className="space-y-3">
-        {t.questions.map((q, i) => (
-          <li key={q.id} className="rounded-lg border bg-card p-4">
-            <div className="flex items-start gap-3">
-              <span className="mt-0.5 w-6 shrink-0 text-sm font-semibold tabular text-muted-foreground">{i + 1}.</span>
-              <div className="min-w-0 flex-1">
-                <p className="whitespace-pre-wrap">{q.body}</p>
-                {q.options && (
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {q.options.map((o) => {
-                      const right = q.correctOptions?.includes(o.id);
-                      return (
-                        <li key={o.id} className={right ? 'font-medium text-success' : 'text-muted-foreground'}>
-                          {right ? <Check className="mr-1 inline h-3.5 w-3.5" aria-label="Correct" /> : <span className="mr-1 inline-block w-3.5" />}
-                          {o.text}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-                {q.type === 'nat' && <p className="mt-2 text-sm font-medium text-success">Answer: {q.natAnswer}{q.natTolerance ? ` ± ${q.natTolerance}` : ''}</p>}
-                {q.type === 'coding' && <CodingSummary q={q} />}
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {TYPE_LABEL[q.type]} · {q.marks} {q.marks === 1 ? 'mark' : 'marks'}{q.negativeMarks ? ` · −${q.negativeMarks} if wrong` : ''}
-                </p>
-              </div>
-              <Button size="icon" variant="ghost" aria-label={`Remove question ${i + 1}`} onClick={() => remove.mutate(q.id)} disabled={remove.isPending}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ol>
+      <SectionsPanel orgId={orgId!} testId={testId!} test={t} onChange={refresh} />
 
-      <AddQuestion orgId={orgId!} testId={testId!} onAdded={refresh} number={t.questions.length + 1} />
+      <div className="space-y-6">
+        {groups.map((g) => (
+          <section key={g.section?.id ?? 'none'} aria-label={g.section?.name ?? 'Not in a section'}>
+            {(t.sections.length > 0) && (
+              <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                {g.section ? g.section.name : 'Not in a section'}
+                {g.section?.durationMinutes && t.sectionTimeLocked && (
+                  <span className="inline-flex items-center gap-1 text-xs font-normal text-muted-foreground"><Clock className="h-3 w-3" />{g.section.durationMinutes} min</span>
+                )}
+              </h2>
+            )}
+            {g.questions.length === 0 && <p className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">No questions in this section yet.</p>}
+            <ol className="space-y-3">
+              {g.questions.map((q) => {
+                const i = number++;
+                return (
+                  <li key={q.id} className="rounded-lg border bg-card p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="mt-0.5 w-6 shrink-0 text-sm font-semibold tabular text-muted-foreground">{i + 1}.</span>
+                      <div className="min-w-0 flex-1">
+                        <p className="whitespace-pre-wrap">{q.body}</p>
+                        {q.options && (
+                          <ul className="mt-2 space-y-1 text-sm">
+                            {q.options.map((o) => {
+                              const right = q.correctOptions?.includes(o.id);
+                              return (
+                                <li key={o.id} className={right ? 'font-medium text-success' : 'text-muted-foreground'}>
+                                  {right ? <Check className="mr-1 inline h-3.5 w-3.5" aria-label="Correct" /> : <span className="mr-1 inline-block w-3.5" />}
+                                  {o.text}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                        {q.type === 'nat' && <p className="mt-2 text-sm font-medium text-success">Answer: {q.natAnswer}{q.natTolerance ? ` ± ${q.natTolerance}` : ''}</p>}
+                        {q.type === 'coding' && <CodingSummary q={q} />}
+                        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                          <span>{TYPE_LABEL[q.type]} · {q.marks} {q.marks === 1 ? 'mark' : 'marks'}{q.negativeMarks ? ` · −${q.negativeMarks} if wrong` : ''}</span>
+                          {t.sections.length > 0 && (
+                            <select aria-label={`Section for question ${i + 1}`} value={q.sectionId ?? ''} disabled={move.isPending}
+                              onChange={(e) => move.mutate({ questionId: q.id, sectionId: e.target.value || null })}
+                              className="rounded border bg-card px-2 py-0.5 text-xs">
+                              <option value="">Not in a section</option>
+                              {t.sections.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+                            </select>
+                          )}
+                        </div>
+                      </div>
+                      <Button size="icon" variant="ghost" aria-label={`Remove question ${i + 1}`} onClick={() => remove.mutate(q.id)} disabled={remove.isPending}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        ))}
+      </div>
+
+      <AddQuestion orgId={orgId!} testId={testId!} onAdded={refresh} number={t.questions.length + 1} sections={t.sections} />
     </>
   );
 }
@@ -205,8 +247,66 @@ function CodingFields({ starter, setStarter, compare, setCompare, tests, setTest
 
 const NEW_TESTS: TestRow[] = [{ input: '', expected: '', isSample: true }, { input: '', expected: '', isSample: false }];
 
-function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId: string; onAdded: () => void; number: number }) {
+function SectionsPanel({ orgId, testId, test, onChange }: { orgId: string; testId: string; test: TestDetail; onChange: () => void }) {
+  const [name, setName] = useState('');
+  const [minutes, setMinutes] = useState('');
+  const base = `/orgs/${orgId}/tests/${testId}`;
+  const run = (fn: () => Promise<unknown>, ok?: string) => fn().then(() => { if (ok) toast.success(ok); onChange(); }, (e: Error) => toast.error(e.message));
+  const addSection = (e: FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) return;
+    void run(() => post(`${base}/sections`, { name: name.trim(), durationMinutes: minutes ? Number(minutes) : null }), 'Section added')
+      .then(() => { setName(''); setMinutes(''); });
+  };
+
+  return (
+    <section className="mb-6 rounded-lg border bg-card p-4" aria-label="Sections">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className="flex items-center gap-2 font-semibold"><Layers className="h-4 w-4" /> Sections</h2>
+          <p className="text-sm text-muted-foreground">Group questions, e.g. Aptitude, Technical, Coding.</p>
+        </div>
+        <label className="flex max-w-sm items-start gap-3 text-sm">
+          <Switch checked={test.sectionTimeLocked} aria-label="Timed sections"
+            onCheckedChange={(v) => void run(() => patch(base, { sectionTimeLocked: v }), v ? 'Timed sections on' : 'Timed sections off')} />
+          <span><span className="font-medium">Timed sections</span><span className="block text-xs text-muted-foreground">Students take one section at a time with its own timer and can't go back. The test lasts the sum of the sections.</span></span>
+        </label>
+      </div>
+
+      {test.sections.length > 0 && (
+        <ul className="mt-4 divide-y rounded-md border">
+          {test.sections.map((x) => (
+            <li key={x.id} className="flex flex-wrap items-center gap-2 px-3 py-2">
+              <Input defaultValue={x.name} aria-label={`Name of section ${x.name}`} className="h-8 max-w-xs"
+                onBlur={(e) => { const v = e.target.value.trim(); if (v && v !== x.name) void run(() => patch(`${base}/sections/${x.id}`, { name: v })); }} />
+              <Input type="number" min={1} max={1440} defaultValue={x.durationMinutes ?? ''} placeholder="Minutes" aria-label={`Minutes for ${x.name}`} className="h-8 w-28"
+                onBlur={(e) => {
+                  const v = e.target.value ? Number(e.target.value) : null;
+                  if (v !== x.durationMinutes) void run(() => patch(`${base}/sections/${x.id}`, { durationMinutes: v }));
+                }} />
+              <span className="text-xs text-muted-foreground">min · {x.questionCount} {x.questionCount === 1 ? 'question' : 'questions'}</span>
+              {test.sectionTimeLocked && !x.durationMinutes && <Badge variant="outline" className="text-warning">needs a time limit</Badge>}
+              <Button size="icon" variant="ghost" className="ml-auto" aria-label={`Remove section ${x.name}`}
+                onClick={() => void run(() => del(`${base}/sections/${x.id}`), 'Section removed — its questions stay in the test')}>
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <form onSubmit={addSection} className="mt-3 flex flex-wrap items-center gap-2">
+        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="New section name" aria-label="New section name" className="h-9 max-w-xs" />
+        <Input type="number" min={1} max={1440} value={minutes} onChange={(e) => setMinutes(e.target.value)} placeholder="Minutes" aria-label="New section minutes" className="h-9 w-28" />
+        <Button type="submit" size="sm" variant="outline" disabled={!name.trim()}><Plus className="mr-1 h-4 w-4" /> Add section</Button>
+      </form>
+    </section>
+  );
+}
+
+function AddQuestion({ orgId, testId, onAdded, number, sections }: { orgId: string; testId: string; onAdded: () => void; number: number; sections: TestSection[] }) {
   const [type, setType] = useState<Question['type']>('mcq');
+  const [sectionId, setSectionId] = useState<string | null | undefined>(undefined); // undefined = not chosen yet
   const [body, setBody] = useState('');
   const [options, setOptions] = useState(['', '', '', '']);
   const [correct, setCorrect] = useState<number[]>([]);
@@ -219,19 +319,23 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
   const [tests, setTests] = useState<TestRow[]>(NEW_TESTS);
 
   const reset = () => { setBody(''); setOptions(['', '', '', '']); setCorrect([]); setNatAnswer(''); setNatTolerance('0'); setTests(NEW_TESTS); };
+  // Default to the last section, so adding a run of questions to one section is quick.
+  const section = sectionId === null ? null
+    : sectionId && sections.some((x) => x.id === sectionId) ? sectionId
+    : sections.at(-1)?.id ?? null;
   const add = useMutation({
     mutationFn: () => {
       const filled = options.map((o, i) => ({ o: o.trim(), i })).filter((x) => x.o);
       if (type === 'coding') {
         return post(`/orgs/${orgId}/tests/${testId}/questions`, {
-          type, body, marks: Number(marks), starterCode: starter, compare,
+          type, body, marks: Number(marks), starterCode: starter, compare, sectionId: section,
           tests: tests.filter((t) => t.input.trim() && t.expected.trim()),
         });
       }
       return post(`/orgs/${orgId}/tests/${testId}/questions`, type === 'nat'
-        ? { type, body, natAnswer: Number(natAnswer), natTolerance: Number(natTolerance), marks: Number(marks) }
+        ? { type, body, natAnswer: Number(natAnswer), natTolerance: Number(natTolerance), marks: Number(marks), sectionId: section }
         : {
-            type, body, marks: Number(marks), negativeMarks: Number(negative),
+            type, body, marks: Number(marks), negativeMarks: Number(negative), sectionId: section,
             options: filled.map((x) => x.o),
             correct: correct.map((c) => filled.findIndex((x) => x.i === c)).filter((c) => c >= 0),
           });
@@ -266,6 +370,15 @@ function AddQuestion({ orgId, testId, onAdded, number }: { orgId: string; testId
           ))}
         </div>
       </div>
+
+      {sections.length > 0 && (
+        <Field label="Section" htmlFor="q-section">
+          <select id="q-section" value={section ?? ''} onChange={(e) => setSectionId(e.target.value || null)} className="rounded-md border bg-card px-3 py-2 text-sm">
+            {sections.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            <option value="">Not in a section</option>
+          </select>
+        </Field>
+      )}
 
       <Field label="Question" htmlFor="q-body">
         <Textarea id="q-body" required rows={3} value={body} onChange={(e) => setBody(e.target.value)} />
