@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 370 done, 263 partly, 1,265 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 372 done, 263 partly, 1,263 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -26,7 +26,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 | Slice | What | Reuses |
 |---|---|---|
 | **B1 · Coding questions in Campus tests** ✅ *built; migration not yet applied to the live DB* | Question type `coding` with test cases; exam screen embeds the A1 editor; scored by the shared judge; partial marks per test | A1, `packages/judge`, `assessment-core`, Campus exam screen |
-| B2 · Question pools & per-student extra time | Draw N of M per attempt; `attempt_overrides` | `buildAttemptOrder` |
+| **B2 · Question pools & per-student extra time** ✅ *built; migration not yet applied* | Draw N of M per attempt; `assignment_accommodations` | `buildAttemptOrder` |
 | **B3 · Section timers & locking** ✅ *built (Campus); migration not yet applied* | enforce `test_sections.duration_seconds`, `section_time_locked` | Test Series CBT |
 | B4 · College question import | CSV/Excel import into a college's bank, preview + per-row errors | roster import pattern, staged import |
 | **B5 · Live invigilator board** ✅ *built; migration not yet applied* | live board (5 s polling + student heartbeats), timeline, reviews, extra time, end attempt | proctoring events |
@@ -210,3 +210,20 @@ board, timeline, review, +15 min (time left 44:57 → 59:57), end attempt, stude
 
 **Verified:** SQL checks (4 new, mutation-tested); Forge API 92 (3 new); browser: history after a wrong and a right
 submit, settings applied and remembered, Ctrl+Enter, Format, full screen in and out.
+
+---
+
+## Slice B2 — question pools and accommodations — built
+
+- **Rules** (`assessment-core/pools.ts`): deal N of M per section (or the unsectioned part), seeded by the attempt.
+- **Data** (`20261016000001_campus_pools_accommodations.sql`): `draw_count` on sections and tests;
+  `campus.assignment_accommodations` (extra % per student; composite keys keep student, assignment and college the
+  same; staff manage, the student sees their own).
+- **API:** pool counts; publish refuses pools that deal more than they hold, mix marks, or hold passage questions;
+  attempts draw before ordering; accommodations stretch the test and each timed section (and may run past closing
+  by the same share); list / set / remove; `/my/assignments` shows the student's extra time.
+- **UI:** portal "deal N per student" on sections (or a test-level pool), header shows what each student gets;
+  results page "Extra time" card; the student's instructions show "includes your 25% extra time".
+
+**Verified:** assessment-core 63 (4 new); SQL checks (9 new, mutation-tested); Campus API 44 (3 new); browser:
+portal pool + extra time, student intro (25 min) and 3 of 8 questions dealt.

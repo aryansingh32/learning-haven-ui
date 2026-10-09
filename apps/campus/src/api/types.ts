@@ -102,6 +102,8 @@ export interface TestSection {
   id: string;
   name: string;
   durationMinutes: number | null;
+  /** Pool: deal this many of the section's questions to each student. */
+  drawCount: number | null;
   questionCount: number;
 }
 
@@ -116,6 +118,8 @@ export interface TestDetail {
   published: boolean;
   /** Students take one section at a time, each with its own timer, and can't go back. */
   sectionTimeLocked: boolean;
+  /** Pool for questions not in any section. */
+  drawCount: number | null;
   sections: TestSection[];
   questions: Question[];
 }
@@ -212,3 +216,11 @@ export type TimelineItem =
   | { at: string; kind: 'extend' | 'force_submit'; minutes: number | null; reason: string; by: string | null }
   | { at: string; kind: 'review'; outcome: ReviewOutcome; note: string | null; by: string | null }
   | { at: string; kind: 'submitted'; reason: string | null };
+
+export interface Accommodation {
+  userId: string;
+  name: string | null;
+  rollNumber: string | null;
+  extraPercent: number;
+  note: string | null;
+}

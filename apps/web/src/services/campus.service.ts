@@ -90,6 +90,8 @@ export interface MyAssignment {
   proctoring: ProctoringPolicy;
   /** Set when the test runs one timed section at a time (no going back). */
   timedSections?: Array<{ name: string; minutes: number }> | null;
+  /** Extra time granted to this student (already in durationMinutes). */
+  extraPercent?: number;
 }
 
 export type AnswerStatus = 'not_visited' | 'visited' | 'answered' | 'marked_for_review' | 'answered_marked';

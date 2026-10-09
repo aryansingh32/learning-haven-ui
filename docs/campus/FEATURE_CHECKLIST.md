@@ -34,7 +34,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
 | 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
-| 12 | Assessment Engine | 32 | 7 | 18 | 57 |
+| 12 | Assessment Engine | 34 | 7 | 16 | 57 |
 | 13 | Question Bank Management | 10 | 6 | 26 | 42 |
 | 14 | AI Assessment Generation | 0 | 0 | 31 | 31 |
 | 15 | Online Judge & Evaluation Engine | 15 | 7 | 9 | 31 |
@@ -83,7 +83,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **370** (19%) | **263** (14%) | **1265** (67%) | **1898** |
+| | **All modules** | **372** (20%) | **263** (14%) | **1263** (67%) | **1898** |
 
 ---
 
@@ -547,7 +547,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Section-Wise Tests — `test_sections`
 - [x] Multi-Section Assessments — sectional tests in Test Series
 - [x] Question Randomization — seeded per-attempt shuffle (Campus)
-- [ ] Question Pool Sampling
+- [x] Question Pool Sampling — Campus: a section (or the unsectioned part) deals N of M per student, seeded per attempt; equal marks enforced (B2)
 - [x] Option Randomization — per-attempt option shuffle (Campus)
 - [ ] Difficulty-Based Selection
 - [x] Negative Marking — per question
@@ -565,7 +565,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Question Dependencies
 - [x] Section Locking — Campus: one section at a time, no going back; only the current section's questions are sent (B3)
 - [x] Randomized Question Sets — different order per student
-- [ ] Multiple Assessment Versions
+- [ ] 🟡 Multiple Assessment Versions — question pools give students different question sets; no named versions (A/B papers)
 - [x] Test Scheduling — assignment scheduling in portal
 - [ ] 🟡 Assessment Invitations — assigned to a batch; no invite emails
 - [ ] Access Codes
@@ -585,7 +585,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Hybrid Evaluation
 - [ ] Re-evaluation Requests
 - [x] Grace Period Management — invigilators add extra time per student during the test (also extends the current timed section); audited
-- [ ] 🟡 Accommodation Settings — extra time can be given live; no pre-set per-student accommodations yet (B2)
+- [x] Accommodation Settings — per-student extra time (%) on an assignment, applied to the test and each timed section; plus live extra time by invigilators
 - [ ] 🟡 Assessment Audit Logs — proctoring events, extra time / force-submit (`campus.attempt_adjustments`), incident reviews, submit reason; no change log for test edits
 
 ### 13. Question Bank Management

@@ -58,7 +58,15 @@ export default function TestEditor() {
   if (test.isLoading) return <Loading />;
   if (test.error) return <ErrorNote error={test.error} />;
   const t = test.data!;
-  const totalMarks = t.questions.reduce((s, q) => s + q.marks, 0);
+  // Marks a student can score: pooled sections count only the questions dealt.
+  const totalMarks = [
+    ...t.sections.map((x) => ({ qs: t.questions.filter((q) => q.sectionId === x.id), draw: x.drawCount })),
+    { qs: t.questions.filter((q) => !q.sectionId || !t.sections.some((x) => x.id === q.sectionId)), draw: t.sections.length ? null : t.drawCount },
+  ].reduce((sum, g) => sum + (g.draw && g.draw < g.qs.length ? g.draw * (g.qs[0]?.marks ?? 0) : g.qs.reduce((s, q) => s + q.marks, 0)), 0);
+  const dealt = [
+    ...t.sections.map((x) => Math.min(x.drawCount ?? Infinity, x.questionCount)),
+    Math.min(t.sections.length ? Infinity : t.drawCount ?? Infinity, t.questions.filter((q) => !q.sectionId || !t.sections.some((x) => x.id === q.sectionId)).length),
+  ].reduce((a, b) => a + b, 0);
   const timedMinutes = t.sections.reduce((s, x) => s + (x.durationMinutes ?? 0), 0);
   // Questions grouped by section, in section order; unsectioned ones last.
   const groups: Array<{ section: TestSection | null; questions: Question[] }> = [
@@ -74,7 +82,7 @@ export default function TestEditor() {
       </Link>
       <PageHeader
         title={t.title}
-        description={`${t.questions.length} questions · ${totalMarks} marks · ${t.sectionTimeLocked ? `${timedMinutes} minutes in timed sections` : `${t.durationMinutes} minutes`}`}
+        description={`${t.questions.length} questions${dealt < t.questions.length ? ` (each student gets ${dealt})` : ''} · ${totalMarks} marks · ${t.sectionTimeLocked ? `${timedMinutes} minutes in timed sections` : `${t.durationMinutes} minutes`}`}
         actions={
           <>
             <Badge variant={t.published ? 'secondary' : 'outline'}>{t.published ? 'Published' : 'Draft'}</Badge>
@@ -285,6 +293,16 @@ function SectionsPanel({ orgId, testId, test, onChange }: { orgId: string; testI
                   if (v !== x.durationMinutes) void run(() => patch(`${base}/sections/${x.id}`, { durationMinutes: v }));
                 }} />
               <span className="text-xs text-muted-foreground">min · {x.questionCount} {x.questionCount === 1 ? 'question' : 'questions'}</span>
+              <label className="flex items-center gap-1 text-xs text-muted-foreground">
+                deal
+                <Input type="number" min={1} max={500} defaultValue={x.drawCount ?? ''} placeholder="all" aria-label={`Questions dealt from ${x.name}`} className="h-8 w-16"
+                  onBlur={(e) => {
+                    const v = e.target.value ? Number(e.target.value) : null;
+                    if (v !== x.drawCount) void run(() => patch(`${base}/sections/${x.id}`, { drawCount: v }));
+                  }} />
+                per student
+              </label>
+              {x.drawCount && x.drawCount > x.questionCount && <Badge variant="outline" className="text-warning">pool too small</Badge>}
               {test.sectionTimeLocked && !x.durationMinutes && <Badge variant="outline" className="text-warning">needs a time limit</Badge>}
               <Button size="icon" variant="ghost" className="ml-auto" aria-label={`Remove section ${x.name}`}
                 onClick={() => void run(() => del(`${base}/sections/${x.id}`), 'Section removed — its questions stay in the test')}>
@@ -294,6 +312,22 @@ function SectionsPanel({ orgId, testId, test, onChange }: { orgId: string; testI
           ))}
         </ul>
       )}
+
+      {(() => {
+        const loose = test.questions.filter((q) => !q.sectionId || !test.sections.some((x) => x.id === q.sectionId)).length;
+        return loose > 0 && test.sections.length === 0 ? (
+          <label className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+            <span className="font-medium">Question pool:</span> deal
+            <Input type="number" min={1} max={500} defaultValue={test.drawCount ?? ''} placeholder="all" aria-label="Questions dealt per student" className="h-8 w-20"
+              onBlur={(e) => {
+                const v = e.target.value ? Number(e.target.value) : null;
+                if (v !== test.drawCount) void run(() => patch(base, { drawCount: v }), v ? `Each student gets ${v} of ${loose} questions` : 'Every student gets every question');
+              }} />
+            of {loose} questions to each student <span className="text-xs text-muted-foreground">(different questions per student; give them equal marks)</span>
+          </label>
+        ) : null;
+      })()}
+      <p className="mt-2 text-xs text-muted-foreground">Pools: set "deal" to give each student a random subset of a section's questions. Questions in a pool need equal marks.</p>
 
       <form onSubmit={addSection} className="mt-3 flex flex-wrap items-center gap-2">
         <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="New section name" aria-label="New section name" className="h-9 max-w-xs" />

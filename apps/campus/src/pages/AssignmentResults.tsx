@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { AlertTriangle, ArrowLeft, Download, Hourglass, Radio, RefreshCw } from 'lucide-react';
-import { api, download, post } from '@/api/client';
-import type { ResultRow, Results } from '@/api/types';
+import { api, del, download, post, put } from '@/api/client';
+import type { Accommodation, ResultRow, Results } from '@/api/types';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -90,6 +90,8 @@ export default function AssignmentResults() {
         </div>
       )}
 
+      {can('assessments.create') && <ExtraTime orgId={orgId!} assignmentId={assignmentId!} rows={results.data!.rows} />}
+
       <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap gap-1 text-sm" role="tablist" aria-label="Filter students">
           {([['all', 'All'], ['submitted', 'Submitted'], ['in_progress', 'In progress'], ['not_attempted', 'Not attempted'], ['flagged', 'Flagged']] as const).map(([v, label]) => (
@@ -145,5 +147,57 @@ export default function AssignmentResults() {
       </div>
       <p className="mt-2 text-xs text-muted-foreground">Includes every student in the batch, so the average and completion rate reflect everyone assigned. Updates every 30 seconds.</p>
     </>
+  );
+}
+
+/** Extra time for named students (accommodations), applied when they start. */
+function ExtraTime({ orgId, assignmentId, rows }: { orgId: string; assignmentId: string; rows: ResultRow[] }) {
+  const qc = useQueryClient();
+  const key = ['accommodations', assignmentId];
+  const list = useQuery({ queryKey: key, queryFn: () => api<Accommodation[]>(`/orgs/${orgId}/assignments/${assignmentId}/accommodations`) });
+  const [studentId, setStudentId] = useState('');
+  const [percent, setPercent] = useState(25);
+  const [note, setNote] = useState('');
+  const base = `/orgs/${orgId}/assignments/${assignmentId}/accommodations`;
+  const save = useMutation({
+    mutationFn: () => put(`${base}/${studentId}`, { extraPercent: percent, note: note || null }),
+    onSuccess: () => { toast.success('Extra time saved — it applies when the student starts'); setStudentId(''); setNote(''); qc.invalidateQueries({ queryKey: key }); },
+    onError: (e) => toast.error(e.message),
+  });
+  const remove = useMutation({
+    mutationFn: (id: string) => del(`${base}/${id}`),
+    onSuccess: () => qc.invalidateQueries({ queryKey: key }),
+    onError: (e) => toast.error(e.message),
+  });
+  const given = new Set((list.data ?? []).map((a) => a.userId));
+  return (
+    <section className="mt-6 rounded-lg border bg-card p-4" aria-label="Extra time">
+      <h2 className="font-semibold">Extra time</h2>
+      <p className="text-sm text-muted-foreground">For students with an accommodation (e.g. 25% for a scribe). Applies to the whole test and each timed section, from their next start.</p>
+      {(list.data ?? []).length > 0 && (
+        <ul className="mt-3 divide-y rounded-md border text-sm">
+          {list.data!.map((a) => (
+            <li key={a.userId} className="flex flex-wrap items-center gap-2 px-3 py-2">
+              <span className="font-medium">{a.name}</span>
+              <span className="text-xs tabular text-muted-foreground">{a.rollNumber}</span>
+              <Badge variant="secondary">+{a.extraPercent}%</Badge>
+              {a.note && <span className="text-xs text-muted-foreground">{a.note}</span>}
+              <Button size="sm" variant="ghost" className="ml-auto" onClick={() => remove.mutate(a.userId)} aria-label={`Remove extra time for ${a.name}`}>Remove</Button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <form className="mt-3 flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); if (studentId) save.mutate(); }}>
+        <select aria-label="Student" value={studentId} onChange={(e) => setStudentId(e.target.value)} className="rounded-md border bg-card px-3 py-1.5 text-sm">
+          <option value="">Choose a student…</option>
+          {rows.filter((r) => !given.has(r.userId)).map((r) => <option key={r.userId} value={r.userId}>{r.rollNumber ? `${r.rollNumber} · ` : ''}{r.name ?? r.email}</option>)}
+        </select>
+        <select aria-label="Extra time" value={percent} onChange={(e) => setPercent(Number(e.target.value))} className="rounded-md border bg-card px-3 py-1.5 text-sm">
+          {[10, 20, 25, 33, 50, 100].map((p) => <option key={p} value={p}>+{p}%</option>)}
+        </select>
+        <input aria-label="Note" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Reason (optional)" className="rounded-md border bg-card px-3 py-1.5 text-sm" />
+        <Button type="submit" size="sm" disabled={!studentId || save.isPending}>Give extra time</Button>
+      </form>
+    </section>
   );
 }

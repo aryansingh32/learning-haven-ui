@@ -88,6 +88,7 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
             <div className="rounded-xl bg-secondary/40 p-3">
               <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">Duration</p>
               <p className="text-lg font-display font-bold text-foreground">{a.durationMinutes} min</p>
+              {Boolean(a.extraPercent) && <p className="text-[11px] font-semibold text-success">includes your {a.extraPercent}% extra time</p>}
             </div>
             <div className="rounded-xl bg-secondary/40 p-3">
               <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">Attempt</p>
