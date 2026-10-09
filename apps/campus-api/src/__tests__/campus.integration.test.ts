@@ -167,10 +167,12 @@ describe('faculty authoring', () => {
 
 describe('a student sits the test', () => {
   let attemptId: string;
+  let dealtOrder: string[];
 
   it('shows the assignment only to the batch', async () => {
     const mine = await request(app).get('/campus/v1/my/assignments').set(await as(U.s1));
     expect(mine.body).toEqual([expect.objectContaining({ id: assignmentId, state: 'open', durationMinutes: 20, attemptsUsed: 0 })]);
+    expect(mine.body[0].proctoring).toEqual(expect.objectContaining({ enabled: true, maxViolations: 2, warnFirst: true }));
     expect((await request(app).get('/campus/v1/my/assignments').set(await as(U.s2))).body).toEqual([]);
     expect((await request(app).post(`/campus/v1/my/assignments/${assignmentId}/start`).set(await as(U.s2))).status).toBe(404);
   });
@@ -179,6 +181,7 @@ describe('a student sits the test', () => {
     const res = await request(app).post(`/campus/v1/my/assignments/${assignmentId}/start`).set(await as(U.s1));
     expect(res.status).toBe(201);
     attemptId = res.body.attemptId;
+    dealtOrder = res.body.questions.map((q: { id: string }) => q.id);
     expect(res.body.questions).toHaveLength(3);
     expect(JSON.stringify(res.body)).not.toMatch(/correct|natAnswer|nat_answer|explanation/i);
     expect(new Date(res.body.expiresAt).getTime() - Date.now()).toBeLessThanOrEqual(20 * 60_000 + 5_000);
@@ -229,6 +232,8 @@ describe('a student sits the test', () => {
     expect(res.body.status).toBe('completed');
     expect(res.body.submitReason).toBe('manual');
     expect(res.body.result).toMatchObject({ released: true, score: 5, totalMarks: 5, correctCount: 3 });
+    // The breakdown follows the order this student saw, so "Question 2" means the same thing on both screens.
+    expect(res.body.result.perQuestion.map((q: { questionId: string }) => q.questionId)).toEqual(dealtOrder);
     const again = await request(app).post(`/campus/v1/my/assignments/${assignmentId}/start`).set(await as(U.s1));
     expect(again.status).toBe(409);
     const late = await request(app).post(`/campus/v1/my/attempts/${attemptId}/events`).set(await as(U.s1)).send({ type: 'tab_switch' });

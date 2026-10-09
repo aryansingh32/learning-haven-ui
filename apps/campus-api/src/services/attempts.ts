@@ -284,13 +284,16 @@ export async function getAttemptView(userId: string, attemptId: string) {
     questions: publicQuestions,
     answers: attempt.status === 'in_progress' ? attempt.answers : undefined,
     submitReason: attempt.submit_reason,
-    result: attempt.status === 'completed' ? resultView(attempt, released, questions) : undefined,
+    result: attempt.status === 'completed' ? resultView(attempt, released, questions, order.questionIds) : undefined,
   };
 }
 
-function resultView(attempt: AttemptRow, released: boolean, questions: QuestionRow[]) {
+function resultView(attempt: AttemptRow, released: boolean, questions: QuestionRow[], dealtOrder: string[]) {
   if (!released) return { released: false as const };
-  const scored = scoreAttempt(questions.map(toScoring), attempt.answers ?? []);
+  // Report questions in the order this student saw them (shuffled per attempt).
+  const position = new Map(dealtOrder.map((id, i) => [id, i]));
+  const ordered = [...questions].sort((a, b) => (position.get(a.id) ?? Infinity) - (position.get(b.id) ?? Infinity));
+  const scored = scoreAttempt(ordered.map(toScoring), attempt.answers ?? []);
   return {
     released: true as const,
     score: Number(attempt.score),

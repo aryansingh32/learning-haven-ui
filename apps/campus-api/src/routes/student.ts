@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { PROCTORING_EVENTS } from '@repo/assessment-core';
+import { normalizePolicy, PROCTORING_EVENTS } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
 import { getAttemptView, recordEvent, resultsReleased, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
@@ -14,7 +14,7 @@ studentRouter.get('/assignments', async (req, res) => {
   const rows = await asUser(userId, async (db) => {
     const { rows } = await db.query(
       `select a.id, a.title, a.instructions, a.opens_at, a.closes_at, a.max_attempts, a.result_release,
-              a.results_released_at, a.duration_seconds, a.test_id,
+              a.results_released_at, a.duration_seconds, a.test_id, a.proctoring,
               o.name as org_name, b.name as batch_name,
               (select count(*) from public.test_attempts x where x.assignment_id = a.id and x.user_id = $1)::int as attempts_used,
               (select x.id from public.test_attempts x where x.assignment_id = a.id and x.user_id = $1
@@ -64,6 +64,8 @@ studentRouter.get('/assignments', async (req, res) => {
       resultsReleased: released,
       bestScore: released && r.best_score !== null ? Number(r.best_score) : null,
       totalMarks: released && r.total_marks !== null ? Number(r.total_marks) : null,
+      // So the student knows the lockdown rules before pressing Start.
+      proctoring: normalizePolicy(r.proctoring),
     };
   }));
 });
