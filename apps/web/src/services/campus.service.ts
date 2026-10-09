@@ -191,12 +191,36 @@ export interface EventResult {
   autoSubmitted: boolean;
 }
 
+export type CourseAssignmentStatus = 'not_started' | 'in_progress' | 'completed' | 'overdue';
+
+/** A Learn course (or some of its chapters) the student's college assigned. */
+export interface MyCourseAssignment {
+  id: string;
+  title: string;
+  instructions: string | null;
+  dueAt: string | null;
+  orgName: string;
+  batchName: string;
+  courseId: string;
+  courseTitle: string | null;
+  courseSlug: string | null;
+  coverImage: string | null;
+  wholeCourse: boolean;
+  chapters: Array<{ id: string; number: number; title: string; done: boolean }>;
+  status: CourseAssignmentStatus;
+  completedChapters: number;
+  totalChapters: number;
+  percent: number;
+}
+
 // ── Calls ───────────────────────────────────────────────────────────────
 
 /** Also attaches any roster entries the college pre-registered for this email. */
 export const fetchCampusMe = (): Promise<CampusMe> => client.get('/me');
 
 export const fetchMyAssignments = (): Promise<MyAssignment[]> => client.get('/my/assignments');
+
+export const fetchMyCourseAssignments = (): Promise<MyCourseAssignment[]> => client.get('/my/course-assignments');
 
 export const startAssignment = (assignmentId: string): Promise<AttemptView> =>
   client.post(`/my/assignments/${assignmentId}/start`);

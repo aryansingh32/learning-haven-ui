@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useLearnCourse } from "@/hooks/useLearnCourse";
 import { PremiumLockBadge } from "@/components/PremiumLockBadge";
+import { AssignedCourseBanner } from "@/features/campus/CollegeCourses";
 
 const difficultyStyles: Record<string, string> = {
   easy: "bg-success/10 text-success border border-success/20",
@@ -88,6 +89,8 @@ export default function ChaptersOverviewPage() {
       >
         <ArrowLeft className="h-4 w-4" /> Back to courses
       </button>
+
+      <AssignedCourseBanner courseId={course?.id ?? courseId} />
 
       <section className="rounded-2xl card-layer-2 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">

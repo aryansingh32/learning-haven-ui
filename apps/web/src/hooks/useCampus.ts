@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
-import { fetchCampusMe, fetchMyAssignments, studentMemberships } from '@/services/campus.service';
+import { fetchCampusMe, fetchMyAssignments, fetchMyCourseAssignments, studentMemberships } from '@/services/campus.service';
 
 /**
  * The learner's college memberships. Fetching it also claims any roster
@@ -30,5 +30,16 @@ export function useMyAssignments(enabled = true) {
     retry: 1,
     // Keep open/closed states honest while the page is left open.
     refetchInterval: 60 * 1000,
+  });
+}
+
+/** Courses the college assigned, with the student's own chapter progress. */
+export function useMyCourseAssignments(enabled = true) {
+  return useQuery({
+    queryKey: ['campus-my-course-assignments'],
+    queryFn: fetchMyCourseAssignments,
+    enabled,
+    staleTime: 60 * 1000,
+    retry: 1,
   });
 }

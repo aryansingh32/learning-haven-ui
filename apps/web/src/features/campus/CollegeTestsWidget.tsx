@@ -4,6 +4,7 @@ import { GraduationCap, ChevronRight, Clock, CalendarClock } from 'lucide-react'
 import { cn } from '@/lib/utils';
 import { useCampusMe, useMyAssignments } from '@/hooks/useCampus';
 import { assignmentStatus, sortTodo, timeUntil } from './assignmentStatus';
+import { DueCourses } from './CollegeCourses';
 
 /** Dashboard card with the student's next college tests. Renders nothing for Forge-only learners. */
 export function CollegeTestsWidget() {
@@ -63,6 +64,7 @@ export function CollegeTestsWidget() {
           })}
         </div>
       )}
+      <DueCourses />
     </motion.div>
   );
 }

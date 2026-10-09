@@ -13,6 +13,7 @@ import type { CampusMembership, MyAssignment } from '@/services/campus.service';
 import {
   assignmentStatus, formatWhen, sortTodo, timeUntil, type AssignmentBucket, type AssignmentStatus,
 } from '@/features/campus/assignmentStatus';
+import { CollegeCoursesSection } from '@/features/campus/CollegeCourses';
 
 const TONE: Record<AssignmentStatus['tone'], string> = {
   primary: 'bg-primary/10 text-primary border-primary/20',
@@ -318,6 +319,8 @@ export default function MyCollegePage() {
           </div>
         )}
       </section>
+
+      <CollegeCoursesSection />
     </div>
   );
 }

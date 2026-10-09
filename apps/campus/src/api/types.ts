@@ -224,3 +224,27 @@ export interface Accommodation {
   extraPercent: number;
   note: string | null;
 }
+
+// ── Courses for colleges (D6) ───────────────────────────────────────────────
+export interface CollegeCourse {
+  id: string; title: string; slug: string; description: string | null; difficulty: string | null; coverImage: string | null;
+  isPremium: boolean; owner: 'forge' | 'college'; chapters: number; minutes: number; licensed: boolean;
+}
+export interface CourseChapter { id: string; number: number; title: string; minutes: number | null }
+export interface CollegeCourseDetail extends CollegeCourse { chapterList: CourseChapter[] }
+
+export interface CourseAssignment {
+  id: string; title: string; status: 'draft' | 'published' | 'archived'; dueAt: string | null; createdAt: string;
+  batchId: string; batchName: string; courseId: string; courseTitle: string | null; chapters: number; wholeCourse: boolean;
+  assigned: number; completed: number; inProgress: number; overdue: number;
+}
+export type StudentCourseStatus = 'not_started' | 'in_progress' | 'completed' | 'overdue';
+export interface CourseProgressReport {
+  assignment: { id: string; title: string; status: string; instructions: string | null; dueAt: string | null; batch: string; courseId: string; courseTitle: string | null; wholeCourse: boolean };
+  chapters: Array<{ id: string; number: number; title: string }>;
+  summary: { assigned: number; completed: number; inProgress: number; notStarted: number; overdue: number; averagePercent: number | null };
+  rows: Array<{
+    userId: string; rollNumber: string | null; name: string | null; email: string | null; status: StudentCourseStatus;
+    completedChapters: number; totalChapters: number; percent: number; lastActivity: string | null; completedAt: string | null; chapters: boolean[];
+  }>;
+}
