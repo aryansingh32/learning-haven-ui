@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (375 done, 260 partly, 1,263 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (378 done, 260 partly, 1,260 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -30,10 +30,11 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Practice submission history + editor settings/shortcuts/full screen (slice A3); `submissions` insert hole closed | ✅ built, browser-verified |
 | Question pools (N of M) and per-student extra time (slice B2) | ✅ built, browser-verified |
 | College question import from Excel/CSV; Excel roster upload (slice B4) | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Courses for colleges (slice D6): Learn ↔ Campus connected — assign courses/chapters, chapter progress, college licences, catalogue honours visibility | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
-| Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review), then B2–B5 (§8.3) |
+| Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
 
 ### Owner decisions recorded (2026-10-10)
 - Apply the problem-judging migration: **yes** (owner runs it themselves; Claude verifies).
@@ -195,8 +196,8 @@ pnpm --filter @repo/assessment-core test   # 68 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 3 SQL suites
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 47 integration tests
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 4 SQL suites
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 53 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -257,6 +258,14 @@ policy; `select count(*) from pg_policies where tablename = 'submissions' and cm
 Then `20261016000001_campus_pools_accommodations`: `test_sections.draw_count`, `tests.draw_count`, table
 `campus.assignment_accommodations` with RLS on and 2 policies.
 
+Then `20261017000001_campus_courses`: tables `campus.course_licences` (2 policies) and `campus.course_assignments`
+(3 policies) with RLS on; functions `campus.course_licensed`, `campus.user_has_course_licence`,
+`campus.user_can_see_course` exist, and the last two are **not** executable by `authenticated`:
+`select has_function_privilege('authenticated', 'campus.user_can_see_course(uuid,uuid)', 'execute');` → false.
+Then `select count(*) from public.courses where is_published and deleted_at is null and visibility = 'public';` → the
+same number the catalogue showed before (6). Deploy the Forge API with this branch only **after** this migration:
+without it `CourseAccessService` falls back to the old rule (own plan only) and logs nothing.
+
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
 coding question after creation, C/C++, per-test weights, plagiarism, showing code on the result page).
@@ -275,7 +284,7 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the two pending migrations in order (§8.1), then tell Claude to verify
+- Run the eight pending migrations in order (`20261010000001` … `20261017000001`) (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings
@@ -296,10 +305,12 @@ Pilot college and its exam date; pricing (per student per year vs month); webcam
 - `apps/web` and `apps/campus` `tsc -b` print a `baseUrl` deprecation (TS5101) when a global TypeScript 6 is picked up; use
   the local `node_modules/.bin/tsc` (5.9) — the build itself passes
 - Campus coding questions can't be edited after creation (delete + re-add)
-- **Courses and Campus are not connected** (checked 2026-10-12, see FEATURE_CHECKLIST fact 3). Before any college
-  course exists: `CoursesService.listCourses` filters only `is_published` and `getCourse` returns any course by id/slug
-  (unpublished drafts too) — both ignore `owner_org_id`/`visibility`, so an `org`/`private` course would be public.
-  Chapter paywall reads `users.current_plan`, while problems use entitlements (`hasPaidPlan`) — two sources of truth.
+- Courses ↔ Campus (D6, 2026-10-12): the catalogue lists only published, public courses; a course page 404s unless
+  `campus.user_can_see_course` allows it (org/batch/private courses); unpublished drafts no longer leak. One
+  premium rule for chapters and problems (`CourseAccessService.hasPremiumAccess`: paid plan, plan grant, or college
+  licence). Left: colleges can't **author** their own Learn courses in the portal yet (they can assign Forge's and
+  any `owner_org_id = college` course created by Forge admin); removing a licence doesn't withdraw a course already
+  assigned (students keep seeing it, the paywall applies again); no reminder emails for due courses (needs D2).
 - Judge integrity rule (keep it): **expected outputs never enter the learner's program** — not on stdin, not in the
   generated source (the program can read its own source file). Answers are compared in TypeScript. With that rule,
   anything learner code prints in place of the judge's line it could equally have returned, so in-process output

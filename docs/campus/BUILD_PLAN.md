@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 375 done, 260 partly, 1,263 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 378 done, 260 partly, 1,260 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -42,7 +42,7 @@ The biggest gap found: learners cannot code inside Forge, and Practice links to 
 ## Track D — College operations (modules 2, 23, 24, 25, 40)
 D1 placement-officer dashboard (batch/department rollups, CSV) · D2 notifications centre + "new test / closes in 24h / result out" emails · D3 academic year & semester on batches · D4 faculty at-risk list and per-student report · D5 announcements.
 
-**D6 · Courses for colleges** (added 2026-10-12, after checking Learn vs Campus): catalogue and course pages honour
+**D6 · Courses for colleges** — **built** (see "Slice D6 — built" below). Added 2026-10-12, after checking Learn vs Campus: catalogue and course pages honour
 `owner_org_id`/`visibility` (and hide unpublished courses); assign a course or chapters to a batch with a due date;
 faculty see per-student chapter progress; a college licence unlocks premium Forge courses for its students
 (entitlement via membership, one source of truth with problems).
@@ -249,3 +249,33 @@ portal pool + extra time, student intro (25 min) and 3 of 8 questions dealt.
 
 **Verified:** assessment-core 68 (5 new); Campus API 47 (3 new); browser with real Excel files: bad sheet shows
 line 7 and blocks import, good sheet imports 5 questions into created sections; Excel roster preview flags line 4.
+
+## Slice D6 — courses for colleges — built
+
+Learn and Campus were separate (FEATURE_CHECKLIST fact 3); D6 connects them.
+
+- **Database** (`20261017000001_campus_courses`): `campus.course_licences` (Forge grants a college one premium course
+  or all, for a period; only platform admins write) and `campus.course_assignments` (course or chosen chapters → batch,
+  due date, draft/published/archived; a trigger allows only the college's own or Forge public published courses,
+  needs a licence for premium, and checks the chapters belong to the course). Helpers for the Forge API (service
+  role only): `user_has_course_licence`, `user_can_see_course` (public / org members / assigned batch / owner staff).
+  `supabase/tests/campus_courses.sql`: 22 checks, mutation-tested.
+- **Forge API:** `CourseAccessService` — one premium rule for chapters and problems (paid plan, grant, or college
+  licence); catalogue shows only published public courses; course and chapter pages 404 for courses the user may not
+  see; paywalled chapters no longer send their content. Falls back to the old rule if the migration isn't applied.
+- **Campus API:** `/orgs/:id/courses` (library with premium/licensed flags, course detail with chapters),
+  `/orgs/:id/course-assignments` (list with completion counts, create, patch, `/:id/progress` per student + CSV),
+  `/my/course-assignments`, `/platform/courses`, `/platform/colleges/:id/licences`. Progress = `user_chapter_progress`
+  COMPLETED on the assigned chapters; status not started / in progress / completed / overdue.
+- **Portal:** Courses page (assigned list, library cards, assign dialog with whole course or chosen chapters and due
+  date), progress page (per-chapter ticks, filters, CSV), Platform → "Course licences" per college.
+- **Forge app:** My College "Courses" section, "Assigned by <college> · due …" banner on the course page, due courses
+  on the dashboard college card.
+
+**Verified:** Forge API 100 tests (8 new); Campus API 53 (6 new); 4 SQL suites; browser run against a local DB —
+faculty assign chapters 1 and 3, premium course locked until Forge staff grant a licence, student sees 1/2 on My
+College and the course banner, faculty progress page shows both students and the CSV has per-chapter columns. The
+dashboard card's new course rows were checked by build only (the stubbed Forge API can't render the dashboard).
+
+**Not built:** colleges authoring their own Learn courses in the portal; due-date reminders (D2); course analytics
+beyond completion (time spent, quiz scores per chapter); withdrawing assigned courses when a licence ends.

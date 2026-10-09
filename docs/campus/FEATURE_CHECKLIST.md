@@ -18,12 +18,11 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 >    coded locally and pushed to GitHub.
 > 2. **Content is thin in the live database:** 8 practice problems (Arrays & Hashing 6, Two Pointers 1, Binary
 >    Search 1), 6 published courses / 72 chapters, 0 test series, 0 test-series questions.
-> 3. **Courses (Learn) and Campus are separate products in one app** (checked 2026-10-12). They share the learner
->    app, the account and the sidebar, and Campus results link to Practice — but no data connects them: Campus has
->    no course/chapter code at all; faculty can't assign a course or see course progress; course access follows the
->    student's own plan, not their college; the catalogue ignores the `owner_org_id`/`visibility` columns. Live DB:
->    6 courses (all Forge, public; "Learn English A to Z" has 0 chapters; two HTML/CSS courses with 21 chapters each
->    look duplicated), 0 colleges, 0 memberships.
+> 3. **Courses (Learn) and Campus were separate; slice D6 connects them** (2026-10-12). A college assigns a Learn
+>    course or some of its chapters to a batch with a due date, sees each student's chapter progress, and Forge can
+>    license premium courses to a college. The catalogue honours `owner_org_id`/`visibility` and hides drafts.
+>    Needs migration `20261017000001_campus_courses` on the live DB. Live content is unchanged: 6 courses (all Forge,
+>    public; "Learn English A to Z" has 0 chapters; two HTML/CSS courses with 21 chapters each look duplicated).
 
 ## Summary
 
@@ -51,9 +50,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 20 | Interview Preparation | 0 | 1 | 27 | 28 |
 | 21 | System Design & Software Engineering | 2 | 3 | 25 | 30 |
 | 22 | Project-Based Learning | 10 | 3 | 15 | 28 |
-| 23 | Faculty & Trainer Portal | 5 | 4 | 26 | 35 |
+| 23 | Faculty & Trainer Portal | 7 | 3 | 25 | 35 |
 | 24 | Placement Officer & Training and Placement Cell | 1 | 3 | 29 | 33 |
-| 25 | Learning Analytics | 2 | 7 | 30 | 39 |
+| 25 | Learning Analytics | 2 | 8 | 29 | 39 |
 | 26 | AI-Powered Analytics | 0 | 0 | 26 | 26 |
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
 | 28 | Assignments & Homework | 7 | 4 | 15 | 26 |
@@ -73,7 +72,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
 | 44 | Admin Control Center | 17 | 17 | 13 | 47 |
-| 45 | Payments & Monetization | 11 | 6 | 16 | 33 |
+| 45 | Payments & Monetization | 12 | 6 | 15 | 33 |
 | 46 | SaaS & Enterprise Management | 4 | 2 | 23 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
 | 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
@@ -89,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **375** (20%) | **260** (14%) | **1263** (67%) | **1898** |
+| | **All modules** | **378** (20%) | **260** (14%) | **1260** (66%) | **1898** |
 
 ---
 
@@ -127,7 +126,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Branch Management — departments double as branches; no separate branch entity
 - [ ] Semester Management
 - [ ] Academic Year Management
-- [ ] 🟡 Course Management — Forge admin only. `courses.owner_org_id`/`visibility` exist (all 6 live courses: Forge, public) but no college UI, and the catalogue ignores visibility (checked 2026-10-12)
+- [ ] 🟡 Course Management — Forge admin authors courses; the catalogue and course pages honour `owner_org_id`/`visibility` and hide drafts, and colleges assign courses from a portal library (D6). Colleges can't author their own courses yet
 - [x] Batch Management — `campus.batches`, members, faculty
 - [ ] 🟡 Section Management — use a batch per section; no section entity
 - [ ] Classroom Management
@@ -917,7 +916,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 23. Faculty & Trainer Portal
 - [ ] 🟡 Faculty Dashboard — Campus portal overview
-- [ ] Course Assignment — Campus assigns tests only; a course or chapter can't be given to a batch
+- [x] Course Assignment — portal Courses: a course or chosen chapters to a batch with a due date (`campus.course_assignments`, D6)
 - [x] Batch Assignment — tests assigned to batches
 - [x] Student Roster — People page, batch members
 - [ ] Attendance Management
@@ -926,7 +925,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Question Bank Access — college tests and questions
 - [ ] Live Class Scheduling
 - [ ] Learning Material Upload — colleges can't add lessons or files
-- [ ] 🟡 Student Progress Monitoring — test results per assignment; faculty can't see students' course/chapter progress
+- [x] Student Progress Monitoring — test results per assignment, and per-student chapter progress on assigned courses with status/overdue and CSV (D6)
 - [ ] 🟡 Student Performance Analytics — results table + filters + CSV; no analytics
 - [ ] Weak Student Identification
 - [ ] At-Risk Student Alerts
@@ -990,7 +989,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 25. Learning Analytics
 - [ ] 🟡 Student Learning Analytics — activity heatmap, solved breakdown for the learner
 - [ ] Cohort Analytics
-- [ ] 🟡 Course Analytics — Forge admin Analytics page; none per college or batch
+- [ ] 🟡 Course Analytics — Forge admin Analytics page; per batch: completion counts and average chapters done per assigned course (D6); no time or quiz analytics
 - [ ] Lesson Analytics
 - [ ] 🟡 Assessment Analytics — per-assignment results with violations
 - [ ] Coding Analytics
@@ -998,7 +997,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Time-on-Task Analytics — `time_spent_seconds` on submissions, `study_time_total`; no view
 - [ ] 🟡 Learning Engagement Analytics — `analytics_events` pipeline; admin analytics
 - [ ] Learning Drop-Off Analysis
-- [ ] Course Completion Analytics
+- [ ] 🟡 Course Completion Analytics — completed / in progress / not started / overdue per course assignment, CSV (D6); no trends
 - [ ] Question-Level Analytics
 - [ ] Topic-Level Analytics
 - [ ] Difficulty-Level Analytics
@@ -1604,7 +1603,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 AI Usage Credits — daily AI quota per plan
 - [ ] Coding Execution Credits
 - [ ] Team Licences
-- [ ] College Licences — course access follows each student's own plan (`users.current_plan`); a college can't unlock premium courses (e.g. DSA Foundations) for its students
+- [x] College Licences — Forge staff grant a college one premium course or all, for a period (`campus.course_licences`, Platform page); every active member gets access; one premium rule for chapters and problems (D6)
 - [ ] Annual Contracts
 - [ ] Trial Periods
 - [x] Coupon Management — `coupons`, admin Coupons (race-safe usage)
