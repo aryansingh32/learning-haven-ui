@@ -3,6 +3,7 @@ import { AuthRequest } from '../../../middleware/auth';
 import { ProblemsService } from '../services/problems.service';
 import { hasPaidPlan } from './judge.controller';
 import logger from '../../../config/logger';
+import { cleanCompany, cleanSearch } from '../services/practiceHelpers';
 
 export class ProblemsController {
     /**
@@ -11,14 +12,15 @@ export class ProblemsController {
     static async getProblems(req: Request, res: Response) {
         try {
             const user_id = (req as AuthRequest).user?.id;
-            const { page, limit, difficulty, topic, search, is_premium } = req.query as any;
+            const { page, limit, difficulty, topic, search, company, is_premium } = req.query as any;
 
             const result = await ProblemsService.getProblems({
                 page: parseInt(page) || 1,
                 limit: parseInt(limit) || 20,
                 difficulty,
                 topic,
-                search,
+                search: cleanSearch(search),
+                company: cleanCompany(company),
                 is_premium: is_premium === 'true' ? true : is_premium === 'false' ? false : undefined,
                 user_id,
             });
@@ -27,6 +29,30 @@ export class ProblemsController {
         } catch (error) {
             logger.error('Get problems error:', error);
             res.status(500).json({ error: 'Failed to fetch problems' });
+        }
+    }
+
+    /**
+     * GET /api/problems/companies
+     */
+    static async getCompanies(_req: Request, res: Response) {
+        try {
+            res.json(await ProblemsService.getCompanies());
+        } catch (error) {
+            logger.error('Get problem companies error:', error);
+            res.status(500).json({ error: 'Failed to fetch companies' });
+        }
+    }
+
+    /**
+     * GET /api/problems/daily
+     */
+    static async getDaily(req: Request, res: Response) {
+        try {
+            res.json(await ProblemsService.getDaily((req as AuthRequest).user?.id));
+        } catch (error) {
+            logger.error('Get daily problem error:', error);
+            res.status(500).json({ error: 'Failed to fetch the daily problem' });
         }
     }
 

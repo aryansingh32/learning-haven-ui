@@ -135,3 +135,29 @@ function toExecutionResult(p: ProblemDetail, res: Omit<JudgeResponse, 'xpGained'
     ...(judged ? { judged: { passed: res.passed, total: res.total } } : {}),
   };
 }
+
+export interface ProblemListItem {
+  id: string;
+  slug: string;
+  title: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  topic: string;
+  companies: string[] | null;
+  is_premium: boolean;
+  status: 'solved' | 'tried' | 'revision' | null;
+}
+export interface DailyProblem {
+  date: string;
+  problem: Pick<ProblemListItem, 'id' | 'slug' | 'title' | 'difficulty' | 'topic' | 'companies'> | null;
+  solved: boolean;
+  solved_today: boolean;
+}
+export const fetchDailyProblem = (): Promise<DailyProblem> => api.get('/problems/daily');
+export const fetchProblemCompanies = (): Promise<{ companies: Array<{ name: string; count: number }> }> => api.get('/problems/companies');
+export function findProblems(f: { search?: string; company?: string; difficulty?: string }): Promise<{ problems: ProblemListItem[]; pagination: { total: number } }> {
+  const q = new URLSearchParams({ limit: '50' });
+  if (f.search) q.set('search', f.search);
+  if (f.company) q.set('company', f.company);
+  if (f.difficulty) q.set('difficulty', f.difficulty);
+  return api.get(`/problems?${q.toString()}`);
+}

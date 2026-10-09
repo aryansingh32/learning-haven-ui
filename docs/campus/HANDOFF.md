@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (446 done, 219 partly, 1,233 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (451 done, 214 partly, 1,233 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -36,7 +36,8 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Activity log, custom roles, consent record, device check, onboarding checklist, bulk member actions (slice C2c) | ✅ built, browser-verified |
 | Notifications (bell, preferences, reminders, email) and placement drives (slice C3) | ✅ built, browser-verified; email needs `RESEND_API_KEY` + a cron calling the scheduler |
 | Courses for colleges (slice D6): Learn ↔ Campus connected — assign courses/chapters, chapter progress, college licences, catalogue honours visibility | ✅ built, browser-verified |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles`, `20261021000001_notifications`, `20261022000001_campus_drives` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Practice (slice W2-P1): problem search by title, company filter, problem of the day, editorials for all 8 problems (drafts for review) | ✅ built, browser-verified |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles`, `20261021000001_notifications`, `20261022000001_campus_drives`, `20261023000001_problem_editorials` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
@@ -201,7 +202,7 @@ pnpm --filter @repo/assessment-core test   # 68 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 8 SQL suites
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 9 SQL suites
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 80 integration tests
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
@@ -292,6 +293,7 @@ Then `20261021000001_notifications` and `20261022000001_campus_drives`: tables `
 `update public.notifications set title = 'x'` is refused (only `read_at` is writable).
 Then set on the Campus API: `CRON_SECRET` and a cron (e.g. every 10 min) calling `POST /campus/internal/scheduler` with
 `x-cron-secret`, or `SCHEDULER_MINUTES=10` on a single instance; `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `APP_URL` for email.
+Then `20261023000001_problem_editorials` (data only): `select count(*) from public.problems where length(trim(solution_explanation)) > 0;` → 8.
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
@@ -311,7 +313,7 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the thirteen pending migrations in order (`20261010000001` … `20261022000001`) (§8.1), then tell Claude to verify
+- Run the fourteen pending migrations in order (`20261010000001` … `20261023000001`) (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings

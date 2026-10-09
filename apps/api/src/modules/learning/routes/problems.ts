@@ -22,6 +22,20 @@ router.get(
 );
 
 /**
+ * @route   GET /api/problems/companies
+ * @desc    Companies that have asked the live problems, with counts (company filter)
+ * @access  Public
+ */
+router.get('/companies', ProblemsController.getCompanies);
+
+/**
+ * @route   GET /api/problems/daily
+ * @desc    Today's problem (same for everyone; turns over at midnight IST), and whether you've solved it
+ * @access  Public (solved flags when signed in)
+ */
+router.get('/daily', optionalAuth, ProblemsController.getDaily);
+
+/**
  * @route   GET /api/problems/:slug
  * @desc    Get single problem details
  * @access  Public

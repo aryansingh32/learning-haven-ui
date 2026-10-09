@@ -37,7 +37,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
 | 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
-| 10 | Coding Practice Platform | 14 | 9 | 20 | 43 |
+| 10 | Coding Practice Platform | 18 | 5 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 39 | 3 | 15 | 57 |
 | 13 | Question Bank Management | 18 | 0 | 24 | 42 |
@@ -78,7 +78,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
 | 49 | Security & Privacy | 14 | 7 | 27 | 48 |
 | 50 | Reliability & Platform Infrastructure | 15 | 9 | 25 | 49 |
-| 51 | Search & Discovery | 1 | 3 | 20 | 24 |
+| 51 | Search & Discovery | 2 | 2 | 20 | 24 |
 | 52 | Content Creation & Management | 5 | 5 | 19 | 29 |
 | 53 | Library & Learning Resources | 3 | 3 | 18 | 24 |
 | 54 | Mentorship & Human Support | 1 | 1 | 25 | 27 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **446** (23%) | **219** (12%) | **1233** (65%) | **1898** |
+| | **All modules** | **451** (24%) | **214** (11%) | **1233** (65%) | **1898** |
 
 ---
 
@@ -436,12 +436,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Coding Problem Library — Practice page + admin Problems; only 8 problems live
 - [x] Topic-Wise Problems — grouped by topic on Practice
 - [x] Difficulty-Wise Problems — easy/medium/hard filter
-- [ ] 🟡 Company-Wise Problems — companies shown on the problem page; no company filter yet
+- [x] Company-Wise Problems — company filter on Practice (`GET /problems?company=`, `GET /problems/companies` with counts); company chips on each result (W2-P1)
 - [x] Pattern-Wise Problems — `patterns`, `problem_patterns`, admin Patterns
 - [ ] Interview Problems
 - [x] Beginner Problems — easy filter
 - [x] Advanced Problems — hard filter
-- [ ] 🟡 Daily Coding Challenge — daily quests can include problems; no daily problem
+- [x] Daily Coding Challenge — Problem of the day on Practice: the same free problem for everyone, new at midnight IST, cycles every problem before repeating; shows solved today / before (`GET /problems/daily`, W2-P1)
 - [ ] Weekly Coding Challenge
 - [ ] Problem of the Day
 - [ ] 🟡 Curated Problem Sheets — the topic list is one curated sheet
@@ -458,8 +458,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Reattempt Tracking — "marked for revision"
 - [x] Solution Submission History — Submissions tab: every judged submission with verdict, tests passed, language, time and code (`problem_submissions`)
 - [ ] Multiple Language Solutions
-- [ ] 🟡 Editorials — `solution_explanation` column; 0 problems have one; not shown
-- [ ] 🟡 Official Solutions — `solution_code` column; not shown
+- [x] Editorials — Solution tab renders the markdown editorial; written editorials for all 8 problems (migration 20261023000001, drafts for the content team; never overwrites a reviewed one)
+- [x] Official Solutions — Solution tab shows the official code per language under the editorial (unlocked on solve, or reveal)
 - [ ] Community Solutions
 - [ ] AI-Generated Hints
 - [x] Progressive Hints — Hints tab reveals one at a time
@@ -1837,7 +1837,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Course Search — catalog filtering
 - [ ] Lesson Search
 - [ ] 🟡 Question Search — admin question bank filters
-- [ ] 🟡 Coding Problem Search — Practice search filters topics, not individual problems
+- [x] Coding Problem Search — Practice search finds problems by any part of the title, combined with company and difficulty filters (W2-P1)
 - [ ] Company Search
 - [ ] Skill Search
 - [ ] Resource Search

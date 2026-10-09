@@ -1,6 +1,7 @@
 import { supabase } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import logger from '../../../config/logger';
+import { indiaDate, pickDaily } from './practiceHelpers';
 
 interface GetProblemsParams {
     page: number;
@@ -8,6 +9,7 @@ interface GetProblemsParams {
     difficulty?: 'easy' | 'medium' | 'hard';
     topic?: string;
     search?: string;
+    company?: string;
     is_premium?: boolean;
     user_id?: string;
 }
@@ -17,7 +19,7 @@ export class ProblemsService {
      * Get problems list with filters and pagination
      */
     static async getProblems(params: GetProblemsParams) {
-        const { page, limit, difficulty, topic, search, is_premium, user_id } = params;
+        const { page, limit, difficulty, topic, search, company, is_premium, user_id } = params;
         const offset = (page - 1) * limit;
 
         // Generate cache key
@@ -34,7 +36,8 @@ export class ProblemsService {
             // Build query
             let query = supabase
                 .from('problems')
-                .select('*, user_problem_status!left(status), user_notes!left(id)', { count: 'exact' });
+                .select('*, user_problem_status!left(status), user_notes!left(id)', { count: 'exact' })
+                .is('deleted_at', null);
 
             // Apply filters
             if (difficulty) {
@@ -46,13 +49,16 @@ export class ProblemsService {
             if (typeof is_premium === 'boolean') {
                 query = query.eq('is_premium', is_premium);
             }
+            if (company) {
+                query = query.contains('companies', [company]);
+            }
             if (search) {
-                query = query.textSearch('search_vector', search);
+                // Already cleaned of wildcards and PostgREST syntax (cleanSearch).
+                query = query.ilike('title', `%${search}%`);
             }
 
             // Filter submissions by user
             if (user_id) {
-                query = query.eq('user_problem_status.user_id', user_id);
                 query = query.eq('user_problem_status.user_id', user_id);
                 query = query.eq('user_notes.user_id', user_id);
             }
@@ -104,6 +110,53 @@ export class ProblemsService {
             logger.error('Error fetching problems:', error);
             throw new Error('Failed to fetch problems');
         }
+    }
+
+    /** Every company that has asked a live problem, most problems first (for the company filter). */
+    static async getCompanies() {
+        const cacheKey = 'problems:companies';
+        const cached = await CacheService.get(cacheKey);
+        if (cached) return cached;
+        const { data, error } = await supabase.from('problems').select('companies').is('deleted_at', null);
+        if (error) throw error;
+        const counts = new Map<string, number>();
+        for (const row of data ?? []) for (const c of (row.companies as string[] | null) ?? []) counts.set(c, (counts.get(c) ?? 0) + 1);
+        const result = {
+            companies: [...counts.entries()]
+                .map(([name, count]) => ({ name, count }))
+                .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)),
+        };
+        await CacheService.set(cacheKey, result, 300);
+        return result;
+    }
+
+    /**
+     * Today's problem: the same free problem for everyone, turning over at midnight in India.
+     * With a signed-in learner, also whether they've solved it (ever, and today).
+     */
+    static async getDaily(user_id?: string, now: Date = new Date()) {
+        const date = indiaDate(now);
+        const { data, error } = await supabase
+            .from('problems')
+            .select('id, slug, title, difficulty, topic, companies')
+            .is('deleted_at', null)
+            .eq('is_premium', false);
+        if (error) throw error;
+        const problem = pickDaily(data ?? [], date);
+        if (!problem) return { date, problem: null, solved: false, solved_today: false };
+        let solved = false;
+        let solved_today = false;
+        if (user_id) {
+            const { data: status } = await supabase
+                .from('user_problem_status')
+                .select('status, solved_at')
+                .eq('user_id', user_id)
+                .eq('problem_id', problem.id)
+                .maybeSingle();
+            solved = status?.status === 'solved';
+            solved_today = solved && !!status?.solved_at && indiaDate(new Date(status.solved_at)) === date;
+        }
+        return { date, problem, solved, solved_today };
     }
 
     /**

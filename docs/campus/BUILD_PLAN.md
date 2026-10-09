@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 446 done, 219 partly, 1,233 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 451 done, 214 partly, 1,233 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -351,3 +351,17 @@ table, roll-ups, at-risk order and reasons, 8-line placement CSV, student report
 **Verified:** 8 SQL suites (drive self-selection mutation-checked), Campus API 80 (email via a mocked Resend), browser
 run (drive opened → bell → apply; ineligible student sees nothing; shortlist → notified; mute saved). Found: the bell
 stayed open after following a notification, swallowing the next click — it now closes.
+
+## Slice W2-P1 — practice search, company filter, problem of the day, editorials — built
+- **API (Forge):** `GET /problems` takes `company` and a cleaned `search` (any part of the title; LIKE wildcards and
+  PostgREST syntax stripped) and now hides deleted problems; `GET /problems/companies` (counts); `GET /problems/daily`
+  — one free problem for everyone, new at midnight IST, every problem comes round once before any repeats
+  (`practiceHelpers.ts`), with `solved` / `solved_today` for a signed-in learner.
+- **Content:** migration `20261023000001_problem_editorials` writes markdown editorials for the 8 live problems; it only fills
+  empty ones, so a reviewed editorial is never overwritten. The content team should review them.
+- **Web:** Practice page gets a "Problem of the day" card, a company picker, problem search that combines with the
+  difficulty buttons (which previously did nothing), and a results list. The Solution tab already rendered editorial + code.
+- **Verified:** `practice.sql` (fills / never overwrites / re-runnable), `practiceHelpers.test.ts` and `practiceList.test.ts`
+  (company, search, deleted hidden, company counts, daily pick and solved-today) — 9 tests; browser run of every filter,
+  the daily card, the editorial, and a phone-width check.
+- **Left out:** full-text search over descriptions (`search_vector` still unused), saved searches, a daily streak.

@@ -7,6 +7,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRoadmap } from "@/context/RoadmapContext";
+import { useQuery } from "@tanstack/react-query";
+import { DailyProblemCard } from "@/features/practice/DailyProblemCard";
+import { ProblemFinder } from "@/features/practice/ProblemFinder";
+import { fetchProblemCompanies } from "@/features/practice/practice.service";
 
 const difficultyColor: Record<string, string> = {
   easy: "bg-success/15 text-success border border-success/20",
@@ -30,7 +34,15 @@ import {
 const TopicsPage = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "easy" | "medium" | "hard">("all");
+  const [company, setCompany] = useState("");
+  const [debounced, setDebounced] = useState("");
   const [expanded, setExpanded] = useState<string | null>(null);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(search), 250);
+    return () => clearTimeout(t);
+  }, [search]);
+  const { data: companyList } = useQuery({ queryKey: ["problem-companies"], queryFn: fetchProblemCompanies, staleTime: 5 * 60_000 });
+  const finding = debounced.trim().length > 0 || company !== "" || filter !== "all";
   const [notesOpen, setNotesOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState<{ id: string; title: string } | null>(null);
 
@@ -77,6 +89,8 @@ const TopicsPage = () => {
         </div>
       </div>
 
+      <DailyProblemCard />
+
       {/* Adaptive Difficulty Recommendation */}
       <AdaptiveDifficultyBanner />
 
@@ -91,6 +105,7 @@ const TopicsPage = () => {
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
+                    aria-pressed={filter === f}
                     className={cn(
                       "px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all duration-200",
                       filter === f
@@ -107,15 +122,29 @@ const TopicsPage = () => {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input
                     type="text"
-                    placeholder="Search topics..."
+                    placeholder="Search problems or topics..."
+                    aria-label="Search problems or topics"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 rounded-xl bg-secondary/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all border border-border/50"
                   />
                 </div>
+                <select
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  aria-label="Filter by company"
+                  className="py-2 px-3 rounded-xl bg-secondary/50 text-sm text-foreground border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                >
+                  <option value="">All companies</option>
+                  {companyList?.companies.map((c) => (
+                    <option key={c.name} value={c.name}>{c.name} ({c.count})</option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
+
+          {finding && <ProblemFinder search={debounced} company={company} difficulty={filter} />}
 
           {progressLoading ? (
             <div className="space-y-3">
