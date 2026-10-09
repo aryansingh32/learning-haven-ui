@@ -1,8 +1,9 @@
+import { cppFunctionHint } from './cpp';
 // Per-language harnesses that call a learner's function exactly the way the
 // browser runner does (same `name = value` inputs, same function detection).
 // Pure string functions; execution lives in runner.ts.
 
-export const JUDGED_LANGUAGES = ['javascript', 'python', 'java'] as const;
+export const JUDGED_LANGUAGES = ['javascript', 'python', 'java', 'cpp'] as const;
 export type JudgedLanguage = (typeof JUDGED_LANGUAGES)[number];
 
 export interface JudgeTest {
@@ -39,7 +40,8 @@ export interface JudgeResult {
 /** Function the problem expects, read from its starter code, e.g. "twoSum". */
 export function functionHint(language: JudgedLanguage, starter: string | undefined): string {
   if (!starter) return '';
-  const patterns: Record<JudgedLanguage, RegExp> = {
+  if (language === 'cpp') return cppFunctionHint(starter);
+  const patterns: Record<Exclude<JudgedLanguage, 'cpp'>, RegExp> = {
     javascript: /function\s+([A-Za-z_$][\w$]*)\s*\(/,
     python: /def\s+([A-Za-z_]\w*)\s*\(\s*self/,
     java: /public\s+[\w<>\[\],\s]+?\s+([A-Za-z_]\w*)\s*\(/,
@@ -136,16 +138,24 @@ __forge_main()
 `;
 }
 
+export const TAMPERED = 'Your code printed a line that imitates the judge, so this test was not counted.';
+
 /** Pull per-test outputs out of the harness's stdout. */
 export function parseMarked(stdout: string, marker: string, count: number): Array<{ ok: boolean; text: string } | null> {
   const out: Array<{ ok: boolean; text: string } | null> = Array.from({ length: count }, () => null);
+  const seen: boolean[] = Array.from({ length: count }, () => false);
   for (const line of stdout.split('\n')) {
     if (!line.startsWith(marker)) continue;
     const rest = line.slice(marker.length);
     const m = rest.match(/^([OE])(\d+):(.*)$/);
     if (!m) continue;
     const idx = Number(m[2]);
-    if (idx >= 0 && idx < count && out[idx] === null) out[idx] = { ok: m[1] === 'O', text: m[3] };
+    if (idx < 0 || idx >= count) continue;
+    // The harness prints exactly one line per test. A second one means the
+    // learner's code printed a fake result line: that test fails.
+    if (seen[idx]) out[idx] = { ok: false, text: TAMPERED };
+    else out[idx] = { ok: m[1] === 'O', text: m[3] };
+    seen[idx] = true;
   }
   return out;
 }

@@ -9,7 +9,7 @@ import { CampusApiError, type CodeLanguage, type CodeRunResult, type ExamQuestio
 // left, the editor and sample-run results on the right. Running only checks
 // the samples; hidden tests are judged on the server after submitting.
 
-const LANGUAGE_LABEL: Record<CodeLanguage, string> = { python: 'Python', java: 'Java', javascript: 'JavaScript' };
+const LANGUAGE_LABEL: Record<CodeLanguage, string> = { python: 'Python', java: 'Java', cpp: 'C++', javascript: 'JavaScript' };
 
 const VERDICT_TONE: Record<CodeRunResult['verdict'], string> = {
   Accepted: 'text-success',

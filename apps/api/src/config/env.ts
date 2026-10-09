@@ -87,6 +87,7 @@ const envSchema = z.object({
   // Judge0 CE ids: 63 = JavaScript (Node.js), 71 = Python 3.
   JUDGE0_JS_LANGUAGE_ID: z.coerce.number().default(63),
   JUDGE0_PYTHON_LANGUAGE_ID: z.coerce.number().default(71),
+  JUDGE0_CPP_LANGUAGE_ID: z.coerce.number().default(54),
   JUDGE0_TIMEOUT_MS: z.coerce.number().default(20_000),
 });
 

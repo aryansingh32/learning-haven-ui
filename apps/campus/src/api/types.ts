@@ -97,7 +97,7 @@ export interface Question {
   tests?: Array<{ input: string; expected: string; isSample: boolean }>;
 }
 
-export type CodeLanguage = 'python' | 'java' | 'javascript';
+export type CodeLanguage = 'python' | 'java' | 'cpp' | 'javascript';
 export type CompareMode = 'exact' | 'unordered' | 'unordered_deep';
 
 export interface TestDetail {

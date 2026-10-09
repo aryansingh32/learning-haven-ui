@@ -17,6 +17,7 @@ const schema = z.object({
   JUDGE0_JS_LANGUAGE_ID: z.coerce.number().default(63),
   JUDGE0_PYTHON_LANGUAGE_ID: z.coerce.number().default(71),
   JUDGE0_JAVA_LANGUAGE_ID: z.coerce.number().default(62),
+  JUDGE0_CPP_LANGUAGE_ID: z.coerce.number().default(54),
   JUDGE0_TIMEOUT_MS: z.coerce.number().default(20_000),
 });
 

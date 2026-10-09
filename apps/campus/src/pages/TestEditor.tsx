@@ -14,13 +14,14 @@ import { Textarea } from '@/components/ui/textarea';
 const TYPE_LABEL: Record<Question['type'], string> = { mcq: 'Single choice', msq: 'Multiple choice', nat: 'Numeric answer', coding: 'Coding' };
 
 const LANGUAGES: Array<{ id: CodeLanguage; label: string }> = [
-  { id: 'python', label: 'Python' }, { id: 'java', label: 'Java' }, { id: 'javascript', label: 'JavaScript' },
+  { id: 'python', label: 'Python' }, { id: 'java', label: 'Java' }, { id: 'cpp', label: 'C++' }, { id: 'javascript', label: 'JavaScript' },
 ];
 // The judge calls the student's function with each test's named inputs, so
 // parameter names in the starter code must match the test inputs.
 const STARTER: Record<CodeLanguage, string> = {
   python: 'class Solution:\n    def solve(self, nums):\n        pass\n',
   java: 'class Solution {\n    public int solve(int[] nums) {\n        \n    }\n}\n',
+  cpp: 'class Solution {\npublic:\n    int solve(vector<int>& nums) {\n        \n    }\n};\n',
   javascript: '/**\n * @param {number[]} nums\n * @return {number}\n */\nfunction solve(nums) {\n  \n}\n',
 };
 const COMPARE_LABEL: Record<CompareMode, string> = {

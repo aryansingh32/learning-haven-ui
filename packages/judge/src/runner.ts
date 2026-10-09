@@ -9,13 +9,13 @@ import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
 
-export type RunLanguage = 'javascript' | 'python' | 'java';
+export type RunLanguage = 'javascript' | 'python' | 'java' | 'cpp';
 
 export interface JudgeConfig {
   /** Judge0 CE base URL. Required in production. */
   judge0Url?: string;
   judge0Token?: string;
-  /** Judge0 CE language ids (63 = JavaScript, 71 = Python 3, 62 = Java). */
+  /** Judge0 CE language ids (63 = JavaScript, 71 = Python 3, 62 = Java, 54 = C++ GCC 9). */
   languageIds?: Partial<Record<RunLanguage, number>>;
   /** Give up on Judge0 after this long. */
   timeoutMs?: number;
@@ -37,7 +37,8 @@ export class JudgeUnavailableError extends Error {
   }
 }
 
-const DEFAULT_IDS: Record<RunLanguage, number> = { javascript: 63, python: 71, java: 62 };
+const DEFAULT_IDS: Record<RunLanguage, number> = { javascript: 63, python: 71, java: 62, cpp: 54 };
+const COMPILER_OPTIONS: Partial<Record<RunLanguage, string>> = { cpp: '-O2 -std=gnu++17' };
 
 export function canJudge(config: JudgeConfig): boolean {
   return Boolean(config.judge0Url) || config.environment !== 'production';
@@ -65,6 +66,7 @@ async function runOnJudge0(config: JudgeConfig, language: RunLanguage, source: s
       language_id: config.languageIds?.[language] ?? DEFAULT_IDS[language],
       source_code: b64(source),
       stdin: b64(stdin),
+      ...(COMPILER_OPTIONS[language] ? { compiler_options: COMPILER_OPTIONS[language] } : {}),
       ...LIMITS,
     }),
   });
@@ -129,6 +131,14 @@ async function runLocally(language: RunLanguage, source: string, stdin: string):
       }
       const run = await exec('java', ['-Xmx256m', 'Main'], dir, stdin);
       return toRun(run);
+    }
+    if (language === 'cpp') {
+      await fs.writeFile(path.join(dir, 'main.cpp'), source, 'utf8');
+      const compile = await exec('g++', [...COMPILER_OPTIONS.cpp!.split(' '), '-o', 'main', 'main.cpp'], dir, '');
+      if (compile.code !== 0) {
+        return { stdout: '', stderr: '', compileOutput: (compile.stderr || compile.stdout).trim(), outcome: 'compile_error', timeMs: 0 };
+      }
+      return toRun(await exec(path.join(dir, 'main'), [], dir, stdin));
     }
     const file = language === 'javascript' ? 'main.js' : 'main.py';
     await fs.writeFile(path.join(dir, file), source, 'utf8');

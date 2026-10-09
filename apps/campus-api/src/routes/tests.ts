@@ -145,7 +145,9 @@ const questionBody = z.object({
   difficulty: z.enum(['easy', 'medium', 'hard']).nullable().optional(),
   explanation: z.string().trim().max(10_000).nullable().optional(),
   // coding only
-  starterCode: z.object({ javascript: z.string().max(20_000), python: z.string().max(20_000), java: z.string().max(20_000) }).partial().strict().optional(),
+  starterCode: z.object({
+    javascript: z.string().max(20_000), python: z.string().max(20_000), java: z.string().max(20_000), cpp: z.string().max(20_000),
+  }).partial().strict().optional(),
   compare: z.enum(['exact', 'unordered', 'unordered_deep']).default('exact'),
   tests: z.array(z.object({
     input: z.string().trim().min(1).max(20_000),

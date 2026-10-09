@@ -24,7 +24,7 @@ alter table public.testseries_questions
     check (question_type in ('nat', 'coding') or (options is not null and correct_options is not null));
 
 alter table public.testseries_questions
-  add column if not exists starter_code jsonb not null default '{}'::jsonb,  -- { "javascript": "...", "python": "...", "java": "..." }
+  add column if not exists starter_code jsonb not null default '{}'::jsonb,  -- { "javascript": "...", "python": "...", "java": "...", "cpp": "..." }
   add column if not exists judge_config jsonb not null default '{}'::jsonb;  -- { "compare": "exact" }; languages = the keys of starter_code
 
 alter table public.testseries_questions
@@ -33,7 +33,7 @@ alter table public.testseries_questions
     question_type <> 'coding'
     or (
       jsonb_typeof(starter_code) = 'object'
-      and starter_code ?| array['javascript', 'python', 'java']
+      and starter_code ?| array['javascript', 'python', 'java', 'cpp']
       and coalesce(judge_config->>'compare', 'exact') in ('exact', 'unordered', 'unordered_deep')
     )
   );

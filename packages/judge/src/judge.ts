@@ -5,6 +5,7 @@ import { randomBytes } from 'crypto';
 import { compareOutputs, CompareMode } from '@repo/assessment-core';
 import { JudgedLanguage, JudgeResult, JudgeTest, TestVerdict, Verdict, javascriptHarness, parseMarked, pythonHarness } from './harness';
 import { parseHarnessOutput, prepareForJudge0, wrapJavaCode } from './java';
+import { cppHarness, CppSignatureError } from './cpp';
 import { canJudge, JudgeConfig, JudgeUnavailableError, runProgram } from './runner';
 
 function summarize(tests: JudgeTest[], verdicts: TestVerdict[], timeMs: number, message?: string): JudgeResult {
@@ -50,6 +51,38 @@ async function judgeScript(config: JudgeConfig, language: 'javascript' | 'python
   return summarize(tests, verdicts, run.timeMs);
 }
 
+async function judgeCpp(config: JudgeConfig, code: string, tests: JudgeTest[], compare: CompareMode, hint: string): Promise<JudgeResult> {
+  if (/\bint\s+main\s*\(/.test(code)) {
+    return failedRun(tests, 'Compilation Error', 'Remove main() — the judge calls your Solution method itself.', 0);
+  }
+  const marker = `__FORGE_${randomBytes(6).toString('hex')}__`;
+  let source: string;
+  try {
+    source = cppHarness(code, hint, marker, tests.map((t) => t.input));
+  } catch (err) {
+    if (err instanceof CppSignatureError) return failedRun(tests, 'Compilation Error', err.message, 0);
+    throw err;
+  }
+  const run = await runProgram(config, 'cpp', source, '');
+
+  if (run.outcome === 'compile_error') return failedRun(tests, 'Compilation Error', cleanCompilerOutput(run.compileOutput), 0);
+  if (run.outcome === 'time_limit') return failedRun(tests, 'Time Limit Exceeded', TOO_SLOW, run.timeMs);
+  const outputs = parseMarked(run.stdout, marker, tests.length);
+  if (outputs.every((o) => o === null)) return failedRun(tests, 'Runtime Error', run.stderr || 'Your code crashed before finishing the first test.', run.timeMs);
+  const verdicts = tests.map((t, i) => {
+    const o = outputs[i];
+    if (!o) return verdictFor(t, i, false, undefined, 'Your code crashed or stopped before reaching this test.');
+    if (!o.ok) return verdictFor(t, i, false, undefined, o.text);
+    return verdictFor(t, i, compareOutputs(o.text, t.expected, compare), o.text);
+  });
+  return summarize(tests, verdicts, run.timeMs);
+}
+
+/** Compiler errors mention the generated file; keep only what helps the learner. */
+function cleanCompilerOutput(text: string): string {
+  return (text || 'Your code did not compile.').replace(/(?:\/[^\s:]*)?main\.cpp:/g, 'line ').slice(0, 4000);
+}
+
 async function judgeJava(config: JudgeConfig, code: string, tests: JudgeTest[], compare: CompareMode): Promise<JudgeResult> {
   if (!/class\s+Solution\s*\{/.test(code)) {
     return failedRun(tests, 'Compilation Error', 'Keep the Solution class from the starter code — the judge calls its method.', 0);
@@ -85,9 +118,9 @@ export async function judgeSolution(req: JudgeRequest, config: JudgeConfig): Pro
   if (!canJudge(config)) throw new JudgeUnavailableError();
   if (req.tests.length === 0) return { verdict: 'Accepted', passed: 0, total: 0, tests: [], timeMs: 0 };
   try {
-    return req.language === 'java'
-      ? await judgeJava(config, req.code, req.tests, req.compare)
-      : await judgeScript(config, req.language, req.code, req.tests, req.compare, req.hint);
+    if (req.language === 'java') return await judgeJava(config, req.code, req.tests, req.compare);
+    if (req.language === 'cpp') return await judgeCpp(config, req.code, req.tests, req.compare, req.hint);
+    return await judgeScript(config, req.language, req.code, req.tests, req.compare, req.hint);
   } catch (err) {
     if (err instanceof JudgeUnavailableError) throw err;
     // Judge0 unreachable / misbehaving: callers decide (practice: retry later; exams: grading pending).

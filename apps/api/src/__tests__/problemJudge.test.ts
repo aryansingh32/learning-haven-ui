@@ -112,8 +112,8 @@ describe('judge helpers', () => {
     expect(declaredJsFunctions('function a(){}\nconst b = (x) => x;\nlet c = function(){}')).toEqual(['a', 'b', 'c']);
   });
 
-  it('only accepts lines with the exact marker, first one wins', () => {
+  it('only accepts lines with the exact marker; a duplicate line (forged result) fails the test', () => {
     const out = parseMarked('M_O0:1\nM_O0:2\nfake_O1:3\nM_E1:boom', 'M_', 2);
-    expect(out).toEqual([{ ok: true, text: '1' }, { ok: false, text: 'boom' }]);
+    expect(out).toEqual([{ ok: false, text: expect.stringMatching(/imitates the judge/) }, { ok: false, text: 'boom' }]);
   });
 });

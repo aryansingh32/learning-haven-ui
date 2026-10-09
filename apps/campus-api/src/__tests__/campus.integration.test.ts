@@ -376,7 +376,8 @@ describe('coding questions', () => {
       type: 'coding', languages: ['javascript', 'python'], samples: [{ input: 'x = 1', expected: '2' }],
     });
     expect(res.body.questions[0].starterCode.python).toBe(PY_STARTER);
-    expect(JSON.stringify(res.body)).not.toMatch(/x = 5|x = -3|-6/);
+    // (Match the quoted value: a bare "-6" also occurs inside random UUIDs.)
+    expect(JSON.stringify(res.body)).not.toMatch(/x = 5|x = -3|"-6"/);
   });
 
   it('runs code on the samples only, with a short cooldown', async () => {
@@ -427,6 +428,33 @@ describe('coding questions', () => {
     expect(regrade.body).toEqual({ attempts: 1, judged: 1, pending: 0 });
     const after = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${codingAssignmentId}/results`).set(await as(U.facultyA));
     expect(after.body.rows[0]).toMatchObject({ score: 4, gradingPending: false });
+  });
+
+  it('judges C++ answers the same way', async () => {
+    const created = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA))
+      .send({ title: 'C++ round', durationMinutes: 30 });
+    const q = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${created.body.id}/questions`).set(await as(U.facultyA)).send({
+      type: 'coding', body: 'Sum the list.', marks: 4,
+      starterCode: { cpp: 'class Solution {\npublic:\n    long long total(vector<int>& nums) {\n    }\n};\n' },
+      tests: [
+        { input: 'nums = [1,2,3]', expected: '6', isSample: true },
+        { input: 'nums = [2000000000,2000000000]', expected: '4000000000' },
+      ],
+    });
+    expect(q.status).toBe(201);
+    await request(app).patch(`/campus/v1/orgs/${ORG_A}/tests/${created.body.id}`).set(await as(U.facultyA)).send({ published: true });
+    const a = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: created.body.id, title: 'C++ round', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), resultRelease: 'immediately',
+    });
+    const start = await request(app).post(`/campus/v1/my/assignments/${a.body.id}/start`).set(await as(U.s1));
+    expect(start.body.questions[0].languages).toEqual(['cpp']);
+    // int overflows on the hidden test; long long would not.
+    const code = 'class Solution {\npublic:\n    long long total(vector<int>& nums) {\n        int s = 0; for (int x : nums) s += x; return s;\n    }\n};\n';
+    await request(app).put(`/campus/v1/my/attempts/${start.body.attemptId}/answers/${q.body.id}`).set(await as(U.s1)).send({ code, language: 'cpp' });
+    const res = await request(app).post(`/campus/v1/my/attempts/${start.body.attemptId}/submit`).set(await as(U.s1));
+    expect(res.body.result).toMatchObject({ score: 2, totalMarks: 4 });
+    expect(res.body.result.perQuestion[0]).toMatchObject({ testsPassed: 1, testsTotal: 2 });
   });
 
   it('keeps hidden tests away from students in the database', async () => {

@@ -18,7 +18,7 @@ export function judgeConfig(): JudgeConfig {
   return {
     judge0Url: env.JUDGE0_URL,
     judge0Token: env.JUDGE0_AUTH_TOKEN,
-    languageIds: { javascript: env.JUDGE0_JS_LANGUAGE_ID, python: env.JUDGE0_PYTHON_LANGUAGE_ID, java: env.JUDGE0_JAVA_LANGUAGE_ID },
+    languageIds: { javascript: env.JUDGE0_JS_LANGUAGE_ID, python: env.JUDGE0_PYTHON_LANGUAGE_ID, java: env.JUDGE0_JAVA_LANGUAGE_ID, cpp: env.JUDGE0_CPP_LANGUAGE_ID },
     timeoutMs: env.JUDGE0_TIMEOUT_MS,
     environment: env.NODE_ENV,
   };

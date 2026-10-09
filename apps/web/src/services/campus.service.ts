@@ -102,7 +102,7 @@ export interface AttemptAnswer {
   language?: CodeLanguage | null;
 }
 
-export type CodeLanguage = 'python' | 'java' | 'javascript';
+export type CodeLanguage = 'python' | 'java' | 'cpp' | 'javascript';
 
 export interface ExamQuestion {
   id: string;
