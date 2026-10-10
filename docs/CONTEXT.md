@@ -51,18 +51,11 @@ W2 slices:
 | W2-B1 | GST invoices, billing details, working order history | ✅ |
 | W2-G1 | Gamification: weekly missions, coding streak, milestones, collections, leaderboard, daily XP limit | ✅ |
 | W2-I1 | Coding workspace: diff, run history, custom input, memory, themes, formatters, phone layout | ✅ |
-| W2-A1 | Account: active sessions, account log, email verification, skills, public portfolio | 🟡 DB merged; API and UI in `docs/campus/wip/W2-A1-account-unfinished.patch` |
-| W2-L1 | Learning: highlights, video speed, prerequisites, drip, export, discussions | 🟡 DB and API merged; UI in `docs/campus/wip/W2-L1-learning-web-unfinished.patch` |
+| W2-A1 | Account: active sessions, account log, email verification, skills, public portfolio | ✅ (2026-10-10, browser-verified) |
+| W2-L1 | Learning: highlights, video speed, prerequisites, drip, export, discussions (+ admin learning settings) | ✅ (2026-10-10, browser-verified) |
 
-**Immediate next step:** finish W2-A1 and W2-L1 from their patches:
-1. `git apply --3way docs/campus/wip/<patch>`
-2. Finish the work.
-3. Run the checks in §5.
-
-See HANDOFF §8.1a. The A1 patch currently fails one test in `payments.v2.test.ts`. Then do the rest of W2:
-- notes and highlights UI, playback speed, course discussions UI
+**Immediate next step:** the rest of W2:
 - placement readiness computed on the server
-- weekly missions are done
 - course bundles
 - certificate templates
 
@@ -163,7 +156,7 @@ except intended findings). Details: HANDOFF §0 and §4.
 | `docs/campus/FEATURE_CHECKLIST.md` | Status of every feature (✅ / 🟡 / ❌) with evidence; summary totals per module |
 | `docs/campus/BUILD_PLAN.md` | Build order and a "Slice … built" section for every finished slice (DB / API / Web / Verified / Left out) |
 | `docs/campus/PLATFORM_AUDIT.md` | The original audit of the platform and the live database |
-| `docs/campus/wip/*.patch` | Unfinished work kept as patches (W2-A1 account, W2-L1 learning web) |
+| `docs/campus/LOCAL_E2E.md` | How to run the full stack locally (Postgres + PostgREST + API + web) for browser checks without touching Supabase |
 | `infra/judge0/README.md` | Self-hosting Judge0 |
 | `apps/*/.env.example` | Every environment variable each app needs |
 | `docs/PROJECT_AUDIT.md`, `docs/architecture/`, `docs/runbooks/`, `docs/observability.md`, `docs/release-rollback-plan.md` | Older general docs (architecture, operations) |

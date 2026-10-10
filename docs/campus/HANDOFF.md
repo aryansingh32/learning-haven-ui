@@ -44,8 +44,8 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | GST invoices + billing details (slice W2-B1); Billing page order history fixed (it never showed orders) | ✅ built, browser-verified; set `SELLER_LEGAL_NAME`, `SELLER_GSTIN`, `SELLER_ADDRESS` on the Forge API to start issuing |
 | Gamification (slice W2-G1): weekly missions, coding streak, milestones + badges, collections, learner leaderboard with opt-out, daily XP limit (`/achievements`) | ✅ built, browser-verified (35 checks) |
 | Coding workspace (slice W2-I1): submission diff, run history, custom input, memory per test, 10 editor themes saved per learner, Python/C++/Java formatting, phone layout | ✅ built, browser-verified |
-| Account (slice W2-A1): database only — account log, own-session list/revoke helpers, skills, opt-in public portfolio | 🟡 DB merged + tested (24 mutations); API + screens unfinished → `docs/campus/wip/W2-A1-account-unfinished.patch` |
-| Learning (slice W2-L1): highlights, course prerequisites + enforcement, drip release, chapter discussions, course export | 🟡 DB + API merged + tested; learner/admin screens unfinished → `docs/campus/wip/W2-L1-learning-web-unfinished.patch` |
+| Account (slice W2-A1): account page (email status/resend, password change, devices with sign-out, activity), revoked sessions refused by the API, verified email required to pay / earn certificates / publish, skills profile, opt-in public portfolio `/u/<handle>` | ✅ built, browser-verified (2026-10-10) |
+| Learning (slice W2-L1): highlights, video speed, prerequisites + enforcement, drip release, chapter discussions; admin 'Learning settings' (prerequisites, drip, CSV export) | ✅ built, browser-verified (2026-10-10) |
 | Live DB migrations | ✅ **all applied 2026-10-10** (Claude, at the owner's request): the 14 older ones live lacked (`20260823000001` … `20260901000004`, listed in `tests/fixtures/missing_on_live.txt`), three new fixes (`20260828000005` XP functions server-only, `20260901000005` notes/mock tests locked, `20261029000003` function hardening), and the 21 pending ones (`20261010000001` … `20261029000002`). Verified: schema fingerprint (functions, policies, constraints, columns, triggers, grants, RLS) identical to a local database built in the same order; §8.1 data checks pass; 0 tables without RLS; advisor shows only intended findings + leaked-password toggle |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ✅ 2026-10-10: the four stacked branches (fast-forward) and the audit branch (merge, minus its duplicate per-course pricing) |
@@ -346,7 +346,7 @@ features built on them fail there today:
 (`20260216000002_advanced_admin`'s `roadmaps`, `roadmap_items`, `plans_config` are also absent — check whether that was intended.)
 Apply them, in date order, **before** the pending list below (replayed cleanly on the live snapshot, then every pending migration, 2026-10-09); `20260901000003` and `20260906000002` should be checked the same way.
 
-### 8.1a Unfinished work kept as patches (2026-10-10)
+### 8.1a ~~Unfinished work kept as patches~~ — finished and merged 2026-10-10 (patches removed)
 Four agents built W2-G1, W2-I1, W2-A1 and W2-L1 in parallel; all four stopped at once on a usage limit. G1 and I1 were finished and
 verified, and are merged. A1 and L1 had their database (and for L1 the API) committed and tested — merged — but their web screens
 (and A1's API, auth middleware and verify-email gating) were mid-edit and never browser-checked, so they are **not** merged; they are
@@ -382,6 +382,8 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
 Pilot college and its exam date; pricing (per student per year vs month); webcam proctoring in the first pilot or not.
 
 ### 8.7 Known issues backlog
+- **Forge API crashes at startup without `OPENAI_API_KEY`** (found 2026-10-10): `env.ts` marks it optional but
+  `ai.service.ts` builds an OpenAI client at import time, which throws. Fix with W4 (AI features): build the client lazily.
 - Landing page / `getPublicStats` show fabricated numbers ("10,847 students", +10,000 offset) — legal risk; owner to decide
 - Test data visible to buyers: 22 duplicate "Fullstack Apprenticeship" programs, duplicate HTML course, empty "Learn English A to Z"
 - `/course-preview` is an orphan page with a dead course slug — delete
