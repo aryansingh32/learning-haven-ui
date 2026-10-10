@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { supabase } from '../../../config/database';
 import logger from '../../../config/logger';
 import { WhatsAppService } from '../../communication/services/whatsapp.service';
+import { AchievementsService } from '../../auth/services/achievements.service';
 
 const router = Router();
 
@@ -116,6 +117,22 @@ router.post('/whatsapp-checkin', async (req, res) => {
     if (!verifyCronSecret(req, res)) return;
     res.json({ success: true, message: 'Check-in messages queued' });
     await WhatsAppService.sendEveningCheckin();
+});
+
+/**
+ * @route   POST /api/cron/week-xp-snapshot
+ * @desc    Monday 00:00 IST (Sunday 18:30 UTC): record everyone's XP so the weekly leaderboard counts
+ *          XP earned this week. Safe to call more than once a week.
+ * @access  Secured via x-cron-secret header
+ */
+router.post('/week-xp-snapshot', async (req, res) => {
+    if (!verifyCronSecret(req, res)) return;
+    try {
+        return res.json({ success: true, ...(await AchievementsService.snapshotWeek()) });
+    } catch (error: any) {
+        logger.error('Week XP snapshot cron error:', { error });
+        return res.status(500).json({ error: 'Failed to record the week snapshot' });
+    }
 });
 
 export default router;

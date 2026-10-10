@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, Flame, Zap, Target, BookOpen, Code, Calendar, Share2, ExternalLink, Star, Trophy, Briefcase, TrendingUp, Brain, AlertTriangle, Check } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useApiQuery } from '@/hooks/useApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/context/AuthContext';
@@ -190,10 +190,15 @@ const ProfilePage = () => {
         transition={{ delay: 0.2 }}
         className="card-glass rounded-2xl p-4 sm:p-5"
       >
-        <h3 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
-          <Award className="w-4 h-4 text-primary" />
-          Badges Earned ({earnedBadges.length})
-        </h3>
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+            <Award className="w-4 h-4 text-primary" />
+            Badges Earned ({earnedBadges.length})
+          </h3>
+          <Link to="/achievements" className="text-xs font-semibold text-primary hover:underline shrink-0">
+            Collections, missions &amp; leaderboard →
+          </Link>
+        </div>
         {earnedBadges.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {earnedBadges.map((badge, i) => (
