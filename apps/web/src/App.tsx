@@ -42,6 +42,7 @@ const AICoachPage = lazy(() => import("./pages/AICoachPage"));
 const ReferralsPage = lazy(() => import("./pages/ReferralsPage"));
 const CertificatesPage = lazy(() => import("./pages/CertificatesPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const AchievementsPage = lazy(() => import("./pages/AchievementsPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const LearnChapterPage = lazy(() => import("./pages/LearnChapterPage"));
@@ -195,6 +196,8 @@ const App = () => (
                         <Route path="/referrals" element={<ReferralsPage />} />
                         <Route path="/certificates" element={<CertificatesPage />} />
                         <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/achievements" element={<AchievementsPage />} />
+                        <Route path="/leaderboard" element={<Navigate to="/achievements" replace />} />
                         <Route path="/subscription" element={<SubscriptionPage />} />
                         <Route path="/phase-complete/:phaseId" element={<PhaseCompletionPage />} />
                         <Route path="/visualizer" element={<Navigate to="/courses" replace />} />

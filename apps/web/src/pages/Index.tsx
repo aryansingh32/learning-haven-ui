@@ -24,6 +24,7 @@ import { CollegeTestsWidget } from '@/features/campus/CollegeTestsWidget';
 import { GoalsAndStudy } from '@/features/dashboard/GoalsAndStudy';
 import { AssessmentPerformance } from '@/features/dashboard/AssessmentPerformance';
 import { ActivityFeed } from '@/features/dashboard/ActivityFeed';
+import { AchievementsWidget } from '@/features/achievements/AchievementsWidget';
 
 // ─── Activity Calendar (GitHub-style, real data) ───────────────────────────
 function ActivityCalendar({ heatmap }: { heatmap: { date: string; count: number; level: number }[] }) {
@@ -491,6 +492,7 @@ const Index = () => {
           <CollegeTestsWidget />
 
           {dailyQuests && <DailyQuestsWidget data={dailyQuests} />}
+          <AchievementsWidget />
           <ActivityFeed />
           <motion.div
             initial={{ opacity: 0, y: 12 }}

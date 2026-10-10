@@ -115,12 +115,15 @@ export class AchievementsService {
         const reached = milestonesReached({ solved: act.solved, chapters: act.chapters, coding_streak: streak.longest });
 
         let rewardsEnabled = true;
+        const newlyEarned: Array<{ id: string; name: string; emoji: string; xp: number }> = [];
         let rewards: Array<{ reward_key: string; status: RewardStatus; xp: number; paid_day: string | null; claimed_at: string }> = [];
         try {
             const existing = await pool.query(`select reward_key from public.gamification_rewards where user_id = $1 and kind = 'milestone'`, [userId]);
             const have = new Set(existing.rows.map((r: any) => r.reward_key));
             for (const m of reached) {
-                if (!have.has(milestoneRewardKey(m.id))) await AchievementsService.grant(userId, milestoneRewardKey(m.id), 'milestone', m.xp, m.badge, cap);
+                if (have.has(milestoneRewardKey(m.id))) continue;
+                const result = await AchievementsService.grant(userId, milestoneRewardKey(m.id), 'milestone', m.xp, m.badge, cap);
+                if (result === 'paid' || result === 'capped') newlyEarned.push({ id: m.id, name: m.badge.name, emoji: m.badge.emoji, xp: m.xp });
             }
             await AchievementsService.payPending(userId, cap);
             rewards = (await pool.query(
@@ -151,6 +154,8 @@ export class AchievementsService {
                 reward: status.get(milestoneRewardKey(m.id)) ?? null,
             })),
             collections: collectionViews(earned),
+            /** Milestones earned by this request (to announce once). */
+            new_milestones: newlyEarned,
             xp_today: { paid: paidToday, cap, pending: pendingXp },
         };
     }
