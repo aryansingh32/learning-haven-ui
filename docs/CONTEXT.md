@@ -116,8 +116,9 @@ migration applied to live and verified (schema fingerprint identical to the test
 except intended findings). Details: HANDOFF §0 and §4.
 
 **Owner (production) — new for the college platform:**
-- Apply on live, in order (not applied yet): `20261030000001_certificate_revocation`, `20261030000002_college_lifecycle`,
-  `20261031000001_college_content`, `20261101000001_college_community`. All pass `pnpm --filter @repo/api test:db`.
+- ~~Apply on live~~ **done 2026-10-10** (owner asked): `20261030000001_certificate_revocation`, `20261030000002_college_lifecycle`,
+  `20261031000001_college_content`, `20261101000001_college_community`. Verified: campus functions, policies, constraints,
+  triggers, grants, role permissions and columns identical to the tested database; security advisor unchanged.
 - Push `feat/college-saas-admin` and `feat/college-content`, then merge into `main`.
 - College addresses: a wildcard DNS record `*.<your domain>` and a wildcard TLS certificate pointing at the Campus portal;
   set `VITE_CAMPUS_BASE_DOMAIN` (portal), `CAMPUS_BASE_DOMAIN` (Forge API and Campus API, for CORS) and
