@@ -12,6 +12,9 @@ import adminTestSeriesRoutes from '../../testseries/admin/admin-testseries.route
 import { z } from 'zod';
 import { BundlesService } from '../../learning/services/bundles.service';
 import { CertificateTemplatesService } from '../../learning/services/certificateTemplates.service';
+import controlRoutes from './control';
+import operationsRoutes from './operations';
+import { AdminUsersService, UserStatusFilter } from '../services/adminUsers.service';
 
 const router = Router();
 
@@ -31,6 +34,11 @@ const csvUpload = multer({
 // All admin routes require authentication + admin role
 router.use(authenticateUser, requireAdmin, adminLogging);
 
+// Control centre: maintenance, sign-ups, feature flags, kill switches, announcements
+router.use('/control', controlRoutes);
+// Operations: job queues, email set-up, integrations
+router.use('/ops', operationsRoutes);
+
 // ══════════════════════════════════════════════════════════
 // DASHBOARD & HEALTH
 // ══════════════════════════════════════════════════════════
@@ -45,10 +53,43 @@ router.get('/analytics', AdminController.getAnalyticsReport);
 // ══════════════════════════════════════════════════════════
 // USER MANAGEMENT
 // ══════════════════════════════════════════════════════════
-router.get('/users', AdminController.listUsers);
+const userFilters = (q: any) => ({
+  search: typeof q.search === 'string' ? q.search.slice(0, 100) : undefined,
+  plan: typeof q.plan === 'string' ? q.plan.slice(0, 40) : undefined,
+  status: (['active', 'banned', 'staff'].includes(q.status) ? q.status : 'all') as UserStatusFilter,
+});
+router.get('/users', async (req, res) => {
+  res.json(await AdminUsersService.list(Number(req.query.page) || 1, Number(req.query.limit) || 20, userFilters(req.query)));
+});
+// CSV of the filtered list (before /users/:id so "export" isn't taken as an id)
+router.get('/users/export', async (req: any, res) => {
+  const csv = await AdminUsersService.exportCsv(req.user.id, userFilters(req.query));
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="forge-users-${new Date().toISOString().slice(0, 10)}.csv"`);
+  res.send(csv);
+});
+const bulkSchema = z.object({
+  userIds: z.array(z.string().uuid()).min(1).max(500),
+  action: z.enum(['ban', 'unban', 'set_role']),
+  role: z.enum(['user', 'admin', 'super_admin']).optional(),
+}).strict().refine((b) => b.action !== 'set_role' || b.role, { message: 'Choose a role' });
+// Suspend, restore or change the role of many accounts at once (roles: super admins only)
+router.post('/users/bulk', async (req: any, res) => {
+  const body = bulkSchema.safeParse(req.body);
+  if (!body.success) return res.status(400).json({ error: body.error.issues[0]?.message ?? 'Invalid request' });
+  if (body.data.action === 'set_role' && req.adminRole !== 'super_admin') return res.status(403).json({ error: 'Super admin access required' });
+  res.json(await AdminUsersService.bulk(req.user.id, body.data.userIds, body.data.action, body.data.role));
+});
 router.get('/users/:id', AdminController.getUserDetail);
 router.put('/users/:id/role', requireSuperAdmin, AdminController.updateUserRole);
-router.put('/users/:id/ban', AdminController.toggleUserBan);
+// One account: { banned: boolean }. Same rules as the bulk action.
+router.put('/users/:id/ban', async (req: any, res) => {
+  const id = z.string().uuid().safeParse(req.params.id);
+  if (!id.success || typeof req.body?.banned !== 'boolean') return res.status(400).json({ error: 'Send { banned: true | false }' });
+  const result = await AdminUsersService.bulk(req.user.id, [id.data], req.body.banned ? 'ban' : 'unban');
+  if (result.skipped.length) return res.status(400).json({ error: `Not changed: ${result.skipped[0].reason}` });
+  res.json({ banned: req.body.banned });
+});
 
 // ══════════════════════════════════════════════════════════
 // PROBLEM MANAGEMENT

@@ -59,10 +59,10 @@ const UserDetail = () => {
     });
 
     const banMut = useMutation({
-        mutationFn: () => usersService.toggleUserBan(id!),
+        mutationFn: () => usersService.setBanned(id!, !(user as any)?.is_banned),
         onSuccess: (res: any) => {
             queryClient.invalidateQueries({ queryKey: ['user', id] });
-            toast.success(res.banned ? 'User banned' : 'User unbanned');
+            toast.success(res.banned ? 'Account suspended' : 'Account restored');
         },
         onError: (e: any) => toast.error(e.response?.data?.error || e.message),
     });

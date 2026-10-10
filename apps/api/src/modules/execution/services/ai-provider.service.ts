@@ -11,6 +11,8 @@ export interface AIConfig {
     anthropicKey: string;
     grokKey: string;
     freeTierLimit?: number;
+    /** The coach's system prompt set in the admin (falls back to the built-in one). */
+    systemPrompt?: string;
 }
 
 export class AIProviderService {

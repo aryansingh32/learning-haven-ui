@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { usersService } from '../services/users.service';
+import { usersService, type UserStatusFilter } from '../services/users.service';
+import { useAuth } from '../context/AuthContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, Search, Loader2, ShieldAlert } from 'lucide-react';
+import { MoreHorizontal, Search, Loader2, ShieldAlert, Download, Ban, RotateCcw, UserCog, X } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from 'sonner';
 
@@ -34,13 +35,17 @@ const Users = () => {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [planFilter, setPlanFilter] = useState<string>('all');
+    const [statusFilter, setStatusFilter] = useState<UserStatusFilter>('all');
+    const [selected, setSelected] = useState<Set<string>>(new Set());
+    const { user: me } = useAuth();
+    const isSuper = (me as any)?.role === 'super_admin';
     const debouncedSearch = useDebounce(search, 500);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['users', page, debouncedSearch, planFilter],
-        queryFn: () => usersService.listUsers(page, 10, debouncedSearch, planFilter === 'all' ? undefined : planFilter),
+        queryKey: ['users', page, debouncedSearch, planFilter, statusFilter],
+        queryFn: () => usersService.listUsers(page, 10, debouncedSearch, planFilter === 'all' ? undefined : planFilter, statusFilter),
     });
 
     const roleMutation = useMutation({
@@ -54,13 +59,41 @@ const Users = () => {
     });
 
     const banMutation = useMutation({
-        mutationFn: (id: string) => usersService.toggleUserBan(id),
+        mutationFn: ({ id, banned }: { id: string; banned: boolean }) => usersService.setBanned(id, banned),
         onSuccess: (res: any) => {
             queryClient.invalidateQueries({ queryKey: ['users'] });
-            toast.success(res.banned ? 'User banned' : 'User unbanned');
+            toast.success(res.banned ? 'Account suspended' : 'Account restored');
         },
         onError: (e: any) => toast.error(e.response?.data?.error || e.message),
     });
+
+    const bulkMutation = useMutation({
+        mutationFn: ({ action, role }: { action: 'ban' | 'unban' | 'set_role'; role?: 'user' | 'admin' | 'super_admin' }) =>
+            usersService.bulk([...selected], action, role),
+        onSuccess: (r) => {
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+            setSelected(new Set());
+            const reasons = [...new Set(r.skipped.map((s) => s.reason))];
+            toast.success(`${r.updated.length} account${r.updated.length === 1 ? '' : 's'} updated`
+                + (r.skipped.length ? ` · ${r.skipped.length} skipped (${reasons.join(', ')})` : ''));
+        },
+        onError: (e: any) => toast.error(e.response?.data?.error || e.message),
+    });
+
+    const exportMutation = useMutation({
+        mutationFn: () => usersService.exportCsv(debouncedSearch, planFilter === 'all' ? undefined : planFilter, statusFilter),
+        onError: (e: any) => toast.error(e.response?.data?.error || e.message),
+    });
+
+    const pageIds: string[] = (data?.users ?? []).map((u: any) => u.id);
+    const allOnPage = pageIds.length > 0 && pageIds.every((id) => selected.has(id));
+    const toggle = (id: string) => setSelected((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
+    const togglePage = () => setSelected((prev) => { const next = new Set(prev); pageIds.forEach((id) => (allOnPage ? next.delete(id) : next.add(id))); return next; });
+    const confirmBulk = (action: 'ban' | 'unban' | 'set_role', role?: 'user' | 'admin' | 'super_admin') => {
+        const n = selected.size;
+        const what = action === 'ban' ? 'Suspend' : action === 'unban' ? 'Restore' : `Make ${role}`;
+        if (window.confirm(`${what} ${n} account${n === 1 ? '' : 's'}?`)) bulkMutation.mutate({ action, role });
+    };
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -88,6 +121,20 @@ const Users = () => {
                             <SelectItem value="ultra">Ultra</SelectItem>
                         </SelectContent>
                     </Select>
+                    <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v as UserStatusFilter); setPage(1); }}>
+                        <SelectTrigger className="w-36" aria-label="Status">
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Everyone</SelectItem>
+                            <SelectItem value="active">Active</SelectItem>
+                            <SelectItem value="banned">Suspended</SelectItem>
+                            <SelectItem value="staff">Staff</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Button variant="outline" onClick={() => exportMutation.mutate()} disabled={exportMutation.isPending}>
+                        {exportMutation.isPending ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <Download className="mr-1.5 h-4 w-4" />}Export CSV
+                    </Button>
                     {/* Search */}
                     <div className="relative w-full sm:w-[250px]">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -101,10 +148,32 @@ const Users = () => {
                 </div>
             </div>
 
+            {selected.size > 0 && (
+                <div role="toolbar" aria-label="Bulk actions" className="flex flex-wrap items-center gap-2 rounded-md border bg-muted/50 px-3 py-2 text-sm">
+                    <span className="font-medium">{selected.size} selected</span>
+                    <Button size="sm" variant="outline" className="text-destructive" disabled={bulkMutation.isPending} onClick={() => confirmBulk('ban')}><Ban className="mr-1 h-3.5 w-3.5" />Suspend</Button>
+                    <Button size="sm" variant="outline" disabled={bulkMutation.isPending} onClick={() => confirmBulk('unban')}><RotateCcw className="mr-1 h-3.5 w-3.5" />Restore</Button>
+                    {isSuper && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button size="sm" variant="outline" disabled={bulkMutation.isPending}><UserCog className="mr-1 h-3.5 w-3.5" />Set role</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                {(['user', 'admin', 'super_admin'] as const).map((r) => <DropdownMenuItem key={r} onClick={() => confirmBulk('set_role', r)}>{r}</DropdownMenuItem>)}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+                    <Button size="sm" variant="ghost" className="ml-auto" onClick={() => setSelected(new Set())}><X className="mr-1 h-3.5 w-3.5" />Clear</Button>
+                </div>
+            )}
+
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead className="w-10">
+                                <input type="checkbox" aria-label="Select all on this page" checked={allOnPage} onChange={togglePage} />
+                            </TableHead>
                             <TableHead>User</TableHead>
                             <TableHead>Plan</TableHead>
                             <TableHead>Role</TableHead>
@@ -116,7 +185,7 @@ const Users = () => {
                     <TableBody>
                         {isLoading ? (
                             <TableRow>
-                                <TableCell colSpan={6} className="h-24 text-center">
+                                <TableCell colSpan={7} className="h-24 text-center">
                                     <div className="flex justify-center">
                                         <Loader2 className="h-6 w-6 animate-spin" />
                                     </div>
@@ -124,16 +193,19 @@ const Users = () => {
                             </TableRow>
                         ) : data?.users.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={6} className="h-24 text-center">No users found.</TableCell>
+                                <TableCell colSpan={7} className="h-24 text-center">No users found.</TableCell>
                             </TableRow>
                         ) : (
                             data?.users.map((user: any) => (
-                                <TableRow key={user.id} className={user.is_banned ? 'opacity-50' : ''}>
+                                <TableRow key={user.id} className={user.is_banned ? 'opacity-50' : ''} data-state={selected.has(user.id) ? 'selected' : undefined}>
+                                    <TableCell>
+                                        <input type="checkbox" aria-label={`Select ${user.email}`} checked={selected.has(user.id)} onChange={() => toggle(user.id)} />
+                                    </TableCell>
                                     <TableCell>
                                         <div className="flex flex-col">
                                             <div className="flex items-center gap-1.5">
                                                 <span className="font-medium">{user.full_name || '—'}</span>
-                                                {user.is_banned && <span title="Banned"><ShieldAlert className="h-3.5 w-3.5 text-destructive" /></span>}
+                                                {user.is_banned && <span title="Suspended" aria-label="Suspended"><ShieldAlert className="h-3.5 w-3.5 text-destructive" /></span>}
                                             </div>
                                             <span className="text-xs text-muted-foreground">{user.email}</span>
                                         </div>
@@ -149,7 +221,7 @@ const Users = () => {
                                         </Badge>
                                     </TableCell>
                                     <TableCell className="text-sm text-muted-foreground">
-                                        {relativeTime(user.last_active_at ?? user.updated_at)}
+                                        {relativeTime(user.last_active_date)}
                                     </TableCell>
                                     <TableCell className="text-sm text-muted-foreground">
                                         {new Date(user.created_at).toLocaleDateString('en-IN')}
@@ -180,9 +252,9 @@ const Users = () => {
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuItem
                                                     className="text-destructive focus:text-destructive"
-                                                    onClick={() => banMutation.mutate(user.id)}
+                                                    onClick={() => banMutation.mutate({ id: user.id, banned: !user.is_banned })}
                                                 >
-                                                    {user.is_banned ? 'Unban User' : 'Ban User'}
+                                                    {user.is_banned ? 'Restore account' : 'Suspend account'}
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

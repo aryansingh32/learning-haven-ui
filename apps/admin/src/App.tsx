@@ -14,6 +14,8 @@ const Analytics = lazy(() => import('./pages/Analytics'));
 const Users = lazy(() => import('./pages/Users'));
 const UserDetail = lazy(() => import('./pages/UserDetail'));
 const SystemHealth = lazy(() => import('./pages/SystemHealth'));
+const ControlCentre = lazy(() => import('./pages/ControlCentre'));
+const Operations = lazy(() => import('./pages/Operations'));
 const Permissions = lazy(() => import('./pages/Permissions'));
 const Experiments = lazy(() => import('./pages/Experiments'));
 const CommunicationCenter = lazy(() => import('./pages/CommunicationCenter'));
@@ -173,6 +175,8 @@ function App() {
               <Route path="/withdrawals" element={<Withdrawals />} />
 
               {/* System */}
+              <Route path="/control-centre" element={<ControlCentre />} />
+              <Route path="/operations" element={<Operations />} />
               <Route path="/system-health" element={<SystemHealth />} />
               <Route path="/experiments" element={<Experiments />} />
               <Route path="/leaderboard" element={<Leaderboard />} />

@@ -8,6 +8,8 @@ import { unauthorized, forbidden, serverError } from '../utils/api-response';
 import { sessionClaims } from '../modules/auth/services/accountHelpers';
 import { firstSighting, isSessionRevoked } from '../modules/auth/services/sessionGuard';
 import { AccountEvents } from '../modules/auth/services/account.service';
+import { isBanned } from '../modules/auth/services/banGuard';
+import { fail } from '../utils/api-response';
 
 export interface AuthRequest extends Request {
   user?: any;
@@ -31,6 +33,8 @@ async function trackSession(req: AuthRequest, userId: string, claims: Record<str
 }
 
 const REVOKED = 'Invalid token: this session was signed out';
+const suspended = (res: Response) =>
+  fail(res, 403, 'ACCOUNT_SUSPENDED', 'This account is suspended. Contact support if you think this is a mistake.');
 
 export const authenticateUser = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
@@ -48,6 +52,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
     if (localVerified) {
       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
       if (!(await trackSession(req, localVerified.id, localVerified.claims))) return unauthorized(res, REVOKED);
+      if (await isBanned(localVerified.id)) return suspended(res);
       logger.debug('Authenticated via local Supabase JWT verification');
       const ctx = requestContext.getStore();
       if (ctx) ctx.userId = localVerified.id;
@@ -62,6 +67,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
         if (decoded?.sub) {
           req.user = { id: decoded.sub, email: decoded.email, role: decoded.role };
           if (!(await trackSession(req, decoded.sub, decoded as Record<string, any>))) return unauthorized(res, REVOKED);
+          if (await isBanned(decoded.sub)) return suspended(res);
           logger.debug('Using local JWT fallback for auth');
           const ctx = requestContext.getStore();
           if (ctx) ctx.userId = decoded.sub;
@@ -99,6 +105,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
     if (!remoteError && user) {
       req.user = user;
       if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) return unauthorized(res, REVOKED);
+      if (await isBanned((user as any).id)) return suspended(res);
       const ctx = requestContext.getStore();
       if (ctx) ctx.userId = (user as any).id;
       return next();
@@ -132,7 +139,7 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
     const localVerified = verifySupabaseAccessToken(token);
     if (localVerified) {
       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
-      if (!(await trackSession(req, localVerified.id, localVerified.claims))) {
+      if (!(await trackSession(req, localVerified.id, localVerified.claims)) || (await isBanned(localVerified.id))) {
         req.user = undefined;
         return next();
       }
@@ -157,7 +164,7 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
 
       if (user && !result.error) {
         req.user = user;
-        if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) {
+        if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null)) || (await isBanned((user as any).id))) {
           req.user = undefined;
           return next();
         }

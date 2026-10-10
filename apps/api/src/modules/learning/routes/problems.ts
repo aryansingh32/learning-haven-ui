@@ -5,9 +5,11 @@ import { JudgeController } from '../controllers/judge.controller';
 import { submissionRateLimit, writeRateLimit } from '../../../middleware/rateLimit';
 import { authenticateUser, optionalAuth } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
+import { moduleGate } from '../../../middleware/controlGates';
 import { getProblemsSchema, getProblemSchema, submitSolutionSchema } from '../../../utils/validators';
 
 const router = Router();
+const codeRuns = moduleGate('module.code_execution');
 
 /**
  * @route   GET /api/problems
@@ -54,6 +56,7 @@ router.get(
  */
 router.post(
     '/:id/submit',
+    codeRuns,
     authenticateUser,
     validate(submitSolutionSchema),
     SubmissionsController.submitSolution
@@ -64,14 +67,14 @@ router.post(
  * @desc    Judge a solution on the server against every test; solve + XP only when all pass
  * @access  Private
  */
-router.post('/:id/judge', authenticateUser, submissionRateLimit, JudgeController.judge);
+router.post('/:id/judge', codeRuns, authenticateUser, submissionRateLimit, JudgeController.judge);
 
 /**
  * @route   POST /api/problems/:id/run
  * @desc    Run a solution on the sample tests only (server-side; for languages the browser can't run)
  * @access  Private
  */
-router.post('/:id/run', authenticateUser, submissionRateLimit, JudgeController.run);
+router.post('/:id/run', codeRuns, authenticateUser, submissionRateLimit, JudgeController.run);
 
 /**
  * @route   GET /api/problems/:id/submissions

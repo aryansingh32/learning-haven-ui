@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { signup, signin, signout, refreshSession } from '../controllers/auth.controller';
 import { phoneSendOtp, phoneVerifyOtp, phoneCompleteProfile } from '../controllers/auth-phone.controller';
 import { validate } from '../../../middleware/validate';
+import { signupGate } from '../../../middleware/controlGates';
 import { authRateLimit, authIpCeiling, otpRateLimit } from '../../../middleware/rateLimit';
 import { AccountController } from '../controllers/account.controller';
 
@@ -26,7 +27,7 @@ const refreshSchema = z.object({
 });
 
 // ── Routes ──────────────────────────────────────────────
-router.post('/signup', authIpCeiling, authRateLimit, validate(signupSchema), signup);
+router.post('/signup', signupGate, authIpCeiling, authRateLimit, validate(signupSchema), signup);
 router.post('/signin', authIpCeiling, authRateLimit, validate(signinSchema), signin);
 router.post('/refresh', validate(refreshSchema), refreshSession);
 router.post('/signout', signout);
@@ -36,6 +37,6 @@ router.post('/resend-verification', authIpCeiling, authRateLimit, AccountControl
 // Phone OTP Auth Routes (MSG91)
 router.post('/phone-send-otp', otpRateLimit, phoneSendOtp);
 router.post('/phone-verify-otp', otpRateLimit, phoneVerifyOtp);
-router.post('/phone-complete-profile', phoneCompleteProfile);
+router.post('/phone-complete-profile', signupGate, phoneCompleteProfile);
 
 export default router;

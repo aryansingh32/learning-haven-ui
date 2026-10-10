@@ -1,3 +1,5 @@
+import { isMasked, isSecretKey, keyStatus, maskSettings } from '../services/secrets';
+import { SYSTEM_PROMPT } from '../../../config/openai';
 import { Request, Response } from 'express';
 import { AuthRequest } from '../../../middleware/auth';
 import { AdminService } from '../services/admin.service';
@@ -527,7 +529,7 @@ export class AdminController {
                     settings[s.key] = s.value;
                 }
             });
-            res.json(settings);
+            res.json(maskSettings(settings));
         } catch (error) {
             logger.error('Get settings error:', error);
             res.status(500).json({ error: 'Failed to get settings' });
@@ -540,6 +542,7 @@ export class AdminController {
             const updates = req.body; // { key: value, key: value }
 
             for (const [key, value] of Object.entries(updates)) {
+                if (isSecretKey(key) && isMasked(value)) continue; // unchanged key sent back masked
                 const { error } = await supabase
                     .from('system_settings')
                     .upsert({
@@ -826,10 +829,11 @@ export class AdminController {
                 ai_active_provider: 'openrouter',
                 ai_model: 'openrouter/owl-alpha',
                 ai_free_tier_limit: 50,
-                ai_openrouter_key: env.OPENROUTER_API_KEY || '',
-                ai_openai_key: env.OPENAI_API_KEY || '',
+                ai_openrouter_key: '',
+                ai_openai_key: '',
                 ai_anthropic_key: '',
                 ai_grok_key: '',
+                ai_system_prompt: SYSTEM_PROMPT,
             };
             
             (data || []).forEach((s: any) => { 
@@ -839,7 +843,14 @@ export class AdminController {
                     config[s.key] = s.value;
                 }
             });
-            res.json(config);
+            // Keys never leave the server: a mask, plus where each one comes from.
+            const keys = {
+                openrouter: keyStatus(config.ai_openrouter_key, env.OPENROUTER_API_KEY),
+                openai: keyStatus(config.ai_openai_key, env.OPENAI_API_KEY),
+                anthropic: keyStatus(config.ai_anthropic_key, undefined),
+                grok: keyStatus(config.ai_grok_key, undefined),
+            };
+            res.json({ ...maskSettings(config), _keys: keys, _default_system_prompt: SYSTEM_PROMPT });
         } catch (error) {
             logger.error('Get AI config error:', error);
             res.status(500).json({ error: 'Failed to get AI config' });
@@ -850,8 +861,21 @@ export class AdminController {
         try {
             const adminId = (req as AuthRequest).user!.id;
             const updates = req.body; // { ai_model: "gpt-4", ai_temperature: 0.5, ... }
+            const isSuper = (req as any).adminRole === 'super_admin';
 
-            for (const [key, value] of Object.entries(updates)) {
+            // Check everything first, so a refused field doesn't leave half the changes saved.
+            const writes = Object.entries(updates ?? {}).filter(([key, value]) =>
+                !key.startsWith('_') // read-only extras (_keys, _default_system_prompt)
+                && !(isSecretKey(key) && isMasked(value))); // a key sent back masked is unchanged
+            if (!isSuper && writes.some(([key]) => isSecretKey(key))) {
+                return res.status(403).json({ error: 'Only a super admin can change API keys' });
+            }
+            const prompt = writes.find(([key]) => key === 'ai_system_prompt')?.[1];
+            if (prompt !== undefined && (typeof prompt !== 'string' || prompt.length > 8000)) {
+                return res.status(400).json({ error: 'The system prompt must be text of at most 8,000 characters' });
+            }
+
+            for (const [key, value] of writes) {
                 const { error } = await supabase
                     .from('system_settings')
                     .upsert({

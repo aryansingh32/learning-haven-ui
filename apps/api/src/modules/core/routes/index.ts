@@ -36,23 +36,31 @@ import referralsV2Routes from '../../billing/routes/referrals.v2';
 import plansRoutes from '../../plans/plans.routes';
 import testSeriesRoutes from '../../testseries/routes/testseries';
 import portfolioRoutes from '../../auth/routes/portfolio';
+import systemRoutes from './system';
+import { moduleGate } from '../../../middleware/controlGates';
 
 const router = Router();
+
+// Payment confirmations and webhooks keep working while new purchases are switched off,
+// so nobody who already paid is left without what they bought.
+const paymentsGate = moduleGate('module.payments', [/^\/(verify|webhook|history|subscription|cancel-subscription|billing-profile|plans)$/, /^\/invoices\//]);
+
+router.use('/system', systemRoutes);
 
 router.use('/analytics', analyticsRoutes);
 router.use('/entitlements', entitlementsRoutes);
 router.use('/plans', plansRoutes);
-router.use('/v2/payments', paymentsV2Routes);
+router.use('/v2/payments', paymentsGate, paymentsV2Routes);
 router.use('/v2/referrals', referralsV2Routes);
 
 router.use('/auth', authRoutes);
 router.use('/problems', problemsRoutes);
 router.use('/users', usersRoutes);
 router.use('/submissions', submissionsRoutes);
-router.use('/payments', paymentsRoutes);
+router.use('/payments', paymentsGate, paymentsRoutes);
 router.use('/subscriptions', subscriptionsRoutes);
 router.use('/referrals', referralsRoutes);
-router.use('/ai', aiRoutes);
+router.use('/ai', moduleGate('module.ai'), aiRoutes);
 router.use('/certificates', certificatesRoutes);
 router.use('/admin', adminRoutes);
 router.use('/tasks', tasksRoutes);
@@ -60,13 +68,13 @@ router.use('/courses', coursesRoutes);
 router.use('/bundles', bundlesRoutes);
 router.use('/categories', categoriesRoutes);
 router.use('/feedback', feedbackRoutes);
-router.use('/execute', executeRoutes);
+router.use('/execute', moduleGate('module.code_execution', [/^\/health$/]), executeRoutes);
 router.use('/chapters', chaptersRoutes);
 router.use('/notebook', notebookRoutes);
-router.use('/mock-test', mockTestRoutes);
+router.use('/mock-test', moduleGate('module.test_series'), mockTestRoutes);
 router.use('/highlights', highlightsRouter);
-router.use('/discussion', discussionRouter);
-router.use('/test-series', testSeriesRoutes);
+router.use('/discussion', moduleGate('module.discussions'), discussionRouter);
+router.use('/test-series', moduleGate('module.test_series'), testSeriesRoutes);
 router.use('/portfolio', portfolioRoutes);
 router.use('/cron', cronRoutes);
 router.use('/jobs', jobsRoutes);

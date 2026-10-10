@@ -6,6 +6,9 @@ import cors from 'cors';
 import './workers/email.worker';
 import './workers/verification.worker';
 import './workers/build-verification.worker';
+// Referral activation, commissions and subscription expiry: queued by payments, and
+// until now never processed because this worker was not started.
+import './workers/monetization.worker';
 import helmet from 'helmet';
 import compression from 'compression';
 import { authenticateUser } from './middleware/auth';
@@ -18,6 +21,7 @@ import { pool } from './config/database';
 import routes from './modules/core/routes/index';
 
 import { isCollegePortalOrigin } from './utils/collegeOrigin';
+import { maintenanceGate } from './middleware/controlGates';
 
 const app = express();
 
@@ -106,6 +110,8 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 // ──────────────────────────────────────────────────────────
 // Routes
 // ──────────────────────────────────────────────────────────
+// Maintenance mode (admin control centre): learners get a 503; staff and webhooks pass.
+app.use(maintenanceGate);
 app.use('/api', routes);
 
 app.get('/', (req, res) => {

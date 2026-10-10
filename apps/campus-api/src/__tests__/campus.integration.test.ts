@@ -8,6 +8,7 @@ import { SignJWT } from 'jose';
 import request from 'supertest';
 import { app } from '../app';
 import { pool } from '../db';
+import { forgetControls } from '../controls';
 
 const SECRET = new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET!);
 const ISSUER = 'http://supabase.test/auth/v1';
@@ -1557,5 +1558,34 @@ describe('college community', () => {
     expect((await request(app).get(`${base}/threads/${threadId}`).set(await as(C.c3))).body.posts).toEqual([]);
     expect((await request(app).get(`${base}/threads/${threadId}`).set(await as(C.c2))).body.posts).toEqual([expect.objectContaining({ hidden: true, mine: true })]);
     expect((await request(app).get(`${base}/reports`).set(await as(U.facultyA))).body).toEqual([]);
+  });
+});
+
+describe('Forge admin controls', () => {
+  const banned = 'a0000000-0000-0000-0000-0000000000d1';
+  beforeAll(async () => {
+    await pool.query(`insert into auth.users (id, email, email_confirmed_at) values ($1, 'banned@community.edu', now())`, [banned]);
+    await pool.query(`insert into public.users (id, email, full_name, is_banned) values ($1, 'banned@community.edu', 'Banned', true)`, [banned]);
+    await pool.query(`insert into campus.org_memberships (org_id, user_id, role) values ($1, $2, 'student')`, [ORG_A, banned]);
+  });
+  afterEach(() => forgetControls());
+
+  it('refuses a suspended account', async () => {
+    const r = await request(app).get('/campus/v1/me').set(await as(banned));
+    expect(r.status).toBe(403);
+    expect(r.body.error).toMatch(/suspended/);
+  });
+
+  it('switches the community off and on again', async () => {
+    const url = `/campus/v1/community/${ORG_A}/threads`;
+    await pool.query(`update public.feature_flags set enabled = false where key = 'module.community'`);
+    try {
+      forgetControls();
+      expect((await request(app).get(url).set(await as(U.s1))).status).toBe(503);
+    } finally {
+      await pool.query(`update public.feature_flags set enabled = true where key = 'module.community'`);
+    }
+    forgetControls();
+    expect((await request(app).get(url).set(await as(U.s1))).status).toBe(200);
   });
 });

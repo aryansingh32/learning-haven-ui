@@ -41,6 +41,13 @@ const ACTION_OPTIONS = [
   'Suggest career path',
 ];
 
+const PROVIDER_KEYS: Array<[string, string, string]> = [
+  ['ai_openrouter_key', 'OpenRouter key', 'openrouter'],
+  ['ai_openai_key', 'OpenAI key', 'openai'],
+  ['ai_anthropic_key', 'Anthropic key', 'anthropic'],
+  ['ai_grok_key', 'Grok key', 'grok'],
+];
+
 const AIConfig = () => {
   const queryClient = useQueryClient();
   const [config, setConfig] = useState<Record<string, any>>({});
@@ -88,7 +95,8 @@ const AIConfig = () => {
         setJsonError('Invalid JSON');
       }
     } else {
-      saveMut.mutate({ ...config, intervention_rules: rules });
+      const { _keys, _default_system_prompt, ...rest } = config;
+      saveMut.mutate({ ...rest, intervention_rules: rules });
     }
   };
 
@@ -124,7 +132,10 @@ const AIConfig = () => {
     );
   }
 
-  const keys = Object.keys(config).filter(k => !k.startsWith('_') && k !== 'id' && k !== 'intervention_rules');
+  const keys = Object.keys(config).filter(k => !k.startsWith('_') && k !== 'id' && k !== 'intervention_rules'
+    && k !== 'ai_system_prompt' && !PROVIDER_KEYS.some(([key]) => key === k));
+  const keyStatus: Record<string, { configured: boolean; source: 'admin' | 'server' | null; hint: string }> = config._keys ?? {};
+  const defaultPrompt: string = config._default_system_prompt ?? '';
 
   return (
     <div className="space-y-6 max-w-4xl">
@@ -204,6 +215,49 @@ const AIConfig = () => {
                 })}
               </div>
             )}
+          </CardContent>
+        </Card>
+      )}
+
+      {mode === 'visual' && (
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-semibold">Coach instructions (system prompt)</CardTitle>
+            <CardDescription>What the AI coach is told before every conversation. The learner's course, streak and current problem are added after it.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Label htmlFor="ai-prompt" className="sr-only">System prompt</Label>
+            <Textarea id="ai-prompt" maxLength={8000} className="min-h-[220px] font-mono text-xs"
+              value={config.ai_system_prompt ?? ''} onChange={(e) => handleChange('ai_system_prompt', e.target.value)} />
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>{(config.ai_system_prompt ?? '').length.toLocaleString()} / 8,000 characters{config.ai_system_prompt === defaultPrompt ? ' · built-in prompt' : ''}</span>
+              <Button size="sm" variant="ghost" disabled={!defaultPrompt || config.ai_system_prompt === defaultPrompt}
+                onClick={() => handleChange('ai_system_prompt', defaultPrompt)}>Reset to built-in</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {mode === 'visual' && (
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-semibold">Provider API keys</CardTitle>
+            <CardDescription>Keys are never shown again after saving. Type a new key to replace one; leave it as is to keep it. Super admins only.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4 md:grid-cols-2">
+            {PROVIDER_KEYS.map(([key, label, provider]) => {
+              const st = keyStatus[provider];
+              return (
+                <div key={key} className="space-y-1.5">
+                  <Label htmlFor={key} className="text-xs font-medium">{label}</Label>
+                  <Input id={key} type="password" autoComplete="off" placeholder={st?.configured ? 'Saved' : 'Not set'}
+                    value={config[key] ?? ''} onChange={(e) => handleChange(key, e.target.value)} />
+                  <p className="text-xs text-muted-foreground">
+                    {st?.configured ? `In use: ${st.hint} (${st.source === 'admin' ? 'saved here' : 'server environment'})` : 'Not set up'}
+                  </p>
+                </div>
+              );
+            })}
           </CardContent>
         </Card>
       )}

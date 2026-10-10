@@ -231,3 +231,24 @@ export function authHeaders(userId = TEST_USER.id): Record<string, string> {
     Authorization: `Bearer ${getAuthToken(userId)}`,
   };
 }
+
+// Suspended-account lookups (middleware/auth): not banned unless a test says so.
+// Suites that feed pool.query a fixed sequence of results would otherwise lose one.
+// Tested on its own in banGuard.test.ts.
+jest.mock('../modules/auth/services/banGuard', () => ({
+  isBanned: jest.fn().mockResolvedValue(false),
+  forgetBans: jest.fn(),
+}));
+
+// The control centre's state (maintenance, kill switches, sign-ups): everything on,
+// without a database read on every request. controlCentre.test.ts sets its own.
+jest.mock('../modules/core/services/controlCentre.service', () => {
+  const actual = jest.requireActual('../modules/core/services/controlCentre.service');
+  return {
+    ...actual,
+    ControlCentre: {
+      ...actual.ControlCentre,
+      state: jest.fn(async () => ({ maintenance: false, maintenanceMessage: '', signupsOpen: true, flags: [], announcements: [] })),
+    },
+  };
+});

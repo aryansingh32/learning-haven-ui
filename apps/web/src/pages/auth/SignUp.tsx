@@ -9,8 +9,10 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getAccessToken } from "@/lib/authSession";
+import { useSystemStatus } from "@/features/system/SystemStatus";
 
 export default function SignUp() {
+  const { signupsOpen } = useSystemStatus();
   const { register } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -78,6 +80,20 @@ export default function SignUp() {
       toast.error(error.message || "Failed to sign up with GitHub");
     }
   };
+
+  if (!signupsOpen) {
+    return (
+      <Card className="card-glass border-border/40 shadow-lg w-full max-w-md mx-auto">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold">Sign-ups are paused</CardTitle>
+          <CardDescription>We're not taking new accounts right now. Please check back soon.</CardDescription>
+        </CardHeader>
+        <CardFooter className="justify-center text-sm">
+          Already have an account?&nbsp;<Link to="/signin" className="font-medium text-primary underline">Sign in</Link>
+        </CardFooter>
+      </Card>
+    );
+  }
 
   return (
     <Card className="card-glass border-border/40 shadow-lg w-full max-w-md mx-auto">

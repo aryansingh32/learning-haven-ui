@@ -31,6 +31,7 @@ export class AIService {
                 if (row.key === 'ai_anthropic_key' && val) cfg.anthropicKey = val;
                 if (row.key === 'ai_grok_key' && val) cfg.grokKey = val;
                 if (row.key === 'ai_free_tier_limit' && val !== undefined) cfg.freeTierLimit = Number(val);
+                if (row.key === 'ai_system_prompt' && typeof val === 'string' && val.trim()) cfg.systemPrompt = val;
             }
         }
         return cfg as AIConfig;
@@ -60,8 +61,10 @@ export class AIService {
                 .order('created_at', { ascending: false })
                 .limit(10);
 
+            const config = await this.getAIConfig();
+            // The coach's instructions: edited in admin → AI Configuration, else the built-in prompt.
             const messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
-                { role: 'system', content: SYSTEM_PROMPT },
+                { role: 'system', content: config.systemPrompt || SYSTEM_PROMPT },
             ];
 
             // BH-011: Inject learner context so the Mentor automatically knows the
@@ -126,7 +129,6 @@ export class AIService {
 
             messages.push({ role: 'user', content: message });
 
-            const config = await this.getAIConfig();
             const stream = await AIProviderService.getStream(messages, config);
 
             let fullReply = '';

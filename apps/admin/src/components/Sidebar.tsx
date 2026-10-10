@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
     LayoutDashboard,
+    Power,
+    Server,
     Users,
     Code,
     BookOpen,
@@ -168,9 +170,11 @@ const categories = [
         id: 'platform',
         label: 'Platform',
         icon: Settings,
-        basePaths: ['/system-health', '/cms', '/experiments', '/network', '/gamification', '/ai-config', '/leaderboard', '/settings', '/logs'],
+        basePaths: ['/control-centre', '/operations', '/system-health', '/cms', '/experiments', '/network', '/gamification', '/ai-config', '/leaderboard', '/settings', '/logs'],
         exactPaths: [],
         items: [
+            { name: 'Control Centre', href: '/control-centre', icon: Power },
+            { name: 'Operations', href: '/operations', icon: Server },
             { name: 'System Health', href: '/system-health', icon: Activity },
             { name: 'CMS & Appearance', href: '/cms', icon: LayoutTemplate },
             { name: 'Experiments', href: '/experiments', icon: FlaskConical },

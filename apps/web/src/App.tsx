@@ -7,6 +7,7 @@ import { SiteConfigProvider } from "@/context/SiteConfigContext";
 import { initErrorTracking } from "@/lib/analytics";
 import { lazy, Suspense } from "react";
 import { AuthProvider } from "@/context/AuthContext";
+import { SystemStatusProvider } from "@/features/system/SystemStatus";
 
 initErrorTracking();
 
@@ -112,6 +113,7 @@ const App = () => (
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AuthProvider>
           {/* BH-002: Suspense boundary required for all React.lazy() components */}
+          <SystemStatusProvider>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/test-editor" element={<CodeExecutorTest />} />
@@ -237,6 +239,7 @@ const App = () => (
               />
             </Routes>
           </Suspense>
+          </SystemStatusProvider>
         </AuthProvider>
         </BrowserRouter>
       </SiteConfigProvider>

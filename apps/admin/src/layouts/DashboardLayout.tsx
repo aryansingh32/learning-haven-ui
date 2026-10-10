@@ -25,6 +25,8 @@ const pageNames: Record<string, string> = {
     '/apprenticeship/programs/new': 'Create Program',
     '/leaderboard': 'Leaderboard Config',
     '/ai-config': 'AI Configuration',
+    '/control-centre': 'Control Centre',
+    '/operations': 'Operations',
     '/settings': 'System Settings',
     '/logs': 'Audit Logs',
     '/cms': 'CMS & Appearance',

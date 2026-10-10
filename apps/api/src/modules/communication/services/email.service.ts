@@ -22,6 +22,35 @@ async function sendEmail(payload: {
   });
 }
 
+/** How email is set up (for the admin), without the key. */
+export function emailStatus() {
+  const key = process.env.RESEND_API_KEY ?? '';
+  return {
+    provider: 'Resend',
+    configured: Boolean(resend),
+    keyHint: key.length > 8 ? `••••${key.slice(-4)}` : key ? '••••' : '',
+    from,
+    fromIsDefault: !process.env.RESEND_FROM_EMAIL,
+  };
+}
+
+/** Sends a short test message, reporting the provider's answer instead of throwing. */
+export async function sendTestEmail(to: string): Promise<{ sent: boolean; message: string }> {
+  if (!resend) return { sent: false, message: 'Email is not set up: RESEND_API_KEY is missing on the server.' };
+  try {
+    const { error } = (await resend.emails.send({
+      from,
+      to,
+      subject: 'Forge test email',
+      html: '<p>This is a test email from the Forge admin. If you can read it, email delivery works.</p>',
+    })) as { error?: { message?: string } | null };
+    if (error) return { sent: false, message: error.message ?? 'The email provider refused the message.' };
+    return { sent: true, message: `Sent to ${to}` };
+  } catch (error: any) {
+    return { sent: false, message: error?.message ?? 'Sending failed' };
+  }
+}
+
 export async function sendApprenticeshipWelcomeEmail(params: {
   to: string;
   name: string;

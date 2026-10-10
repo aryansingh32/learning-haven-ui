@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { requireUser } from './auth';
 import { requireActiveCollege } from './collegeStatus';
+import { moduleSwitch, rejectSuspended } from './controls';
 import { allowOrigin } from './env';
 import { errorHandler, HttpError } from './errors';
 import { analyticsRouter } from './routes/analytics';
@@ -40,7 +41,7 @@ app.post('/campus/internal/scheduler', async (req, res) => {
 app.use('/campus/v1/public', publicRouter);
 
 const api = express.Router();
-api.use(requireUser);
+api.use(requireUser, rejectSuspended);
 api.use('/me', meRouter);
 api.use('/my', studentRouter);
 api.use('/platform', platformRouter);
@@ -54,7 +55,7 @@ api.use('/orgs/:orgId/drives', drivesRouter);
 api.use('/orgs/:orgId/course-assignments', courseAssignmentsRouter);
 api.use('/orgs/:orgId/content', contentRouter);
 // The college's community (students and staff of that college).
-api.use('/community/:orgId', communityRouter);
+api.use('/community/:orgId', moduleSwitch('module.community'), communityRouter);
 app.use('/campus/v1', api);
 
 app.use((_req, _res, next) => next(new HttpError(404, 'Not found')));

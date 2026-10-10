@@ -1,3 +1,4 @@
+import { systemEventFromResponse } from '@/features/system/systemEvents';
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { logger } from '../lib/logger';
 import {
@@ -95,6 +96,8 @@ class ApiService {
             clearStoredSession();
           }
         }
+
+        systemEventFromResponse(status, error.response?.data);
 
         const apiError = new Error(message) as Error & { status?: number; data?: unknown };
         apiError.status = status;
