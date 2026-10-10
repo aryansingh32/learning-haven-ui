@@ -25,7 +25,12 @@ const Login = () => {
             navigate('/');
         } catch (err: any) {
             console.error(err);
-            setError(err.response?.data?.error || err.message || 'Login failed');
+            // The API answers { error: string } or { error: { code, message } }; always show text.
+            const apiError = err.response?.data?.error;
+            const text = typeof apiError === 'string' ? apiError : apiError?.message;
+            setError(err.response?.status === 429
+                ? 'Too many sign-in attempts. Wait a few minutes and try again.'
+                : text || err.message || 'Login failed');
         } finally {
             setLoading(false);
         }

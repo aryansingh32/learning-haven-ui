@@ -26,9 +26,22 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) {
+        // The API sends errors as { error: string } or { error: { code, message } }. Pages render
+        // `response.data.error` as text, so make it a string (keeping the code) before they see it.
+        const data = error.response?.data;
+        if (data && data.error && typeof data.error === 'object') {
+            data.errorCode = data.error.code;
+            data.error = data.error.message || data.error.code || 'Something went wrong';
+        }
+        if (error.response?.status === 429 && data && typeof data === 'object' && !data.error) {
+            data.error = 'Too many requests. Wait a minute and try again.';
+        }
+        // A 401 on a signed-in call means the session ended: back to the login page. A 401 from the
+        // sign-in request itself is just a wrong password; the login form shows it.
+        const isSignIn = String(error.config?.url ?? '').includes('/auth/signin');
+        if (error.response?.status === 401 && !isSignIn) {
             localStorage.removeItem('token');
-            window.location.href = '/login';
+            if (window.location.pathname !== '/login') window.location.href = '/login';
         }
         return Promise.reject(error);
     }

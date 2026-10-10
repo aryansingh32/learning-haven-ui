@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import rateLimit, { ipKeyGenerator, Options } from 'express-rate-limit';
 import RedisStore from 'rate-limit-redis';
 import redis from '../config/redis';
@@ -34,11 +35,33 @@ const createLimiter = ({ keyPrefix, ...options }: RateLimitConfig) =>
     ...options,
   });
 
+/**
+ * Sign-in/sign-up attempts are counted per account (email) per IP, not per IP alone:
+ * a college lab or hostel shares one public IP, and a per-IP limit of 10 would lock
+ * the whole class out at exam time. The email is hashed so Redis never holds it.
+ */
+const authKey = (req: any) => {
+  const userId = req.user?.id;
+  if (userId) return `auth:user:${userId}`;
+  const ip = ipKeyGenerator(req.ip || '127.0.0.1');
+  const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+  if (!email) return `auth:ip:${ip}`;
+  return `auth:ip:${ip}:acct:${createHash('sha256').update(email).digest('hex').slice(0, 24)}`;
+};
+
 export const authRateLimit = createLimiter({
   keyPrefix: 'auth',
   windowMs: 15 * 60 * 1000,
-  max: 10, // 10 auth attempts per 15 minutes per IP/user
-  keyGenerator: userOrIpKey('auth'),
+  max: 10, // 10 attempts per 15 minutes per account and IP (or per signed-in user)
+  keyGenerator: authKey,
+});
+
+/** A ceiling per IP across all accounts, against password spraying; high enough for a full lab. */
+export const authIpCeiling = createLimiter({
+  keyPrefix: 'auth-ip',
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  keyGenerator: (req: any) => `auth-ip:${ipKeyGenerator(req.ip || '127.0.0.1')}`,
 });
 
 export const otpRateLimit = createLimiter({
