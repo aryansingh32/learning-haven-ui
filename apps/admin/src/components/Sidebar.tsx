@@ -41,6 +41,7 @@ import {
     HelpCircle,
     X,
     Building2,
+    Package,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
@@ -153,11 +154,12 @@ const categories = [
         id: 'commerce',
         label: 'Commerce',
         icon: DollarSign,
-        basePaths: ['/revenue', '/plans', '/coupons', '/withdrawals'],
+        basePaths: ['/revenue', '/plans', '/bundles', '/coupons', '/withdrawals'],
         exactPaths: [],
         items: [
             { name: 'Revenue', href: '/revenue', icon: TrendingUp },
             { name: 'Plans', href: '/plans', icon: CreditCard },
+            { name: 'Bundles', href: '/bundles', icon: Package },
             { name: 'Coupons', href: '/coupons', icon: Ticket },
             { name: 'Withdrawals', href: '/withdrawals', icon: Wallet },
         ]

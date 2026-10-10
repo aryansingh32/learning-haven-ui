@@ -9,6 +9,8 @@ import { AdminPermissionsController } from '../controllers/admin.permissions.con
 import { ContentImportController } from '../controllers/contentImport.controller';
 import { CourseLearningController } from '../controllers/courseLearning.controller';
 import adminTestSeriesRoutes from '../../testseries/admin/admin-testseries.routes';
+import { z } from 'zod';
+import { BundlesService } from '../../learning/services/bundles.service';
 
 const router = Router();
 
@@ -257,6 +259,46 @@ router.post('/content/import/:batchId/publish', ContentImportController.publishB
 // tests, sections, question bank — see modules/testseries)
 // ══════════════════════════════════════════════════════════
 router.use('/test-series', adminTestSeriesRoutes);
+
+// ── Course bundles ──────────────────────────────────────────────────────────
+const bundleBody = z.object({
+    slug: z.string().trim().toLowerCase().regex(/^[a-z0-9][a-z0-9-]{1,79}$/, 'Use lowercase letters, numbers and hyphens.'),
+    title: z.string().trim().min(2).max(120),
+    description: z.string().trim().max(4000).nullable().optional(),
+    coverImage: z.string().trim().url().startsWith('https://').max(1000).nullable().optional(),
+    price: z.number().int().min(0).max(10_000_000),
+    isPublished: z.boolean().optional(),
+    courseIds: z.array(z.string().uuid()).max(50),
+});
+const bundleError = (res: any, error: any, fallback: string) => {
+    if (error instanceof z.ZodError) return res.status(400).json({ error: 'Some fields are invalid.', details: error.flatten().fieldErrors });
+    if (error?.code === '23505') return res.status(409).json({ error: 'That address is already used by another bundle.' });
+    if (error?.code === '23514' || /bundle|course/i.test(error?.message ?? '')) return res.status(400).json({ error: error.message });
+    logger.error(fallback, error);
+    return res.status(500).json({ error: fallback });
+};
+router.get('/bundles', async (_req, res) => {
+    try { res.json(await BundlesService.adminList()); } catch (e) { bundleError(res, e, 'Failed to load bundles'); }
+});
+router.post('/bundles', async (req: any, res) => {
+    try {
+        const body = bundleBody.parse(req.body);
+        if (body.isPublished && body.courseIds.length < 2) return res.status(400).json({ error: 'A bundle needs at least two courses before it is published' });
+        res.status(201).json(await BundlesService.create(body, req.user.id));
+    } catch (e) { bundleError(res, e, 'Failed to create the bundle'); }
+});
+router.put('/bundles/:id', async (req, res) => {
+    try {
+        await BundlesService.update(z.string().uuid().parse(req.params.id), bundleBody.partial().parse(req.body));
+        res.json({ ok: true });
+    } catch (e) { bundleError(res, e, 'Failed to save the bundle'); }
+});
+router.delete('/bundles/:id', async (req, res) => {
+    try {
+        await BundlesService.remove(z.string().uuid().parse(req.params.id));
+        res.status(204).end();
+    } catch (e) { bundleError(res, e, 'Failed to delete the bundle'); }
+});
 
 // ══════════════════════════════════════════════════════════
 // TASK 1: User Intelligence Endpoint

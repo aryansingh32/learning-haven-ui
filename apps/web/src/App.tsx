@@ -56,6 +56,7 @@ const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
 const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
 const CollegeDrivesPage = lazy(() => import('./pages/campus/CollegeDrivesPage'));
 const CommunityPage = lazy(() => import('./pages/community/CommunityPage'));
+const BundlePage = lazy(() => import('./features/bundles/bundles').then((m) => ({ default: m.BundlePage })));
 const CommunityThreadPage = lazy(() => import('./pages/community/CommunityThreadPage'));
 const CommunityTeamPage = lazy(() => import('./pages/community/CommunityTeamPage'));
 const NotificationSettingsPage = lazy(() => import('./pages/settings/NotificationSettingsPage'));
@@ -203,6 +204,7 @@ const App = () => (
                         <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
                         <Route path="/college/drives" element={<CollegeDrivesPage />} />
                         <Route path="/community" element={<CommunityPage />} />
+                        <Route path="/bundles/:slug" element={<BundlePage />} />
                         <Route path="/community/:orgId/threads/:threadId" element={<CommunityThreadPage />} />
                         <Route path="/community/:orgId/teams/:teamId" element={<CommunityTeamPage />} />
                         <Route path="/settings/notifications" element={<NotificationSettingsPage />} />

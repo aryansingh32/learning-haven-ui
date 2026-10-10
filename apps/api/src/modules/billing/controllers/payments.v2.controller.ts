@@ -104,6 +104,23 @@ export class PaymentsV2Controller {
   }
 
   /**
+   * POST /api/v2/payments/create-bundle-order
+   * Create a Razorpay order for a course bundle.
+   */
+  static async createBundleOrder(req: Request, res: Response) {
+    try {
+      const userId = (req as AuthRequest).user!.id;
+      const { bundle_id, coupon_code } = req.body ?? {};
+      if (typeof bundle_id !== 'string' || !/^[0-9a-f-]{36}$/i.test(bundle_id)) return badRequest(res, 'bundle_id is required');
+      const order = await PaymentsV2Service.createBundleOrder(userId, bundle_id, typeof coupon_code === 'string' ? coupon_code : undefined);
+      return created(res, order);
+    } catch (error: any) {
+      logger.error('Create bundle order error:', error);
+      return badRequest(res, error.message || 'Failed to create bundle order');
+    }
+  }
+
+  /**
    * POST /api/v2/payments/verify
    */
   static async verifyPayment(req: Request, res: Response) {

@@ -60,6 +60,14 @@ router.post(
 );
 
 router.post(
+  '/create-bundle-order',
+  authenticateUser,
+  requireVerifiedEmail,
+  writeRateLimit,
+  PaymentsV2Controller.createBundleOrder
+);
+
+router.post(
   '/verify',
   authenticateUser,
   writeRateLimit,

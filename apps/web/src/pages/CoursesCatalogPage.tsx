@@ -12,6 +12,7 @@ import { HeroCarousel } from '@/components/catalog/HeroCarousel';
 import { PartnerMarquee } from '@/components/catalog/PartnerMarquee';
 import { YourPathSection } from '@/components/catalog/YourPathSection';
 import { FromYourCollegeCourses } from '@/components/college/FromYourCollege';
+import { BundlesStrip } from '@/features/bundles/bundles';
 import { CatalogSearch } from '@/components/catalog/CatalogSearch';
 import { PremiumCourseCard } from '@/components/catalog/PremiumCourseCard';
 import { TrendingLists } from '@/components/catalog/TrendingLists';
@@ -304,6 +305,8 @@ export default function CoursesCatalogPage() {
             <Button onClick={() => refetch()}>Retry</Button>
           </section>
         )}
+
+        <BundlesStrip />
 
         {/* Course grid */}
         {!isError && (

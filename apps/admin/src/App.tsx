@@ -60,6 +60,7 @@ const NotificationsPage = lazy(() => import('./pages/apprenticeship/Notification
 const BuildChallengesPage = lazy(() => import('./pages/apprenticeship/BuildChallengesPage'));
 const BuildChallengeUsersPage = lazy(() => import('./pages/build-haven/BuildChallengeUsersPage'));
 const CommerceCouponsPage = lazy(() => import('./pages/commerce/CouponsPage'));
+const BundlesPage = lazy(() => import('./pages/commerce/BundlesPage'));
 const RevenuePage = lazy(() => import('./pages/commerce/RevenuePage'));
 
 function PageLoader() {
@@ -167,6 +168,7 @@ function App() {
               {/* Finance */}
               <Route path="/plans" element={<Plans />} />
               <Route path="/coupons" element={<CommerceCouponsPage />} />
+              <Route path="/bundles" element={<BundlesPage />} />
               <Route path="/revenue" element={<RevenuePage />} />
               <Route path="/withdrawals" element={<Withdrawals />} />
 

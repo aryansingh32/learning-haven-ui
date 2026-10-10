@@ -214,7 +214,168 @@ export class PaymentsV2Service {
   }
 
   /**
-   * Verify Razorpay payment and activate subscription.
+   * Create a Razorpay order for a course bundle: every course in it, for the bundle's price.
+   * Courses the learner already has stay as they are; a bundle with nothing new can't be bought.
+   */
+  static async createBundleOrder(userId: string, bundleId: string, couponCode?: string) {
+    const bundle = (await pool.query(
+      `SELECT id, title, price, currency FROM public.course_bundles
+        WHERE id = $1 AND is_published AND deleted_at IS NULL`, [bundleId])).rows[0];
+    if (!bundle) throw new Error('Bundle not found');
+    const courseIds: string[] = (await pool.query(
+      `SELECT i.course_id FROM public.course_bundle_items i JOIN public.courses c ON c.id = i.course_id
+        WHERE i.bundle_id = $1 AND c.deleted_at IS NULL AND c.is_published ORDER BY i.sort_order`, [bundleId])).rows.map((r) => r.course_id);
+    if (courseIds.length === 0) throw new Error('This bundle has no courses yet');
+    const owned = (await pool.query(
+      `SELECT resource_id FROM public.user_entitlements
+        WHERE user_id = $1 AND feature_key = 'course_access' AND resource_type = 'course' AND bool_value = true
+          AND resource_id = ANY($2::uuid[]) AND (expires_at IS NULL OR expires_at > NOW())`, [userId, courseIds])).rows.length;
+    if (owned === courseIds.length) throw new Error('You already have every course in this bundle');
+
+    let discountAmount = 0;
+    let couponId: string | null = null;
+    if (couponCode) {
+      const cv = await this.validateCoupon(couponCode, 'bundle_one_time', userId, bundle.price);
+      if (!cv.valid) throw new Error(cv.reason);
+      discountAmount = cv.discountAmount;
+      couponId = cv.coupon.id;
+    }
+    const gstInfo = calculateGST(Math.max(0, bundle.price - discountAmount));
+    const finalAmountInPaise = gstInfo.total;
+    if (finalAmountInPaise < 100 && finalAmountInPaise > 0) throw new Error('Final amount cannot be less than ₹1');
+
+    let razorpayOrderId = `free_bundle_${Date.now()}_${userId.slice(0, 8)}`;
+    if (finalAmountInPaise > 0) {
+      const order = await razorpay.orders.create({
+        amount: finalAmountInPaise,
+        currency: bundle.currency || 'INR',
+        receipt: `bundle_${bundleId.slice(0, 8)}_${Date.now()}`,
+        notes: { user_id: userId, bundle_id: bundleId, purchase_kind: 'bundle' },
+      });
+      razorpayOrderId = order.id;
+    }
+    const paymentResult = await pool.query(
+      `INSERT INTO public.payments (
+           user_id, plan_id, amount, discount_amount, tax_amount, final_amount,
+           status, razorpay_order_id, coupon_id, coupon_code, billing_cycle, description, metadata
+         ) VALUES ($1, NULL, $2, $3, $4, $5, 'created', $6, $7, $8, 'one_time', $9, $10)
+         RETURNING id`,
+      [userId, bundle.price, discountAmount, gstInfo.gst_amount, finalAmountInPaise, razorpayOrderId, couponId, couponCode ?? null,
+        `${bundle.title} (bundle, one-time purchase)`,
+        // The courses are fixed at purchase time, so a later edit of the bundle doesn't change what was bought.
+        { purchase_kind: 'bundle', resource_type: 'bundle', resource_id: bundleId, course_ids: courseIds }]
+    );
+    return {
+      orderId: paymentResult.rows[0].id,
+      razorpayOrderId,
+      amount: bundle.price,
+      discountAmount,
+      taxAmount: gstInfo.gst_amount,
+      finalAmount: finalAmountInPaise,
+      currency: bundle.currency || 'INR',
+      bundle: { id: bundle.id, title: bundle.title, courses: courseIds.length },
+      keyId: env.RAZORPAY_KEY_ID,
+    };
+  }
+
+  /**
+   * Turn a paid order into access, inside the caller's transaction: a plan becomes the
+   * active subscription; a course, bundle or other resource becomes entitlements linked
+   * to this payment. Used by both the checkout callback and the Razorpay webhook.
+   */
+  private static async activate(client: any, payment: any, razorpayPaymentId: string, razorpaySignature: string | null) {
+    const userId: string = payment.user_id;
+    await client.query(
+      `UPDATE public.payments SET status = 'captured', razorpay_payment_id = $1,
+              razorpay_signature = COALESCE($2, razorpay_signature), updated_at = NOW() WHERE id = $3`,
+      [razorpayPaymentId, razorpaySignature, payment.id]
+    );
+
+    const meta = payment.metadata || {};
+    const plan = payment.plan_id
+      ? (await client.query(`SELECT slug, name FROM public.plans WHERE id = $1`, [payment.plan_id])).rows[0] ?? null
+      : null;
+    const now = new Date();
+    const periodEnd = getSubscriptionEndDate(payment.billing_cycle, now);
+
+    // What this payment unlocks, besides a plan.
+    const grants: Array<{ feature: string; type: string; id: string }> = [];
+    if (meta.resource_type === 'bundle') {
+      for (const courseId of (meta.course_ids ?? []) as string[]) grants.push({ feature: 'course_access', type: 'course', id: courseId });
+    } else if (this.featureForResource(meta.resource_type) && meta.resource_id) {
+      grants.push({ feature: this.featureForResource(meta.resource_type)!, type: meta.resource_type, id: meta.resource_id });
+    }
+
+    let subscriptionId: string | null = null;
+    if (plan && grants.length === 0) {
+      // Plan purchase: replace the active subscription.
+      await client.query(
+        `UPDATE public.subscriptions SET status = 'cancelled', cancelled_at = NOW(), updated_at = NOW()
+         WHERE user_id = $1 AND status = 'active'`,
+        [userId]
+      );
+      const subRes = await client.query(
+        `INSERT INTO public.subscriptions (
+           user_id, plan_id, status, billing_cycle, amount_paid, current_period_start, current_period_end
+         ) VALUES ($1, $2, 'active', $3, $4, $5, $6) RETURNING id`,
+        [userId, payment.plan_id, payment.billing_cycle, payment.final_amount, now, periodEnd]
+      );
+      subscriptionId = subRes.rows[0].id;
+      await client.query(`UPDATE public.payments SET subscription_id = $1 WHERE id = $2`, [subscriptionId, payment.id]);
+      await client.query(
+        `UPDATE public.users SET current_plan = $1, active_subscription_id = $2 WHERE id = $3`,
+        [plan.slug, subscriptionId, userId]
+      );
+    }
+
+    const label = plan ? `${plan.name} access` : (payment.description || 'Purchase');
+    for (const g of grants) {
+      await client.query(
+        `INSERT INTO public.user_entitlements (
+           user_id, feature_key, entitlement_type, bool_value, resource_type, resource_id,
+           label, source_payment_id, source_subscription_id, expires_at, metadata
+         ) VALUES ($1, $2, 'resource_access', true, $3, $4, $5, $6, $7, $8, $9)
+         ON CONFLICT (user_id, feature_key, resource_type, resource_id)
+         DO UPDATE SET
+           bool_value = true,
+           source_payment_id = EXCLUDED.source_payment_id,
+           source_subscription_id = EXCLUDED.source_subscription_id,
+           expires_at = EXCLUDED.expires_at,
+           metadata = EXCLUDED.metadata,
+           updated_at = NOW()
+         -- A course already owned for at least as long keeps its own record (and its own refund).
+         WHERE public.user_entitlements.bool_value = false
+            OR (public.user_entitlements.expires_at IS NOT NULL AND public.user_entitlements.expires_at < EXCLUDED.expires_at)`,
+        [userId, g.feature, g.type, g.id, label, payment.id, subscriptionId, periodEnd,
+          { plan_slug: plan?.slug ?? null, billing_cycle: payment.billing_cycle, ...(meta.resource_type === 'bundle' ? { bundle_id: meta.resource_id } : {}) }]
+      );
+    }
+
+    if (payment.coupon_id) {
+      await client.query(
+        `INSERT INTO public.coupon_usages (coupon_id, user_id, payment_id, discount_applied) VALUES ($1, $2, $3, $4)
+         ON CONFLICT DO NOTHING`,
+        [payment.coupon_id, userId, payment.id, payment.discount_amount]
+      );
+      await client.query(`UPDATE public.coupons SET used_count = used_count + 1 WHERE id = $1`, [payment.coupon_id]);
+    }
+
+    return { subscriptionId, plan, label, courseIds: grants.filter((g) => g.type === 'course').map((g) => g.id) };
+  }
+
+  /** After the transaction: caches, the GST invoice and follow-up jobs. */
+  private static async afterActivation(userId: string, paymentId: string, label: string) {
+    await CacheService.delPattern(`entitlements:${userId}`);
+    await CacheService.delPattern(`content_entitlements:${userId}`);
+    await CacheService.del(`user_plan:${userId}`);
+    await CacheService.delPattern(`plan_entitlements:*`);
+    await InvoiceService.issueQuietly(paymentId);
+    await monetizationQueue.add('referral.check-and-activate', { userId, paymentId });
+    await monetizationQueue.add('payment.welcome-email', { userId, planName: label });
+  }
+
+  /**
+   * Verify the checkout callback and activate what was bought.
    */
   static async verifyAndActivate(
     userId: string,
@@ -222,8 +383,9 @@ export class PaymentsV2Service {
     razorpayPaymentId: string,
     razorpaySignature: string,
   ) {
-    // 1. Verify signature (skip if free order bypass)
-    if (!razorpayOrderId.startsWith('free_order_')) {
+    // Fully discounted orders never reach Razorpay, so there is no signature; they must really be free.
+    const isFree = razorpayOrderId.startsWith('free_');
+    if (!isFree) {
       const isValid = verifyPaymentSignature(razorpayOrderId, razorpayPaymentId, razorpaySignature);
       if (!isValid) throw new Error('Payment verification failed');
     }
@@ -231,119 +393,29 @@ export class PaymentsV2Service {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-
-      // 2. Fetch payment
-      const paymentRes = await client.query(
+      const payment = (await client.query(
         `SELECT * FROM public.payments WHERE razorpay_order_id = $1 FOR UPDATE`,
         [razorpayOrderId]
-      );
-      if (paymentRes.rows.length === 0) throw new Error('Payment not found');
-      const payment = paymentRes.rows[0];
+      )).rows[0];
+      // Someone else's order is "not found", whatever they hold.
+      if (!payment || payment.user_id !== userId) throw new Error('Payment not found');
+      if (isFree && Number(payment.final_amount) > 0) throw new Error('Payment verification failed');
 
       if (payment.status === 'captured') {
         await client.query('COMMIT');
         return { success: true, message: 'Payment already processed' }; // Idempotent
       }
 
-      // 3. Fetch plan
-      const planRes = await client.query(`SELECT slug, name FROM public.plans WHERE id = $1`, [payment.plan_id]);
-      const plan = planRes.rows[0];
-      const resourceType = payment.metadata?.resource_type;
-      const resourceId = payment.metadata?.resource_id;
-      const resourceFeature = this.featureForResource(resourceType);
-      const isResourcePurchase = Boolean(resourceFeature && resourceId);
-
-      // 4. Update payment status
-      await client.query(
-        `UPDATE public.payments SET status = 'captured', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = NOW() WHERE id = $3`,
-        [razorpayPaymentId, razorpaySignature, payment.id]
-      );
-
-      // 5. Work out access duration.
-      const now = new Date();
-      const periodEnd = getSubscriptionEndDate(payment.billing_cycle, now);
-      let subscriptionId: string | null = null;
-
-      if (!isResourcePurchase) {
-        // 6. Plan purchase: replace active subscription.
-        await client.query(
-          `UPDATE public.subscriptions SET status = 'cancelled', cancelled_at = NOW(), updated_at = NOW()
-           WHERE user_id = $1 AND status = 'active'`,
-          [userId]
-        );
-
-        const subRes = await client.query(
-          `INSERT INTO public.subscriptions (
-             user_id, plan_id, status, billing_cycle, amount_paid, current_period_start, current_period_end
-           ) VALUES ($1, $2, 'active', $3, $4, $5, $6) RETURNING id`,
-          [userId, payment.plan_id, payment.billing_cycle, payment.final_amount, now, periodEnd]
-        );
-        subscriptionId = subRes.rows[0].id;
-
-        await client.query(`UPDATE public.payments SET subscription_id = $1 WHERE id = $2`, [subscriptionId, payment.id]);
-
-        await client.query(
-          `UPDATE public.users SET current_plan = $1, active_subscription_id = $2 WHERE id = $3`,
-          [plan.slug, subscriptionId, userId]
-        );
-      }
-
-      if (resourceFeature && resourceId) {
-        await client.query(
-          `INSERT INTO public.user_entitlements (
-             user_id, feature_key, entitlement_type, bool_value, resource_type, resource_id,
-             label, source_payment_id, source_subscription_id, expires_at, metadata
-           ) VALUES ($1, $2, 'resource_access', true, $3, $4, $5, $6, $7, $8, $9)
-           ON CONFLICT (user_id, feature_key, resource_type, resource_id)
-           DO UPDATE SET
-             bool_value = true,
-             source_payment_id = EXCLUDED.source_payment_id,
-             source_subscription_id = EXCLUDED.source_subscription_id,
-             expires_at = EXCLUDED.expires_at,
-             metadata = EXCLUDED.metadata,
-             updated_at = NOW()`,
-          [
-            userId,
-            resourceFeature,
-            resourceType,
-            resourceId,
-            `${plan.name} access`,
-            payment.id,
-            subscriptionId,
-            periodEnd,
-            { plan_slug: plan.slug, billing_cycle: payment.billing_cycle },
-          ]
-        );
-      }
-
-      // 8. Record coupon usage
-      if (payment.coupon_id) {
-        await client.query(
-          `INSERT INTO public.coupon_usages (coupon_id, user_id, payment_id, discount_applied) VALUES ($1, $2, $3, $4)
-           ON CONFLICT DO NOTHING`,
-          [payment.coupon_id, userId, payment.id, payment.discount_amount]
-        );
-        await client.query(
-          `UPDATE public.coupons SET used_count = used_count + 1 WHERE id = $1`,
-          [payment.coupon_id]
-        );
-      }
-
+      const result = await this.activate(client, payment, razorpayPaymentId, isFree ? null : razorpaySignature);
       await client.query('COMMIT');
+      await this.afterActivation(userId, payment.id, result.label);
 
-      // 9. Post-commit side effects
-      await CacheService.delPattern(`entitlements:${userId}`);
-      await CacheService.delPattern(`content_entitlements:${userId}`);
-      await CacheService.del(`user_plan:${userId}`);
-      await CacheService.delPattern(`plan_entitlements:*`);
-
-      await InvoiceService.issueQuietly(payment.id);
-
-      // Enqueue jobs
-      await monetizationQueue.add('referral.check-and-activate', { userId, paymentId: payment.id });
-      await monetizationQueue.add('payment.welcome-email', { userId, planName: plan.name });
-
-      return { success: true, subscriptionId, plan: { name: plan.name, slug: plan.slug } };
+      return {
+        success: true,
+        subscriptionId: result.subscriptionId,
+        plan: result.plan ? { name: result.plan.name, slug: result.plan.slug } : null,
+        courseIds: result.courseIds,
+      };
     } catch (error) {
       await client.query('ROLLBACK');
       throw error;
@@ -385,72 +457,23 @@ export class PaymentsV2Service {
           return;
         }
 
-        // Payment is still 'created' (frontend failed to call verify) — activate now
-        logger.info(`Webhook activating subscription for order ${orderId}, payment ${paymentId}`);
-
+        // Payment is still 'created' (the checkout callback never arrived) — activate now.
+        logger.info(`Webhook activating order ${orderId}, payment ${paymentId}`);
         const client = await pool.connect();
         try {
           await client.query('BEGIN');
-
-          // Mark payment as captured
-          await client.query(
-            `UPDATE public.payments SET status = 'captured', razorpay_payment_id = $1, updated_at = NOW() WHERE id = $2`,
-            [paymentId, payment.id]
-          );
-
-          // Increment coupon usage if applicable
-          if (payment.coupon_id) {
-            await client.query(
-              `UPDATE public.coupons SET used_count = used_count + 1 WHERE id = $1 AND (max_uses IS NULL OR used_count < max_uses)`,
-              [payment.coupon_id]
-            );
+          const locked = (await client.query(`SELECT * FROM public.payments WHERE id = $1 FOR UPDATE`, [payment.id])).rows[0];
+          if (!locked || locked.status === 'captured') {
+            await client.query('COMMIT');
+            return;
           }
-
-          // Cancel existing active subscriptions
-          await client.query(
-            `UPDATE public.subscriptions SET status = 'cancelled', cancel_reason = 'upgrade', updated_at = NOW() WHERE user_id = $1 AND status = 'active'`,
-            [payment.user_id]
-          );
-
-          // Determine subscription end date
-          const now = new Date();
-          const isYearly = payment.billing_cycle === 'annual' || payment.billing_cycle === 'yearly';
-          const isLifetime = payment.billing_cycle === 'lifetime';
-          const endDate = new Date(now);
-          if (isLifetime) {
-            endDate.setFullYear(endDate.getFullYear() + 100);
-          } else if (isYearly) {
-            endDate.setFullYear(endDate.getFullYear() + 1);
-          } else {
-            endDate.setMonth(endDate.getMonth() + 1);
-          }
-
-          // Create new subscription
-          const subRes = await client.query(
-            `INSERT INTO public.subscriptions (user_id, plan_id, billing_cycle, status, amount_paid, current_period_start, current_period_end)
-             VALUES ($1, $2, $3, 'active', $4, $5, $6)
-             RETURNING id`,
-            [payment.user_id, payment.plan_id, payment.billing_cycle, payment.final_amount, now.toISOString(), endDate.toISOString()]
-          );
-
-          // Update user plan
-          await client.query(
-            `UPDATE public.users SET current_plan = (SELECT slug FROM public.plans WHERE id = $1), active_subscription_id = $2, updated_at = NOW() WHERE id = $3`,
-            [payment.plan_id, subRes.rows[0].id, payment.user_id]
-          );
-
+          const result = await this.activate(client, locked, paymentId, null);
           await client.query('COMMIT');
-          await InvoiceService.issueQuietly(payment.id);
-
-          // Invalidate entitlement caches
-          await CacheService.delPattern(`entitlements:${payment.user_id}`);
-          await CacheService.delPattern(`content_entitlements:${payment.user_id}`);
-          await CacheService.del(`user_plan:${payment.user_id}`);
-
-          logger.info(`Webhook successfully activated subscription for user ${payment.user_id} via webhook fallback`);
+          await this.afterActivation(locked.user_id, locked.id, result.label);
+          logger.info(`Webhook activated order ${orderId} for user ${locked.user_id}`);
         } catch (e) {
           await client.query('ROLLBACK');
-          logger.error('Webhook subscription activation error:', e);
+          logger.error('Webhook activation error:', e);
         } finally {
           client.release();
         }
@@ -463,12 +486,20 @@ export class PaymentsV2Service {
       const client = await pool.connect();
       try {
         await client.query('BEGIN');
-        const paymentRes = await client.query(`SELECT id, user_id FROM public.payments WHERE razorpay_payment_id = $1`, [paymentId]);
+        const paymentRes = await client.query(`SELECT id, user_id, subscription_id FROM public.payments WHERE razorpay_payment_id = $1`, [paymentId]);
         if (paymentRes.rows.length > 0) {
           const p = paymentRes.rows[0];
           await client.query(`UPDATE public.payments SET status = 'refunded' WHERE id = $1`, [p.id]);
-          await client.query(`UPDATE public.subscriptions SET status = 'cancelled', cancelled_at = NOW() WHERE id IN (SELECT subscription_id FROM public.payments WHERE id = $1)`, [p.id]);
-          await client.query(`UPDATE public.users SET current_plan = 'free', active_subscription_id = NULL WHERE id = $1`, [p.user_id]);
+          // Courses, bundles and other things bought with this payment stop working.
+          await client.query(
+            `UPDATE public.user_entitlements SET bool_value = false, updated_at = NOW() WHERE source_payment_id = $1`, [p.id]);
+          // A plan is cancelled only when this payment paid for it.
+          if (p.subscription_id) {
+            await client.query(`UPDATE public.subscriptions SET status = 'cancelled', cancelled_at = NOW() WHERE id = $1`, [p.subscription_id]);
+            await client.query(
+              `UPDATE public.users SET current_plan = 'free', active_subscription_id = NULL WHERE id = $1 AND active_subscription_id = $2`,
+              [p.user_id, p.subscription_id]);
+          }
           await CacheService.delPattern(`entitlements:${p.user_id}`);
           await CacheService.delPattern(`content_entitlements:${p.user_id}`);
           await CacheService.del(`user_plan:${p.user_id}`);
