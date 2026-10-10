@@ -25,6 +25,15 @@ export interface CourseItem {
     problem?: any;
 }
 
+export interface CourseLearningSettings {
+    course_id: string;
+    /** Chapter N opens (N-1) × this many days after the learner starts. null = no drip. */
+    drip_interval_days: number | null;
+    prerequisites: { course_id: string; title: string; slug: string }[];
+}
+
+export type CourseExportType = 'chapters_meta' | 'chapter_steps';
+
 export const coursesService = {
     list: async () => {
         const res = await api.get<Course[]>('/admin/courses');
@@ -54,6 +63,19 @@ export const coursesService = {
     },
     reorderItems: async (id: string, items: { id: string; order_index: number }[]) => {
         const res = await api.put(`/admin/courses/${id}/reorder`, { items });
+        return res.data;
+    },
+    getLearningSettings: async (id: string) => {
+        const res = await api.get<CourseLearningSettings>(`/admin/courses/${id}/learning-settings`);
+        return res.data;
+    },
+    saveLearningSettings: async (id: string, data: { drip_interval_days: number | null; prerequisite_ids: string[] }) => {
+        const res = await api.put<CourseLearningSettings>(`/admin/courses/${id}/learning-settings`, data);
+        return res.data;
+    },
+    /** CSV in the content-import format, so a course can be edited in a spreadsheet and imported back. */
+    exportCourse: async (id: string, type: CourseExportType) => {
+        const res = await api.get<Blob>(`/admin/courses/${id}/export`, { params: { type }, responseType: 'blob' });
         return res.data;
     },
 };

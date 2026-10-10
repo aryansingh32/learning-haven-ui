@@ -9,11 +9,13 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Plus, Pencil, Trash2, Loader2, Save, X, BookOpen, Image as ImageIcon } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Save, X, BookOpen, Image as ImageIcon, ListChecks } from 'lucide-react';
+import { CourseLearningSettingsDialog } from '../components/CourseLearningSettingsDialog';
 import { toast } from 'sonner';
 
 const Courses = () => {
     const queryClient = useQueryClient();
+    const [learningCourse, setLearningCourse] = useState<Course | null>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [showCreate, setShowCreate] = useState(false);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -294,7 +296,8 @@ const Courses = () => {
                                                 )}
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+                                                    <Button variant="ghost" size="icon" title="Learning settings" aria-label={`Learning settings for ${c.title}`} onClick={() => setLearningCourse(c)}><ListChecks className="h-4 w-4" /></Button>
                                                     <Button variant="ghost" size="icon" title="Edit Metadata" onClick={() => startEdit(c)}><Pencil className="h-4 w-4" /></Button>
                                                     <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive"
                                                         onClick={() => { if (confirm('Delete this course?')) deleteMut.mutate(c.id); }}
@@ -309,6 +312,7 @@ const Courses = () => {
                     </Table>
                 </CardContent>
             </Card>
+            <CourseLearningSettingsDialog course={learningCourse} courses={courses || []} onClose={() => setLearningCourse(null)} />
         </div>
     );
 };
