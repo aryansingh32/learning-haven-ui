@@ -16,3 +16,4 @@
 20260901000002_quiz_answers.sql
 20260901000003_notebook_edit_access.sql
 20260901000004_mock_test.sql
+20260901000005_lock_notes_and_mock_tests.sql
