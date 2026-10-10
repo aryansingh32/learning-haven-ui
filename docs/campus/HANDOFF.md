@@ -1,5 +1,8 @@
 # Forge / Forge Campus — session handoff
 
+**2026-10-10 update:** every branch below is now merged into **`main`** (plus the August audit branch, see §3), and the
+live database has every migration in the repo (§4). New work goes on feature branches off `main`.
+
 **Last updated: 2026-10-12.** Resume on branch **`ccr-f94ce2b7-q10f2w`** — it contains everything
 (launch fixes → Campus phase 0 → phase 1 → student Campus UI → in-app practice + server judge → coding questions
 in Campus tests → C++ on the judge).
@@ -43,9 +46,9 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Coding workspace (slice W2-I1): submission diff, run history, custom input, memory per test, 10 editor themes saved per learner, Python/C++/Java formatting, phone layout | ✅ built, browser-verified |
 | Account (slice W2-A1): database only — account log, own-session list/revoke helpers, skills, opt-in public portfolio | 🟡 DB merged + tested (24 mutations); API + screens unfinished → `docs/campus/wip/W2-A1-account-unfinished.patch` |
 | Learning (slice W2-L1): highlights, course prerequisites + enforcement, drip release, chapter discussions, course export | 🟡 DB + API merged + tested; learner/admin screens unfinished → `docs/campus/wip/W2-L1-learning-web-unfinished.patch` |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles`, `20261021000001_notifications`, `20261022000001_campus_drives`, `20261023000001_problem_editorials`, `20261024000001_learner_goals_study`, `20261025000001_gst_invoices`, `20261026000001_gamification_rewards`, `20261027000001_practice_runs_editor_prefs`, `20261028000001_account_profile`, `20261029000001_learning_highlights_prereqs_drip`, `20261029000002_chapter_discussions` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Live DB migrations | ✅ **all applied 2026-10-10** (Claude, at the owner's request): the 14 older ones live lacked (`20260823000001` … `20260901000004`, listed in `tests/fixtures/missing_on_live.txt`), three new fixes (`20260828000005` XP functions server-only, `20260901000005` notes/mock tests locked, `20261029000003` function hardening), and the 21 pending ones (`20261010000001` … `20261029000002`). Verified: schema fingerprint (functions, policies, constraints, columns, triggers, grants, RLS) identical to a local database built in the same order; §8.1 data checks pass; 0 tables without RLS; advisor shows only intended findings + leaked-password toggle |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
-| Branches merged to `main` | ❌ not yet — see §3 |
+| Branches merged to `main` | ✅ 2026-10-10: the four stacked branches (fast-forward) and the audit branch (merge, minus its duplicate per-course pricing) |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
 
 ### Owner decisions recorded (2026-10-10)
@@ -99,13 +102,30 @@ Stacked branches, all pushed to origin, each containing the one before:
 is already locked down (§4); `main`'s API still uses the public anon key server-side and will fail on the
 locked tables. No PR has been opened yet (owner hasn't asked).
 
-Separate, unmerged and **diverged**: `claude/project-audit-production-xn70jx` (10 commits from a72ae35:
+**2026-10-10: merged.** `main` = the four branches above (fast-forward) + `claude/project-audit-production-xn70jx` (merge
+commit 6d0cd27). From the audit branch everything was kept except commit f8e3eb0 (per-course pricing with `price_inr`/`is_free`):
+`main` already had per-course checkout (`courses.price`/`is_individually_purchasable`, `CourseCheckoutModal`, grants that
+`CourseAccessService` honours), so it was reverted before merging. Conflicts kept `main`'s later fixes (Java env, chapters
+service, resume page); the quiz keeps the audit's one-question flow plus `main`'s per-answer notebook details.
+
+Was separate, unmerged and **diverged**: `claude/project-audit-production-xn70jx` (10 commits from a72ae35:
 money-path/security fixes, per-course purchasing, pricing redesign, resume fixes). It overlaps `main`'s later
 work — cherry-pick its security/money-path commits (5853694, 703a30e) rather than merging it whole. Owner to decide.
 
 ## 4. Live database (Supabase project `learningheaven`, ref `wxrxnqhjkwlxvmaopvlv`, ap-south-1)
 
-Applied via the Supabase MCP (in order), all verified after applying (`20261010000001_problem_judging`, `20261011000001_campus_coding_questions` and `20261012000001_problem_cpp_starters` are **pending**, §8.1):
+Applied via the Supabase MCP (in order), all verified after applying. **2026-10-10: everything else applied too** (status table
+above); live now matches the repo. `scripts/test-db.sh` also builds a *replay* database (snapshot + `missing_on_live.txt` +
+post-snapshot migrations, the order live got them) and runs `tests/replay/*.sql`.
+
+Security fixes found while applying (all mutation-tested, applied):
+- `increment_xp()` (20260823000001) and `update_streak()` (audit branch) were SECURITY DEFINER and granted to `authenticated`:
+  any signed-in user could give anyone XP or change streaks through PostgREST. Now service role only.
+- `chapter_notes` and `mock_test_attempts` were created without RLS: the anon key could read everyone's notes and the mock
+  test answer keys. Now RLS on, no policies, browser grants revoked.
+- Live keeps streaks in `streak_count` but most API readers use `streak`: `update_streak()` now writes both; aligned once.
+
+Earlier (2026-10-08/09):
 
 | Migration | Effect |
 |---|---|

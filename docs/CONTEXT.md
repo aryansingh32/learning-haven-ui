@@ -1,6 +1,7 @@
 # Project context — read this first to resume work from anywhere
 
-Last updated: 2026-10-10 · Working branch: **`ccr-f94ce2b7-q10f2w`** (all work committed and pushed)
+Last updated: 2026-10-10 · **Everything is merged into `main`**; the live database has every migration in the repo.
+Work on feature branches off `main` (current: `feat/w2-account-learning`).
 
 This file is the short version. It tells you what we are building, what we are doing right now, what is
 done, what is left, and which document holds the details. When you finish a piece of work, update the
@@ -105,13 +106,17 @@ Details of each slice: `docs/campus/BUILD_PLAN.md` (the "Slice … built" sectio
 
 Full list: the 🟡 and ❌ rows in FEATURE_CHECKLIST.md.
 
-**Owner (production; Claude never applies these):**
-1. **Apply migrations on live, in order:**
+**Done 2026-10-10 (owner asked):** all stacked branches and the August audit branch merged into `main`; every pending
+migration applied to live and verified (schema fingerprint identical to the tested database; security advisor clean
+except intended findings). Details: HANDOFF §0 and §4.
+
+**Owner (production):**
+1. ~~**Apply migrations on live, in order:**~~ done
    - First the older missing ones: `20260823000001` … `20260906000002`. Live lacks the xp ledger, resumes,
      bookmarks, chapter notes, mock tests and others.
    - Then the 21 pending ones: `20261010000001` … `20261029000002`.
    - After each, run the verify query in HANDOFF §8.1.
-2. **Merge the stacked branches into `main`, in order** (HANDOFF §3):
+2. ~~**Merge the stacked branches into `main`, in order** (HANDOFF §3):~~ done
    1. `chore/launch-fixes-and-test-series`
    2. `feat/campus-phase-0`
    3. `feat/campus-phase-1`
@@ -130,7 +135,7 @@ Full list: the 🟡 and ❌ rows in FEATURE_CHECKLIST.md.
 
 ## 5. How to work and verify (the rules)
 
-- Read `CLAUDE.md` (repo root). Work only on `ccr-f94ce2b7-q10f2w`. Make small, verified commits. Don't open PRs unless asked.
+- Read `CLAUDE.md` (repo root). Work on a feature branch off `main`. Make small, verified commits. Don't open PRs unless asked.
 - **Database changes:**
   - New migration in `apps/api/supabase/migrations/` (additive, RLS on, server-only writes revoked from `authenticated`).
   - SQL suite in `apps/api/supabase/tests/*.sql`.
