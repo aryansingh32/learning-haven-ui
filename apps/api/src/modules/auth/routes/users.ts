@@ -5,6 +5,8 @@ import { JudgeController } from '../../learning/controllers/judge.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
 import { updateProfileSchema } from '../../../utils/validators';
+import { AccountController } from '../controllers/account.controller';
+import { authRateLimit, writeRateLimit } from '../../../middleware/rateLimit';
 
 const router = Router();
 
@@ -171,6 +173,21 @@ router.get('/leaderboard', authenticateUser, AchievementsController.leaderboard)
  * @access  Private
  */
 router.put('/me/leaderboard-visibility', authenticateUser, AchievementsController.setLeaderboardVisibility);
+
+// ── Account & security, skills, portfolio (slice W2-A1) ──────────────────
+router.get('/me/account', authenticateUser, AccountController.getAccount);
+router.post('/me/verification-email', authenticateUser, authRateLimit, AccountController.sendVerification);
+router.get('/me/sessions', authenticateUser, AccountController.listSessions);
+router.post('/me/sessions/revoke-others', authenticateUser, writeRateLimit, AccountController.revokeOthers);
+router.delete('/me/sessions/:sessionId', authenticateUser, writeRateLimit, AccountController.revokeSession);
+router.put('/me/password', authenticateUser, authRateLimit, AccountController.changePassword);
+router.get('/me/activity', authenticateUser, AccountController.getActivity);
+router.get('/me/skills', authenticateUser, AccountController.getSkills);
+router.put('/me/skills', authenticateUser, writeRateLimit, AccountController.saveSkills);
+router.get('/me/portfolio', authenticateUser, AccountController.getPortfolio);
+// Saving a private draft is fine without a verified email; publishing is checked in the service and the database.
+router.put('/me/portfolio', authenticateUser, writeRateLimit, AccountController.savePortfolio);
+router.delete('/me/portfolio', authenticateUser, writeRateLimit, AccountController.deletePortfolio);
 
 export default router;
 

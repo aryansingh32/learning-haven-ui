@@ -6,6 +6,8 @@ export type VerifiedSupabaseUser = {
   id: string;
   email?: string;
   role?: string;
+  /** The verified token's claims (session_id, amr, app_metadata …). */
+  claims?: Record<string, any>;
 };
 
 function jwtExpiryMs(token: string): number | null {
@@ -47,7 +49,7 @@ export function verifySupabaseAccessToken(token: string): VerifiedSupabaseUser |
           role?: string;
         };
         if (decoded?.sub) {
-          return { id: decoded.sub, email: decoded.email, role: decoded.role };
+          return { id: decoded.sub, email: decoded.email, role: decoded.role, claims: decoded as Record<string, any> };
         }
       }
     } catch (err) {
@@ -64,7 +66,7 @@ export function verifySupabaseAccessToken(token: string): VerifiedSupabaseUser |
         role?: string;
       };
       if (decoded?.sub) {
-        return { id: decoded.sub, email: decoded.email, role: decoded.role };
+        return { id: decoded.sub, email: decoded.email, role: decoded.role, claims: decoded as Record<string, any> };
       }
     } catch (err) {
       logger.debug('SUPABASE_JWT_SECRET verification failed', err);

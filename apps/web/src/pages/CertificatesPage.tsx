@@ -1,4 +1,5 @@
-import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy } from "lucide-react";
+import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -57,6 +58,19 @@ const CertificatesPage = () => {
         <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground">Certificates</h1>
         <p className="text-xs text-muted-foreground mt-0.5">Your verified achievements & learning milestones</p>
       </div>
+
+      {/* Credential portfolio (W2-A1): pick which certificates appear on the public page */}
+      <Link to="/settings/portfolio"
+        className="card-glass rounded-2xl p-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border border-border/40 hover:border-primary/40 transition-colors">
+        <span className="flex items-start gap-3">
+          <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden />
+          <span>
+            <span className="block text-sm font-bold text-foreground">Show your certificates on a public portfolio</span>
+            <span className="block text-xs text-muted-foreground">Choose which ones, alongside your projects and skills. Private until you turn it on.</span>
+          </span>
+        </span>
+        <span className="text-xs font-bold text-primary shrink-0">Choose certificates →</span>
+      </Link>
 
       {activeCert ? (
         <motion.div

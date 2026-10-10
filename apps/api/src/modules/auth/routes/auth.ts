@@ -4,6 +4,7 @@ import { signup, signin, signout, refreshSession } from '../controllers/auth.con
 import { phoneSendOtp, phoneVerifyOtp, phoneCompleteProfile } from '../controllers/auth-phone.controller';
 import { validate } from '../../../middleware/validate';
 import { authRateLimit, otpRateLimit } from '../../../middleware/rateLimit';
+import { AccountController } from '../controllers/account.controller';
 
 const router = Router();
 
@@ -29,6 +30,8 @@ router.post('/signup', authRateLimit, validate(signupSchema), signup);
 router.post('/signin', authRateLimit, validate(signinSchema), signin);
 router.post('/refresh', validate(refreshSchema), refreshSession);
 router.post('/signout', signout);
+// Resend the confirmation email to someone who can't sign in until they confirm.
+router.post('/resend-verification', authRateLimit, AccountController.resendPublic);
 
 // Phone OTP Auth Routes (MSG91)
 router.post('/phone-send-otp', otpRateLimit, phoneSendOtp);

@@ -1,7 +1,8 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Bot, Gift, Award,
-  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap, Medal
+  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap, Medal,
+  Globe, ShieldCheck
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ import { GlobalAIAssistant } from "@/components/GlobalAIAssistant";
 import { EntitlementProvider } from "@/services/entitlement.service";
 import { useCampusMe } from "@/hooks/useCampus";
 import { NotificationBell } from "@/features/campus/NotificationBell";
+import { EmailVerifyBanner } from "@/features/account/EmailVerifyBanner";
 
 const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
@@ -38,6 +40,8 @@ const careerNav = [
   { to: "/referrals", icon: Gift, label: "Referrals" },
   { to: "/certificates", icon: Award, label: "Certificates" },
   { to: "/subscription", icon: CreditCard, label: "Billing" },
+  { to: "/settings/portfolio", icon: Globe, label: "Portfolio" },
+  { to: "/settings/account", icon: ShieldCheck, label: "Account" },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -292,6 +296,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 exit={{ opacity: 0, y: -5 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
+                <EmailVerifyBanner />
                 {children}
               </motion.div>
             </AnimatePresence>

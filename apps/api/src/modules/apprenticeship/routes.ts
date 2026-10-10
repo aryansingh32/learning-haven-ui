@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { requireVerifiedEmail } from '../../middleware/requireVerifiedEmail';
 import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import RedisStore from 'rate-limit-redis';
 import { ApprenticeshipController } from './programs.controller';
@@ -38,7 +39,7 @@ router.get('/leaderboard/:programId', ApprenticeshipController.getLeaderboard);
 router.get('/certificates/verify/:code', apprenticeshipTracker('certificate_viewed', 'certificate'), ApprenticeshipController.verifyCertificate);
 
 router.post('/track', optionalAuth, trackingRateLimit, TrackingController.ingest);
-router.post('/payments/create-order', authenticateUser, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('checkout_initiated', 'payment'), EnrollmentController.createOrder);
+router.post('/payments/create-order', authenticateUser, requireVerifiedEmail, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('checkout_initiated', 'payment'), EnrollmentController.createOrder);
 router.post('/enroll', authenticateUser, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('enrollment_completed', 'payment'), EnrollmentController.enroll);
 router.get('/enrollments/mine', authenticateUser, ApprenticeshipController.getMyEnrollments);
 router.get('/enrollments/:enrollmentId', authenticateUser, ApprenticeshipController.getEnrollmentDetail);

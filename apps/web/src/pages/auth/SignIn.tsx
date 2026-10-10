@@ -25,7 +25,13 @@ const SignIn = () => {
       toast.success("Welcome back!");
       navigate("/dashboard");
     } catch (error: any) {
-      toast.error(error.message || "Failed to sign in");
+      if (/not confirmed|not verified/i.test(error?.message || "")) {
+        // Supabase refuses password sign-in until the email is confirmed: offer a new link.
+        toast.error("Confirm your email first. We can send the link again.");
+        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+      } else {
+        toast.error(error.message || "Failed to sign in");
+      }
     } finally {
       setLoading(false);
     }

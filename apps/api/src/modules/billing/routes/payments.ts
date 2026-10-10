@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
 import { PaymentsController } from '../controllers/payments.controller';
 import { PublicPaymentsController } from '../controllers/payments.public.controller';
 import { authenticateUser } from '../../../middleware/auth';
@@ -24,6 +25,7 @@ router.get('/plans', PublicPaymentsController.getPlans);
 router.post(
     '/create-order',
     authenticateUser,
+    requireVerifiedEmail,
     writeRateLimit,
     requireIdempotencyKey,
     validate(createOrderSchema),

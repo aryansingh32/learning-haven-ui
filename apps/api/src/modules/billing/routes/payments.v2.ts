@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
 import { PaymentsV2Controller } from '../controllers/payments.v2.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
@@ -44,6 +45,7 @@ router.get('/subscription', authenticateUser, PaymentsV2Controller.getCurrentSub
 router.post(
   '/create-order',
   authenticateUser,
+  requireVerifiedEmail,
   writeRateLimit,
   validate(createOrderV2Schema),
   PaymentsV2Controller.createOrder
@@ -52,6 +54,7 @@ router.post(
 router.post(
   '/create-course-order',
   authenticateUser,
+  requireVerifiedEmail,
   writeRateLimit,
   PaymentsV2Controller.createCourseOrder
 );

@@ -59,6 +59,10 @@ describe('Payments V2 Service & Endpoints', () => {
       if (sqlLower.includes('select 1 from public.coupon_usages')) {
         return Promise.resolve({ rows: [] });
       }
+      // Checkout needs a verified email (requireVerifiedEmail); the test user has one.
+      if (sqlLower.includes('public.account_auth_info')) {
+        return Promise.resolve({ rows: [{ email: TEST_USER.email, email_confirmed_at: '2026-01-01T00:00:00Z' }] });
+      }
       if (sqlLower.includes('update public.subscriptions set cancel_at_period_end = true')) {
         return Promise.resolve({
           rows: [{ id: 'sub-1', user_id: TEST_USER.id, cancel_at_period_end: true }]
@@ -159,6 +163,23 @@ describe('Payments V2 Service & Endpoints', () => {
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
       expect(res.body.data.finalAmount).toBe(9900);
+    });
+
+    it('POST /api/v2/payments/create-order refuses an unverified email', async () => {
+      const unverified = '00000000-0000-0000-0000-0000000000e1';
+      const base = mockQuery.getMockImplementation()!;
+      mockQuery.mockImplementation((sql: string, params?: any[]) =>
+        sql.toLowerCase().includes('public.account_auth_info')
+          ? Promise.resolve({ rows: [{ email: 'new@learninghaven.dev', email_confirmed_at: null }] })
+          : base(sql, params));
+      const res = await request(app)
+        .post('/api/v2/payments/create-order')
+        .set(authHeaders(unverified))
+        .send({ plan_id: '30000000-0000-4000-a000-000000000001', billing_cycle: 'monthly' });
+
+      expect(res.status).toBe(403);
+      expect(res.body.error?.code ?? res.body.code).toBe('EMAIL_NOT_VERIFIED');
+      expect(mockQuery).not.toHaveBeenCalledWith(expect.stringContaining('INSERT INTO public.payments'), expect.anything());
     });
 
     it('POST /api/v2/payments/verify verifies payment', async () => {

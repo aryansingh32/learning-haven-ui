@@ -56,6 +56,10 @@ const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
 const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
 const CollegeDrivesPage = lazy(() => import('./pages/campus/CollegeDrivesPage'));
 const NotificationSettingsPage = lazy(() => import('./pages/settings/NotificationSettingsPage'));
+const AccountSettingsPage = lazy(() => import('./pages/settings/AccountSettingsPage'));
+const PortfolioSettingsPage = lazy(() => import('./pages/settings/PortfolioSettingsPage'));
+const PublicPortfolioPage = lazy(() => import('./pages/PublicPortfolioPage'));
+const VerifyEmailPage = lazy(() => import('./pages/auth/VerifyEmailPage'));
 const ProblemPage = lazy(() => import("./pages/ProblemPage"));
 const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
 const JobsPage = lazy(() => import("./pages/JobsPage"));
@@ -111,6 +115,7 @@ const App = () => (
               <Route element={<AuthLayout />}>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/verify-email" element={<VerifyEmailPage />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/course-preview" element={<CoursePreview />} />
               </Route>
@@ -119,6 +124,7 @@ const App = () => (
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/certificates/:code" element={<ApprenticeshipCertificatePage />} />
               <Route path="/certificates/verify/:code" element={<CertificateVerifyPage />} />
+              <Route path="/u/:handle" element={<PublicPortfolioPage />} />
 
               {/* Legacy redirects */}
               <Route path="/apprenticeships" element={<Navigate to="/jobs?tab=apprenticeships" replace />} />
@@ -194,6 +200,8 @@ const App = () => (
                         <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
                         <Route path="/college/drives" element={<CollegeDrivesPage />} />
                         <Route path="/settings/notifications" element={<NotificationSettingsPage />} />
+                        <Route path="/settings/account" element={<AccountSettingsPage />} />
+                        <Route path="/settings/portfolio" element={<PortfolioSettingsPage />} />
                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
                         <Route path="/projects" element={<ProjectsPage />} />

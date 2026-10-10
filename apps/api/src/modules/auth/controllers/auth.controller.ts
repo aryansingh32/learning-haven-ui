@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import { createAuthClient, supabase, supabaseAdmin } from '../../../config/database';
 import logger from '../../../config/logger';
 import { ReferralsService } from '../../billing/services/referrals.service';
+import jwt from 'jsonwebtoken';
+import { sessionClaims } from '../services/accountHelpers';
+import { markSessionsRevoked } from '../services/sessionGuard';
+import { AccountEvents } from '../services/account.service';
 import {
   ok,
   created,
@@ -136,6 +140,15 @@ export const signout = async (req: Request, res: Response) => {
 
     if (error) {
         return serverError(res);
+    }
+
+    // Supabase accepted the token, so its claims are genuine: log the sign-out and
+    // stop the API accepting this session's access token for the rest of its life.
+    const payload = jwt.decode(token) as Record<string, any> | null;
+    const session = sessionClaims(payload);
+    if (session.sessionId) await markSessionsRevoked([session.sessionId]);
+    if (typeof payload?.sub === 'string') {
+        await AccountEvents.record(payload.sub, 'sign_out', { ip: req.ip ?? null, userAgent: req.get?.('user-agent') ?? null, sessionId: session.sessionId });
     }
 
     return ok(res, { message: 'Signed out successfully' });

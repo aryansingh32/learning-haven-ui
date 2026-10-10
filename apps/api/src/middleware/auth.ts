@@ -5,10 +5,32 @@ import jwt from 'jsonwebtoken';
 import { verifySupabaseAccessToken } from '../utils/supabaseJwt';
 import { requestContext } from './requestTracer';
 import { unauthorized, forbidden, serverError } from '../utils/api-response';
+import { sessionClaims } from '../modules/auth/services/accountHelpers';
+import { firstSighting, isSessionRevoked } from '../modules/auth/services/sessionGuard';
+import { AccountEvents } from '../modules/auth/services/account.service';
 
 export interface AuthRequest extends Request {
   user?: any;
 }
+
+/**
+ * Session bookkeeping for a verified token: refuses tokens of sessions signed
+ * out from the Account page (their access token would otherwise live until it
+ * expires), exposes the Supabase session id as req.user.session_id, and records
+ * the session's sign-in (device + IP of this browser) the first time it's seen.
+ * Returns false when the session was revoked.
+ */
+async function trackSession(req: AuthRequest, userId: string, claims: Record<string, any> | null | undefined): Promise<boolean> {
+  const session = sessionClaims(claims);
+  if (await isSessionRevoked(session.sessionId)) return false;
+  req.user.session_id = session.sessionId;
+  if (session.sessionId && firstSighting(session.sessionId)) {
+    void AccountEvents.recordSignIn(userId, session, { ip: req.ip ?? null, userAgent: req.get?.('user-agent') ?? null });
+  }
+  return true;
+}
+
+const REVOKED = 'Invalid token: this session was signed out';
 
 export const authenticateUser = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
@@ -25,6 +47,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
     const localVerified = verifySupabaseAccessToken(token);
     if (localVerified) {
       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
+      if (!(await trackSession(req, localVerified.id, localVerified.claims))) return unauthorized(res, REVOKED);
       logger.debug('Authenticated via local Supabase JWT verification');
       const ctx = requestContext.getStore();
       if (ctx) ctx.userId = localVerified.id;
@@ -38,6 +61,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
         const decoded = jwt.verify(token, secret) as { sub?: string; email?: string; role?: string };
         if (decoded?.sub) {
           req.user = { id: decoded.sub, email: decoded.email, role: decoded.role };
+          if (!(await trackSession(req, decoded.sub, decoded as Record<string, any>))) return unauthorized(res, REVOKED);
           logger.debug('Using local JWT fallback for auth');
           const ctx = requestContext.getStore();
           if (ctx) ctx.userId = decoded.sub;
@@ -74,6 +98,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
 
     if (!remoteError && user) {
       req.user = user;
+      if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) return unauthorized(res, REVOKED);
       const ctx = requestContext.getStore();
       if (ctx) ctx.userId = (user as any).id;
       return next();
@@ -107,6 +132,10 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
     const localVerified = verifySupabaseAccessToken(token);
     if (localVerified) {
       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
+      if (!(await trackSession(req, localVerified.id, localVerified.claims))) {
+        req.user = undefined;
+        return next();
+      }
       const ctx = requestContext.getStore();
       if (ctx) ctx.userId = localVerified.id;
       return next();
@@ -128,6 +157,10 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
 
       if (user && !result.error) {
         req.user = user;
+        if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) {
+          req.user = undefined;
+          return next();
+        }
         const ctx = requestContext.getStore();
         if (ctx) ctx.userId = (user as any).id;
       }

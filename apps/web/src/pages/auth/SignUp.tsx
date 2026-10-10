@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { getAccessToken } from "@/lib/authSession";
 
 export default function SignUp() {
   const { register } = useAuth();
@@ -33,6 +34,12 @@ export default function SignUp() {
     setLoading(true);
     try {
       await register({ email, password, full_name: fullName, referral_code: referralCode || undefined });
+      if (!getAccessToken()) {
+        // Email confirmation is on: there's no session until the link is opened.
+        toast.success("Account created! Check your inbox to confirm your email.");
+        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+        return;
+      }
       toast.success("Account created!");
       navigate("/onboarding");
     } catch (error: any) {

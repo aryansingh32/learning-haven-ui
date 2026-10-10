@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
 import { CertificatesController } from '../controllers/certificates.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
@@ -17,6 +18,7 @@ const router = Router();
 router.post(
     '/generate',
     authenticateUser,
+    requireVerifiedEmail,
     requireEntitlement('certificates_access'),
     writeRateLimit,
     requireIdempotencyKey,

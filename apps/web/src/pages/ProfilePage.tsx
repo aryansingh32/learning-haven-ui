@@ -7,12 +7,16 @@ import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { useRoadmap } from '@/context/RoadmapContext';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { SkillsProfileCard } from '@/features/account/SkillsProfileCard';
+import { accountApi, portfolioUrl } from '@/features/account/account.service';
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [copiedProfile, setCopiedProfile] = useState(false);
+  const { data: portfolio } = useQuery({ queryKey: ['portfolio-editor'], queryFn: accountApi.portfolio, retry: false });
 
   // Keep ALL existing API calls
   const { data: profileStats, isLoading } = useApiQuery<any>(
@@ -90,32 +94,53 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* Share profile */}
-        <div className="mt-4 flex items-center gap-2">
+        {/* Share profile: the opt-in public portfolio (W2-A1) */}
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          {portfolio?.portfolio?.is_public ? (
+            <>
+              <button
+                onClick={async () => {
+                  const profileUrl = portfolioUrl(portfolio.portfolio!.handle);
+                  try {
+                    await navigator.clipboard.writeText(profileUrl);
+                    setCopiedProfile(true);
+                    setTimeout(() => setCopiedProfile(false), 2000);
+                  } catch {
+                    window.prompt('Copy your portfolio link:', profileUrl);
+                  }
+                }}
+                className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+              >
+                {copiedProfile ? <Check className="w-3 h-3 text-green-500" /> : <Share2 className="w-3 h-3" />}
+                {copiedProfile ? 'Link Copied!' : 'Copy portfolio link'}
+              </button>
+              <a
+                href={`/u/${portfolio.portfolio.handle}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+              >
+                <ExternalLink className="w-3 h-3" /> View public portfolio
+              </a>
+            </>
+          ) : (
+            <button
+              onClick={() => navigate('/settings/portfolio')}
+              className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+            >
+              <Share2 className="w-3 h-3" /> Set up a public portfolio
+            </button>
+          )}
           <button
-            onClick={async () => {
-              const profileUrl = `${window.location.origin}/profile/${user?.id}`;
-              try {
-                await navigator.clipboard.writeText(profileUrl);
-                setCopiedProfile(true);
-                setTimeout(() => setCopiedProfile(false), 2000);
-              } catch {
-                window.prompt('Copy your profile link:', profileUrl);
-              }
-            }}
-            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+            onClick={() => navigate('/settings/portfolio')}
+            className="text-xs px-3 py-1.5 rounded-lg text-muted-foreground font-bold hover:text-foreground transition-colors"
           >
-            {copiedProfile ? <Check className="w-3 h-3 text-green-500" /> : <Share2 className="w-3 h-3" />}
-            {copiedProfile ? 'Link Copied!' : 'Share Profile'}
-          </button>
-          <button
-            onClick={() => window.open(`${window.location.origin}/profile/${user?.id}`, '_blank')}
-            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
-          >
-            <ExternalLink className="w-3 h-3" /> Public Profile
+            {portfolio?.portfolio?.is_public ? 'Edit portfolio' : 'Private — only you see this page'}
           </button>
         </div>
       </motion.div>
+
+      <SkillsProfileCard />
 
       {/* Stats Grid */}
       {xp === 0 && totalSolved === 0 ? (
