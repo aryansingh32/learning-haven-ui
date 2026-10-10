@@ -64,8 +64,9 @@ export class ProblemsService {
         // Generate cache key
         const cacheKey = `problems:${JSON.stringify(params)}`;
 
-        // Try cache first
-        const cached = await CacheService.get(cacheKey);
+        // Try cache first. A college's own list isn't cached: it is small, and its staff
+        // publish and remove problems from the Campus API, which can't clear this cache.
+        const cached = college_id ? null : await CacheService.get(cacheKey);
         if (cached) {
             logger.info('Cache hit for problems list');
             return cached;
@@ -144,7 +145,7 @@ export class ProblemsService {
             };
 
             // Cache for 5 minutes
-            await CacheService.set(cacheKey, result, 300);
+            if (!college_id) await CacheService.set(cacheKey, result, 300);
 
             return result;
         } catch (error) {
@@ -270,7 +271,8 @@ export class ProblemsService {
             };
 
             // Cache for 10 minutes
-            await CacheService.set(cacheKey, problem, 600);
+            // College problems are edited and removed from the Campus API, which can't clear this cache.
+            if (problem.owner_org_id === FORGE_ORG) await CacheService.set(cacheKey, problem, 600);
 
             return problem;
         } catch (error) {

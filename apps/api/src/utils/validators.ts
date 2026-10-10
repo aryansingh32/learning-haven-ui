@@ -10,6 +10,8 @@ export const getProblemsSchema = z.object({
         search: z.string().max(200).optional(),
         company: z.string().max(100).optional(),
         is_premium: z.string().transform(val => val === 'true').optional(),
+        // A college's own problems (the service checks the learner belongs to it).
+        college: z.string().uuid().optional(),
     }),
 });
 
