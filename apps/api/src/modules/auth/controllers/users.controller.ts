@@ -3,6 +3,7 @@ import { AuthRequest } from '../../../middleware/auth';
 import { UsersService } from '../services/users.service';
 import logger from '../../../config/logger';
 import { InsightsService } from '../services/insights.service';
+import { ReadinessService } from '../services/readiness.service';
 
 export class UsersController {
     /**
@@ -87,6 +88,16 @@ export class UsersController {
     /**
      * GET /api/users/me/insights
      */
+    /** GET /api/users/me/readiness — placement readiness computed on the server, with its parts and trend. */
+    static async getReadiness(req: Request, res: Response) {
+        try {
+            res.json(await ReadinessService.get((req as AuthRequest).user!.id));
+        } catch (error) {
+            logger.error('Get readiness error:', error);
+            res.status(500).json({ error: 'Failed to work out your readiness' });
+        }
+    }
+
     static async getInsights(req: Request, res: Response) {
         try {
             res.json(await InsightsService.get((req as AuthRequest).user!.id));

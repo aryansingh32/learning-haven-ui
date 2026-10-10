@@ -1,3 +1,4 @@
+import { ReadinessService, scoreReadiness } from './readiness.service';
 import { pool } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import { ChaptersService } from '../../learning/services/chapters.service';
@@ -192,26 +193,15 @@ export class GamificationService {
         };
     }
 
+    /** The mission card's career numbers, from the same readiness score the dashboard shows. */
     static async getCareerSnapshot(userId: string) {
-        const stats = await pool.query(
-            `SELECT COUNT(*) FILTER (WHERE ups.status = 'solved') AS solved
-             FROM public.user_problem_status ups WHERE ups.user_id = $1`,
-            [userId]
-        );
-        const projects = await pool.query(
-            `SELECT COUNT(*) AS count FROM public.build_enrollments WHERE user_id = $1`,
-            [userId]
-        ).catch(() => ({ rows: [{ count: 0 }] }));
-
-        const solved = Number(stats.rows[0]?.solved || 0);
-        const projectsBuilt = Number(projects.rows[0]?.count || 0);
-        const interviewReadiness = Math.min(100, Math.round(solved * 2 + projectsBuilt * 10));
-
+        const inputs = await ReadinessService.inputs(userId);
+        const { score } = scoreReadiness(inputs);
         return {
-            skillsLearned: solved,
-            projectsBuilt,
-            interviewReadiness,
-            salaryBand: interviewReadiness >= 50 ? '₹6–12 LPA' : interviewReadiness >= 25 ? '₹4–8 LPA' : '₹3–6 LPA',
+            skillsLearned: inputs.solved.easy + inputs.solved.medium + inputs.solved.hard,
+            projectsBuilt: inputs.projects.completed,
+            interviewReadiness: score,
+            salaryBand: score >= 50 ? '₹6–12 LPA' : score >= 25 ? '₹4–8 LPA' : '₹3–6 LPA',
         };
     }
 

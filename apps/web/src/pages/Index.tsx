@@ -24,6 +24,7 @@ import { CollegeTestsWidget } from '@/features/campus/CollegeTestsWidget';
 import { GoalsAndStudy } from '@/features/dashboard/GoalsAndStudy';
 import { AssessmentPerformance } from '@/features/dashboard/AssessmentPerformance';
 import { ActivityFeed } from '@/features/dashboard/ActivityFeed';
+import { ReadinessCard } from '@/features/dashboard/ReadinessCard';
 import { AchievementsWidget } from '@/features/achievements/AchievementsWidget';
 
 // ─── Activity Calendar (GitHub-style, real data) ───────────────────────────
@@ -562,7 +563,7 @@ const Index = () => {
           </motion.div>
 
           {/* Career Readiness */}
-          <CareerReadinessWidget />
+          <ReadinessCard compact />
 
           {/* Knowledge Graph */}
           <KnowledgeGraphWidget />
@@ -613,66 +614,6 @@ const Index = () => {
 };
 
 export default Index;
-
-// ─── Career Readiness Widget ─────────────────────────────────────────────────
-function CareerReadinessWidget() {
-  const { careerReadiness, isLoading } = useRoadmap();
-  if (isLoading || !careerReadiness) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.35 }}
-      className="rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/5 via-indigo-500/5 to-transparent p-5"
-    >
-      <h3 className="text-sm font-display font-bold text-foreground mb-3 flex items-center gap-2">
-        <Briefcase className="w-4 h-4 text-purple-500" />
-        Career Readiness
-      </h3>
-      <div className="flex items-center gap-3 mb-3">
-        <div className="text-3xl font-display font-bold text-foreground">
-          {careerReadiness.readinessPercent}%
-        </div>
-        <div className="flex-1">
-          <p className="text-xs font-semibold text-foreground">{careerReadiness.targetRole}</p>
-          <div className="flex items-center gap-1 mt-0.5">
-            <TrendingUp className="w-3 h-3 text-reward" />
-            <span className="text-[10px] font-bold text-reward">{careerReadiness.salaryBand}</span>
-          </div>
-        </div>
-      </div>
-      <div className="h-2 bg-secondary rounded-full overflow-hidden mb-3">
-        <motion.div
-          className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${careerReadiness.readinessPercent}%` }}
-          transition={{ duration: 0.8 }}
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-2 text-xs">
-        <div className="rounded-lg bg-secondary/30 p-2 text-center">
-          <p className="font-bold text-foreground">{careerReadiness.skillsLearned}</p>
-          <p className="text-[10px] text-muted-foreground">Skills Learned</p>
-        </div>
-        <div className="rounded-lg bg-secondary/30 p-2 text-center">
-          <p className="font-bold text-foreground">{careerReadiness.projectsBuilt}</p>
-          <p className="text-[10px] text-muted-foreground">Projects Built</p>
-        </div>
-      </div>
-      {careerReadiness.skillsMissing.length > 0 && (
-        <div className="mt-3">
-          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5">Missing Skills</p>
-          <div className="flex flex-wrap gap-1">
-            {careerReadiness.skillsMissing.slice(0, 4).map(s => (
-              <span key={s} className="text-[9px] px-2 py-0.5 rounded-full bg-destructive/10 text-destructive font-semibold">{s}</span>
-            ))}
-          </div>
-        </div>
-      )}
-    </motion.div>
-  );
-}
 
 // ─── Knowledge Graph Widget ──────────────────────────────────────────────────
 function KnowledgeGraphWidget() {

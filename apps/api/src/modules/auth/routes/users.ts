@@ -63,6 +63,13 @@ router.get('/me/progress', authenticateUser, UsersController.getProgress);
 router.get('/me/insights', authenticateUser, UsersController.getInsights);
 
 /**
+ * @route   GET /api/users/me/readiness
+ * @desc    Placement readiness (0–100): practice, tests, courses, projects, profile, consistency; next steps; 12-week trend
+ * @access  Private
+ */
+router.get('/me/readiness', authenticateUser, UsersController.getReadiness);
+
+/**
  * @route   PUT /api/users/me/goals
  * @desc    Set daily study minutes, weekly problems and the learning goal
  * @access  Private

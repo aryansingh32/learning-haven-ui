@@ -1,3 +1,4 @@
+import { ReadinessCard } from '@/features/dashboard/ReadinessCard';
 import { motion } from 'framer-motion';
 import { Award, Flame, Zap, Target, BookOpen, Code, Calendar, Share2, ExternalLink, Star, Trophy, Briefcase, TrendingUp, Brain, AlertTriangle, Check } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -262,7 +263,7 @@ const ProfilePage = () => {
       </motion.div>
 
       {/* Career Readiness */}
-      <ProfileCareerWidget />
+      <ReadinessCard />
 
       {/* Knowledge Map */}
       <ProfileKnowledgeWidget />
@@ -319,92 +320,6 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
-// ─── Profile Career Readiness Widget ─────────────────────────────────────────
-function ProfileCareerWidget() {
-  const { careerReadiness, momentum, isLoading } = useRoadmap();
-  if (isLoading || !careerReadiness) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.25 }}
-      className="rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/5 via-indigo-500/5 to-transparent p-5"
-    >
-      <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
-        <Briefcase className="w-4 h-4 text-purple-500" />
-        Career Readiness
-      </h3>
-
-      <div className="flex items-center gap-4 mb-4">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/10 flex flex-col items-center justify-center">
-          <span className="text-2xl font-display font-bold text-foreground">{careerReadiness.readinessPercent}%</span>
-          <span className="text-[9px] text-muted-foreground font-medium">Ready</span>
-        </div>
-        <div className="flex-1 space-y-2">
-          <div>
-            <p className="text-xs font-semibold text-foreground">{careerReadiness.targetRole}</p>
-            <div className="flex items-center gap-1">
-              <TrendingUp className="w-3 h-3 text-reward" />
-              <span className="text-[10px] font-bold text-reward">{careerReadiness.salaryBand}</span>
-            </div>
-          </div>
-          <div className="h-2 bg-secondary rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${careerReadiness.readinessPercent}%` }}
-              transition={{ duration: 0.8 }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-2 text-xs">
-        <div className="rounded-xl bg-secondary/30 p-3 text-center">
-          <p className="font-bold text-foreground">{careerReadiness.skillsLearned}</p>
-          <p className="text-[10px] text-muted-foreground">Skills</p>
-        </div>
-        <div className="rounded-xl bg-secondary/30 p-3 text-center">
-          <p className="font-bold text-foreground">{careerReadiness.projectsBuilt}</p>
-          <p className="text-[10px] text-muted-foreground">Projects</p>
-        </div>
-        <div className="rounded-xl bg-secondary/30 p-3 text-center">
-          <p className="font-bold text-foreground">{careerReadiness.interviewReadiness}%</p>
-          <p className="text-[10px] text-muted-foreground">Interviews</p>
-        </div>
-      </div>
-
-      {careerReadiness.skillsMissing.length > 0 && (
-        <div className="mt-4 rounded-xl border border-orange-500/15 bg-orange-500/5 p-3">
-          <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2 flex items-center gap-1">
-            <AlertTriangle className="w-3 h-3" /> Skills to Develop
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {careerReadiness.skillsMissing.map(s => (
-              <span key={s} className="text-[10px] px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">{s}</span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {momentum && momentum.churnRisk !== 'low' && (
-        <div className={cn(
-          'mt-3 rounded-xl p-3 text-[11px] font-medium',
-          momentum.churnRisk === 'high'
-            ? 'bg-destructive/10 text-destructive border border-destructive/20'
-            : 'bg-orange-500/10 text-orange-500 border border-orange-500/20',
-        )}>
-          {momentum.churnRisk === 'high'
-            ? `⚠️ ${momentum.daysInactive} days inactive — your career readiness growth has stalled`
-            : '💡 Stay consistent! Practice daily to accelerate your career readiness.'
-          }
-        </div>
-      )}
-    </motion.div>
-  );
-}
 
 // ─── Profile Knowledge Map Widget ────────────────────────────────────────────
 function ProfileKnowledgeWidget() {
