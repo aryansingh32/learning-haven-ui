@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom';
-import { BarChart3, BookOpenCheck, Briefcase, ClipboardList, GraduationCap, History, LayoutDashboard, LogOut, Menu, Settings, Users, UsersRound, X } from 'lucide-react';
+import { BarChart3, BookOpenCheck, Briefcase, ClipboardList, GraduationCap, History, LayoutDashboard, LogOut, Menu, Settings, Users, UsersRound, X, Library } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { Permission } from '@/api/types';
 import { ROLE_LABEL } from '@/api/types';
@@ -14,6 +14,7 @@ const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permissi
   { to: 'insights', label: 'Insights', icon: BarChart3, needs: 'reports.view' },
   { to: 'placements', label: 'Placements', icon: Briefcase, needs: ['placements.manage', 'reports.view'] },
   { to: 'courses', label: 'Courses', icon: GraduationCap, needs: ['assessments.create', 'reports.view'] },
+  { to: 'content', label: 'Content', icon: Library, needs: 'content.create' },
   { to: 'tests', label: 'Tests', icon: BookOpenCheck, needs: 'content.create' },
   { to: 'batches', label: 'Batches', icon: UsersRound, needs: 'members.view' },
   { to: 'people', label: 'People', icon: Users, needs: 'members.view' },

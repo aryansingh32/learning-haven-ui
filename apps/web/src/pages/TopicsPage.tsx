@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRoadmap } from "@/context/RoadmapContext";
+import { FromYourCollegeProblems } from "@/components/college/FromYourCollege";
 import { useQuery } from "@tanstack/react-query";
 import { DailyProblemCard } from "@/features/practice/DailyProblemCard";
 import { ProblemFinder } from "@/features/practice/ProblemFinder";
@@ -97,6 +98,7 @@ const TopicsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         <div className="lg:col-span-3 space-y-4">
           {/* Sticky Filter Bar */}
+          <FromYourCollegeProblems search={debounced} difficulty={filter} />
           <div className="sticky top-0 z-20 card-glass rounded-2xl p-3 -mx-1 px-4">
             <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
               <div className="flex items-center gap-1.5 font-sans">

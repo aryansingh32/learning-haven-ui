@@ -1,15 +1,18 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { MarkdownContent } from '@/features/build-haven/components/MarkdownContent';
 import { motion } from 'framer-motion';
 import {
   GraduationCap, ClipboardCheck, CalendarClock, CheckCircle2, Target, Clock, ShieldCheck,
-  ArrowRight, RotateCw, Hourglass, Trophy, Mail, Loader2, AlertTriangle, Users, CircleSlash,
+  ArrowRight, RotateCw, Hourglass, Trophy, Mail, Loader2, AlertTriangle, Users, CircleSlash, BookMarked, FileText, ExternalLink
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { useCampusMe, useMyAssignments } from '@/hooks/useCampus';
 import type { CampusMembership, MyAssignment } from '@/services/campus.service';
+import { fetchMyMaterials } from '@/services/campus.service';
 import {
   assignmentStatus, formatWhen, sortTodo, timeUntil, type AssignmentBucket, type AssignmentStatus,
 } from '@/features/campus/assignmentStatus';
@@ -343,6 +346,44 @@ export default function MyCollegePage() {
       </section>
 
       <CollegeCoursesSection />
+
+      <StudyMaterialsSection />
     </div>
+  );
+}
+
+
+/** Study material the college published: notes open in place, links and files open in a new tab. */
+function StudyMaterialsSection() {
+  const q = useQuery({ queryKey: ['campus-materials'], queryFn: fetchMyMaterials, staleTime: 60_000 });
+  const [open, setOpen] = useState<string | null>(null);
+  if (!q.data?.length) return null;
+  return (
+    <section className="card-glass rounded-2xl p-5 sm:p-6 border border-border/40" aria-labelledby="materials-h">
+      <h2 id="materials-h" className="text-xl font-display font-extrabold text-foreground flex items-center gap-2 mb-4">
+        <BookMarked className="w-5 h-5 text-primary" /> Study material
+      </h2>
+      <ul className="divide-y divide-border/40">
+        {q.data.map((m) => (
+          <li key={m.id} className="py-3">
+            {m.kind === 'note' ? (
+              <button className="w-full text-left" aria-expanded={open === m.id} onClick={() => setOpen(open === m.id ? null : m.id)}>
+                <span className="flex items-center gap-2 font-semibold text-foreground"><FileText className="h-4 w-4 text-muted-foreground" />{m.title}</span>
+              </button>
+            ) : (
+              <a href={m.url ?? '#'} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-semibold text-foreground hover:underline">
+                <ExternalLink className="h-4 w-4 text-muted-foreground" />{m.title}
+              </a>
+            )}
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {m.batchName ? `For ${m.batchName}` : 'For the whole college'}{m.tags.length ? ` · ${m.tags.join(', ')}` : ''}
+            </p>
+            {m.kind === 'note' && open === m.id && m.body && (
+              <div className="mt-3 rounded-xl border border-border/40 bg-background/60 p-4"><MarkdownContent content={m.body} /></div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

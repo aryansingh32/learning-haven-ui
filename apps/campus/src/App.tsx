@@ -24,6 +24,9 @@ const StudentReport = lazy(() => import('@/pages/StudentReport'));
 const Courses = lazy(() => import('@/pages/Courses'));
 const CourseProgress = lazy(() => import('@/pages/CourseProgress'));
 const Settings = lazy(() => import('@/pages/Settings'));
+const Content = lazy(() => import('@/pages/content/Content'));
+const CourseEditor = lazy(() => import('@/pages/content/CourseEditor'));
+const ProblemEditor = lazy(() => import('@/pages/content/ProblemEditor'));
 
 function Home() {
   const { staffOrgs, me, signOut } = useCampus();
@@ -93,6 +96,9 @@ export default function App() {
             <Route path="insights/students/:studentId" element={<StudentReport />} />
             <Route path="courses" element={<Courses />} />
             <Route path="courses/:assignmentId" element={<CourseProgress />} />
+            <Route path="content" element={<Content />} />
+            <Route path="content/courses/:courseId" element={<CourseEditor />} />
+            <Route path="content/problems/:problemId" element={<ProblemEditor />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

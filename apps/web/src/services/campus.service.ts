@@ -242,6 +242,13 @@ export interface MyDrive {
 /** Also attaches any roster entries the college pre-registered for this email. */
 export const fetchCampusMe = (): Promise<CampusMe> => client.get('/me');
 
+/** Notes, links and files the learner's colleges published to them (their college, their batch). */
+export interface StudyMaterial {
+  id: string; orgId: string; college: string | null; title: string; kind: 'note' | 'link' | 'file';
+  body: string | null; url: string | null; tags: string[]; batchName: string | null; updatedAt: string;
+}
+export const fetchMyMaterials = (): Promise<StudyMaterial[]> => client.get('/my/materials');
+
 export const fetchMyAssignments = (): Promise<MyAssignment[]> => client.get('/my/assignments');
 
 export const fetchNotifications = (): Promise<{ unread: number; rows: AppNotification[] }> => client.get('/me/notifications');

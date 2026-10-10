@@ -11,6 +11,7 @@ import { AlertTriangle, ArrowRight, BookOpen, Compass, GraduationCap, Layers, Sp
 import { HeroCarousel } from '@/components/catalog/HeroCarousel';
 import { PartnerMarquee } from '@/components/catalog/PartnerMarquee';
 import { YourPathSection } from '@/components/catalog/YourPathSection';
+import { FromYourCollegeCourses } from '@/components/college/FromYourCollege';
 import { CatalogSearch } from '@/components/catalog/CatalogSearch';
 import { PremiumCourseCard } from '@/components/catalog/PremiumCourseCard';
 import { TrendingLists } from '@/components/catalog/TrendingLists';
@@ -266,6 +267,9 @@ export default function CoursesCatalogPage() {
         ) : (
           <YourPathSection />
         )}
+
+        {/* Courses the learner's college made for its own students (nothing for other learners). */}
+        <FromYourCollegeCourses />
 
         {/* Search + filters */}
         <section className="space-y-4">

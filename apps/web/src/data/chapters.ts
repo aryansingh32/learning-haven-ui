@@ -178,6 +178,11 @@ export async function fetchPhases() {
   return api.get('/courses');
 }
 
+/** One course by id, including ones not in the catalogue (e.g. a college's own) when the learner may see it. */
+export async function fetchCourse(courseId: string): Promise<any> {
+  return api.get(`/courses/${courseId}`);
+}
+
 export type CourseChaptersResponse = {
   chapters: unknown[];
   prerequisites?: CoursePrerequisite[];

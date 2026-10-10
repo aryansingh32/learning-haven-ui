@@ -1,3 +1,4 @@
+import { FromYourCollegeSeries } from '@/components/college/FromYourCollege';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, Clock, Lock, ArrowRight } from 'lucide-react';
@@ -25,6 +26,8 @@ export default function TestSeriesCatalogPage() {
           instantly, or unlock a series.
         </p>
       </div>
+
+      <FromYourCollegeSeries />
 
       {isLoading ? (
         <div className="flex justify-center py-24"><Loader2 className="h-6 w-6 animate-spin" /></div>

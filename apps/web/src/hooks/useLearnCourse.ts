@@ -1,6 +1,6 @@
 import { useEffect, useId } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchPhases, fetchPhaseChapters, type CourseChaptersResponse } from '@/data/chapters';
+import { fetchCourse, fetchPhases, fetchPhaseChapters, type CourseChaptersResponse } from '@/data/chapters';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 
@@ -41,9 +41,20 @@ export function useLearnCourse(courseId?: string) {
     staleTime: 60_000,
   });
 
-  const activeCourse = courseId 
+  const listedCourse = courseId
     ? phasesQuery.data?.find((p: any) => p.id === courseId)
     : phasesQuery.data?.[0];
+
+  // Courses outside the public catalogue (a college's own courses) are loaded on their
+  // own; the server only returns them to the people they're meant for.
+  const unlistedQuery = useQuery({
+    queryKey: ['learn-course', courseId],
+    queryFn: () => fetchCourse(courseId!),
+    enabled: Boolean(courseId) && phasesQuery.isSuccess && !listedCourse,
+    staleTime: 60_000,
+    retry: false,
+  });
+  const activeCourse = listedCourse ?? unlistedQuery.data;
 
   const chaptersQuery = useQuery({
     queryKey: ['learn-chapters', activeCourse?.id],
@@ -101,7 +112,7 @@ export function useLearnCourse(courseId?: string) {
   return {
     course: activeCourse,
     chapters,
-    isLoading: phasesQuery.isLoading || chaptersQuery.isLoading,
+    isLoading: phasesQuery.isLoading || unlistedQuery.isLoading || chaptersQuery.isLoading,
     completedCount,
     progressPercent,
     activeChapter,
