@@ -20,7 +20,7 @@ export const checkBadges = async (userId: string) => {
 
         const { data: user, error: userErr } = await supabase
             .from('users')
-            .select('streak_count')
+            .select('streak')
             .eq('id', userId)
             .single();
 
@@ -51,7 +51,7 @@ export const checkBadges = async (userId: string) => {
             });
         }
 
-        if (user.streak_count >= 7) {
+        if (user.streak >= 7) {
             badgesToAward.push({
                 user_id: userId,
                 badge_id: 'week_streak',

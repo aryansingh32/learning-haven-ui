@@ -37,10 +37,6 @@ const difficultyStyles: Record<string, string> = {
   hard: 'bg-destructive/15 text-destructive',
 };
 
-const PRICING = {
-  monthlyDisplay: '583'
-};
-
 function youtubeIdFromUrl(url?: string): string {
   if (!url) return '';
   const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -69,6 +65,16 @@ export default function LearnChapterPage() {
   } | null>(null);
   const [cinemaMode, setCinemaMode] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
+
+  // Live pricing — never hardcode prices, they must match what checkout actually charges.
+  const { data: plansData } = useQuery({
+    queryKey: ['learn-chapter-plans'],
+    queryFn: () => api.get('/plans'),
+    staleTime: 10 * 60 * 1000,
+  });
+  const activePlans = Array.isArray(plansData) ? plansData : ((plansData as any)?.data || []);
+  const proPlan = activePlans.find((p: any) => p.slug === 'pro') || activePlans.find((p: any) => p.is_highlighted) || activePlans[0];
+  const monthlyPriceDisplay = proPlan?.price_monthly ? Math.round(proPlan.price_monthly / 100).toLocaleString('en-IN') : null;
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chapter', chapterId],
@@ -116,10 +122,9 @@ export default function LearnChapterPage() {
       setShowCelebration(true);
     },
     onError: (err: unknown) => {
-      const message =
-        err && typeof err === 'object' && 'response' in err
-          ? (err as { response?: { data?: { error?: string } } }).response?.data?.error
-          : undefined;
+      // The API interceptor rejects with a plain Error carrying the server's
+      // message, so read `.message` rather than an axios-shaped `.response`.
+      const message = err instanceof Error ? err.message : undefined;
       toast.error(message || 'Could not unlock chapter. Try again.');
     },
   });
@@ -286,7 +291,7 @@ export default function LearnChapterPage() {
           </ChapterCta>
           {isPaywall && (
             <ChapterCta variant="primary" onClick={() => navigate('/pricing')}>
-              Upgrade to Pro — ₹{PRICING.monthlyDisplay}/mo
+              Upgrade to Pro{monthlyPriceDisplay ? ` — ₹${monthlyPriceDisplay}/mo` : ''}
             </ChapterCta>
           )}
         </div>
@@ -674,10 +679,13 @@ export default function LearnChapterPage() {
         streakDay={celebrationPayload?.streak ?? data?.user?.streak_day ?? 1}
         userName={userName}
         linkedInText={celebrationMeta?.linkedin_text}
+        // Only pass a next action when a next chapter actually exists —
+        // otherwise the overlay offered "Continue to next chapter" on the last
+        // chapter of a course and quietly went back to the chapter list.
         onNext={
           celebrationPayload?.nextChapterId
             ? () => navigate(`/chapter/${celebrationPayload.nextChapterId}`)
-            : () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses')
+            : undefined
         }
       />
 

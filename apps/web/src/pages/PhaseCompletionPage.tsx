@@ -2,7 +2,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Trophy, ArrowRight, Share2, Clock, Zap, CheckCircle2, Target } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPhases } from '@/data/chapters';
+import { toast } from 'sonner';
+import { fetchPhases, fetchPhaseChapters } from '@/data/chapters';
 import { useAuth } from '@/context/AuthContext';
 
 export default function PhaseCompletionPage() {
@@ -26,10 +27,19 @@ export default function PhaseCompletionPage() {
   const userName = (user as any)?.full_name?.split(' ')[0] || 'Champion';
   const totalMinutes = (phase?.course_items || []).reduce((sum: number, m: any) => sum + (m.est_minutes || 15), 0);
   const missionsTotal = phase?.item_count || 0;
-  const problemsSolved = 0; // TODO: fetch from progress
   const celebrationMeta = phase?.celebration;
 
-  const shareText = `🎉 I just completed "${phase?.title || 'a course'}" on DSA OS!\n\n${missionsTotal} chapters, ${problemsSolved}+ problems solved.\n\nThis structured approach is actually working. If you're from a Tier 3/4 college and want to crack placements, check it out.\n\n#DSA #CodingJourney #Placements`;
+  // Real per-user progress for this phase — sum of completed learning steps
+  // across its chapters (previously this was a hardcoded 0).
+  const { data: phaseChapters } = useQuery({
+    queryKey: ['learn-chapters', phase?.id],
+    queryFn: () => fetchPhaseChapters(phase.id),
+    enabled: Boolean(phase?.id),
+  });
+  const chapterList = (phaseChapters as any)?.chapters || [];
+  const stepsCompleted = chapterList.reduce((sum: number, ch: any) => sum + (ch.completed_steps || 0), 0);
+
+  const shareText = `🎉 I just completed "${phase?.title || 'a course'}" on DSA OS!\n\n${missionsTotal} chapters, ${stepsCompleted}+ steps completed.\n\nThis structured approach is actually working. If you're from a Tier 3/4 college and want to crack placements, check it out.\n\n#DSA #CodingJourney #Placements`;
 
   if (!phase) return null;
 
@@ -61,7 +71,7 @@ export default function PhaseCompletionPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { icon: CheckCircle2, label: 'Chapters', value: `${missionsTotal}` },
-          { icon: Target, label: 'Problems Solved', value: `${problemsSolved}+` },
+          { icon: Target, label: 'Steps Completed', value: `${stepsCompleted}+` },
           { icon: Zap, label: 'XP Earned', value: `${celebrationMeta?.xp ?? (missionsTotal * 100)}` },
           { icon: Clock, label: 'Time Spent', value: `~${Math.round(totalMinutes / 60)}h` },
         ].map((stat, i) => (
@@ -93,12 +103,41 @@ export default function PhaseCompletionPage() {
         <div className="bg-secondary/50 rounded-xl p-4 border border-border/50 mb-4">
           <p className="text-xs text-foreground whitespace-pre-line">{shareText}</p>
         </div>
-        <button
-          onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank')}
-          className="w-full sm:w-auto px-6 py-3 bg-[#0077B5] text-white rounded-xl font-bold text-sm hover:bg-[#006699] transition-colors"
-        >
-          Share on LinkedIn
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(shareText);
+                toast.success('Caption copied — paste it into your post.');
+              } catch {
+                toast.error('Could not copy caption.');
+              }
+            }}
+            className="w-full sm:w-auto px-6 py-3 border border-border rounded-xl font-bold text-sm hover:bg-secondary transition-colors"
+          >
+            Copy caption
+          </button>
+          <button
+            onClick={async () => {
+              // share-offsite only accepts a URL, so the caption is copied to the
+              // clipboard first — otherwise the text shown above is never posted.
+              try {
+                await navigator.clipboard.writeText(shareText);
+                toast.success('Caption copied — paste it into your LinkedIn post.');
+              } catch {
+                /* clipboard can be blocked; still open the composer */
+              }
+              window.open(
+                `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`,
+                '_blank',
+                'noopener,noreferrer'
+              );
+            }}
+            className="w-full sm:w-auto px-6 py-3 bg-[#0077B5] text-white rounded-xl font-bold text-sm hover:bg-[#006699] transition-colors"
+          >
+            Share on LinkedIn
+          </button>
+        </div>
       </motion.div>
 
       {/* Next Phase CTA */}

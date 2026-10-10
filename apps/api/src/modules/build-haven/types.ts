@@ -254,7 +254,10 @@ export interface GateResult {
 }
 
 export interface VibeVerificationResult {
-  verdict: 'passed' | 'partial' | 'failed';
+  /** 'pending_review' = a github_push submission that passed its existence
+   *  check but has no automated build+test verification yet — see
+   *  BuildHavenService.submitVibeStage. */
+  verdict: 'passed' | 'partial' | 'failed' | 'pending_review';
   gates_passed: number;
   gates_total: number;
   score_pct: number;

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useSiteConfig } from '@/context/SiteConfigContext';
 import { trackPageView } from '@/lib/analytics';
 import { api } from '@/services/api.svc';
+import { useApiQuery } from '@/hooks/useApi';
 
 const painPoints = [
   {
@@ -24,11 +25,6 @@ const painPoints = [
     color: 'text-red-400',
   },
 ];
-
-const PRICING = {
-  monthlyDisplay: '583',
-  yearlyDisplay: '6,999',
-};
 
 const pillars = [
   {
@@ -93,6 +89,13 @@ export default function LandingPage() {
   const { isAuthenticated } = useAuth();
   const config = useSiteConfig();
   const [studentCount, setStudentCount] = useState(847);
+
+  // Live pricing — never hardcode prices, they must match what checkout actually charges.
+  const { data: plansData } = useApiQuery<any[]>(['landing-plans'], '/plans');
+  const activePlans = Array.isArray(plansData) ? plansData : ((plansData as any)?.data || []);
+  const proPlan = activePlans.find((p: any) => p.slug === 'pro') || activePlans.find((p: any) => p.is_highlighted) || activePlans[0];
+  const monthlyPriceDisplay = proPlan?.price_monthly ? Math.round(proPlan.price_monthly / 100).toLocaleString('en-IN') : null;
+  const annualPriceDisplay = proPlan?.price_annual ? Math.round(proPlan.price_annual / 100).toLocaleString('en-IN') : null;
 
   useEffect(() => {
     trackPageView('/');
@@ -387,8 +390,8 @@ export default function LandingPage() {
             >
               <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Most Popular</div>
               <p className="text-sm font-bold text-orange-100 uppercase tracking-widest mb-1">Pro</p>
-              <p className="text-3xl font-extrabold mb-1">₹{PRICING.monthlyDisplay}<span className="text-sm font-medium text-orange-100">/mo</span></p>
-              <p className="text-xs text-orange-100 mb-4">billed annually (₹{PRICING.yearlyDisplay}/year)</p>
+              <p className="text-3xl font-extrabold mb-1">{monthlyPriceDisplay ? `₹${monthlyPriceDisplay}` : '—'}<span className="text-sm font-medium text-orange-100">/mo</span></p>
+              <p className="text-xs text-orange-100 mb-4">{annualPriceDisplay ? `billed annually (₹${annualPriceDisplay}/year)` : 'see pricing page for details'}</p>
               <ul className="space-y-2.5 text-sm text-orange-50 mb-6">
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 shrink-0" /> All courses + all chapters</li>
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 shrink-0" /> Unlimited AI coaching</li>

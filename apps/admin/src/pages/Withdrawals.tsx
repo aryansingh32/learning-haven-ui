@@ -78,7 +78,7 @@ const Withdrawals = () => {
                                                 {expandedId === w.id ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                                             </TableCell>
                                             <TableCell className="font-medium">{w.user?.email ?? w.user_id?.slice(0, 8)}</TableCell>
-                                            <TableCell className="font-semibold">₹{w.amount}</TableCell>
+                                            <TableCell className="font-semibold">₹{Math.round((w.amount || 0) / 100).toLocaleString('en-IN')}</TableCell>
                                             <TableCell><Badge variant="outline">{w.method || 'UPI'}</Badge></TableCell>
                                             <TableCell>
                                                 <Badge variant="outline" className={

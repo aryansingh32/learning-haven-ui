@@ -22,7 +22,7 @@ type Props = {
 
 export function BuildLeaderboardPanel({ language, rows, currentUserId, rankHint }: Props) {
   return (
-    <aside className="flex h-full w-[280px] shrink-0 flex-col border-l border-border/60 bg-card/20">
+    <aside className="hidden h-full w-[280px] shrink-0 flex-col border-l border-border/60 bg-card/20 xl:flex">
       {/* Header */}
       <div className="border-b border-border/60 p-4">
         <div className="flex items-center gap-2">

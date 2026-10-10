@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useApiQuery } from '@/hooks/useApi';
+import { useApiQuery, useApiMutation } from '@/hooks/useApi';
+import { api } from '@/services/api.svc';
 import { Briefcase, Clock, ExternalLink, Bookmark, ChevronRight, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -36,7 +37,27 @@ export const JobsPage = () => {
     const section: JobsSection = searchParams.get('tab') === 'apprenticeships' ? 'apprenticeships' : 'opportunities';
     const [activeTab, setActiveTab] = useState<JobType | 'ALL'>('ALL');
     const [page, setPage] = useState(1);
+    // Bookmarks are synced server-side (public.job_bookmarks) so they survive
+    // refresh and follow the user across devices.
+    const { data: bookmarksResponse } = useApiQuery<any>(
+        ['job-bookmarks'],
+        '/user-jobs/bookmarks'
+    );
     const [savedJobs, setSavedJobs] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        const bookmarks = bookmarksResponse?.data?.bookmarks || bookmarksResponse?.bookmarks;
+        if (Array.isArray(bookmarks)) {
+            setSavedJobs(Object.fromEntries(bookmarks.map((b: any) => [b.id, true])));
+        }
+    }, [bookmarksResponse]);
+
+    const saveMutation = useApiMutation<any, { jobId: string; jobData: any }>(
+        (variables) => api.post('/user-jobs/bookmarks', variables)
+    );
+    const unsaveMutation = useApiMutation<any, string>(
+        (jobId) => api.delete(`/user-jobs/bookmarks/${jobId}`)
+    );
 
     const typeQuery = activeTab === 'ALL' ? '' : `&type=${activeTab}`;
 
@@ -48,18 +69,30 @@ export const JobsPage = () => {
     const jobs = data?.jobs || [];
     const total = data?.total || 0;
 
-    const toggleSave = (id: string, e: React.MouseEvent) => {
+    const toggleSave = (job: JobAlert, e: React.MouseEvent) => {
         e.preventDefault();
-        setSavedJobs(prev => ({ ...prev, [id]: !prev[id] }));
+        const isSaved = !!savedJobs[job.id];
+        setSavedJobs(prev => ({ ...prev, [job.id]: !isSaved }));
+        if (isSaved) {
+            unsaveMutation.mutateAsync(job.id).catch(() => {
+                setSavedJobs(prev => ({ ...prev, [job.id]: true }));
+            });
+        } else {
+            saveMutation.mutateAsync({ jobId: job.id, jobData: job }).catch(() => {
+                setSavedJobs(prev => ({ ...prev, [job.id]: false }));
+            });
+        }
     };
 
+    // Tinted with alpha over the themed surface so these stay legible in dark
+    // mode — the previous fixed -100/-700 pairs rendered light-on-light there.
     const getBadgeColor = (type: JobType) => {
         switch (type) {
-            case 'JOB': return 'bg-blue-100 text-blue-700 border-blue-200';
-            case 'INTERNSHIP': return 'bg-green-100 text-green-700 border-green-200';
-            case 'HACKATHON': return 'bg-purple-100 text-purple-700 border-purple-200';
-            case 'SCHOLARSHIP': return 'bg-amber-100 text-amber-700 border-amber-200';
-            default: return 'bg-gray-100 text-gray-700 border-gray-200';
+            case 'JOB': return 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20';
+            case 'INTERNSHIP': return 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20';
+            case 'HACKATHON': return 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20';
+            case 'SCHOLARSHIP': return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
+            default: return 'bg-secondary text-muted-foreground border-border';
         }
     };
 
@@ -190,7 +223,7 @@ export const JobsPage = () => {
                                                 </div>
                                             </div>
                                             <button
-                                                onClick={(e) => toggleSave(job.id, e)}
+                                                onClick={(e) => toggleSave(job, e)}
                                                 className="p-2 -mr-2 -mt-2 text-muted-foreground hover:text-blue-600 transition-colors rounded-full hover:bg-blue-50"
                                             >
                                                 <Bookmark className="w-5 h-5" fill={savedJobs[job.id] ? "currentColor" : "none"} />

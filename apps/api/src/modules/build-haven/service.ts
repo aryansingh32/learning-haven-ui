@@ -5,7 +5,8 @@ import { supabase, pool } from '../../config/database';
 import logger from '../../config/logger';
 import { GitHubService } from '../github/github.service';
 import { validateBuildLanguageConfig } from './validation';
-import { CreateBuildChallengeInput, CreateBuildStageInput, UpsertLanguageInput, UpdateBuildChallengeInput, UpdateBuildStageInput, VibeVerificationResult } from './types';
+import { CreateBuildChallengeInput, CreateBuildStageInput, UpsertLanguageInput, UpdateBuildChallengeInput, UpdateBuildStageInput, VibeVerificationResult, Journey } from './types';
+import { runVibeVerification, SubmissionUrlError } from './vibeVerifier';
 
 /**
  * Generate a 3-character alphanumeric short ID for stages.
@@ -711,6 +712,17 @@ export class BuildHavenService {
       .single();
     if (!enrollment) return;
 
+    await BuildHavenService.advanceEnrollmentOnStagePass(enrollment);
+  }
+
+  /**
+   * Shared progress-advancement logic for a passed stage — moves current_stage
+   * forward, records completed_stages, updates progress_percentage, and marks
+   * the enrollment 'completed' once every stage has passed. Used by both the
+   * traditional (Docker test) and vibe (Playwright gate) completion paths so
+   * they can never drift out of sync with each other.
+   */
+  private static async advanceEnrollmentOnStagePass(enrollment: { id: string; current_stage: number; completed_stages?: number[]; total_stages: number }) {
     const completed = Array.from(new Set([...(enrollment.completed_stages || []), enrollment.current_stage]));
     const nextStage = enrollment.current_stage + 1;
     const finished = nextStage > enrollment.total_stages;
@@ -977,9 +989,56 @@ export class BuildHavenService {
   }
 
   /**
-   * Submit a vibe-mode stage for Playwright-based gate verification.
-   * For Phase 1 this only supports 'github_push' (paste a public repo URL).
-   * The actual Playwright run is delegated to sandbox.service.ts via BullMQ.
+   * Check that a GitHub repo URL points at a real, public repository.
+   * Uses the unauthenticated GitHub REST API (fine for a single lookup —
+   * subject to GitHub's 60 req/hr per-IP limit for unauthenticated calls).
+   */
+  private static async checkGithubRepoAccessible(rawUrl: string): Promise<{ ok: boolean; reason?: string }> {
+    let owner: string | undefined;
+    let repo: string | undefined;
+    try {
+      const url = new URL(rawUrl);
+      if (url.hostname !== 'github.com' && url.hostname !== 'www.github.com') {
+        return { ok: false, reason: 'Submit a github.com repository URL.' };
+      }
+      const parts = url.pathname.split('/').filter(Boolean);
+      [owner, repo] = parts;
+      repo = repo?.replace(/\.git$/, '');
+    } catch {
+      return { ok: false, reason: 'Enter a valid GitHub repository URL, e.g. https://github.com/you/your-app' };
+    }
+    if (!owner || !repo) {
+      return { ok: false, reason: 'Enter a valid GitHub repository URL, e.g. https://github.com/you/your-app' };
+    }
+
+    try {
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'learning-haven-build-haven' },
+        signal: AbortSignal.timeout(8_000),
+      });
+      if (res.status === 404) return { ok: false, reason: 'Repository not found — make sure it exists and is public.' };
+      if (!res.ok) return { ok: false, reason: `GitHub returned an error (${res.status}) checking that repository.` };
+      const data = (await res.json()) as { private?: boolean };
+      if (data.private) return { ok: false, reason: 'That repository is private — make it public so we can verify it.' };
+      return { ok: true };
+    } catch (err) {
+      logger.warn('GitHub repo accessibility check failed', { rawUrl, err });
+      return { ok: false, reason: 'Could not reach GitHub to verify that repository. Please try again.' };
+    }
+  }
+
+  /**
+   * Submit a vibe-mode stage for gate verification.
+   *
+   * `live_url` submissions run real Playwright journeys against the
+   * deployment right now (synchronous — capped to a tight time budget so the
+   * request stays fast; see vibeVerifier.ts). `github_push` submissions get
+   * a real existence/visibility check against GitHub but are not yet built
+   * end-to-end (auto build+serve of an arbitrary repo needs a proper sandbox
+   * — running `npm install` against untrusted code with network access is a
+   * meaningfully bigger security surface than driving a browser against a
+   * URL the learner already deployed) — those come back as 'pending_review'
+   * rather than a fake pass or fail, and don't advance progress on their own.
    */
   static async submitVibeStage(params: {
     enrollmentId: string;
@@ -987,8 +1046,27 @@ export class BuildHavenService {
     userId: string;
     submissionSource: 'github_push' | 'live_url';
     submissionRef: string; // GitHub repo URL or live deployment URL
-    onLogLine?: (line: string) => void;
   }): Promise<VibeVerificationResult> {
+    const { data: enrollment } = await supabase
+      .from('build_enrollments')
+      .select('*')
+      .eq('id', params.enrollmentId)
+      .single();
+    if (!enrollment) throw new Error('Enrollment not found');
+    if (enrollment.user_id !== params.userId) {
+      const err = new Error('This enrollment does not belong to you');
+      (err as any).statusCode = 403;
+      throw err;
+    }
+    if (enrollment.build_mode !== 'vibe') {
+      throw new Error('This enrollment is not in vibe mode');
+    }
+
+    const allowed = await BuildHavenService.checkRateLimit(params.enrollmentId, 20);
+    if (!allowed) {
+      throw new Error('Rate limit exceeded: maximum 20 submissions per hour. Please wait before trying again.');
+    }
+
     const { data: stage } = await supabase
       .from('build_stages')
       .select('*')
@@ -996,54 +1074,80 @@ export class BuildHavenService {
       .single();
 
     if (!stage) throw new Error('Stage not found');
+    if (stage.program_id !== enrollment.program_id) {
+      throw new Error('Stage does not belong to this enrollment');
+    }
     if (stage.verification_type !== 'contract') {
       throw new Error('Stage is not a vibe/contract stage');
     }
+    if (stage.stage_number !== enrollment.current_stage) {
+      throw new Error('You can only submit your current stage — earlier and later stages are read-only here.');
+    }
 
-    const contract = (stage.acceptance_contract || {}) as any;
-    const journeys: any[] = contract.journeys || [];
-    const startedAt = Date.now();
+    const contract = (stage.acceptance_contract || {}) as { journeys?: Journey[] };
+    const journeys = contract.journeys || [];
 
-    // ── Phase 1: Structural validation only (no live Playwright) ──────
-    // In Phase 2, this will call sandbox.service.ts to spin up two-container
-    // build+serve+playwright flow. For now, we produce a "pending" result
-    // so the enrollment UX works end-to-end while sandbox is being built.
-    const gateResults = journeys.map((j: any) => ({
-      journeyId: j.id,
-      label: j.label,
-      passed: false,
-      steps_passed: 0,
-      steps_total: (j.steps || []).length,
-      failure_step: 'Vibe verification engine coming soon',
-      failure_reason: 'Sandbox infrastructure is being provisioned for this challenge.',
-      screenshot_url: null,
-    }));
+    let result: VibeVerificationResult;
+    if (params.submissionSource === 'live_url') {
+      try {
+        result = await runVibeVerification({ journeys, submissionRef: params.submissionRef });
+      } catch (err) {
+        if (err instanceof SubmissionUrlError) throw err;
+        logger.error('Vibe verification failed unexpectedly', err);
+        result = {
+          verdict: 'failed',
+          gates_passed: 0,
+          gates_total: journeys.length,
+          score_pct: 0,
+          gate_results: [],
+          logs_tail: `[vibe] Verification could not run: ${err instanceof Error ? err.message : String(err)}`,
+          duration_ms: 0,
+          submission_source: 'live_url',
+          submission_ref: params.submissionRef,
+        };
+      }
+    } else {
+      const startedAt = Date.now();
+      const check = await BuildHavenService.checkGithubRepoAccessible(params.submissionRef);
+      result = {
+        verdict: check.ok ? 'pending_review' : 'failed',
+        gates_passed: 0,
+        gates_total: journeys.length,
+        score_pct: 0,
+        gate_results: journeys.map((j) => ({
+          journeyId: j.id,
+          label: j.label,
+          passed: false,
+          steps_passed: 0,
+          steps_total: (j.steps || []).length,
+          failure_reason: check.ok
+            ? 'Automated verification for GitHub repo submissions is not available yet — this submission is queued for manual review.'
+            : check.reason,
+          screenshot_url: null,
+        })),
+        logs_tail: check.ok
+          ? `[vibe] Repository ${params.submissionRef} verified reachable and public. Automated build+test verification for repo submissions is not yet available — flagged for manual review. In the meantime, deploy your app and submit its live URL instead for instant automated verification.`
+          : `[vibe] ${check.reason}`,
+        duration_ms: Date.now() - startedAt,
+        submission_source: 'github_push',
+        submission_ref: params.submissionRef,
+      };
+    }
 
-    const result: VibeVerificationResult = {
-      verdict: 'failed',
-      gates_passed: 0,
-      gates_total: journeys.length,
-      score_pct: 0,
-      gate_results: gateResults,
-      logs_tail: '[vibe] Submission received. Verification pipeline initializing.',
-      duration_ms: Date.now() - startedAt,
-      submission_source: params.submissionSource,
-      submission_ref: params.submissionRef,
-    };
-
-    // Record the attempt
     const { count } = await supabase
       .from('build_stage_results')
       .select('id', { count: 'exact', head: true })
       .eq('enrollment_id', params.enrollmentId)
       .eq('stage_id', params.stageId);
 
+    const dbStatus: 'passed' | 'failed' = result.verdict === 'passed' ? 'passed' : 'failed';
+
     await supabase.from('build_stage_results').insert({
       enrollment_id: params.enrollmentId,
       stage_id: params.stageId,
       user_id: params.userId,
       commit_hash: null,
-      status: 'failed',
+      status: dbStatus,
       test_output: result.logs_tail,
       exit_code: null,
       execution_time_ms: result.duration_ms,
@@ -1054,10 +1158,40 @@ export class BuildHavenService {
       completed_at: new Date().toISOString(),
     });
 
-    await supabase
-      .from('build_enrollments')
-      .update({ last_push_at: new Date().toISOString() })
-      .eq('id', params.enrollmentId);
+    if (result.verdict === 'passed') {
+      await BuildHavenService.advanceEnrollmentOnStagePass(enrollment);
+    } else {
+      await supabase
+        .from('build_enrollments')
+        .update({ last_push_at: new Date().toISOString() })
+        .eq('id', params.enrollmentId);
+    }
+
+    // Broadcast on the same channel the traditional-mode worker uses so the
+    // workspace UI's existing realtime handler (stage-pass modal, confetti,
+    // leaderboard refresh) works identically for vibe submissions.
+    try {
+      await supabase.channel(`build:${params.enrollmentId}`).send({
+        type: 'broadcast',
+        event: 'stage_result',
+        payload: {
+          enrollmentId: params.enrollmentId,
+          stageId: params.stageId,
+          stageNumber: stage.stage_number,
+          stage_number: stage.stage_number,
+          status: dbStatus,
+          output: result.logs_tail,
+          structuredFeedback: result,
+        },
+      });
+      await supabase.channel(`build:${params.enrollmentId}`).send({
+        type: 'broadcast',
+        event: 'verification_complete',
+        payload: { enrollmentId: params.enrollmentId, status: dbStatus },
+      });
+    } catch (err) {
+      logger.warn('Failed to broadcast vibe stage_result', { enrollmentId: params.enrollmentId, err });
+    }
 
     return result;
   }

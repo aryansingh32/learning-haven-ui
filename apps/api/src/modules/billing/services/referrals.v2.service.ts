@@ -252,7 +252,7 @@ export class ReferralsV2Service {
     if (cached) return cached;
 
     const res = await pool.query(
-      `SELECT u.first_name, u.last_name, u.total_referral_earnings, 
+      `SELECT u.full_name, u.total_referral_earnings,
          (SELECT COUNT(*) FROM public.referrals r WHERE r.referrer_id = u.id AND r.status = 'active') as referral_count
        FROM public.users u
        WHERE u.total_referral_earnings > 0
@@ -260,12 +260,16 @@ export class ReferralsV2Service {
        LIMIT 20`
     );
 
-    const mapped = res.rows.map((r, i) => ({
-      rank: i + 1,
-      name: `${r.first_name} ${r.last_name ? r.last_name[0] + '.' : ''}`,
-      earnings: r.total_referral_earnings,
-      referrals: r.referral_count
-    }));
+    const mapped = res.rows.map((r, i) => {
+      const parts = (r.full_name || '').trim().split(' ');
+      const name = parts.length === 1 ? parts[0] : `${parts[0]} ${parts[parts.length - 1][0]}.`;
+      return {
+        rank: i + 1,
+        name,
+        earnings: r.total_referral_earnings,
+        referrals: r.referral_count
+      };
+    });
 
     await CacheService.set('referral:leaderboard', mapped, 3600);
     return mapped;

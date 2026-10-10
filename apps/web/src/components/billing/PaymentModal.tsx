@@ -65,7 +65,7 @@ export function PaymentModal({ isOpen, onClose, defaultPlanSlug = 'pro' }: Payme
             onClose();
             window.location.reload(); // Quick refresh to update entitlements context
           } catch (err: any) {
-            toast.error(err?.response?.data?.error || "Payment verification failed.");
+            toast.error(err instanceof Error ? err.message : "Payment verification failed.");
           }
         }
       };
@@ -76,7 +76,7 @@ export function PaymentModal({ isOpen, onClose, defaultPlanSlug = 'pro' }: Payme
       });
       razor.open();
     } catch (err: any) {
-      toast.error(err?.response?.data?.error || "Failed to initiate checkout.");
+      toast.error(err instanceof Error ? err.message : "Failed to initiate checkout.");
     } finally {
       setLoadingPlan(null);
     }

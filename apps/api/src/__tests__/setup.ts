@@ -67,6 +67,27 @@ jest.mock('../config/razorpay', () => ({
   verifyWebhookSignature: jest.fn().mockReturnValue(true),
 }));
 
+// Mock BullMQ. Services construct queues at module load and call `.add()` in
+// normal flows; without this the real client tries to reach Redis and the test
+// hangs until the timeout rather than failing fast.
+jest.mock('bullmq', () => ({
+  __esModule: true,
+  Queue: jest.fn().mockImplementation(() => ({
+    add: jest.fn().mockResolvedValue({ id: 'test-job' }),
+    addBulk: jest.fn().mockResolvedValue([]),
+    close: jest.fn().mockResolvedValue(undefined),
+    on: jest.fn(),
+  })),
+  Worker: jest.fn().mockImplementation(() => ({
+    close: jest.fn().mockResolvedValue(undefined),
+    on: jest.fn(),
+  })),
+  QueueEvents: jest.fn().mockImplementation(() => ({
+    close: jest.fn().mockResolvedValue(undefined),
+    on: jest.fn(),
+  })),
+}));
+
 // Mock Redis
 jest.mock('../config/redis', () => ({
   __esModule: true,

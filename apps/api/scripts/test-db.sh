@@ -56,3 +56,30 @@ for t in "$tests"/*.sql; do
 done
 
 psql_q "$admin_url" -c "drop database if exists $db"
+
+# Replay: the database as live will be once the older migrations it is missing
+# (fixtures/missing_on_live.txt) are applied before the post-snapshot ones.
+# Proves the whole sequence applies cleanly, then runs tests/replay/*.sql.
+replay_db="forge_db_replay"
+replay_url="${TEST_DATABASE_URL%/*}/$replay_db"
+psql_q "$admin_url" -c "drop database if exists $replay_db" -c "create database $replay_db"
+echo "→ Replay: snapshot + migrations missing on live + migrations after $baseline_date"
+psql_q "$replay_url" -f "$tests/fixtures/supabase_stubs.sql"
+PGOPTIONS='-c search_path=public,extensions' psql_q "$replay_url" -f "$snapshot"
+while read -r name; do
+  [[ -z "$name" || "$name" == \#* ]] && continue
+  echo "  $name"
+  psql_q "$replay_url" -f "$migrations/$name"
+done < "$tests/fixtures/missing_on_live.txt"
+for f in "$migrations"/*.sql; do
+  name="$(basename "$f")"
+  if [[ "${name:0:8}" > "$baseline_date" || "${name:0:8}" == "$baseline_date" ]]; then
+    psql_q "$replay_url" -f "$f"
+  fi
+done
+for t in "$tests"/replay/*.sql; do
+  echo "  replay/$(basename "$t")"
+  psql -X -v ON_ERROR_STOP=1 "$replay_url" -f "$t" 2>&1 | grep -E 'FAIL|ERROR|PASSED' | sed 's/^psql:[^:]*:[0-9]*: //'
+  [[ ${PIPESTATUS[0]} -eq 0 ]] || { echo "Database tests failed." >&2; exit 1; }
+done
+psql_q "$admin_url" -c "drop database if exists $replay_db"

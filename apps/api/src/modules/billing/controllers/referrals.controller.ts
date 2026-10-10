@@ -72,7 +72,7 @@ export class ReferralsController {
         } catch (error: any) {
             logger.error('Withdrawal error:', error);
 
-            const knownErrors = ['Insufficient wallet balance', 'Minimum withdrawal amount is ₹1'];
+            const knownErrors = ['Insufficient wallet balance', 'Minimum withdrawal amount is ₹100', 'User not found'];
             if (knownErrors.includes(error.message)) {
                 return res.status(400).json({ error: error.message });
             }

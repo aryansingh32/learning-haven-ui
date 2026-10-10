@@ -43,11 +43,22 @@ export class VerificationService {
     const { repoFullName, commitHash, branch } = event.payload;
     logger.info('Enqueueing build verification', { repoFullName, commitHash, branch, requestId: event.meta.requestId });
 
-    const { data: enrollment } = await supabase
+    // `build_enrollments` has no `build_challenge_id` column (it's `program_id` —
+    // see 20260520000001_build_haven_complete.sql). Selecting a nonexistent
+    // column makes PostgREST return an error and `data` comes back null, so this
+    // previously hit the `!enrollment` branch on every single push — no build
+    // verification job was ever enqueued, silently, for any traditional-mode
+    // enrollment.
+    const { data: enrollment, error } = await supabase
       .from('build_enrollments')
-      .select('id, user_id, build_challenge_id')
+      .select('id, user_id, program_id')
       .eq('repo_full_name', repoFullName)
       .maybeSingle();
+
+    if (error) {
+      logger.error('Failed to look up enrollment for push event', { repoFullName, error });
+      return;
+    }
 
     if (!enrollment) {
       logger.warn('No enrollment found for repo, skipping verification', { repoFullName });
@@ -62,7 +73,7 @@ export class VerificationService {
         branch,
         enrollmentId: enrollment.id,
         userId: enrollment.user_id,
-        challengeId: enrollment.build_challenge_id,
+        challengeId: enrollment.program_id,
       },
       {
         ...buildVerificationJobOptions,

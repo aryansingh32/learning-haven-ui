@@ -1,0 +1,18 @@
+# Migrations dated before the live-schema snapshot (2026-10-08) whose objects the
+# live database did not have (checked object by object on 2026-10-10). The replay
+# step in scripts/test-db.sh applies these, in this order, before the post-snapshot
+# migrations, which is the order they are applied to live.
+20260823000001_xp_ledger.sql
+20260823000002_task_responses.sql
+20260823100001_user_resumes.sql
+20260823100002_job_bookmarks.sql
+20260823200001_course_pricing.sql
+20260828000001_user_chapter_progress_index.sql
+20260828000002_xp_level_recalc.sql
+20260828000003_atomic_streak.sql
+20260828000004_skip_tokens_column.sql
+20260828000005_server_only_xp_functions.sql
+20260901000001_chapter_notes_and_notebook.sql
+20260901000002_quiz_answers.sql
+20260901000003_notebook_edit_access.sql
+20260901000004_mock_test.sql

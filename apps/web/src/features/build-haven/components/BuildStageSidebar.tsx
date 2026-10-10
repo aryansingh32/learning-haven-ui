@@ -20,6 +20,8 @@ type Props = {
   activeView: 'setup' | number;
   onSelectSetup: () => void;
   onSelectStage: (stageNumber: number) => void;
+  /** Vibe-mode enrollments have no GitHub repo, so there's no "local setup". */
+  isVibeMode?: boolean;
 };
 
 function StatusIcon({ status }: { status: StageProgressStatus }) {
@@ -38,8 +40,11 @@ export function BuildStageSidebar({
   activeView,
   onSelectSetup,
   onSelectStage,
+  isVibeMode,
 }: Props) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 768
+  );
 
   // Group stages by section (using simple grouping: every 3-4 stages)
   // In CodeCrafters these are grouped by feature area — we'll use stage titles
@@ -62,19 +67,21 @@ export function BuildStageSidebar({
         </div>
         <ScrollArea className="min-h-0 flex-1">
           <nav className="flex flex-col items-center gap-1 py-3" aria-label="Stages">
-            <button
-              type="button"
-              onClick={onSelectSetup}
-              className={cn(
-                'flex h-8 w-8 items-center justify-center rounded-lg transition-all',
-                activeView === 'setup'
-                  ? 'bg-primary/10 text-primary ring-1 ring-primary/30'
-                  : 'text-muted-foreground hover:bg-secondary/80 hover:text-foreground'
-              )}
-              title="Local setup"
-            >
-              <Settings2 className="h-4 w-4" />
-            </button>
+            {!isVibeMode && (
+              <button
+                type="button"
+                onClick={onSelectSetup}
+                className={cn(
+                  'flex h-8 w-8 items-center justify-center rounded-lg transition-all',
+                  activeView === 'setup'
+                    ? 'bg-primary/10 text-primary ring-1 ring-primary/30'
+                    : 'text-muted-foreground hover:bg-secondary/80 hover:text-foreground'
+                )}
+                title="Local setup"
+              >
+                <Settings2 className="h-4 w-4" />
+              </button>
+            )}
             {stages.map((stage) => {
               const st = stageStatus(stage.stage_number, enrollment);
               const active = activeView === stage.stage_number;
@@ -106,7 +113,7 @@ export function BuildStageSidebar({
   }
 
   return (
-    <aside className="flex w-[280px] shrink-0 flex-col border-r border-border/60 bg-card/30">
+    <aside className="flex w-[280px] max-w-[80vw] shrink-0 flex-col border-r border-border/60 bg-card/30">
       {/* Header */}
       <div className="border-b border-border/60 p-4">
         <div className="flex items-center justify-between">
@@ -151,19 +158,21 @@ export function BuildStageSidebar({
       <ScrollArea className="min-h-0 flex-1">
         <nav className="space-y-0.5 p-2" aria-label="Stages">
           {/* Setup */}
-          <button
-            type="button"
-            onClick={onSelectSetup}
-            className={cn(
-              'flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm transition-all',
-              activeView === 'setup'
-                ? 'bg-primary/10 text-foreground ring-1 ring-primary/20'
-                : 'text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
-            )}
-          >
-            <Settings2 className={cn('h-4 w-4 shrink-0', activeView === 'setup' ? 'text-primary' : '')} />
-            <span className="font-medium">Local setup</span>
-          </button>
+          {!isVibeMode && (
+            <button
+              type="button"
+              onClick={onSelectSetup}
+              className={cn(
+                'flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm transition-all',
+                activeView === 'setup'
+                  ? 'bg-primary/10 text-foreground ring-1 ring-primary/20'
+                  : 'text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
+              )}
+            >
+              <Settings2 className={cn('h-4 w-4 shrink-0', activeView === 'setup' ? 'text-primary' : '')} />
+              <span className="font-medium">Local setup</span>
+            </button>
+          )}
 
           {/* Stages */}
           {stages.map((stage) => {
@@ -199,7 +208,9 @@ export function BuildStageSidebar({
       <div className="border-t border-border/60 p-3">
         <p className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
           <BookOpen className="h-3 w-3" />
-          Push to <code className="rounded bg-secondary/80 px-1 py-0.5 text-foreground">main</code> to run tests
+          {isVibeMode ? 'Submit your URL or repo to run proof gates' : (
+            <>Push to <code className="rounded bg-secondary/80 px-1 py-0.5 text-foreground">main</code> to run tests</>
+          )}
         </p>
       </div>
     </aside>
