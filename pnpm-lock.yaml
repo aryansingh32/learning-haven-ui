@@ -549,6 +549,12 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.83.0
         version: 5.100.14(react@18.3.1)
+      '@wasm-fmt/clang-format':
+        specifier: 23.1.1
+        version: 23.1.1
+      '@wasm-fmt/ruff_fmt':
+        specifier: 0.15.20
+        version: 0.15.20
       JSCPP:
         specifier: ^2.0.9
         version: 2.0.9
@@ -3983,6 +3989,14 @@ packages:
 
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
+
+  '@wasm-fmt/clang-format@23.1.1':
+    resolution: {integrity: sha512-SPA6H8DI/MOJAr0CfpbFBoqI5sfrimu3SlovuAAy36mq9vs9TOkS48lpUsNaPLeZzeQVEGe+pfbJHXKxiroP/g==}
+    engines: {node: '>=16.17.0'}
+    hasBin: true
+
+  '@wasm-fmt/ruff_fmt@0.15.20':
+    resolution: {integrity: sha512-PYij4wTiDSTx6MyBGHSY0nWDjSiTbOB3moPJiZTBL8F0JZLEfHAi4lYAn9SC9Hzm8tVeTnL7Qyf1iPW0TKHVEg==}
 
   JSCPP@2.0.9:
     resolution: {integrity: sha512-ix62BbyR33JfuLS5JN3lrP5WrDFHJMe498TbyEN0vjRgK1pvOREs03YA0rMoj0U2h9EYLSoo9emZMW2rSlFVfQ==}
@@ -11327,6 +11341,10 @@ snapshots:
       '@vitest/pretty-format': 3.2.4
       loupe: 3.2.1
       tinyrainbow: 2.0.0
+
+  '@wasm-fmt/clang-format@23.1.1': {}
+
+  '@wasm-fmt/ruff_fmt@0.15.20': {}
 
   JSCPP@2.0.9:
     dependencies:

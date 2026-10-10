@@ -126,7 +126,7 @@ function exec(command: string, args: string[], cwd: string, stdin: string): Prom
     let stdout = '';
     let stderr = '';
     let killed = false;
-    // Linux only: sample the peak (VmHWM) while it runs. Approximate — the last few ms
+    // Linux only: sample the peak (VmHWM) while it runs. Approximate — the last ms or two
     // before exit can be missed — which is fine for a development runner.
     let memoryKb: number | undefined;
     const sample = () => {
@@ -136,7 +136,7 @@ function exec(command: string, args: string[], cwd: string, stdin: string): Prom
         if (kb !== undefined) memoryKb = Math.max(memoryKb ?? 0, kb);
       } catch { /* exited, or not Linux */ }
     };
-    const sampler = process.platform === 'linux' ? setInterval(sample, 5) : undefined;
+    const sampler = process.platform === 'linux' ? setInterval(sample, 2) : undefined;
     sample();
     const done = (r: Omit<ExecResult, 'memoryKb' | 'timeMs'>) => {
       clearTimeout(timer);

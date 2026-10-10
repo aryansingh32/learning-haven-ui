@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Lightbulb, BookOpen, FileText, Lock, CheckCircle2, Building2, Gauge, Bot, Loader2, Eye, XCircle, Copy, History } from 'lucide-react';
+import { Lightbulb, BookOpen, FileText, Lock, CheckCircle2, Building2, Gauge, Bot, Loader2, Eye, XCircle, Copy, History, ArrowLeft, GitCompare, Undo2, Terminal, PlayCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import type { QuestionData } from '@/modules/CodeExecutor';
-import { fetchHints, fetchSolution, fetchSubmissions, type ProblemDetail, type SubmissionRecord } from './practice.service';
+import type { QuestionData, WorkspaceEditorState } from '@/modules/CodeExecutor';
+import { CodeDiffView, type DiffSide } from '@/modules/CodeExecutor/components/CodeDiffView';
+import { formatMemory } from '@/modules/CodeExecutor/customRun';
+import { fetchHints, fetchRuns, fetchSolution, fetchSubmissions, type ProblemDetail, type RunRecord, type SubmissionRecord } from './practice.service';
 
-type Tab = 'description' | 'hints' | 'solution' | 'submissions';
+type Tab = 'description' | 'hints' | 'solution' | 'submissions' | 'runs';
 
 const DIFF_STYLE: Record<string, string> = {
   Easy: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -21,7 +23,7 @@ const DIFF_STYLE: Record<string, string> = {
 
 function Description({ problem, question }: { problem: ProblemDetail; question: QuestionData }) {
   return (
-    <div className="px-6 py-6 space-y-7">
+    <div className="px-4 sm:px-6 py-6 space-y-7">
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className={cn('text-[11px] font-bold px-2 py-0.5 rounded-full border', DIFF_STYLE[question.difficulty])}>{question.difficulty}</span>
@@ -187,56 +189,182 @@ function when(iso: string) {
   return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
 }
 
-function Submissions({ problem }: { problem: ProblemDetail }) {
+const memoryText = (kb: number | null | undefined) => formatMemory(kb ? kb * 1024 : null);
+
+type DiffPair = { before: DiffSide; after: DiffSide };
+
+function DiffScreen({ diff, onBack, backLabel }: { diff: DiffPair; onBack: () => void; backLabel: string }) {
+  return (
+    <div className="p-3 sm:p-4 space-y-3">
+      <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-zinc-400 hover:text-zinc-100" onClick={onBack}>
+        <ArrowLeft className="w-3.5 h-3.5 mr-1.5" /> {backLabel}
+      </Button>
+      <CodeDiffView before={diff.before} after={diff.after} />
+    </div>
+  );
+}
+
+function CodeActions({ code, language, label, editor, onCompare }: {
+  code: string; language: string; label: string; editor?: WorkspaceEditorState; onCompare: (d: DiffPair) => void;
+}) {
+  const sameLanguage = editor?.language === language;
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button size="sm" variant="secondary" className="h-7 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs"
+        onClick={() => { void navigator.clipboard?.writeText(code).then(() => toast.success('Code copied')); }}>
+        <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy code
+      </Button>
+      {editor && (
+        <Button size="sm" variant="secondary" className="h-7 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs"
+          onClick={() => onCompare({ before: { label, code }, after: { label: `Your editor (${LANG_LABEL[editor.language] ?? editor.language})`, code: editor.code } })}>
+          <GitCompare className="w-3.5 h-3.5 mr-1.5" /> Compare with editor
+        </Button>
+      )}
+      {editor && (
+        <Button size="sm" variant="secondary" className="h-7 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs disabled:opacity-50"
+          disabled={!sameLanguage} title={sameLanguage ? undefined : `Switch the editor to ${LANG_LABEL[language] ?? language} first`}
+          onClick={() => { editor.setCode(code); toast.success('Loaded into the editor — Ctrl/⌘+Z undoes it.'); }}>
+          <Undo2 className="w-3.5 h-3.5 mr-1.5" /> Load into editor
+        </Button>
+      )}
+    </div>
+  );
+}
+
+function Submissions({ problem, editor }: { problem: ProblemDetail; editor?: WorkspaceEditorState }) {
   const query = useQuery({ queryKey: ['problem-submissions', problem.id], queryFn: () => fetchSubmissions(problem.id), retry: false });
   const [open, setOpen] = useState<string | null>(null);
+  const [picked, setPicked] = useState<string[]>([]);
+  const [diff, setDiff] = useState<DiffPair | null>(null);
   if (query.isLoading) return <div className="p-6 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-500" /></div>;
   if (query.isError) return <p className="p-6 text-sm text-zinc-500">Couldn't load your submissions.</p>;
   const list = query.data?.submissions ?? [];
   if (list.length === 0) {
     return <p className="p-6 text-center text-sm text-zinc-500">No submissions yet. Press <span className="text-zinc-300 font-semibold">Submit</span> to have your code judged on every test.</p>;
   }
+  if (diff) return <DiffScreen diff={diff} onBack={() => setDiff(null)} backLabel="Back to submissions" />;
+
+  const label = (s: SubmissionRecord) => `#${list.length - list.indexOf(s)} ${s.verdict} · ${LANG_LABEL[s.language] ?? s.language} · ${when(s.created_at)}`;
+  const togglePick = (id: string) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p.slice(-1), id]));
+  const compareSelected = () => {
+    const [a, b] = picked.map((id) => list.find((s) => s.id === id)!).sort((x, y) => x.created_at.localeCompare(y.created_at));
+    setDiff({ before: { label: label(a), code: a.code }, after: { label: label(b), code: b.code } });
+  };
+
   return (
-    <ul className="p-3 space-y-2">
-      {list.map((s: SubmissionRecord) => {
-        const ok = s.verdict === 'Accepted';
-        const expanded = open === s.id;
-        return (
-          <li key={s.id} className="rounded-lg border border-white/5 bg-zinc-900/40">
-            <button type="button" onClick={() => setOpen(expanded ? null : s.id)} aria-expanded={expanded}
-              className="w-full flex items-center gap-3 px-3 py-2.5 text-left">
-              {ok ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
-              <span className={cn('text-sm font-semibold', ok ? 'text-emerald-400' : 'text-rose-300')}>{s.verdict}</span>
-              <span className="text-xs text-zinc-500 tabular-nums">{s.passed}/{s.total} tests</span>
-              <span className="ml-auto text-xs text-zinc-500">{LANG_LABEL[s.language] ?? s.language} · {when(s.created_at)}</span>
-            </button>
-            {expanded && (
-              <div className="px-3 pb-3 space-y-2">
-                <pre className="text-xs font-mono text-zinc-200 bg-black/40 border border-white/5 rounded-lg p-3 overflow-x-auto max-h-72">{s.code}</pre>
-                <Button size="sm" variant="secondary" className="h-7 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs"
-                  onClick={() => { void navigator.clipboard?.writeText(s.code).then(() => toast.success('Code copied')); }}>
-                  <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy code
-                </Button>
+    <div className="p-3 space-y-2">
+      {list.length > 1 && (
+        <div className="flex flex-wrap items-center gap-2 px-1 text-xs text-zinc-400">
+          <span>Tick two submissions to see what changed between them.</span>
+          <Button size="sm" className="h-7 text-xs bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-50" disabled={picked.length !== 2} onClick={compareSelected}>
+            <GitCompare className="w-3.5 h-3.5 mr-1.5" /> Compare selected ({picked.length}/2)
+          </Button>
+        </div>
+      )}
+      <ul className="space-y-2" aria-label="Your submissions">
+        {list.map((s: SubmissionRecord) => {
+          const ok = s.verdict === 'Accepted';
+          const expanded = open === s.id;
+          const mem = memoryText(s.memory_kb);
+          return (
+            <li key={s.id} className="rounded-lg border border-white/5 bg-zinc-900/40">
+              <div className="flex items-center gap-2 pl-3">
+                {list.length > 1 && (
+                  <input type="checkbox" checked={picked.includes(s.id)} onChange={() => togglePick(s.id)} className="accent-emerald-500 shrink-0"
+                    aria-label={`Select submission ${label(s)} to compare`} />
+                )}
+                <button type="button" onClick={() => setOpen(expanded ? null : s.id)} aria-expanded={expanded}
+                  className="flex-1 min-w-0 flex flex-wrap items-center gap-x-3 gap-y-0.5 pr-3 py-2.5 text-left">
+                  <span className="inline-flex items-center gap-2">
+                    {ok ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                    <span className={cn('text-sm font-semibold', ok ? 'text-emerald-400' : 'text-rose-300')}>{s.verdict}</span>
+                  </span>
+                  <span className="text-xs text-zinc-500 tabular-nums">{s.passed}/{s.total} tests{s.time_ms != null ? ` · ${s.time_ms} ms` : ''}{mem ? ` · ${mem}` : ''}</span>
+                  <span className="ml-auto text-xs text-zinc-500">{LANG_LABEL[s.language] ?? s.language} · {when(s.created_at)}</span>
+                </button>
               </div>
-            )}
-          </li>
-        );
-      })}
-    </ul>
+              {expanded && (
+                <div className="px-3 pb-3 space-y-2">
+                  <pre className="text-xs font-mono text-zinc-200 bg-black/40 border border-white/5 rounded-lg p-3 overflow-x-auto max-h-72">{s.code}</pre>
+                  <CodeActions code={s.code} language={s.language} label={label(s)} editor={editor} onCompare={setDiff} />
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
-export function ProblemDetailPanel({ problem, question }: { problem: ProblemDetail; question: QuestionData }) {
+const RUN_TONE: Record<string, string> = { Accepted: 'text-emerald-400', Ran: 'text-sky-300' };
+
+function Runs({ problem, editor }: { problem: ProblemDetail; editor?: WorkspaceEditorState }) {
+  const query = useQuery({ queryKey: ['problem-runs', problem.id], queryFn: () => fetchRuns(problem.id), retry: false });
+  const [open, setOpen] = useState<string | null>(null);
+  const [diff, setDiff] = useState<DiffPair | null>(null);
+  if (query.isLoading) return <div className="p-6 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-500" /></div>;
+  if (query.isError) return <p className="p-6 text-sm text-zinc-500">Couldn't load your runs.</p>;
+  const list = query.data?.runs ?? [];
+  if (list.length === 0) {
+    return <p className="p-6 text-center text-sm text-zinc-500">No runs yet. Press <span className="text-zinc-300 font-semibold">Run</span> or try a custom input — your last 25 runs are kept here.</p>;
+  }
+  if (diff) return <DiffScreen diff={diff} onBack={() => setDiff(null)} backLabel="Back to runs" />;
+  return (
+    <div className="p-3 space-y-2">
+      <p className="px-1 text-xs text-zinc-500">Your last {list.length} run{list.length === 1 ? '' : 's'} on this problem (the newest 25 are kept). Runs never count as a solve.</p>
+      <ul className="space-y-2" aria-label="Your runs">
+        {list.map((r: RunRecord) => {
+          const expanded = open === r.id;
+          const failed = r.verdict !== 'Accepted' && r.verdict !== 'Ran';
+          const mem = memoryText(r.memory_kb);
+          const what = r.kind === 'custom' ? 'Custom input' : `Examples ${r.passed}/${r.total}`;
+          const label = `${what} · ${r.verdict} · ${when(r.created_at)}`;
+          return (
+            <li key={r.id} className="rounded-lg border border-white/5 bg-zinc-900/40">
+              <button type="button" onClick={() => setOpen(expanded ? null : r.id)} aria-expanded={expanded}
+                className="w-full flex flex-wrap items-center gap-x-3 gap-y-0.5 px-3 py-2.5 text-left">
+                <span className="inline-flex items-center gap-2">
+                  {failed ? <XCircle className="w-4 h-4 text-rose-400 shrink-0" /> : r.verdict === 'Ran' ? <Terminal className="w-4 h-4 text-sky-300 shrink-0" /> : <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                  <span className={cn('text-sm font-semibold', RUN_TONE[r.verdict] ?? 'text-rose-300')}>{r.verdict}</span>
+                </span>
+                <span className="text-xs text-zinc-400">{what}</span>
+                <span className="text-xs text-zinc-500 tabular-nums">
+                  {r.time_ms != null ? `${r.time_ms} ms` : ''}{mem ? ` · ${mem}` : r.source === 'browser' ? ' · memory not measured (browser)' : ''}
+                </span>
+                <span className="ml-auto text-xs text-zinc-500">{LANG_LABEL[r.language] ?? r.language} · {r.source === 'server' ? 'Server' : 'Browser'} · {when(r.created_at)}</span>
+              </button>
+              {expanded && (
+                <div className="px-3 pb-3 space-y-2">
+                  {r.input !== null && (
+                    <p className="text-xs"><span className="text-zinc-500 font-semibold mr-1.5">Input</span><code className="font-mono text-zinc-200 break-all">{r.input}</code></p>
+                  )}
+                  {r.output && (
+                    <p className="text-xs"><span className="text-zinc-500 font-semibold mr-1.5">{failed ? 'Message' : 'Output'}</span><code className="font-mono text-zinc-200 break-all whitespace-pre-wrap">{r.output}</code></p>
+                  )}
+                  <pre className="text-xs font-mono text-zinc-200 bg-black/40 border border-white/5 rounded-lg p-3 overflow-x-auto max-h-72">{r.code}</pre>
+                  <CodeActions code={r.code} language={r.language} label={`Run: ${label}`} editor={editor} onCompare={setDiff} />
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export function ProblemDetailPanel({ problem, question, editor }: { problem: ProblemDetail; question: QuestionData; editor?: WorkspaceEditorState }) {
   const [tab, setTab] = useState<Tab>('description');
   const tabs: Array<{ key: Tab; label: string; icon: React.ElementType }> = [
     { key: 'description', label: 'Description', icon: FileText },
     { key: 'hints', label: `Hints${problem.hint_count ? ` (${problem.hint_count})` : ''}`, icon: Lightbulb },
     { key: 'solution', label: 'Solution', icon: BookOpen },
-    ...(problem.judged ? [{ key: 'submissions' as Tab, label: 'Submissions', icon: History }] : []),
+    ...(problem.judged ? [{ key: 'submissions' as Tab, label: 'Submissions', icon: History }, { key: 'runs' as Tab, label: 'Runs', icon: PlayCircle }] : []),
   ];
   return (
     <div className="h-full flex flex-col bg-zinc-950">
-      <div role="tablist" className="flex items-center gap-1 px-3 py-2 border-b border-white/5 bg-zinc-900/40">
+      <div role="tablist" className="flex items-center gap-1 px-2 sm:px-3 py-2 border-b border-white/5 bg-zinc-900/40 overflow-x-auto">
         {tabs.map((t) => (
           <button
             key={t.key}
@@ -244,11 +372,11 @@ export function ProblemDetailPanel({ problem, question }: { problem: ProblemDeta
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors',
+              'flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0',
               tab === t.key ? 'bg-zinc-800 text-zinc-100' : 'text-zinc-500 hover:text-zinc-200',
             )}
           >
-            <t.icon className="w-3.5 h-3.5" /> {t.label}
+            <t.icon className="w-3.5 h-3.5 hidden sm:block" /> {t.label}
           </button>
         ))}
       </div>
@@ -256,7 +384,8 @@ export function ProblemDetailPanel({ problem, question }: { problem: ProblemDeta
         {tab === 'description' && <Description problem={problem} question={question} />}
         {tab === 'hints' && <Hints problem={problem} />}
         {tab === 'solution' && <Solution problem={problem} />}
-        {tab === 'submissions' && <Submissions problem={problem} />}
+        {tab === 'submissions' && <Submissions problem={problem} editor={editor} />}
+        {tab === 'runs' && <Runs problem={problem} editor={editor} />}
       </ScrollArea>
     </div>
   );

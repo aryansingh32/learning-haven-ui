@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { QuestionData, SupportedLanguage } from './types';
-import { useCodeExecution } from './hooks/useCodeExecution';
+import { useCodeExecution, type RunContext } from './hooks/useCodeExecution';
+import type { CustomRunInput } from './customRun';
 import { ResizeLayout } from './components/ResizeLayout';
 import { QuestionPanel } from './components/QuestionPanel';
-import { EditorPanel } from './components/EditorPanel';
+import { EditorPanel, type EditorPrefsSync } from './components/EditorPanel';
 import { ConsolePanel } from './components/ConsolePanel';
 import { WorkspaceHeader } from './components/WorkspaceHeader';
 import { cn } from '@/lib/utils';
@@ -28,13 +29,40 @@ export interface CodeWorkspaceProps {
     resetOnQuestionChange?: boolean;
     header?: React.ReactNode;
     className?: string;
-    /** Replace the default question panel (e.g. with tabs for hints and solution). */
-    questionPanel?: React.ReactNode;
+    /** Replace the default question panel (e.g. with tabs for hints and solution). A function gets the live editor state. */
+    questionPanel?: React.ReactNode | ((editor: WorkspaceEditorState) => React.ReactNode);
     languages?: SupportedLanguage[];
     onSubmit?: (code: string, language: SupportedLanguage) => Promise<import('./types').ExecutionResult>;
     /** Run on a server for some languages; return undefined to run in the browser. */
-    onRun?: (code: string, language: SupportedLanguage) => Promise<import('./types').ExecutionResult> | undefined;
+    onRun?: (code: string, language: SupportedLanguage, custom?: CustomRunInput) => Promise<import('./types').ExecutionResult> | undefined;
+    /** After every Run, with what was run (e.g. to keep a run history). */
+    onRunComplete?: (result: import('./types').ExecutionResult, ctx: RunContext) => void;
+    /** Offer a "Custom input" console tab (function-style problems: the input is the arguments). */
+    allowCustomInput?: boolean;
+    /** Keep editor settings on the learner's account. */
+    editorPrefsSync?: EditorPrefsSync;
     storageKey?: string;
+}
+
+export interface WorkspaceEditorState {
+    code: string;
+    language: SupportedLanguage;
+    setCode: (code: string) => void;
+    setLanguage: (language: SupportedLanguage) => void;
+}
+
+/** Phones and narrow windows get a stacked layout instead of resizable panels. */
+function useNarrow(breakpoint = 768) {
+    const query = `(max-width: ${breakpoint - 1}px)`;
+    const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
+    useEffect(() => {
+        const mql = window.matchMedia(query);
+        const onChange = () => setNarrow(mql.matches);
+        mql.addEventListener('change', onChange);
+        onChange();
+        return () => mql.removeEventListener('change', onChange);
+    }, [query]);
+    return narrow;
 }
 
 const HackerrankTabs: React.FC = () => {
@@ -78,8 +106,13 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
     languages,
     onSubmit,
     onRun,
+    onRunComplete,
+    allowCustomInput = false,
+    editorPrefsSync,
     storageKey,
 }) => {
+    const narrow = useNarrow();
+    const consoleRef = useRef<HTMLDivElement>(null);
     const {
         language,
         setLanguage,
@@ -104,8 +137,15 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
         onSolved,
         onSubmit,
         onRun,
+        onRunComplete,
         storageKey,
     });
+
+    // On a phone the console sits below the editor: bring it into view when a run starts.
+    const showConsoleOnPhone = () => { if (narrow) consoleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+    const run = () => { showConsoleOnPhone(); void handleRun(); };
+    const submit = () => { showConsoleOnPhone(); void handleSubmit(); };
+    const runCustom = (custom: CustomRunInput) => { void handleRun(custom); };
 
     const editorPanel = (
         <EditorPanel
@@ -115,8 +155,8 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
             setCode={setCode}
             theme={theme}
             toggleTheme={toggleTheme}
-            onRun={handleRun}
-            onSubmit={handleSubmit}
+            onRun={run}
+            onSubmit={submit}
             isExecuting={isExecuting}
             onReset={resetCode}
             showRun={showRun}
@@ -124,6 +164,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
             allowLanguageSwitch={allowLanguageSwitch}
             variant={layout}
             languages={languages}
+            prefsSync={editorPrefsSync}
         />
     );
 
@@ -134,12 +175,17 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
             isExecuting={isExecuting}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            onRunCustom={allowCustomInput ? runCustom : undefined}
+            inputExample={question.examples[0]?.input}
         />
     ) : (
         <div className="h-full w-full bg-zinc-950" />
     );
 
-    const questionPanel = showQuestion && customQuestionPanel ? customQuestionPanel : showQuestion ? (
+    const customPanel = typeof customQuestionPanel === 'function'
+        ? customQuestionPanel({ code, language, setCode, setLanguage })
+        : customQuestionPanel;
+    const questionPanel = showQuestion && customPanel ? customPanel : showQuestion ? (
         <div className="h-full flex flex-col">
             {layout === 'hackerrank' && <HackerrankTabs />}
             <QuestionPanel question={question} />
@@ -147,12 +193,33 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
     ) : null;
 
     const containerClass = cn(
-        "h-screen w-full overflow-hidden flex flex-col font-sans antialiased bg-zinc-950",
+        "w-full flex flex-col font-sans antialiased bg-zinc-950",
+        narrow ? "min-h-screen overflow-x-hidden" : "h-screen overflow-hidden",
         theme === 'dark' ? 'dark text-zinc-100' : 'text-zinc-900',
         className
     );
 
     const renderLayout = () => {
+        if (narrow) {
+            // Stacked: statement, editor, console — the page scrolls, each part keeps a usable height.
+            return (
+                <div className="flex flex-col w-full">
+                    {showQuestion && (
+                        <section aria-label="Problem" className="h-[60svh] min-h-[320px] border-b border-border/50 overflow-hidden">
+                            {questionPanel}
+                        </section>
+                    )}
+                    <section aria-label="Code editor" className="h-[70svh] min-h-[360px] overflow-hidden">
+                        {editorPanel}
+                    </section>
+                    {showConsole && (
+                        <section ref={consoleRef} aria-label="Console" className="h-[75svh] min-h-[360px] overflow-hidden scroll-mt-2">
+                            {consolePanel}
+                        </section>
+                    )}
+                </div>
+            );
+        }
         if (showQuestion && showConsole) {
             return (
                 <ResizeLayout
@@ -212,7 +279,7 @@ export const CodeWorkspace: React.FC<CodeWorkspaceProps> = ({
     return (
         <div className={containerClass}>
             {showHeader && (header || <WorkspaceHeader variant={layout} questionId={question.id} />)}
-            <div className="flex-1 flex flex-col min-h-0">
+            <div className={cn("flex-1 flex flex-col", !narrow && "min-h-0")}>
                 {renderLayout()}
             </div>
         </div>

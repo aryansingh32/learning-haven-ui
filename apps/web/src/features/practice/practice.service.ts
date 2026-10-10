@@ -1,5 +1,5 @@
 import { api } from '@/services/api.svc';
-import type { CompareMode, ExecutionResult, QuestionData, SupportedLanguage } from '@/modules/CodeExecutor';
+import type { CompareMode, CustomRunInput, EditorPrefs, ExecutionResult, QuestionData, SupportedLanguage } from '@/modules/CodeExecutor';
 
 export interface ProblemDetail {
   id: string;
@@ -29,15 +29,19 @@ interface JudgeResponse {
   total: number;
   message?: string;
   timeMs: number;
+  /** Peak memory of the run in KB, when the judge measured it. */
+  memoryKb?: number;
   tests: Array<{ index: number; passed: boolean; isSample: boolean; actual?: string; error?: string }>;
   xpGained: number;
   firstSolve: boolean;
+  /** Present for a custom-input run. */
+  custom?: { input: string; expected: string | null; output: string | null; error: string | null };
 }
 
 /** Languages the server judge can check (a problem offers those it has starter code for). */
 export const JUDGED_LANGUAGES: SupportedLanguage[] = ['javascript', 'python', 'java', 'cpp'];
-/** Languages the browser can't run: Run goes to the server (sample tests only). */
-export const SERVER_RUN_LANGUAGES: SupportedLanguage[] = ['cpp'];
+/** Languages the browser can't run: Run goes to the server (sample tests or a custom input). */
+export const SERVER_RUN_LANGUAGES: SupportedLanguage[] = ['cpp', 'java'];
 
 export const fetchProblem = (slug: string): Promise<ProblemDetail> => api.get(`/problems/${encodeURIComponent(slug)}`);
 export const fetchHints = (id: string): Promise<{ hints: string[] }> => api.get(`/problems/${id}/hints`);
@@ -51,6 +55,7 @@ export interface SubmissionRecord {
   passed: number;
   total: number;
   time_ms: number | null;
+  memory_kb?: number | null;
   created_at: string;
 }
 export const fetchSubmissions = (id: string): Promise<{ submissions: SubmissionRecord[] }> => api.get(`/problems/${id}/submissions`);
@@ -95,10 +100,22 @@ export async function judgeOnServer(p: ProblemDetail, code: string, language: Su
   return { result: toExecutionResult(p, res, true), xpGained: res.xpGained, firstSolve: res.firstSolve };
 }
 
-/** Run on the server against the sample tests only (no solve, no XP). */
-export async function runOnServer(p: ProblemDetail, code: string, language: SupportedLanguage): Promise<ExecutionResult> {
+/** Run on the server against the sample tests, or one custom input (no solve, no XP). */
+export async function runOnServer(p: ProblemDetail, code: string, language: SupportedLanguage, custom?: CustomRunInput): Promise<ExecutionResult> {
   try {
-    const res: Omit<JudgeResponse, 'xpGained' | 'firstSolve'> = await api.post(`/problems/${p.id}/run`, { code, language });
+    const res: Omit<JudgeResponse, 'xpGained' | 'firstSolve'> = await api.post(`/problems/${p.id}/run`, {
+      code, language, ...(custom ? { input: custom.input, ...(custom.expected ? { expected: custom.expected } : {}) } : {}),
+    });
+    if (custom && res.custom) {
+      return {
+        status: res.verdict,
+        output: '',
+        executionTime: res.timeMs,
+        memoryUsage: res.memoryKb ? res.memoryKb * 1024 : undefined,
+        ranIn: 'server',
+        custom: { ...res.custom, matched: res.custom.expected === null || res.custom.error ? undefined : res.verdict === 'Accepted' },
+      };
+    }
     return toExecutionResult(p, res, false);
   } catch (e) {
     const err = e as Error & { status?: number };
@@ -131,6 +148,8 @@ function toExecutionResult(p: ProblemDetail, res: Omit<JudgeResponse, 'xpGained'
     status: res.verdict,
     output: res.message ?? '',
     executionTime: res.timeMs,
+    memoryUsage: res.memoryKb ? res.memoryKb * 1024 : undefined,
+    ranIn: 'server',
     testCaseResults: res.verdict === 'Compilation Error' ? undefined : testCaseResults,
     ...(judged ? { judged: { passed: res.passed, total: res.total } } : {}),
   };
@@ -161,3 +180,49 @@ export function findProblems(f: { search?: string; company?: string; difficulty?
   if (f.difficulty) q.set('difficulty', f.difficulty);
   return api.get(`/problems?${q.toString()}`);
 }
+
+// ── Run history ──────────────────────────────────────────────────────────────
+
+export interface RunRecord {
+  id: string;
+  language: SupportedLanguage;
+  source: 'browser' | 'server';
+  kind: 'examples' | 'custom';
+  code: string;
+  input: string | null;
+  output: string | null;
+  verdict: ExecutionResult['status'];
+  passed: number;
+  total: number;
+  time_ms: number | null;
+  memory_kb: number | null;
+  created_at: string;
+}
+export const fetchRuns = (id: string): Promise<{ runs: RunRecord[] }> => api.get(`/problems/${id}/runs`);
+
+/** Keep a run done in the browser in the learner's history (server runs are kept by the server). */
+export function reportBrowserRun(id: string, code: string, language: SupportedLanguage, result: ExecutionResult, custom?: CustomRunInput): Promise<unknown> {
+  const tests = result.testCaseResults ?? [];
+  const output = custom ? (result.custom?.output ?? result.custom?.error ?? null) : (result.status === 'Accepted' || result.status === 'Wrong Answer' ? null : result.output || null);
+  return api.post(`/problems/${id}/runs`, {
+    language,
+    kind: custom ? 'custom' : 'examples',
+    code,
+    ...(custom ? { input: custom.input } : {}),
+    ...(output ? { output: output.slice(0, 4000) } : {}),
+    verdict: result.status,
+    passed: custom ? (result.custom?.matched ? 1 : 0) : tests.filter((t) => t.passed).length,
+    total: custom ? (result.custom?.expected != null ? 1 : 0) : tests.length,
+    ...(result.executionTime != null && Number.isFinite(result.executionTime) ? { time_ms: Math.max(0, Math.round(result.executionTime)) } : {}),
+  });
+}
+
+// ── Editor preferences ──────────────────────────────────────────────────────
+
+interface EditorPrefsResponse { theme: string; font_size: number; word_wrap: boolean }
+export const fetchEditorPrefs = async (): Promise<Partial<EditorPrefs>> => {
+  const r: EditorPrefsResponse = await api.get('/users/me/editor-preferences');
+  return { theme: r.theme, fontSize: r.font_size, wordWrap: r.word_wrap };
+};
+export const saveEditorPrefs = (p: EditorPrefs): Promise<unknown> =>
+  api.put('/users/me/editor-preferences', { ...(p.theme ? { theme: p.theme } : {}), font_size: p.fontSize, word_wrap: p.wordWrap });

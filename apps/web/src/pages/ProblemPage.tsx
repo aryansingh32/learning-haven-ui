@@ -6,9 +6,14 @@ import { toast } from 'sonner';
 import { ArrowLeft, CheckCircle2, Loader2, RotateCcw, ShieldCheck, AlertTriangle, Bookmark } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { CodeWorkspace, type SupportedLanguage } from '@/modules/CodeExecutor';
+import { CodeWorkspace, type CustomRunInput, type EditorPrefsSync, type ExecutionResult, type RunContext, type SupportedLanguage } from '@/modules/CodeExecutor';
 import { ProblemDetailPanel } from '@/features/practice/ProblemDetailPanel';
-import { fetchProblem, judgeOnServer, JUDGED_LANGUAGES, runOnServer, SERVER_RUN_LANGUAGES, setProblemStatus, toQuestion } from '@/features/practice/practice.service';
+import {
+  fetchEditorPrefs, fetchProblem, judgeOnServer, JUDGED_LANGUAGES, reportBrowserRun, runOnServer, saveEditorPrefs, SERVER_RUN_LANGUAGES, setProblemStatus, toQuestion,
+} from '@/features/practice/practice.service';
+
+// Editor theme, font size and word wrap follow the learner across devices.
+const EDITOR_PREFS_SYNC: EditorPrefsSync = { load: fetchEditorPrefs, save: saveEditorPrefs };
 
 const DIFF_STYLE: Record<string, string> = {
   easy: 'text-emerald-400 bg-emerald-500/10',
@@ -51,9 +56,16 @@ export default function ProblemPage() {
     return outcome.result;
   }, [problem, refreshLists]);
 
-  // C++ can't run in the browser: its Run goes to the server (sample tests only).
-  const run = useCallback((code: string, language: SupportedLanguage) =>
-    (SERVER_RUN_LANGUAGES.includes(language) ? runOnServer(problem!, code, language) : undefined), [problem]);
+  // C++ and Java can't run in the browser: their Run goes to the server (samples or a custom input).
+  const run = useCallback((code: string, language: SupportedLanguage, custom?: CustomRunInput) =>
+    (SERVER_RUN_LANGUAGES.includes(language) ? runOnServer(problem!, code, language, custom) : undefined), [problem]);
+
+  // Every Run lands in the learner's run history: the server keeps its own runs, browser runs are reported.
+  const runDone = useCallback((result: ExecutionResult, ctx: RunContext) => {
+    const refresh = () => void queryClient.invalidateQueries({ queryKey: ['problem-runs', problem!.id] });
+    if (result.ranIn === 'server' || SERVER_RUN_LANGUAGES.includes(ctx.language)) return refresh();
+    reportBrowserRun(problem!.id, ctx.code, ctx.language, result, ctx.custom).catch(() => undefined).finally(refresh);
+  }, [problem, queryClient]);
 
   const status = useMutation({
     mutationFn: (s: 'tried' | 'revision' | 'solved') => setProblemStatus(problem!.id, s),
@@ -125,12 +137,15 @@ export default function ProblemPage() {
       key={problem.id}
       question={question}
       header={header}
-      questionPanel={<ProblemDetailPanel problem={problem} question={question} />}
+      questionPanel={(editor) => <ProblemDetailPanel problem={problem} question={question} editor={editor} />}
       languages={languages}
       initialLanguage="javascript"
       storageKey={`problem:${problem.slug}`}
       onSubmit={problem.judged ? submit : undefined}
       onRun={problem.judged ? run : undefined}
+      onRunComplete={problem.judged ? runDone : undefined}
+      allowCustomInput={problem.judged}
+      editorPrefsSync={EDITOR_PREFS_SYNC}
       showSubmit={problem.judged}
       theme="dark"
     />

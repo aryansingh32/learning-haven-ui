@@ -46,6 +46,8 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@supabase/supabase-js": "^2.98.0",
     "@tanstack/react-query": "^5.83.0",
+    "@wasm-fmt/clang-format": "23.1.1",
+    "@wasm-fmt/ruff_fmt": "0.15.20",
     "JSCPP": "^2.0.9",
     "axios": "^1.13.5",
     "canvas-confetti": "^1.9.4",
