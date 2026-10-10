@@ -18,14 +18,6 @@ const createOrderV2Schema = z.object({
   }),
 });
 
-// A course may be addressed by uuid or slug, matching GET /api/courses/:idOrSlug.
-const createCourseOrderSchema = z.object({
-  body: z.object({
-    course_id: z.string().min(1).max(200),
-    coupon_code: z.string().max(50).optional(),
-  }),
-});
-
 const verifyPaymentV2Schema = z.object({
   body: z.object({
     razorpay_order_id: z.string().min(1),
@@ -53,14 +45,6 @@ router.post(
   writeRateLimit,
   validate(createOrderV2Schema),
   PaymentsV2Controller.createOrder
-);
-
-router.post(
-  '/course-order',
-  authenticateUser,
-  writeRateLimit,
-  validate(createCourseOrderSchema),
-  PaymentsV2Controller.createCourseOrder
 );
 
 router.post(
