@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Monitor, Minimize2 } from 'lucide-react';
+import { Play, Monitor, Minimize2, Gauge } from 'lucide-react';
 import { ChapterCta } from './ChapterCta';
 import { VideoTimelinePanel } from './VideoTimelinePanel';
 import { useYouTubePlayer } from '@/hooks/useYouTubePlayer';
@@ -39,7 +39,12 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const hasTimeline = timeline.length > 0 && Boolean(chapterId);
-  const { containerRef: ytContainerRef, currentTime } = useYouTubePlayer(videoId, hasTimeline && playing);
+  // Every lesson video plays through the IFrame API so we can offer our own speed control;
+  // if the API can't load (blocked network), we fall back to the plain embed.
+  const {
+    containerRef: ytContainerRef, currentTime, isReady, failed: apiFailed,
+    playbackRate, setPlaybackRate, availableRates,
+  } = useYouTubePlayer(videoId, playing);
 
   if (!videoId) return null;
 
@@ -148,11 +153,11 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
             </button>
           )}
 
-          {playing && hasTimeline && (
-            <div ref={ytContainerRef} className="absolute inset-0 w-full h-full" />
+          {playing && !apiFailed && (
+            <div ref={ytContainerRef} className="absolute inset-0 w-full h-full" data-testid="yt-player" />
           )}
 
-          {playing && !hasTimeline && playerSrc && (
+          {playing && apiFailed && playerSrc && (
             <iframe
               className="absolute inset-0 w-full h-full"
               src={playerSrc}
@@ -185,6 +190,28 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
           </div>
         )}
       </motion.div>
+
+      {playing && !apiFailed && (
+        <div className="flex flex-wrap items-center gap-2">
+          <label htmlFor={`speed-${videoId}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+            <Gauge className="h-3.5 w-3.5" aria-hidden="true" /> Speed
+          </label>
+          <select
+            id={`speed-${videoId}`}
+            value={String(playbackRate)}
+            disabled={!isReady}
+            onChange={(e) => setPlaybackRate(Number(e.target.value))}
+            className="h-8 rounded-lg border border-border/60 bg-background px-2 text-xs font-semibold text-foreground disabled:opacity-50"
+          >
+            {availableRates.map((r) => (
+              <option key={r} value={String(r)}>
+                {r === 1 ? 'Normal (1×)' : `${r}×`}
+              </option>
+            ))}
+          </select>
+          <span className="sr-only" aria-live="polite">Playback speed {playbackRate}×</span>
+        </div>
+      )}
 
       {cinemaMode && playing && (
         <p className="text-center text-xs text-muted-foreground">

@@ -646,3 +646,8 @@
     }
   }
 }
+/* Lesson highlights (CSS Custom Highlight API, see features/learning/components/DocSection.tsx) */
+::highlight(forge-hl-yellow) { background-color: rgb(250 204 21 / 0.45); }
+::highlight(forge-hl-green) { background-color: rgb(74 222 128 / 0.4); }
+::highlight(forge-hl-blue) { background-color: rgb(56 189 248 / 0.4); }
+::highlight(forge-hl-pink) { background-color: rgb(244 114 182 / 0.4); }

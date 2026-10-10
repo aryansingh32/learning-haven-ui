@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
+import { ArrowLeft, CalendarClock, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   fetchChapterWithProgress,
@@ -25,6 +25,8 @@ import { MicroRevisionSection } from '@/features/learning/components/MicroRevisi
 import CelebrationOverlay from '@/features/learning/components/CelebrationOverlay';
 import { ChapterCta } from '@/features/learning/components/ChapterCta';
 import { ChapterNotesPanel } from '@/features/learning/components/ChapterNotesPanel';
+import { ChapterDiscussion } from '@/features/learning/components/ChapterDiscussion';
+import { formatUnlockDate } from '@/data/learning';
 import { toast } from 'sonner';
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
 
@@ -268,6 +270,50 @@ export default function LearnChapterPage() {
     );
   }
 
+  // Closed by the course's rules (checked on the server): prerequisites not finished, or drip release.
+  if (progress?.status === 'LOCKED_PREREQ' || progress?.status === 'LOCKED_DRIP') {
+    const gate = data?.gate;
+    const backToCourse = () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses');
+    return (
+      <motion.div className="max-w-3xl mx-auto card-layer-2 rounded-2xl p-6 sm:p-8 text-center space-y-4" data-testid="chapter-gate">
+        {gate?.code === 'DRIP' ? (
+          <CalendarClock className="h-10 w-10 mx-auto text-orange-500" aria-hidden="true" />
+        ) : (
+          <Lock className="h-10 w-10 mx-auto text-muted-foreground" aria-hidden="true" />
+        )}
+        <h2 className="text-xl font-bold">{chapter.title}</h2>
+        {gate?.code === 'DRIP' ? (
+          <p className="text-sm text-muted-foreground">
+            This course releases a chapter at a time. This one unlocks on{' '}
+            <strong className="text-foreground">{formatUnlockDate(gate.available_at)}</strong>.
+          </p>
+        ) : (
+          <>
+            <p className="text-sm text-muted-foreground">{gate?.message || 'Finish the required courses first.'}</p>
+            {gate?.code === 'PREREQUISITES' && gate.prerequisites.length > 0 && (
+              <ul className="mx-auto max-w-sm space-y-2 text-left">
+                {gate.prerequisites.map((p) => (
+                  <li key={p.course_id} className="flex items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/60 px-3 py-2">
+                    <span className="text-sm font-semibold min-w-0 truncate">{p.title}</span>
+                    <span className="shrink-0 text-xs text-muted-foreground">{p.done}/{p.total} chapters</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <ChapterCta variant="secondary" onClick={backToCourse}>Back to course</ChapterCta>
+          {gate?.code === 'PREREQUISITES' && gate.prerequisites[0] && (
+            <ChapterCta variant="primary" onClick={() => navigate(`/course/${gate.prerequisites[0].course_id}/chapters`)}>
+              Go to {gate.prerequisites[0].title}
+            </ChapterCta>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
+
   if (isLocked || progress?.status === 'LOCKED_PAYWALL') {
     const isPaywall = progress?.status === 'LOCKED_PAYWALL';
     return (
@@ -331,6 +377,8 @@ export default function LearnChapterPage() {
           <DocSection
             markdown={c.doc_md || ''}
             chapterId={chapter.id}
+            stepId={step.id}
+            courseId={data?.course?.id}
             chapterTitle={step.title || chapter.title}
             onMarkDone={() => markStepDone(step.id, index)}
           />
@@ -663,6 +711,8 @@ export default function LearnChapterPage() {
           isUnlocking={unlockMutation.isPending}
         />
       )}
+
+      {started && <ChapterDiscussion chapterId={chapter.id} chapterTitle={chapter.title} />}
 
       <CelebrationOverlay
         isOpen={showCelebration}

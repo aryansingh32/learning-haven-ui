@@ -26,6 +26,7 @@ export type NotebookEntry = {
   quiz_answers: NotebookQuizAnswer[];
   task_response: string | null;
   task_submitted_at: string | null;
+  highlights?: { id: string; text: string; color: 'yellow' | 'green' | 'blue' | 'pink'; created_at: string }[];
 };
 
 export type NotebookMockTest = {

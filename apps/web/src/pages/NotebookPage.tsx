@@ -6,8 +6,10 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Download, Loader2,
-  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X, Trophy,
+  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X, Trophy, Highlighter, Trash2,
 } from 'lucide-react';
+import { deleteHighlight } from '@/data/learning';
+import { SWATCH } from '@/features/learning/components/DocSection';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { fetchCourseNotebook, exportCourseNotebookPdf, saveChapterNotes, type NotebookEntry } from '@/data/notebook';
@@ -62,6 +64,16 @@ export default function NotebookPage() {
       void qc.invalidateQueries({ queryKey: ['notebook', courseId] });
     },
     onError: () => toast.error('Could not save your edits. Try again.'),
+  });
+
+  const removeHighlightMutation = useMutation({
+    mutationFn: (id: string) => deleteHighlight(id),
+    onSuccess: () => {
+      toast.success('Highlight removed');
+      void qc.invalidateQueries({ queryKey: ['notebook', courseId] });
+      void qc.invalidateQueries({ queryKey: ['highlights'] });
+    },
+    onError: () => toast.error('Could not remove the highlight. Try again.'),
   });
 
   const pages: NotebookPage[] = useMemo(() => {
@@ -339,6 +351,31 @@ export default function NotebookPage() {
                       <p className="text-xs text-[#a89a76] italic">No notes yet — click Edit to add some.</p>
                     )}
                   </div>
+
+                  {page.entry.highlights?.length ? (
+                    <div data-testid="notebook-highlights">
+                      <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">
+                        <Highlighter className="h-3 w-3" aria-hidden="true" /> Highlights
+                      </p>
+                      <ul className="space-y-1.5">
+                        {page.entry.highlights.map((h) => (
+                          <li key={h.id} className="flex items-start gap-2">
+                            <span className={cn('mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full', SWATCH[h.color])} aria-hidden="true" />
+                            <span className="flex-1 min-w-0 break-words text-sm text-[#2a2419]">{h.text}</span>
+                            <button
+                              type="button"
+                              onClick={() => removeHighlightMutation.mutate(h.id)}
+                              disabled={removeHighlightMutation.isPending}
+                              aria-label={`Remove highlight: ${h.text.slice(0, 60)}`}
+                              className="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-lg text-[#8a7d5f] hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
 
                   {page.entry.quiz_answers?.length ? (
                     <div>

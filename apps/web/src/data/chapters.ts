@@ -1,4 +1,5 @@
 import { api } from '@/services/api.svc';
+import type { ChapterGate, CoursePrerequisite } from '@/data/learning';
 
 export type StepType =
   | 'story_hook'
@@ -107,7 +108,7 @@ export type Chapter = {
 
 export type ChapterProgress = {
   id: string;
-  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED';
+  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED' | 'LOCKED_PAYWALL' | 'LOCKED_PREREQ' | 'LOCKED_DRIP';
   quiz_score?: number;
   quiz_attempts?: number;
   tasks_completed?: number;
@@ -159,6 +160,8 @@ export type ChapterWithProgressResponse = {
     steps: ChapterStep[];
   };
   progress: ChapterProgress;
+  /** Why the chapter is closed (course prerequisites or drip release), when it is. */
+  gate?: ChapterGate | null;
   celebration?: ChapterCelebrationMeta;
   user?: {
     full_name: string;
@@ -175,7 +178,16 @@ export async function fetchPhases() {
   return api.get('/courses');
 }
 
-export async function fetchPhaseChapters(courseId: string) {
+export type CourseChaptersResponse = {
+  chapters: unknown[];
+  prerequisites?: CoursePrerequisite[];
+  prerequisites_blocked?: boolean;
+  prerequisites_exemption?: 'admin' | 'college_assigned' | 'already_started' | null;
+  prerequisites_message?: string;
+  drip?: { interval_days: number | null; started_at: string | null };
+};
+
+export async function fetchPhaseChapters(courseId: string): Promise<CourseChaptersResponse> {
   return api.get(`/courses/${courseId}/chapters`);
 }
 

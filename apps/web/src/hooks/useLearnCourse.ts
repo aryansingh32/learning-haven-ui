@@ -1,6 +1,6 @@
 import { useEffect, useId } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchPhases, fetchPhaseChapters } from '@/data/chapters';
+import { fetchPhases, fetchPhaseChapters, type CourseChaptersResponse } from '@/data/chapters';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 
@@ -12,10 +12,17 @@ export type CourseChapter = {
   difficulty?: string;
   est_minutes?: number;
   story_hook?: string;
-  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED';
+  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED' | 'LOCKED_PAYWALL';
   total_steps: number;
   completed_steps: number;
+  /** Drip release: when the chapter opens (null before the learner starts, or without drip). */
+  available_at?: string | null;
+  /** Drip release: days after starting the course when it opens. */
+  available_after_days?: number | null;
+  drip_locked?: boolean;
 };
+
+export type CourseGateInfo = Omit<CourseChaptersResponse, 'chapters'>;
 
 export function useLearnCourse(courseId?: string) {
   const { user } = useAuth();
@@ -41,9 +48,10 @@ export function useLearnCourse(courseId?: string) {
   const chaptersQuery = useQuery({
     queryKey: ['learn-chapters', activeCourse?.id],
     queryFn: async () => {
-      if (!activeCourse?.id) return [];
+      if (!activeCourse?.id) return { chapters: [] as CourseChapter[], gate: {} as CourseGateInfo };
       const res = await fetchPhaseChapters(activeCourse.id);
-      return (res?.chapters || []) as CourseChapter[];
+      const { chapters, ...gate } = res || { chapters: [] };
+      return { chapters: (chapters || []) as CourseChapter[], gate: gate as CourseGateInfo };
     },
     enabled: Boolean(activeCourse?.id),
     staleTime: 15_000,
@@ -78,7 +86,7 @@ export function useLearnCourse(courseId?: string) {
     };
   }, [user?.id, qc, instanceId]);
 
-  const chapters = (chaptersQuery.data || []).sort((a, b) => a.chapter_number - b.chapter_number);
+  const chapters = [...(chaptersQuery.data?.chapters || [])].sort((a, b) => a.chapter_number - b.chapter_number);
   const completedCount = chapters.filter((c) => c.status === 'COMPLETED').length;
   const progressPercent = chapters.length
     ? Math.round((completedCount / chapters.length) * 100)
@@ -97,6 +105,7 @@ export function useLearnCourse(courseId?: string) {
     completedCount,
     progressPercent,
     activeChapter,
+    gate: chaptersQuery.data?.gate,
     refetch: chaptersQuery.refetch,
   };
 }

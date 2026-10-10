@@ -2,13 +2,15 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight, ArrowLeft, CheckCircle2, Clock, Flame, Lock,
-  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy
+  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy,
+  CalendarClock, ListChecks
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useLearnCourse } from "@/hooks/useLearnCourse";
 import { PremiumLockBadge } from "@/components/PremiumLockBadge";
 import { AssignedCourseBanner } from "@/features/campus/CollegeCourses";
+import { formatUnlockDate } from "@/data/learning";
 
 const difficultyStyles: Record<string, string> = {
   easy: "bg-success/10 text-success border border-success/20",
@@ -32,7 +34,9 @@ function normalizeDifficulty(d?: string) {
 export default function ChaptersOverviewPage() {
   const navigate = useNavigate();
   const { courseId } = useParams();
-  const { course, chapters, isLoading, completedCount, progressPercent, activeChapter } = useLearnCourse(courseId);
+  const { course, chapters, isLoading, completedCount, progressPercent, gate } = useLearnCourse(courseId);
+  const prereqBlocked = Boolean(gate?.prerequisites_blocked);
+  const prerequisites = gate?.prerequisites ?? [];
 
   const missions = useMemo(
     () =>
@@ -41,7 +45,12 @@ export default function ChaptersOverviewPage() {
         order: ch.chapter_number,
         title: ch.title,
         concept: ch.topic_tag || ch.story_hook || "Master this topic step by step",
-        locked: ch.status === "LOCKED",
+        // Locked in order, by drip release, or until the course's prerequisites are finished.
+        locked: ch.status === "LOCKED" || (ch.status !== "COMPLETED" && (Boolean(ch.drip_locked) || prereqBlocked)),
+        sequenceLocked: ch.status === "LOCKED",
+        dripLocked: ch.status !== "COMPLETED" && Boolean(ch.drip_locked),
+        availableAt: ch.available_at ?? null,
+        availableAfterDays: ch.available_after_days ?? null,
         paywalled: ch.status === "LOCKED_PAYWALL",
         completedSteps: ch.completed_steps,
         totalSteps: ch.total_steps || 1,
@@ -51,7 +60,7 @@ export default function ChaptersOverviewPage() {
         status: ch.status,
         reward: { xp: ch.xp_reward ?? (100 + ch.chapter_number * 25) },
       })),
-    [chapters]
+    [chapters, prereqBlocked]
   );
 
   const activeIndex = useMemo(
@@ -92,6 +101,46 @@ export default function ChaptersOverviewPage() {
 
       <AssignedCourseBanner courseId={course?.id ?? courseId} />
 
+      {prerequisites.length > 0 && (
+        <section
+          aria-labelledby="prereq-heading"
+          data-testid="prerequisites"
+          className={cn("rounded-2xl border p-4 sm:p-5", prereqBlocked ? "border-orange-500/40 bg-orange-500/5" : "border-border/60 card-layer-2")}
+        >
+          <h2 id="prereq-heading" className="flex items-center gap-2 text-sm font-extrabold text-foreground">
+            <ListChecks className="h-4 w-4 text-orange-500" aria-hidden="true" /> Before you start
+          </h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {prereqBlocked
+              ? gate?.prerequisites_message || "Finish these courses to unlock this one."
+              : gate?.prerequisites_exemption === "college_assigned"
+                ? "Your college assigned this course, so you can start it now. These courses are recommended first:"
+                : gate?.prerequisites_exemption === "already_started"
+                  ? "You had already started this course. These courses are recommended first:"
+                  : gate?.prerequisites_exemption === "admin"
+                    ? "Admin preview — learners must finish these first:"
+                    : "You've finished everything this course needs."}
+          </p>
+          <ul className="mt-3 space-y-2">
+            {prerequisites.map((p) => (
+              <li key={p.course_id}>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/course/${p.course_id}/chapters`)}
+                  className="flex w-full items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-left hover:bg-background"
+                >
+                  <span className="flex min-w-0 items-center gap-2">
+                    {p.completed ? <CheckCircle2 className="h-4 w-4 shrink-0 text-success" aria-label="Done" /> : <Lock className="h-4 w-4 shrink-0 text-muted-foreground" aria-label="Not finished" />}
+                    <span className="truncate text-sm font-semibold">{p.title}</span>
+                  </span>
+                  <span className="shrink-0 text-xs text-muted-foreground">{p.done}/{p.total} chapters</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className="rounded-2xl card-layer-2 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -118,7 +167,7 @@ export default function ChaptersOverviewPage() {
                 <Trophy className="h-4 w-4 text-orange-500" /> Mock Test
               </button>
             )}
-            {nextMission && (
+            {nextMission && !prereqBlocked && (
               <button
                 type="button"
                 onClick={() => navigate(`/chapter/${nextMission.id}`)}
@@ -171,10 +220,10 @@ export default function ChaptersOverviewPage() {
               const blurredMissions = missions.slice(visibleCount);
 
               const renderMission = (mission: typeof missions[0], index: number, isBlurredSection: boolean = false) => {
-                const isComplete = mission.status === "COMPLETED" || index < safeActiveIndex;
+                const isComplete = mission.status === "COMPLETED" || (index < safeActiveIndex && !mission.locked);
                 const isActuallyActive = index === safeActiveIndex && !mission.locked && !mission.paywalled;
                 const isLockedOrPaywalled = mission.locked || mission.paywalled;
-                const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.locked ? "Locked" : "Active";
+                const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.dripLocked && !mission.sequenceLocked ? "Coming soon" : mission.locked ? "Locked" : "Active";
                 const IconComponent = iconMap[mission.icon] || Grid;
 
                 return (
@@ -315,8 +364,24 @@ export default function ChaptersOverviewPage() {
                       )}
 
                       {mission.locked && !mission.paywalled && !isBlurredSection && (
-                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest relative z-10">
-                          <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
+                        <div className="mt-4 flex flex-col gap-1.5 relative z-10">
+                          {prereqBlocked ? (
+                            <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground/70 uppercase tracking-widest">
+                              <ListChecks className="w-3.5 h-3.5" /> Finish the required courses first
+                            </span>
+                          ) : mission.sequenceLocked ? (
+                            <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest">
+                              <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
+                            </span>
+                          ) : null}
+                          {mission.dripLocked && !prereqBlocked && (
+                            <span className="flex items-center gap-2 text-xs font-bold text-orange-500/90" data-testid="drip-label">
+                              <CalendarClock className="w-3.5 h-3.5" />
+                              {mission.availableAt
+                                ? `Unlocks on ${formatUnlockDate(mission.availableAt)}`
+                                : `Opens ${mission.availableAfterDays} day${mission.availableAfterDays === 1 ? "" : "s"} after you start`}
+                            </span>
+                          )}
                         </div>
                       )}
 
@@ -363,11 +428,6 @@ export default function ChaptersOverviewPage() {
         </section>
       )}
 
-      {activeChapter && !activeChapter.status.includes('PAYWALL') && (
-        <p className="text-xs text-muted-foreground text-center mt-6">
-          Current: {activeChapter.title} ({activeChapter.status})
-        </p>
-      )}
     </motion.div>
   );
 }
