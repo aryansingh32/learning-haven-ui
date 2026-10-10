@@ -71,7 +71,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
-| 44 | Admin Control Center | 21 | 14 | 12 | 47 |
+| 44 | Admin Control Center | 31 | 8 | 8 | 47 |
 | 45 | Payments & Monetization | 15 | 4 | 14 | 33 |
 | 46 | SaaS & Enterprise Management | 8 | 1 | 20 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 1 | 3 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 4 | 5 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **490** (26%) | **181** (10%) | **1227** (65%) | **1898** |
+| | **All modules** | **506** (27%) | **170** (9%) | **1222** (64%) | **1898** |
 
 ---
 
@@ -1543,8 +1543,8 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 44. Admin Control Center
 - [x] Global Admin Dashboard — admin Dashboard
 - [x] Organization Admin Dashboard — Campus portal Overview + Insights (trends, roll-ups, at-risk students) (C2b)
-- [ ] 🟡 Feature Flag Management — `feature_flags` table (5 flags, all off); no admin screen
-- [ ] 🟡 Feature Toggle Controls — same; plus `allow_signups` setting
+- [x] Feature Flag Management — admin Control Centre: roll-outs by % of learners + chosen colleges (W3)
+- [x] Feature Toggle Controls — flags served by `GET /api/system/status`, `useFeatureFlag`; sign-ups can be paused (W3)
 - [ ] Module Configuration
 - [x] Tenant Configuration — college branding and exam/course defaults (Settings, C1)
 - [x] Dynamic Configuration — `system_settings` edited in admin Settings
@@ -1553,7 +1553,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Branding Configuration — CMS, course page CMS; college branding
 - [ ] Custom Navigation Configuration
 - [x] User Management — admin Users, UserDetail
-- [ ] 🟡 Bulk User Operations — Campus People: select many → suspend, restore, role, custom role, add to / remove from batch (C2c); Forge admin Users still one at a time
+- [x] Bulk User Operations — Campus People (C2c); Forge admin Users: select many → suspend, restore, role (W3)
 - [x] Role Management — admin roles
 - [x] Permission Management — admin Permissions
 - [x] Course Management
@@ -1562,12 +1562,12 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Content Moderation
 - [x] AI Model Configuration — admin AI Config (`ai_model`)
 - [x] AI Provider Configuration — provider keys in settings
-- [ ] 🟡 AI Prompt Management — system prompt in code
+- [x] AI Prompt Management — coach system prompt edited in AI Config, reset to built-in (W3)
 - [x] AI Usage Limits — via plans/entitlements
 - [ ] AI Cost Budgets
-- [ ] 🟡 API Key Management — AI keys in settings only
-- [ ] Integration Management
-- [ ] 🟡 Email Configuration — env-based
+- [x] API Key Management — keys masked, never sent to the browser, super admin replaces (W3)
+- [ ] 🟡 Integration Management — admin Operations shows which services are configured (W3); keys stay in the server env
+- [x] Email Configuration — admin Operations: provider, key hint, sender, test send (W3)
 - [ ] 🟡 Notification Configuration — apprenticeship notifications page
 - [x] Payment Configuration — plans + prices in admin
 - [x] Subscription Configuration — admin Plans
@@ -1577,17 +1577,17 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Audit Log Viewer — admin Audit Logs
 - [x] System Health Dashboard — admin System Health
 - [x] Error Monitoring — Sentry (API + web)
-- [ ] 🟡 Job Queue Monitoring — BullMQ; `job_logs`; no queue dashboard
+- [x] Job Queue Monitoring — admin Operations: counts, failed jobs, retry, clear, pause (W3)
 - [ ] 🟡 Background Task Monitoring — admin Tasks page
-- [ ] Data Export Controls
-- [ ] 🟡 Maintenance Mode — `maintenance_mode` setting exists; nothing enforces it
-- [ ] System Announcement Management
+- [ ] 🟡 Data Export Controls — users CSV export (logged in admin audit) (W3)
+- [x] Maintenance Mode — enforced by the API (503) with a learner screen; staff and webhooks pass (W3)
+- [x] System Announcement Management — timed banners by audience (W3)
 - [ ] Backup Management
 - [ ] Restore Management
 - [x] Tenant Usage Monitoring — admin Colleges: students vs seats, staff, waiting roster, published tests, attempts in 30 days, last activity
 - [ ] 🟡 Admin Action History — admin audit logs
 - [ ] Approval Queue
-- [ ] Emergency Feature Disablement
+- [x] Emergency Feature Disablement — kill switches for AI, code runs, purchases, test series, discussions, community (W3)
 
 ### 45. Payments & Monetization
 - [x] Subscription Management — `subscriptions`, Billing page

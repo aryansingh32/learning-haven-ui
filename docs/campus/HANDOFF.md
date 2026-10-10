@@ -120,6 +120,11 @@ above); live now matches the repo. `scripts/test-db.sh` also builds a *replay* d
 post-snapshot migrations, the order live got them) and runs `tests/replay/*.sql`.
 
 Security fixes found while applying (all mutation-tested, applied):
+- **2026-10-10 (20261105000001):** signed-in learners had UPDATE on their own `public.users` row via PostgREST (policy
+  "Users can update own data", full column grants): `role = 'super_admin'` made them admin everywhere, including every
+  `*_admin_all` policy (payments, subscriptions, plans, coupons, withdrawals). Also `wallet_balance`, `current_plan`,
+  `is_banned`, xp; plus direct inserts into `withdrawals`, own `build_stage_results`, enrolments, referral codes. Writes
+  on these 8 tables revoked from anon/authenticated (no app wrote them as the learner). Test: `tests/control_centre.sql`.
 - `increment_xp()` (20260823000001) and `update_streak()` (audit branch) were SECURITY DEFINER and granted to `authenticated`:
   any signed-in user could give anyone XP or change streaks through PostgREST. Now service role only.
 - `chapter_notes` and `mock_test_attempts` were created without RLS: the anon key could read everyone's notes and the mock

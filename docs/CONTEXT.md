@@ -36,7 +36,7 @@ The work goes in waves:
 |---|---|---|
 | C1–C3 | Campus partials: college structure; grading, analytics, activity log and roles; notifications and placement drives | ✅ done |
 | W2 | Learner-side partials | 🔄 in progress (see below) |
-| W3 | Admin control center: feature flags, maintenance mode, AI prompts, API keys, email config, queues, bulk user operations | ⏳ next |
+| W3 | Admin control center: feature flags, maintenance mode, AI prompts, API keys, email config, queues, bulk user operations | ✅ (2026-10-10, browser-verified, 31 checks) |
 | W4 | AI features (testable only with a stub model until a key is set) | ⏳ |
 | W5 | Content drafts (problems, editorials, aptitude bank) for the owner's team to review | ⏳ |
 | W6 | Infra and security (some steps are owner-only) | ⏳ |
@@ -74,7 +74,18 @@ W2 is done. Migrations `20261102000001` (readiness), `20261103000001` (bundles +
 `20261104000001` (certificate templates) are **applied to live and verified** (2026-10-10).
 Branch `feat/w2-readiness-bundles-certs`, stacked on `feat/college-content`.
 
-**Immediate next step:** W3 (admin control center), then W5 (content drafts).
+W3 is done (branch `feat/w3-control-centre`, stacked on `feat/w2-readiness-bundles-certs`). Migration
+`20261105000001` (control centre + **security fix**: learners could make themselves super_admin through Supabase REST)
+is **applied to live and verified** (2026-10-10). What it added:
+- Admin → Control Centre: maintenance mode (enforced), pause sign-ups, emergency switches per module (Forge + Campus
+  APIs), feature roll-outs (% of learners + chosen colleges, `GET /api/system/status`, web `useFeatureFlag`), announcements.
+- Admin → Operations: BullMQ queues (counts, failed jobs, retry/clear/pause), email status + test send, integrations.
+- Users: bulk suspend/restore/role, status filter, CSV export; bans enforced by both APIs (were never checked).
+- AI config: keys never sent to the browser; editable coach system prompt.
+- Monetization worker now runs (referral activation and subscription expiry were never processed).
+- Known gap: Google sign-up goes straight to Supabase, so "pause sign-ups" doesn't stop it.
+
+**Immediate next step:** W5 (content drafts).
 
 ## 3. Done (high level)
 
@@ -102,8 +113,7 @@ Details of each slice: `docs/campus/BUILD_PLAN.md` (the "Slice … built" sectio
 ## 4. Left, and owner-only actions
 
 **Engineering:**
-- Rest of W2.
-- W3–W7.
+- W4–W7.
 - Campus partials still open:
   - colleges authoring their own courses
   - project / GitHub assignments
