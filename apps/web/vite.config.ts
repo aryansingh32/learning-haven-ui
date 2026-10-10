@@ -7,7 +7,8 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const apiBase = env.VITE_API_BASE_URL || "http://localhost:5000/api";
-  const apiTarget = apiBase.replace(/\/api\/?$/, "");
+  // A relative base ("/api", as in .env.example) means "same origin": proxy it to the local API.
+  const apiTarget = apiBase.replace(/\/api\/?$/, "") || env.API_PROXY_TARGET || "http://localhost:5000";
 
   return {
     server: {
