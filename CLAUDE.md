@@ -2,7 +2,7 @@
 
 Monorepo for **Forge** (learner platform) and **Forge Campus** (college LMS/assessments). pnpm 9 + turbo.
 
-**Start here when resuming work:** read `docs/campus/HANDOFF.md` — current state, branch merge order,
+**Start here when resuming work:** read `docs/CONTEXT.md` (one-page summary: what we're doing, done, left, where the docs are), then `docs/campus/HANDOFF.md` — current state, branch merge order,
 live-database state, architecture rules, how to test, and what's left (next: slice B1, coding questions in Campus tests).
 Then `docs/campus/BUILD_PLAN.md` (build order) and `docs/campus/FEATURE_CHECKLIST.md` (status of every feature).
 
