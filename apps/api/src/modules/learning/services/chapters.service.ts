@@ -4,6 +4,7 @@ import logger from '../../../config/logger';
 import { updateStreak } from '../../../utils/streak';
 import { checkBadges } from '../../../utils/badges';
 import { CoursesService } from './courses.service';
+import { LearningGateService, dripUnlockAt } from './learningGate.service';
 
 /**
  * BUG-014 fix: Remove correct answer fields from quiz questions before sending to client.
@@ -134,6 +135,56 @@ export class ChaptersService {
                 throw new Error('Chapter not found');
             }
 
+            const course = chapter.course_id ? await CourseAccessService.loadCourse(chapter.course_id) : null;
+            // College courses and drafts: only for the people they're meant for.
+            if (course && !(await CourseAccessService.canSeeCourse(userId, course))) {
+                throw new Error('Chapter not found');
+            }
+
+            // Paywall: premium chapters need a paid plan, the course itself, or a college licence.
+            // Without access, chapters past 4 don't exist for you and earlier ones show only their title.
+            const premiumDenied = Boolean(course?.is_premium) && !(await CourseAccessService.hasPremiumAccess(userId, course!));
+            if (premiumDenied && chapter.chapter_number > 4) {
+                throw new Error('Chapter not found');
+            }
+
+            const userResult = await pool.query(
+                'SELECT full_name, streak_count, skip_tokens_remaining FROM public.users WHERE id = $1',
+                [userId]
+            );
+            const user = userResult.rows[0];
+            const userView = {
+                full_name: user?.full_name || 'Learner',
+                streak_day: user?.streak_count || 1,
+                skip_tokens_remaining: user?.skip_tokens_remaining ?? 0,
+            };
+            const courseView = chapter.course_title
+                ? { id: chapter.course_id, title: chapter.course_title, slug: chapter.course_slug }
+                : null;
+
+            // Course prerequisites and drip release (server-enforced). Gated chapters get no content
+            // and no progress row (opening a gated chapter doesn't count as starting the course).
+            const gate = await LearningGateService.chapterGate(userId, chapterId);
+            if (gate.ok === false) {
+                const existing = await pool.query(
+                    'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = $2',
+                    [userId, chapterId]
+                );
+                const { ok: _ok, ...gateBody } = gate as Exclude<typeof gate, { ok: true }>;
+                return {
+                    chapter,
+                    course: courseView,
+                    content: { quiz_questions: [], steps: [] },
+                    progress: {
+                        ...(existing.rows[0] || { user_id: userId, chapter_id: chapterId, steps_completed: [] }),
+                        status: gateBody.code === 'DRIP' ? 'LOCKED_DRIP' : 'LOCKED_PREREQ',
+                    },
+                    gate: gateBody,
+                    celebration: ChaptersService.buildCelebrationMeta(chapter, []),
+                    user: userView,
+                };
+            }
+
             const contentResult = await pool.query(
                 'SELECT * FROM public.chapter_content WHERE chapter_id = $1',
                 [chapterId]
@@ -154,49 +205,22 @@ export class ChaptersService {
 
             if (!progress) {
                 const defaultStatus = chapter.chapter_number === 1 ? 'UNLOCKED' : 'LOCKED';
-                const insertPayload = {
-                    user_id: userId,
-                    chapter_id: chapterId,
-                    status: defaultStatus,
-                    unlocked_at: defaultStatus === 'UNLOCKED' ? new Date().toISOString() : null,
-                };
-
-                const { data: inserted, error: insertError } = await supabase
-                    .from('user_chapter_progress')
-                    .insert(insertPayload)
-                    .select('*')
-                    .single();
-
-                if (insertError) {
-                    throw insertError;
-                }
-
-                progress = inserted;
+                await pool.query(
+                    `INSERT INTO public.user_chapter_progress (user_id, chapter_id, status, unlocked_at)
+                     VALUES ($1, $2, $3, $4) ON CONFLICT (user_id, chapter_id) DO NOTHING`,
+                    [userId, chapterId, defaultStatus, defaultStatus === 'UNLOCKED' ? new Date().toISOString() : null]
+                );
+                const inserted = await pool.query(
+                    'SELECT * FROM public.user_chapter_progress WHERE user_id = $1 AND chapter_id = $2',
+                    [userId, chapterId]
+                );
+                progress = inserted.rows[0];
             }
 
-            const { data: user } = await supabase
-                .from('users')
-                .select('full_name, streak_count, skip_tokens_remaining')
-                .eq('id', userId)
-                .maybeSingle();
-
-            const course = chapter.course_id ? await CourseAccessService.loadCourse(chapter.course_id) : null;
-            // College courses and drafts: only for the people they're meant for.
-            if (course && !(await CourseAccessService.canSeeCourse(userId, course))) {
-                throw new Error('Chapter not found');
-            }
-
-            // Paywall: premium chapters need a paid plan, the course itself, or a college licence.
-            // Without access, chapters past 4 don't exist for you and earlier ones show only their title.
             let paywalled = false;
-            if (course?.is_premium && !(await CourseAccessService.hasPremiumAccess(userId, course))) {
-                if (chapter.chapter_number > 4) {
-                    throw new Error('Chapter not found');
-                }
-                if (progress?.status !== 'COMPLETED') {
-                    progress = { ...progress, status: 'LOCKED_PAYWALL' };
-                    paywalled = true;
-                }
+            if (premiumDenied && progress?.status !== 'COMPLETED') {
+                progress = { ...progress, status: 'LOCKED_PAYWALL' };
+                paywalled = true;
             }
             if (paywalled) {
                 content = null;
@@ -207,13 +231,7 @@ export class ChaptersService {
 
             return {
                 chapter,
-                course: chapter.course_title
-                    ? {
-                          id: chapter.course_id,
-                          title: chapter.course_title,
-                          slug: chapter.course_slug,
-                      }
-                    : null,
+                course: courseView,
                 content: {
                     ...(content || {}),
                     // BUG-014 fix: Sanitize quiz questions — strip answer fields before sending to client
@@ -227,12 +245,9 @@ export class ChaptersService {
                     steps: steps || [],
                 },
                 progress,
+                gate: null,
                 celebration,
-                user: {
-                    full_name: user?.full_name || 'Learner',
-                    streak_day: user?.streak_count || 1,
-                    skip_tokens_remaining: user?.skip_tokens_remaining ?? 0,
-                },
+                user: userView,
             };
         } catch (error) {
             logger.error('Get chapter with progress error:', { userId, chapterId, error });
@@ -284,6 +299,9 @@ export class ChaptersService {
 
             const isPremiumCourse = course?.is_premium === true;
             const isFreeUser = isPremiumCourse && !(await CourseAccessService.hasPremiumAccess(userId, course!));
+            const drip = await LearningGateService.dripSettings(userId, courseId);
+            const dripExempt = drip.intervalDays ? await LearningGateService.isAdmin(userId) : true;
+            const now = new Date();
 
             return chapters.map(chapter => {
                 const prog = progressByChapter.get(chapter.id);
@@ -298,9 +316,17 @@ export class ChaptersService {
                     status = 'LOCKED_PAYWALL';
                 }
 
+                // Drip: when this chapter opens (null = no drip date). Completed chapters stay open.
+                const unlockAt = dripExempt || status === 'COMPLETED'
+                    ? null
+                    : dripUnlockAt(drip.startedAt, chapter.chapter_number, drip.intervalDays, now);
+
                 return {
                     ...chapter,
                     status,
+                    available_at: drip.startedAt && unlockAt ? unlockAt.toISOString() : null,
+                    available_after_days: unlockAt ? (chapter.chapter_number - 1) * (drip.intervalDays ?? 0) : null,
+                    drip_locked: Boolean(unlockAt && unlockAt > now),
                     total_steps: totalSteps,
                     completed_steps: completedSteps,
                     quiz_score: prog?.quiz_score ?? null,

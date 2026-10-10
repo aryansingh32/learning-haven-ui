@@ -3,6 +3,7 @@ import { authenticateUser } from '../../../middleware/auth';
 import { ChaptersService } from '../services/chapters.service';
 import logger from '../../../config/logger';
 import { pool } from '../../../config/database';
+import { LearningGateService } from '../services/learningGate.service';
 
 const router = Router();
 
@@ -68,6 +69,8 @@ router.post('/:chapterId/progress/quiz', authenticateUser, async (req: any, res:
 
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
         const result = await ChaptersService.updateQuizProgress(userId, chapterId, score, passed, total_questions, answers);
         return res.json(result);
     } catch (err: any) {
@@ -89,6 +92,8 @@ router.post('/:chapterId/progress/task', authenticateUser, async (req: any, res:
 
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
         const result = await ChaptersService.updateTaskProgress(userId, chapterId, notes);
         return res.json(result);
     } catch (err) {
@@ -110,6 +115,8 @@ router.post('/:chapterId/progress/task/draft', authenticateUser, async (req: any
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
         if (typeof draft !== 'string') return res.status(400).json({ error: 'Missing draft string' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
         const result = await ChaptersService.saveTaskDraft(userId, chapterId, draft);
         return res.json(result);
     } catch (err) {
@@ -131,6 +138,8 @@ router.post('/:chapterId/progress/step', authenticateUser, async (req: any, res:
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
         if (!step_id) return res.status(400).json({ error: 'Missing step_id' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
         const result = await ChaptersService.updateStepProgress(userId, chapterId, step_id);
         return res.json(result);
     } catch (err) {
@@ -150,6 +159,8 @@ router.post('/unlock', authenticateUser, async (req: any, res: Response) => {
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
         if (!chapter_id) return res.status(400).json({ error: 'Missing chapter_id' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapter_id, res))) return;
         const result = await ChaptersService.unlockChapter(userId, chapter_id);
 
         if (result.error) {
@@ -174,6 +185,8 @@ router.post('/skip-unlock', authenticateUser, async (req: any, res: Response) =>
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
         if (!chapter_id) return res.status(400).json({ error: 'Missing chapter_id' });
 
+        // Prerequisites and drip release are enforced here, not only in the UI.
+        if (!(await LearningGateService.allowChapterWrite(userId, chapter_id, res))) return;
         const result = await ChaptersService.skipUnlockChapter(userId, chapter_id);
 
         if (result.error) {
@@ -229,6 +242,7 @@ router.get('/:chapterId', authenticateUser, async (req: any, res: Response) => {
             course: data.course,
             content: data.content,
             progress: data.progress,
+            gate: data.gate,
             celebration: data.celebration,
             user: data.user,
         });

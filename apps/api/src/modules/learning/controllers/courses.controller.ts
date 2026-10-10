@@ -1,6 +1,7 @@
 import { CourseAccessService } from '../services/courseAccess.service';
 import { Request, Response } from 'express';
 import { CoursesService } from '../services/courses.service';
+import { LearningGateService } from '../services/learningGate.service';
 import logger from '../../../config/logger';
 
 export class CoursesController {
@@ -61,6 +62,18 @@ export class CoursesController {
             if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
             const courseId = req.params.id as string;
+            if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(courseId)) {
+                return res.status(404).json({ error: 'Course not found' });
+            }
+            const course = await CourseAccessService.loadCourse(courseId);
+            if (!course || !(await CourseAccessService.canSeeCourse(userId, course))) {
+                return res.status(404).json({ error: 'Course not found' });
+            }
+            // Course prerequisites are enforced on the server (exemptions: admins, college-assigned, already started).
+            const start = await LearningGateService.checkCourseStart(userId, courseId);
+            if (start.blocked) {
+                return res.status(403).json({ error: start.message, code: 'PREREQUISITES', prerequisites: start.unmet });
+            }
             const enrollment = await CoursesService.enroll(userId, courseId);
             res.json({ enrollment });
         } catch (error) {

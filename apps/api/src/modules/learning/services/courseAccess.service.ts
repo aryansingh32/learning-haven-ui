@@ -69,6 +69,22 @@ export class CourseAccessService {
         return this.hasCollegeLicence(userId, course.id);
     }
 
+    /**
+     * A chapter whose content this learner may read: the course is visible to them and,
+     * for premium courses, they have premium access. Null otherwise (treat as not found).
+     */
+    static async loadReadableChapter(userId: string, chapterId: string): Promise<{ id: string; course_id: string; chapter_number: number; title: string; course: CourseRow } | null> {
+        if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(chapterId)) return null;
+        const { rows } = await pool.query<{ id: string; course_id: string | null; chapter_number: number; title: string }>(
+            `select id, course_id, chapter_number, title from public.chapters where id = $1`, [chapterId]);
+        const chapter = rows[0];
+        if (!chapter?.course_id) return null;
+        const course = await this.loadCourse(chapter.course_id);
+        if (!course || !(await this.canSeeCourse(userId, course))) return null;
+        if (!(await this.hasPremiumAccess(userId, course))) return null;
+        return { ...chapter, course_id: chapter.course_id, course };
+    }
+
     static async loadCourse(courseId: string): Promise<CourseRow | null> {
         const { rows } = await pool.query<CourseRow>(
             `select id, is_premium, is_published, visibility::text as visibility, deleted_at from public.courses where id = $1`, [courseId]);

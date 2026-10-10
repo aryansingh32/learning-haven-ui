@@ -95,14 +95,15 @@ export class CoursesService {
 
     static async enroll(userId: string, courseId: string) {
         try {
-            const { data, error } = await supabase
-                .from('course_enrollments')
-                .upsert({ user_id: userId, course_id: courseId, status: 'active', progress_percentage: 0 }, { onConflict: 'user_id, course_id' })
-                .select()
-                .single();
-
-            if (error) throw error;
-            return data;
+            // Enrolling again keeps the original enrolment (its date starts drip release, and its progress stays).
+            const { rows } = await pool.query(
+                `INSERT INTO public.course_enrollments (user_id, course_id, status, progress_percentage)
+                 VALUES ($1, $2, 'active', 0)
+                 ON CONFLICT (user_id, course_id) DO UPDATE SET status = public.course_enrollments.status
+                 RETURNING *`,
+                [userId, courseId]
+            );
+            return rows[0];
         } catch (error) {
             logger.error('Enroll error:', error);
             throw new Error('Failed to enroll in course');
