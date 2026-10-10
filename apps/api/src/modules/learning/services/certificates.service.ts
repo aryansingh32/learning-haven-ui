@@ -131,6 +131,9 @@ export class CertificatesService {
             if (error || !cert) {
                 return { valid: false, message: 'Certificate not found' };
             }
+            if ((cert as any).is_valid === false) {
+                return { valid: false, message: 'This certificate has been revoked' };
+            }
 
             return {
                 valid: true,

@@ -382,13 +382,13 @@ export class AdminService {
                 count = parseInt(countRes.rows[0].count, 10);
 
                 const dataRes = await pool.query(`
-                    SELECT w.*, u.full_name, u.email, u.phone,
+                    SELECT w.*, w.created_at AS requested_at, u.full_name, u.email, u.phone,
                            rw.upi_id AS rw_upi, rw.bank_account, rw.ifsc_code, rw.account_holder_name
                     FROM public.withdrawals w
                     LEFT JOIN public.users u ON u.id = w.user_id
                     LEFT JOIN public.referral_withdrawals rw ON rw.id = w.id
                     WHERE w.status = $1
-                    ORDER BY w.requested_at DESC
+                    ORDER BY w.created_at DESC
                     LIMIT $2 OFFSET $3
                 `, [status, limit, offset]);
 
@@ -404,12 +404,12 @@ export class AdminService {
                     count = parseInt(countRes.rows[0].count, 10);
 
                     const dataRes = await pool.query(`
-                        SELECT w.*, u.full_name, u.email, u.phone,
+                        SELECT w.*, w.created_at AS requested_at, u.full_name, u.email, u.phone,
                                w.upi_id, w.bank_account, w.ifsc_code, w.account_holder_name
                         FROM public.withdrawals w
                         LEFT JOIN public.users u ON u.id = w.user_id
                         WHERE w.status = $1
-                        ORDER BY w.requested_at DESC
+                        ORDER BY w.created_at DESC
                         LIMIT $2 OFFSET $3
                     `, [status, limit, offset]);
 
@@ -419,11 +419,11 @@ export class AdminService {
                     }));
                 } catch (e2: any) {
                     const dataRes = await pool.query(`
-                        SELECT w.*, u.full_name, u.email, u.phone
+                        SELECT w.*, w.created_at AS requested_at, u.full_name, u.email, u.phone
                         FROM public.withdrawals w
                         LEFT JOIN public.users u ON u.id = w.user_id
                         WHERE w.status = $1
-                        ORDER BY w.requested_at DESC
+                        ORDER BY w.created_at DESC
                         LIMIT $2 OFFSET $3
                     `, [status, limit, offset]);
                     

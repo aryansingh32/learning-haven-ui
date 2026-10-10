@@ -173,23 +173,23 @@ router.get('/certificates', async (req, res) => {
     const offset = (page - 1) * limit;
 
     let query = `
-      SELECT c.id, c.user_id, c.topic_name, c.certificate_code, c.created_at,
-             c.is_valid, u.full_name, u.email
+      SELECT c.id, c.user_id, c.topic AS topic_name, c.verification_code AS certificate_code, c.issued_at AS created_at,
+             c.is_valid, c.revoked_at, c.certificate_url, u.full_name, u.email
       FROM public.certificates c
       JOIN public.users u ON u.id = c.user_id
     `;
     const params: any[] = [];
     if (search) {
       params.push(`%${search}%`);
-      query += ` WHERE (u.full_name ILIKE $1 OR u.email ILIKE $1 OR c.topic_name ILIKE $1 OR c.certificate_code ILIKE $1)`;
+      query += ` WHERE (u.full_name ILIKE $1 OR u.email ILIKE $1 OR c.topic ILIKE $1 OR c.verification_code ILIKE $1)`;
     }
-    query += ` ORDER BY c.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+    query += ` ORDER BY c.issued_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
     const result = await pool.query(query, params);
 
     // Count total
     let countQuery = `SELECT COUNT(*) FROM public.certificates c JOIN public.users u ON u.id = c.user_id`;
-    if (search) countQuery += ` WHERE (u.full_name ILIKE $1 OR u.email ILIKE $1)`;
+    if (search) countQuery += ` WHERE (u.full_name ILIKE $1 OR u.email ILIKE $1 OR c.topic ILIKE $1 OR c.verification_code ILIKE $1)`;
     const countResult = await pool.query(countQuery, search ? [`%${search}%`] : []);
     const total = parseInt(countResult.rows[0].count, 10);
 

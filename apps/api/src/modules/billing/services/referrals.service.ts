@@ -35,10 +35,11 @@ export class ReferralsService {
 
             // Get custom primary code if exists
             const { data: customCode } = await supabase
-                .from('user_referral_codes')
+                .from('referral_codes')
                 .select('code')
                 .eq('user_id', userId)
-                .eq('is_primary', true)
+                .eq('is_custom', true)
+                .eq('is_active', true)
                 .maybeSingle();
 
             const displayCode = customCode?.code || user.referral_code;
@@ -131,9 +132,11 @@ export class ReferralsService {
 
             // Check custom codes first
             const { data: customRef } = await supabase
-                .from('user_referral_codes')
-                .select('user_id, reward_amount')
+                .from('referral_codes')
+                .select('user_id, reward_amount:custom_commission_fixed')
                 .eq('code', referralCode)
+                .eq('is_custom', true)
+                .eq('is_active', true)
                 .maybeSingle();
 
             if (customRef) {

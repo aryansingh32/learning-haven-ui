@@ -32,7 +32,8 @@ const Certificates = () => {
                 ...(debouncedSearch ? { search: debouncedSearch } : {})
             });
             const res = await api.get(`/admin/certificates?${params}`);
-            return res.data as { certificates: Certificate[], total: number };
+            const body = res.data?.data ?? res.data;
+            return { certificates: body.certificates ?? [], total: body.pagination?.total ?? body.total ?? 0 } as { certificates: Certificate[], total: number };
         },
     });
 
