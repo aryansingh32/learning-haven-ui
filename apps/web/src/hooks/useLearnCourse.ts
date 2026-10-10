@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchPhases, fetchPhaseChapters } from '@/data/chapters';
 import { supabase } from '@/lib/supabase';
@@ -20,6 +20,10 @@ export type CourseChapter = {
 export function useLearnCourse(courseId?: string) {
   const { user } = useAuth();
   const qc = useQueryClient();
+  // Several components use this hook at once (roadmap, dashboard, path card). Supabase hands back the
+  // existing channel for a topic it already has, and adding a listener to a subscribed channel throws,
+  // so each instance gets its own topic.
+  const instanceId = useId();
 
   const phasesQuery = useQuery({
     queryKey: ['learn-phases'],
@@ -53,7 +57,7 @@ export function useLearnCourse(courseId?: string) {
     if (!supabase || !user?.id) return;
 
     const channel = supabase
-      .channel(`learn-progress:${user.id}`)
+      .channel(`learn-progress:${user.id}:${instanceId}`)
       .on(
         'postgres_changes',
         {
@@ -72,7 +76,7 @@ export function useLearnCourse(courseId?: string) {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [user?.id, qc]);
+  }, [user?.id, qc, instanceId]);
 
   const chapters = (chaptersQuery.data || []).sort((a, b) => a.chapter_number - b.chapter_number);
   const completedCount = chapters.filter((c) => c.status === 'COMPLETED').length;
