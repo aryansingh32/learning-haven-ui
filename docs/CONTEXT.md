@@ -66,12 +66,15 @@ W2 slices:
 
 Data model decision (owner): **shared database, strict isolation** (RLS on every college row), not a database per college.
 
-**Immediate next step:** the rest of W2:
-- placement readiness computed on the server
-- course bundles
-- certificate templates
+| W2-R1 | Placement readiness computed on the server (score, parts, next steps, trend) | ✅ (2026-10-10, browser-verified) |
+| W2-C1 | Course bundles (admin + Learn + checkout); course purchases fixed (plan_id NOT NULL, webhook, refunds, ownership) | ✅ (2026-10-10, browser-verified) |
+| W2-T1 | Certificate templates + QR verification; Certificates page list fixed; topic completion counts distinct problems | ✅ (2026-10-10, browser-verified) |
 
-Then W3.
+W2 is done. Migrations `20261102000001` (readiness), `20261103000001` (bundles + payments.plan_id),
+`20261104000001` (certificate templates) are **applied to live and verified** (2026-10-10).
+Branch `feat/w2-readiness-bundles-certs`, stacked on `feat/college-content`.
+
+**Immediate next step:** W3 (admin control center), then W5 (content drafts).
 
 ## 3. Done (high level)
 

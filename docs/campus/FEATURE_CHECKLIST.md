@@ -180,7 +180,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Course Progress — chapter progress bars
 - [x] Coding Progress — problems solved + difficulty breakdown
 - [x] Assessment Performance — dashboard card: recent college test results (released), test series and course tests with scores and an average (`GET /users/me/insights`, W2-D1)
-- [ ] 🟡 Placement Readiness Score — career-readiness widget computed in the browser (`RoadmapContext.tsx`)
+- [x] Placement Readiness Score — computed on the server: practice, test scores, courses, projects, profile, consistency; next steps; 12-week trend (`GET /users/me/readiness`, W2-R1)
 - [ ] 🟡 Skill Proficiency Score — knowledge-graph widget, client-side
 - [ ] 🟡 Daily Learning Plan — mission hero suggests today's task; not a plan
 - [ ] Weekly Learning Plan
@@ -223,7 +223,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] xAPI Support
 - [ ] LTI Integration
 - [x] Learning Paths — phases → chapters, roadmaps
-- [ ] 🟡 Course Bundles — plans bundle access; no bundle product
+- [x] Course Bundles — admin Commerce → Bundles; Learn shows them; one payment gives every course (W2-C1)
 - [x] Module Management — phases / chapters / steps
 - [x] Lesson Sequencing — chapter numbers, steps order
 - [x] Lesson Completion Tracking — `user_chapter_progress`
@@ -760,7 +760,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Graduate Trainee Preparation
 - [ ] Campus Placement Preparation
 - [ ] Off-Campus Placement Preparation
-- [ ] 🟡 Placement Readiness Score — client-side career readiness
+- [x] Placement Readiness Score — server-computed, with parts and next steps (W2-R1)
 - [ ] Interview Readiness Score
 - [ ] Company Match Score
 - [ ] Eligibility Checker
@@ -1207,10 +1207,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Project Certificates — apprenticeship / program certificates
 - [ ] 🟡 Internship Certificates — apprenticeship certificates serve this
 - [ ] Achievement Certificates
-- [ ] 🟡 Certificate Templates — fixed HTML templates (`certificate_v4.html`)
+- [x] Certificate Templates — admin templates per kind, placeholders, colours, signatory, logo, live preview (W2-T1)
 - [ ] Certificate Builder
 - [x] Automated Certificate Issuance — issued on completion
-- [ ] QR-Based Verification
+- [x] QR-Based Verification — every certificate carries a QR code to its verification page (W2-T1)
 - [x] Public Verification Page — `/certificates/:code`
 - [x] Unique Certificate IDs — `verification_code`
 - [x] Certificate Revocation — admin revoke (`DELETE /admin/certificates/:id`)
@@ -2057,7 +2057,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 59. Unique Differentiation & Competitive Advantage
 - [ ] Personalized Student Learning Twin
 - [ ] Verified Skill Passport
-- [ ] 🟡 Live Placement Readiness Index — client-side readiness score
+- [x] Live Placement Readiness Index — server score, saved daily for the trend (W2-R1)
 - [ ] Adaptive Company Preparation
 - [ ] Explainable Skill Gap Analysis
 - [ ] One-Click Remedial Learning Plan
