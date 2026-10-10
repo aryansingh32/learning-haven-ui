@@ -157,7 +157,10 @@ export class CertificatesService {
         const { data: problems } = await supabase
             .from('problems')
             .select('id')
-            .eq('topic', topic);
+            .eq('topic', topic)
+            .is('deleted_at', null)
+            .eq('owner_org_id', '00000000-0000-0000-0000-00000000f0f0')
+            .eq('visibility', 'public');
 
         if (!problems || problems.length === 0) {
             throw new Error(`No problems found for topic: ${topic}`);

@@ -35,6 +35,33 @@ export class CoursesService {
     }
 
     /**
+     * Courses a learner's colleges made for their own students (published, visibility 'org'),
+     * per college — the "From your college" rows above the search on Learn.
+     */
+    static async listCollegeCourses(userId: string) {
+        let colleges: { org_id: string; name: string; slug: string; logo_url: string | null; brand_color: string | null }[] = [];
+        try {
+            colleges = (await pool.query(`select * from campus.user_colleges($1)`, [userId])).rows;
+        } catch (error: any) {
+            if (error?.code === '42883' || error?.code === '3F000') return [];
+            throw error;
+        }
+        if (!colleges.length) return [];
+        const { rows } = await pool.query(
+            `select c.*, (select count(*)::integer from public.chapters ch where ch.course_id = c.id) as chapter_count,
+                    exists (select 1 from public.course_enrollments e where e.course_id = c.id and e.user_id = $2) as enrolled
+               from public.courses c
+              where c.owner_org_id = any($1::uuid[]) and c.visibility = 'org' and c.is_published and c.deleted_at is null
+              order by c.created_at desc`, [colleges.map((c) => c.org_id), userId]);
+        return colleges
+            .map((col) => ({
+                college: { id: col.org_id, name: col.name, slug: col.slug, logoUrl: col.logo_url, brandColor: col.brand_color },
+                courses: rows.filter((r) => r.owner_org_id === col.org_id),
+            }))
+            .filter((c) => c.courses.length > 0);
+    }
+
+    /**
      * Get course with all items
      */
     static async getCourse(idOrSlug: string) {

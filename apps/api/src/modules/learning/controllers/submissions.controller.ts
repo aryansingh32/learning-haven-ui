@@ -15,7 +15,7 @@ export class SubmissionsController {
             const { code, language, time_spent_seconds } = req.body;
 
             // Problems with tests are solved through the judge, not on the browser's word.
-            const judgeData = await ProblemsService.getJudgeData(problem_id);
+            const judgeData = await ProblemsService.getJudgeData(problem_id, user_id);
             if (judgeData && judgeData.tests.length > 0) {
                 return res.status(409).json({ error: 'Submit your code to be judged.', code: 'JUDGE_REQUIRED' });
             }

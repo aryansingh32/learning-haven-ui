@@ -16,7 +16,7 @@ export class TestSeriesController {
 
   static async getTestMeta(req: Request, res: Response) {
     try {
-      const result = await TestSeriesService.getTestMeta(req.params.testId as string);
+      const result = await TestSeriesService.getTestMeta(req.params.testId as string, (req as any).user?.id);
       return res.json(result);
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Failed to fetch test';
@@ -24,6 +24,15 @@ export class TestSeriesController {
       if (message === 'Test not found') return res.status(404).json({ error: message });
       if (message === 'Test not available') return res.status(400).json({ error: message });
       return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async getCollegeCatalog(req: Request, res: Response) {
+    try {
+      return res.json(await TestSeriesService.getCollegeCatalog((req as AuthRequest).user!.id));
+    } catch (error: unknown) {
+      logger.error('Get college test series error:', error);
+      return res.status(500).json({ error: 'Failed to load your college\'s test series' });
     }
   }
 

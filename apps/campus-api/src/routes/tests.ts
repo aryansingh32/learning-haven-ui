@@ -281,6 +281,11 @@ testsRouter.post('/:testId/questions', async (req, res) => {
   const testId = uuid.parse(req.params.testId);
   const q = questionBody.parse(req.body);
   await requirePermission(userId, orgId, 'content.create');
+  if (!['mcq', 'msq', 'nat', 'tf'].includes(q.type)) {
+    const inSeries = await asSystem(async (db) => (await db.query(
+      `select 1 from public.tests where id = $1 and owner_org_id = $2 and test_series_id is not null`, [testId, orgId])).rowCount);
+    if (inSeries) throw badRequest('This test is in a practice test series, which supports multiple-choice, true/false and numeric questions only.');
+  }
   const choice = q.type === 'mcq' || q.type === 'msq';
   let options = choice ? q.options!.map((text, i) => ({ id: optionIds[i], text })) : null;
   let correct = choice ? [...new Set(q.correct!)].sort().map((i) => optionIds[i]) : null;

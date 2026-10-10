@@ -21,6 +21,9 @@ router.get('/', CoursesController.listCourses);
  */
 router.get('/enrollments/mine', authenticateUser, CoursesController.getMyEnrollments);
 
+/** GET /api/courses/college — courses made by the learner's colleges for their own students. */
+router.get('/college', authenticateUser, CoursesController.listCollegeCourses);
+
 /**
  * @route   POST /api/courses/:id/enroll
  * @desc    Enroll in a course

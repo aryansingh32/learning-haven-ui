@@ -289,6 +289,7 @@ export class CategoriesService {
                     const { data: maxOrder } = await supabase
                         .from('problems')
                         .select('order_index')
+                        .eq('owner_org_id', '00000000-0000-0000-0000-00000000f0f0')
                         .order('order_index', { ascending: false })
                         .limit(1)
                         .single();

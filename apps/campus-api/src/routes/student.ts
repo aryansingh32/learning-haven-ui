@@ -28,6 +28,20 @@ studentRouter.get('/course-assignments', async (req, res) => {
 });
 
 /** Published assignments for every batch I'm in, with my attempt status. */
+/** Study materials the student's colleges published to them (RLS: published, their college, their batch). */
+studentRouter.get('/materials', async (req, res) => {
+  const userId = userOf(req);
+  const rows = await asUser(userId, async (db) => (await db.query(
+    `select m.id, m.org_id as "orgId", m.title, m.kind, m.body, m.url, m.tags, m.course_id as "courseId",
+            m.batch_id as "batchId", b.name as "batchName", m.updated_at as "updatedAt"
+       from campus.study_materials m left join campus.batches b on b.id = m.batch_id
+      order by m.updated_at desc limit 200`)).rows);
+  // College names (RLS lets members read their own college rows).
+  const names = new Map(await asUser(userId, async (db) => (await db.query<{ id: string; name: string }>(
+    `select id, name from campus.organizations where id = any($1::uuid[])`, [[...new Set(rows.map((r) => r.orgId))]])).rows.map((r) => [r.id, r.name] as [string, string])));
+  res.json(rows.map((r) => ({ ...r, college: names.get(r.orgId) ?? null })));
+});
+
 studentRouter.get('/assignments', async (req, res) => {
   const userId = userOf(req);
   const rows = await asUser(userId, async (db) => {

@@ -134,6 +134,7 @@ describe('TestSeriesService — attempt resume', () => {
     };
 
     mockQuery
+      .mockResolvedValueOnce({ rows: [{ owner_org_id: '00000000-0000-0000-0000-00000000f0f0', visibility: 'public', test_series_id: null, is_exam: false }] }) // access check (Forge public test)
       .mockResolvedValueOnce({ rows: [test] }) // SELECT test
       .mockResolvedValueOnce({ rows: [existingAttempt] }) // SELECT existing in-progress attempt
       .mockResolvedValueOnce({ rows: [QUESTION_ROW] }); // getTestQuestions
@@ -142,13 +143,14 @@ describe('TestSeriesService — attempt resume', () => {
 
     expect(result.attemptId).toBe('attempt-4');
     expect(result.status).toBe('in_progress');
-    // No INSERT was issued -- exactly the 3 SELECTs above, nothing more.
-    expect(mockQuery).toHaveBeenCalledTimes(3);
+    // No INSERT was issued -- the access check and the 3 SELECTs above, nothing more.
+    expect(mockQuery).toHaveBeenCalledTimes(4);
   });
 });
 
 describe('TestSeriesService — paywall guard (no purchase/entitlement layer exists yet)', () => {
   it('refuses to start a test that is not free and whose series is not free either', async () => {
+    mockQuery.mockResolvedValueOnce({ rows: [{ owner_org_id: '00000000-0000-0000-0000-00000000f0f0', visibility: 'public', test_series_id: null, is_exam: false }] }); // access check (Forge public test)
     mockQuery.mockResolvedValueOnce({
       rows: [
         {
@@ -169,12 +171,13 @@ describe('TestSeriesService — paywall guard (no purchase/entitlement layer exi
     await expect(TestSeriesService.startAttempt('user-1', 'test-paid')).rejects.toThrow(
       'This test requires purchase, which is not available yet'
     );
-    // Refused before ever looking up an existing attempt or the question bank.
-    expect(mockQuery).toHaveBeenCalledTimes(1);
+    // Refused before ever looking up an existing attempt or the question bank (access check + test only).
+    expect(mockQuery).toHaveBeenCalledTimes(2);
   });
 
   it('allows starting when the individual test is marked free even if its series is not', async () => {
     mockQuery
+      .mockResolvedValueOnce({ rows: [{ owner_org_id: '00000000-0000-0000-0000-00000000f0f0', visibility: 'public', test_series_id: null, is_exam: false }] }) // access check (Forge public test)
       .mockResolvedValueOnce({
         rows: [
           {
@@ -209,5 +212,22 @@ describe('TestSeriesService — paywall guard (no purchase/entitlement layer exi
 
     const result = await TestSeriesService.startAttempt('user-1', 'test-free-sample');
     expect(result.status).toBe('in_progress');
+  });
+});
+
+describe('TestSeriesService — who may take a test here', () => {
+  const COLLEGE = 'c0000000-0000-0000-0000-00000000000c';
+  it('never starts a college exam through the self-paced test series', async () => {
+    mockQuery.mockResolvedValueOnce({ rows: [{ owner_org_id: COLLEGE, visibility: 'org', test_series_id: 's1', series_published: true, series_owner: COLLEGE, is_exam: true }] });
+    await expect(TestSeriesService.startAttempt('student-1', 'exam-1')).rejects.toThrow('Test not found');
+    expect(mockQuery).toHaveBeenCalledTimes(1);
+  });
+
+  it('starts a college practice test only for that college\'s members', async () => {
+    const practice = { owner_org_id: COLLEGE, visibility: 'org', test_series_id: 's1', series_published: true, series_owner: COLLEGE, is_exam: false };
+    mockQuery.mockResolvedValueOnce({ rows: [practice] }).mockResolvedValueOnce({ rows: [{ ok: false }] });
+    await expect(TestSeriesService.getTestMeta('practice-1', 'outsider')).rejects.toThrow('Test not found');
+    mockQuery.mockResolvedValueOnce({ rows: [{ ...practice, test_series_id: null }] });
+    await expect(TestSeriesService.getTestMeta('practice-1', 'member')).rejects.toThrow('Test not found'); // not in a series
   });
 });

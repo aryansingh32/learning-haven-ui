@@ -14,6 +14,12 @@ const router = Router();
 router.get('/catalog', authenticateUser, TestSeriesController.getCatalog);
 
 /**
+ * GET /api/test-series/college
+ * Practice series made by the learner's colleges, only for their students.
+ */
+router.get('/college', authenticateUser, TestSeriesController.getCollegeCatalog);
+
+/**
  * GET /api/test-series/tests/:testId
  * Test metadata for the pre-attempt instructions screen. Does not start
  * an attempt or start the timer.

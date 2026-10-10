@@ -8,6 +8,7 @@ import { corsOrigins } from './env';
 import { errorHandler, HttpError } from './errors';
 import { analyticsRouter } from './routes/analytics';
 import { assignmentsRouter } from './routes/assignments';
+import { contentRouter } from './routes/content';
 import { drivesRouter } from './routes/drives';
 import { env } from './env';
 import { runScheduler } from './services/notify';
@@ -46,6 +47,7 @@ api.use('/orgs/:orgId/courses', orgCoursesRouter);
 api.use('/orgs/:orgId/analytics', analyticsRouter);
 api.use('/orgs/:orgId/drives', drivesRouter);
 api.use('/orgs/:orgId/course-assignments', courseAssignmentsRouter);
+api.use('/orgs/:orgId/content', contentRouter);
 app.use('/campus/v1', api);
 
 app.use((_req, _res, next) => next(new HttpError(404, 'Not found')));

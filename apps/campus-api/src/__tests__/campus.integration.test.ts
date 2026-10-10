@@ -1332,3 +1332,89 @@ describe('notifications and placement drives (C3)', () => {
     expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/drives`).set(await as(U.adminB))).status).toBe(403);
   });
 });
+
+describe('content a college makes for its own students', () => {
+  const C = (p: string) => `/campus/v1/orgs/${ORG_A}/content${p}`;
+  let courseId = '';
+
+  it('lets faculty build a course with chapters and steps, and publish it', async () => {
+    const created = await request(app).post(C('/courses')).set(await as(U.facultyA)).send({ title: 'Data Structures in C', difficulty: 'intermediate' });
+    expect(created.status).toBe(201);
+    courseId = created.body.id;
+    expect((await request(app).patch(C(`/courses/${courseId}`)).set(await as(U.facultyA)).send({ published: true })).status).toBe(400); // no chapters yet
+    const ch = await request(app).post(C(`/courses/${courseId}/chapters`)).set(await as(U.facultyA)).send({ title: 'Arrays' });
+    expect(ch.body).toMatchObject({ number: 1, title: 'Arrays' });
+    const steps = await request(app).put(C(`/chapters/${ch.body.id}/steps`)).set(await as(U.facultyA)).send({ steps: [
+      { type: 'doc', content: { doc_md: '# Arrays\nContiguous memory.' } },
+      { type: 'quiz', content: { quiz_questions: [{ question: 'Index of the first element?', options: ['0', '1'], correctAnswer: '0' }] } },
+    ] });
+    expect(steps.body).toEqual({ saved: 2 });
+    expect((await request(app).put(C(`/chapters/${ch.body.id}/steps`)).set(await as(U.facultyA))
+      .send({ steps: [{ type: 'quiz', content: { quiz_questions: [{ question: 'Q', options: ['a', 'b'], correctAnswer: 'c' }] } }] })).status).toBe(400);
+    expect((await request(app).patch(C(`/courses/${courseId}`)).set(await as(U.facultyA)).send({ published: true })).status).toBe(200);
+    const row = (await pool.query(`select owner_org_id, visibility, is_published from public.courses where id = $1`, [courseId])).rows[0];
+    expect(row).toEqual({ owner_org_id: ORG_A, visibility: 'org', is_published: true });
+    const full = await request(app).get(C(`/courses/${courseId}`)).set(await as(U.facultyA));
+    expect(full.body.chapters[0].steps.map((s: { type: string }) => s.type)).toEqual(['doc', 'quiz']);
+  });
+
+  it('keeps each college to its own content', async () => {
+    expect((await request(app).get(C('/courses')).set(await as(U.adminB))).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/content/courses/${courseId}`).set(await as(U.adminB))).status).toBe(404);
+    expect((await request(app).patch(`/campus/v1/orgs/${ORG_B}/content/courses/${courseId}`).set(await as(U.adminB)).send({ title: 'Mine now' })).status).toBe(404);
+    expect((await request(app).post(C('/courses')).set(await as(U.s1)).send({ title: 'Student course' })).status).toBe(403);
+  });
+
+  it('lets faculty write a judged practice problem, drafted until published', async () => {
+    const p = await request(app).post(C('/problems')).set(await as(U.facultyA)).send({
+      title: 'Sum of two', description: 'Return the sum of a and b.', difficulty: 'easy', topic: 'Math',
+      starterCode: { python: 'class Solution:\n    def add(self, a, b):\n        pass\n' },
+      tests: [{ input: 'a = 1, b = 2', expected: '3', isSample: true }, { input: 'a = -1, b = 1', expected: '0' }],
+    });
+    expect(p.status).toBe(201);
+    expect((await pool.query(`select visibility from public.problems where id = $1`, [p.body.id])).rows[0].visibility).toBe('private');
+    await request(app).patch(C(`/problems/${p.body.id}`)).set(await as(U.facultyA)).send({ published: true });
+    expect((await pool.query(`select owner_org_id, visibility from public.problems where id = $1`, [p.body.id])).rows[0]).toEqual({ owner_org_id: ORG_A, visibility: 'org' });
+    expect((await request(app).get(C(`/problems/${p.body.id}`)).set(await as(U.facultyA))).body.tests).toHaveLength(2);
+    expect((await request(app).post(C('/problems')).set(await as(U.facultyA)).send({
+      title: 'No samples', description: 'Missing a sample test.', difficulty: 'easy', topic: 'Math',
+      starterCode: { python: 'x' }, tests: [{ input: 'a = 1', expected: '1' }] })).status).toBe(400);
+  });
+
+  it('builds a practice test series from the college\'s own tests, but never from an exam', async () => {
+    const cat = (await pool.query(`insert into public.exam_categories (slug, name, is_active) values ('aptitude-x', 'Aptitude', true) returning id`)).rows[0].id;
+    const series = await request(app).post(C('/test-series')).set(await as(U.facultyA)).send({ title: 'Aptitude practice', categoryId: cat });
+    expect(series.status).toBe(201);
+    const t = await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Quant set 1', durationMinutes: 20 });
+    await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${t.body.id}/questions`).set(await as(U.facultyA))
+      .send({ type: 'nat', body: '12 x 12 = ?', natAnswer: 144 });
+    expect((await request(app).patch(C(`/test-series/${series.body.id}`)).set(await as(U.facultyA)).send({ published: true })).status).toBe(400); // no tests yet
+    expect((await request(app).post(C(`/test-series/${series.body.id}/tests`)).set(await as(U.facultyA)).send({ testId: t.body.id })).status).toBe(201);
+    expect((await request(app).patch(C(`/test-series/${series.body.id}`)).set(await as(U.facultyA)).send({ published: true })).status).toBe(200);
+    expect((await pool.query(`select is_published, test_series_id from public.tests where id = $1`, [t.body.id])).rows[0])
+      .toEqual({ is_published: true, test_series_id: series.body.id });
+    const exam = (await pool.query(`select test_id from campus.assignments where org_id = $1 limit 1`, [ORG_A])).rows[0]?.test_id;
+    if (exam) expect((await request(app).post(C(`/test-series/${series.body.id}/tests`)).set(await as(U.facultyA)).send({ testId: exam })).status).toBe(400);
+  });
+
+  it('publishes study materials only to the people they are for', async () => {
+    const m = await request(app).post(C('/materials')).set(await as(U.facultyA)).send({ title: 'Lab manual', kind: 'link', url: 'https://example.edu/lab.pdf', published: true });
+    expect(m.status).toBe(201);
+    expect((await request(app).post(C('/materials')).set(await as(U.facultyA)).send({ title: 'Bad', kind: 'note' })).status).toBe(400);
+    expect((await request(app).get(C('/materials')).set(await as(U.facultyA))).body.map((x: { title: string }) => x.title)).toContain('Lab manual');
+    expect((await request(app).get(C('/materials')).set(await as(U.adminB))).status).toBe(403);
+  });
+});
+
+describe('students and their college\'s study materials', () => {
+  it('shows a student only published materials of their own college', async () => {
+    await request(app).post(`/campus/v1/orgs/${ORG_A}/content/materials`).set(await as(U.facultyA)).send({ title: 'Draft only', kind: 'note', body: 'wip' });
+    const mine = await request(app).get('/campus/v1/my/materials').set(await as(U.s1));
+    expect(mine.status).toBe(200);
+    const titles = mine.body.map((m: { title: string }) => m.title);
+    expect(titles).toContain('Lab manual');
+    expect(titles).not.toContain('Draft only');
+    expect(mine.body.find((m: { title: string }) => m.title === 'Lab manual').college).toBe('College A');
+    expect((await request(app).get('/campus/v1/my/materials').set(await as(U.facultyB))).body.map((m: { title: string }) => m.title)).not.toContain('Lab manual');
+  });
+});

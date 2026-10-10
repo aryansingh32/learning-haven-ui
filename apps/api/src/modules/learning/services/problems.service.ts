@@ -1,4 +1,4 @@
-import { supabase } from '../../../config/database';
+import { pool, supabase } from '../../../config/database';
 import { CacheService } from '../../core/services/cache.service';
 import logger from '../../../config/logger';
 import { indiaDate, pickDaily } from './practiceHelpers';
@@ -12,14 +12,53 @@ interface GetProblemsParams {
     company?: string;
     is_premium?: boolean;
     user_id?: string;
+    /** A college's own problems (only for its members); otherwise Forge's public library. */
+    college_id?: string;
 }
 
+export const FORGE_ORG = '00000000-0000-0000-0000-00000000f0f0';
+
 export class ProblemsService {
+    /**
+     * Who may open a problem: Forge's public library is for everyone; a college's
+     * problems only for that college's active members (and its content staff, even
+     * as drafts). Same rule as the database's campus.user_can_see_content.
+     */
+    static async canSee(problem: { owner_org_id?: string | null; visibility?: string | null }, userId?: string): Promise<boolean> {
+        const owner = problem.owner_org_id ?? FORGE_ORG;
+        const visibility = problem.visibility ?? 'public';
+        if (owner === FORGE_ORG && visibility === 'public') return true;
+        if (!userId) return false;
+        try {
+            const { rows } = await pool.query<{ ok: boolean }>(
+                `select campus.user_can_see_content($1, $2, $3::public.content_visibility, true) as ok`, [userId, owner, visibility]);
+            return Boolean(rows[0]?.ok);
+        } catch (error: any) {
+            // Before the college-content migration there is no college content to see.
+            if (error?.code === '42883' || error?.code === '42703') return false;
+            throw error;
+        }
+    }
+
+    /** The colleges a learner belongs to (for "From your college" sections). */
+    static async userColleges(userId?: string): Promise<{ org_id: string; name: string; slug: string; logo_url: string | null; brand_color: string | null }[]> {
+        if (!userId) return [];
+        try {
+            return (await pool.query(`select * from campus.user_colleges($1)`, [userId])).rows;
+        } catch (error: any) {
+            if (error?.code === '42883' || error?.code === '3F000') return [];
+            throw error;
+        }
+    }
+
     /**
      * Get problems list with filters and pagination
      */
     static async getProblems(params: GetProblemsParams) {
-        const { page, limit, difficulty, topic, search, company, is_premium, user_id } = params;
+        const { page, limit, difficulty, topic, search, company, is_premium, user_id, college_id } = params;
+        if (college_id && !(await ProblemsService.userColleges(user_id)).some((c) => c.org_id === college_id)) {
+            return { problems: [], pagination: { page, limit, total: 0, total_pages: 0 } };
+        }
         const offset = (page - 1) * limit;
 
         // Generate cache key
@@ -37,7 +76,9 @@ export class ProblemsService {
             let query = supabase
                 .from('problems')
                 .select('*, user_problem_status!left(status), user_notes!left(id)', { count: 'exact' })
-                .is('deleted_at', null);
+                .is('deleted_at', null)
+                .eq('owner_org_id', college_id ?? FORGE_ORG)
+                .eq('visibility', college_id ? 'org' : 'public');
 
             // Apply filters
             if (difficulty) {
@@ -117,7 +158,8 @@ export class ProblemsService {
         const cacheKey = 'problems:companies';
         const cached = await CacheService.get(cacheKey);
         if (cached) return cached;
-        const { data, error } = await supabase.from('problems').select('companies').is('deleted_at', null);
+        const { data, error } = await supabase.from('problems').select('companies').is('deleted_at', null)
+            .eq('owner_org_id', FORGE_ORG).eq('visibility', 'public');
         if (error) throw error;
         const counts = new Map<string, number>();
         for (const row of data ?? []) for (const c of (row.companies as string[] | null) ?? []) counts.set(c, (counts.get(c) ?? 0) + 1);
@@ -140,6 +182,8 @@ export class ProblemsService {
             .from('problems')
             .select('id, slug, title, difficulty, topic, companies')
             .is('deleted_at', null)
+            .eq('owner_org_id', FORGE_ORG)
+            .eq('visibility', 'public')
             .eq('is_premium', false);
         if (error) throw error;
         const problem = pickDaily(data ?? [], date);
@@ -165,8 +209,10 @@ export class ProblemsService {
     static async getProblemBySlug(slug: string, user_id?: string) {
         // Try cache first
         const cacheKey = `problem:${slug}:${user_id || 'anon'}`;
-        const cached = await CacheService.get(cacheKey);
+        const cached = await CacheService.get<any>(cacheKey);
         if (cached) {
+            // Access can change (left the college, college suspended): check it every time.
+            if (!(await ProblemsService.canSee(cached, user_id))) throw new Error('Problem not found');
             logger.info('Cache hit for problem:', slug);
             return cached;
         }
@@ -191,10 +237,13 @@ export class ProblemsService {
                 }
                 throw error;
             }
+            if (data.deleted_at || !(await ProblemsService.canSee(data, user_id))) throw new Error('Problem not found');
 
             // Format response
             const problem = {
                 id: data.id,
+                owner_org_id: data.owner_org_id ?? FORGE_ORG,
+                visibility: data.visibility ?? 'public',
                 slug: data.slug,
                 title: data.title,
                 description: data.description,
@@ -253,15 +302,15 @@ export class ProblemsService {
     }
 
     /** Everything the judge needs, hidden tests included. Server use only. */
-    static async getJudgeData(problem_id: string) {
+    static async getJudgeData(problem_id: string, user_id?: string) {
         const { data: problem, error } = await supabase
             .from('problems')
-            .select('id, slug, is_premium, starter_code, judge_config')
+            .select('id, slug, is_premium, starter_code, judge_config, owner_org_id, visibility')
             .eq('id', problem_id)
             .is('deleted_at', null)
             .maybeSingle();
         if (error) throw error;
-        if (!problem) return null;
+        if (!problem || !(await ProblemsService.canSee(problem, user_id))) return null;
         const { data: tests, error: testsError } = await supabase
             .from('problem_test_cases')
             .select('input, expected_output, is_sample')
@@ -280,15 +329,16 @@ export class ProblemsService {
     /**
      * Get problem hints (premium feature)
      */
-    static async getHints(problem_id: string, user_plan: string) {
+    static async getHints(problem_id: string, user_plan: string, user_id?: string) {
         try {
             const { data, error } = await supabase
                 .from('problems')
-                .select('hints, required_plan, is_premium')
+                .select('hints, required_plan, is_premium, owner_org_id, visibility')
                 .eq('id', problem_id)
                 .single();
 
             if (error) throw error;
+            if (!(await ProblemsService.canSee(data, user_id))) throw new Error('Problem not found');
 
             // Check access
             if (data.is_premium && user_plan === 'free') {
@@ -305,15 +355,16 @@ export class ProblemsService {
     /**
      * Get problem solution (premium feature)
      */
-    static async getSolution(problem_id: string, user_plan: string) {
+    static async getSolution(problem_id: string, user_plan: string, user_id?: string) {
         try {
             const { data, error } = await supabase
                 .from('problems')
-                .select('solution_code, solution_explanation, required_plan, is_premium')
+                .select('solution_code, solution_explanation, required_plan, is_premium, owner_org_id, visibility')
                 .eq('id', problem_id)
                 .single();
 
             if (error) throw error;
+            if (!(await ProblemsService.canSee(data, user_id))) throw new Error('Problem not found');
 
             // Check access
             if (data.is_premium && user_plan === 'free') {

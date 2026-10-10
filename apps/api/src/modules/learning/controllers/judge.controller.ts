@@ -39,7 +39,7 @@ export class JudgeController {
         const { code, language } = parsed.data;
 
         try {
-            const data = await ProblemsService.getJudgeData(problemId);
+            const data = await ProblemsService.getJudgeData(problemId, userId);
             if (!data) return res.status(404).json({ error: 'Problem not found' });
             const { problem, tests } = data;
             if (problem.is_premium && !(await hasPaidPlan(userId))) {
@@ -98,7 +98,7 @@ export class JudgeController {
         const { code, language, input, expected } = parsed.data;
 
         try {
-            const data = await ProblemsService.getJudgeData(problemId);
+            const data = await ProblemsService.getJudgeData(problemId, userId);
             if (!data) return res.status(404).json({ error: 'Problem not found' });
             const { problem, tests } = data;
             if (problem.is_premium && !(await hasPaidPlan(userId))) {
@@ -226,7 +226,7 @@ export class JudgeController {
         if (!parsed.success) return res.status(400).json({ error: 'Status must be solved, tried or revision.' });
 
         try {
-            const data = await ProblemsService.getJudgeData(problemId);
+            const data = await ProblemsService.getJudgeData(problemId, userId);
             if (!data) return res.status(404).json({ error: 'Problem not found' });
             if (parsed.data.status === 'solved' && data.tests.length > 0) {
                 return res.status(409).json({ error: 'Submit your code to mark this problem solved.', code: 'JUDGE_REQUIRED' });

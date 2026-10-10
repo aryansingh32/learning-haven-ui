@@ -18,6 +18,16 @@ export class CoursesController {
         }
     }
 
+    /** GET /api/courses/college — courses from the learner's colleges. */
+    static async listCollegeCourses(req: Request, res: Response) {
+        try {
+            res.json(await CoursesService.listCollegeCourses((req as any).user.id));
+        } catch (error) {
+            logger.error('List college courses error:', error);
+            res.status(500).json({ error: 'Failed to list your college\'s courses' });
+        }
+    }
+
     /**
      * GET /api/courses/:idOrSlug
      */

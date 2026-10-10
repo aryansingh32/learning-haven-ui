@@ -3,17 +3,22 @@
  * company filter, title search, deleted problems hidden, the company list,
  * and the daily problem (free only, solved-today flag).
  */
+const FORGE = '00000000-0000-0000-0000-00000000f0f0';
 const rows = {
   problems: [
-    { id: 'p1', slug: 'two-sum', title: 'Two Sum', difficulty: 'easy', topic: 'Arrays & Hashing', companies: ['Amazon', 'Google'], is_premium: false, deleted_at: null, order_index: 1 },
-    { id: 'p2', slug: 'group-anagrams', title: 'Group Anagrams', difficulty: 'medium', topic: 'Arrays & Hashing', companies: ['Amazon', 'Uber'], is_premium: false, deleted_at: null, order_index: 2 },
-    { id: 'p3', slug: 'trapping-rain-water', title: 'Trapping Rain Water', difficulty: 'hard', topic: 'Two Pointers', companies: ['Google'], is_premium: true, deleted_at: null, order_index: 3 },
-    { id: 'p4', slug: 'old-sum', title: 'Old Sum', difficulty: 'easy', topic: 'Arrays & Hashing', companies: ['Amazon'], is_premium: false, deleted_at: '2026-01-01', order_index: 4 },
+    { id: 'p1', slug: 'two-sum', title: 'Two Sum', difficulty: 'easy', topic: 'Arrays & Hashing', companies: ['Amazon', 'Google'], is_premium: false, deleted_at: null, order_index: 1, owner_org_id: FORGE, visibility: 'public' },
+    { id: 'p2', slug: 'group-anagrams', title: 'Group Anagrams', difficulty: 'medium', topic: 'Arrays & Hashing', companies: ['Amazon', 'Uber'], is_premium: false, deleted_at: null, order_index: 2, owner_org_id: FORGE, visibility: 'public' },
+    { id: 'p3', slug: 'trapping-rain-water', title: 'Trapping Rain Water', difficulty: 'hard', topic: 'Two Pointers', companies: ['Google'], is_premium: true, deleted_at: null, order_index: 3, owner_org_id: FORGE, visibility: 'public' },
+    { id: 'p4', slug: 'old-sum', title: 'Old Sum', difficulty: 'easy', topic: 'Arrays & Hashing', companies: ['Amazon'], is_premium: false, deleted_at: '2026-01-01', order_index: 4, owner_org_id: FORGE, visibility: 'public' },
+    // A college's own problem: never in Forge's public list, company list or daily pick.
+    { id: 'p5', slug: 'college-only', title: 'College Only', difficulty: 'easy', topic: 'Arrays & Hashing', companies: ['Amazon'], is_premium: false, deleted_at: null, order_index: 0, owner_org_id: 'c0000000-0000-0000-0000-00000000000c', visibility: 'org' },
   ] as any[],
   user_problem_status: [] as any[],
 };
 
 jest.mock('../config/database', () => {
+  const FORGE = '00000000-0000-0000-0000-00000000f0f0';
+  void FORGE;
   const builder = (table: string) => {
     let list: any[] = [...(rows as any)[table]];
     const q: any = {
@@ -47,6 +52,7 @@ const list = (extra: object = {}) => ProblemsService.getProblems({ page: 1, limi
 describe('practice list', () => {
   it('hides deleted problems', async () => {
     const r = await list();
+    expect(r.problems.map((p: any) => p.slug)).not.toContain('college-only');
     expect(r.problems.map((p: any) => p.slug)).toEqual(['two-sum', 'group-anagrams', 'trapping-rain-water']);
     expect(r.pagination.total).toBe(3);
   });
@@ -68,7 +74,8 @@ describe('practice list', () => {
 
   it('picks a free problem for the day, with solved flags for the learner', async () => {
     const now = new Date('2026-10-09T06:00:00Z');
-    const expected = pickDaily(rows.problems.filter((p) => !p.is_premium && !p.deleted_at), '2026-10-09')!;
+    const expected = pickDaily(rows.problems.filter((p) => !p.is_premium && !p.deleted_at && p.owner_org_id === FORGE && p.visibility === 'public'), '2026-10-09')!;
+    expect(expected.slug).not.toBe('college-only');
     const anon: any = await ProblemsService.getDaily(undefined, now);
     expect(anon).toMatchObject({ date: '2026-10-09', solved: false, solved_today: false });
     expect(anon.problem.slug).toBe(expected.slug);

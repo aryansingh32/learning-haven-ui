@@ -12,7 +12,7 @@ export class ProblemsController {
     static async getProblems(req: Request, res: Response) {
         try {
             const user_id = (req as AuthRequest).user?.id;
-            const { page, limit, difficulty, topic, search, company, is_premium } = req.query as any;
+            const { page, limit, difficulty, topic, search, company, is_premium, college } = req.query as any;
 
             const result = await ProblemsService.getProblems({
                 page: parseInt(page) || 1,
@@ -23,6 +23,7 @@ export class ProblemsController {
                 company: cleanCompany(company),
                 is_premium: is_premium === 'true' ? true : is_premium === 'false' ? false : undefined,
                 user_id,
+                college_id: typeof college === 'string' && /^[0-9a-f-]{36}$/i.test(college) ? college : undefined,
             });
 
             res.json(result);
@@ -87,10 +88,11 @@ export class ProblemsController {
             // req.user carries no plan; read it from entitlements.
             const user_plan = (await hasPaidPlan((req as AuthRequest).user!.id)) ? 'paid' : 'free';
 
-            const hints = await ProblemsService.getHints(id, user_plan);
+            const hints = await ProblemsService.getHints(id, user_plan, (req as AuthRequest).user?.id);
 
             res.json(hints);
         } catch (error: any) {
+            if (error.message === 'Problem not found') return res.status(404).json({ error: 'Problem not found' });
             logger.error('Get hints error:', error);
 
             if (error.message === 'Premium subscription required') {
@@ -110,10 +112,11 @@ export class ProblemsController {
             // req.user carries no plan; read it from entitlements.
             const user_plan = (await hasPaidPlan((req as AuthRequest).user!.id)) ? 'paid' : 'free';
 
-            const solution = await ProblemsService.getSolution(id, user_plan);
+            const solution = await ProblemsService.getSolution(id, user_plan, (req as AuthRequest).user?.id);
 
             res.json(solution);
         } catch (error: any) {
+            if (error.message === 'Problem not found') return res.status(404).json({ error: 'Problem not found' });
             logger.error('Get solution error:', error);
 
             if (error.message === 'Premium subscription required') {

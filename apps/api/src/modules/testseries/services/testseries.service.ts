@@ -4,7 +4,7 @@ import { scoreAttempt, AnswerState, ScoringQuestion } from '@repo/assessment-cor
 interface QuestionRow {
   id: string;
   question_group_id: string | null;
-  question_type: 'mcq' | 'msq' | 'nat';
+  question_type: 'mcq' | 'msq' | 'nat' | 'tf';
   body: string;
   options: unknown;
   correct_options: string[] | null;
@@ -21,7 +21,7 @@ interface QuestionRow {
 function toScoringQuestion(row: QuestionRow): ScoringQuestion {
   return {
     id: row.id,
-    question_type: row.question_type,
+    question_type: row.question_type === 'tf' ? 'mcq' : row.question_type,
     correct_options: row.correct_options,
     nat_answer: row.nat_answer !== null ? Number(row.nat_answer) : null,
     nat_tolerance: Number(row.nat_tolerance ?? 0),
@@ -35,7 +35,7 @@ function toPublicQuestion(row: QuestionRow) {
   return {
     id: row.id,
     questionGroupId: row.question_group_id,
-    questionType: row.question_type,
+    questionType: row.question_type === 'tf' ? 'mcq' : row.question_type,
     body: row.body,
     options: row.options,
     marks: Number(row.marks),
@@ -46,6 +46,8 @@ function toPublicQuestion(row: QuestionRow) {
     sortOrder: row.sort_order,
   };
 }
+
+const FORGE_ORG = '00000000-0000-0000-0000-00000000f0f0';
 
 export class TestSeriesService {
   // Public catalog: exam categories -> published series -> published (and
@@ -62,6 +64,7 @@ export class TestSeriesService {
       `SELECT id, exam_category_id, slug, title, description, year, is_free, price
        FROM public.test_series
        WHERE is_published = true AND deleted_at IS NULL
+         AND owner_org_id = '00000000-0000-0000-0000-00000000f0f0' AND visibility = 'public'
        ORDER BY created_at DESC`
     );
 
@@ -69,6 +72,7 @@ export class TestSeriesService {
       `SELECT id, test_series_id, slug, title, duration_seconds, is_sectional, is_free
        FROM public.tests
        WHERE is_published = true AND deleted_at IS NULL AND (release_at IS NULL OR release_at <= NOW())
+         AND owner_org_id = '00000000-0000-0000-0000-00000000f0f0' AND visibility = 'public'
        ORDER BY sort_order ASC`
     );
 
@@ -115,9 +119,57 @@ export class TestSeriesService {
       .filter((c) => c.series.length > 0);
   }
 
+  /**
+   * Who may take a test here (the self-paced Test Series): Forge's public tests, or a college's
+   * practice tests (inside one of its published series) for that college's members. A college's
+   * exams (tests given to batches) are never reachable here; they go through Forge Campus.
+   */
+  static async assertCanTake(userId: string | undefined, testId: string) {
+    const { rows } = await pool.query(
+      `SELECT t.owner_org_id, t.visibility, t.test_series_id, s.is_published AS series_published, s.owner_org_id AS series_owner,
+              EXISTS (SELECT 1 FROM campus.assignments a WHERE a.test_id = t.id) AS is_exam
+         FROM public.tests t LEFT JOIN public.test_series s ON s.id = t.test_series_id
+        WHERE t.id = $1 AND t.deleted_at IS NULL`, [testId]);
+    const t = rows[0];
+    if (!t) throw new Error('Test not found');
+    if (t.owner_org_id === FORGE_ORG && t.visibility === 'public') return;
+    const ok = userId && !t.is_exam && t.test_series_id && t.series_published && t.series_owner === t.owner_org_id
+      && (await pool.query(`SELECT campus.user_can_see_content($1, $2, 'org', true) AS ok`, [userId, t.owner_org_id])).rows[0]?.ok;
+    if (!ok) throw new Error('Test not found');
+  }
+
+  /** Practice test series a learner's colleges published for their own students, per college. */
+  static async getCollegeCatalog(userId: string) {
+    let colleges: { org_id: string; name: string; slug: string; logo_url: string | null; brand_color: string | null }[] = [];
+    try {
+      colleges = (await pool.query(`SELECT * FROM campus.user_colleges($1)`, [userId])).rows;
+    } catch (e: any) {
+      if (e?.code === '42883' || e?.code === '3F000') return [];
+      throw e;
+    }
+    if (!colleges.length) return [];
+    const { rows } = await pool.query(
+      `SELECT s.id, s.owner_org_id, s.slug, s.title, s.description, c.name AS category,
+              COALESCE((SELECT json_agg(json_build_object('id', t.id, 'slug', t.slug, 'title', t.title,
+                          'durationSeconds', t.duration_seconds, 'isSectional', t.is_sectional, 'isFree', true) ORDER BY t.sort_order)
+                          FROM public.tests t WHERE t.test_series_id = s.id AND t.is_published AND t.deleted_at IS NULL
+                           AND NOT EXISTS (SELECT 1 FROM campus.assignments a WHERE a.test_id = t.id)), '[]') AS tests
+         FROM public.test_series s LEFT JOIN public.exam_categories c ON c.id = s.exam_category_id
+        WHERE s.owner_org_id = ANY($1::uuid[]) AND s.visibility = 'org' AND s.is_published AND s.deleted_at IS NULL
+        ORDER BY s.created_at DESC`, [colleges.map((c) => c.org_id)]);
+    return colleges
+      .map((c) => ({
+        college: { id: c.org_id, name: c.name, slug: c.slug, logoUrl: c.logo_url, brandColor: c.brand_color },
+        series: rows.filter((r) => r.owner_org_id === c.org_id && r.tests.length > 0)
+          .map(({ owner_org_id: _o, ...r }) => ({ ...r, isFree: true, price: 0 })),
+      }))
+      .filter((c) => c.series.length > 0);
+  }
+
   // Metadata only -- no attempt is created, no timer starts. Used to render
   // the pre-test instructions screen before the learner commits to starting.
-  static async getTestMeta(testId: string) {
+  static async getTestMeta(testId: string, userId?: string) {
+    await this.assertCanTake(userId, testId);
     const result = await pool.query(
       `SELECT t.id, t.title, t.instructions, t.duration_seconds, t.is_sectional, t.is_free, t.is_published, t.release_at,
               COUNT(tq.id)::int AS question_count
@@ -158,6 +210,7 @@ export class TestSeriesService {
   }
 
   static async startAttempt(userId: string, testId: string) {
+    await this.assertCanTake(userId, testId);
     const testResult = await pool.query(
       `SELECT t.id, t.title, t.instructions, t.duration_seconds, t.is_sectional, t.section_time_locked,
               t.is_published, t.release_at, t.is_free AS test_is_free,
