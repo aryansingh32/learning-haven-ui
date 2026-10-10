@@ -1,6 +1,6 @@
 # Master feature checklist — verified against the code and the live database
 
-Verified 2026-10-09; re-checked 2026-10-12 after slices B1 and A2, on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
+Verified 2026-10-09; re-checked 2026-10-12 after slices B1 and A2; updated 2026-10-10 after W2-A1 and W2-L1 (now on `main`), on branch `ccr-f94ce2b7-q10f2w` (everything on `main` plus the Campus branches), and against
 the live Supabase database (read-only counts) for content.
 
 - `[x]` **Done** — built *and* reachable by the people it's for. Evidence after the dash.
@@ -28,11 +28,11 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 | # | Module | ✅ Done | 🟡 Partly | ❌ Not done | Total |
 |---|---|---:|---:|---:|---:|
-| 1 | Student Identity & Account Management | 9 | 4 | 10 | 23 |
+| 1 | Student Identity & Account Management | 14 | 0 | 9 | 23 |
 | 2 | College, University & Organization Management | 15 | 2 | 12 | 29 |
 | 3 | Role-Based Access & Permissions | 16 | 0 | 8 | 24 |
 | 4 | Student Dashboard | 15 | 4 | 5 | 24 |
-| 5 | Learning Management System | 16 | 11 | 20 | 47 |
+| 5 | Learning Management System | 23 | 4 | 20 | 47 |
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
@@ -59,7 +59,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
 | 30 | Gamification & Motivation | 15 | 0 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
-| 32 | Certificates & Credentials | 9 | 3 | 12 | 24 |
+| 32 | Certificates & Credentials | 10 | 2 | 12 | 24 |
 | 33 | Proctoring & Assessment Security | 18 | 1 | 16 | 35 |
 | 34 | AI-Era Academic Integrity | 1 | 1 | 23 | 25 |
 | 35 | Coding Contests & Hackathons | 0 | 0 | 30 | 30 |
@@ -85,23 +85,23 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 55 | Parent & Guardian Portal | 0 | 0 | 15 | 15 |
 | 56 | Institutional Reports & Accreditation | 2 | 0 | 21 | 23 |
 | 57 | Gamified Campus Ecosystem | 0 | 0 | 21 | 21 |
-| 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
-| 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
+| 58 | Innovation Features for the AI Era | 1 | 3 | 39 | 43 |
+| 59 | Unique Differentiation & Competitive Advantage | 4 | 5 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **470** (25%) | **195** (10%) | **1233** (65%) | **1898** |
+| | **All modules** | **485** (26%) | **181** (10%) | **1232** (65%) | **1898** |
 
 ---
 
 ### 1. Student Identity & Account Management
 - [x] Student Registration — email/password and phone sign-up (`pages/auth/SignUp.tsx`, `auth-phone.controller.ts`)
-- [ ] 🟡 Email Verification — Campus requires a verified email to claim a roster entry; portfolio publishing needs one (DB, W2-A1); the Forge verify screen + gating is unfinished (patch in docs/campus/wip)
+- [x] Email Verification — verified email required to pay, earn certificates and publish a portfolio (`requireVerifiedEmail`, DB checks); banner, `/verify-email` page, resend from Account settings (W2-A1)
 - [x] Mobile OTP Verification — `otp_verifications` table, `/auth/phone-send-otp`, `/auth/phone-verify-otp`
 - [x] Social Login — Google sign-in via Supabase OAuth (`SignIn.tsx`, `SignUp.tsx`)
 - [ ] Single Sign-On (SSO)
 - [ ] Multi-Factor Authentication
 - [x] Student Profile — `ProfilePage.tsx`
 - [x] Academic Profile — `users.college_name`/`year_of_study`; Campus roll number, unit, CGPA, active backlogs, 10th/12th % (portal edit + roster columns, C1)
-- [ ] 🟡 Skills Profile — `user_skills` + `skill_evidence()` in the database (W2-A1); API + profile UI unfinished (patch in docs/campus/wip)
+- [x] Skills Profile — declared skills with levels on the profile, plus evidence from judged solves, certificates and finished projects, and suggestions from the resume (W2-A1)
 - [x] Resume Profile — resume builder saved server-side (`resume.service.ts`)
 - [x] GitHub Profile Integration — GitHub OAuth connection for projects (`githubOAuth.ts`, `apprenticeship_github_connections`)
 - [ ] LinkedIn Profile Integration
@@ -109,10 +109,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Digital Student ID
 - [x] Multi-College Account Support — one account, many `campus.org_memberships`
 - [x] Account Recovery — forgot-password on `SignIn.tsx`
-- [ ] 🟡 Session Management — database helpers to list and revoke a learner's own Supabase sessions (W2-A1, migration 20261028000001); API + screen unfinished — docs/campus/wip/W2-A1-account-unfinished.patch
+- [x] Session Management — Account settings lists signed-in devices (device, IP, last active); sign out one or all others; a revoked session's access token is refused by the API at once (W2-A1)
 - [ ] Device Management
-- [ ] Login History
-- [ ] 🟡 Account Activity History — append-only `account_events` table (W2-A1); recording + screen unfinished (patch in docs/campus/wip)
+- [x] Login History — every sign-in with device and IP in Account activity, plus older ones from the Supabase Auth log (W2-A1)
+- [x] Account Activity History — append-only `account_events` (sign-ins/outs, revoked sessions, password changes, verification emails, portfolio publish) shown in Account settings with purchases (W2-A1)
 - [ ] Consent Management
 - [ ] Data Export
 - [ ] Account Deletion — `users.deleted_at` column exists, no deletion flow
@@ -204,7 +204,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Course Builder — admin Courses, Chapters editors, content import
 - [ ] 🟡 Drag-and-Drop Course Builder — Visual Roadmap Builder in admin; chapter editing is form-based
 - [x] Course Categories — `categories`
-- [ ] 🟡 Course Prerequisites — course-to-course prerequisites in the database + admin API (`/admin/courses/:id/learning-settings`) (W2-L1); no admin/learner screens yet (patch in docs/campus/wip)
+- [x] Course Prerequisites — set per course in admin Learning settings (loops refused); learners see a "Before you start" card (W2-L1)
 - [x] Course Enrollment — `course_enrollments`
 - [x] Self-Paced Learning
 - [ ] Instructor-Led Learning
@@ -232,22 +232,22 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Course Publishing — `courses.is_published`
 - [ ] Course Scheduling
 - [ ] Course Expiry
-- [ ] 🟡 Drip Content — time-based release per course enforced server-side (W2-L1); "unlocks on" UI unfinished (patch in docs/campus/wip)
-- [ ] 🟡 Prerequisite Enforcement — enforced server-side on enrol and chapter reads/writes, with exemptions (admins, college-assigned, already started) (W2-L1); learners don't see the reason in the UI yet
+- [x] Drip Content — admin sets days between chapters; enforced server-side; locked chapters say "Opens N days after you start" (W2-L1)
+- [x] Prerequisite Enforcement — enforced server-side on enrol and chapter reads/writes (exemptions: admins, college-assigned, already started); course and chapter pages show what to finish first (W2-L1)
 - [ ] Bookmarking
-- [ ] 🟡 Notes and Highlights — database + API built (highlights with text anchors, listed in the notebook API; W2-L1, migration 20261029000001); chapter-page highlighting UI unfinished — docs/campus/wip/W2-L1-learning-web-unfinished.patch
+- [x] Notes and Highlights — select lesson text, pick a colour, saved per learner and painted back; list with remove; "Add to notes"; shown in the notebook (W2-L1)
 - [ ] Lesson Search
 - [ ] Transcript Search
-- [ ] 🟡 Video Playback Speed — speed-control work in progress (YouTube IFrame API) — unfinished, in docs/campus/wip/W2-L1-learning-web-unfinished.patch
+- [x] Video Playback Speed — lessons play through the YouTube IFrame API with a speed control (W2-L1)
 - [x] Resume Learning — "Continue learning" on dashboard
 - [ ] Offline Learning
 - [x] Course Feedback — `feedback` table + admin Feedback page
 - [ ] Course Ratings — `program_reviews` table exists, 0 rows, no UI
-- [ ] 🟡 Course Discussions — per-chapter discussions in the database + API (post, reply, edit/delete own, report, staff hide; RLS) (W2-L1, migration 20261029000002); discussion UI unfinished (patch in docs/campus/wip)
+- [x] Course Discussions — a thread per chapter: post, one-level replies, edit (marked), delete, report; course staff can hide (W2-L1)
 - [ ] Course Announcements
 - [ ] 🟡 Course Completion Rules — phase completion page, certificates
 - [ ] Course Duplication
-- [ ] 🟡 Course Import and Export — export endpoint `/admin/courses/:id/export` writes the CSV the staged import reads back (round-trip jest) (W2-L1); no button in the admin UI yet
+- [x] Course Import and Export — admin Learning settings exports chapters / chapter steps as CSV in the Content Import format (round-trip tested) (W2-L1)
 
 ### 6. AI-Powered Learning
 - [x] AI Learning Copilot — global AI assistant on every page (`GlobalAIAssistant.tsx`)
@@ -1221,7 +1221,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Credential Sharing — share actions on certificate pages
 - [x] LinkedIn Sharing — share to LinkedIn from certificates
 - [x] Certificate Download — PDF generation (`certificates.service.ts`)
-- [ ] 🟡 Credential Portfolio — Certificates page (private)
+- [x] Credential Portfolio — learners pick certificates for their opt-in public portfolio `/u/<handle>` (W2-A1)
 - [ ] Verified Skill Credentials
 - [ ] Certificate Issuance Analytics
 - [ ] Certificate Fraud Detection
@@ -2043,7 +2043,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 AI Software Project Mentor — apprenticeship AI help
 - [ ] AI Agent Workflow Builder
 - [ ] AI Skill Passport
-- [ ] 🟡 Verified Skill Evidence — GitHub-verified project stages + verifiable certificates; not tied to skills
+- [x] Verified Skill Evidence — `skill_evidence()` ties skills to judge-accepted solves per topic, certificates and finished projects; shown on profile and portfolio (W2-A1)
 - [ ] Evidence-Based Skill Graph
 - [ ] Personalized Placement Simulation
 - [ ] Continuous Skill Assessment
@@ -2065,7 +2065,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Real-Time Cohort Intelligence
 - [ ] Cross-College Benchmarking
 - [ ] 🟡 Job-Ready Skill Verification — Docker-verified build challenges
-- [ ] 🟡 Evidence-Based Student Portfolio — projects + certificates (private)
+- [x] Evidence-Based Student Portfolio — public portfolio with chosen projects (stages done, optional repo link), certificates, skills and judged-solve evidence; private by default, needs a verified email (W2-A1)
 - [x] Practical Skill Challenges — staged build challenges verified by tests
 - [ ] Industry-Defined Assessments
 - [ ] Employer Skill Benchmarking

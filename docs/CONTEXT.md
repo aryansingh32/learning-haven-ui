@@ -63,7 +63,7 @@ Then W3.
 
 ## 3. Done (high level)
 
-Checklist totals: **470 done · 195 partly · 1,233 not done** (out of 1,898).
+Checklist totals: **485 done · 181 partly · 1,232 not done** (out of 1,898; updated 2026-10-10).
 
 - **Platform fixes and security** (earlier branches):
   - Auth bypass removed. `/execute/java` was open and leaked env; it is now locked down.
