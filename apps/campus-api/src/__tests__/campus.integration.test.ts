@@ -1454,3 +1454,108 @@ describe('college addresses (<slug>.forge.test)', () => {
     expect(await allowed('https://evilforge.test')).toBe(false);
   });
 });
+
+describe('college community', () => {
+  const C = {
+    c1: 'a0000000-0000-0000-0000-0000000000c1',
+    c2: 'a0000000-0000-0000-0000-0000000000c2',
+    c3: 'a0000000-0000-0000-0000-0000000000c3',
+    cb: 'b0000000-0000-0000-0000-0000000000cb',
+  };
+  const base = `/campus/v1/community/${ORG_A}`;
+  let threadId = '';
+  let replyId = '';
+  let teamId = '';
+
+  beforeAll(async () => {
+    for (const [name, id] of Object.entries(C)) {
+      await pool.query(`insert into auth.users (id, email, email_confirmed_at) values ($1, $2, now())`, [id, `${name}@community.edu`]);
+      await pool.query(`insert into public.users (id, email, full_name) values ($1, $2, $3)`, [id, `${name}@community.edu`, `Student ${name.toUpperCase()}`]);
+    }
+    await pool.query(`insert into campus.org_memberships (org_id, user_id, role) values ($1, $2, 'student'), ($1, $3, 'student'), ($1, $4, 'student'), ($5, $6, 'student')`,
+      [ORG_A, C.c1, C.c2, C.c3, ORG_B, C.cb]);
+  });
+  const kinds = async (user: string) => (await pool.query<{ kind: string }>(`select kind from public.notifications where user_id = $1`, [user])).rows.map((r) => r.kind);
+
+  it('asks a doubt, gets an answer, and marks it', async () => {
+    const t = await request(app).post(`${base}/threads`).set(await as(C.c1)).send({ kind: 'doubt', title: 'Why TLE on two sum?', body: 'Two loops', tags: ['arrays'] });
+    expect(t.status).toBe(201);
+    threadId = t.body.id;
+    const list = await request(app).get(`${base}/threads`).set(await as(C.c2));
+    expect(list.body).toEqual([expect.objectContaining({ id: threadId, author: expect.objectContaining({ name: 'Student C1' }), replies: 0, solved: false })]);
+    const r = await request(app).post(`${base}/threads/${threadId}/posts`).set(await as(C.c2)).send({ body: 'Use a hash map.' });
+    expect(r.status).toBe(201);
+    replyId = r.body.id;
+    expect(await kinds(C.c1)).toContain('community_reply');
+    expect((await request(app).patch(`${base}/threads/${threadId}`).set(await as(C.c2)).send({ title: 'Hijacked' })).status).toBe(403);
+    expect((await request(app).patch(`${base}/threads/${threadId}`).set(await as(C.c1)).send({ solvedPostId: replyId })).status).toBe(200);
+    const one = await request(app).get(`${base}/threads/${threadId}`).set(await as(C.c3));
+    expect(one.body).toMatchObject({ solvedPostId: replyId, posts: [expect.objectContaining({ body: 'Use a hash map.', author: expect.objectContaining({ name: 'Student C2' }) })] });
+    expect((await request(app).get(`${base}/threads?unanswered=1`).set(await as(C.c3))).body).toEqual([]);
+  });
+
+  it('keeps it all inside the college', async () => {
+    expect((await request(app).get(`${base}/threads`).set(await as(C.cb))).status).toBe(404);
+    expect((await request(app).get(`${base}/threads/${threadId}`).set(await as(C.cb))).status).toBe(404);
+    expect((await request(app).post(`${base}/threads/${threadId}/posts`).set(await as(C.cb)).send({ body: 'hi' })).status).toBe(404);
+    expect((await request(app).get(`/campus/v1/community/${ORG_B}/threads`).set(await as(C.cb))).body).toEqual([]);
+  });
+
+  it('lists people who joined the directory', async () => {
+    expect((await request(app).put(`${base}/people/me`).set(await as(C.c1))
+      .send({ headline: 'Backend', skills: ['Java', 'SQL'], lookingForTeam: true, githubUrl: 'http://insecure.example' })).status).toBe(400);
+    expect((await request(app).put(`${base}/people/me`).set(await as(C.c1))
+      .send({ headline: 'Backend', skills: ['Java', 'SQL'], lookingForTeam: true, githubUrl: 'https://github.com/c1' })).status).toBe(200);
+    const found = await request(app).get(`${base}/people?q=java`).set(await as(C.c2));
+    expect(found.body).toEqual([expect.objectContaining({ headline: 'Backend', person: expect.objectContaining({ name: 'Student C1' }), lookingForTeam: true })]);
+    expect((await request(app).get(`${base}/people`).set(await as(C.cb))).status).toBe(404);
+  });
+
+  it('forms a team: ask, accept, and stop at the size limit', async () => {
+    const t = await request(app).post(`${base}/teams`).set(await as(C.c1)).send({ name: 'Hostel app', description: 'Mess menu', skillsNeeded: ['React'], maxMembers: 2 });
+    expect(t.status).toBe(201);
+    teamId = t.body.id;
+    expect((await request(app).post(`${base}/teams/${teamId}/join`).set(await as(C.c2)).send({ message: 'I do Android' })).status).toBe(201);
+    expect((await request(app).post(`${base}/teams/${teamId}/join`).set(await as(C.c2)).send({})).status).toBe(400);
+    expect(await kinds(C.c1)).toContain('team_request');
+    expect((await request(app).post(`${base}/teams/${teamId}/join`).set(await as(C.c3)).send({})).status).toBe(201);
+
+    const asLead = await request(app).get(`${base}/teams/${teamId}`).set(await as(C.c1));
+    expect(asLead.body).toMatchObject({ myRole: 'lead', members: [expect.objectContaining({ role: 'lead' })] });
+    expect(asLead.body.requests).toHaveLength(2);
+    const asOther = await request(app).get(`${base}/teams/${teamId}`).set(await as(C.c3));
+    expect(asOther.body).toMatchObject({ myRole: null, myRequest: true });
+    expect(asOther.body.requests).toHaveLength(1); // only their own
+
+    expect((await request(app).post(`${base}/teams/${teamId}/members/${C.c2}/accept`).set(await as(C.c3))).status).toBe(403);
+    expect((await request(app).post(`${base}/teams/${teamId}/members/${C.c2}/accept`).set(await as(C.c1))).status).toBe(200);
+    expect(await kinds(C.c2)).toContain('team_update');
+    const full = await request(app).post(`${base}/teams/${teamId}/members/${C.c3}/accept`).set(await as(C.c1));
+    expect(full.status).toBe(400);
+    expect(full.body.error).toMatch(/full/);
+    expect((await request(app).get(`${base}/teams`).set(await as(C.cb))).status).toBe(404);
+  });
+
+  it('keeps team threads inside the team', async () => {
+    const t = await request(app).post(`${base}/threads`).set(await as(C.c2)).send({ kind: 'discussion', title: 'Pick a stack', body: 'RN?', teamId });
+    expect(t.status).toBe(201);
+    expect((await request(app).post(`${base}/threads`).set(await as(C.c3)).send({ kind: 'discussion', title: 'Sneak in', body: 'x', teamId })).status).toBe(403);
+    expect((await request(app).get(`${base}/threads?teamId=${teamId}`).set(await as(C.c1))).body).toHaveLength(1);
+    expect((await request(app).get(`${base}/threads?teamId=${teamId}`).set(await as(C.c3))).body).toHaveLength(0);
+    expect((await request(app).get(`${base}/threads/${t.body.id}`).set(await as(C.c3))).status).toBe(404);
+    // Not in the college-wide feed either.
+    expect((await request(app).get(`${base}/threads`).set(await as(C.c1))).body.map((x: { id: string }) => x.id)).toEqual([threadId]);
+  });
+
+  it('lets anyone report, and moderators act on reports', async () => {
+    expect((await request(app).post(`${base}/reports`).set(await as(C.c3)).send({ postId: replyId, reason: 'Gives away the answer' })).status).toBe(201);
+    expect((await request(app).get(`${base}/reports`).set(await as(C.c3))).status).toBe(403);
+    expect((await request(app).post(`${base}/posts/${replyId}/moderate`).set(await as(C.c3)).send({ hidden: true })).status).toBe(403);
+    const open = await request(app).get(`${base}/reports`).set(await as(U.facultyA));
+    expect(open.body).toEqual([expect.objectContaining({ postId: replyId, threadId, author: expect.objectContaining({ name: 'Student C2' }) })]);
+    expect((await request(app).post(`${base}/reports/${open.body[0].id}/resolve`).set(await as(U.facultyA)).send({ action: 'hide' })).status).toBe(200);
+    expect((await request(app).get(`${base}/threads/${threadId}`).set(await as(C.c3))).body.posts).toEqual([]);
+    expect((await request(app).get(`${base}/threads/${threadId}`).set(await as(C.c2))).body.posts).toEqual([expect.objectContaining({ hidden: true, mine: true })]);
+    expect((await request(app).get(`${base}/reports`).set(await as(U.facultyA))).body).toEqual([]);
+  });
+});

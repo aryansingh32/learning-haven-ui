@@ -25,6 +25,7 @@ const Courses = lazy(() => import('@/pages/Courses'));
 const CourseProgress = lazy(() => import('@/pages/CourseProgress'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const Content = lazy(() => import('@/pages/content/Content'));
+const Community = lazy(() => import('@/pages/Community'));
 const CourseEditor = lazy(() => import('@/pages/content/CourseEditor'));
 const ProblemEditor = lazy(() => import('@/pages/content/ProblemEditor'));
 
@@ -110,6 +111,7 @@ export default function App() {
             <Route path="courses" element={<Courses />} />
             <Route path="courses/:assignmentId" element={<CourseProgress />} />
             <Route path="content" element={<Content />} />
+            <Route path="community" element={<Community />} />
             <Route path="content/courses/:courseId" element={<CourseEditor />} />
             <Route path="content/problems/:problemId" element={<ProblemEditor />} />
             <Route path="settings" element={<Settings />} />

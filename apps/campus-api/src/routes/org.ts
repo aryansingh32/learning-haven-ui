@@ -529,11 +529,12 @@ orgRouter.patch('/settings', async (req, res) => {
 
 // ── Custom roles ────────────────────────────────────────────────────────────
 const ASSIGNABLE_PERMISSIONS = ['members.manage', 'members.view', 'batches.manage', 'content.create', 'assessments.create',
-  'assessments.grade', 'assessments.invigilate', 'reports.view', 'reports.export', 'records.view', 'placements.manage'] as const;
+  'assessments.grade', 'assessments.invigilate', 'reports.view', 'reports.export', 'records.view', 'placements.manage',
+  'community.moderate'] as const;
 const roleBody = z.object({
   name: z.string().trim().min(2).max(60),
   description: z.string().trim().max(300).nullable().optional(),
-  permissions: z.array(z.enum(ASSIGNABLE_PERMISSIONS)).min(1).max(11),
+  permissions: z.array(z.enum(ASSIGNABLE_PERMISSIONS)).min(1).max(12),
 });
 
 orgRouter.get('/roles', async (req, res) => {

@@ -55,6 +55,9 @@ const MyCollegePage = lazy(() => import("./pages/campus/MyCollegePage"));
 const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
 const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
 const CollegeDrivesPage = lazy(() => import('./pages/campus/CollegeDrivesPage'));
+const CommunityPage = lazy(() => import('./pages/community/CommunityPage'));
+const CommunityThreadPage = lazy(() => import('./pages/community/CommunityThreadPage'));
+const CommunityTeamPage = lazy(() => import('./pages/community/CommunityTeamPage'));
 const NotificationSettingsPage = lazy(() => import('./pages/settings/NotificationSettingsPage'));
 const AccountSettingsPage = lazy(() => import('./pages/settings/AccountSettingsPage'));
 const PortfolioSettingsPage = lazy(() => import('./pages/settings/PortfolioSettingsPage'));
@@ -199,6 +202,9 @@ const App = () => (
                         <Route path="/college" element={<MyCollegePage />} />
                         <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
                         <Route path="/college/drives" element={<CollegeDrivesPage />} />
+                        <Route path="/community" element={<CommunityPage />} />
+                        <Route path="/community/:orgId/threads/:threadId" element={<CommunityThreadPage />} />
+                        <Route path="/community/:orgId/teams/:teamId" element={<CommunityTeamPage />} />
                         <Route path="/settings/notifications" element={<NotificationSettingsPage />} />
                         <Route path="/settings/account" element={<AccountSettingsPage />} />
                         <Route path="/settings/portfolio" element={<PortfolioSettingsPage />} />

@@ -2,7 +2,8 @@ import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Bot, Gift, Award,
   Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap, Medal,
-  Globe, ShieldCheck
+  Globe, ShieldCheck,
+  UsersRound,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,8 @@ const primaryNav = [
 
 // Shown only to students whose college uses Forge Campus.
 const collegeNavItem = { to: "/college", icon: GraduationCap, label: "My College" };
+// Doubts, people and project teams of the learner's college.
+const communityNavItem = { to: "/community", icon: UsersRound, label: "Community" };
 // Sidebar and drawer only (the mobile bottom bar has no room); reachable from Home and Profile too.
 const achievementsNavItem = { to: "/achievements", icon: Medal, label: "Achievements" };
 
@@ -54,7 +57,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const { isStudent } = useCampusMe();
   // The mobile bottom bar stays as it is; My College lives in the sidebar and drawer.
   const journeyNav = [...primaryNav.slice(0, -1), achievementsNavItem, primaryNav[primaryNav.length - 1]];
-  const sidebarNav = isStudent ? [journeyNav[0], collegeNavItem, ...journeyNav.slice(1)] : journeyNav;
+  const sidebarNav = isStudent ? [journeyNav[0], collegeNavItem, communityNavItem, ...journeyNav.slice(1)] : journeyNav;
 
   const renderNavItem = (item: typeof primaryNav[0], onClick?: () => void) => (
     <RouterNavLink

@@ -3,7 +3,7 @@ export type Role = 'owner' | 'admin' | 'placement_officer' | 'faculty' | 'evalua
 export type Permission =
   | 'org.manage' | 'org.billing' | 'members.manage' | 'members.view' | 'batches.manage'
   | 'content.create' | 'assessments.create' | 'assessments.grade' | 'assessments.invigilate'
-  | 'reports.view' | 'reports.export' | 'records.view' | 'placements.manage';
+  | 'reports.view' | 'reports.export' | 'records.view' | 'placements.manage' | 'community.moderate';
 
 export interface Membership {
   orgId: string;

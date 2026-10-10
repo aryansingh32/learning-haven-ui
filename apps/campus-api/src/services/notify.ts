@@ -7,7 +7,8 @@ import { env } from '../env';
 
 export type NotificationKind =
   | 'test_assigned' | 'test_closing' | 'result_released' | 'feedback' | 'course_assigned' | 'course_due'
-  | 'drive_announced' | 'drive_update' | 'job_alert' | 'announcement';
+  | 'drive_announced' | 'drive_update' | 'job_alert' | 'announcement'
+  | 'community_reply' | 'team_request' | 'team_update';
 
 export interface NewNotification {
   orgId: string | null;

@@ -384,6 +384,7 @@ const PERMISSION_INFO: Array<{ id: Permission; label: string; hint: string }> = 
   { id: 'reports.export', label: 'Export reports', hint: 'Download results, placement and progress CSVs.' },
   { id: 'records.view', label: 'See academic records', hint: 'CGPA, backlogs and school marks.' },
   { id: 'placements.manage', label: 'Run placement drives', hint: 'Create drives, shortlist and select students.' },
+  { id: 'community.moderate', label: 'Moderate the community', hint: 'Handle reports; hide and pin students\' doubts and replies.' },
   { id: 'members.view', label: 'See people and batches', hint: 'The member list and who is in which batch.' },
   { id: 'batches.manage', label: 'Manage batches', hint: 'Create batches, sections and units; move students.' },
   { id: 'members.manage', label: 'Manage people', hint: 'Upload rosters, change roles, suspend people, define roles.' },

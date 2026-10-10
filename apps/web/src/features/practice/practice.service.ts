@@ -2,6 +2,8 @@ import { api } from '@/services/api.svc';
 import type { CompareMode, CustomRunInput, EditorPrefs, ExecutionResult, QuestionData, SupportedLanguage } from '@/modules/CodeExecutor';
 
 export interface ProblemDetail {
+  /** Forge, or the college that made it (then only its students see it). */
+  owner_org_id?: string;
   id: string;
   slug: string;
   title: string;

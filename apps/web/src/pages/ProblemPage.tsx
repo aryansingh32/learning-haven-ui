@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import confetti from 'canvas-confetti';
 import { toast } from 'sonner';
-import { ArrowLeft, CheckCircle2, Loader2, RotateCcw, ShieldCheck, AlertTriangle, Bookmark } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Loader2, RotateCcw, ShieldCheck, AlertTriangle, Bookmark, MessageCircleQuestion } from 'lucide-react';
+import { useCampusMe } from '@/hooks/useCampus';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { CodeWorkspace, type CustomRunInput, type EditorPrefsSync, type ExecutionResult, type RunContext, type SupportedLanguage } from '@/modules/CodeExecutor';
@@ -25,6 +26,7 @@ export default function ProblemPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { colleges } = useCampusMe();
 
   const { data: problem, isLoading, isError, error } = useQuery({
     queryKey: ['problem', slug],
@@ -116,6 +118,22 @@ export default function ProblemPage() {
       ) : (
         <Button size="sm" variant="secondary" className="h-8 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs" disabled={status.isPending || problem.solved} onClick={() => status.mutate('solved')}>
           <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" /> {problem.solved ? 'Solved' : 'Mark solved'}
+        </Button>
+      )}
+      {colleges.length > 0 && (
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-8 text-xs text-zinc-400 hover:text-zinc-100"
+          title="Ask students and faculty of your college"
+          onClick={() => {
+            // A college's own problem goes to that college; otherwise the learner's first college.
+            const college = colleges.find((c) => c.orgId === problem.owner_org_id) ?? colleges[0];
+            const q = new URLSearchParams({ college: college.orgId, problem: problem.id, problemTitle: problem.title, ask: '1' });
+            navigate(`/community?${q}`);
+          }}
+        >
+          <MessageCircleQuestion className="w-3.5 h-3.5 sm:mr-1.5" /><span className="hidden sm:inline">Ask your college</span>
         </Button>
       )}
       <Button

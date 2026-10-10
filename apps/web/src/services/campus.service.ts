@@ -225,7 +225,8 @@ export interface MyCourseAssignment {
 
 export type NotificationKind =
   | 'test_assigned' | 'test_closing' | 'result_released' | 'feedback' | 'course_assigned' | 'course_due'
-  | 'drive_announced' | 'drive_update' | 'job_alert' | 'announcement';
+  | 'drive_announced' | 'drive_update' | 'job_alert' | 'announcement'
+  | 'community_reply' | 'team_request' | 'team_update';
 export interface AppNotification { id: string; kind: NotificationKind; title: string; body: string | null; link: string | null; readAt: string | null; createdAt: string }
 export interface NotificationPreferences { emailEnabled: boolean; dailyDigest: boolean; mutedKinds: NotificationKind[] }
 
@@ -298,3 +299,77 @@ export const submitCampusAttempt = (attemptId: string): Promise<AttemptView> =>
 /** Colleges where this person is a student (staff roles use the Campus portal). */
 export const studentMemberships = (me: CampusMe | undefined) =>
   (me?.memberships ?? []).filter((m) => m.type === 'college' && m.role === 'student');
+
+// ── Community (one college's doubts, people and teams) ───────────────────
+
+export interface CommunityPerson { id: string; name: string; avatarUrl: string | null }
+export type ThreadKind = 'doubt' | 'discussion';
+export interface ThreadSummary {
+  id: string; kind: ThreadKind; title: string; excerpt: string; tags: string[]; teamId: string | null;
+  problemId: string | null; problemTitle: string | null; problemSlug: string | null; courseId: string | null; courseTitle: string | null;
+  pinned: boolean; hidden: boolean; solved: boolean; replies: number; createdAt: string; lastActivityAt: string;
+  author: CommunityPerson; mine: boolean;
+}
+export interface ThreadPost { id: string; body: string; hidden: boolean; createdAt: string; editedAt: string | null; author: CommunityPerson; mine: boolean }
+export interface ThreadDetail extends Omit<ThreadSummary, 'excerpt' | 'replies' | 'solved' | 'lastActivityAt'> {
+  body: string; solvedPostId: string | null; editedAt: string | null; teamName: string | null; canModerate: boolean; posts: ThreadPost[];
+}
+export interface ThreadFilters { kind?: ThreadKind; problemId?: string; teamId?: string; q?: string; mine?: boolean; unanswered?: boolean }
+export interface NewThread { kind: ThreadKind; title: string; body: string; tags?: string[]; problemId?: string | null; courseId?: string | null; teamId?: string | null }
+export interface DirectoryCard {
+  person: CommunityPerson; me: boolean; headline: string | null; bio: string | null; skills: string[]; lookingForTeam: boolean;
+  githubUrl: string | null; linkedinUrl: string | null; teams: { id: string; name: string }[];
+}
+export interface MyCard { headline: string | null; bio: string | null; skills: string[]; lookingForTeam: boolean; githubUrl: string | null; linkedinUrl: string | null }
+export type TeamStatus = 'forming' | 'building' | 'shipped' | 'archived';
+export interface TeamSummary {
+  id: string; name: string; excerpt: string | null; skillsNeeded: string[]; maxMembers: number; status: TeamStatus;
+  repoUrl: string | null; demoUrl: string | null; members: number; lead: CommunityPerson | null; myStatus: 'requested' | 'active' | null;
+}
+export interface TeamMember { role: 'lead' | 'member'; status: 'active' | 'requested'; createdAt: string; person: CommunityPerson; message?: string | null }
+export interface TeamDetail {
+  id: string; name: string; description: string | null; skillsNeeded: string[]; maxMembers: number; status: TeamStatus;
+  repoUrl: string | null; demoUrl: string | null; createdAt: string; members: TeamMember[]; requests: TeamMember[];
+  myRole: 'lead' | 'member' | null; myRequest: boolean; canModerate: boolean;
+}
+export interface TeamInput { name: string; description?: string | null; skillsNeeded?: string[]; maxMembers?: number; status?: TeamStatus; repoUrl?: string | null; demoUrl?: string | null }
+export interface CommunityReport {
+  id: string; reason: string; createdAt: string; threadId: string; postId: string | null; threadTitle: string;
+  excerpt: string; hidden: boolean; reporter: CommunityPerson; author: CommunityPerson;
+}
+
+const community = (orgId: string) => `/community/${orgId}`;
+const qs = (o: Record<string, string | undefined>) => {
+  const p = new URLSearchParams(Object.entries(o).filter((e): e is [string, string] => Boolean(e[1])));
+  return p.toString() ? `?${p}` : '';
+};
+
+export const fetchThreads = (orgId: string, f: ThreadFilters = {}): Promise<ThreadSummary[]> =>
+  client.get(`${community(orgId)}/threads${qs({ kind: f.kind, problemId: f.problemId, teamId: f.teamId, q: f.q, mine: f.mine ? '1' : undefined, unanswered: f.unanswered ? '1' : undefined })}`);
+export const createThread = (orgId: string, t: NewThread): Promise<{ id: string }> => client.post(`${community(orgId)}/threads`, t);
+export const fetchThread = (orgId: string, id: string): Promise<ThreadDetail> => client.get(`${community(orgId)}/threads/${id}`);
+export const updateThread = (orgId: string, id: string, patch: { title?: string; body?: string; tags?: string[]; solvedPostId?: string | null }) =>
+  client.patch(`${community(orgId)}/threads/${id}`, patch);
+export const moderateThread = (orgId: string, id: string, m: { hidden?: boolean; pinned?: boolean }) => client.post(`${community(orgId)}/threads/${id}/moderate`, m);
+export const deleteThread = (orgId: string, id: string) => client.delete(`${community(orgId)}/threads/${id}`);
+export const replyToThread = (orgId: string, id: string, body: string): Promise<{ id: string }> => client.post(`${community(orgId)}/threads/${id}/posts`, { body });
+export const updatePost = (orgId: string, id: string, body: string) => client.patch(`${community(orgId)}/posts/${id}`, { body });
+export const moderatePost = (orgId: string, id: string, hidden: boolean) => client.post(`${community(orgId)}/posts/${id}/moderate`, { hidden });
+export const deletePost = (orgId: string, id: string) => client.delete(`${community(orgId)}/posts/${id}`);
+export const reportContent = (orgId: string, r: { threadId?: string; postId?: string; reason: string }) => client.post(`${community(orgId)}/reports`, r);
+
+export const fetchDirectory = (orgId: string, f: { q?: string; looking?: boolean } = {}): Promise<DirectoryCard[]> =>
+  client.get(`${community(orgId)}/people${qs({ q: f.q, looking: f.looking ? '1' : undefined })}`);
+export const fetchMyCard = (orgId: string): Promise<MyCard | null> => client.get(`${community(orgId)}/people/me`);
+export const saveMyCard = (orgId: string, card: MyCard) => client.put(`${community(orgId)}/people/me`, card);
+export const leaveDirectory = (orgId: string) => client.delete(`${community(orgId)}/people/me`);
+
+export const fetchTeams = (orgId: string, f: { all?: boolean; mine?: boolean } = {}): Promise<TeamSummary[]> =>
+  client.get(`${community(orgId)}/teams${qs({ status: f.all ? 'all' : undefined, mine: f.mine ? '1' : undefined })}`);
+export const createTeam = (orgId: string, t: TeamInput): Promise<{ id: string }> => client.post(`${community(orgId)}/teams`, t);
+export const fetchTeam = (orgId: string, id: string): Promise<TeamDetail> => client.get(`${community(orgId)}/teams/${id}`);
+export const updateTeam = (orgId: string, id: string, t: Partial<TeamInput>) => client.patch(`${community(orgId)}/teams/${id}`, t);
+export const deleteTeam = (orgId: string, id: string) => client.delete(`${community(orgId)}/teams/${id}`);
+export const askToJoinTeam = (orgId: string, id: string, message?: string) => client.post(`${community(orgId)}/teams/${id}/join`, { message });
+export const acceptTeamRequest = (orgId: string, id: string, userId: string) => client.post(`${community(orgId)}/teams/${id}/members/${userId}/accept`);
+export const removeTeamMember = (orgId: string, id: string, userId: string) => client.delete(`${community(orgId)}/teams/${id}/members/${userId}`);

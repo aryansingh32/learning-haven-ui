@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Bell, Briefcase, CalendarClock, CheckCheck, ClipboardCheck, MessageSquareText, Settings2, Trophy, BookOpen, Megaphone } from 'lucide-react';
+import { Bell, Briefcase, CalendarClock, CheckCheck, ClipboardCheck, MessageSquareText, Settings2, Trophy, BookOpen, Megaphone, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -12,6 +12,7 @@ const ICON: Record<NotificationKind, LucideIcon> = {
   test_assigned: ClipboardCheck, test_closing: CalendarClock, result_released: Trophy, feedback: MessageSquareText,
   course_assigned: BookOpen, course_due: CalendarClock, drive_announced: Briefcase, drive_update: Briefcase,
   job_alert: Briefcase, announcement: Megaphone,
+  community_reply: MessageSquareText, team_request: Users, team_update: Users,
 };
 
 function ago(iso: string) {

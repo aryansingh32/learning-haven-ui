@@ -66,7 +66,7 @@ meRouter.post('/notifications/read', async (req, res) => {
 });
 
 const KINDS = ['test_assigned', 'test_closing', 'result_released', 'feedback', 'course_assigned', 'course_due',
-  'drive_announced', 'drive_update', 'job_alert', 'announcement'] as const;
+  'drive_announced', 'drive_update', 'job_alert', 'announcement', 'community_reply', 'team_request', 'team_update'] as const;
 const prefsBody = z.object({
   emailEnabled: z.boolean().optional(),
   dailyDigest: z.boolean().optional(),

@@ -15,6 +15,9 @@ const KINDS: Array<{ kind: NotificationKind; label: string; hint: string }> = [
   { kind: 'drive_update', label: 'Drive updates', hint: 'Shortlists, selections, and the last day to apply.' },
   { kind: 'job_alert', label: 'Job alerts', hint: 'New jobs on Forge that match you.' },
   { kind: 'announcement', label: 'Announcements', hint: 'Messages from your college or Forge.' },
+  { kind: 'community_reply', label: 'Replies to your doubts', hint: 'When someone in your college answers a thread you started.' },
+  { kind: 'team_request', label: 'Team requests', hint: 'When someone asks to join a team you lead.' },
+  { kind: 'team_update', label: 'Team updates', hint: "When you're accepted onto a team, or removed." },
 ];
 
 export default function NotificationSettingsPage() {

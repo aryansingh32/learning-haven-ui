@@ -8,6 +8,7 @@ import { allowOrigin } from './env';
 import { errorHandler, HttpError } from './errors';
 import { analyticsRouter } from './routes/analytics';
 import { assignmentsRouter } from './routes/assignments';
+import { communityRouter } from './routes/community';
 import { contentRouter } from './routes/content';
 import { drivesRouter } from './routes/drives';
 import { env } from './env';
@@ -52,6 +53,8 @@ api.use('/orgs/:orgId/analytics', analyticsRouter);
 api.use('/orgs/:orgId/drives', drivesRouter);
 api.use('/orgs/:orgId/course-assignments', courseAssignmentsRouter);
 api.use('/orgs/:orgId/content', contentRouter);
+// The college's community (students and staff of that college).
+api.use('/community/:orgId', communityRouter);
 app.use('/campus/v1', api);
 
 app.use((_req, _res, next) => next(new HttpError(404, 'Not found')));
