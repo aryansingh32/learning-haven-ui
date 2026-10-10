@@ -49,6 +49,7 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Live DB migrations | ✅ **all applied 2026-10-10** (Claude, at the owner's request): the 14 older ones live lacked (`20260823000001` … `20260901000004`, listed in `tests/fixtures/missing_on_live.txt`), three new fixes (`20260828000005` XP functions server-only, `20260901000005` notes/mock tests locked, `20261029000003` function hardening), and the 21 pending ones (`20261010000001` … `20261029000002`). Verified: schema fingerprint (functions, policies, constraints, columns, triggers, grants, RLS) identical to a local database built in the same order; §8.1 data checks pass; 0 tables without RLS; advisor shows only intended findings + leaked-password toggle |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ✅ 2026-10-10: the four stacked branches (fast-forward) and the audit branch (merge, minus its duplicate per-course pricing) |
+| College platform (branches `feat/college-saas-admin` → `feat/college-content`, not pushed) | ✅ SaaS control from the Forge admin; college-made courses/problems/test series/materials visible only to that college; college addresses `<slug>.<base domain>`; per-college community (doubts, people, teams, moderation). Migrations `20261030000001`, `20261030000002`, `20261031000001`, `20261101000001` **not on live yet** |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
 
 ### Owner decisions recorded (2026-10-10)
@@ -209,6 +210,25 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 - **Security:** duplicate result lines for a test now fail it (a learner could read the marker and forge "passed").
 - Forge API `POST /api/problems/:id/run` (samples only, records nothing); practice sends C++ Run there. Migration
   `20261012000001_problem_cpp_starters.sql` (C++ starters for the 8 live problems). Campus coding questions allow C++.
+
+### 2026-10-10 — College platform (owner's request)
+- **SaaS control** (`feat/college-saas-admin`): Forge admin → Colleges (create with owner, seats, suspend/archive,
+  licences). `campus.org_is_active` in every access helper; seat-limit and org-column guard triggers. The Campus portal is
+  each college's own workspace; students only use the Forge app.
+- **College content** (`20261031000001`): `problems.owner_org_id/visibility`; `campus.user_can_see_content`,
+  `campus.user_colleges` (server-only); `campus.study_materials`. Campus API `/orgs/:orgId/content/*` (courses with
+  chapters + steps, problems with tests, test series from the college's own tests, materials). Forge API filters every
+  public list to Forge content and checks access on single problems, hints, solutions, judge data and test-series
+  attempts; `GET /courses/college`, `GET /test-series/college`, `GET /problems?college=`. College lists and college
+  problems aren't cached in the Forge API (the Campus API can't clear that cache).
+- **College addresses**: portal reads `<slug>.<VITE_CAMPUS_BASE_DOMAIN>`; public `GET /campus/v1/public/colleges/:slug`
+  (name + branding of an active college only); both APIs allow `https://<one label>.<CAMPUS_BASE_DOMAIN>`; slugs must be
+  DNS labels and not reserved (`campus-api/src/collegeSlug.ts`). Dev: `http://vit-demo.localhost:5175`.
+- **Community** (`20261101000001`): `campus.community_profiles|teams|team_members|threads|posts|reports`; permission
+  `community.moderate` (owner, admin, faculty). Campus API `/community/:orgId/*`; web `/community`,
+  `/community/:orgId/threads/:id`, `/community/:orgId/teams/:id`, "Ask your college" on problem pages; portal
+  Community page (reports, pin/hide). Tests: `supabase/tests/college_community.sql` (all policies + triggers
+  mutation-checked), 6 Campus API integration tests.
 
 ## 6. Architecture rules for Campus (keep these)
 

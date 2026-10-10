@@ -54,6 +54,18 @@ W2 slices:
 | W2-A1 | Account: active sessions, account log, email verification, skills, public portfolio | ✅ (2026-10-10, browser-verified) |
 | W2-L1 | Learning: highlights, video speed, prerequisites, drip, export, discussions (+ admin learning settings) | ✅ (2026-10-10, browser-verified) |
 
+**College platform (owner's request, 2026-10-10)** — branch `feat/college-content`, stacked on
+`feat/college-saas-admin` (both local, not pushed yet):
+
+| Slice | What | State |
+|---|---|---|
+| SaaS control | Forge admin → Colleges: create, seats, suspend/archive, licences; suspension enforced everywhere | ✅ browser-verified |
+| College content | Campus portal → Content: colleges make their own courses (chapters + steps), practice problems with tests, aptitude test series, study materials. Only that college's students see them: "From your college" (tagged) above search on Learn, Practice, Test Series; notes on My College | ✅ browser-verified (17 checks) |
+| College addresses | Each college's portal at `<slug>.<CAMPUS_BASE_DOMAIN>` (e.g. `vit.forge.com`): branded sign-in, only that college's workspace; reserved names refused; admin + Settings show the address | ✅ browser-verified (8 checks) |
+| Community | Per college: doubts/discussions (+ "Ask your college" on every problem, mark the answer), opt-in people directory, project teams (ask/accept, private team threads), reports + moderation (new permission `community.moderate`) | ✅ browser-verified (19 checks) |
+
+Data model decision (owner): **shared database, strict isolation** (RLS on every college row), not a database per college.
+
 **Immediate next step:** the rest of W2:
 - placement readiness computed on the server
 - course bundles
@@ -102,6 +114,14 @@ Full list: the 🟡 and ❌ rows in FEATURE_CHECKLIST.md.
 **Done 2026-10-10 (owner asked):** all stacked branches and the August audit branch merged into `main`; every pending
 migration applied to live and verified (schema fingerprint identical to the tested database; security advisor clean
 except intended findings). Details: HANDOFF §0 and §4.
+
+**Owner (production) — new for the college platform:**
+- Apply on live, in order (not applied yet): `20261030000001_certificate_revocation`, `20261030000002_college_lifecycle`,
+  `20261031000001_college_content`, `20261101000001_college_community`. All pass `pnpm --filter @repo/api test:db`.
+- Push `feat/college-saas-admin` and `feat/college-content`, then merge into `main`.
+- College addresses: a wildcard DNS record `*.<your domain>` and a wildcard TLS certificate pointing at the Campus portal;
+  set `VITE_CAMPUS_BASE_DOMAIN` (portal), `CAMPUS_BASE_DOMAIN` (Forge API and Campus API, for CORS) and
+  `VITE_CAMPUS_PORTAL_URL=https://{slug}.<your domain>` (admin).
 
 **Owner (production):**
 1. ~~**Apply migrations on live, in order:**~~ done
