@@ -212,6 +212,14 @@ Key findings: the learner code editor was only on a dev page; live DB has just 8
 
 ## 6. Architecture rules for Campus (keep these)
 
+- **Three separate surfaces (2026-10-10, owner's rule):** Forge staff run the SaaS from the **Forge admin panel**
+  (`apps/admin` → Colleges: create, seats, suspend/archive/reactivate, licences, usage; it calls the Campus API's
+  `/platform/*` with the admin's own sign-in). The **Campus portal** (`apps/campus`) is only each college's own
+  workspace — no Forge-wide controls in it. **Students** only use the Forge app (`/college`).
+- A college's `status`, `seat_limit`, `slug` and `type` are Forge-only (DB trigger); suspension is enforced in every
+  access rule (`campus.org_is_active`), seats by a trigger on memberships. New env: admin `VITE_CAMPUS_API_URL`,
+  portal `VITE_FORGE_ADMIN_URL`; add the admin origin to the Campus API's `CORS_ORIGINS`.
+
 - Campus API: `asUser(userId, fn)` runs as Postgres role `authenticated` with JWT claims → **RLS decides**. Use for every user-requested read/write.
 - `asSystem(fn)` bypasses RLS — only **after** `asUser` has proven access, and only by explicit ids (questions with answers, attempt writes, user names).
 - Students never receive correct answers while an attempt is open; scoring uses server-saved answers only; deadline = `least(start + duration, closes_at)`.
