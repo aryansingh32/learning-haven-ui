@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { userOf } from '../auth';
 import { z } from 'zod';
-import { asUser } from '../db';
+import { asSystem, asUser } from '../db';
 
 export const meRouter = Router();
 
@@ -31,7 +31,13 @@ meRouter.get('/', async (req, res) => {
     const admin = await db.query<{ ok: boolean }>(`select campus.is_platform_admin() as ok`);
     return { claimed: claimed.rows[0].n, memberships: memberships.rows, isPlatformAdmin: admin.rows[0].ok };
   });
-  res.json(result);
+  // Colleges the caller belongs to that Forge has suspended or archived (only their names, so the
+  // apps can say why the college is missing). The caller's own memberships only.
+  const unavailableColleges = await asSystem(async (db) => (await db.query(
+    `select o.name as "orgName", o.status, m.role
+       from campus.org_memberships m join campus.organizations o on o.id = m.org_id
+      where m.user_id = $1 and m.status = 'active' and o.status <> 'active' order by o.name`, [userId])).rows);
+  res.json({ ...result, unavailableColleges });
 });
 
 // ── My notifications ────────────────────────────────────────────────────────

@@ -157,4 +157,6 @@ export async function download(path: string, fallbackName: string) {
   URL.revokeObjectURL(url);
 }
 
+/** Forge's own admin panel, where Forge staff manage colleges (never inside the Campus portal). */
+export const forgeAdminUrl = import.meta.env.VITE_FORGE_ADMIN_URL ?? 'http://localhost:5174';
 export const studentAppUrl = import.meta.env.VITE_STUDENT_APP_URL ?? 'http://localhost:5173';

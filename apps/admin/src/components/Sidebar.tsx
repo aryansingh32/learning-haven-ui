@@ -40,6 +40,7 @@ import {
     Layers,
     HelpCircle,
     X,
+    Building2,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
@@ -121,6 +122,16 @@ const categories = [
             { name: 'Analytics', href: '/apprenticeship/analytics', icon: BarChart3 },
             { name: 'Coupons', href: '/apprenticeship/coupons', icon: CreditCard },
             { name: 'Notifications', href: '/apprenticeship/notifications', icon: MessageSquare },
+        ]
+    },
+    {
+        id: 'colleges',
+        label: 'Colleges',
+        icon: Building2,
+        basePaths: ['/colleges'],
+        exactPaths: [],
+        items: [
+            { name: 'All colleges', href: '/colleges', icon: Building2 },
         ]
     },
     {

@@ -66,6 +66,8 @@ export interface CampusMe {
   claimed: number;
   memberships: CampusMembership[];
   isPlatformAdmin: boolean;
+  /** Colleges the learner belongs to that Forge has suspended or archived. */
+  unavailableColleges?: { orgName: string; status: 'suspended' | 'archived'; role: string }[];
 }
 
 export type AssignmentState = 'upcoming' | 'open' | 'closed';

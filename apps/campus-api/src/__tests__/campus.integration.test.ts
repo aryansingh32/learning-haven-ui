@@ -313,6 +313,43 @@ describe('platform: onboarding a college', () => {
     expect(res.body.error).toMatch(/doesn't have a Forge account/);
   });
 
+  it('shows each college with its usage', async () => {
+    const one = await request(app).get(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin));
+    expect(one.status).toBe(200);
+    expect(one.body).toMatchObject({ id: ORG_A, status: 'active', staffMembers: expect.any(Array), batches: expect.any(Array) });
+    expect(one.body.staffMembers.map((s: { userId: string }) => s.userId)).toContain(U.adminA);
+    expect(typeof one.body.students).toBe('number');
+  });
+
+  it('sets seats, but never below the students a college already has', async () => {
+    const n = (await request(app).get(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin))).body.students as number;
+    const ok = await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin)).send({ seatLimit: Math.max(n, 1) + 10 });
+    expect(ok.status).toBe(200);
+    expect(ok.body.seatLimit).toBe(Math.max(n, 1) + 10);
+    if (n > 1) {
+      const low = await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin)).send({ seatLimit: n - 1 });
+      expect(low.status).toBe(400);
+      expect(low.body.error).toMatch(/already has/);
+    }
+    expect((await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin)).send({ seatLimit: null })).body.seatLimit).toBeNull();
+  });
+
+  it('suspends a college: its staff lose access until Forge reactivates it', async () => {
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/batches`).set(await as(U.adminA))).status).toBe(200);
+    expect((await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin)).send({ status: 'suspended' })).body.status).toBe('suspended');
+    const me = await request(app).get('/campus/v1/me').set(await as(U.adminA));
+    expect(me.body.memberships.find((m: { orgId: string }) => m.orgId === ORG_A)).toBeUndefined();
+    expect(me.body.unavailableColleges).toEqual(expect.arrayContaining([expect.objectContaining({ orgName: 'College A', status: 'suspended' })]));
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/batches`).set(await as(U.adminA))).status).not.toBe(200);
+    expect((await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin)).send({ status: 'active' })).body.status).toBe('active');
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/batches`).set(await as(U.adminA))).status).toBe(200);
+  });
+
+  it('keeps the plan out of the college\'s hands', async () => {
+    expect((await request(app).patch(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.adminA)).send({ seatLimit: 99999 })).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.adminA))).status).toBe(403);
+  });
+
   it('is closed to college admins', async () => {
     expect((await request(app).get('/campus/v1/platform/colleges').set(await as(U.adminA))).status).toBe(403);
     expect((await request(app).post('/campus/v1/platform/colleges').set(await as(U.adminA))

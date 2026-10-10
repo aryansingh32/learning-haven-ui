@@ -39,6 +39,8 @@ const CMSControl = lazy(() => import('./pages/CMSControl'));
 const NetworkMonitoring = lazy(() => import('./pages/NetworkMonitoring'));
 const CoursePageCMS = lazy(() => import('./pages/CoursePageCMS'));
 const ContentImport = lazy(() => import('./pages/ContentImport'));
+const CollegesPage = lazy(() => import('./pages/colleges/CollegesPage'));
+const CollegeDetailPage = lazy(() => import('./pages/colleges/CollegeDetailPage'));
 const ExamCategoriesPage = lazy(() => import('./pages/testseries/ExamCategoriesPage'));
 const TestSeriesPage = lazy(() => import('./pages/testseries/TestSeriesPage'));
 const SeriesTestsPage = lazy(() => import('./pages/testseries/SeriesTestsPage'));
@@ -152,6 +154,8 @@ function App() {
               <Route path="/build-challenges/users" element={<BuildChallengeUsersPage />} />
 
               {/* People */}
+              <Route path="/colleges" element={<CollegesPage />} />
+              <Route path="/colleges/:id" element={<CollegeDetailPage />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/:id" element={<UserDetail />} />
               <Route path="/permissions" element={<Permissions />} />

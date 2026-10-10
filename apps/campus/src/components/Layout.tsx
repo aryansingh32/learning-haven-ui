@@ -23,7 +23,7 @@ const NAV: Array<{ to: string; label: string; icon: LucideIcon; needs?: Permissi
 
 export default function Layout() {
   const { orgId } = useParams();
-  const { staffOrgs, session, signOut, me } = useCampus();
+  const { staffOrgs, session, signOut } = useCampus();
   const { membership, can } = useOrg(orgId);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -74,9 +74,6 @@ export default function Layout() {
       </div>
       {nav}
       <div className="border-t p-3">
-        {me?.isPlatformAdmin && (
-          <NavLink to="/platform" className="mb-1 block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">All colleges</NavLink>
-        )}
         <p className="truncate px-3 text-xs text-muted-foreground">{session?.email}</p>
         <button onClick={signOut} className="mt-1 flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">
           <LogOut className="h-4 w-4" /> Sign out

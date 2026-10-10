@@ -23,6 +23,8 @@ export interface Me {
   claimed: number;
   memberships: Membership[];
   isPlatformAdmin: boolean;
+  /** Colleges the person belongs to that Forge has suspended or archived. */
+  unavailableColleges?: { orgName: string; status: 'suspended' | 'archived'; role: string }[];
 }
 
 export interface Org {

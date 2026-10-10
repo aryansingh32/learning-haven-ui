@@ -247,6 +247,25 @@ export default function MyCollegePage() {
     );
   }
 
+  const paused = me.data?.unavailableColleges?.find((c) => c.role === 'student');
+  if (!me.isStudent && paused) {
+    return (
+      <div className="max-w-2xl mx-auto py-8">
+        <div className="card-glass rounded-2xl p-6 sm:p-8 border border-border/40 text-center">
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-4">
+            <GraduationCap className="w-7 h-7" />
+          </div>
+          <h1 className="text-2xl font-display font-bold text-foreground">{paused.orgName} is paused</h1>
+          <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
+            Your college's tests and courses aren't available right now. Nothing is lost: your results come back when
+            the college is restored. Ask your training and placement office if you need them sooner.
+          </p>
+          <Button className="mt-6" variant="outline" onClick={() => me.refetch()} disabled={me.isFetching}>Check again</Button>
+        </div>
+      </div>
+    );
+  }
+
   if (!me.isStudent) {
     return <NotEnrolled email={user?.email} onRecheck={() => me.refetch()} checking={me.isFetching} />;
   }
