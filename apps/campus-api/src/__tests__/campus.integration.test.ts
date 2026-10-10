@@ -313,6 +313,14 @@ describe('platform: onboarding a college', () => {
     expect(res.body.error).toMatch(/doesn't have a Forge account/);
   });
 
+  it('refuses addresses that are reserved or not valid subdomains', async () => {
+    for (const slug of ['admin', 'www', 'api', 'ends-with-', 'has.dot', 'UPPER_case']) {
+      const res = await request(app).post('/campus/v1/platform/colleges').set(await as(U.forgeAdmin))
+        .send({ name: 'College X', slug, ownerEmail: 's2@a.edu' });
+      expect(res.status).toBe(400);
+    }
+  });
+
   it('shows each college with its usage', async () => {
     const one = await request(app).get(`/campus/v1/platform/colleges/${ORG_A}`).set(await as(U.forgeAdmin));
     expect(one.status).toBe(200);
@@ -1416,5 +1424,33 @@ describe('students and their college\'s study materials', () => {
     expect(titles).not.toContain('Draft only');
     expect(mine.body.find((m: { title: string }) => m.title === 'Lab manual').college).toBe('College A');
     expect((await request(app).get('/campus/v1/my/materials').set(await as(U.facultyB))).body.map((m: { title: string }) => m.title)).not.toContain('Lab manual');
+  });
+});
+
+describe('college addresses (<slug>.forge.test)', () => {
+  it('gives the sign-in page a college\'s name and branding without signing in', async () => {
+    const res = await request(app).get('/campus/v1/public/colleges/college-a');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ id: ORG_A, name: 'College A', slug: 'college-a', logoUrl: null, brandColor: null });
+    expect((await request(app).get('/campus/v1/public/colleges/no-such-college')).status).toBe(404);
+    expect((await request(app).get('/campus/v1/public/colleges/bad.slug')).status).toBe(404);
+  });
+
+  it('says nothing about a suspended college', async () => {
+    await request(app).patch(`/campus/v1/platform/colleges/${ORG_B}`).set(await as(U.forgeAdmin)).send({ status: 'suspended' });
+    expect((await request(app).get('/campus/v1/public/colleges/college-b')).status).toBe(404);
+    await request(app).patch(`/campus/v1/platform/colleges/${ORG_B}`).set(await as(U.forgeAdmin)).send({ status: 'active' });
+    expect((await request(app).get('/campus/v1/public/colleges/college-b')).status).toBe(200);
+  });
+
+  it('lets each college\'s portal call the API, and nothing else', async () => {
+    const allowed = async (origin: string) =>
+      (await request(app).get('/health').set('Origin', origin)).headers['access-control-allow-origin'] === origin;
+    expect(await allowed('https://college-a.forge.test')).toBe(true);
+    expect(await allowed('http://localhost:5175')).toBe(true);
+    expect(await allowed('http://college-a.forge.test')).toBe(false);
+    expect(await allowed('https://a.b.forge.test')).toBe(false);
+    expect(await allowed('https://college-a.forge.test.evil.com')).toBe(false);
+    expect(await allowed('https://evilforge.test')).toBe(false);
   });
 });

@@ -17,6 +17,8 @@ import { pool } from './config/database';
 
 import routes from './modules/core/routes/index';
 
+import { isCollegePortalOrigin } from './utils/collegeOrigin';
+
 const app = express();
 
 // Trust reverse proxy (like ngrok, nginx) to get correct client IP
@@ -53,6 +55,7 @@ app.use(
       // In development, allow all origins (including ngrok tunnels)
       if (env.NODE_ENV !== 'production') return callback(null, true);
       if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      if (isCollegePortalOrigin(origin)) return callback(null, true);
       return callback(new Error(`Origin ${origin} not allowed by CORS`));
     },
     credentials: true,

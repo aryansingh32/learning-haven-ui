@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import { collegeSlug } from '../collegeSlug';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
 import { badRequest, forbidden, notFound } from '../errors';
@@ -84,7 +85,7 @@ platformRouter.patch('/colleges/:orgId', async (req, res) => {
 
 const collegeBody = z.object({
   name: z.string().trim().min(2).max(120),
-  slug: z.string().trim().toLowerCase().regex(/^[a-z0-9][a-z0-9-]{1,62}$/, 'Use lowercase letters, numbers and hyphens.'),
+  slug: collegeSlug,
   ownerEmail: z.string().trim().toLowerCase().email(),
   seatLimit: z.number().int().min(1).max(100_000).nullable().optional(),
 });

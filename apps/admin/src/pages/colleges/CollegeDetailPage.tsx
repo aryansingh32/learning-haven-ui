@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Loader2, Save, ShieldAlert, ShieldCheck, Archive, Trash2, KeyRound } from 'lucide-react';
 import { toast } from 'sonner';
-import { collegesService, type CollegeStatus } from '../../services/colleges.service';
+import { collegePortalUrl, collegesService, type CollegeStatus } from '../../services/colleges.service';
 import { STATUS_STYLE, SeatBar } from './CollegesPage';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -115,7 +115,10 @@ const CollegeDetailPage = () => {
             <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight">{c.name}</h2>
-                    <p className="text-muted-foreground">{c.slug} · owner {c.ownerEmail ?? '—'} · since {when(c.createdAt)}</p>
+                    <p className="text-muted-foreground">
+                        <a href={collegePortalUrl(c.slug)} target="_blank" rel="noreferrer" className="font-medium text-foreground underline underline-offset-2">{collegePortalUrl(c.slug).replace(/^https?:\/\//, '')}</a>
+                        {' '}· owner {c.ownerEmail ?? '—'} · since {when(c.createdAt)}
+                    </p>
                 </div>
                 <div className="flex items-center gap-2">
                     <Badge variant="outline" className={STATUS_STYLE[c.status]}>{c.status}</Badge>

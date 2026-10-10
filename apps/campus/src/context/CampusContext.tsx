@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { api, loadSession, onSessionChange, signOut as clearSession, type Session } from '@/api/client';
+import { api, fetchPublicCollege, loadSession, onSessionChange, signOut as clearSession, type PublicCollege, type Session } from '@/api/client';
+import { hostCollegeSlug } from '@/lib/collegeHost';
 import type { Me, Membership, Permission } from '@/api/types';
 
 interface CampusState {
@@ -10,6 +11,9 @@ interface CampusState {
   /** Colleges where this person has any staff permission. */
   staffOrgs: Membership[];
   signOut: () => void;
+  /** On a college's own address (vit.forge.com): its slug, and its branding once loaded (null = no such college). */
+  hostSlug: string | null;
+  hostCollege: PublicCollege | null | undefined;
 }
 
 const CampusContext = createContext<CampusState | null>(null);
@@ -30,13 +34,24 @@ export function CampusProvider({ children }: { children: ReactNode }) {
     staleTime: 60_000,
   });
 
+  const hostQuery = useQuery({
+    queryKey: ['host-college', hostCollegeSlug],
+    queryFn: () => fetchPublicCollege(hostCollegeSlug!),
+    enabled: Boolean(hostCollegeSlug),
+    staleTime: 5 * 60_000,
+  });
+
   const value = useMemo<CampusState>(() => ({
     session,
     me: meQuery.data,
-    loadingMe: meQuery.isLoading,
-    staffOrgs: (meQuery.data?.memberships ?? []).filter((m) => m.type === 'college' && m.permissions.length > 0),
+    loadingMe: meQuery.isLoading || hostQuery.isLoading,
+    // On a college's own address, the portal is that college's workspace only.
+    staffOrgs: (meQuery.data?.memberships ?? []).filter((m) => m.type === 'college' && m.permissions.length > 0
+      && (!hostCollegeSlug || m.slug === hostCollegeSlug)),
     signOut: clearSession,
-  }), [session, meQuery.data, meQuery.isLoading]);
+    hostSlug: hostCollegeSlug,
+    hostCollege: hostQuery.data,
+  }), [session, meQuery.data, meQuery.isLoading, hostQuery.isLoading, hostQuery.data]);
 
   return <CampusContext.Provider value={value}>{children}</CampusContext.Provider>;
 }

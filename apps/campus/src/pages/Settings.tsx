@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { api, patch } from '@/api/client';
 import type { CollegeDefaults, Org } from '@/api/types';
 import { ErrorNote, Field, Loading, PageHeader } from '@/components/common';
+import { collegePortalUrl } from '@/lib/collegeHost';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
@@ -70,6 +71,9 @@ export default function Settings() {
       </form>}
       <p className="mt-6 max-w-xl text-sm text-muted-foreground">
         Your college's short name is <code className="rounded bg-secondary px-1.5 py-0.5 text-foreground">{org.data!.slug}</code>. Give it to another college that wants to share tests with you.
+      </p>
+      <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+        Your staff sign in at <a className="font-medium text-foreground underline underline-offset-2" href={collegePortalUrl(org.data!.slug)}>{collegePortalUrl(org.data!.slug).replace(/^https?:\/\//, '')}</a>. Students use the Forge app.
       </p>
       <DefaultsForm orgId={orgId!} />
     </>

@@ -64,3 +64,7 @@ export const collegesService = {
     revokeLicence: async (id: string, licenceId: string) => { await campus.delete(`/platform/colleges/${id}/licences/${licenceId}`); },
     premiumCourses: async () => (await campus.get<{ id: string; title: string; isPremium: boolean }[]>('/platform/courses')).data,
 };
+
+/** A college's Campus portal address (its staff sign in there; students use the Forge app). */
+export const collegePortalUrl = (slug: string) =>
+    (import.meta.env.VITE_CAMPUS_PORTAL_URL ?? 'http://{slug}.localhost:5175').replace('{slug}', slug);

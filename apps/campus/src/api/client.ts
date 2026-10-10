@@ -158,5 +158,15 @@ export async function download(path: string, fallbackName: string) {
 }
 
 /** Forge's own admin panel, where Forge staff manage colleges (never inside the Campus portal). */
+export interface PublicCollege { id: string; name: string; slug: string; logoUrl: string | null; brandColor: string | null }
+
+/** A college's name and branding for its sign-in page (no sign-in needed). Null when there's no such active college. */
+export async function fetchPublicCollege(slug: string): Promise<PublicCollege | null> {
+  const res = await fetch(`${CAMPUS}/campus/v1/public/colleges/${encodeURIComponent(slug)}`);
+  if (res.status === 404) return null;
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
 export const forgeAdminUrl = import.meta.env.VITE_FORGE_ADMIN_URL ?? 'http://localhost:5174';
 export const studentAppUrl = import.meta.env.VITE_STUDENT_APP_URL ?? 'http://localhost:5173';

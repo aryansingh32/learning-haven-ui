@@ -7,3 +7,4 @@ process.env.SUPABASE_JWT_SECRET = 'campus-test-secret-not-for-production';
 process.env.CORS_ORIGINS = 'http://localhost:5175';
 process.env.CRON_SECRET = 'test-cron-secret-0123456789';
 process.env.RESEND_API_KEY = 'test-resend-key';
+process.env.CAMPUS_BASE_DOMAIN = 'forge.test';

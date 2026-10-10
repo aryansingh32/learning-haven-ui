@@ -4,7 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { requireUser } from './auth';
 import { requireActiveCollege } from './collegeStatus';
-import { corsOrigins } from './env';
+import { allowOrigin } from './env';
 import { errorHandler, HttpError } from './errors';
 import { analyticsRouter } from './routes/analytics';
 import { assignmentsRouter } from './routes/assignments';
@@ -16,6 +16,7 @@ import { courseAssignmentsRouter, orgCoursesRouter } from './routes/courses';
 import { meRouter } from './routes/me';
 import { orgRouter } from './routes/org';
 import { platformRouter } from './routes/platform';
+import { publicRouter } from './routes/public';
 import { studentRouter } from './routes/student';
 import { testsRouter } from './routes/tests';
 
@@ -23,7 +24,7 @@ export const app = express();
 
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(cors({ origin: corsOrigins, credentials: false, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] }));
+app.use(cors({ origin: allowOrigin, credentials: false, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] }));
 app.use(express.json({ limit: '3mb' })); // roster CSVs travel as JSON text
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
@@ -33,6 +34,9 @@ app.post('/campus/internal/scheduler', async (req, res) => {
   if (!env.CRON_SECRET || req.header('x-cron-secret') !== env.CRON_SECRET) return res.status(401).json({ error: 'Unauthorized' });
   res.json(await runScheduler());
 });
+
+// Before sign-in: a college's name and branding for its portal address (vit.forge.com).
+app.use('/campus/v1/public', publicRouter);
 
 const api = express.Router();
 api.use(requireUser);

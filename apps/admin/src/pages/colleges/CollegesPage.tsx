@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Building2, Loader2, Plus, Search } from 'lucide-react';
 import { toast } from 'sonner';
-import { collegesService, type CollegeStatus, type CollegeSummary } from '../../services/colleges.service';
+import { collegePortalUrl, collegesService, type CollegeStatus, type CollegeSummary } from '../../services/colleges.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
@@ -66,9 +66,11 @@ function NewCollegeDialog({ open, onClose }: { open: boolean; onClose: () => voi
                     </div>
                     <div className="space-y-1.5">
                         <Label htmlFor="c-slug">Short address</Label>
-                        <Input id="c-slug" required pattern="[a-z0-9][a-z0-9-]{1,62}" value={form.slug}
+                        <Input id="c-slug" required pattern="[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])" value={form.slug}
                             onChange={(e) => { setSlugTouched(true); setForm((f) => ({ ...f, slug: slugify(e.target.value) })); }} />
-                        <p className="text-xs text-muted-foreground">Lowercase letters, numbers and hyphens. Other colleges use it to share tests.</p>
+                        <p className="text-xs text-muted-foreground">
+                            Staff sign in at <span className="font-medium text-foreground">{collegePortalUrl(form.slug || 'college').replace(/^https?:\/\//, '')}</span>. Lowercase letters, numbers and hyphens; can't be changed later.
+                        </p>
                     </div>
                     <div className="space-y-1.5">
                         <Label htmlFor="c-owner">Owner's email</Label>

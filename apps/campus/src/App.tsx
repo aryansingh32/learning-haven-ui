@@ -29,8 +29,21 @@ const CourseEditor = lazy(() => import('@/pages/content/CourseEditor'));
 const ProblemEditor = lazy(() => import('@/pages/content/ProblemEditor'));
 
 function Home() {
-  const { staffOrgs, me, signOut } = useCampus();
+  const { staffOrgs, me, signOut, hostCollege } = useCampus();
   if (staffOrgs.length > 0) return <Navigate to={`/o/${staffOrgs[0].orgId}/overview`} replace />;
+  // On a college's own address: a closed college or someone from elsewhere.
+  if (hostCollege) {
+    const elsewhere = me?.memberships.some((m) => m.type === 'college' && m.permissions.length > 0);
+    return (
+      <main className="mx-auto max-w-lg px-4 py-24">
+        <EmptyState title={`You're not on ${hostCollege.name}'s staff list`} action={<Button variant="outline" onClick={signOut}>Sign out</Button>}>
+          {elsewhere
+            ? 'You work with another college on Forge Campus. Open your own college\'s address to reach its workspace.'
+            : 'Ask your college\'s Campus admin to add your email to the staff roster, then sign in again.'}
+        </EmptyState>
+      </main>
+    );
+  }
   const isStudent = me?.memberships.some((m) => m.role === 'student');
   const closed = me?.unavailableColleges?.find((c) => c.role !== 'student');
   // Forge staff manage colleges from Forge's admin panel; the Campus portal is only each college's own workspace.

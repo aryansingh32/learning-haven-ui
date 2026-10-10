@@ -8,6 +8,9 @@ const schema = z.object({
   SUPABASE_URL: z.string().url('SUPABASE_URL must be a URL'),
   SUPABASE_JWT_SECRET: z.string().min(1).optional(),
   CORS_ORIGINS: z.string().default('http://localhost:5173,http://localhost:5175'),
+  // Each college's portal lives at <slug>.<CAMPUS_BASE_DOMAIN> (e.g. vit.forge.com).
+  // Those origins are allowed on top of CORS_ORIGINS. In development, <slug>.localhost.
+  CAMPUS_BASE_DOMAIN: z.string().trim().toLowerCase().regex(/^[a-z0-9.-]+$/).optional(),
   PG_POOL_MAX: z.coerce.number().default(10),
   // Code judge for coding questions (self-hosted Judge0 CE). Without
   // JUDGE0_URL, development runs code locally; production marks coding
@@ -37,3 +40,14 @@ if (!parsed.success) {
 
 export const env = parsed.data;
 export const corsOrigins = env.CORS_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean);
+
+const escapeRe = (v: string) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** A college subdomain of CAMPUS_BASE_DOMAIN: https only, except on localhost. */
+export function isCollegeOrigin(origin: string, base = env.CAMPUS_BASE_DOMAIN): boolean {
+  if (!base) return false;
+  const scheme = base === 'localhost' ? 'https?' : 'https';
+  return new RegExp(`^${scheme}://[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.${escapeRe(base)}(?::\\d{1,5})?$`).test(origin);
+}
+
+export const allowOrigin = (origin: string | undefined, cb: (err: Error | null, allow?: boolean) => void) =>
+  cb(null, !origin || corsOrigins.includes(origin) || isCollegeOrigin(origin));

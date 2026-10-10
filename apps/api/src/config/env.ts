@@ -67,6 +67,8 @@ const envSchema = z.object({
 
   // ── Frontend ──────────────────────────────────────────────
   FRONTEND_URL: z.string().url().optional(),
+  // Colleges' Campus portals live at <slug>.<CAMPUS_BASE_DOMAIN> and sign in through this API.
+  CAMPUS_BASE_DOMAIN: z.string().trim().toLowerCase().regex(/^[a-z0-9.-]+$/).optional(),
 
   // ── Metrics ───────────────────────────────────────────────
   METRICS_SECRET_TOKEN: z.string().min(1).optional(),
