@@ -36,7 +36,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 6 | AI-Powered Learning | 8 | 16 | 38 | 62 |
 | 7 | AI Agent System | 0 | 0 | 23 | 23 |
 | 8 | Programming Language Learning | 2 | 7 | 21 | 30 |
-| 9 | Online Coding IDE | 28 | 12 | 18 | 58 |
+| 9 | Online Coding IDE | 35 | 5 | 18 | 58 |
 | 10 | Coding Practice Platform | 18 | 5 | 20 | 43 |
 | 11 | Data Structures & Algorithms | 23 | 8 | 22 | 53 |
 | 12 | Assessment Engine | 39 | 3 | 15 | 57 |
@@ -57,7 +57,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 27 | Live Classes & Virtual Learning | 0 | 0 | 28 | 28 |
 | 28 | Assignments & Homework | 10 | 3 | 13 | 26 |
 | 29 | Attendance & Engagement | 1 | 0 | 16 | 17 |
-| 30 | Gamification & Motivation | 9 | 6 | 16 | 31 |
+| 30 | Gamification & Motivation | 15 | 0 | 16 | 31 |
 | 31 | Community & Collaboration | 2 | 1 | 30 | 33 |
 | 32 | Certificates & Credentials | 9 | 3 | 12 | 24 |
 | 33 | Proctoring & Assessment Security | 18 | 1 | 16 | 35 |
@@ -88,20 +88,20 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 0 | 4 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 3 | 6 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **457** (24%) | **208** (11%) | **1233** (65%) | **1898** |
+| | **All modules** | **470** (25%) | **195** (10%) | **1233** (65%) | **1898** |
 
 ---
 
 ### 1. Student Identity & Account Management
 - [x] Student Registration — email/password and phone sign-up (`pages/auth/SignUp.tsx`, `auth-phone.controller.ts`)
-- [ ] 🟡 Email Verification — Supabase Auth confirmation; Campus requires a verified email to claim a roster entry; no Forge screen enforcing it
+- [ ] 🟡 Email Verification — Campus requires a verified email to claim a roster entry; portfolio publishing needs one (DB, W2-A1); the Forge verify screen + gating is unfinished (patch in docs/campus/wip)
 - [x] Mobile OTP Verification — `otp_verifications` table, `/auth/phone-send-otp`, `/auth/phone-verify-otp`
 - [x] Social Login — Google sign-in via Supabase OAuth (`SignIn.tsx`, `SignUp.tsx`)
 - [ ] Single Sign-On (SSO)
 - [ ] Multi-Factor Authentication
 - [x] Student Profile — `ProfilePage.tsx`
 - [x] Academic Profile — `users.college_name`/`year_of_study`; Campus roll number, unit, CGPA, active backlogs, 10th/12th % (portal edit + roster columns, C1)
-- [ ] 🟡 Skills Profile — skills only inside the resume builder
+- [ ] 🟡 Skills Profile — `user_skills` + `skill_evidence()` in the database (W2-A1); API + profile UI unfinished (patch in docs/campus/wip)
 - [x] Resume Profile — resume builder saved server-side (`resume.service.ts`)
 - [x] GitHub Profile Integration — GitHub OAuth connection for projects (`githubOAuth.ts`, `apprenticeship_github_connections`)
 - [ ] LinkedIn Profile Integration
@@ -109,10 +109,10 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Digital Student ID
 - [x] Multi-College Account Support — one account, many `campus.org_memberships`
 - [x] Account Recovery — forgot-password on `SignIn.tsx`
-- [ ] 🟡 Session Management — token refresh scheduler; sign-out revokes the token; no "active sessions" screen
+- [ ] 🟡 Session Management — database helpers to list and revoke a learner's own Supabase sessions (W2-A1, migration 20261028000001); API + screen unfinished — docs/campus/wip/W2-A1-account-unfinished.patch
 - [ ] Device Management
 - [ ] Login History
-- [ ] 🟡 Account Activity History — activity heatmap from `analytics_events`; no account-level log
+- [ ] 🟡 Account Activity History — append-only `account_events` table (W2-A1); recording + screen unfinished (patch in docs/campus/wip)
 - [ ] Consent Management
 - [ ] Data Export
 - [ ] Account Deletion — `users.deleted_at` column exists, no deletion flow
@@ -204,7 +204,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Course Builder — admin Courses, Chapters editors, content import
 - [ ] 🟡 Drag-and-Drop Course Builder — Visual Roadmap Builder in admin; chapter editing is form-based
 - [x] Course Categories — `categories`
-- [ ] 🟡 Course Prerequisites — sequential chapter unlocking; no course-to-course prerequisites
+- [ ] 🟡 Course Prerequisites — course-to-course prerequisites in the database + admin API (`/admin/courses/:id/learning-settings`) (W2-L1); no admin/learner screens yet (patch in docs/campus/wip)
 - [x] Course Enrollment — `course_enrollments`
 - [x] Self-Paced Learning
 - [ ] Instructor-Led Learning
@@ -232,22 +232,22 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Course Publishing — `courses.is_published`
 - [ ] Course Scheduling
 - [ ] Course Expiry
-- [ ] 🟡 Drip Content — chapters unlock in order; no time-based drip
-- [ ] 🟡 Prerequisite Enforcement — locked chapters until earlier ones are done
+- [ ] 🟡 Drip Content — time-based release per course enforced server-side (W2-L1); "unlocks on" UI unfinished (patch in docs/campus/wip)
+- [ ] 🟡 Prerequisite Enforcement — enforced server-side on enrol and chapter reads/writes, with exemptions (admins, college-assigned, already started) (W2-L1); learners don't see the reason in the UI yet
 - [ ] Bookmarking
-- [ ] 🟡 Notes and Highlights — per-chapter notes + auto notebook; no highlights
+- [ ] 🟡 Notes and Highlights — database + API built (highlights with text anchors, listed in the notebook API; W2-L1, migration 20261029000001); chapter-page highlighting UI unfinished — docs/campus/wip/W2-L1-learning-web-unfinished.patch
 - [ ] Lesson Search
 - [ ] Transcript Search
-- [ ] 🟡 Video Playback Speed — only YouTube's own control
+- [ ] 🟡 Video Playback Speed — speed-control work in progress (YouTube IFrame API) — unfinished, in docs/campus/wip/W2-L1-learning-web-unfinished.patch
 - [x] Resume Learning — "Continue learning" on dashboard
 - [ ] Offline Learning
 - [x] Course Feedback — `feedback` table + admin Feedback page
 - [ ] Course Ratings — `program_reviews` table exists, 0 rows, no UI
-- [ ] 🟡 Course Discussions — only apprenticeship community posts
+- [ ] 🟡 Course Discussions — per-chapter discussions in the database + API (post, reply, edit/delete own, report, staff hide; RLS) (W2-L1, migration 20261029000002); discussion UI unfinished (patch in docs/campus/wip)
 - [ ] Course Announcements
 - [ ] 🟡 Course Completion Rules — phase completion page, certificates
 - [ ] Course Duplication
-- [ ] 🟡 Course Import and Export — staged import; no export
+- [ ] 🟡 Course Import and Export — export endpoint `/admin/courses/:id/export` writes the CSV the staged import reads back (round-trip jest) (W2-L1); no button in the admin UI yet
 
 ### 6. AI-Powered Learning
 - [x] AI Learning Copilot — global AI assistant on every page (`GlobalAIAssistant.tsx`)
@@ -377,35 +377,35 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Multi-Language Editor — JavaScript, Python, Java, C++ on judged problems (C run-only on the dev page)
 - [x] Syntax Highlighting — Monaco
 - [x] Intelligent Autocomplete — Monaco
-- [ ] 🟡 Code Formatting — Format code for JavaScript (Monaco); none for Python/Java/C++
+- [x] Code Formatting — Format for JavaScript (Monaco), Python (ruff, WebAssembly) and C/C++/Java (clang-format, WebAssembly), loaded on first use (W2-I1)
 - [x] Code Folding — Monaco
 - [ ] Multi-Tab Editor
 - [ ] Multiple File Support
 - [ ] Project Explorer
 - [ ] Terminal Emulator
-- [ ] 🟡 Standard Input Support — Judge0 / Java executor accept stdin
+- [x] Standard Input Support — Custom input tab: run your function on your own arguments, optionally checked against an expected output (W2-I1)
 - [x] Standard Output Panel — console tab in the practice workspace
 - [ ] Custom Test Input
 - [x] Run Code — runs the examples (in the browser; C++ and Campus tests on the server, samples only)
 - [x] Submit Code — judged on the server against every test (`POST /problems/:id/judge`)
-- [ ] 🟡 Code Execution History — every judged submission is kept (A3); sample runs aren't
+- [x] Code Execution History — Runs tab: every sample/custom run is kept per learner (bounded) with verdict and time (`practice_runs`, migration 20261027000001, W2-I1)
 - [x] Execution Time Display — shown for Run and Submit
-- [ ] 🟡 Memory Usage Display — in result types; dev page only
+- [x] Memory Usage Display — memory per judged submission/test from the runner (peak RSS); browser runs say plainly that memory isn't measured there (W2-I1)
 - [x] Compiler Error Display — Compilation Error verdict with the message
 - [x] Runtime Error Display — per-test error text
 - [x] Test Case Results — per-example results; hidden tests as pass/fail
 - [ ] Code Diff Viewer
-- [ ] 🟡 Code Version History — each judged submission's code is kept and viewable; no diff between versions
+- [x] Code Version History — tick any two judged submissions to see a line diff between them in the practice workspace (W2-I1)
 - [x] Autosave — code saved per problem and language
 - [x] Code Recovery — saved code restored after a refresh (verified)
 - [x] Keyboard Shortcuts — Ctrl/⌘+Enter run, Ctrl/⌘+Shift+Enter submit, plus Monaco's; listed in editor settings
-- [ ] 🟡 Theme Customization — light/dark editor toggle, font size, word wrap; no other themes
+- [x] Theme Customization — 10 editor themes (Forge Dark, Monokai, Dracula, Solarized, GitHub Light, high contrast …), font size, word wrap, saved per learner across devices (`/users/me/editor-preferences`, W2-I1)
 - [x] Font Customization — editor font size 11–24, remembered per browser
 - [ ] Editor Accessibility
 - [x] Resizable Panels — practice workspace
 - [x] Full-Screen Editor — full-screen toggle in practice (off in proctored exams)
 - [x] Split-Screen Editor — problem / editor / console
-- [ ] 🟡 Mobile Coding Support — Campus coding questions stack statement and editor on phones; practice workspace is desktop-first
+- [x] Mobile Coding Support — practice workspace stacks statement, editor and console at phone width with no sideways scroll (W2-I1)
 - [ ] AI Code Completion
 - [ ] 🟡 AI Code Explanation — apprenticeship "AI help" endpoint (`ai-help.controller.ts`)
 - [ ] 🟡 AI Debugging Assistant — same apprenticeship AI help
@@ -1135,21 +1135,21 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 ### 30. Gamification & Motivation
 - [x] Learning Streaks — `user_streaks`, streak freezes
 - [x] Daily Quests — `user_daily_quests`
-- [ ] 🟡 Weekly Missions — daily missions only
+- [x] Weekly Missions — weekly missions for the India week with real progress (solves, chapters, study time, active days); claim pays XP once (`gamification_rewards`, `pay_gamification_reward`); dashboard + /achievements (W2-G1, migration 20261026000001)
 - [x] XP Points
 - [x] Level System
 - [x] Achievement Badges — `user_badges`, `utils/badges.ts`
 - [ ] Skill Badges
-- [ ] 🟡 Milestone Rewards — phase completion celebration, signup bonus XP
+- [x] Milestone Rewards — milestones (problems 1/10/25/50/100, chapters 1/10/25, coding streak 7/30) award a badge + XP exactly once, announced when earned (W2-G1)
 - [x] Leaderboards — build-challenge leaderboard; admin Leaderboard page
-- [ ] 🟡 Global Leaderboard — admin view only; no learner global board
+- [x] Global Leaderboard — learner leaderboard /achievements: all-time XP and XP this week (`xp_week_start` snapshots), own rank, first-name display only, opt-out in the page; admins/banned/opted-out never shown (W2-G1)
 - [ ] College Leaderboard
 - [ ] Branch Leaderboard
 - [ ] Batch Leaderboard
 - [ ] Friends Leaderboard
-- [ ] 🟡 Coding Streaks — one streak for all activity
+- [x] Coding Streaks — separate coding streak (consecutive IST days with a solve), current + longest, on the dashboard and /achievements (W2-G1)
 - [ ] Challenge Streaks
-- [ ] 🟡 Achievement Collections — badges list
+- [x] Achievement Collections — badges grouped into collections (Problem Solver, Learning Journey, Consistency) with progress on /achievements (W2-G1)
 - [x] Learning Challenges — build challenges
 - [ ] Coding Battles
 - [ ] One-on-One Challenges
@@ -1162,7 +1162,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Goal Completion Rewards
 - [ ] Habit Tracking
 - [x] Custom Gamification Rules — admin Gamification Settings (XP values, max daily XP)
-- [ ] 🟡 Anti-Farming Controls — max daily XP setting
+- [x] Anti-Farming Controls — daily XP limit enforced server-side across missions/milestones/quest bonus — over the limit a reward is kept and paid on a later day; plus the max daily XP setting (W2-G1)
 - [ ] Healthy Competition Settings
 
 ### 31. Community & Collaboration

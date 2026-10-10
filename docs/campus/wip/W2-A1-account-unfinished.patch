@@ -1,0 +1,2720 @@
+diff --git a/apps/api/src/__tests__/account.test.ts b/apps/api/src/__tests__/account.test.ts
+new file mode 100644
+index 0000000..cd99791
+--- /dev/null
++++ b/apps/api/src/__tests__/account.test.ts
+@@ -0,0 +1,133 @@
++import {
++    auditKind, checkNewPassword, cleanHandle, cleanPortfolio, cleanSkills, describeUserAgent, mergeAccountActivity,
++    resumeSkillSuggestions, sessionClaims, suggestHandle,
++} from '../modules/auth/services/accountHelpers';
++import { firstSighting, isSessionRevoked, markSessionsRevoked } from '../modules/auth/services/sessionGuard';
++import { AccountService } from '../modules/auth/services/account.service';
++import { requireVerifiedEmail } from '../middleware/requireVerifiedEmail';
++
++const SID = '6f1c0b9e-2d3a-4b5c-8d7e-9f0a1b2c3d4e';
++
++describe('account helpers', () => {
++    it('reads the session id, sign-in method and time from Supabase claims', () => {
++        expect(sessionClaims({ session_id: SID.toUpperCase(), amr: [{ method: 'password', timestamp: 1760000000 }], app_metadata: { provider: 'email' } }))
++            .toEqual({ sessionId: SID, method: 'password', provider: 'email', signedInAt: 1760000000 });
++        expect(sessionClaims({ session_id: 'not-a-uuid' }).sessionId).toBeNull();
++        expect(sessionClaims(null)).toEqual({ sessionId: null, method: null, provider: null, signedInAt: null });
++    });
++
++    it('names devices from user agents', () => {
++        expect(describeUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36').label).toBe('Chrome on Windows');
++        expect(describeUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'))
++            .toMatchObject({ label: 'Safari on iOS', mobile: true });
++        expect(describeUserAgent('Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/129.0 Mobile Safari/537.36 EdgA/129.0').label).toBe('Edge on Android');
++        expect(describeUserAgent('Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0').label).toBe('Firefox on Linux');
++        expect(describeUserAgent('node').label).toBe('App or script');
++        expect(describeUserAgent(null).label).toBe('Unknown device');
++    });
++
++    it('maps only meaningful audit-log actions', () => {
++        expect(auditKind('login')).toBe('sign_in');
++        expect(auditKind('user_updated_password')).toBe('password_changed');
++        expect(auditKind('token_refreshed')).toBeNull();
++        expect(auditKind(undefined)).toBeNull();
++    });
++
++    it('merges the account log newest first, before a cursor, up to a limit', () => {
++        const row = (at: string) => ({ kind: 'sign_in' as const, at, source: 'account_log' as const, device: null, ip: null, detail: null });
++        const items = [row('2026-10-01T00:00:00.000Z'), row('2026-10-03T00:00:00.000Z'), row('2026-10-02T00:00:00.000Z')];
++        expect(mergeAccountActivity(items, 2).map((i) => i.at.slice(8, 10))).toEqual(['03', '02']);
++        expect(mergeAccountActivity(items, 5, '2026-10-02T00:00:00.000Z').map((i) => i.at.slice(8, 10))).toEqual(['01']);
++    });
++
++    it('checks new passwords', () => {
++        expect(checkNewPassword('old', 'short1')).toMatch(/8 characters/);
++        expect(checkNewPassword('old', 'onlyletters')).toMatch(/letter and one number/);
++        expect(checkNewPassword('same1234', 'same1234')).toMatch(/different/);
++        expect(checkNewPassword('old', 'x'.repeat(73) + '1')).toMatch(/72/);
++        expect(checkNewPassword('old', 'better-pass-42')).toBeNull();
++    });
++
++    it('cleans a skills list: trims, drops duplicates, checks levels and categories', () => {
++        expect(cleanSkills([{ name: '  Java ', level: 'advanced', category: 'language' }, { name: 'java', level: 'beginner' }, { name: 'React', level: 'expert', category: '' }]))
++            .toEqual({ ok: true, value: [{ name: 'Java', level: 'advanced', category: 'language' }, { name: 'React', level: 'expert', category: null }] });
++        expect(cleanSkills([{ name: 'Go', level: 'guru' }])).toMatchObject({ ok: false });
++        expect(cleanSkills([{ name: '<b>', level: 'expert' }])).toMatchObject({ ok: false });
++        expect(cleanSkills([{ name: 'Go', level: 'expert', category: 'magic' }])).toMatchObject({ ok: false });
++        expect(cleanSkills(Array.from({ length: 31 }, (_, i) => ({ name: `S${i}`, level: 'beginner' })))).toMatchObject({ ok: false });
++        expect(cleanSkills('Java')).toMatchObject({ ok: false });
++    });
++
++    it('suggests skills from the resume builder that are not declared yet', () => {
++        const resume = { skills: { languages: 'Java, Python,  ', frameworks: 'React;Spring Boot', tools: 'Git', softSkills: '' } };
++        expect(resumeSkillSuggestions(resume, ['python'])).toEqual([
++            { name: 'Java', category: 'language' }, { name: 'React', category: 'framework' }, { name: 'Spring Boot', category: 'framework' }, { name: 'Git', category: 'tool' },
++        ]);
++        expect(resumeSkillSuggestions(null, [])).toEqual([]);
++    });
++
++    it('validates handles and suggests one from a name', () => {
++        expect(cleanHandle(' Priya-S ')).toEqual({ ok: true, value: 'priya-s' });
++        for (const bad of ['ab', '-priya', 'priya-', 'pri--ya', 'priya_s', 'a'.repeat(31), 'admin', 'प्रिया']) expect(cleanHandle(bad)).toMatchObject({ ok: false });
++        expect(suggestHandle('Priya Sharma')).toBe('priya-sharma');
++        expect(suggestHandle('Jö')).toMatch(/^learner-[a-z0-9]+$/);
++        expect(cleanHandle(suggestHandle('A very long name that goes on and on forever'))).toMatchObject({ ok: true });
++    });
++
++    it('cleans portfolio settings: private and minimal by default', () => {
++        const r = cleanPortfolio({ handle: 'priya-s' });
++        expect(r).toEqual({ ok: true, value: {
++            handle: 'priya-s', is_public: false, headline: null, bio: null, show_college: false, show_skills: true, show_evidence: true,
++            show_repo_links: false, certificate_refs: [], project_ids: [],
++        } });
++        expect(cleanPortfolio({ handle: 'priya-s', certificate_refs: ['topic:' + SID, 'topic:' + SID] })).toMatchObject({ ok: true, value: { certificate_refs: ['topic:' + SID] } });
++        expect(cleanPortfolio({ handle: 'priya-s', certificate_refs: ['user:' + SID] })).toMatchObject({ ok: false });
++        expect(cleanPortfolio({ handle: 'priya-s', project_ids: ['1'] })).toMatchObject({ ok: false });
++        expect(cleanPortfolio({ handle: 'priya-s', headline: 'x'.repeat(121) })).toMatchObject({ ok: false, error: expect.stringMatching(/Headline/) });
++        expect(cleanPortfolio({ handle: 'no' })).toMatchObject({ ok: false });
++    });
++});
++
++describe('session guard', () => {
++    it('refuses a revoked session at once in this process', async () => {
++        expect(await isSessionRevoked(SID)).toBe(false);
++        await markSessionsRevoked([SID]);
++        expect(await isSessionRevoked(SID)).toBe(true);
++        expect(await isSessionRevoked(null)).toBe(false);
++    });
++
++    it('records a session once per process', () => {
++        const id = '11111111-2222-3333-4444-555555555555';
++        expect(firstSighting(id)).toBe(true);
++        expect(firstSighting(id)).toBe(false);
++    });
++});
++
++describe('requireVerifiedEmail', () => {
++    const run = async (verified: boolean | Error) => {
++        const spy = jest.spyOn(AccountService, 'isEmailVerified');
++        if (verified instanceof Error) spy.mockRejectedValueOnce(verified); else spy.mockResolvedValueOnce(verified);
++        const res: any = { status: jest.fn().mockReturnThis(), json: jest.fn().mockReturnThis() };
++        const next = jest.fn();
++        await requireVerifiedEmail({ user: { id: 'u1' } } as any, res, next);
++        return { res, next };
++    };
++
++    it('lets verified learners through', async () => {
++        const { next, res } = await run(true);
++        expect(next).toHaveBeenCalled();
++        expect(res.status).not.toHaveBeenCalled();
++    });
++
++    it('stops unverified learners with a clear code', async () => {
++        const { next, res } = await run(false);
++        expect(next).not.toHaveBeenCalled();
++        expect(res.status).toHaveBeenCalledWith(403);
++        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ error: expect.objectContaining({ code: 'EMAIL_NOT_VERIFIED' }) }));
++    });
++
++    it('does not block checkout when the check itself fails', async () => {
++        const { next } = await run(new Error('db down'));
++        expect(next).toHaveBeenCalled();
++    });
++});
+diff --git a/apps/api/src/middleware/auth.ts b/apps/api/src/middleware/auth.ts
+index be82f7a..33b274c 100644
+--- a/apps/api/src/middleware/auth.ts
++++ b/apps/api/src/middleware/auth.ts
+@@ -5,11 +5,33 @@ import jwt from 'jsonwebtoken';
+ import { verifySupabaseAccessToken } from '../utils/supabaseJwt';
+ import { requestContext } from './requestTracer';
+ import { unauthorized, forbidden, serverError } from '../utils/api-response';
++import { sessionClaims } from '../modules/auth/services/accountHelpers';
++import { firstSighting, isSessionRevoked } from '../modules/auth/services/sessionGuard';
++import { AccountEvents } from '../modules/auth/services/account.service';
+ 
+ export interface AuthRequest extends Request {
+   user?: any;
+ }
+ 
++/**
++ * Session bookkeeping for a verified token: refuses tokens of sessions signed
++ * out from the Account page (their access token would otherwise live until it
++ * expires), exposes the Supabase session id as req.user.session_id, and records
++ * the session's sign-in (device + IP of this browser) the first time it's seen.
++ * Returns false when the session was revoked.
++ */
++async function trackSession(req: AuthRequest, userId: string, claims: Record<string, any> | null | undefined): Promise<boolean> {
++  const session = sessionClaims(claims);
++  if (await isSessionRevoked(session.sessionId)) return false;
++  req.user.session_id = session.sessionId;
++  if (session.sessionId && firstSighting(session.sessionId)) {
++    void AccountEvents.recordSignIn(userId, session, { ip: req.ip ?? null, userAgent: req.get?.('user-agent') ?? null });
++  }
++  return true;
++}
++
++const REVOKED = 'Invalid token: this session was signed out';
++
+ export const authenticateUser = async (req: AuthRequest, res: Response, next: NextFunction) => {
+   try {
+     const authHeader = req.headers.authorization;
+@@ -25,6 +47,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
+     const localVerified = verifySupabaseAccessToken(token);
+     if (localVerified) {
+       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
++      if (!(await trackSession(req, localVerified.id, localVerified.claims))) return unauthorized(res, REVOKED);
+       logger.debug('Authenticated via local Supabase JWT verification');
+       const ctx = requestContext.getStore();
+       if (ctx) ctx.userId = localVerified.id;
+@@ -38,6 +61,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
+         const decoded = jwt.verify(token, secret) as { sub?: string; email?: string; role?: string };
+         if (decoded?.sub) {
+           req.user = { id: decoded.sub, email: decoded.email, role: decoded.role };
++          if (!(await trackSession(req, decoded.sub, decoded as Record<string, any>))) return unauthorized(res, REVOKED);
+           logger.debug('Using local JWT fallback for auth');
+           const ctx = requestContext.getStore();
+           if (ctx) ctx.userId = decoded.sub;
+@@ -74,6 +98,7 @@ export const authenticateUser = async (req: AuthRequest, res: Response, next: Ne
+ 
+     if (!remoteError && user) {
+       req.user = user;
++      if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) return unauthorized(res, REVOKED);
+       const ctx = requestContext.getStore();
+       if (ctx) ctx.userId = (user as any).id;
+       return next();
+@@ -107,6 +132,10 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
+     const localVerified = verifySupabaseAccessToken(token);
+     if (localVerified) {
+       req.user = { id: localVerified.id, email: localVerified.email, role: localVerified.role };
++      if (!(await trackSession(req, localVerified.id, localVerified.claims))) {
++        req.user = undefined;
++        return next();
++      }
+       const ctx = requestContext.getStore();
+       if (ctx) ctx.userId = localVerified.id;
+       return next();
+@@ -128,6 +157,10 @@ export const optionalAuth = async (req: AuthRequest, res: Response, next: NextFu
+ 
+       if (user && !result.error) {
+         req.user = user;
++        if (!(await trackSession(req, (user as any).id, jwt.decode(token) as Record<string, any> | null))) {
++          req.user = undefined;
++          return next();
++        }
+         const ctx = requestContext.getStore();
+         if (ctx) ctx.userId = (user as any).id;
+       }
+diff --git a/apps/api/src/middleware/requireVerifiedEmail.ts b/apps/api/src/middleware/requireVerifiedEmail.ts
+new file mode 100644
+index 0000000..51d5870
+--- /dev/null
++++ b/apps/api/src/middleware/requireVerifiedEmail.ts
+@@ -0,0 +1,25 @@
++import { Response, NextFunction } from 'express';
++import { AuthRequest } from './auth';
++import logger from '../config/logger';
++import { AccountService } from '../modules/auth/services/account.service';
++import { fail, unauthorized } from '../utils/api-response';
++
++/**
++ * Actions that need a confirmed email address (slice W2-A1): paying, earning a
++ * certificate, and publishing a portfolio. The email is where receipts,
++ * invoices and certificates go and what a certificate's name is tied to.
++ * (Claiming a college roster entry is enforced in the database by
++ * campus.claim_roster_entries.) Fails open on an unexpected error so a
++ * database hiccup doesn't block checkout; the database checks still apply.
++ */
++export const requireVerifiedEmail = async (req: AuthRequest, res: Response, next: NextFunction) => {
++    const id = req.user?.id;
++    if (!id) return unauthorized(res);
++    try {
++        if (await AccountService.isEmailVerified(id)) return next();
++        return fail(res, 403, 'EMAIL_NOT_VERIFIED', 'Verify your email address first. You can resend the link from Account settings.');
++    } catch (error) {
++        logger.warn('Email verification check failed; letting the request through', { error });
++        return next();
++    }
++};
+diff --git a/apps/api/src/modules/apprenticeship/routes.ts b/apps/api/src/modules/apprenticeship/routes.ts
+index 8ba2945..25157c3 100644
+--- a/apps/api/src/modules/apprenticeship/routes.ts
++++ b/apps/api/src/modules/apprenticeship/routes.ts
+@@ -1,4 +1,5 @@
+ import { Router } from 'express';
++import { requireVerifiedEmail } from '../../middleware/requireVerifiedEmail';
+ import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
+ import RedisStore from 'rate-limit-redis';
+ import { ApprenticeshipController } from './programs.controller';
+@@ -38,7 +39,7 @@ router.get('/leaderboard/:programId', ApprenticeshipController.getLeaderboard);
+ router.get('/certificates/verify/:code', apprenticeshipTracker('certificate_viewed', 'certificate'), ApprenticeshipController.verifyCertificate);
+ 
+ router.post('/track', optionalAuth, trackingRateLimit, TrackingController.ingest);
+-router.post('/payments/create-order', authenticateUser, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('checkout_initiated', 'payment'), EnrollmentController.createOrder);
++router.post('/payments/create-order', authenticateUser, requireVerifiedEmail, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('checkout_initiated', 'payment'), EnrollmentController.createOrder);
+ router.post('/enroll', authenticateUser, writeRateLimit, requireIdempotencyKey, apprenticeshipTracker('enrollment_completed', 'payment'), EnrollmentController.enroll);
+ router.get('/enrollments/mine', authenticateUser, ApprenticeshipController.getMyEnrollments);
+ router.get('/enrollments/:enrollmentId', authenticateUser, ApprenticeshipController.getEnrollmentDetail);
+diff --git a/apps/api/src/modules/auth/controllers/account.controller.ts b/apps/api/src/modules/auth/controllers/account.controller.ts
+new file mode 100644
+index 0000000..d3d555a
+--- /dev/null
++++ b/apps/api/src/modules/auth/controllers/account.controller.ts
+@@ -0,0 +1,121 @@
++import { Request, Response } from 'express';
++import { AuthRequest } from '../../../middleware/auth';
++import logger from '../../../config/logger';
++import { AccountError, AccountService, RequestContext } from '../services/account.service';
++import { ProfileService } from '../services/profile.service';
++import { checkNewPassword, cleanHandle, cleanPortfolio, cleanSkills } from '../services/accountHelpers';
++
++/** Account & security, skills profile and portfolio endpoints (slice W2-A1). Plain JSON; errors are { error, code }. */
++
++const me = (req: Request) => (req as AuthRequest).user!;
++const ctx = (req: Request): RequestContext => ({
++    ip: req.ip ?? null,
++    userAgent: req.get('user-agent') ?? null,
++    sessionId: (req as AuthRequest).user?.session_id ?? null,
++});
++
++function handle(res: Response, error: unknown, what: string) {
++    if (error instanceof AccountError) return res.status(error.status).json({ error: error.message, code: error.code });
++    logger.error(`${what} error:`, error);
++    return res.status(500).json({ error: `Could not ${what.toLowerCase()}. Try again.` });
++}
++
++export class AccountController {
++    /** GET /users/me/account */
++    static async getAccount(req: Request, res: Response) {
++        try { return res.json(await AccountService.getInfo(me(req).id)); } catch (e) { return handle(res, e, 'Load account'); }
++    }
++
++    /** POST /users/me/verification-email */
++    static async sendVerification(req: Request, res: Response) {
++        try { return res.json(await AccountService.sendVerificationForUser(me(req).id, ctx(req))); } catch (e) { return handle(res, e, 'Send the email'); }
++    }
++
++    /** POST /auth/resend-verification { email } — for someone who can't sign in yet. Always the same answer. */
++    static async resendPublic(req: Request, res: Response) {
++        const email = typeof req.body?.email === 'string' ? req.body.email.trim() : '';
++        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return res.status(400).json({ error: 'Enter a valid email address.' });
++        try {
++            await AccountService.resendVerification(email);
++        } catch (e) {
++            if (e instanceof AccountError && e.status === 429) return res.status(429).json({ error: e.message, code: e.code });
++            // Unknown or already verified addresses get the same reply, so this can't be used to probe accounts.
++        }
++        return res.json({ sent: true });
++    }
++
++    /** GET /users/me/sessions */
++    static async listSessions(req: Request, res: Response) {
++        try { return res.json(await AccountService.listSessions(me(req).id, ctx(req).sessionId ?? null)); } catch (e) { return handle(res, e, 'Load sessions'); }
++    }
++
++    /** DELETE /users/me/sessions/:sessionId */
++    static async revokeSession(req: Request, res: Response) {
++        try { return res.json(await AccountService.revokeSession(me(req).id, String(req.params.sessionId).toLowerCase(), ctx(req))); } catch (e) { return handle(res, e, 'Sign out that session'); }
++    }
++
++    /** POST /users/me/sessions/revoke-others */
++    static async revokeOthers(req: Request, res: Response) {
++        try { return res.json(await AccountService.revokeOtherSessions(me(req).id, ctx(req))); } catch (e) { return handle(res, e, 'Sign out other sessions'); }
++    }
++
++    /** PUT /users/me/password { current_password, new_password, sign_out_others } */
++    static async changePassword(req: Request, res: Response) {
++        const { current_password, new_password, sign_out_others } = req.body ?? {};
++        if (typeof current_password !== 'string' || !current_password) return res.status(400).json({ error: 'Enter your current password.' });
++        const problem = checkNewPassword(current_password, new_password);
++        if (problem) return res.status(400).json({ error: problem });
++        try {
++            return res.json(await AccountService.changePassword(me(req).id, current_password, new_password, sign_out_others !== false, ctx(req)));
++        } catch (e) { return handle(res, e, 'Change the password'); }
++    }
++
++    /** GET /users/me/activity?before=<iso>&limit=<1-50> */
++    static async getActivity(req: Request, res: Response) {
++        const before = typeof req.query.before === 'string' && !Number.isNaN(Date.parse(req.query.before)) ? new Date(req.query.before).toISOString() : null;
++        const limit = Math.min(Math.max(Number.parseInt(String(req.query.limit ?? '30'), 10) || 30, 1), 50);
++        try { return res.json(await AccountService.activity(me(req).id, before, limit)); } catch (e) { return handle(res, e, 'Load activity'); }
++    }
++
++    /** GET /users/me/skills */
++    static async getSkills(req: Request, res: Response) {
++        try { return res.json(await ProfileService.getSkills(me(req).id)); } catch (e) { return handle(res, e, 'Load skills'); }
++    }
++
++    /** PUT /users/me/skills { skills: [{ name, level, category? }] } */
++    static async saveSkills(req: Request, res: Response) {
++        const cleaned = cleanSkills(req.body?.skills);
++        if ('error' in cleaned) return res.status(400).json({ error: cleaned.error });
++        try { return res.json(await ProfileService.saveSkills(me(req).id, cleaned.value)); } catch (e) { return handle(res, e, 'Save skills'); }
++    }
++
++    /** GET /users/me/portfolio */
++    static async getPortfolio(req: Request, res: Response) {
++        try { return res.json(await ProfileService.getPortfolio(me(req).id)); } catch (e) { return handle(res, e, 'Load portfolio'); }
++    }
++
++    /** PUT /users/me/portfolio */
++    static async savePortfolio(req: Request, res: Response) {
++        const cleaned = cleanPortfolio(req.body ?? {});
++        if ('error' in cleaned) return res.status(400).json({ error: cleaned.error });
++        try { return res.json(await ProfileService.savePortfolio(me(req).id, cleaned.value, ctx(req))); } catch (e) { return handle(res, e, 'Save portfolio'); }
++    }
++
++    /** DELETE /users/me/portfolio */
++    static async deletePortfolio(req: Request, res: Response) {
++        try { return res.json(await ProfileService.deletePortfolio(me(req).id, ctx(req))); } catch (e) { return handle(res, e, 'Delete portfolio'); }
++    }
++
++    /** GET /portfolio/:handle — public; only published portfolios, never cached so unpublishing is immediate. */
++    static async getPublicPortfolio(req: Request, res: Response) {
++        res.set('Cache-Control', 'no-store');
++        res.set('X-Robots-Tag', 'noindex');
++        const h = cleanHandle(req.params.handle);
++        if ('error' in h) return res.status(404).json({ error: 'Portfolio not found' });
++        try {
++            const view = await ProfileService.publicPortfolio(h.value);
++            if (!view) return res.status(404).json({ error: 'Portfolio not found' });
++            return res.json(view);
++        } catch (e) { return handle(res, e, 'Load portfolio'); }
++    }
++}
+diff --git a/apps/api/src/modules/auth/controllers/auth.controller.ts b/apps/api/src/modules/auth/controllers/auth.controller.ts
+index b88d855..73071da 100644
+--- a/apps/api/src/modules/auth/controllers/auth.controller.ts
++++ b/apps/api/src/modules/auth/controllers/auth.controller.ts
+@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
+ import { createAuthClient, supabase, supabaseAdmin } from '../../../config/database';
+ import logger from '../../../config/logger';
+ import { ReferralsService } from '../../billing/services/referrals.service';
++import jwt from 'jsonwebtoken';
++import { sessionClaims } from '../services/accountHelpers';
++import { markSessionsRevoked } from '../services/sessionGuard';
++import { AccountEvents } from '../services/account.service';
+ import {
+   ok,
+   created,
+@@ -138,5 +142,14 @@ export const signout = async (req: Request, res: Response) => {
+         return serverError(res);
+     }
+ 
++    // Supabase accepted the token, so its claims are genuine: log the sign-out and
++    // stop the API accepting this session's access token for the rest of its life.
++    const payload = jwt.decode(token) as Record<string, any> | null;
++    const session = sessionClaims(payload);
++    if (session.sessionId) await markSessionsRevoked([session.sessionId]);
++    if (typeof payload?.sub === 'string') {
++        await AccountEvents.record(payload.sub, 'sign_out', { ip: req.ip ?? null, userAgent: req.get?.('user-agent') ?? null, sessionId: session.sessionId });
++    }
++
+     return ok(res, { message: 'Signed out successfully' });
+ };
+diff --git a/apps/api/src/modules/auth/routes/auth.ts b/apps/api/src/modules/auth/routes/auth.ts
+index 48a6b33..0eb1b29 100644
+--- a/apps/api/src/modules/auth/routes/auth.ts
++++ b/apps/api/src/modules/auth/routes/auth.ts
+@@ -4,6 +4,7 @@ import { signup, signin, signout, refreshSession } from '../controllers/auth.con
+ import { phoneSendOtp, phoneVerifyOtp, phoneCompleteProfile } from '../controllers/auth-phone.controller';
+ import { validate } from '../../../middleware/validate';
+ import { authRateLimit, otpRateLimit } from '../../../middleware/rateLimit';
++import { AccountController } from '../controllers/account.controller';
+ 
+ const router = Router();
+ 
+@@ -29,6 +30,8 @@ router.post('/signup', authRateLimit, validate(signupSchema), signup);
+ router.post('/signin', authRateLimit, validate(signinSchema), signin);
+ router.post('/refresh', validate(refreshSchema), refreshSession);
+ router.post('/signout', signout);
++// Resend the confirmation email to someone who can't sign in until they confirm.
++router.post('/resend-verification', authRateLimit, AccountController.resendPublic);
+ 
+ // Phone OTP Auth Routes (MSG91)
+ router.post('/phone-send-otp', otpRateLimit, phoneSendOtp);
+diff --git a/apps/api/src/modules/auth/routes/portfolio.ts b/apps/api/src/modules/auth/routes/portfolio.ts
+new file mode 100644
+index 0000000..07d77d1
+--- /dev/null
++++ b/apps/api/src/modules/auth/routes/portfolio.ts
+@@ -0,0 +1,13 @@
++import { Router } from 'express';
++import { AccountController } from '../controllers/account.controller';
++
++const router = Router();
++
++/**
++ * @route   GET /api/portfolio/:handle
++ * @desc    A learner's published portfolio (opt-in; 404 when private or unknown)
++ * @access  Public
++ */
++router.get('/:handle', AccountController.getPublicPortfolio);
++
++export default router;
+diff --git a/apps/api/src/modules/auth/routes/users.ts b/apps/api/src/modules/auth/routes/users.ts
+index 1421cce..807677d 100644
+--- a/apps/api/src/modules/auth/routes/users.ts
++++ b/apps/api/src/modules/auth/routes/users.ts
+@@ -4,6 +4,8 @@ import { GamificationController } from '../controllers/gamification.controller';
+ import { authenticateUser } from '../../../middleware/auth';
+ import { validate } from '../../../middleware/validate';
+ import { updateProfileSchema } from '../../../utils/validators';
++import { AccountController } from '../controllers/account.controller';
++import { authRateLimit, writeRateLimit } from '../../../middleware/rateLimit';
+ 
+ const router = Router();
+ 
+@@ -129,5 +131,20 @@ router.get('/me/identity', authenticateUser, GamificationController.getIdentity)
+  */
+ router.get('/me/mentor-context', authenticateUser, GamificationController.getMentorContext);
+ 
++// ── Account & security, skills, portfolio (slice W2-A1) ──────────────────
++router.get('/me/account', authenticateUser, AccountController.getAccount);
++router.post('/me/verification-email', authenticateUser, authRateLimit, AccountController.sendVerification);
++router.get('/me/sessions', authenticateUser, AccountController.listSessions);
++router.post('/me/sessions/revoke-others', authenticateUser, writeRateLimit, AccountController.revokeOthers);
++router.delete('/me/sessions/:sessionId', authenticateUser, writeRateLimit, AccountController.revokeSession);
++router.put('/me/password', authenticateUser, authRateLimit, AccountController.changePassword);
++router.get('/me/activity', authenticateUser, AccountController.getActivity);
++router.get('/me/skills', authenticateUser, AccountController.getSkills);
++router.put('/me/skills', authenticateUser, writeRateLimit, AccountController.saveSkills);
++router.get('/me/portfolio', authenticateUser, AccountController.getPortfolio);
++// Saving a private draft is fine without a verified email; publishing is checked in the service and the database.
++router.put('/me/portfolio', authenticateUser, writeRateLimit, AccountController.savePortfolio);
++router.delete('/me/portfolio', authenticateUser, writeRateLimit, AccountController.deletePortfolio);
++
+ export default router;
+ 
+diff --git a/apps/api/src/modules/auth/services/account.service.ts b/apps/api/src/modules/auth/services/account.service.ts
+new file mode 100644
+index 0000000..89d9d91
+--- /dev/null
++++ b/apps/api/src/modules/auth/services/account.service.ts
+@@ -0,0 +1,293 @@
++import jwt from 'jsonwebtoken';
++import { pool, createAuthClient, supabaseAdmin } from '../../../config/database';
++import logger from '../../../config/logger';
++import { CacheService } from '../../core/services/cache.service';
++import {
++    ActivityItem, ActivityKind, METHOD_LABELS, SessionClaims, auditKind, describeUserAgent, isUuid,
++    mergeAccountActivity, sessionClaims,
++} from './accountHelpers';
++import { markSessionsRevoked } from './sessionGuard';
++
++/**
++ * Account & security for one learner (slice W2-A1): email verification, the
++ * account log, signed-in sessions (list / sign out one / sign out all others)
++ * and password change. Everything is scoped to the caller's own user id; the
++ * Supabase Auth tables are only reached through the service-role functions of
++ * migration 20261028000001, which always filter by that id.
++ */
++
++/** Before the migration is applied (or on a project without some auth table) these read as "nothing". */
++const MISSING = new Set(['42P01', '42883', '42703']);
++export const isMissing = (e: any) => MISSING.has(e?.code);
++
++export class AccountError extends Error {
++    constructor(public status: number, message: string, public code = 'BAD_REQUEST') {
++        super(message);
++    }
++}
++
++export interface RequestContext { ip?: string | null; userAgent?: string | null; sessionId?: string | null }
++
++const clip = (s: string | null | undefined, n: number) => (s ? String(s).slice(0, n) : null);
++
++export const AccountEvents = {
++    /** Never throws: the log must not break the action it records. */
++    async record(userId: string, kind: string, ctx: RequestContext = {}, details: Record<string, unknown> = {}) {
++        try {
++            await pool.query(
++                `insert into public.account_events (user_id, kind, session_id, ip, user_agent, details) values ($1, $2, $3, $4, $5, $6)`,
++                [userId, kind, isUuid(ctx.sessionId) ? ctx.sessionId : null, clip(ctx.ip, 64), clip(ctx.userAgent, 512), JSON.stringify(details)],
++            );
++        } catch (error: any) {
++            logger.debug('account event not recorded', { kind, code: error?.code, message: error?.message });
++        }
++    },
++
++    /** The first time the API sees a session: a sign-in row with the browser's own device and IP (once per session). */
++    async recordSignIn(userId: string, claims: SessionClaims, ctx: RequestContext) {
++        if (!claims.sessionId) return;
++        try {
++            await pool.query(
++                `insert into public.account_events (user_id, kind, occurred_at, session_id, ip, user_agent, details)
++                 values ($1, 'sign_in', coalesce(to_timestamp($2::double precision), now()), $3, $4, $5, $6)
++                 on conflict (session_id) where kind = 'sign_in' do nothing`,
++                [userId, claims.signedInAt, claims.sessionId, clip(ctx.ip, 64), clip(ctx.userAgent, 512),
++                 JSON.stringify({ method: claims.method, provider: claims.provider })],
++            );
++        } catch (error: any) {
++            logger.debug('sign-in not recorded', { code: error?.code, message: error?.message });
++        }
++    },
++};
++
++const verifiedKey = (id: string) => `user:${id}:email-verified`;
++
++export interface AccountInfo {
++    email: string | null;
++    email_verified: boolean;
++    email_verified_at: string | null;
++    pending_email: string | null;
++    created_at: string | null;
++    last_sign_in_at: string | null;
++    providers: string[];
++    has_password: boolean;
++}
++
++async function authInfo(userId: string) {
++    const { rows } = await pool.query(`select * from public.account_auth_info($1)`, [userId]);
++    return rows[0] ?? null;
++}
++
++const iso = (d: any) => (d ? new Date(d).toISOString() : null);
++
++export class AccountService {
++    static async getInfo(userId: string): Promise<AccountInfo> {
++        const row = await authInfo(userId);
++        if (!row) throw new AccountError(404, 'Account not found', 'NOT_FOUND');
++        return {
++            email: row.email,
++            email_verified: Boolean(row.email_confirmed_at),
++            email_verified_at: iso(row.email_confirmed_at),
++            pending_email: row.pending_email,
++            created_at: iso(row.created_at),
++            last_sign_in_at: iso(row.last_sign_in_at),
++            providers: row.providers ?? [],
++            has_password: Boolean(row.has_password),
++        };
++    }
++
++    /**
++     * Whether the learner confirmed their email. Fails open (true) while the
++     * migration that exposes it is missing, so payments keep working until then.
++     * Only a "yes" is cached: verifying unlocks everything at once.
++     */
++    static async isEmailVerified(userId: string): Promise<boolean> {
++        if (await CacheService.get<boolean>(verifiedKey(userId))) return true;
++        try {
++            const row = await authInfo(userId);
++            const verified = Boolean(row?.email_confirmed_at);
++            if (verified) await CacheService.set(verifiedKey(userId), true, 600);
++            return verified;
++        } catch (error: any) {
++            if (isMissing(error)) return true;
++            throw error;
++        }
++    }
++
++    private static redirect() {
++        return process.env.FRONTEND_URL ? `${process.env.FRONTEND_URL.replace(/\/$/, '')}/verify-email` : undefined;
++    }
++
++    /** Resends Supabase's confirmation email. Supabase limits how often; we also allow one a minute per address. */
++    static async resendVerification(email: string): Promise<void> {
++        const key = `verify-resend:${email.toLowerCase()}`;
++        if (await CacheService.exists(key)) throw new AccountError(429, 'We just sent one. Wait a minute before asking again.', 'TOO_MANY_REQUESTS');
++        await CacheService.set(key, 1, 60);
++        const redirect = AccountService.redirect();
++        const { error } = await createAuthClient().auth.resend({ type: 'signup', email, ...(redirect ? { options: { emailRedirectTo: redirect } } : {}) });
++        if (error) {
++            logger.warn('Verification resend failed', { message: error.message });
++            if (/rate|seconds/i.test(error.message)) throw new AccountError(429, 'Too many emails. Try again in a little while.', 'TOO_MANY_REQUESTS');
++            throw new AccountError(400, 'Could not send the email. Try again later.');
++        }
++    }
++
++    static async sendVerificationForUser(userId: string, ctx: RequestContext) {
++        const info = await AccountService.getInfo(userId);
++        if (info.email_verified) throw new AccountError(409, 'Your email is already verified.', 'CONFLICT');
++        if (!info.email) throw new AccountError(400, 'There is no email address on this account.');
++        await AccountService.resendVerification(info.email);
++        await AccountEvents.record(userId, 'verification_email_sent', ctx);
++        return { sent: true, email: info.email };
++    }
++
++    // ── Sessions ────────────────────────────────────────────────────────────
++
++    static async listSessions(userId: string, currentSessionId: string | null) {
++        let rows: any[] = [];
++        try {
++            rows = (await pool.query(`select * from public.account_sessions($1)`, [userId])).rows;
++        } catch (error: any) {
++            if (!isMissing(error)) throw error;
++            return { supported: false, current_session_id: currentSessionId, sessions: [] };
++        }
++        const ids = rows.map((r) => r.id);
++        const signIns = new Map<string, any>();
++        if (ids.length) {
++            try {
++                const { rows: ev } = await pool.query(
++                    `select session_id, ip, user_agent, details from public.account_events where user_id = $1 and kind = 'sign_in' and session_id = any($2::uuid[])`,
++                    [userId, ids],
++                );
++                for (const e of ev) signIns.set(e.session_id, e);
++            } catch (error: any) {
++                if (!isMissing(error)) throw error;
++            }
++        }
++        const sessions = rows.map((r) => {
++            // Our own record holds the browser's device and IP; Supabase's row has the API server's when sign-in went through it.
++            const ev = signIns.get(r.id);
++            const device = describeUserAgent(ev?.user_agent ?? r.user_agent);
++            const method = ev?.details?.method ?? null;
++            const times = [r.created_at, r.updated_at, r.refreshed_at].filter(Boolean).map((d: any) => new Date(d).getTime());
++            return {
++                id: r.id,
++                current: r.id === currentSessionId,
++                device: device.label,
++                browser: device.browser,
++                os: device.os,
++                mobile: device.mobile,
++                ip: ev?.ip ?? r.ip ?? null,
++                signed_in_at: iso(r.created_at),
++                last_active_at: times.length ? new Date(Math.max(...times)).toISOString() : null,
++                method: method ? METHOD_LABELS[method] ?? method : null,
++            };
++        });
++        sessions.sort((a, b) => Number(b.current) - Number(a.current));
++        return { supported: true, current_session_id: currentSessionId, sessions };
++    }
++
++    static async revokeSession(userId: string, sessionId: string, ctx: RequestContext) {
++        if (!isUuid(sessionId)) throw new AccountError(404, 'Session not found', 'NOT_FOUND');
++        if (sessionId === ctx.sessionId) throw new AccountError(400, "That's the device you're using now. Use Sign out instead.");
++        const before = await AccountService.listSessions(userId, ctx.sessionId ?? null);
++        const target = before.sessions.find((s) => s.id === sessionId);
++        const { rows } = await pool.query(`select public.revoke_account_sessions($1, $2, null) as id`, [userId, sessionId]);
++        if (!rows.length) throw new AccountError(404, 'Session not found', 'NOT_FOUND');
++        await markSessionsRevoked(rows.map((r) => r.id));
++        await AccountEvents.record(userId, 'session_revoked', ctx, { device: target?.device ?? null, ip: target?.ip ?? null });
++        return { revoked: rows.length };
++    }
++
++    static async revokeOtherSessions(userId: string, ctx: RequestContext, reason: 'manual' | 'password_changed' = 'manual') {
++        if (!ctx.sessionId) throw new AccountError(400, "We can't tell which session is this device's. Sign out and back in, then try again.");
++        const { rows } = await pool.query(`select public.revoke_account_sessions($1, null, $2) as id`, [userId, ctx.sessionId]);
++        await markSessionsRevoked(rows.map((r) => r.id));
++        if (rows.length) await AccountEvents.record(userId, 'other_sessions_revoked', ctx, { count: rows.length, reason });
++        return { revoked: rows.length };
++    }
++
++    // ── Password ────────────────────────────────────────────────────────────
++
++    static async changePassword(userId: string, current: string, next: string, signOutOthers: boolean, ctx: RequestContext) {
++        const info = await AccountService.getInfo(userId);
++        if (!info.has_password || !info.email) {
++            throw new AccountError(400, 'This account signs in with Google or GitHub and has no password to change.');
++        }
++        // Check the current password with a throwaway client, then drop the session that check opened.
++        const { data, error } = await createAuthClient().auth.signInWithPassword({ email: info.email, password: current });
++        if (error || !data.session) throw new AccountError(400, 'Your current password is not right.');
++        const checkSession = sessionClaims(jwt.decode(data.session.access_token) as any).sessionId;
++        if (checkSession) {
++            await pool.query(`select public.revoke_account_sessions($1, $2, null)`, [userId, checkSession]).catch(() => undefined);
++            await markSessionsRevoked([checkSession]);
++        }
++        const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(userId, { password: next });
++        if (updateError) throw new AccountError(400, updateError.message || 'Could not change the password.');
++        await AccountEvents.record(userId, 'password_changed', ctx);
++        const others = signOutOthers && ctx.sessionId ? await AccountService.revokeOtherSessions(userId, ctx, 'password_changed') : { revoked: 0 };
++        return { changed: true, signed_out_sessions: others.revoked };
++    }
++
++    // ── Account log ─────────────────────────────────────────────────────────
++
++    static async activity(userId: string, before: string | null, limit: number) {
++        const own = await pool
++            .query(
++                `select kind, occurred_at, ip, user_agent, details from public.account_events
++                  where user_id = $1 and ($2::timestamptz is null or occurred_at < $2) order by occurred_at desc limit $3`,
++                [userId, before, limit],
++            )
++            .then((r) => r.rows)
++            .catch((e) => (isMissing(e) ? [] : Promise.reject(e)));
++        // Supabase Auth's audit log covers the time before the API kept its own log.
++        const firstOwn = await pool
++            .query(`select min(occurred_at) as at from public.account_events where user_id = $1`, [userId])
++            .then((r) => r.rows[0]?.at ?? null)
++            .catch(() => null);
++        const auditBefore = [before, firstOwn ? new Date(firstOwn).toISOString() : null].filter(Boolean).sort()[0] ?? null;
++        const audit = await pool
++            .query(`select * from public.account_audit_history($1, $2, $3)`, [userId, auditBefore, limit])
++            .then((r) => r.rows)
++            .catch((e) => (isMissing(e) || e?.code === '42501' ? [] : Promise.reject(e)));
++        const info = await authInfo(userId).catch(() => null);
++        const payments = await pool
++            .query(
++                `select p.updated_at, p.final_amount, p.billing_cycle, p.description, pl.name as plan_name
++                   from public.payments p left join public.plans pl on pl.id = p.plan_id
++                  where p.user_id = $1 and p.status = 'captured' and ($2::timestamptz is null or p.updated_at < $2)
++                  order by p.updated_at desc limit $3`,
++                [userId, before, limit],
++            )
++            .then((r) => r.rows)
++            .catch((e) => (isMissing(e) ? [] : Promise.reject(e)));
++
++        const items: ActivityItem[] = [];
++        for (const e of own) {
++            const d = e.details ?? {};
++            const detail =
++                e.kind === 'sign_in' ? (d.method ? METHOD_LABELS[d.method] ?? d.method : null)
++                : e.kind === 'session_revoked' ? d.device ?? null
++                : e.kind === 'other_sessions_revoked' ? `${d.count ?? 0} other session${d.count === 1 ? '' : 's'}${d.reason === 'password_changed' ? ' (after a password change)' : ''}`
++                : null;
++            items.push({
++                kind: e.kind as ActivityKind, at: new Date(e.occurred_at).toISOString(), source: 'account_log',
++                device: e.user_agent ? describeUserAgent(e.user_agent).label : null, ip: e.ip, detail,
++            });
++        }
++        for (const a of audit) {
++            const kind = auditKind(a.action);
++            if (!kind) continue;
++            items.push({ kind, at: new Date(a.at).toISOString(), source: 'auth_log', device: null, ip: a.ip, detail: a.provider ? METHOD_LABELS[a.provider] ?? a.provider : null });
++        }
++        if (info?.created_at) items.push({ kind: 'account_created', at: iso(info.created_at)!, source: 'account', device: null, ip: null, detail: null });
++        if (info?.email_confirmed_at) items.push({ kind: 'email_verified', at: iso(info.email_confirmed_at)!, source: 'account', device: null, ip: null, detail: info.email });
++        for (const p of payments) {
++            const amount = Number(p.final_amount) > 0 ? `₹${(Number(p.final_amount) / 100).toLocaleString('en-IN')}` : 'free';
++            const what = p.description || `${p.plan_name ?? 'Plan'}${p.billing_cycle ? ` (${p.billing_cycle})` : ''}`;
++            items.push({ kind: 'plan_purchased', at: iso(p.updated_at)!, source: 'payments', device: null, ip: null, detail: `${what} · ${amount}` });
++        }
++        const page = mergeAccountActivity(items, limit, before);
++        return { items: page, next_before: page.length === limit ? page[page.length - 1].at : null };
++    }
++}
+diff --git a/apps/api/src/modules/auth/services/accountHelpers.ts b/apps/api/src/modules/auth/services/accountHelpers.ts
+new file mode 100644
+index 0000000..ec9e6ae
+--- /dev/null
++++ b/apps/api/src/modules/auth/services/accountHelpers.ts
+@@ -0,0 +1,226 @@
++/**
++ * Pure helpers for the account & profile slice (W2-A1): reading session claims,
++ * naming devices, shaping the account log, and validating skills / portfolio input.
++ */
++
++// ── Session claims ──────────────────────────────────────────────────────────
++
++export interface SessionClaims {
++    sessionId: string | null;
++    /** How the session was opened (password, oauth, otp, magiclink …), from the JWT `amr` claim. */
++    method: string | null;
++    provider: string | null;
++    /** When the session was opened (seconds since epoch), from `amr` when present. */
++    signedInAt: number | null;
++}
++
++const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++export const isUuid = (v: unknown): v is string => typeof v === 'string' && UUID.test(v);
++
++/** Supabase access tokens carry `session_id`, `amr` and `app_metadata.provider`. */
++export function sessionClaims(payload: Record<string, any> | null | undefined): SessionClaims {
++    const amr = Array.isArray(payload?.amr) ? payload!.amr : [];
++    const first = amr.find((a: any) => a && typeof a.method === 'string') ?? null;
++    return {
++        sessionId: isUuid(payload?.session_id) ? payload!.session_id.toLowerCase() : null,
++        method: first?.method ?? null,
++        provider: typeof payload?.app_metadata?.provider === 'string' ? payload!.app_metadata.provider : null,
++        signedInAt: typeof first?.timestamp === 'number' ? first.timestamp : null,
++    };
++}
++
++// ── Devices ─────────────────────────────────────────────────────────────────
++
++export interface Device { browser: string | null; os: string | null; mobile: boolean; label: string }
++
++/** "Chrome on Windows" style names from a user agent; never throws. */
++export function describeUserAgent(ua: string | null | undefined): Device {
++    const s = (ua ?? '').slice(0, 512);
++    if (!s.trim()) return { browser: null, os: null, mobile: false, label: 'Unknown device' };
++    const os =
++        /Android/i.test(s) ? 'Android'
++        : /iPhone|iPad|iPod/i.test(s) ? 'iOS'
++        : /Windows/i.test(s) ? 'Windows'
++        : /CrOS/i.test(s) ? 'ChromeOS'
++        : /Mac OS X|Macintosh/i.test(s) ? 'macOS'
++        : /Linux/i.test(s) ? 'Linux'
++        : null;
++    const browser =
++        /Edg(e|A|iOS)?\//.test(s) ? 'Edge'
++        : /OPR\/|Opera/.test(s) ? 'Opera'
++        : /SamsungBrowser\//.test(s) ? 'Samsung Internet'
++        : /Firefox\/|FxiOS\//.test(s) ? 'Firefox'
++        : /Chrome\/|CriOS\//.test(s) ? 'Chrome'
++        : /Safari\//.test(s) && /Version\//.test(s) ? 'Safari'
++        : /^node|undici|supabase|axios|curl|okhttp|python-requests/i.test(s) ? 'App or script'
++        : null;
++    const mobile = /Mobile|Android|iPhone|iPod/i.test(s);
++    const label = browser && os ? `${browser} on ${os}` : browser ?? os ?? 'Unknown device';
++    return { browser, os, mobile, label };
++}
++
++// ── Account log ─────────────────────────────────────────────────────────────
++
++export type ActivityKind =
++    | 'account_created' | 'email_verified' | 'sign_in' | 'sign_out' | 'session_revoked' | 'other_sessions_revoked'
++    | 'password_changed' | 'password_reset_requested' | 'verification_email_sent' | 'account_updated'
++    | 'plan_purchased' | 'portfolio_published' | 'portfolio_unpublished';
++
++export interface ActivityItem {
++    kind: ActivityKind;
++    at: string;
++    /** Where the row comes from: our account log, Supabase Auth's audit log, the account record, or payments. */
++    source: 'account_log' | 'auth_log' | 'account' | 'payments';
++    device: string | null;
++    ip: string | null;
++    detail: string | null;
++}
++
++const AUDIT_KINDS: Record<string, ActivityKind> = {
++    login: 'sign_in',
++    logout: 'sign_out',
++    user_updated_password: 'password_changed',
++    user_recovery_requested: 'password_reset_requested',
++    user_confirmation_requested: 'verification_email_sent',
++    user_modified: 'account_updated',
++};
++
++/** Supabase Auth audit actions we show; account creation comes from the account record instead. */
++export const auditKind = (action: string | null | undefined): ActivityKind | null => (action ? AUDIT_KINDS[action] ?? null : null);
++
++export const METHOD_LABELS: Record<string, string> = {
++    password: 'Email and password', oauth: 'Google or GitHub', otp: 'One-time code', magiclink: 'Email link',
++    email: 'Email and password', google: 'Google', github: 'GitHub', phone: 'Phone',
++};
++
++/** Newest first, at most `limit`, optionally only before a moment. */
++export function mergeAccountActivity(items: ActivityItem[], limit = 30, before?: string | null): ActivityItem[] {
++    return items
++        .filter((i) => !before || i.at < before)
++        .sort((a, b) => b.at.localeCompare(a.at))
++        .slice(0, limit);
++}
++
++// ── Passwords ───────────────────────────────────────────────────────────────
++
++export function checkNewPassword(current: unknown, next: unknown): string | null {
++    if (typeof next !== 'string' || next.length < 8) return 'Use at least 8 characters for the new password.';
++    if (next.length > 72) return 'Use at most 72 characters.';
++    if (!/[A-Za-z]/.test(next) || !/[0-9]/.test(next)) return 'Use at least one letter and one number.';
++    if (typeof current === 'string' && current === next) return 'The new password must be different from the current one.';
++    return null;
++}
++
++// ── Skills ──────────────────────────────────────────────────────────────────
++
++export const SKILL_LEVELS = ['beginner', 'intermediate', 'advanced', 'expert'] as const;
++export const SKILL_CATEGORIES = ['language', 'framework', 'tool', 'concept', 'soft'] as const;
++export type SkillLevel = typeof SKILL_LEVELS[number];
++export interface SkillInput { name: string; level: SkillLevel; category: typeof SKILL_CATEGORIES[number] | null }
++export const MAX_SKILLS = 30;
++
++type Clean<T> = { ok: true; value: T } | { ok: false; error: string };
++
++/** The whole list a learner saves: trimmed, de-duplicated (any case), at most 30. */
++export function cleanSkills(input: unknown): Clean<SkillInput[]> {
++    if (!Array.isArray(input)) return { ok: false, error: 'skills must be a list' };
++    if (input.length > MAX_SKILLS) return { ok: false, error: `At most ${MAX_SKILLS} skills.` };
++    const seen = new Set<string>();
++    const out: SkillInput[] = [];
++    for (const raw of input) {
++        const name = typeof raw?.name === 'string' ? raw.name.replace(/\s+/g, ' ').trim() : '';
++        if (!name || name.length > 40) return { ok: false, error: 'Each skill needs a name of up to 40 characters.' };
++        if (/[<>{}]/.test(name)) return { ok: false, error: `"${name}" has characters that aren't allowed.` };
++        if (!SKILL_LEVELS.includes(raw?.level)) return { ok: false, error: `Pick a level for ${name}.` };
++        const category = raw?.category == null || raw.category === '' ? null : raw.category;
++        if (category !== null && !SKILL_CATEGORIES.includes(category)) return { ok: false, error: `Unknown category for ${name}.` };
++        const key = name.toLowerCase();
++        if (seen.has(key)) continue;
++        seen.add(key);
++        out.push({ name, level: raw.level, category });
++    }
++    return { ok: true, value: out };
++}
++
++/** Skill names from the resume builder's comma-separated fields, minus ones already declared. */
++export function resumeSkillSuggestions(resumeData: any, declared: string[]): Array<{ name: string; category: SkillInput['category'] }> {
++    const skills = resumeData?.skills ?? {};
++    const fields: Array<[string, SkillInput['category']]> = [['languages', 'language'], ['frameworks', 'framework'], ['tools', 'tool'], ['softSkills', 'soft']];
++    const have = new Set(declared.map((d) => d.toLowerCase()));
++    const out: Array<{ name: string; category: SkillInput['category'] }> = [];
++    for (const [field, category] of fields) {
++        const value = skills[field];
++        if (typeof value !== 'string') continue;
++        for (const part of value.split(/[,;\n]/)) {
++            const name = part.replace(/\s+/g, ' ').trim();
++            if (!name || name.length > 40 || /[<>{}]/.test(name) || have.has(name.toLowerCase())) continue;
++            have.add(name.toLowerCase());
++            out.push({ name, category });
++        }
++    }
++    return out.slice(0, MAX_SKILLS);
++}
++
++// ── Portfolio ───────────────────────────────────────────────────────────────
++
++const RESERVED = new Set(['admin', 'api', 'forge', 'support', 'help', 'root', 'system', 'settings', 'staff', 'campus', 'official', 'null', 'undefined', 'www', 'team']);
++
++export function cleanHandle(raw: unknown): Clean<string> {
++    const h = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
++    if (!/^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(h) || h.includes('--')) {
++        return { ok: false, error: 'Use 3–30 lower-case letters, digits or single hyphens (not at the start or end).' };
++    }
++    if (RESERVED.has(h)) return { ok: false, error: 'That address is reserved. Pick another.' };
++    return { ok: true, value: h };
++}
++
++/** A starting handle from a name: "Priya Sharma" → "priya-sharma". */
++export function suggestHandle(name: string | null | undefined): string {
++    const base = (name ?? '').normalize('NFKD').replace(/[^\x00-\x7f]/g, '').toLowerCase()
++        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 26).replace(/-+$/g, '');
++    return base.length >= 3 && !RESERVED.has(base) ? base : `learner-${Math.random().toString(36).slice(2, 7)}`;
++}
++
++export interface PortfolioInput {
++    handle: string; is_public: boolean; headline: string | null; bio: string | null;
++    show_college: boolean; show_skills: boolean; show_evidence: boolean; show_repo_links: boolean;
++    certificate_refs: string[]; project_ids: string[];
++}
++
++const REF = /^(topic|apprenticeship|program):[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
++const text = (v: unknown, max: number): Clean<string | null> => {
++    if (v == null) return { ok: true, value: null };
++    if (typeof v !== 'string') return { ok: false, error: 'Expected text.' };
++    const t = v.replace(/\r\n/g, '\n').trim();
++    if (t.length > max) return { ok: false, error: `Keep it to ${max} characters.` };
++    return { ok: true, value: t || null };
++};
++
++export function cleanPortfolio(body: any): Clean<PortfolioInput> {
++    const handle = cleanHandle(body?.handle);
++    if ('error' in handle) return { ok: false, error: handle.error };
++    const headline = text(body?.headline, 120);
++    if ('error' in headline) return { ok: false, error: `Headline: ${headline.error}` };
++    const bio = text(body?.bio, 600);
++    if ('error' in bio) return { ok: false, error: `About: ${bio.error}` };
++    const refs = Array.isArray(body?.certificate_refs) ? body.certificate_refs : [];
++    const projects = Array.isArray(body?.project_ids) ? body.project_ids : [];
++    if (refs.length > 30 || !refs.every((r: unknown) => typeof r === 'string' && REF.test(r))) return { ok: false, error: 'Unknown certificate.' };
++    if (projects.length > 20 || !projects.every(isUuid)) return { ok: false, error: 'Unknown project.' };
++    const bool = (v: unknown, d: boolean) => (typeof v === 'boolean' ? v : d);
++    return {
++        ok: true,
++        value: {
++            handle: handle.value,
++            is_public: bool(body?.is_public, false),
++            headline: headline.value,
++            bio: bio.value,
++            show_college: bool(body?.show_college, false),
++            show_skills: bool(body?.show_skills, true),
++            show_evidence: bool(body?.show_evidence, true),
++            show_repo_links: bool(body?.show_repo_links, false),
++            certificate_refs: [...new Set<string>(refs)],
++            project_ids: [...new Set<string>(projects.map((p: string) => p.toLowerCase()))],
++        },
++    };
++}
+diff --git a/apps/api/src/modules/auth/services/profile.service.ts b/apps/api/src/modules/auth/services/profile.service.ts
+new file mode 100644
+index 0000000..6fdaf77
+--- /dev/null
++++ b/apps/api/src/modules/auth/services/profile.service.ts
+@@ -0,0 +1,131 @@
++import { pool } from '../../../config/database';
++import { AccountError, AccountEvents, AccountService, RequestContext, isMissing } from './account.service';
++import { PortfolioInput, SkillInput, resumeSkillSuggestions, suggestHandle } from './accountHelpers';
++
++/**
++ * Skills profile and public portfolio (slice W2-A1).
++ * Skills: what the learner declares (public.user_skills) plus what Forge can
++ * show (public.skill_evidence: judge-accepted solves, certificates, finished
++ * projects). Portfolio: opt-in page at /u/<handle> built by
++ * public.public_portfolio(), which only ever returns what the learner picked.
++ */
++
++const rowsOrEmpty = async (sql: string, params: unknown[]) => {
++    try {
++        return (await pool.query(sql, params)).rows;
++    } catch (error: any) {
++        if (isMissing(error)) return [];
++        throw error;
++    }
++};
++
++export class ProfileService {
++    static async getSkills(userId: string) {
++        const skills = await rowsOrEmpty(
++            `select name, level, category from public.user_skills where user_id = $1 order by sort_order, lower(name)`, [userId]);
++        const evidence = await rowsOrEmpty(`select skill, source, detail, amount from public.skill_evidence($1)`, [userId]);
++        // The resume builder's table is missing on some databases; then there's simply nothing to suggest.
++        const resume = await rowsOrEmpty(`select data from public.user_resumes where user_id = $1`, [userId]);
++        return {
++            skills,
++            evidence: evidence.map((e) => ({ skill: e.skill, source: e.source, detail: e.source === 'project' ? e.detail : null, amount: e.amount })),
++            suggestions: resumeSkillSuggestions(resume[0]?.data, skills.map((s) => s.name)),
++        };
++    }
++
++    /** Replaces the whole list (order = display order). */
++    static async saveSkills(userId: string, skills: SkillInput[]) {
++        const client = await pool.connect();
++        try {
++            await client.query('begin');
++            await client.query(`delete from public.user_skills where user_id = $1`, [userId]);
++            for (const [i, s] of skills.entries()) {
++                await client.query(
++                    `insert into public.user_skills (user_id, name, level, category, sort_order) values ($1, $2, $3, $4, $5)`,
++                    [userId, s.name, s.level, s.category, i],
++                );
++            }
++            await client.query('commit');
++        } catch (error: any) {
++            await client.query('rollback').catch(() => undefined);
++            if (error?.code === '23514' || error?.code === '23505') throw new AccountError(400, 'Some skills could not be saved. Check names and levels.');
++            if (isMissing(error)) throw new AccountError(503, 'Skills profiles are not available yet.', 'UNAVAILABLE');
++            throw error;
++        } finally {
++            client.release();
++        }
++        return ProfileService.getSkills(userId);
++    }
++
++    /** What the settings page needs: the saved portfolio (or a suggested handle) and everything that can be shown on it. */
++    static async getPortfolio(userId: string) {
++        const [row] = await rowsOrEmpty(`select * from public.learner_portfolios where user_id = $1`, [userId]);
++        const [user] = await rowsOrEmpty(`select full_name, college_name from public.users where id = $1`, [userId]);
++        const certificates = [
++            ...(await rowsOrEmpty(`select 'topic:' || id as ref, topic as title, issued_at from public.certificates where user_id = $1`, [userId])),
++            ...(await rowsOrEmpty(
++                `select 'apprenticeship:' || c.id as ref, ap.title, c.issued_at from public.apprenticeship_certificates c
++                   join public.apprenticeship_programs ap on ap.id = c.program_id where c.user_id = $1`, [userId])),
++            ...(await rowsOrEmpty(
++                `select 'program:' || c.id as ref, p.title, c.issued_at from public.program_certificates c
++                   join public.programs p on p.id = c.program_id where c.user_id = $1 and c.status = 'issued' and c.revoked_at is null`, [userId])),
++        ].sort((a, b) => String(b.issued_at).localeCompare(String(a.issued_at)));
++        const projects = await rowsOrEmpty(
++            `select b.id, ap.title, b.language, b.status, coalesce(cardinality(b.completed_stages), 0) as stages_done, b.total_stages,
++                    b.repo_url is not null as has_repo
++               from public.build_enrollments b join public.apprenticeship_programs ap on ap.id = b.program_id
++              where b.user_id = $1 and b.deleted_at is null order by (b.status = 'completed') desc, b.updated_at desc`, [userId]);
++        let emailVerified = true;
++        try { emailVerified = await AccountService.isEmailVerified(userId); } catch { /* shown as verified; the database still refuses */ }
++        return {
++            portfolio: row ? {
++                handle: row.handle, is_public: row.is_public, headline: row.headline, bio: row.bio,
++                show_college: row.show_college, show_skills: row.show_skills, show_evidence: row.show_evidence, show_repo_links: row.show_repo_links,
++                certificate_refs: row.certificate_refs, project_ids: row.project_ids, published_at: row.published_at,
++            } : null,
++            suggested_handle: suggestHandle(user?.full_name),
++            has_college: Boolean(user?.college_name),
++            email_verified: emailVerified,
++            certificates: certificates.map((c) => ({ ref: c.ref, title: c.title, issued_at: c.issued_at })),
++            projects: projects.map((p) => ({ id: p.id, title: p.title, language: p.language, status: p.status, stages_done: p.stages_done, stages_total: p.total_stages, has_repo: p.has_repo })),
++        };
++    }
++
++    static async savePortfolio(userId: string, input: PortfolioInput, ctx: RequestContext) {
++        if (input.is_public && !(await AccountService.isEmailVerified(userId))) {
++            throw new AccountError(403, 'Verify your email before making your portfolio public.', 'EMAIL_NOT_VERIFIED');
++        }
++        const [before] = await rowsOrEmpty(`select is_public from public.learner_portfolios where user_id = $1`, [userId]);
++        try {
++            await pool.query(
++                `insert into public.learner_portfolios (user_id, handle, is_public, headline, bio, show_college, show_skills, show_evidence,
++                                                        show_repo_links, certificate_refs, project_ids)
++                 values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
++                 on conflict (user_id) do update set handle = excluded.handle, is_public = excluded.is_public, headline = excluded.headline,
++                   bio = excluded.bio, show_college = excluded.show_college, show_skills = excluded.show_skills, show_evidence = excluded.show_evidence,
++                   show_repo_links = excluded.show_repo_links, certificate_refs = excluded.certificate_refs, project_ids = excluded.project_ids`,
++                [userId, input.handle, input.is_public, input.headline, input.bio, input.show_college, input.show_skills, input.show_evidence,
++                 input.show_repo_links, input.certificate_refs, input.project_ids],
++            );
++        } catch (error: any) {
++            if (error?.code === '23505') throw new AccountError(409, 'That address is taken. Try another.', 'CONFLICT');
++            if (error?.code === '23514') throw new AccountError(400, /verify/i.test(error.message) ? 'Verify your email before making your portfolio public.' : error.message || 'Some choices could not be saved.');
++            if (isMissing(error)) throw new AccountError(503, 'Portfolios are not available yet.', 'UNAVAILABLE');
++            throw error;
++        }
++        const was = Boolean(before?.is_public);
++        if (input.is_public !== was) await AccountEvents.record(userId, input.is_public ? 'portfolio_published' : 'portfolio_unpublished', ctx, { handle: input.handle });
++        return ProfileService.getPortfolio(userId);
++    }
++
++    static async deletePortfolio(userId: string, ctx: RequestContext) {
++        const rows = await rowsOrEmpty(`delete from public.learner_portfolios where user_id = $1 returning handle, is_public`, [userId]);
++        if (rows[0]?.is_public) await AccountEvents.record(userId, 'portfolio_unpublished', ctx, { handle: rows[0].handle, deleted: true });
++        return { deleted: rows.length > 0 };
++    }
++
++    static async publicPortfolio(handle: string) {
++        const rows = await rowsOrEmpty(`select public.public_portfolio($1) as v`, [handle]);
++        return rows[0]?.v ?? null;
++    }
++}
+diff --git a/apps/api/src/modules/auth/services/sessionGuard.ts b/apps/api/src/modules/auth/services/sessionGuard.ts
+new file mode 100644
+index 0000000..a76ebd5
+--- /dev/null
++++ b/apps/api/src/modules/auth/services/sessionGuard.ts
+@@ -0,0 +1,53 @@
++import redis from '../../../config/redis';
++import logger from '../../../config/logger';
++
++/**
++ * Signed-out sessions, for the access tokens they already handed out.
++ *
++ * Revoking a session deletes it from auth.sessions, so its refresh token stops
++ * working at once. Its current access token is a self-contained JWT that stays
++ * valid until it expires (Supabase default: 1 hour), so the API also refuses
++ * tokens of sessions revoked here for that long: in this process (immediately)
++ * and through Redis (other instances). A slow or absent Redis never blocks a
++ * request: the check gives up after a short wait.
++ */
++
++const TTL_SECONDS = Number(process.env.SUPABASE_ACCESS_TOKEN_TTL_SECONDS) || 3600;
++const REDIS_WAIT_MS = 150;
++const key = (id: string) => `revoked-session:${id}`;
++const local = new Map<string, number>();
++
++function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
++    return Promise.race([p, new Promise<null>((resolve) => setTimeout(() => resolve(null), ms).unref?.())]);
++}
++
++export async function markSessionsRevoked(ids: string[]): Promise<void> {
++    const until = Date.now() + TTL_SECONDS * 1000;
++    for (const id of ids) local.set(id, until);
++    if (local.size > 50_000) for (const [id, t] of local) if (t < Date.now()) local.delete(id);
++    try {
++        await withTimeout(Promise.all(ids.map((id) => redis.set(key(id), '1', 'EX', TTL_SECONDS))), 500);
++    } catch (error) {
++        logger.warn('Could not share revoked sessions through Redis', { error });
++    }
++}
++
++export async function isSessionRevoked(id: string | null | undefined): Promise<boolean> {
++    if (!id) return false;
++    const t = local.get(id);
++    if (t && t > Date.now()) return true;
++    try {
++        return (await withTimeout(redis.get(key(id)), REDIS_WAIT_MS)) === '1';
++    } catch {
++        return false;
++    }
++}
++
++/** True the first time this process sees a session (so its sign-in is recorded once, not per request). */
++const seen = new Set<string>();
++export function firstSighting(id: string): boolean {
++    if (seen.has(id)) return false;
++    if (seen.size > 50_000) seen.clear();
++    seen.add(id);
++    return true;
++}
+diff --git a/apps/api/src/modules/billing/routes/payments.ts b/apps/api/src/modules/billing/routes/payments.ts
+index 44a660a..f231fdd 100644
+--- a/apps/api/src/modules/billing/routes/payments.ts
++++ b/apps/api/src/modules/billing/routes/payments.ts
+@@ -1,4 +1,5 @@
+ import { Router } from 'express';
++import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
+ import { PaymentsController } from '../controllers/payments.controller';
+ import { PublicPaymentsController } from '../controllers/payments.public.controller';
+ import { authenticateUser } from '../../../middleware/auth';
+@@ -24,6 +25,7 @@ router.get('/plans', PublicPaymentsController.getPlans);
+ router.post(
+     '/create-order',
+     authenticateUser,
++    requireVerifiedEmail,
+     writeRateLimit,
+     requireIdempotencyKey,
+     validate(createOrderSchema),
+diff --git a/apps/api/src/modules/billing/routes/payments.v2.ts b/apps/api/src/modules/billing/routes/payments.v2.ts
+index 3cbd34c..66eacab 100644
+--- a/apps/api/src/modules/billing/routes/payments.v2.ts
++++ b/apps/api/src/modules/billing/routes/payments.v2.ts
+@@ -1,4 +1,5 @@
+ import { Router } from 'express';
++import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
+ import { PaymentsV2Controller } from '../controllers/payments.v2.controller';
+ import { authenticateUser } from '../../../middleware/auth';
+ import { validate } from '../../../middleware/validate';
+@@ -44,6 +45,7 @@ router.get('/subscription', authenticateUser, PaymentsV2Controller.getCurrentSub
+ router.post(
+   '/create-order',
+   authenticateUser,
++  requireVerifiedEmail,
+   writeRateLimit,
+   validate(createOrderV2Schema),
+   PaymentsV2Controller.createOrder
+@@ -52,6 +54,7 @@ router.post(
+ router.post(
+   '/create-course-order',
+   authenticateUser,
++  requireVerifiedEmail,
+   writeRateLimit,
+   PaymentsV2Controller.createCourseOrder
+ );
+diff --git a/apps/api/src/modules/core/routes/index.ts b/apps/api/src/modules/core/routes/index.ts
+index 9c57854..16b4456 100644
+--- a/apps/api/src/modules/core/routes/index.ts
++++ b/apps/api/src/modules/core/routes/index.ts
+@@ -33,6 +33,7 @@ import paymentsV2Routes from '../../billing/routes/payments.v2';
+ import referralsV2Routes from '../../billing/routes/referrals.v2';
+ import plansRoutes from '../../plans/plans.routes';
+ import testSeriesRoutes from '../../testseries/routes/testseries';
++import portfolioRoutes from '../../auth/routes/portfolio';
+ 
+ const router = Router();
+ 
+@@ -61,6 +62,7 @@ router.use('/chapters', chaptersRoutes);
+ router.use('/notebook', notebookRoutes);
+ router.use('/mock-test', mockTestRoutes);
+ router.use('/test-series', testSeriesRoutes);
++router.use('/portfolio', portfolioRoutes);
+ router.use('/cron', cronRoutes);
+ router.use('/jobs', jobsRoutes);
+ router.use('/settings', settingsRoutes);
+diff --git a/apps/api/src/modules/learning/routes/certificates.ts b/apps/api/src/modules/learning/routes/certificates.ts
+index 449bc49..6481196 100644
+--- a/apps/api/src/modules/learning/routes/certificates.ts
++++ b/apps/api/src/modules/learning/routes/certificates.ts
+@@ -1,4 +1,5 @@
+ import { Router } from 'express';
++import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
+ import { CertificatesController } from '../controllers/certificates.controller';
+ import { authenticateUser } from '../../../middleware/auth';
+ import { validate } from '../../../middleware/validate';
+@@ -17,6 +18,7 @@ const router = Router();
+ router.post(
+     '/generate',
+     authenticateUser,
++    requireVerifiedEmail,
+     requireEntitlement('certificates_access'),
+     writeRateLimit,
+     requireIdempotencyKey,
+diff --git a/apps/api/src/utils/supabaseJwt.ts b/apps/api/src/utils/supabaseJwt.ts
+index 20ae935..ba90ca9 100644
+--- a/apps/api/src/utils/supabaseJwt.ts
++++ b/apps/api/src/utils/supabaseJwt.ts
+@@ -6,6 +6,8 @@ export type VerifiedSupabaseUser = {
+   id: string;
+   email?: string;
+   role?: string;
++  /** The verified token's claims (session_id, amr, app_metadata …). */
++  claims?: Record<string, any>;
+ };
+ 
+ function jwtExpiryMs(token: string): number | null {
+@@ -47,7 +49,7 @@ export function verifySupabaseAccessToken(token: string): VerifiedSupabaseUser |
+           role?: string;
+         };
+         if (decoded?.sub) {
+-          return { id: decoded.sub, email: decoded.email, role: decoded.role };
++          return { id: decoded.sub, email: decoded.email, role: decoded.role, claims: decoded as Record<string, any> };
+         }
+       }
+     } catch (err) {
+@@ -64,7 +66,7 @@ export function verifySupabaseAccessToken(token: string): VerifiedSupabaseUser |
+         role?: string;
+       };
+       if (decoded?.sub) {
+-        return { id: decoded.sub, email: decoded.email, role: decoded.role };
++        return { id: decoded.sub, email: decoded.email, role: decoded.role, claims: decoded as Record<string, any> };
+       }
+     } catch (err) {
+       logger.debug('SUPABASE_JWT_SECRET verification failed', err);
+diff --git a/apps/web/src/App.tsx b/apps/web/src/App.tsx
+index 5ea90e7..af20bd8 100644
+--- a/apps/web/src/App.tsx
++++ b/apps/web/src/App.tsx
+@@ -55,6 +55,10 @@ const CampusExamPage = lazy(() => import("./pages/campus/CampusExamPage"));
+ const CampusResultPage = lazy(() => import("./pages/campus/CampusResultPage"));
+ const CollegeDrivesPage = lazy(() => import('./pages/campus/CollegeDrivesPage'));
+ const NotificationSettingsPage = lazy(() => import('./pages/settings/NotificationSettingsPage'));
++const AccountSettingsPage = lazy(() => import('./pages/settings/AccountSettingsPage'));
++const PortfolioSettingsPage = lazy(() => import('./pages/settings/PortfolioSettingsPage'));
++const PublicPortfolioPage = lazy(() => import('./pages/PublicPortfolioPage'));
++const VerifyEmailPage = lazy(() => import('./pages/auth/VerifyEmailPage'));
+ const ProblemPage = lazy(() => import("./pages/ProblemPage"));
+ const CoursesCatalogPage = lazy(() => import("./pages/CoursesCatalogPage"));
+ const JobsPage = lazy(() => import("./pages/JobsPage"));
+@@ -99,6 +103,7 @@ const App = () => (
+               <Route element={<AuthLayout />}>
+                 <Route path="/signin" element={<SignIn />} />
+                 <Route path="/signup" element={<SignUp />} />
++                <Route path="/verify-email" element={<VerifyEmailPage />} />
+                 <Route path="/onboarding" element={<Onboarding />} />
+                 <Route path="/course-preview" element={<CoursePreview />} />
+               </Route>
+@@ -106,6 +111,7 @@ const App = () => (
+               <Route path="/" element={<LandingPage />} />
+               <Route path="/pricing" element={<Pricing />} />
+               <Route path="/certificates/:code" element={<ApprenticeshipCertificatePage />} />
++              <Route path="/u/:handle" element={<PublicPortfolioPage />} />
+ 
+               {/* Legacy redirects */}
+               <Route path="/apprenticeships" element={<Navigate to="/jobs?tab=apprenticeships" replace />} />
+@@ -181,6 +187,8 @@ const App = () => (
+                         <Route path="/college/attempts/:attemptId" element={<CampusResultPage />} />
+                         <Route path="/college/drives" element={<CollegeDrivesPage />} />
+                         <Route path="/settings/notifications" element={<NotificationSettingsPage />} />
++                        <Route path="/settings/account" element={<AccountSettingsPage />} />
++                        <Route path="/settings/portfolio" element={<PortfolioSettingsPage />} />
+                         <Route path="/chapters" element={<Navigate to="/courses" replace />} />
+                         <Route path="/chapter/:chapterId" element={<LearnChapterPage />} />
+                         <Route path="/projects" element={<ProjectsPage />} />
+diff --git a/apps/web/src/components/AppLayout.tsx b/apps/web/src/components/AppLayout.tsx
+index 6a4ff50..3ed2a55 100644
+--- a/apps/web/src/components/AppLayout.tsx
++++ b/apps/web/src/components/AppLayout.tsx
+@@ -1,7 +1,8 @@
+ import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
+ import {
+   LayoutDashboard, BookOpen, Bot, Gift, Award,
+-  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap
++  Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap,
++  Globe, ShieldCheck
+ } from "lucide-react";
+ import { useState } from "react";
+ import { cn } from "@/lib/utils";
+@@ -16,6 +17,7 @@ import { GlobalAIAssistant } from "@/components/GlobalAIAssistant";
+ import { EntitlementProvider } from "@/services/entitlement.service";
+ import { useCampusMe } from "@/hooks/useCampus";
+ import { NotificationBell } from "@/features/campus/NotificationBell";
++import { EmailVerifyBanner } from "@/features/account/EmailVerifyBanner";
+ 
+ const primaryNav = [
+   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
+@@ -36,6 +38,8 @@ const careerNav = [
+   { to: "/referrals", icon: Gift, label: "Referrals" },
+   { to: "/certificates", icon: Award, label: "Certificates" },
+   { to: "/subscription", icon: CreditCard, label: "Billing" },
++  { to: "/settings/portfolio", icon: Globe, label: "Portfolio" },
++  { to: "/settings/account", icon: ShieldCheck, label: "Account" },
+ ];
+ 
+ export function AppLayout({ children }: { children: React.ReactNode }) {
+@@ -289,6 +293,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
+                 exit={{ opacity: 0, y: -5 }}
+                 transition={{ duration: 0.25, ease: "easeOut" }}
+               >
++                <EmailVerifyBanner />
+                 {children}
+               </motion.div>
+             </AnimatePresence>
+diff --git a/apps/web/src/components/billing/PaymentModal.tsx b/apps/web/src/components/billing/PaymentModal.tsx
+index bc3a172..8abf650 100644
+--- a/apps/web/src/components/billing/PaymentModal.tsx
++++ b/apps/web/src/components/billing/PaymentModal.tsx
+@@ -76,7 +76,7 @@ export function PaymentModal({ isOpen, onClose, defaultPlanSlug = 'pro' }: Payme
+       });
+       razor.open();
+     } catch (err: any) {
+-      toast.error(err?.response?.data?.error || "Failed to initiate checkout.");
++      toast.error(err?.message || "Failed to initiate checkout.");
+     } finally {
+       setLoadingPlan(null);
+     }
+diff --git a/apps/web/src/features/account/EmailVerifyBanner.tsx b/apps/web/src/features/account/EmailVerifyBanner.tsx
+new file mode 100644
+index 0000000..63bf25d
+--- /dev/null
++++ b/apps/web/src/features/account/EmailVerifyBanner.tsx
+@@ -0,0 +1,40 @@
++import { useState } from 'react';
++import { Link } from 'react-router-dom';
++import { useMutation, useQuery } from '@tanstack/react-query';
++import { toast } from 'sonner';
++import { MailWarning, Loader2, X } from 'lucide-react';
++import { accountApi } from './account.service';
++
++/** Shown across the app while the learner's email isn't confirmed (slice W2-A1). */
++export function EmailVerifyBanner() {
++  const [hidden, setHidden] = useState(() => {
++    try { return sessionStorage.getItem('verify-banner-hidden') === '1'; } catch { return false; }
++  });
++  const info = useQuery({ queryKey: ['account-info'], queryFn: accountApi.info, retry: false, staleTime: 60_000 });
++  const send = useMutation({
++    mutationFn: accountApi.sendVerification,
++    onSuccess: (r) => toast.success(`Verification email sent to ${r.email}`),
++    onError: (e: Error) => toast.error(e.message),
++  });
++  if (hidden || !info.data || info.data.email_verified) return null;
++  return (
++    <div role="status" aria-label="Email not verified"
++      className="mb-4 flex flex-col gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-sm sm:flex-row sm:items-center">
++      <MailWarning className="hidden h-5 w-5 shrink-0 text-amber-600 dark:text-amber-300 sm:block" aria-hidden />
++      <p className="flex-1 text-foreground">
++        <strong>Confirm your email</strong> <span className="break-all">({info.data.email})</span> to pay for plans, earn certificates and publish your portfolio.
++      </p>
++      <div className="flex items-center gap-2">
++        <button type="button" onClick={() => send.mutate()} disabled={send.isPending}
++          className="inline-flex items-center gap-1 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-60">
++          {send.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />} Resend email
++        </button>
++        <Link to="/settings/account" className="text-xs font-semibold text-amber-700 underline dark:text-amber-300">Details</Link>
++        <button type="button" aria-label="Hide for now" className="rounded p-1 text-muted-foreground hover:text-foreground"
++          onClick={() => { setHidden(true); try { sessionStorage.setItem('verify-banner-hidden', '1'); } catch { /* ignore */ } }}>
++          <X className="h-4 w-4" />
++        </button>
++      </div>
++    </div>
++  );
++}
+diff --git a/apps/web/src/features/account/SkillsProfileCard.tsx b/apps/web/src/features/account/SkillsProfileCard.tsx
+new file mode 100644
+index 0000000..eb2b8ba
+--- /dev/null
++++ b/apps/web/src/features/account/SkillsProfileCard.tsx
+@@ -0,0 +1,155 @@
++import { useEffect, useMemo, useState } from 'react';
++import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
++import { toast } from 'sonner';
++import { Award, Code2, Hammer, Loader2, Plus, Sparkles, X } from 'lucide-react';
++import { Button } from '@/components/ui/button';
++import { Input } from '@/components/ui/input';
++import { Label } from '@/components/ui/label';
++import { LEVELS, accountApi, type Skill, type SkillCategory, type SkillLevel } from './account.service';
++
++const CATEGORIES: Array<{ value: SkillCategory | ''; label: string }> = [
++  { value: '', label: 'No category' },
++  { value: 'language', label: 'Language' },
++  { value: 'framework', label: 'Framework' },
++  { value: 'tool', label: 'Tool' },
++  { value: 'concept', label: 'Concept' },
++  { value: 'soft', label: 'Soft skill' },
++];
++const selectCls = 'h-9 rounded-md border border-input bg-background px-2 text-sm text-foreground';
++const same = (a: Skill[], b: Skill[]) => JSON.stringify(a) === JSON.stringify(b);
++
++/** Skills profile on the Profile page (slice W2-A1): what you say you know, and what your work on Forge shows. */
++export function SkillsProfileCard() {
++  const qc = useQueryClient();
++  const q = useQuery({ queryKey: ['skills-profile'], queryFn: accountApi.skills, retry: false });
++  const [draft, setDraft] = useState<Skill[]>([]);
++  const [name, setName] = useState('');
++  const [level, setLevel] = useState<SkillLevel>('intermediate');
++  const [category, setCategory] = useState<SkillCategory | ''>('');
++  useEffect(() => { if (q.data) setDraft(q.data.skills); }, [q.data]);
++  const save = useMutation({
++    mutationFn: accountApi.saveSkills,
++    onSuccess: (data) => { qc.setQueryData(['skills-profile'], data); toast.success('Skills saved'); },
++    onError: (e: Error) => toast.error(e.message),
++  });
++  const dirty = q.data ? !same(draft, q.data.skills) : false;
++  const names = useMemo(() => new Set(draft.map((s) => s.name.toLowerCase())), [draft]);
++  const trimmed = name.replace(/\s+/g, ' ').trim();
++  const nameProblem = !trimmed ? null : trimmed.length > 40 ? 'Up to 40 characters.' : /[<>{}]/.test(trimmed) ? 'No < > { } characters.' : names.has(trimmed.toLowerCase()) ? 'Already on your list.' : null;
++  const full = draft.length >= 30;
++
++  const add = (skill: Skill) => setDraft((d) => (d.some((s) => s.name.toLowerCase() === skill.name.toLowerCase()) || d.length >= 30 ? d : [...d, skill]));
++  const evidence = q.data?.evidence ?? [];
++  const practice = evidence.filter((e) => e.source === 'practice');
++  const certs = evidence.filter((e) => e.source === 'certificate');
++  const projects = evidence.filter((e) => e.source === 'project');
++
++  return (
++    <section className="card-glass rounded-2xl p-5 sm:p-6 space-y-4" aria-labelledby="skills-h">
++      <div className="flex flex-wrap items-center justify-between gap-2">
++        <h2 id="skills-h" className="font-display font-bold text-foreground flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /> Skills profile</h2>
++        {dirty && (
++          <div className="flex gap-2">
++            <Button size="sm" variant="ghost" onClick={() => q.data && setDraft(q.data.skills)}>Undo</Button>
++            <Button size="sm" onClick={() => save.mutate(draft)} disabled={save.isPending}>
++              {save.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Save skills
++            </Button>
++          </div>
++        )}
++      </div>
++      {q.isLoading && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
++      {q.isError && <p className="text-sm text-muted-foreground">Your skills can't be loaded right now.</p>}
++      {q.data && (
++        <>
++          <div>
++            <h3 className="text-sm font-semibold text-foreground mb-2">Your skills</h3>
++            {draft.length === 0 ? (
++              <p className="text-sm text-muted-foreground">Add the languages, frameworks and tools you know, and how well.</p>
++            ) : (
++              <ul className="space-y-2" aria-label="Your skills">
++                {draft.map((s, i) => (
++                  <li key={s.name} className="flex flex-wrap items-center gap-2 rounded-lg bg-secondary/50 px-3 py-2">
++                    <span className="min-w-0 flex-1 text-sm font-medium text-foreground break-words">{s.name}</span>
++                    <select aria-label={`Level for ${s.name}`} className={selectCls} value={s.level}
++                      onChange={(e) => setDraft((d) => d.map((x, j) => (j === i ? { ...x, level: e.target.value as SkillLevel } : x)))}>
++                      {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
++                    </select>
++                    <button type="button" aria-label={`Remove ${s.name}`} className="rounded p-1 text-muted-foreground hover:text-destructive"
++                      onClick={() => setDraft((d) => d.filter((_, j) => j !== i))}>
++                      <X className="h-4 w-4" />
++                    </button>
++                  </li>
++                ))}
++              </ul>
++            )}
++          </div>
++
++          <form className="grid gap-2 sm:grid-cols-[1fr_auto_auto_auto] sm:items-end"
++            onSubmit={(e) => {
++              e.preventDefault();
++              if (!trimmed || nameProblem || full) return;
++              add({ name: trimmed, level, category: category || null });
++              setName('');
++            }}>
++            <div className="space-y-1">
++              <Label htmlFor="skill-name">Add a skill</Label>
++              <Input id="skill-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Java, React, SQL" maxLength={60}
++                aria-invalid={Boolean(nameProblem)} aria-describedby="skill-name-hint" />
++            </div>
++            <select aria-label="Level" className={selectCls} value={level} onChange={(e) => setLevel(e.target.value as SkillLevel)}>
++              {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
++            </select>
++            <select aria-label="Category" className={selectCls} value={category} onChange={(e) => setCategory(e.target.value as SkillCategory | '')}>
++              {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
++            </select>
++            <Button type="submit" size="sm" variant="outline" disabled={!trimmed || Boolean(nameProblem) || full}><Plus className="mr-1 h-4 w-4" /> Add</Button>
++            <p id="skill-name-hint" className={nameProblem ? 'text-xs text-destructive sm:col-span-4' : 'text-xs text-muted-foreground sm:col-span-4'}>
++              {nameProblem ?? (full ? 'You have the maximum of 30 skills.' : `${draft.length} of 30. Remember to save.`)}
++            </p>
++          </form>
++
++          {q.data.suggestions.length > 0 && (
++            <div>
++              <h3 className="text-sm font-semibold text-foreground mb-2">From your resume</h3>
++              <div className="flex flex-wrap gap-2">
++                {q.data.suggestions.filter((s) => !names.has(s.name.toLowerCase())).map((s) => (
++                  <button key={s.name} type="button" disabled={full} onClick={() => add({ name: s.name, level: 'intermediate', category: s.category })}
++                    className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground hover:bg-secondary disabled:opacity-50"
++                    aria-label={`Add ${s.name} from your resume`}>
++                    <Plus className="h-3 w-3" /> {s.name}
++                  </button>
++                ))}
++              </div>
++            </div>
++          )}
++
++          <div>
++            <h3 className="text-sm font-semibold text-foreground mb-1">Shown by your work on Forge</h3>
++            <p className="text-xs text-muted-foreground mb-2">Problems the judge accepted, certificates you earned and projects you finished.</p>
++            {evidence.length === 0 ? (
++              <p className="text-sm text-muted-foreground">Nothing yet — solve problems, finish a project or earn a certificate and it shows up here.</p>
++            ) : (
++              <ul className="flex flex-wrap gap-2" aria-label="Skills shown by your work">
++                {practice.map((e) => (
++                  <li key={`p-${e.skill}`} className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs text-foreground">
++                    <Code2 className="h-3 w-3 text-primary" aria-hidden /> {e.skill} · {e.amount} solved
++                  </li>
++                ))}
++                {certs.map((e) => (
++                  <li key={`c-${e.skill}-${e.amount}`} className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 text-xs text-foreground">
++                    <Award className="h-3 w-3 text-amber-600" aria-hidden /> {e.skill} · certificate
++                  </li>
++                ))}
++                {projects.map((e, i) => (
++                  <li key={`b-${e.skill}-${i}`} className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs text-foreground">
++                    <Hammer className="h-3 w-3 text-emerald-600" aria-hidden /> {e.skill}{e.detail ? ` · ${e.detail}` : ''}
++                  </li>
++                ))}
++              </ul>
++            )}
++          </div>
++        </>
++      )}
++    </section>
++  );
++}
+diff --git a/apps/web/src/features/account/account.service.ts b/apps/web/src/features/account/account.service.ts
+new file mode 100644
+index 0000000..bd22581
+--- /dev/null
++++ b/apps/web/src/features/account/account.service.ts
+@@ -0,0 +1,119 @@
++import { api } from '@/services/api.svc';
++
++/** Account & security, skills profile and public portfolio (slice W2-A1). `api` resolves to the response body. */
++
++export interface AccountInfo {
++  email: string | null;
++  email_verified: boolean;
++  email_verified_at: string | null;
++  pending_email: string | null;
++  created_at: string | null;
++  last_sign_in_at: string | null;
++  providers: string[];
++  has_password: boolean;
++}
++
++export interface SessionRow {
++  id: string;
++  current: boolean;
++  device: string;
++  browser: string | null;
++  os: string | null;
++  mobile: boolean;
++  ip: string | null;
++  signed_in_at: string | null;
++  last_active_at: string | null;
++  method: string | null;
++}
++
++export interface ActivityRow {
++  kind: string;
++  at: string;
++  source: 'account_log' | 'auth_log' | 'account' | 'payments';
++  device: string | null;
++  ip: string | null;
++  detail: string | null;
++}
++
++export type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
++export type SkillCategory = 'language' | 'framework' | 'tool' | 'concept' | 'soft';
++export interface Skill { name: string; level: SkillLevel; category: SkillCategory | null }
++export interface SkillEvidence { skill: string; source: 'practice' | 'certificate' | 'project'; detail: string | null; amount: number }
++export interface SkillsProfile { skills: Skill[]; evidence: SkillEvidence[]; suggestions: Array<{ name: string; category: SkillCategory | null }> }
++
++export interface PortfolioSettings {
++  handle: string;
++  is_public: boolean;
++  headline: string | null;
++  bio: string | null;
++  show_college: boolean;
++  show_skills: boolean;
++  show_evidence: boolean;
++  show_repo_links: boolean;
++  certificate_refs: string[];
++  project_ids: string[];
++  published_at?: string | null;
++}
++export interface PortfolioEditor {
++  portfolio: PortfolioSettings | null;
++  suggested_handle: string;
++  has_college: boolean;
++  email_verified: boolean;
++  certificates: Array<{ ref: string; title: string; issued_at: string }>;
++  projects: Array<{ id: string; title: string; language: string; status: string; stages_done: number; stages_total: number; has_repo: boolean }>;
++}
++
++export interface PublicPortfolio {
++  handle: string;
++  name: string;
++  avatar_url: string | null;
++  headline: string | null;
++  bio: string | null;
++  college: string | null;
++  published_at: string | null;
++  certificates: Array<{ kind: 'topic' | 'apprenticeship' | 'program'; title: string; issued_at: string; code: string; grade?: string | null }>;
++  projects: Array<{ title: string; slug: string; tagline: string | null; language: string; status: string; stages_done: number; stages_total: number; completed_at: string | null; repo_url: string | null }>;
++  skills: Array<{ name: string; level: SkillLevel; category: SkillCategory | null }>;
++  evidence: Array<{ skill: string; source: 'practice'; amount: number }>;
++}
++
++export const accountApi = {
++  info: () => api.get('/users/me/account') as Promise<AccountInfo>,
++  sendVerification: () => api.post('/users/me/verification-email') as Promise<{ sent: boolean; email: string }>,
++  resendPublic: (email: string) => api.post('/auth/resend-verification', { email }) as Promise<{ sent: boolean }>,
++  sessions: () => api.get('/users/me/sessions') as Promise<{ supported: boolean; current_session_id: string | null; sessions: SessionRow[] }>,
++  revokeSession: (id: string) => api.delete(`/users/me/sessions/${encodeURIComponent(id)}`) as Promise<{ revoked: number }>,
++  revokeOthers: () => api.post('/users/me/sessions/revoke-others') as Promise<{ revoked: number }>,
++  changePassword: (body: { current_password: string; new_password: string; sign_out_others: boolean }) =>
++    api.put('/users/me/password', body) as Promise<{ changed: boolean; signed_out_sessions: number }>,
++  activity: (before?: string | null) =>
++    api.get('/users/me/activity', { params: { limit: 20, ...(before ? { before } : {}) } }) as Promise<{ items: ActivityRow[]; next_before: string | null }>,
++  skills: () => api.get('/users/me/skills') as Promise<SkillsProfile>,
++  saveSkills: (skills: Skill[]) => api.put('/users/me/skills', { skills }) as Promise<SkillsProfile>,
++  portfolio: () => api.get('/users/me/portfolio') as Promise<PortfolioEditor>,
++  savePortfolio: (p: PortfolioSettings) => api.put('/users/me/portfolio', p) as Promise<PortfolioEditor>,
++  deletePortfolio: () => api.delete('/users/me/portfolio') as Promise<{ deleted: boolean }>,
++  publicPortfolio: (handle: string) => api.get(`/portfolio/${encodeURIComponent(handle)}`) as Promise<PublicPortfolio>,
++};
++
++export const LEVELS: Array<{ value: SkillLevel; label: string }> = [
++  { value: 'beginner', label: 'Beginner' },
++  { value: 'intermediate', label: 'Intermediate' },
++  { value: 'advanced', label: 'Advanced' },
++  { value: 'expert', label: 'Expert' },
++];
++
++export const portfolioUrl = (handle: string) => `${window.location.origin}/u/${handle}`;
++
++export const formatWhen = (iso: string | null | undefined) =>
++  iso ? new Date(iso).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '—';
++
++export function timeAgo(iso: string | null | undefined): string {
++  if (!iso) return '—';
++  const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
++  if (s < 90) return 'just now';
++  if (s < 3600) return `${Math.round(s / 60)} min ago`;
++  if (s < 86400) return `${Math.round(s / 3600)} h ago`;
++  if (s < 86400 * 30) return `${Math.round(s / 86400)} days ago`;
++  return formatWhen(iso);
++}
+diff --git a/apps/web/src/pages/CertificatesPage.tsx b/apps/web/src/pages/CertificatesPage.tsx
+index b5573b6..49c7d4e 100644
+--- a/apps/web/src/pages/CertificatesPage.tsx
++++ b/apps/web/src/pages/CertificatesPage.tsx
+@@ -1,4 +1,5 @@
+-import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy } from "lucide-react";
++import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy, Globe } from "lucide-react";
++import { Link } from "react-router-dom";
+ import { motion } from "framer-motion";
+ import { useApiQuery } from "@/hooks/useApi";
+ import { Skeleton } from "@/components/ui/skeleton";
+@@ -42,6 +43,19 @@ const CertificatesPage = () => {
+         <p className="text-xs text-muted-foreground mt-0.5">Your verified achievements & learning milestones</p>
+       </div>
+ 
++      {/* Credential portfolio (W2-A1): pick which certificates appear on the public page */}
++      <Link to="/settings/portfolio"
++        className="card-glass rounded-2xl p-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border border-border/40 hover:border-primary/40 transition-colors">
++        <span className="flex items-start gap-3">
++          <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden />
++          <span>
++            <span className="block text-sm font-bold text-foreground">Show your certificates on a public portfolio</span>
++            <span className="block text-xs text-muted-foreground">Choose which ones, alongside your projects and skills. Private until you turn it on.</span>
++          </span>
++        </span>
++        <span className="text-xs font-bold text-primary shrink-0">Choose certificates →</span>
++      </Link>
++
+       {activeCert ? (
+         <motion.div
+           initial={{ opacity: 0, scale: 0.97 }}
+diff --git a/apps/web/src/pages/Pricing.tsx b/apps/web/src/pages/Pricing.tsx
+index 8aad32a..b58573a 100644
+--- a/apps/web/src/pages/Pricing.tsx
++++ b/apps/web/src/pages/Pricing.tsx
+@@ -125,7 +125,7 @@ export default function Pricing() {
+       });
+       razor.open();
+     } catch (err: any) {
+-      toast.error(err?.response?.data?.error || "Failed to initiate checkout.");
++      toast.error(err?.message || "Failed to initiate checkout.");
+     } finally {
+       setLoadingPlan(null);
+     }
+diff --git a/apps/web/src/pages/ProfilePage.tsx b/apps/web/src/pages/ProfilePage.tsx
+index da35b78..57064c2 100644
+--- a/apps/web/src/pages/ProfilePage.tsx
++++ b/apps/web/src/pages/ProfilePage.tsx
+@@ -7,12 +7,16 @@ import { useAuth } from '@/context/AuthContext';
+ import { cn } from '@/lib/utils';
+ import { useRoadmap } from '@/context/RoadmapContext';
+ import { useState } from 'react';
++import { useQuery } from '@tanstack/react-query';
++import { SkillsProfileCard } from '@/features/account/SkillsProfileCard';
++import { accountApi, portfolioUrl } from '@/features/account/account.service';
+ 
+ const ProfilePage = () => {
+   const { user } = useAuth();
+   const navigate = useNavigate();
+ 
+   const [copiedProfile, setCopiedProfile] = useState(false);
++  const { data: portfolio } = useQuery({ queryKey: ['portfolio-editor'], queryFn: accountApi.portfolio, retry: false });
+ 
+   // Keep ALL existing API calls
+   const { data: profileStats, isLoading } = useApiQuery<any>(
+@@ -82,33 +86,54 @@ const ProfilePage = () => {
+           </div>
+         </div>
+ 
+-        {/* Share profile */}
+-        <div className="mt-4 flex items-center gap-2">
+-          <button
+-            onClick={async () => {
+-              const profileUrl = `${window.location.origin}/profile/${user?.id}`;
+-              try {
+-                await navigator.clipboard.writeText(profileUrl);
+-                setCopiedProfile(true);
+-                setTimeout(() => setCopiedProfile(false), 2000);
+-              } catch {
+-                window.prompt('Copy your profile link:', profileUrl);
+-              }
+-            }}
+-            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
+-          >
+-            {copiedProfile ? <Check className="w-3 h-3 text-green-500" /> : <Share2 className="w-3 h-3" />}
+-            {copiedProfile ? 'Link Copied!' : 'Share Profile'}
+-          </button>
++        {/* Share profile: the opt-in public portfolio (W2-A1) */}
++        <div className="mt-4 flex flex-wrap items-center gap-2">
++          {portfolio?.portfolio?.is_public ? (
++            <>
++              <button
++                onClick={async () => {
++                  const profileUrl = portfolioUrl(portfolio.portfolio!.handle);
++                  try {
++                    await navigator.clipboard.writeText(profileUrl);
++                    setCopiedProfile(true);
++                    setTimeout(() => setCopiedProfile(false), 2000);
++                  } catch {
++                    window.prompt('Copy your portfolio link:', profileUrl);
++                  }
++                }}
++                className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
++              >
++                {copiedProfile ? <Check className="w-3 h-3 text-green-500" /> : <Share2 className="w-3 h-3" />}
++                {copiedProfile ? 'Link Copied!' : 'Copy portfolio link'}
++              </button>
++              <a
++                href={`/u/${portfolio.portfolio.handle}`}
++                target="_blank"
++                rel="noreferrer"
++                className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
++              >
++                <ExternalLink className="w-3 h-3" /> View public portfolio
++              </a>
++            </>
++          ) : (
++            <button
++              onClick={() => navigate('/settings/portfolio')}
++              className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
++            >
++              <Share2 className="w-3 h-3" /> Set up a public portfolio
++            </button>
++          )}
+           <button
+-            onClick={() => window.open(`${window.location.origin}/profile/${user?.id}`, '_blank')}
+-            className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-bold flex items-center gap-1.5 hover:bg-secondary/80 transition-colors"
++            onClick={() => navigate('/settings/portfolio')}
++            className="text-xs px-3 py-1.5 rounded-lg text-muted-foreground font-bold hover:text-foreground transition-colors"
+           >
+-            <ExternalLink className="w-3 h-3" /> Public Profile
++            {portfolio?.portfolio?.is_public ? 'Edit portfolio' : 'Private — only you see this page'}
+           </button>
+         </div>
+       </motion.div>
+ 
++      <SkillsProfileCard />
++
+       {/* Stats Grid */}
+       {xp === 0 && totalSolved === 0 ? (
+         <motion.div
+diff --git a/apps/web/src/pages/PublicPortfolioPage.tsx b/apps/web/src/pages/PublicPortfolioPage.tsx
+new file mode 100644
+index 0000000..3acd95c
+--- /dev/null
++++ b/apps/web/src/pages/PublicPortfolioPage.tsx
+@@ -0,0 +1,136 @@
++import { useEffect } from 'react';
++import { Link, useParams } from 'react-router-dom';
++import { useQuery } from '@tanstack/react-query';
++import { Award, BadgeCheck, Code2, ExternalLink, GraduationCap, Hammer, Loader2, Sparkles } from 'lucide-react';
++import { LEVELS, accountApi } from '@/features/account/account.service';
++
++const LEVEL_LABEL = Object.fromEntries(LEVELS.map((l) => [l.value, l.label]));
++const LEVEL_DOTS: Record<string, number> = { beginner: 1, intermediate: 2, advanced: 3, expert: 4 };
++const month = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) : '');
++
++/** /u/:handle — a learner's published portfolio (slice W2-A1). Public, read-only, not indexed by search engines. */
++export default function PublicPortfolioPage() {
++  const { handle = '' } = useParams<{ handle: string }>();
++  const q = useQuery({ queryKey: ['public-portfolio', handle], queryFn: () => accountApi.publicPortfolio(handle), retry: false });
++
++  useEffect(() => {
++    const meta = document.createElement('meta');
++    meta.name = 'robots';
++    meta.content = 'noindex';
++    document.head.appendChild(meta);
++    return () => { meta.remove(); };
++  }, []);
++  useEffect(() => { if (q.data) document.title = `${q.data.name} · Forge portfolio`; }, [q.data]);
++
++  if (q.isLoading) return <div className="flex min-h-screen items-center justify-center bg-background"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
++  if (q.isError || !q.data) {
++    return (
++      <main className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background px-4 text-center">
++        <h1 className="font-display text-2xl font-bold text-foreground">This portfolio isn't available</h1>
++        <p className="max-w-sm text-sm text-muted-foreground">The address may be wrong, or its owner has made it private.</p>
++        <Link to="/" className="text-sm font-semibold text-primary hover:underline">Go to Forge</Link>
++      </main>
++    );
++  }
++  const p = q.data;
++  return (
++    <main className="min-h-screen bg-background px-4 py-8 sm:py-12">
++      <div className="mx-auto max-w-3xl space-y-6">
++        <header className="card-glass rounded-2xl p-5 sm:p-8">
++          <div className="flex items-start gap-4">
++            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl gradient-golden font-display text-2xl font-bold text-white sm:h-20 sm:w-20">
++              {p.avatar_url ? <img src={p.avatar_url} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" /> : (p.name || '?').charAt(0)}
++            </div>
++            <div className="min-w-0">
++              <h1 className="font-display text-2xl font-bold text-foreground break-words sm:text-3xl">{p.name}</h1>
++              {p.headline && <p className="mt-1 text-sm text-foreground/80 break-words">{p.headline}</p>}
++              {p.college && <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><GraduationCap className="h-3.5 w-3.5" aria-hidden /> {p.college}</p>}
++            </div>
++          </div>
++          {p.bio && <p className="mt-4 whitespace-pre-line text-sm text-foreground/90 break-words">{p.bio}</p>}
++        </header>
++
++        {p.certificates.length > 0 && (
++          <section className="card-glass rounded-2xl p-5 sm:p-6" aria-labelledby="pp-certs">
++            <h2 id="pp-certs" className="mb-3 flex items-center gap-2 font-display font-bold text-foreground"><Award className="h-4 w-4 text-amber-500" /> Certificates</h2>
++            <ul className="space-y-3">
++              {p.certificates.map((c) => (
++                <li key={`${c.kind}-${c.code}`} className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
++                  <div className="min-w-0">
++                    <p className="text-sm font-medium text-foreground break-words">{c.title}{c.grade ? ` · ${c.grade}` : ''}</p>
++                    <p className="text-xs text-muted-foreground">Issued {month(c.issued_at)} · code <span className="font-mono">{c.code}</span></p>
++                  </div>
++                  {c.kind === 'apprenticeship' && (
++                    <Link to={`/certificates/${encodeURIComponent(c.code)}`} className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
++                      <BadgeCheck className="h-3.5 w-3.5" /> Verify
++                    </Link>
++                  )}
++                </li>
++              ))}
++            </ul>
++          </section>
++        )}
++
++        {p.projects.length > 0 && (
++          <section className="card-glass rounded-2xl p-5 sm:p-6" aria-labelledby="pp-projects">
++            <h2 id="pp-projects" className="mb-3 flex items-center gap-2 font-display font-bold text-foreground"><Hammer className="h-4 w-4 text-emerald-500" /> Projects</h2>
++            <ul className="grid gap-3 sm:grid-cols-2">
++              {p.projects.map((pr) => (
++                <li key={pr.slug + pr.language} className="rounded-xl border border-border/50 p-4">
++                  <p className="font-medium text-foreground break-words">{pr.title}</p>
++                  {pr.tagline && <p className="mt-0.5 text-xs text-muted-foreground break-words">{pr.tagline}</p>}
++                  <p className="mt-2 text-xs text-muted-foreground">
++                    {pr.language} · {pr.status === 'completed' ? `finished ${month(pr.completed_at)}` : `${pr.stages_done} of ${pr.stages_total} stages`}
++                  </p>
++                  <p className="mt-1 text-[11px] text-muted-foreground">Stages are verified by Forge's automated tests.</p>
++                  {pr.repo_url && (
++                    <a href={pr.repo_url} target="_blank" rel="noopener noreferrer nofollow" className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
++                      <ExternalLink className="h-3.5 w-3.5" /> Code on GitHub
++                    </a>
++                  )}
++                </li>
++              ))}
++            </ul>
++          </section>
++        )}
++
++        {(p.skills.length > 0 || p.evidence.length > 0) && (
++          <section className="card-glass rounded-2xl p-5 sm:p-6 space-y-4" aria-labelledby="pp-skills">
++            <h2 id="pp-skills" className="flex items-center gap-2 font-display font-bold text-foreground"><Sparkles className="h-4 w-4 text-primary" /> Skills</h2>
++            {p.skills.length > 0 && (
++              <ul className="flex flex-wrap gap-2" aria-label="Skills">
++                {p.skills.map((s) => (
++                  <li key={s.name} className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs text-foreground">
++                    {s.name}
++                    <span className="flex gap-0.5" role="img" aria-label={LEVEL_LABEL[s.level]}>
++                      {[1, 2, 3, 4].map((n) => <span key={n} className={`h-1.5 w-1.5 rounded-full ${n <= LEVEL_DOTS[s.level] ? 'bg-primary' : 'bg-muted-foreground/30'}`} />)}
++                    </span>
++                  </li>
++                ))}
++              </ul>
++            )}
++            {p.skills.length > 0 && <p className="text-xs text-muted-foreground">Self-assessed levels.</p>}
++            {p.evidence.length > 0 && (
++              <div>
++                <h3 className="mb-2 text-sm font-semibold text-foreground">Problems solved on Forge</h3>
++                <ul className="flex flex-wrap gap-2" aria-label="Problems solved by topic">
++                  {p.evidence.map((e) => (
++                    <li key={e.skill} className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs text-foreground">
++                      <Code2 className="h-3 w-3 text-primary" aria-hidden /> {e.skill} · {e.amount}
++                    </li>
++                  ))}
++                </ul>
++                <p className="mt-2 text-xs text-muted-foreground">Counted from solutions Forge's judge accepted.</p>
++              </div>
++            )}
++          </section>
++        )}
++
++        <footer className="pb-6 text-center text-xs text-muted-foreground">
++          Portfolio on <Link to="/" className="font-semibold text-primary hover:underline">Forge</Link>
++          {p.published_at ? ` · public since ${month(p.published_at)}` : ''}
++        </footer>
++      </div>
++    </main>
++  );
++}
+diff --git a/apps/web/src/pages/auth/SignIn.tsx b/apps/web/src/pages/auth/SignIn.tsx
+index 5afdf5a..7a38b61 100644
+--- a/apps/web/src/pages/auth/SignIn.tsx
++++ b/apps/web/src/pages/auth/SignIn.tsx
+@@ -25,7 +25,13 @@ const SignIn = () => {
+       toast.success("Welcome back!");
+       navigate("/dashboard");
+     } catch (error: any) {
+-      toast.error(error.message || "Failed to sign in");
++      if (/not confirmed|not verified/i.test(error?.message || "")) {
++        // Supabase refuses password sign-in until the email is confirmed: offer a new link.
++        toast.error("Confirm your email first. We can send the link again.");
++        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
++      } else {
++        toast.error(error.message || "Failed to sign in");
++      }
+     } finally {
+       setLoading(false);
+     }
+diff --git a/apps/web/src/pages/auth/SignUp.tsx b/apps/web/src/pages/auth/SignUp.tsx
+index 9c48b34..febcb12 100644
+--- a/apps/web/src/pages/auth/SignUp.tsx
++++ b/apps/web/src/pages/auth/SignUp.tsx
+@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
+ import { toast } from "sonner";
+ import { Loader2 } from "lucide-react";
+ import { supabase } from "@/lib/supabase";
++import { getAccessToken } from "@/lib/authSession";
+ 
+ export default function SignUp() {
+   const { register } = useAuth();
+@@ -33,6 +34,12 @@ export default function SignUp() {
+     setLoading(true);
+     try {
+       await register({ email, password, full_name: fullName, referral_code: referralCode || undefined });
++      if (!getAccessToken()) {
++        // Email confirmation is on: there's no session until the link is opened.
++        toast.success("Account created! Check your inbox to confirm your email.");
++        navigate(`/verify-email?email=${encodeURIComponent(email)}`);
++        return;
++      }
+       toast.success("Account created!");
+       navigate("/onboarding");
+     } catch (error: any) {
+diff --git a/apps/web/src/pages/auth/VerifyEmailPage.tsx b/apps/web/src/pages/auth/VerifyEmailPage.tsx
+new file mode 100644
+index 0000000..0cbeb40
+--- /dev/null
++++ b/apps/web/src/pages/auth/VerifyEmailPage.tsx
+@@ -0,0 +1,85 @@
++import { useEffect, useState } from 'react';
++import { Link, useSearchParams } from 'react-router-dom';
++import { useMutation } from '@tanstack/react-query';
++import { toast } from 'sonner';
++import { BadgeCheck, Loader2, MailCheck } from 'lucide-react';
++import { Button } from '@/components/ui/button';
++import { Input } from '@/components/ui/input';
++import { Label } from '@/components/ui/label';
++import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
++import { persistSession } from '@/lib/authSession';
++import { accountApi } from '@/features/account/account.service';
++
++/**
++ * /verify-email — "check your inbox" after sign-up (with resend), and where the
++ * confirmation link lands: Supabase appends the new session in the URL hash.
++ */
++export default function VerifyEmailPage() {
++  const [params] = useSearchParams();
++  const [email, setEmail] = useState(params.get('email') ?? '');
++  const [confirmed, setConfirmed] = useState(false);
++  const [linkError, setLinkError] = useState<string | null>(null);
++
++  useEffect(() => {
++    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
++    const access = hash.get('access_token');
++    if (access) {
++      persistSession({ access_token: access, refresh_token: hash.get('refresh_token') ?? '' });
++      setConfirmed(true);
++      window.history.replaceState(null, '', window.location.pathname);
++    } else if (hash.get('error_description')) {
++      setLinkError(hash.get('error_description'));
++      window.history.replaceState(null, '', window.location.pathname);
++    }
++  }, []);
++
++  const resend = useMutation({
++    mutationFn: () => accountApi.resendPublic(email.trim()),
++    onSuccess: () => toast.success('If that address has an account waiting for confirmation, a new link is on its way.'),
++    onError: (e: Error) => toast.error(e.message),
++  });
++
++  if (confirmed) {
++    return (
++      <Card className="card-glass border-border/40 shadow-lg w-full max-w-md mx-auto">
++        <CardHeader className="text-center">
++          <BadgeCheck className="mx-auto h-10 w-10 text-emerald-500" aria-hidden />
++          <CardTitle className="text-2xl font-bold">Email confirmed</CardTitle>
++          <CardDescription>You're signed in. Everything on Forge is open to you now.</CardDescription>
++        </CardHeader>
++        <CardContent className="flex justify-center">
++          {/* A full load so the app picks up the new session. */}
++          <Button onClick={() => window.location.assign('/dashboard')}>Continue</Button>
++        </CardContent>
++      </Card>
++    );
++  }
++
++  return (
++    <Card className="card-glass border-border/40 shadow-lg w-full max-w-md mx-auto">
++      <CardHeader className="text-center">
++        <MailCheck className="mx-auto h-10 w-10 text-primary" aria-hidden />
++        <CardTitle className="text-2xl font-bold">Check your inbox</CardTitle>
++        <CardDescription>
++          {linkError
++            ? `That link didn't work (${linkError}). Ask for a new one below.`
++            : 'We sent you a link to confirm your email. Open it on this device to finish signing up.'}
++        </CardDescription>
++      </CardHeader>
++      <CardContent>
++        <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); resend.mutate(); }}>
++          <div className="space-y-1.5">
++            <Label htmlFor="verify-email">Email</Label>
++            <Input id="verify-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
++          </div>
++          <Button type="submit" className="w-full" disabled={resend.isPending || !email.trim()}>
++            {resend.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Send the link again
++          </Button>
++        </form>
++        <p className="mt-4 text-center text-sm text-muted-foreground">
++          Can't find it? Check spam or promotions. Already confirmed? <Link to="/signin" className="text-primary hover:underline">Sign in</Link>
++        </p>
++      </CardContent>
++    </Card>
++  );
++}
+diff --git a/apps/web/src/pages/settings/AccountSettingsPage.tsx b/apps/web/src/pages/settings/AccountSettingsPage.tsx
+new file mode 100644
+index 0000000..3095460
+--- /dev/null
++++ b/apps/web/src/pages/settings/AccountSettingsPage.tsx
+@@ -0,0 +1,300 @@
++import { useState } from 'react';
++import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
++import { toast } from 'sonner';
++import {
++  BadgeCheck, History, KeyRound, Loader2, LogOut, Mail, Monitor, ShieldCheck, Smartphone, AlertTriangle,
++  LogIn, CreditCard, Globe, UserPlus, Send, MonitorX,
++} from 'lucide-react';
++import { Button } from '@/components/ui/button';
++import { Input } from '@/components/ui/input';
++import { Label } from '@/components/ui/label';
++import { Checkbox } from '@/components/ui/checkbox';
++import {
++  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
++  AlertDialogHeader, AlertDialogTitle,
++} from '@/components/ui/alert-dialog';
++import { accountApi, formatWhen, timeAgo, type ActivityRow, type SessionRow } from '@/features/account/account.service';
++
++const ACTIVITY: Record<string, { label: string; icon: typeof LogIn }> = {
++  account_created: { label: 'Account created', icon: UserPlus },
++  email_verified: { label: 'Email verified', icon: BadgeCheck },
++  sign_in: { label: 'Signed in', icon: LogIn },
++  sign_out: { label: 'Signed out', icon: LogOut },
++  session_revoked: { label: 'Signed out a device', icon: MonitorX },
++  other_sessions_revoked: { label: 'Signed out other devices', icon: MonitorX },
++  password_changed: { label: 'Password changed', icon: KeyRound },
++  password_reset_requested: { label: 'Password reset requested', icon: KeyRound },
++  verification_email_sent: { label: 'Verification email sent', icon: Send },
++  account_updated: { label: 'Account details changed', icon: ShieldCheck },
++  plan_purchased: { label: 'Payment', icon: CreditCard },
++  portfolio_published: { label: 'Portfolio made public', icon: Globe },
++  portfolio_unpublished: { label: 'Portfolio made private', icon: Globe },
++};
++
++const section = 'card-glass rounded-2xl border border-border/40 p-5 space-y-4';
++
++function EmailSection() {
++  const info = useQuery({ queryKey: ['account-info'], queryFn: accountApi.info, retry: false });
++  const send = useMutation({
++    mutationFn: accountApi.sendVerification,
++    onSuccess: (r) => toast.success(`Verification email sent to ${r.email}`),
++    onError: (e: Error) => toast.error(e.message),
++  });
++  if (info.isLoading) return <section className={section}><Loader2 className="h-5 w-5 animate-spin text-primary" /></section>;
++  if (info.isError || !info.data) return <section className={section}><p className="text-sm text-muted-foreground">Account details are unavailable right now.</p></section>;
++  const a = info.data;
++  return (
++    <section className={section} aria-labelledby="email-h">
++      <h2 id="email-h" className="flex items-center gap-2 font-bold text-foreground"><Mail className="h-4 w-4 text-primary" /> Email</h2>
++      <div className="flex flex-wrap items-center gap-2 text-sm">
++        <span className="font-medium text-foreground break-all">{a.email}</span>
++        {a.email_verified ? (
++          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
++            <BadgeCheck className="h-3.5 w-3.5" /> Verified
++          </span>
++        ) : (
++          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-300">
++            <AlertTriangle className="h-3.5 w-3.5" /> Not verified
++          </span>
++        )}
++      </div>
++      {a.email_verified ? (
++        <p className="text-sm text-muted-foreground">Verified on {formatWhen(a.email_verified_at)}.</p>
++      ) : (
++        <div className="space-y-3 text-sm">
++          <p className="text-muted-foreground">
++            Until you confirm this address you can't pay for a plan, earn certificates or make your portfolio public — receipts,
++            invoices and certificates are tied to it. Open the link we emailed you, or send a new one.
++          </p>
++          <Button size="sm" onClick={() => send.mutate()} disabled={send.isPending}>
++            {send.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />} Resend verification email
++          </Button>
++        </div>
++      )}
++      {a.pending_email && <p className="text-sm text-muted-foreground">A change to <strong className="text-foreground">{a.pending_email}</strong> is waiting for confirmation.</p>}
++      {a.providers.length > 0 && (
++        <p className="text-xs text-muted-foreground">Sign-in methods: {a.providers.map((p) => (p === 'email' ? 'email and password' : p[0].toUpperCase() + p.slice(1))).join(', ')}</p>
++      )}
++    </section>
++  );
++}
++
++function PasswordSection() {
++  const qc = useQueryClient();
++  const info = useQuery({ queryKey: ['account-info'], queryFn: accountApi.info, retry: false });
++  const [current, setCurrent] = useState('');
++  const [next, setNext] = useState('');
++  const [confirm, setConfirm] = useState('');
++  const [signOutOthers, setSignOutOthers] = useState(true);
++  const change = useMutation({
++    mutationFn: accountApi.changePassword,
++    onSuccess: (r) => {
++      toast.success(r.signed_out_sessions ? `Password changed. ${r.signed_out_sessions} other device${r.signed_out_sessions === 1 ? '' : 's'} signed out.` : 'Password changed.');
++      setCurrent(''); setNext(''); setConfirm('');
++      qc.invalidateQueries({ queryKey: ['account-sessions'] });
++      qc.invalidateQueries({ queryKey: ['account-activity'] });
++    },
++    onError: (e: Error) => toast.error(e.message),
++  });
++  if (!info.data) return null;
++  if (!info.data.has_password) {
++    return (
++      <section className={section} aria-labelledby="pw-h">
++        <h2 id="pw-h" className="flex items-center gap-2 font-bold text-foreground"><KeyRound className="h-4 w-4 text-primary" /> Password</h2>
++        <p className="text-sm text-muted-foreground">You sign in with Google or GitHub, so this account has no password to change.</p>
++      </section>
++    );
++  }
++  const mismatch = confirm.length > 0 && confirm !== next;
++  const weak = next.length > 0 && (next.length < 8 || !/[A-Za-z]/.test(next) || !/[0-9]/.test(next));
++  return (
++    <section className={section} aria-labelledby="pw-h">
++      <h2 id="pw-h" className="flex items-center gap-2 font-bold text-foreground"><KeyRound className="h-4 w-4 text-primary" /> Change password</h2>
++      <form
++        className="grid gap-3 sm:max-w-md"
++        onSubmit={(e) => { e.preventDefault(); change.mutate({ current_password: current, new_password: next, sign_out_others: signOutOthers }); }}
++      >
++        <div className="space-y-1.5">
++          <Label htmlFor="pw-current">Current password</Label>
++          <Input id="pw-current" type="password" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} required />
++        </div>
++        <div className="space-y-1.5">
++          <Label htmlFor="pw-new">New password</Label>
++          <Input id="pw-new" type="password" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} aria-describedby="pw-hint" required />
++          <p id="pw-hint" className={weak ? 'text-xs text-destructive' : 'text-xs text-muted-foreground'}>At least 8 characters, with a letter and a number.</p>
++        </div>
++        <div className="space-y-1.5">
++          <Label htmlFor="pw-confirm">Repeat new password</Label>
++          <Input id="pw-confirm" type="password" autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} aria-invalid={mismatch} required />
++          {mismatch && <p className="text-xs text-destructive">The passwords don't match.</p>}
++        </div>
++        <label className="flex items-center gap-2 text-sm text-foreground">
++          <Checkbox checked={signOutOthers} onCheckedChange={(v) => setSignOutOthers(v === true)} aria-label="Sign out my other devices" />
++          Sign out my other devices
++        </label>
++        <div>
++          <Button type="submit" size="sm" disabled={change.isPending || !current || weak || mismatch || !next || !confirm}>
++            {change.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Change password
++          </Button>
++        </div>
++      </form>
++    </section>
++  );
++}
++
++function SessionsSection() {
++  const qc = useQueryClient();
++  const sessions = useQuery({ queryKey: ['account-sessions'], queryFn: accountApi.sessions, retry: false });
++  const [confirm, setConfirm] = useState<{ kind: 'one'; session: SessionRow } | { kind: 'others' } | null>(null);
++  const done = (msg: string) => {
++    toast.success(msg);
++    qc.invalidateQueries({ queryKey: ['account-sessions'] });
++    qc.invalidateQueries({ queryKey: ['account-activity'] });
++  };
++  const revoke = useMutation({ mutationFn: accountApi.revokeSession, onSuccess: () => done('That device is signed out.'), onError: (e: Error) => toast.error(e.message) });
++  const revokeOthers = useMutation({
++    mutationFn: accountApi.revokeOthers,
++    onSuccess: (r) => done(r.revoked ? `Signed out ${r.revoked} other device${r.revoked === 1 ? '' : 's'}.` : 'No other devices were signed in.'),
++    onError: (e: Error) => toast.error(e.message),
++  });
++  const list = sessions.data?.sessions ?? [];
++  const others = list.filter((s) => !s.current);
++
++  return (
++    <section className={section} aria-labelledby="sessions-h">
++      <div className="flex flex-wrap items-center justify-between gap-2">
++        <h2 id="sessions-h" className="flex items-center gap-2 font-bold text-foreground"><Monitor className="h-4 w-4 text-primary" /> Where you're signed in</h2>
++        {others.length > 0 && (
++          <Button size="sm" variant="outline" onClick={() => setConfirm({ kind: 'others' })} disabled={revokeOthers.isPending}>
++            <LogOut className="mr-2 h-4 w-4" /> Sign out all other devices
++          </Button>
++        )}
++      </div>
++      <p className="text-sm text-muted-foreground">
++        Signing a device out ends that session: it can't renew its sign-in, and Forge stops accepting it straight away. Don't recognise one? Sign it out and change your password.
++      </p>
++      {sessions.isLoading && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
++      {sessions.isError && <p className="text-sm text-muted-foreground">Your sessions can't be loaded right now.</p>}
++      {sessions.data && !sessions.data.supported && <p className="text-sm text-muted-foreground">The list of devices isn't available yet.</p>}
++      {sessions.data?.supported && !sessions.data.current_session_id && (
++        <p className="text-sm text-muted-foreground">This device's own session can't be identified, so it isn't marked below.</p>
++      )}
++      {list.length > 0 && (
++        <ul className="divide-y divide-border/40" aria-label="Signed-in devices">
++          {list.map((s) => {
++            const Icon = s.mobile ? Smartphone : Monitor;
++            return (
++              <li key={s.id} className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between" data-testid="session-row">
++                <div className="flex min-w-0 items-start gap-3">
++                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" aria-hidden />
++                  <div className="min-w-0 text-sm">
++                    <p className="font-medium text-foreground">
++                      {s.device}
++                      {s.current && <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">This device</span>}
++                    </p>
++                    <p className="text-xs text-muted-foreground break-words">
++                      {[s.ip, s.method, `signed in ${formatWhen(s.signed_in_at)}`].filter(Boolean).join(' · ')}
++                    </p>
++                    <p className="text-xs text-muted-foreground">Last active {timeAgo(s.last_active_at)}</p>
++                  </div>
++                </div>
++                {!s.current && (
++                  <Button size="sm" variant="ghost" className="self-start text-destructive hover:text-destructive sm:self-center"
++                    onClick={() => setConfirm({ kind: 'one', session: s })} aria-label={`Sign out ${s.device}`}>
++                    Sign out
++                  </Button>
++                )}
++              </li>
++            );
++          })}
++        </ul>
++      )}
++      <AlertDialog open={confirm !== null} onOpenChange={(o) => !o && setConfirm(null)}>
++        <AlertDialogContent>
++          <AlertDialogHeader>
++            <AlertDialogTitle>{confirm?.kind === 'others' ? 'Sign out all other devices?' : `Sign out ${confirm?.kind === 'one' ? confirm.session.device : ''}?`}</AlertDialogTitle>
++            <AlertDialogDescription>
++              {confirm?.kind === 'others'
++                ? `${others.length} other session${others.length === 1 ? '' : 's'} will end. You stay signed in here.`
++                : 'That device will need to sign in again.'}
++            </AlertDialogDescription>
++          </AlertDialogHeader>
++          <AlertDialogFooter>
++            <AlertDialogCancel>Cancel</AlertDialogCancel>
++            <AlertDialogAction onClick={() => {
++              if (confirm?.kind === 'others') revokeOthers.mutate();
++              else if (confirm?.kind === 'one') revoke.mutate(confirm.session.id);
++              setConfirm(null);
++            }}>
++              Sign out
++            </AlertDialogAction>
++          </AlertDialogFooter>
++        </AlertDialogContent>
++      </AlertDialog>
++    </section>
++  );
++}
++
++function ActivitySection() {
++  const q = useInfiniteQuery({
++    queryKey: ['account-activity'],
++    queryFn: ({ pageParam }) => accountApi.activity(pageParam),
++    initialPageParam: null as string | null,
++    getNextPageParam: (last) => last.next_before,
++    retry: false,
++  });
++  const items: ActivityRow[] = q.data?.pages.flatMap((p) => p.items) ?? [];
++  return (
++    <section className={section} aria-labelledby="activity-h">
++      <h2 id="activity-h" className="flex items-center gap-2 font-bold text-foreground"><History className="h-4 w-4 text-primary" /> Account activity</h2>
++      {q.isLoading && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
++      {q.isError && <p className="text-sm text-muted-foreground">Activity can't be loaded right now.</p>}
++      {!q.isLoading && !q.isError && items.length === 0 && <p className="text-sm text-muted-foreground">Nothing recorded yet.</p>}
++      {items.length > 0 && (
++        <ol className="space-y-3" aria-label="Account activity">
++          {items.map((i, n) => {
++            const meta = ACTIVITY[i.kind] ?? { label: i.kind, icon: ShieldCheck };
++            const Icon = meta.icon;
++            return (
++              <li key={`${i.at}-${i.kind}-${n}`} className="flex gap-3 text-sm">
++                <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
++                <div className="min-w-0">
++                  <p className="text-foreground">
++                    <span className="font-medium">{meta.label}</span>
++                    {i.detail && <span className="text-muted-foreground"> · {i.detail}</span>}
++                  </p>
++                  <p className="text-xs text-muted-foreground break-words">
++                    {[formatWhen(i.at), i.device, i.ip, i.source === 'auth_log' ? 'from the sign-in service log' : null].filter(Boolean).join(' · ')}
++                  </p>
++                </div>
++              </li>
++            );
++          })}
++        </ol>
++      )}
++      {q.hasNextPage && (
++        <Button size="sm" variant="outline" onClick={() => q.fetchNextPage()} disabled={q.isFetchingNextPage}>
++          {q.isFetchingNextPage && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Show older
++        </Button>
++      )}
++      <p className="text-xs text-muted-foreground">
++        Sign-ins show the device and network they came from. Entries marked "from the sign-in service log" are older and have less detail; payments come from your order history.
++      </p>
++    </section>
++  );
++}
++
++export default function AccountSettingsPage() {
++  return (
++    <div className="mx-auto max-w-3xl space-y-6">
++      <div>
++        <h1 className="font-display text-page-title font-bold text-foreground">Account &amp; security</h1>
++        <p className="text-sm text-muted-foreground">Your email, password, the devices you're signed in on, and what's happened on your account.</p>
++      </div>
++      <EmailSection />
++      <PasswordSection />
++      <SessionsSection />
++      <ActivitySection />
++    </div>
++  );
++}
+diff --git a/apps/web/src/pages/settings/PortfolioSettingsPage.tsx b/apps/web/src/pages/settings/PortfolioSettingsPage.tsx
+new file mode 100644
+index 0000000..7993d89
+--- /dev/null
++++ b/apps/web/src/pages/settings/PortfolioSettingsPage.tsx
+@@ -0,0 +1,222 @@
++import { useEffect, useState } from 'react';
++import { Link } from 'react-router-dom';
++import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
++import { toast } from 'sonner';
++import { Check, Copy, ExternalLink, Globe, Loader2, Lock, Trash2 } from 'lucide-react';
++import { Button } from '@/components/ui/button';
++import { Input } from '@/components/ui/input';
++import { Label } from '@/components/ui/label';
++import { Textarea } from '@/components/ui/textarea';
++import { Switch } from '@/components/ui/switch';
++import { Checkbox } from '@/components/ui/checkbox';
++import {
++  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
++  AlertDialogHeader, AlertDialogTitle,
++} from '@/components/ui/alert-dialog';
++import { accountApi, portfolioUrl, type PortfolioSettings } from '@/features/account/account.service';
++
++const HANDLE = /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/;
++const section = 'card-glass rounded-2xl border border-border/40 p-5 space-y-4';
++const blank = (handle: string): PortfolioSettings => ({
++  handle, is_public: false, headline: null, bio: null, show_college: false, show_skills: true, show_evidence: true,
++  show_repo_links: false, certificate_refs: [], project_ids: [],
++});
++
++/** /settings/portfolio — an opt-in public page at /u/<handle> (slice W2-A1). */
++export default function PortfolioSettingsPage() {
++  const qc = useQueryClient();
++  const q = useQuery({ queryKey: ['portfolio-editor'], queryFn: accountApi.portfolio, retry: false });
++  const [p, setP] = useState<PortfolioSettings | null>(null);
++  const [copied, setCopied] = useState(false);
++  const [confirmDelete, setConfirmDelete] = useState(false);
++  useEffect(() => { if (q.data) setP(q.data.portfolio ?? blank(q.data.suggested_handle)); }, [q.data]);
++
++  const save = useMutation({
++    mutationFn: accountApi.savePortfolio,
++    onSuccess: (data, sent) => {
++      qc.setQueryData(['portfolio-editor'], data);
++      const was = q.data?.portfolio?.is_public ?? false;
++      toast.success(sent.is_public && !was ? 'Your portfolio is public' : !sent.is_public && was ? 'Your portfolio is private again' : 'Saved');
++    },
++    onError: (e: Error) => toast.error(e.message),
++  });
++  const remove = useMutation({
++    mutationFn: accountApi.deletePortfolio,
++    onSuccess: () => { qc.invalidateQueries({ queryKey: ['portfolio-editor'] }); toast.success('Portfolio deleted'); },
++    onError: (e: Error) => toast.error(e.message),
++  });
++
++  if (q.isLoading || (!p && !q.isError)) return <div className="flex justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
++  if (q.isError || !q.data || !p) return <p className="py-20 text-center text-sm text-muted-foreground">Portfolio settings are unavailable right now.</p>;
++  const d = q.data;
++  const saved = d.portfolio;
++  const handleOk = HANDLE.test(p.handle) && !p.handle.includes('--');
++  const set = (patch: Partial<PortfolioSettings>) => setP({ ...p, ...patch });
++  const toggle = (list: string[], id: string, on: boolean) => (on ? [...list, id] : list.filter((x) => x !== id));
++  const submit = (patch: Partial<PortfolioSettings> = {}) => save.mutate({ ...p, ...patch });
++  const live = Boolean(saved?.is_public);
++  const url = portfolioUrl(saved?.handle ?? p.handle);
++
++  return (
++    <div className="mx-auto max-w-3xl space-y-6">
++      <div>
++        <h1 className="font-display text-page-title font-bold text-foreground">Public portfolio</h1>
++        <p className="text-sm text-muted-foreground">
++          A page you can share with recruiters, showing only what you pick here. It's off until you turn it on, never shows your email or phone,
++          and you can take it down at any time.
++        </p>
++      </div>
++
++      <section className={section} aria-labelledby="pub-h">
++        <div className="flex flex-wrap items-center justify-between gap-3">
++          <h2 id="pub-h" className="flex items-center gap-2 font-bold text-foreground">
++            {live ? <Globe className="h-4 w-4 text-emerald-500" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
++            {live ? 'Public' : 'Private'}
++          </h2>
++          <label className="flex items-center gap-3 text-sm">
++            <span className="text-foreground">Anyone with the link can see it</span>
++            <Switch checked={live} disabled={save.isPending || (!live && (!handleOk || !d.email_verified))}
++              onCheckedChange={(v) => submit({ is_public: v })} aria-label="Make my portfolio public" />
++          </label>
++        </div>
++        {!d.email_verified && (
++          <p className="text-sm text-amber-700 dark:text-amber-300">
++            Confirm your email before going public. <Link to="/settings/account" className="underline">Resend the link</Link>
++          </p>
++        )}
++        {live && (
++          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
++            <code className="min-w-0 flex-1 truncate rounded-lg bg-secondary px-3 py-2 text-xs text-foreground" data-testid="portfolio-url">{url}</code>
++            <div className="flex gap-2">
++              <Button size="sm" variant="outline" onClick={async () => {
++                try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { window.prompt('Copy your link:', url); }
++              }}>
++                {copied ? <Check className="mr-1 h-4 w-4" /> : <Copy className="mr-1 h-4 w-4" />} {copied ? 'Copied' : 'Copy link'}
++              </Button>
++              <Button size="sm" variant="outline" asChild>
++                <a href={`/u/${saved!.handle}`} target="_blank" rel="noreferrer"><ExternalLink className="mr-1 h-4 w-4" /> View</a>
++              </Button>
++            </div>
++          </div>
++        )}
++      </section>
++
++      <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); if (handleOk) submit(); }}>
++        <section className={section} aria-labelledby="about-h">
++          <h2 id="about-h" className="font-bold text-foreground">About you</h2>
++          <div className="space-y-1.5">
++            <Label htmlFor="pf-handle">Address</Label>
++            <div className="flex items-center gap-1 text-sm">
++              <span className="shrink-0 text-muted-foreground">/u/</span>
++              <Input id="pf-handle" value={p.handle} maxLength={30} aria-invalid={!handleOk} aria-describedby="pf-handle-hint"
++                onChange={(e) => set({ handle: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })} />
++            </div>
++            <p id="pf-handle-hint" className={handleOk ? 'text-xs text-muted-foreground' : 'text-xs text-destructive'}>
++              3–30 lower-case letters, digits or single hyphens. Changing it breaks the old link.
++            </p>
++          </div>
++          <div className="space-y-1.5">
++            <Label htmlFor="pf-headline">Headline</Label>
++            <Input id="pf-headline" value={p.headline ?? ''} maxLength={120} placeholder="e.g. Final-year CSE · backend and DSA"
++              onChange={(e) => set({ headline: e.target.value })} />
++          </div>
++          <div className="space-y-1.5">
++            <Label htmlFor="pf-bio">About</Label>
++            <Textarea id="pf-bio" value={p.bio ?? ''} maxLength={600} rows={4} placeholder="A few lines about what you build and what you're looking for."
++              onChange={(e) => set({ bio: e.target.value })} />
++            <p className="text-xs text-muted-foreground">{(p.bio ?? '').length} / 600</p>
++          </div>
++          {d.has_college && (
++            <label className="flex items-center justify-between gap-4 text-sm">
++              <span className="text-foreground">Show my college</span>
++              <Switch checked={p.show_college} onCheckedChange={(v) => set({ show_college: v })} aria-label="Show my college" />
++            </label>
++          )}
++        </section>
++
++        <section className={section} aria-labelledby="certs-h">
++          <h2 id="certs-h" className="font-bold text-foreground">Certificates</h2>
++          {d.certificates.length === 0 ? (
++            <p className="text-sm text-muted-foreground">No certificates yet. <Link to="/certificates" className="text-primary underline">See how to earn one</Link></p>
++          ) : (
++            <ul className="space-y-2">
++              {d.certificates.map((c) => (
++                <li key={c.ref}>
++                  <label className="flex items-center gap-3 text-sm">
++                    <Checkbox checked={p.certificate_refs.includes(c.ref)} aria-label={`Show certificate ${c.title}`}
++                      onCheckedChange={(v) => set({ certificate_refs: toggle(p.certificate_refs, c.ref, v === true) })} />
++                    <span className="text-foreground">{c.title}</span>
++                    <span className="text-xs text-muted-foreground">{new Date(c.issued_at).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
++                  </label>
++                </li>
++              ))}
++            </ul>
++          )}
++        </section>
++
++        <section className={section} aria-labelledby="projects-h">
++          <h2 id="projects-h" className="font-bold text-foreground">Projects</h2>
++          {d.projects.length === 0 ? (
++            <p className="text-sm text-muted-foreground">No projects yet. <Link to="/projects" className="text-primary underline">Start a build challenge</Link></p>
++          ) : (
++            <ul className="space-y-2">
++              {d.projects.map((pr) => (
++                <li key={pr.id}>
++                  <label className="flex items-center gap-3 text-sm">
++                    <Checkbox checked={p.project_ids.includes(pr.id)} aria-label={`Show project ${pr.title}`}
++                      onCheckedChange={(v) => set({ project_ids: toggle(p.project_ids, pr.id, v === true) })} />
++                    <span className="min-w-0 text-foreground break-words">{pr.title}</span>
++                    <span className="shrink-0 text-xs text-muted-foreground">
++                      {pr.language} · {pr.status === 'completed' ? 'finished' : `${pr.stages_done}/${pr.stages_total} stages`}
++                    </span>
++                  </label>
++                </li>
++              ))}
++            </ul>
++          )}
++          <label className="flex items-center justify-between gap-4 text-sm">
++            <span><span className="text-foreground">Link to GitHub repositories</span><br /><span className="text-xs text-muted-foreground">Shows your GitHub username to visitors.</span></span>
++            <Switch checked={p.show_repo_links} onCheckedChange={(v) => set({ show_repo_links: v })} aria-label="Link to GitHub repositories" />
++          </label>
++        </section>
++
++        <section className={section} aria-labelledby="skills-pf-h">
++          <h2 id="skills-pf-h" className="font-bold text-foreground">Skills</h2>
++          <label className="flex items-center justify-between gap-4 text-sm">
++            <span className="text-foreground">Show my skills profile</span>
++            <Switch checked={p.show_skills} onCheckedChange={(v) => set({ show_skills: v })} aria-label="Show my skills profile" />
++          </label>
++          <label className="flex items-center justify-between gap-4 text-sm">
++            <span><span className="text-foreground">Show problems solved per topic</span><br /><span className="text-xs text-muted-foreground">Counted from solutions Forge's judge accepted.</span></span>
++            <Switch checked={p.show_evidence} onCheckedChange={(v) => set({ show_evidence: v })} aria-label="Show problems solved per topic" />
++          </label>
++          <p className="text-xs text-muted-foreground">Edit your skills on your <Link to="/profile" className="text-primary underline">profile</Link>.</p>
++        </section>
++
++        <div className="flex flex-wrap items-center gap-3">
++          <Button type="submit" disabled={save.isPending || !handleOk}>
++            {save.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Save
++          </Button>
++          {saved && (
++            <Button type="button" variant="ghost" className="text-destructive hover:text-destructive" onClick={() => setConfirmDelete(true)}>
++              <Trash2 className="mr-1 h-4 w-4" /> Delete portfolio
++            </Button>
++          )}
++        </div>
++      </form>
++
++      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
++        <AlertDialogContent>
++          <AlertDialogHeader>
++            <AlertDialogTitle>Delete your portfolio?</AlertDialogTitle>
++            <AlertDialogDescription>The page and its address go away now. Your certificates, projects and skills stay on your account.</AlertDialogDescription>
++          </AlertDialogHeader>
++          <AlertDialogFooter>
++            <AlertDialogCancel>Cancel</AlertDialogCancel>
++            <AlertDialogAction onClick={() => remove.mutate()}>Delete</AlertDialogAction>
++          </AlertDialogFooter>
++        </AlertDialogContent>
++      </AlertDialog>
++    </div>
++  );
++}

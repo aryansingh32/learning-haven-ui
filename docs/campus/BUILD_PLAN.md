@@ -1,6 +1,6 @@
 # Build plan — from the feature checklist to a placement-ready product
 
-Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 457 done, 208 partly, 1,233 not done).
+Source of truth for status: `FEATURE_CHECKLIST.md` (1,898 features: 470 done, 195 partly, 1,233 not done).
 Strategy: `PLATFORM_AUDIT.md` (§4 the assess → gaps → practise → reassess → readiness loop).
 
 **How we build:** small slices, each shippable on its own, each reusing what exists, each verified (tests +
@@ -398,3 +398,43 @@ stayed open after following a notification, swallowing the next click — it now
   mutations caught), `invoice.test.ts`, browser run (details validation, invoice content and amounts, print view, reopen
   keeps the number, unpaid order, phone width).
 - **Left out:** emailing the invoice PDF, credit notes for refunds, auto-renew (needs Razorpay subscriptions — owner).
+
+## Slices built in parallel (2026-10-10) — four agents, one per slice, merged after re-verification
+
+### W2-G1 — gamification — built
+- **DB:** `20261026000001_gamification_rewards` — `gamification_rewards` (one row per reward, unique per learner + key; paid in the same
+  transaction as the XP via `pay_gamification_reward`, so never twice; over the daily XP limit a reward stays pending and pays on a later
+  India day), `xp_week_start` (+ `snapshot_week_xp`) for the weekly board, `users.leaderboard_hidden`; browser writes to
+  `user_problem_status` revoked (the API records solves after judging). `tests/gamification.sql`.
+- **API:** `GET /users/me/achievements`, `POST /users/me/missions/:key/claim`, `GET /users/leaderboard`, `PUT /users/me/leaderboard-visibility`,
+  `POST /cron/week-xp-snapshot`; pure rules in `utils/achievements.ts` (missions, coding streak, milestones, collections) with jest.
+- **Web:** `/achievements` (missions, coding streak, milestones, collections, leaderboard all-time / this week, opt-out), dashboard
+  widget, Profile + nav links. **Verified:** 35 browser checks re-run by the lead (claims, daily limit server-side, opt-out, privacy,
+  390px), SQL suite with mutations, jest.
+
+### W2-I1 — coding workspace — built
+- **DB:** `20261027000001_practice_runs_editor_prefs` — `problem_runs` (kept per learner, trimmed), `editor_preferences`,
+  `problem_submissions.memory_kb`. `tests/practice_workspace.sql`.
+- **API:** `GET/POST /problems/:id/runs`, custom-input runs, memory from the runner (`packages/judge` samples peak memory),
+  `GET/PUT /users/me/editor-preferences`.
+- **Web:** submission diff (tick two), Runs tab, Custom input tab (optional expected output), memory per submission, 10 editor themes,
+  Format for Python (`@wasm-fmt/ruff_fmt`) and C/C++/Java (`@wasm-fmt/clang-format`) loaded on first use, stacked phone layout.
+  **Verified (lead):** browser smoke (themes persist, format JS/Python/C++/Java, diff, custom input, run history, 390px, no errors),
+  12 web unit tests (diff, custom input), jest, SQL suite.
+
+### W2-A1 — account & profile — database merged, rest unfinished
+- **DB (merged):** `20261028000001_account_profile` — `account_events` (append-only), service-role helpers to list/revoke one learner's own
+  Supabase sessions and read their auth audit history, `user_skills` (+ `skill_evidence()`), `learner_portfolios` (private by default,
+  publishing needs a verified email; only own certificates/projects) + `public_portfolio(handle)`. `tests/account_profile.sql` (24 mutations).
+- **Not merged:** API, auth middleware session guard, verify-email screen + gating, settings/portfolio pages —
+  `docs/campus/wip/W2-A1-account-unfinished.patch` (one jest failure to fix first).
+
+### W2-L1 — learning — database + API merged, screens unfinished
+- **DB (merged):** `20261029000001_learning_highlights_prereqs_drip`, `20261029000002_chapter_discussions` — highlights with text anchors,
+  course prerequisites (no cycles), drip interval per course, chapter discussions + reports with RLS (`can_see_course`, `is_course_staff`).
+  `tests/learning.sql`.
+- **API (merged):** `learningGate.service` enforces prerequisites (exempt: admins, college-assigned, already started) and drip on enrol and
+  chapter reads/writes; `/api/highlights`, `/api/discussion`; admin `/admin/courses/:id/learning-settings` and `/admin/courses/:id/export`
+  (CSV the staged import reads back — round-trip jest).
+- **Not merged:** chapter-page highlighting, video speed control, prerequisite/drip messages, discussion UI, notebook highlights, admin
+  buttons — `docs/campus/wip/W2-L1-learning-web-unfinished.patch`.

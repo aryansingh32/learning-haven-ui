@@ -8,7 +8,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (457 done, 208 partly, 1,233 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (470 done, 195 partly, 1,233 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
@@ -39,7 +39,11 @@ Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE
 | Practice (slice W2-P1): problem search by title, company filter, problem of the day, editorials for all 8 problems (drafts for review) | ✅ built, browser-verified |
 | Dashboard (slice W2-D1): goals (weekly problems, daily minutes), study time per day + 14-day chart, assessment performance, recent activity feed | ✅ built, browser-verified |
 | GST invoices + billing details (slice W2-B1); Billing page order history fixed (it never showed orders) | ✅ built, browser-verified; set `SELLER_LEGAL_NAME`, `SELLER_GSTIN`, `SELLER_ADDRESS` on the Forge API to start issuing |
-| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles`, `20261021000001_notifications`, `20261022000001_campus_drives`, `20261023000001_problem_editorials`, `20261024000001_learner_goals_study`, `20261025000001_gst_invoices` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
+| Gamification (slice W2-G1): weekly missions, coding streak, milestones + badges, collections, learner leaderboard with opt-out, daily XP limit (`/achievements`) | ✅ built, browser-verified (35 checks) |
+| Coding workspace (slice W2-I1): submission diff, run history, custom input, memory per test, 10 editor themes saved per learner, Python/C++/Java formatting, phone layout | ✅ built, browser-verified |
+| Account (slice W2-A1): database only — account log, own-session list/revoke helpers, skills, opt-in public portfolio | 🟡 DB merged + tested (24 mutations); API + screens unfinished → `docs/campus/wip/W2-A1-account-unfinished.patch` |
+| Learning (slice W2-L1): highlights, course prerequisites + enforcement, drip release, chapter discussions, course export | 🟡 DB + API merged + tested; learner/admin screens unfinished → `docs/campus/wip/W2-L1-learning-web-unfinished.patch` |
+| Live DB migrations `20261010000001_problem_judging`, `20261011000001_campus_coding_questions`, `20261012000001_problem_cpp_starters`, `20261013000001_campus_section_timing`, `20261014000001_campus_invigilation`, `20261015000001_practice_submission_history`, `20261016000001_campus_pools_accommodations`, `20261017000001_campus_courses`, `20261018000001_campus_structure`, `20261019000001_campus_question_types`, `20261020000001_campus_audit_roles`, `20261021000001_notifications`, `20261022000001_campus_drives`, `20261023000001_problem_editorials`, `20261024000001_learner_goals_study`, `20261025000001_gst_invoices`, `20261026000001_gamification_rewards`, `20261027000001_practice_runs_editor_prefs`, `20261028000001_account_profile`, `20261029000001_learning_highlights_prereqs_drip`, `20261029000002_chapter_discussions` | ⏳ **not applied** — owner runs them (in that order) in the Supabase SQL editor; verify after (§8.1) |
 | Judge0 | ⏳ owner will **self-host on a VM** (`infra/judge0/README.md`); then set `JUDGE0_URL` / `JUDGE0_AUTH_TOKEN` on the Forge API **and the Campus API** |
 | Branches merged to `main` | ❌ not yet — see §3 |
 | Next slice | **A4 · content drafts** (original DSA problems with tests + aptitude bank, for the owner's team to review); then D1–D5 college operations (§8.3) |
@@ -204,8 +208,9 @@ pnpm --filter @repo/assessment-core test   # 68 tests
 pnpm --filter @repo/judge test             # 24 tests (runs real node/python3/java/g++)
 pnpm --filter @repo/api test               # 92 jest tests
 # Disposable Postgres 17 for DB tests (never a Supabase URL — the script refuses):
-TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 11 SQL suites
+TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/api test:db       # 15 SQL suites
 TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres pnpm --filter @repo/campus-api test    # 80 integration tests
+cd apps/api && npx jest                                                                    # 174 Forge API tests (20 suites)
 cd apps/web && npx vitest run              # 17 pass; 9 known stale Build-page specs fail (pre-existing)
 cd apps/web && npx vite build              # must pass
 ```
@@ -301,6 +306,18 @@ Then `20261025000001_gst_invoices`: tables `public.invoices`, `public.invoice_co
 `select public.india_fy('2026-10-09');` → `2026-27`; as a signed-in user `select public.issue_invoice(...)` is refused (service role only).
 Then set `SELLER_LEGAL_NAME`, `SELLER_GSTIN` (state code = its first two digits) and `SELLER_ADDRESS` on the Forge API; invoices are
 issued when a payment is captured, or on first view for earlier payments. Have the accountant confirm SAC `999293` and the wording.
+Then `20261026000001_gamification_rewards`: tables `public.gamification_rewards`, `public.xp_week_start`, column `users.leaderboard_hidden`;
+functions `grant_gamification_reward`, `pay_gamification_reward`, `snapshot_week_xp` (service role only); learners can no longer write
+`user_problem_status` from the browser (`select has_table_privilege('authenticated', 'public.user_problem_status', 'INSERT');` → false).
+Needs `20260823000001_xp_ledger` first (XP is paid through `increment_xp`). Optional cron: Monday 00:05 IST `POST /api/cron/week-xp-snapshot`
+with `x-cron-secret` (otherwise the first leaderboard view of the week takes the snapshot).
+Then `20261027000001_practice_runs_editor_prefs`: tables `public.problem_runs` (bounded per learner by `trim_problem_runs`), `public.editor_preferences`,
+column `problem_submissions.memory_kb` (needs `20261015000001` first).
+Then `20261028000001_account_profile`: tables `public.account_events` (append-only), `public.user_skills`, `public.learner_portfolios` (private by default);
+`select public.public_portfolio('nobody');` → null. The API/screens that use them are not merged yet (patch in `docs/campus/wip/`).
+Then `20261029000001_learning_highlights_prereqs_drip` and `20261029000002_chapter_discussions`: tables `public.chapter_highlights`,
+`public.course_prerequisites` (no cycles), `public.chapter_discussion_posts`, `public.chapter_discussion_reports`, column `courses.drip_interval_days`;
+`select public.unmet_prerequisites(...)`. Enforcement is live in the API as soon as these exist, and is a no-op for courses with no prerequisites/drip set.
 **Older migrations missing on live (found 2026-10-09).** Checked object by object, live lacks everything these create —
 features built on them fail there today:
 `20260823000001_xp_ledger` (`xp_ledger`, `increment_xp()` — daily-quest bonus XP), `20260823000002_task_responses`,
@@ -308,6 +325,14 @@ features built on them fail there today:
 `20260901000001_chapter_notes_and_notebook`, `20260901000002_quiz_answers`, `20260901000004_mock_test` (course mock test).
 (`20260216000002_advanced_admin`'s `roadmaps`, `roadmap_items`, `plans_config` are also absent — check whether that was intended.)
 Apply them, in date order, **before** the pending list below (replayed cleanly on the live snapshot, then every pending migration, 2026-10-09); `20260901000003` and `20260906000002` should be checked the same way.
+
+### 8.1a Unfinished work kept as patches (2026-10-10)
+Four agents built W2-G1, W2-I1, W2-A1 and W2-L1 in parallel; all four stopped at once on a usage limit. G1 and I1 were finished and
+verified, and are merged. A1 and L1 had their database (and for L1 the API) committed and tested — merged — but their web screens
+(and A1's API, auth middleware and verify-email gating) were mid-edit and never browser-checked, so they are **not** merged; they are
+saved as `docs/campus/wip/W2-A1-account-unfinished.patch` and `docs/campus/wip/W2-L1-learning-web-unfinished.patch`.
+To resume: `git apply --3way docs/campus/wip/<patch>`, finish, then run the usual checks (SQL suites, jest — the A1 patch currently
+fails one test in `payments.v2.test.ts` (probably its new verified-email gate on checkout; not yet confirmed) — web tsc, vite build, browser run).
 
 ### 8.2 B1 — done (2026-10-11)
 See `BUILD_PLAN.md` → "Slice B1 — built" for what exists, how it was verified and what was left out (editing a
@@ -327,7 +352,7 @@ coding question after creation, C/C++, per-test weights, plagiarism, showing cod
   `VITE_CAMPUS_API_URL` on the web app.
 
 ### 8.5 Owner actions pending
-- Run the sixteen pending migrations in order (`20261010000001` … `20261025000001`) (§8.1), then tell Claude to verify
+- Run the older missing migrations (§8.1, `20260823000001` … `20260906000002`), then the twenty-one pending ones in order (`20261010000001` … `20261029000002`) (§8.1), then tell Claude to verify
 - Merge branches (§3); decide on the diverged audit branch
 - Rotate: the admin password that was shared in chat; GitHub token encryption key (tables were readable until 2026-10-08)
 - Turn on leaked-password protection in Supabase Auth settings

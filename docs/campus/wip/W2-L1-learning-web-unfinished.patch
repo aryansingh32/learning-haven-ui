@@ -1,0 +1,1516 @@
+diff --git a/apps/web/src/data/chapters.ts b/apps/web/src/data/chapters.ts
+index 21c6c6e..848221d 100644
+--- a/apps/web/src/data/chapters.ts
++++ b/apps/web/src/data/chapters.ts
+@@ -1,4 +1,5 @@
+ import { api } from '@/services/api.svc';
++import type { ChapterGate, CoursePrerequisite } from '@/data/learning';
+ 
+ export type StepType =
+   | 'story_hook'
+@@ -107,7 +108,7 @@ export type Chapter = {
+ 
+ export type ChapterProgress = {
+   id: string;
+-  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED';
++  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED' | 'LOCKED_PAYWALL' | 'LOCKED_PREREQ' | 'LOCKED_DRIP';
+   quiz_score?: number;
+   quiz_attempts?: number;
+   tasks_completed?: number;
+@@ -159,6 +160,8 @@ export type ChapterWithProgressResponse = {
+     steps: ChapterStep[];
+   };
+   progress: ChapterProgress;
++  /** Why the chapter is closed (course prerequisites or drip release), when it is. */
++  gate?: ChapterGate | null;
+   celebration?: ChapterCelebrationMeta;
+   user?: {
+     full_name: string;
+@@ -175,7 +178,16 @@ export async function fetchPhases() {
+   return api.get('/courses');
+ }
+ 
+-export async function fetchPhaseChapters(courseId: string) {
++export type CourseChaptersResponse = {
++  chapters: unknown[];
++  prerequisites?: CoursePrerequisite[];
++  prerequisites_blocked?: boolean;
++  prerequisites_exemption?: 'admin' | 'college_assigned' | 'already_started' | null;
++  prerequisites_message?: string;
++  drip?: { interval_days: number | null; started_at: string | null };
++};
++
++export async function fetchPhaseChapters(courseId: string): Promise<CourseChaptersResponse> {
+   return api.get(`/courses/${courseId}/chapters`);
+ }
+ 
+diff --git a/apps/web/src/data/learning.ts b/apps/web/src/data/learning.ts
+new file mode 100644
+index 0000000..747b220
+--- /dev/null
++++ b/apps/web/src/data/learning.ts
+@@ -0,0 +1,97 @@
++import { api } from '@/services/api.svc';
++
++// ── Highlights ────────────────────────────────────────────────────────────
++export type HighlightColor = 'yellow' | 'green' | 'blue' | 'pink';
++export const HIGHLIGHT_COLORS: HighlightColor[] = ['yellow', 'green', 'blue', 'pink'];
++
++export type ChapterHighlight = {
++  id: string;
++  chapter_id: string;
++  step_id: string | null;
++  text: string;
++  prefix: string;
++  suffix: string;
++  start_offset: number;
++  color: HighlightColor;
++  created_at: string;
++};
++
++export type NewHighlight = Pick<ChapterHighlight, 'text' | 'prefix' | 'suffix' | 'start_offset' | 'color' | 'step_id'>;
++
++export function fetchChapterHighlights(chapterId: string): Promise<{ available: boolean; highlights: ChapterHighlight[] }> {
++  return api.get(`/highlights/chapter/${chapterId}`);
++}
++
++export function createHighlight(chapterId: string, h: NewHighlight): Promise<{ highlight: ChapterHighlight }> {
++  return api.post(`/highlights/chapter/${chapterId}`, h);
++}
++
++export function recolorHighlight(id: string, color: HighlightColor): Promise<{ highlight: ChapterHighlight }> {
++  return api.patch(`/highlights/${id}`, { color });
++}
++
++export function deleteHighlight(id: string): Promise<{ success: boolean }> {
++  return api.delete(`/highlights/${id}`);
++}
++
++// ── Discussions ───────────────────────────────────────────────────────────
++export type DiscussionPost = {
++  id: string;
++  parent_id: string | null;
++  author_name: string;
++  mine: boolean;
++  body: string;
++  created_at: string;
++  edited_at: string | null;
++  deleted: boolean;
++  hidden: boolean;
++  hidden_reason: string | null;
++  reported_by_me: boolean;
++  open_reports?: number;
++  replies: DiscussionPost[];
++};
++
++export type ChapterDiscussion = { can_moderate: boolean; posts: DiscussionPost[] };
++export type ReportReason = 'spam' | 'abuse' | 'off_topic' | 'other';
++
++export function fetchDiscussion(chapterId: string): Promise<ChapterDiscussion> {
++  return api.get(`/discussion/chapter/${chapterId}`);
++}
++
++export function createPost(chapterId: string, body: string, parentId?: string | null): Promise<{ id: string }> {
++  return api.post(`/discussion/chapter/${chapterId}`, { body, parent_id: parentId ?? null });
++}
++
++export function editPost(id: string, body: string): Promise<{ id: string }> {
++  return api.patch(`/discussion/posts/${id}`, { body });
++}
++
++export function deletePost(id: string): Promise<{ id: string }> {
++  return api.delete(`/discussion/posts/${id}`);
++}
++
++export function reportPost(id: string, reason: ReportReason, details?: string): Promise<{ id: string }> {
++  return api.post(`/discussion/posts/${id}/report`, { reason, details });
++}
++
++export function moderatePost(id: string, hidden: boolean, reason?: string): Promise<{ id: string; hidden: boolean }> {
++  return api.post(`/discussion/posts/${id}/moderate`, { hidden, reason });
++}
++
++// ── Course gates (prerequisites, drip) ────────────────────────────────────
++export type CoursePrerequisite = { course_id: string; title: string; slug: string; total: number; done: number; completed: boolean };
++
++export type ChapterGate =
++  | { code: 'PREREQUISITES'; message: string; prerequisites: CoursePrerequisite[] }
++  | { code: 'DRIP'; message: string; available_at: string };
++
++/** "15 Oct 2026" in India time. */
++export function formatUnlockDate(iso: string): string {
++  return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
++}
++
++/** Message from an API error (axios-style or the api.svc wrapper). */
++export function apiErrorMessage(err: unknown, fallback: string): string {
++  const e = err as { response?: { data?: { error?: string } }; data?: { error?: string }; message?: string } | null;
++  return e?.data?.error || e?.response?.data?.error || e?.message || fallback;
++}
+diff --git a/apps/web/src/data/notebook.ts b/apps/web/src/data/notebook.ts
+index d1e61bb..e24d9c3 100644
+--- a/apps/web/src/data/notebook.ts
++++ b/apps/web/src/data/notebook.ts
+@@ -26,6 +26,7 @@ export type NotebookEntry = {
+   quiz_answers: NotebookQuizAnswer[];
+   task_response: string | null;
+   task_submitted_at: string | null;
++  highlights?: { id: string; text: string; color: 'yellow' | 'green' | 'blue' | 'pink'; created_at: string }[];
+ };
+ 
+ export type NotebookMockTest = {
+diff --git a/apps/web/src/features/learning/components/ChapterDiscussion.tsx b/apps/web/src/features/learning/components/ChapterDiscussion.tsx
+new file mode 100644
+index 0000000..615f272
+--- /dev/null
++++ b/apps/web/src/features/learning/components/ChapterDiscussion.tsx
+@@ -0,0 +1,250 @@
++import { useState } from 'react';
++import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
++import { formatDistanceToNow } from 'date-fns';
++import { Eye, EyeOff, Flag, Loader2, MessageSquare, Pencil, Reply, Trash2 } from 'lucide-react';
++import { toast } from 'sonner';
++import { Button } from '@/components/ui/button';
++import { Textarea } from '@/components/ui/textarea';
++import {
++  apiErrorMessage, createPost, deletePost, editPost, fetchDiscussion, moderatePost, reportPost,
++  type DiscussionPost, type ReportReason,
++} from '@/data/learning';
++import { cn } from '@/lib/utils';
++
++const REASONS: { value: ReportReason; label: string }[] = [
++  { value: 'spam', label: 'Spam' },
++  { value: 'abuse', label: 'Abusive or harassing' },
++  { value: 'off_topic', label: 'Off topic' },
++  { value: 'other', label: 'Something else' },
++];
++const MAX = 4000;
++
++function when(iso: string) {
++  try {
++    return formatDistanceToNow(new Date(iso), { addSuffix: true });
++  } catch {
++    return '';
++  }
++}
++
++type Props = { chapterId: string; chapterTitle: string };
++
++/** Per-chapter discussion: post, reply, edit/delete your own, report; staff hide. */
++export function ChapterDiscussion({ chapterId, chapterTitle }: Props) {
++  const qc = useQueryClient();
++  const key = ['discussion', chapterId];
++  const { data, isLoading, error } = useQuery({ queryKey: key, queryFn: () => fetchDiscussion(chapterId), retry: false });
++  const [draft, setDraft] = useState('');
++
++  const refresh = () => void qc.invalidateQueries({ queryKey: key });
++  const onError = (fallback: string) => (err: unknown) => toast.error(apiErrorMessage(err, fallback));
++
++  const post = useMutation({
++    mutationFn: () => createPost(chapterId, draft),
++    onSuccess: () => {
++      setDraft('');
++      toast.success('Posted');
++      refresh();
++    },
++    onError: onError('Could not post. Try again.'),
++  });
++
++  const unavailable = (error as { status?: number } | null)?.status === 503;
++  const count = (data?.posts ?? []).reduce((n, p) => n + (p.deleted ? 0 : 1) + p.replies.length, 0);
++
++  return (
++    <section aria-labelledby="discussion-heading" className="rounded-2xl card-layer-2 border border-border/40 p-4 sm:p-6 space-y-4">
++      <div className="flex items-center gap-2">
++        <MessageSquare className="h-5 w-5 text-orange-500" aria-hidden="true" />
++        <h2 id="discussion-heading" className="text-lg font-extrabold text-foreground">Discussion</h2>
++        {count > 0 && <span className="text-xs font-semibold text-muted-foreground">({count})</span>}
++      </div>
++
++      {isLoading ? (
++        <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
++      ) : error ? (
++        <p className="text-sm text-muted-foreground">
++          {unavailable ? 'Discussions are coming soon for this course.' : 'Could not load the discussion.'}
++        </p>
++      ) : (
++        <>
++          <form
++            className="space-y-2"
++            onSubmit={(e) => {
++              e.preventDefault();
++              if (draft.trim()) post.mutate();
++            }}
++          >
++            <label htmlFor={`new-post-${chapterId}`} className="text-xs font-semibold text-muted-foreground">
++              Ask a question or share a tip about “{chapterTitle}”
++            </label>
++            <Textarea
++              id={`new-post-${chapterId}`}
++              value={draft}
++              maxLength={MAX}
++              onChange={(e) => setDraft(e.target.value)}
++              placeholder="Be kind and specific. Others in this course will see your name."
++              className="min-h-[80px] text-sm"
++            />
++            <div className="flex justify-end">
++              <Button type="submit" size="sm" disabled={!draft.trim() || post.isPending} className="gap-1.5">
++                {post.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />} Post
++              </Button>
++            </div>
++          </form>
++
++          {data && data.posts.length === 0 ? (
++            <p className="text-sm text-muted-foreground">No posts yet. Start the conversation.</p>
++          ) : (
++            <ul className="space-y-3" aria-label="Posts">
++              {data?.posts.map((p) => (
++                <li key={p.id}>
++                  <PostItem post={p} chapterId={chapterId} canModerate={Boolean(data?.can_moderate)} onChanged={refresh} />
++                </li>
++              ))}
++            </ul>
++          )}
++        </>
++      )}
++    </section>
++  );
++}
++
++function PostItem({ post, chapterId, canModerate, onChanged, isReply = false }: {
++  post: DiscussionPost; chapterId: string; canModerate: boolean; onChanged: () => void; isReply?: boolean;
++}) {
++  const [mode, setMode] = useState<'view' | 'edit' | 'reply' | 'report' | 'confirm-delete'>('view');
++  const [text, setText] = useState('');
++  const [reason, setReason] = useState<ReportReason>('spam');
++  const done = (msg: string) => () => {
++    toast.success(msg);
++    setMode('view');
++    setText('');
++    onChanged();
++  };
++  const onError = (fallback: string) => (err: unknown) => toast.error(apiErrorMessage(err, fallback));
++
++  const edit = useMutation({ mutationFn: () => editPost(post.id, text), onSuccess: done('Post updated'), onError: onError('Could not save your edit.') });
++  const reply = useMutation({ mutationFn: () => createPost(chapterId, text, post.id), onSuccess: done('Reply posted'), onError: onError('Could not post your reply.') });
++  const remove = useMutation({ mutationFn: () => deletePost(post.id), onSuccess: done('Post deleted'), onError: onError('Could not delete the post.') });
++  const report = useMutation({ mutationFn: () => reportPost(post.id, reason), onSuccess: done('Thanks — a moderator will take a look'), onError: onError('Could not send the report.') });
++  const moderate = useMutation({
++    mutationFn: (hidden: boolean) => moderatePost(post.id, hidden),
++    onSuccess: (r) => done(r.hidden ? 'Post hidden' : 'Post visible again')(),
++    onError: onError('Could not change the post.'),
++  });
++
++  const busy = edit.isPending || reply.isPending || remove.isPending || report.isPending || moderate.isPending;
++  const action = 'inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary disabled:opacity-50';
++
++  return (
++    <article
++      aria-label={post.deleted ? 'Deleted post' : `Post by ${post.author_name}`}
++      className={cn('rounded-xl border p-3', isReply ? 'border-border/40 bg-background/40' : 'border-border/60 bg-background/70', post.hidden && 'border-dashed opacity-80')}
++    >
++      {post.deleted ? (
++        <p className="text-sm italic text-muted-foreground">This post was deleted.</p>
++      ) : (
++        <>
++          <header className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
++            <span className="font-bold text-foreground">{post.author_name}{post.mine ? ' (you)' : ''}</span>
++            <span className="text-muted-foreground">{when(post.created_at)}</span>
++            {post.edited_at && <span className="text-muted-foreground">· edited</span>}
++            {post.hidden && (
++              <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[10px] font-bold text-destructive">
++                Hidden by a moderator{post.hidden_reason ? `: ${post.hidden_reason}` : ''}
++              </span>
++            )}
++            {canModerate && (post.open_reports ?? 0) > 0 && (
++              <span className="rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-600">
++                {post.open_reports} report{post.open_reports === 1 ? '' : 's'}
++              </span>
++            )}
++          </header>
++
++          {mode === 'edit' ? (
++            <form className="mt-2 space-y-2" onSubmit={(e) => { e.preventDefault(); if (text.trim()) edit.mutate(); }}>
++              <label className="sr-only" htmlFor={`edit-${post.id}`}>Edit your post</label>
++              <Textarea id={`edit-${post.id}`} value={text} maxLength={MAX} onChange={(e) => setText(e.target.value)} className="min-h-[70px] text-sm" />
++              <div className="flex justify-end gap-2">
++                <Button type="button" size="sm" variant="ghost" onClick={() => setMode('view')}>Cancel</Button>
++                <Button type="submit" size="sm" disabled={!text.trim() || busy}>Save</Button>
++              </div>
++            </form>
++          ) : (
++            <p className="mt-1.5 whitespace-pre-wrap break-words text-sm text-foreground/90">{post.body}</p>
++          )}
++
++          {mode === 'view' && (
++            <div className="mt-2 flex flex-wrap items-center gap-1">
++              {!isReply && !post.hidden && (
++                <button type="button" className={action} onClick={() => { setText(''); setMode('reply'); }}><Reply className="h-3 w-3" /> Reply</button>
++              )}
++              {post.mine && !post.hidden && (
++                <button type="button" className={action} onClick={() => { setText(post.body); setMode('edit'); }}><Pencil className="h-3 w-3" /> Edit</button>
++              )}
++              {(post.mine || canModerate) && (
++                <button type="button" className={action} onClick={() => setMode('confirm-delete')}><Trash2 className="h-3 w-3" /> Delete</button>
++              )}
++              {!post.mine && (
++                post.reported_by_me
++                  ? <span className="px-2 py-1 text-[11px] text-muted-foreground">Reported</span>
++                  : <button type="button" className={action} onClick={() => setMode('report')}><Flag className="h-3 w-3" /> Report</button>
++              )}
++              {canModerate && (
++                <button type="button" className={action} disabled={busy} onClick={() => moderate.mutate(!post.hidden)}>
++                  {post.hidden ? <><Eye className="h-3 w-3" /> Unhide</> : <><EyeOff className="h-3 w-3" /> Hide</>}
++                </button>
++              )}
++            </div>
++          )}
++
++          {mode === 'confirm-delete' && (
++            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs" role="alert">
++              <span className="font-semibold">Delete this post?</span>
++              <Button type="button" size="sm" variant="destructive" disabled={busy} onClick={() => remove.mutate()}>Delete</Button>
++              <Button type="button" size="sm" variant="ghost" onClick={() => setMode('view')}>Keep</Button>
++            </div>
++          )}
++
++          {mode === 'report' && (
++            <form className="mt-2 flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); report.mutate(); }}>
++              <label htmlFor={`reason-${post.id}`} className="text-xs font-semibold">Why are you reporting this?</label>
++              <select
++                id={`reason-${post.id}`}
++                value={reason}
++                onChange={(e) => setReason(e.target.value as ReportReason)}
++                className="h-8 rounded-lg border border-border/60 bg-background px-2 text-xs"
++              >
++                {REASONS.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
++              </select>
++              <Button type="submit" size="sm" disabled={busy}>Send report</Button>
++              <Button type="button" size="sm" variant="ghost" onClick={() => setMode('view')}>Cancel</Button>
++            </form>
++          )}
++
++          {mode === 'reply' && (
++            <form className="mt-2 space-y-2" onSubmit={(e) => { e.preventDefault(); if (text.trim()) reply.mutate(); }}>
++              <label className="sr-only" htmlFor={`reply-${post.id}`}>Reply to {post.author_name}</label>
++              <Textarea id={`reply-${post.id}`} value={text} maxLength={MAX} onChange={(e) => setText(e.target.value)} placeholder="Write a reply" className="min-h-[60px] text-sm" />
++              <div className="flex justify-end gap-2">
++                <Button type="button" size="sm" variant="ghost" onClick={() => setMode('view')}>Cancel</Button>
++                <Button type="submit" size="sm" disabled={!text.trim() || busy}>Reply</Button>
++              </div>
++            </form>
++          )}
++        </>
++      )}
++
++      {post.replies.length > 0 && (
++        <ul className="mt-3 space-y-2 border-l-2 border-border/50 pl-3" aria-label="Replies">
++          {post.replies.map((r) => (
++            <li key={r.id}>
++              <PostItem post={r} chapterId={chapterId} canModerate={canModerate} onChanged={onChanged} isReply />
++            </li>
++          ))}
++        </ul>
++      )}
++    </article>
++  );
++}
+diff --git a/apps/web/src/features/learning/components/DocSection.tsx b/apps/web/src/features/learning/components/DocSection.tsx
+index 3a2b695..27df02d 100644
+--- a/apps/web/src/features/learning/components/DocSection.tsx
++++ b/apps/web/src/features/learning/components/DocSection.tsx
+@@ -1,25 +1,86 @@
+-import { useRef, useState } from 'react';
++import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+ import { motion } from 'framer-motion';
+-import { useMutation } from '@tanstack/react-query';
+-import { Highlighter, BookPlus, Loader2 } from 'lucide-react';
++import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
++import { Highlighter, BookPlus, Loader2, Trash2, X } from 'lucide-react';
+ import { MarkdownContent } from '@/features/build-haven/components/MarkdownContent';
+ import { ChapterCta } from './ChapterCta';
+ import { appendChapterNoteHighlight } from '@/data/notebook';
++import {
++  createHighlight, deleteHighlight, fetchChapterHighlights, HIGHLIGHT_COLORS,
++  type ChapterHighlight, type HighlightColor, apiErrorMessage,
++} from '@/data/learning';
++import { anchorFromSelection, containerText, locateHighlight, rangeFromOffsets, type HighlightAnchor } from '@/features/learning/highlightAnchors';
+ import { parseEntitlementError } from '@/lib/entitlementError';
+ import { toast } from 'sonner';
+ import { useNavigate } from 'react-router-dom';
++import { cn } from '@/lib/utils';
+ 
+ type DocSectionProps = {
+   markdown: string;
+   chapterId?: string;
+   chapterTitle?: string;
++  stepId?: string;
++  courseId?: string;
+   onMarkDone?: () => void;
+ };
+ 
+-export function DocSection({ markdown, chapterId, chapterTitle, onMarkDone }: DocSectionProps) {
++export const SWATCH: Record<HighlightColor, string> = {
++  yellow: 'bg-yellow-300',
++  green: 'bg-green-300',
++  blue: 'bg-sky-300',
++  pink: 'bg-pink-300',
++};
++
++type CssHighlights = { set: (name: string, h: unknown) => void; delete: (name: string) => void };
++const cssHighlights = (): { registry: CssHighlights; Highlight: new (...r: Range[]) => unknown } | null => {
++  const w = window as unknown as { CSS?: { highlights?: CssHighlights }; Highlight?: new (...r: Range[]) => unknown };
++  return w.CSS?.highlights && w.Highlight ? { registry: w.CSS.highlights, Highlight: w.Highlight } : null;
++};
++
++export function DocSection({ markdown, chapterId, chapterTitle, stepId, courseId, onMarkDone }: DocSectionProps) {
+   const navigate = useNavigate();
+-  const [selectedText, setSelectedText] = useState('');
++  const qc = useQueryClient();
++  const [selection, setSelection] = useState<HighlightAnchor | null>(null);
++  const [color, setColor] = useState<HighlightColor>('yellow');
+   const containerRef = useRef<HTMLDivElement>(null);
++  const supportsPaint = typeof window !== 'undefined' && Boolean(cssHighlights());
++
++  const highlightsQuery = useQuery({
++    queryKey: ['highlights', chapterId],
++    queryFn: () => fetchChapterHighlights(chapterId!),
++    enabled: Boolean(chapterId),
++  });
++  // Highlights made in this step (or saved without a step).
++  const highlights = useMemo(
++    () => (highlightsQuery.data?.highlights ?? []).filter((h) => !stepId || !h.step_id || h.step_id === stepId),
++    [highlightsQuery.data, stepId]
++  );
++  const highlightsAvailable = highlightsQuery.data?.available !== false;
++
++  const refreshAfterChange = () => {
++    void qc.invalidateQueries({ queryKey: ['highlights', chapterId] });
++    void qc.invalidateQueries({ queryKey: ['notebook', courseId] });
++  };
++
++  const createMutation = useMutation({
++    mutationFn: (anchor: HighlightAnchor) => createHighlight(chapterId!, { ...anchor, color, step_id: stepId ?? null }),
++    onSuccess: () => {
++      toast.success('Highlighted');
++      setSelection(null);
++      window.getSelection()?.removeAllRanges();
++      refreshAfterChange();
++    },
++    onError: (err) => toast.error(apiErrorMessage(err, 'Could not save the highlight. Try again.')),
++  });
++
++  const deleteMutation = useMutation({
++    mutationFn: (id: string) => deleteHighlight(id),
++    onSuccess: () => {
++      toast.success('Highlight removed');
++      refreshAfterChange();
++    },
++    onError: (err) => toast.error(apiErrorMessage(err, 'Could not remove the highlight.')),
++  });
+ 
+   const appendMutation = useMutation({
+     mutationFn: (text: string) => appendChapterNoteHighlight(chapterId!, text, chapterTitle),
+@@ -36,49 +97,154 @@ export function DocSection({ markdown, chapterId, chapterTitle, onMarkDone }: Do
+     },
+   });
+ 
++  // Remember the last selection made inside the lesson (taps on the buttons below clear the
++  // live selection on phones, so we keep it until it is saved or dismissed).
++  const captureSelection = useCallback(() => {
++    const el = containerRef.current;
++    if (!el) return;
++    const anchor = anchorFromSelection(el, window.getSelection());
++    if (anchor) setSelection(anchor);
++  }, []);
++
++  useEffect(() => {
++    document.addEventListener('selectionchange', captureSelection);
++    return () => document.removeEventListener('selectionchange', captureSelection);
++  }, [captureSelection]);
++
++  // Paint saved highlights with the CSS Custom Highlight API (no DOM changes, so React's
++  // markdown tree is left alone). Browsers without it still get the list below.
++  useLayoutEffect(() => {
++    const api = cssHighlights();
++    const el = containerRef.current;
++    if (!api || !el) return;
++    const full = containerText(el);
++    const byColor = new Map<HighlightColor, Range[]>();
++    for (const h of highlights) {
++      const at = locateHighlight(full, h);
++      const range = at && rangeFromOffsets(el, at.start, at.end);
++      if (range) byColor.set(h.color, [...(byColor.get(h.color) ?? []), range]);
++    }
++    for (const c of HIGHLIGHT_COLORS) {
++      const ranges = byColor.get(c);
++      if (ranges?.length) api.registry.set(`forge-hl-${c}`, new api.Highlight(...ranges));
++      else api.registry.delete(`forge-hl-${c}`);
++    }
++    return () => HIGHLIGHT_COLORS.forEach((c) => api.registry.delete(`forge-hl-${c}`));
++  }, [highlights, markdown]);
++
+   if (!markdown?.trim()) return null;
+ 
+-  const handleSelection = () => {
+-    const selection = window.getSelection()?.toString().trim() || '';
+-    setSelectedText(selection);
+-  };
++  const preview = (t: string) => (t.length > 60 ? `${t.slice(0, 57)}…` : t);
+ 
+   return (
+     <motion.div className="mt-4 space-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+       <motion.div
+         ref={containerRef}
+-        onMouseUp={handleSelection}
+-        className="rounded-2xl bg-secondary/40 border border-border/50 p-4 space-y-2"
++        onMouseUp={captureSelection}
++        onTouchEnd={captureSelection}
++        data-testid="doc-content"
++        className="rounded-2xl bg-secondary/40 border border-border/50 p-4 space-y-2 break-words"
+       >
+         <MarkdownContent content={markdown} />
+       </motion.div>
+ 
+       {chapterId && (
+-        <div className="flex flex-wrap items-center gap-2">
+-          {selectedText && (
++        <div className="space-y-2">
++          {selection && (
++            <div
++              role="group"
++              aria-label="Selected text"
++              className="flex flex-wrap items-center gap-2 rounded-xl border border-orange-500/30 bg-orange-500/5 p-2"
++            >
++              <span className="text-xs text-muted-foreground min-w-0 max-w-full truncate">“{preview(selection.text)}”</span>
++              {highlightsAvailable && (
++                <>
++                  <div className="flex items-center gap-1" role="radiogroup" aria-label="Highlight colour">
++                    {HIGHLIGHT_COLORS.map((c) => (
++                      <button
++                        key={c}
++                        type="button"
++                        role="radio"
++                        aria-checked={color === c}
++                        aria-label={`${c} highlight`}
++                        onClick={() => setColor(c)}
++                        className={cn('h-6 w-6 rounded-full border-2', SWATCH[c], color === c ? 'border-foreground' : 'border-transparent')}
++                      />
++                    ))}
++                  </div>
++                  <button
++                    type="button"
++                    onClick={() => createMutation.mutate(selection)}
++                    disabled={createMutation.isPending}
++                    className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 text-white px-3 py-1.5 text-xs font-bold hover:bg-orange-600 transition-colors disabled:opacity-50"
++                  >
++                    {createMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Highlighter className="h-3.5 w-3.5" />}
++                    Highlight
++                  </button>
++                </>
++              )}
++              <button
++                type="button"
++                onClick={() => appendMutation.mutate(selection.text)}
++                disabled={appendMutation.isPending}
++                className="inline-flex items-center gap-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 text-orange-600 px-3 py-1.5 text-xs font-bold hover:bg-orange-500/20 transition-colors disabled:opacity-50"
++              >
++                {appendMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <BookPlus className="h-3.5 w-3.5" />}
++                Add to notes
++              </button>
++              <button
++                type="button"
++                onClick={() => setSelection(null)}
++                aria-label="Dismiss selection"
++                className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary"
++              >
++                <X className="h-3.5 w-3.5" />
++              </button>
++            </div>
++          )}
++
++          <div className="flex flex-wrap items-center gap-2">
++            {!selection && highlightsAvailable && (
++              <p className="text-[11px] text-muted-foreground">Select text in the lesson to highlight it.</p>
++            )}
+             <button
+               type="button"
+-              onClick={() => appendMutation.mutate(selectedText)}
++              onClick={() => appendMutation.mutate(markdown)}
+               disabled={appendMutation.isPending}
+-              className="inline-flex items-center gap-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 text-orange-600 px-3 py-1.5 text-xs font-bold hover:bg-orange-500/20 transition-colors disabled:opacity-50"
++              className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 bg-background/60 text-muted-foreground px-3 py-1.5 text-xs font-bold hover:bg-secondary transition-colors disabled:opacity-50"
+             >
+-              {appendMutation.isPending ? (
+-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+-              ) : (
+-                <Highlighter className="h-3.5 w-3.5" />
+-              )}
+-              Add selection to Notebook
++              <BookPlus className="h-3.5 w-3.5" />
++              Save entire doc to Notebook
+             </button>
++          </div>
++
++          {highlights.length > 0 && (
++            <section aria-label="Your highlights" className="rounded-xl border border-border/50 bg-background/60 p-3">
++              <h4 className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
++                Your highlights ({highlights.length})
++              </h4>
++              {!supportsPaint && (
++                <p className="text-[11px] text-muted-foreground mb-2">Your browser can’t colour text in the lesson; your highlights are listed here.</p>
++              )}
++              <ul className="space-y-1.5" data-testid="highlight-list">
++                {highlights.map((h: ChapterHighlight) => (
++                  <li key={h.id} className="flex items-start gap-2 text-sm">
++                    <span className={cn('mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full', SWATCH[h.color])} aria-hidden="true" />
++                    <span className="flex-1 min-w-0 break-words text-foreground/90">{h.text}</span>
++                    <button
++                      type="button"
++                      onClick={() => deleteMutation.mutate(h.id)}
++                      disabled={deleteMutation.isPending}
++                      aria-label={`Remove highlight: ${preview(h.text)}`}
++                      className="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10"
++                    >
++                      <Trash2 className="h-3.5 w-3.5" />
++                    </button>
++                  </li>
++                ))}
++              </ul>
++            </section>
+           )}
+-          <button
+-            type="button"
+-            onClick={() => appendMutation.mutate(markdown)}
+-            disabled={appendMutation.isPending}
+-            className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 bg-background/60 text-muted-foreground px-3 py-1.5 text-xs font-bold hover:bg-secondary transition-colors disabled:opacity-50"
+-          >
+-            <BookPlus className="h-3.5 w-3.5" />
+-            Save entire doc to Notebook
+-          </button>
+         </div>
+       )}
+ 
+diff --git a/apps/web/src/features/learning/components/VideoSection.tsx b/apps/web/src/features/learning/components/VideoSection.tsx
+index 8c08e3d..5ba5f63 100644
+--- a/apps/web/src/features/learning/components/VideoSection.tsx
++++ b/apps/web/src/features/learning/components/VideoSection.tsx
+@@ -1,6 +1,6 @@
+ import { useState, useRef } from 'react';
+ import { motion, AnimatePresence } from 'framer-motion';
+-import { Play, Monitor, Minimize2 } from 'lucide-react';
++import { Play, Monitor, Minimize2, Gauge } from 'lucide-react';
+ import { ChapterCta } from './ChapterCta';
+ import { VideoTimelinePanel } from './VideoTimelinePanel';
+ import { useYouTubePlayer } from '@/hooks/useYouTubePlayer';
+@@ -39,7 +39,12 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
+   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 
+   const hasTimeline = timeline.length > 0 && Boolean(chapterId);
+-  const { containerRef: ytContainerRef, currentTime } = useYouTubePlayer(videoId, hasTimeline && playing);
++  // Every lesson video plays through the IFrame API so we can offer our own speed control;
++  // if the API can't load (blocked network), we fall back to the plain embed.
++  const {
++    containerRef: ytContainerRef, currentTime, isReady, failed: apiFailed,
++    playbackRate, setPlaybackRate, availableRates,
++  } = useYouTubePlayer(videoId, playing);
+ 
+   if (!videoId) return null;
+ 
+@@ -148,11 +153,11 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
+             </button>
+           )}
+ 
+-          {playing && hasTimeline && (
+-            <div ref={ytContainerRef} className="absolute inset-0 w-full h-full" />
++          {playing && !apiFailed && (
++            <div ref={ytContainerRef} className="absolute inset-0 w-full h-full" data-testid="yt-player" />
+           )}
+ 
+-          {playing && !hasTimeline && playerSrc && (
++          {playing && apiFailed && playerSrc && (
+             <iframe
+               className="absolute inset-0 w-full h-full"
+               src={playerSrc}
+@@ -186,6 +191,28 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
+         )}
+       </motion.div>
+ 
++      {playing && !apiFailed && (
++        <div className="flex flex-wrap items-center gap-2">
++          <label htmlFor={`speed-${videoId}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
++            <Gauge className="h-3.5 w-3.5" aria-hidden="true" /> Speed
++          </label>
++          <select
++            id={`speed-${videoId}`}
++            value={String(playbackRate)}
++            disabled={!isReady}
++            onChange={(e) => setPlaybackRate(Number(e.target.value))}
++            className="h-8 rounded-lg border border-border/60 bg-background px-2 text-xs font-semibold text-foreground disabled:opacity-50"
++          >
++            {availableRates.map((r) => (
++              <option key={r} value={String(r)}>
++                {r === 1 ? 'Normal (1×)' : `${r}×`}
++              </option>
++            ))}
++          </select>
++          <span className="sr-only" aria-live="polite">Playback speed {playbackRate}×</span>
++        </div>
++      )}
++
+       {cinemaMode && playing && (
+         <p className="text-center text-xs text-muted-foreground">
+           Cinema mode — timeline and notes stay below. Use &ldquo;Normal layout&rdquo; to restore the default view.
+diff --git a/apps/web/src/features/learning/highlightAnchors.test.ts b/apps/web/src/features/learning/highlightAnchors.test.ts
+new file mode 100644
+index 0000000..e288b87
+--- /dev/null
++++ b/apps/web/src/features/learning/highlightAnchors.test.ts
+@@ -0,0 +1,55 @@
++import { describe, expect, it } from 'vitest';
++import { anchorFromOffsets, anchorFromSelection, containerText, locateHighlight, rangeFromOffsets } from './highlightAnchors';
++
++const TEXT = 'A stack is LIFO. A queue is FIFO. A stack is used for undo.';
++
++describe('locateHighlight', () => {
++  it('uses the saved offset when the text is still there', () => {
++    const at = TEXT.indexOf('used for undo');
++    expect(locateHighlight(TEXT, { text: 'used for undo', prefix: '', suffix: '', start_offset: at })).toEqual({ start: at, end: at + 13 });
++  });
++
++  it('finds the right copy by its context after the lesson changed', () => {
++    const second = TEXT.lastIndexOf('A stack');
++    const edited = 'Intro. ' + TEXT;
++    const hit = locateHighlight(edited, { text: 'A stack', prefix: 'FIFO. ', suffix: ' is used', start_offset: second });
++    expect(hit?.start).toBe(second + 7);
++  });
++
++  it('gives up when the text is gone', () => {
++    expect(locateHighlight(TEXT, { text: 'heap', prefix: '', suffix: '', start_offset: 0 })).toBeNull();
++  });
++});
++
++describe('anchors', () => {
++  it('trims whitespace and keeps context on both sides', () => {
++    const start = TEXT.indexOf(' A queue');
++    const a = anchorFromOffsets(TEXT, start, start + 17);
++    expect(a).toMatchObject({ text: 'A queue is FIFO.', start_offset: start + 1 });
++    expect(a?.prefix).toBe('A stack is LIFO. ');
++    expect(a?.suffix.startsWith(' A stack')).toBe(true);
++  });
++
++  it('turns a selection across elements into offsets and back', () => {
++    const el = document.createElement('div');
++    el.innerHTML = '<h1>Stacks</h1><p>A stack is <strong>LIFO</strong>: last in, first out.</p>';
++    document.body.appendChild(el);
++    const full = containerText(el);
++    const start = full.indexOf('stack is');
++    const end = full.indexOf(': last');
++    const range = rangeFromOffsets(el, start, end)!;
++    expect(range.toString()).toBe('stack is LIFO');
++    const sel = window.getSelection()!;
++    sel.removeAllRanges();
++    sel.addRange(range);
++    expect(anchorFromSelection(el, sel)).toMatchObject({ text: 'stack is LIFO', start_offset: start });
++    const outside = document.createElement('p');
++    outside.textContent = 'elsewhere';
++    document.body.appendChild(outside);
++    sel.removeAllRanges();
++    const r2 = document.createRange();
++    r2.selectNodeContents(outside);
++    sel.addRange(r2);
++    expect(anchorFromSelection(el, sel)).toBeNull();
++  });
++});
+diff --git a/apps/web/src/features/learning/highlightAnchors.ts b/apps/web/src/features/learning/highlightAnchors.ts
+new file mode 100644
+index 0000000..6d51046
+--- /dev/null
++++ b/apps/web/src/features/learning/highlightAnchors.ts
+@@ -0,0 +1,98 @@
++/**
++ * Finding a saved highlight again in a lesson's text, and turning a text
++ * selection into something we can save. Offsets count characters of the
++ * container's text nodes in document order (the same as textContent).
++ */
++
++export type HighlightAnchor = { text: string; prefix: string; suffix: string; start_offset: number };
++
++const CONTEXT = 32;
++
++/** Where the highlight sits in `fullText` now: its saved offset, else the best match by context, else null. */
++export function locateHighlight(fullText: string, h: HighlightAnchor): { start: number; end: number } | null {
++  const { text } = h;
++  if (!text) return null;
++  if (fullText.substr(h.start_offset, text.length) === text) return { start: h.start_offset, end: h.start_offset + text.length };
++
++  const hits: number[] = [];
++  for (let i = fullText.indexOf(text); i !== -1; i = fullText.indexOf(text, i + 1)) hits.push(i);
++  if (!hits.length) return null;
++  const score = (i: number) => {
++    let s = 0;
++    if (h.prefix && fullText.slice(Math.max(0, i - h.prefix.length), i) === h.prefix) s += 2;
++    if (h.suffix && fullText.slice(i + text.length, i + text.length + h.suffix.length) === h.suffix) s += 2;
++    return s;
++  };
++  const best = hits.reduce((a, b) => {
++    const d = score(b) - score(a);
++    if (d !== 0) return d > 0 ? b : a;
++    return Math.abs(b - h.start_offset) < Math.abs(a - h.start_offset) ? b : a;
++  });
++  return { start: best, end: best + text.length };
++}
++
++/** An anchor for `[start, end)` of `fullText`, trimmed of surrounding whitespace. Null if nothing is left. */
++export function anchorFromOffsets(fullText: string, start: number, end: number): HighlightAnchor | null {
++  let s = Math.max(0, Math.min(start, end));
++  let e = Math.min(fullText.length, Math.max(start, end));
++  while (s < e && /\s/.test(fullText[s])) s++;
++  while (e > s && /\s/.test(fullText[e - 1])) e--;
++  if (e <= s) return null;
++  return {
++    text: fullText.slice(s, e),
++    prefix: fullText.slice(Math.max(0, s - CONTEXT), s),
++    suffix: fullText.slice(e, e + CONTEXT),
++    start_offset: s,
++  };
++}
++
++function textNodes(container: Node): Text[] {
++  const out: Text[] = [];
++  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
++  for (let n = walker.nextNode(); n; n = walker.nextNode()) out.push(n as Text);
++  return out;
++}
++
++export function containerText(container: Node): string {
++  return textNodes(container).map((t) => t.data).join('');
++}
++
++/** Character offset of a (node, offset) boundary inside `container`. */
++function boundaryOffset(container: Node, node: Node, offset: number): number {
++  const r = document.createRange();
++  r.setStart(container, 0);
++  r.setEnd(node, offset);
++  return r.toString().length;
++}
++
++/** Anchor for the current selection if it lies inside `container`. */
++export function anchorFromSelection(container: HTMLElement, selection: Selection | null): HighlightAnchor | null {
++  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
++  const range = selection.getRangeAt(0);
++  if (!container.contains(range.startContainer) || !container.contains(range.endContainer)) return null;
++  const start = boundaryOffset(container, range.startContainer, range.startOffset);
++  const end = boundaryOffset(container, range.endContainer, range.endOffset);
++  return anchorFromOffsets(containerText(container), start, end);
++}
++
++/** A DOM Range covering `[start, end)` of the container's text. */
++export function rangeFromOffsets(container: Node, start: number, end: number): Range | null {
++  let pos = 0;
++  let startNode: Text | null = null;
++  let startOff = 0;
++  for (const node of textNodes(container)) {
++    const len = node.data.length;
++    if (!startNode && start < pos + len) {
++      startNode = node;
++      startOff = start - pos;
++    }
++    if (startNode && end <= pos + len) {
++      const r = document.createRange();
++      r.setStart(startNode, startOff);
++      r.setEnd(node, end - pos);
++      return r;
++    }
++    pos += len;
++  }
++  return null;
++}
+diff --git a/apps/web/src/hooks/useLearnCourse.ts b/apps/web/src/hooks/useLearnCourse.ts
+index 0e0ecdf..374ce4c 100644
+--- a/apps/web/src/hooks/useLearnCourse.ts
++++ b/apps/web/src/hooks/useLearnCourse.ts
+@@ -1,6 +1,6 @@
+ import { useEffect } from 'react';
+ import { useQuery, useQueryClient } from '@tanstack/react-query';
+-import { fetchPhases, fetchPhaseChapters } from '@/data/chapters';
++import { fetchPhases, fetchPhaseChapters, type CourseChaptersResponse } from '@/data/chapters';
+ import { supabase } from '@/lib/supabase';
+ import { useAuth } from '@/context/AuthContext';
+ 
+@@ -12,11 +12,18 @@ export type CourseChapter = {
+   difficulty?: string;
+   est_minutes?: number;
+   story_hook?: string;
+-  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED';
++  status: 'LOCKED' | 'UNLOCKED' | 'IN_PROGRESS' | 'COMPLETED' | 'LOCKED_PAYWALL';
+   total_steps: number;
+   completed_steps: number;
++  /** Drip release: when the chapter opens (null before the learner starts, or without drip). */
++  available_at?: string | null;
++  /** Drip release: days after starting the course when it opens. */
++  available_after_days?: number | null;
++  drip_locked?: boolean;
+ };
+ 
++export type CourseGateInfo = Omit<CourseChaptersResponse, 'chapters'>;
++
+ export function useLearnCourse(courseId?: string) {
+   const { user } = useAuth();
+   const qc = useQueryClient();
+@@ -37,9 +44,10 @@ export function useLearnCourse(courseId?: string) {
+   const chaptersQuery = useQuery({
+     queryKey: ['learn-chapters', activeCourse?.id],
+     queryFn: async () => {
+-      if (!activeCourse?.id) return [];
++      if (!activeCourse?.id) return { chapters: [] as CourseChapter[], gate: {} as CourseGateInfo };
+       const res = await fetchPhaseChapters(activeCourse.id);
+-      return (res?.chapters || []) as CourseChapter[];
++      const { chapters, ...gate } = res || { chapters: [] };
++      return { chapters: (chapters || []) as CourseChapter[], gate: gate as CourseGateInfo };
+     },
+     enabled: Boolean(activeCourse?.id),
+     staleTime: 15_000,
+@@ -74,7 +82,7 @@ export function useLearnCourse(courseId?: string) {
+     };
+   }, [user?.id, qc]);
+ 
+-  const chapters = (chaptersQuery.data || []).sort((a, b) => a.chapter_number - b.chapter_number);
++  const chapters = [...(chaptersQuery.data?.chapters || [])].sort((a, b) => a.chapter_number - b.chapter_number);
+   const completedCount = chapters.filter((c) => c.status === 'COMPLETED').length;
+   const progressPercent = chapters.length
+     ? Math.round((completedCount / chapters.length) * 100)
+@@ -93,6 +101,7 @@ export function useLearnCourse(courseId?: string) {
+     completedCount,
+     progressPercent,
+     activeChapter,
++    gate: chaptersQuery.data?.gate,
+     refetch: chaptersQuery.refetch,
+   };
+ }
+diff --git a/apps/web/src/hooks/useYouTubePlayer.ts b/apps/web/src/hooks/useYouTubePlayer.ts
+index 26b5bf2..08705e0 100644
+--- a/apps/web/src/hooks/useYouTubePlayer.ts
++++ b/apps/web/src/hooks/useYouTubePlayer.ts
+@@ -1,16 +1,22 @@
+-import { useEffect, useRef, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ 
+ interface YTPlayerInstance {
+   getCurrentTime: () => number;
++  setPlaybackRate?: (rate: number) => void;
++  getPlaybackRate?: () => number;
++  getAvailablePlaybackRates?: () => number[];
+   destroy: () => void;
+ }
+ 
+ interface YTPlayerOptions {
+   videoId: string;
++  width?: string | number;
++  height?: string | number;
+   playerVars?: Record<string, number | string>;
+   events?: {
+-    onReady?: () => void;
++    onReady?: (event: { target: YTPlayerInstance }) => void;
+     onStateChange?: (event: { data: number }) => void;
++    onPlaybackRateChange?: (event: { data: number }) => void;
+   };
+ }
+ 
+@@ -26,13 +32,35 @@ declare global {
+   }
+ }
+ 
++/** Speeds our own control offers (YouTube supports 0.25–2). */
++export const PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
++const RATE_KEY = 'forge.video.playbackRate';
++
++/** The learner's remembered speed (1 if none, or if storage is unavailable). */
++export function loadPlaybackRate(): number {
++  try {
++    const v = Number(localStorage.getItem(RATE_KEY));
++    return (PLAYBACK_RATES as readonly number[]).includes(v) ? v : 1;
++  } catch {
++    return 1;
++  }
++}
++
++export function savePlaybackRate(rate: number) {
++  try {
++    localStorage.setItem(RATE_KEY, String(rate));
++  } catch {
++    /* private mode: speed just isn't remembered */
++  }
++}
++
+ let apiLoadPromise: Promise<YTNamespace> | null = null;
+ 
+ function loadYouTubeIframeApi(): Promise<YTNamespace> {
+   if (window.YT?.Player) return Promise.resolve(window.YT);
+   if (apiLoadPromise) return apiLoadPromise;
+ 
+-  apiLoadPromise = new Promise((resolve) => {
++  apiLoadPromise = new Promise((resolve, reject) => {
+     const previousCallback = window.onYouTubeIframeAPIReady;
+     window.onYouTubeIframeAPIReady = () => {
+       previousCallback?.();
+@@ -41,6 +69,10 @@ function loadYouTubeIframeApi(): Promise<YTNamespace> {
+     if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+       const script = document.createElement('script');
+       script.src = 'https://www.youtube.com/iframe_api';
++      script.onerror = () => {
++        apiLoadPromise = null;
++        reject(new Error('YouTube player could not load'));
++      };
+       document.head.appendChild(script);
+     }
+   });
+@@ -49,46 +81,76 @@ function loadYouTubeIframeApi(): Promise<YTNamespace> {
+ }
+ 
+ /**
+- * Mounts a YouTube IFrame API player and polls its current playback time.
+- * Only used for video steps that carry a timestamp-synced interaction
+- * timeline — regular videos keep using the lighter raw <iframe> embed.
++ * Mounts a YouTube IFrame API player inside `containerRef` (on a child node
++ * the API replaces, so React's own node is never swapped out), polls its
++ * playback time, and applies the learner's playback speed.
+  */
+ export function useYouTubePlayer(videoId: string, active: boolean) {
+   const containerRef = useRef<HTMLDivElement | null>(null);
+   const playerRef = useRef<YTPlayerInstance | null>(null);
+   const [currentTime, setCurrentTime] = useState(0);
+   const [isReady, setIsReady] = useState(false);
++  const [failed, setFailed] = useState(false);
++  const [playbackRate, setPlaybackRateState] = useState<number>(() => loadPlaybackRate());
++  const rateRef = useRef(playbackRate);
++  const [availableRates, setAvailableRates] = useState<number[]>([...PLAYBACK_RATES]);
+ 
+   useEffect(() => {
+     if (!active || !containerRef.current) return;
+     let cancelled = false;
+     let pollTimer: ReturnType<typeof setInterval> | null = null;
++    const host = containerRef.current;
++    const mount = document.createElement('div');
++    mount.className = 'w-full h-full';
++    host.appendChild(mount);
++    setFailed(false);
+ 
+-    loadYouTubeIframeApi().then((YT) => {
+-      if (cancelled || !containerRef.current) return;
+-      playerRef.current = new YT.Player(containerRef.current, {
+-        videoId,
+-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1, enablejsapi: 1 },
+-        events: {
+-          onReady: () => setIsReady(true),
+-          onStateChange: (event) => {
+-            if (event.data === YT.PlayerState.PLAYING) {
+-              if (pollTimer) clearInterval(pollTimer);
+-              pollTimer = setInterval(() => {
+-                try {
+-                  setCurrentTime(playerRef.current?.getCurrentTime() ?? 0);
+-                } catch {
+-                  /* player not ready yet */
+-                }
+-              }, 500);
+-            } else if (pollTimer) {
+-              clearInterval(pollTimer);
+-              pollTimer = null;
+-            }
++    loadYouTubeIframeApi()
++      .then((YT) => {
++        if (cancelled) return;
++        playerRef.current = new YT.Player(mount, {
++          videoId,
++          width: '100%',
++          height: '100%',
++          playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1, enablejsapi: 1, origin: window.location.origin },
++          events: {
++            onReady: (event) => {
++              const player = event?.target ?? playerRef.current;
++              const rates = player?.getAvailablePlaybackRates?.() ?? [];
++              const offered = (PLAYBACK_RATES as readonly number[]).filter((r) => rates.length === 0 || rates.includes(r));
++              setAvailableRates(offered.length ? offered : [1]);
++              if (rateRef.current !== 1) player?.setPlaybackRate?.(rateRef.current);
++              setIsReady(true);
++            },
++            // Changed from YouTube's own menu: keep our control (and the remembered speed) in step.
++            onPlaybackRateChange: (event) => {
++              if (typeof event?.data === 'number' && event.data > 0) {
++                rateRef.current = event.data;
++                setPlaybackRateState(event.data);
++                savePlaybackRate(event.data);
++              }
++            },
++            onStateChange: (event) => {
++              if (event.data === YT.PlayerState.PLAYING) {
++                if (pollTimer) clearInterval(pollTimer);
++                pollTimer = setInterval(() => {
++                  try {
++                    setCurrentTime(playerRef.current?.getCurrentTime() ?? 0);
++                  } catch {
++                    /* player not ready yet */
++                  }
++                }, 500);
++              } else if (pollTimer) {
++                clearInterval(pollTimer);
++                pollTimer = null;
++              }
++            },
+           },
+-        },
++        });
++      })
++      .catch(() => {
++        if (!cancelled) setFailed(true);
+       });
+-    });
+ 
+     return () => {
+       cancelled = true;
+@@ -99,9 +161,21 @@ export function useYouTubePlayer(videoId: string, active: boolean) {
+         /* ignore */
+       }
+       playerRef.current = null;
++      host.replaceChildren();
+       setIsReady(false);
+     };
+   }, [active, videoId]);
+ 
+-  return { containerRef, currentTime, isReady };
++  const setPlaybackRate = useCallback((rate: number) => {
++    rateRef.current = rate;
++    setPlaybackRateState(rate);
++    savePlaybackRate(rate);
++    try {
++      playerRef.current?.setPlaybackRate?.(rate);
++    } catch {
++      /* player not ready: applied on ready */
++    }
++  }, []);
++
++  return { containerRef, currentTime, isReady, failed, playbackRate, setPlaybackRate, availableRates };
+ }
+diff --git a/apps/web/src/index.css b/apps/web/src/index.css
+index f09a41d..1a07497 100644
+--- a/apps/web/src/index.css
++++ b/apps/web/src/index.css
+@@ -645,4 +645,9 @@
+       transform: translateY(-5px);
+     }
+   }
+-}
+\ No newline at end of file
++}
++/* Lesson highlights (CSS Custom Highlight API, see features/learning/components/DocSection.tsx) */
++::highlight(forge-hl-yellow) { background-color: rgb(250 204 21 / 0.45); }
++::highlight(forge-hl-green) { background-color: rgb(74 222 128 / 0.4); }
++::highlight(forge-hl-blue) { background-color: rgb(56 189 248 / 0.4); }
++::highlight(forge-hl-pink) { background-color: rgb(244 114 182 / 0.4); }
+diff --git a/apps/web/src/pages/ChaptersOverviewPage.tsx b/apps/web/src/pages/ChaptersOverviewPage.tsx
+index 5e0a5e0..61aef80 100644
+--- a/apps/web/src/pages/ChaptersOverviewPage.tsx
++++ b/apps/web/src/pages/ChaptersOverviewPage.tsx
+@@ -2,13 +2,15 @@ import { useMemo } from "react";
+ import { motion } from "framer-motion";
+ import {
+   ArrowRight, ArrowLeft, CheckCircle2, Clock, Flame, Lock,
+-  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy
++  Brain, Timer, Grid, Type, LayoutGrid, GitMerge, Maximize2, RefreshCw, Search, ArrowDownUp, Loader2, NotebookText, Trophy,
++  CalendarClock, ListChecks
+ } from "lucide-react";
+ import { useNavigate, useParams } from "react-router-dom";
+ import { cn } from "@/lib/utils";
+ import { useLearnCourse } from "@/hooks/useLearnCourse";
+ import { PremiumLockBadge } from "@/components/PremiumLockBadge";
+ import { AssignedCourseBanner } from "@/features/campus/CollegeCourses";
++import { formatUnlockDate } from "@/data/learning";
+ 
+ const difficultyStyles: Record<string, string> = {
+   easy: "bg-success/10 text-success border border-success/20",
+@@ -32,7 +34,9 @@ function normalizeDifficulty(d?: string) {
+ export default function ChaptersOverviewPage() {
+   const navigate = useNavigate();
+   const { courseId } = useParams();
+-  const { course, chapters, isLoading, completedCount, progressPercent, activeChapter } = useLearnCourse(courseId);
++  const { course, chapters, isLoading, completedCount, progressPercent, activeChapter, gate } = useLearnCourse(courseId);
++  const prereqBlocked = Boolean(gate?.prerequisites_blocked);
++  const prerequisites = gate?.prerequisites ?? [];
+ 
+   const missions = useMemo(
+     () =>
+@@ -41,7 +45,12 @@ export default function ChaptersOverviewPage() {
+         order: ch.chapter_number,
+         title: ch.title,
+         concept: ch.topic_tag || ch.story_hook || "Master this topic step by step",
+-        locked: ch.status === "LOCKED",
++        // Locked in order, by drip release, or until the course's prerequisites are finished.
++        locked: ch.status === "LOCKED" || (ch.status !== "COMPLETED" && (Boolean(ch.drip_locked) || prereqBlocked)),
++        sequenceLocked: ch.status === "LOCKED",
++        dripLocked: ch.status !== "COMPLETED" && Boolean(ch.drip_locked),
++        availableAt: ch.available_at ?? null,
++        availableAfterDays: ch.available_after_days ?? null,
+         paywalled: ch.status === "LOCKED_PAYWALL",
+         completedSteps: ch.completed_steps,
+         totalSteps: ch.total_steps || 1,
+@@ -51,7 +60,7 @@ export default function ChaptersOverviewPage() {
+         status: ch.status,
+         reward: { xp: ch.xp_reward ?? (100 + ch.chapter_number * 25) },
+       })),
+-    [chapters]
++    [chapters, prereqBlocked]
+   );
+ 
+   const activeIndex = useMemo(
+@@ -92,6 +101,46 @@ export default function ChaptersOverviewPage() {
+ 
+       <AssignedCourseBanner courseId={course?.id ?? courseId} />
+ 
++      {prerequisites.length > 0 && (
++        <section
++          aria-labelledby="prereq-heading"
++          data-testid="prerequisites"
++          className={cn("rounded-2xl border p-4 sm:p-5", prereqBlocked ? "border-orange-500/40 bg-orange-500/5" : "border-border/60 card-layer-2")}
++        >
++          <h2 id="prereq-heading" className="flex items-center gap-2 text-sm font-extrabold text-foreground">
++            <ListChecks className="h-4 w-4 text-orange-500" aria-hidden="true" /> Before you start
++          </h2>
++          <p className="mt-1 text-xs text-muted-foreground">
++            {prereqBlocked
++              ? gate?.prerequisites_message || "Finish these courses to unlock this one."
++              : gate?.prerequisites_exemption === "college_assigned"
++                ? "Your college assigned this course, so you can start it now. These courses are recommended first:"
++                : gate?.prerequisites_exemption === "already_started"
++                  ? "You had already started this course. These courses are recommended first:"
++                  : gate?.prerequisites_exemption === "admin"
++                    ? "Admin preview — learners must finish these first:"
++                    : "You've finished everything this course needs."}
++          </p>
++          <ul className="mt-3 space-y-2">
++            {prerequisites.map((p) => (
++              <li key={p.course_id}>
++                <button
++                  type="button"
++                  onClick={() => navigate(`/course/${p.course_id}/chapters`)}
++                  className="flex w-full items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-left hover:bg-background"
++                >
++                  <span className="flex min-w-0 items-center gap-2">
++                    {p.completed ? <CheckCircle2 className="h-4 w-4 shrink-0 text-success" aria-label="Done" /> : <Lock className="h-4 w-4 shrink-0 text-muted-foreground" aria-label="Not finished" />}
++                    <span className="truncate text-sm font-semibold">{p.title}</span>
++                  </span>
++                  <span className="shrink-0 text-xs text-muted-foreground">{p.done}/{p.total} chapters</span>
++                </button>
++              </li>
++            ))}
++          </ul>
++        </section>
++      )}
++
+       <section className="rounded-2xl card-layer-2 p-5">
+         <div className="flex flex-wrap items-center justify-between gap-3">
+           <div>
+@@ -118,7 +167,7 @@ export default function ChaptersOverviewPage() {
+                 <Trophy className="h-4 w-4 text-orange-500" /> Mock Test
+               </button>
+             )}
+-            {nextMission && (
++            {nextMission && !prereqBlocked && (
+               <button
+                 type="button"
+                 onClick={() => navigate(`/chapter/${nextMission.id}`)}
+@@ -171,10 +220,10 @@ export default function ChaptersOverviewPage() {
+               const blurredMissions = missions.slice(visibleCount);
+ 
+               const renderMission = (mission: typeof missions[0], index: number, isBlurredSection: boolean = false) => {
+-                const isComplete = mission.status === "COMPLETED" || index < safeActiveIndex;
++                const isComplete = mission.status === "COMPLETED" || (index < safeActiveIndex && !mission.locked);
+                 const isActuallyActive = index === safeActiveIndex && !mission.locked && !mission.paywalled;
+                 const isLockedOrPaywalled = mission.locked || mission.paywalled;
+-                const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.locked ? "Locked" : "Active";
++                const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.dripLocked && !mission.sequenceLocked ? "Coming soon" : mission.locked ? "Locked" : "Active";
+                 const IconComponent = iconMap[mission.icon] || Grid;
+ 
+                 return (
+@@ -315,8 +364,24 @@ export default function ChaptersOverviewPage() {
+                       )}
+ 
+                       {mission.locked && !mission.paywalled && !isBlurredSection && (
+-                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest relative z-10">
+-                          <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
++                        <div className="mt-4 flex flex-col gap-1.5 relative z-10">
++                          {prereqBlocked ? (
++                            <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground/70 uppercase tracking-widest">
++                              <ListChecks className="w-3.5 h-3.5" /> Finish the required courses first
++                            </span>
++                          ) : mission.sequenceLocked ? (
++                            <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground/50 uppercase tracking-widest">
++                              <Lock className="w-3.5 h-3.5" /> Finish previous chapters to unlock
++                            </span>
++                          ) : null}
++                          {mission.dripLocked && !prereqBlocked && (
++                            <span className="flex items-center gap-2 text-xs font-bold text-orange-500/90" data-testid="drip-label">
++                              <CalendarClock className="w-3.5 h-3.5" />
++                              {mission.availableAt
++                                ? `Unlocks on ${formatUnlockDate(mission.availableAt)}`
++                                : `Opens ${mission.availableAfterDays} day${mission.availableAfterDays === 1 ? "" : "s"} after you start`}
++                            </span>
++                          )}
+                         </div>
+                       )}
+ 
+diff --git a/apps/web/src/pages/LearnChapterPage.tsx b/apps/web/src/pages/LearnChapterPage.tsx
+index 6d21bce..ca7349e 100644
+--- a/apps/web/src/pages/LearnChapterPage.tsx
++++ b/apps/web/src/pages/LearnChapterPage.tsx
+@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { useNavigate, useParams } from 'react-router-dom';
+ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+ import { motion } from 'framer-motion';
+-import { ArrowLeft, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
++import { ArrowLeft, CalendarClock, CheckCircle2, Flame, Loader2, Lock, NotebookText } from 'lucide-react';
+ import { cn } from '@/lib/utils';
+ import {
+   fetchChapterWithProgress,
+@@ -25,6 +25,8 @@ import { MicroRevisionSection } from '@/features/learning/components/MicroRevisi
+ import CelebrationOverlay from '@/features/learning/components/CelebrationOverlay';
+ import { ChapterCta } from '@/features/learning/components/ChapterCta';
+ import { ChapterNotesPanel } from '@/features/learning/components/ChapterNotesPanel';
++import { ChapterDiscussion } from '@/features/learning/components/ChapterDiscussion';
++import { formatUnlockDate } from '@/data/learning';
+ import { toast } from 'sonner';
+ import { PremiumLockBadge } from '@/components/PremiumLockBadge';
+ 
+@@ -263,6 +265,50 @@ export default function LearnChapterPage() {
+     );
+   }
+ 
++  // Closed by the course's rules (checked on the server): prerequisites not finished, or drip release.
++  if (progress?.status === 'LOCKED_PREREQ' || progress?.status === 'LOCKED_DRIP') {
++    const gate = data?.gate;
++    const backToCourse = () => navigate(data?.course?.id ? `/course/${data.course.id}/chapters` : '/courses');
++    return (
++      <motion.div className="max-w-3xl mx-auto card-layer-2 rounded-2xl p-6 sm:p-8 text-center space-y-4" data-testid="chapter-gate">
++        {gate?.code === 'DRIP' ? (
++          <CalendarClock className="h-10 w-10 mx-auto text-orange-500" aria-hidden="true" />
++        ) : (
++          <Lock className="h-10 w-10 mx-auto text-muted-foreground" aria-hidden="true" />
++        )}
++        <h2 className="text-xl font-bold">{chapter.title}</h2>
++        {gate?.code === 'DRIP' ? (
++          <p className="text-sm text-muted-foreground">
++            This course releases a chapter at a time. This one unlocks on{' '}
++            <strong className="text-foreground">{formatUnlockDate(gate.available_at)}</strong>.
++          </p>
++        ) : (
++          <>
++            <p className="text-sm text-muted-foreground">{gate?.message || 'Finish the required courses first.'}</p>
++            {gate?.code === 'PREREQUISITES' && gate.prerequisites.length > 0 && (
++              <ul className="mx-auto max-w-sm space-y-2 text-left">
++                {gate.prerequisites.map((p) => (
++                  <li key={p.course_id} className="flex items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/60 px-3 py-2">
++                    <span className="text-sm font-semibold min-w-0 truncate">{p.title}</span>
++                    <span className="shrink-0 text-xs text-muted-foreground">{p.done}/{p.total} chapters</span>
++                  </li>
++                ))}
++              </ul>
++            )}
++          </>
++        )}
++        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
++          <ChapterCta variant="secondary" onClick={backToCourse}>Back to course</ChapterCta>
++          {gate?.code === 'PREREQUISITES' && gate.prerequisites[0] && (
++            <ChapterCta variant="primary" onClick={() => navigate(`/course/${gate.prerequisites[0].course_id}/chapters`)}>
++              Go to {gate.prerequisites[0].title}
++            </ChapterCta>
++          )}
++        </div>
++      </motion.div>
++    );
++  }
++
+   if (isLocked || progress?.status === 'LOCKED_PAYWALL') {
+     const isPaywall = progress?.status === 'LOCKED_PAYWALL';
+     return (
+@@ -326,6 +372,8 @@ export default function LearnChapterPage() {
+           <DocSection
+             markdown={c.doc_md || ''}
+             chapterId={chapter.id}
++            stepId={step.id}
++            courseId={data?.course?.id}
+             chapterTitle={step.title || chapter.title}
+             onMarkDone={() => markStepDone(step.id, index)}
+           />
+@@ -659,6 +707,8 @@ export default function LearnChapterPage() {
+         />
+       )}
+ 
++      {started && <ChapterDiscussion chapterId={chapter.id} chapterTitle={chapter.title} />}
++
+       <CelebrationOverlay
+         isOpen={showCelebration}
+         onClose={() => {
+diff --git a/apps/web/src/pages/NotebookPage.tsx b/apps/web/src/pages/NotebookPage.tsx
+index 94156b0..0c8e651 100644
+--- a/apps/web/src/pages/NotebookPage.tsx
++++ b/apps/web/src/pages/NotebookPage.tsx
+@@ -6,8 +6,10 @@ import ReactMarkdown from 'react-markdown';
+ import remarkGfm from 'remark-gfm';
+ import {
+   ArrowLeft, ChevronLeft, ChevronRight, Download, Loader2,
+-  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X, Trophy,
++  NotebookText, CheckCircle2, XCircle, ListChecks, Pencil, Save, X, Trophy, Highlighter, Trash2,
+ } from 'lucide-react';
++import { deleteHighlight } from '@/data/learning';
++import { SWATCH } from '@/features/learning/components/DocSection';
+ import { cn } from '@/lib/utils';
+ import { Textarea } from '@/components/ui/textarea';
+ import { fetchCourseNotebook, exportCourseNotebookPdf, saveChapterNotes, type NotebookEntry } from '@/data/notebook';
+@@ -64,6 +66,16 @@ export default function NotebookPage() {
+     onError: () => toast.error('Could not save your edits. Try again.'),
+   });
+ 
++  const removeHighlightMutation = useMutation({
++    mutationFn: (id: string) => deleteHighlight(id),
++    onSuccess: () => {
++      toast.success('Highlight removed');
++      void qc.invalidateQueries({ queryKey: ['notebook', courseId] });
++      void qc.invalidateQueries({ queryKey: ['highlights'] });
++    },
++    onError: () => toast.error('Could not remove the highlight. Try again.'),
++  });
++
+   const pages: NotebookPage[] = useMemo(() => {
+     if (!notebook) return [];
+     return [
+@@ -340,6 +352,31 @@ export default function NotebookPage() {
+                     )}
+                   </div>
+ 
++                  {page.entry.highlights?.length ? (
++                    <div data-testid="notebook-highlights">
++                      <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">
++                        <Highlighter className="h-3 w-3" aria-hidden="true" /> Highlights
++                      </p>
++                      <ul className="space-y-1.5">
++                        {page.entry.highlights.map((h) => (
++                          <li key={h.id} className="flex items-start gap-2">
++                            <span className={cn('mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full', SWATCH[h.color])} aria-hidden="true" />
++                            <span className="flex-1 min-w-0 break-words text-sm text-[#2a2419]">{h.text}</span>
++                            <button
++                              type="button"
++                              onClick={() => removeHighlightMutation.mutate(h.id)}
++                              disabled={removeHighlightMutation.isPending}
++                              aria-label={`Remove highlight: ${h.text.slice(0, 60)}`}
++                              className="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-lg text-[#8a7d5f] hover:text-red-700 hover:bg-red-50"
++                            >
++                              <Trash2 className="h-3.5 w-3.5" />
++                            </button>
++                          </li>
++                        ))}
++                      </ul>
++                    </div>
++                  ) : null}
++
+                   {page.entry.quiz_answers?.length ? (
+                     <div>
+                       <p className="text-xs font-bold uppercase tracking-widest text-[#8a7d5f] mb-2">Quiz Review</p>
