@@ -73,6 +73,8 @@ export default defineConfig(({ mode }) => {
     // CJS→ESM conversion handles them as a single unit
     optimizeDeps: {
       include: ["JSCPP", "lodash", "pegjs-util"],
+      // Code formatters ship WebAssembly next to their JS; load them as-is (only on first Format).
+      exclude: ["@wasm-fmt/clang-format", "@wasm-fmt/ruff_fmt"],
     },
   };
 });

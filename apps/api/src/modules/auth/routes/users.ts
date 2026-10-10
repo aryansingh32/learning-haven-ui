@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UsersController } from '../controllers/users.controller';
 import { GamificationController, AchievementsController } from '../controllers/gamification.controller';
+import { JudgeController } from '../../learning/controllers/judge.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { validate } from '../../../middleware/validate';
 import { updateProfileSchema } from '../../../utils/validators';
@@ -65,6 +66,20 @@ router.get('/me/insights', authenticateUser, UsersController.getInsights);
  * @access  Private
  */
 router.put('/me/goals', authenticateUser, UsersController.updateGoals);
+
+/**
+ * @route   GET /api/users/me/editor-preferences
+ * @desc    Code editor theme, font size and word wrap
+ * @access  Private
+ */
+router.get('/me/editor-preferences', authenticateUser, JudgeController.getEditorPrefs);
+
+/**
+ * @route   PUT /api/users/me/editor-preferences
+ * @desc    Save code editor theme, font size and word wrap
+ * @access  Private
+ */
+router.put('/me/editor-preferences', authenticateUser, JudgeController.saveEditorPrefs);
 
 /**
  * @route   POST /api/users/study-time

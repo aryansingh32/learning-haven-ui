@@ -3,6 +3,9 @@ import { DEFAULT_CODE_TEMPLATES } from '../constants';
 import { executeCode } from '../runtimes';
 import { ExecutionResult, QuestionData, SupportedLanguage } from '../types';
 import { logger } from '../logger';
+import { shapeCustomResult, type CustomRunInput } from '../customRun';
+
+export interface RunContext { code: string; language: SupportedLanguage; custom?: CustomRunInput }
 
 interface UseCodeExecutionOptions {
     question: QuestionData;
@@ -13,11 +16,12 @@ interface UseCodeExecutionOptions {
     resetCodeOnLanguageChange?: boolean;
     resetOnQuestionChange?: boolean;
     onSolved?: (result: ExecutionResult) => void;
-    onRunComplete?: (result: ExecutionResult) => void;
+    /** After every Run (examples or custom input), with what was run. */
+    onRunComplete?: (result: ExecutionResult, ctx: RunContext) => void;
     /** Submit to a server judge instead of re-running in the browser. */
     onSubmit?: (code: string, language: SupportedLanguage) => Promise<ExecutionResult>;
     /** Run on a server instead of in the browser — return undefined to run in the browser. */
-    onRun?: (code: string, language: SupportedLanguage) => Promise<ExecutionResult> | undefined;
+    onRun?: (code: string, language: SupportedLanguage, custom?: CustomRunInput) => Promise<ExecutionResult> | undefined;
     /** Autosave code per language under this key (e.g. the problem slug). */
     storageKey?: string;
 }
@@ -103,7 +107,10 @@ export const useCodeExecution = ({
 
     const resetCode = () => setCode(resolveStarterCode(language));
 
-    const handleRun = async (): Promise<ExecutionResult | null> => {
+    /** Run the examples, or one custom input when given. */
+    const handleRun = async (custom?: CustomRunInput): Promise<ExecutionResult | null> => {
+        // Called straight from click handlers too: ignore anything that isn't a custom input.
+        if (custom && typeof (custom as CustomRunInput).input !== 'string') custom = undefined;
         if (isExecuting) {
             logger.warn('Execution blocked: Already executing');
             return null;
@@ -115,10 +122,20 @@ export const useCodeExecution = ({
         setExecutionResult(null);
 
         try {
-            const result = await (onRun?.(code, language) ?? executeCode(language, code, question));
+            const ctx: RunContext = { code, language, ...(custom ? { custom } : {}) };
+            const onServer = onRun?.(code, language, custom);
+            let result: ExecutionResult;
+            if (onServer) {
+                result = { ranIn: 'server', ...(await onServer) };
+            } else if (custom) {
+                const raw = await executeCode(language, code, { ...question, examples: [{ input: custom.input, output: custom.expected ?? '' }] });
+                result = shapeCustomResult(raw, custom, question.compareMode);
+            } else {
+                result = { ranIn: 'browser', ...(await executeCode(language, code, question)) };
+            }
             logger.info('Execution Completed', { status: result.status });
             setExecutionResult(result);
-            onRunComplete?.(result);
+            onRunComplete?.(result, ctx);
             return result;
         } catch (error: unknown) {
             const message = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -129,7 +146,7 @@ export const useCodeExecution = ({
                 executionTime: 0,
             };
             setExecutionResult(errResult);
-            onRunComplete?.(errResult);
+            onRunComplete?.(errResult, { code, language, ...(custom ? { custom } : {}) });
             return errResult;
         } finally {
             setIsExecuting(false);

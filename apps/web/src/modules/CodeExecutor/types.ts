@@ -34,12 +34,17 @@ export interface QuestionData {
 export type SupportedLanguage = 'javascript' | 'python' | 'cpp' | 'c' | 'java';
 
 export interface ExecutionResult {
-    status: 'Accepted' | 'Wrong Answer' | 'Time Limit Exceeded' | 'Runtime Error' | 'Compilation Error';
+    /** 'Ran' = a custom-input run with no expected output (nothing to compare). */
+    status: 'Accepted' | 'Wrong Answer' | 'Time Limit Exceeded' | 'Runtime Error' | 'Compilation Error' | 'Ran';
     output: string;
     expectedOutput?: string;
     error?: string;
     executionTime?: number; // ms
-    memoryUsage?: number; // bytes
+    memoryUsage?: number; // bytes (peak for the whole run; only the server judge measures it)
+    /** Where the code ran. Browser runs can't measure memory. */
+    ranIn?: 'browser' | 'server';
+    /** Set for a run on an input the learner typed. */
+    custom?: { input: string; expected: string | null; output: string | null; error: string | null; matched?: boolean };
     freeForm?: boolean; // true when running arbitrary code (not LeetCode problem mode)
     testCaseResults?: {
         passed: boolean;

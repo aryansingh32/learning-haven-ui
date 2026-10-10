@@ -5,6 +5,7 @@
 
 import { spawn } from 'child_process';
 import { randomUUID } from 'crypto';
+import { readFileSync } from 'fs';
 import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
@@ -29,6 +30,8 @@ export interface ProgramRun {
   compileOutput: string;
   outcome: 'ok' | 'compile_error' | 'time_limit' | 'runtime_error';
   timeMs: number;
+  /** Peak memory of the program in KB, when the runner reports it (Judge0 does; the local runner samples it on Linux). */
+  memoryKb?: number;
 }
 
 export class JudgeUnavailableError extends Error {
@@ -53,7 +56,7 @@ const unb64 = (s: string | null | undefined) => (s ? Buffer.from(s, 'base64').to
 
 interface Judge0Submission {
   stdout: string | null; stderr: string | null; compile_output: string | null; message: string | null;
-  time: string | null; status: { id: number; description: string };
+  time: string | null; memory?: number | null; status: { id: number; description: string };
 }
 
 async function runOnJudge0(config: JudgeConfig, language: RunLanguage, source: string, stdin: string): Promise<ProgramRun> {
@@ -75,7 +78,7 @@ async function runOnJudge0(config: JudgeConfig, language: RunLanguage, source: s
 
   const deadline = Date.now() + (config.timeoutMs ?? 20_000);
   while (Date.now() < deadline) {
-    const res = await fetch(`${base}/submissions/${token}?base64_encoded=true&fields=stdout,stderr,compile_output,message,time,status`, { headers });
+    const res = await fetch(`${base}/submissions/${token}?base64_encoded=true&fields=stdout,stderr,compile_output,message,time,memory,status`, { headers });
     if (!res.ok) throw new Error(`Judge0 status check failed (HTTP ${res.status})`);
     const sub = (await res.json()) as Judge0Submission;
     if (sub.status.id !== STATUS.IN_QUEUE && sub.status.id !== STATUS.PROCESSING) {
@@ -88,11 +91,17 @@ async function runOnJudge0(config: JudgeConfig, language: RunLanguage, source: s
         compileOutput: unb64(sub.compile_output).trim(),
         outcome,
         timeMs: Math.round(parseFloat(sub.time || '0') * 1000),
+        ...(judge0Memory(sub.memory) !== undefined ? { memoryKb: judge0Memory(sub.memory) } : {}),
       };
     }
     await new Promise((r) => setTimeout(r, 300));
   }
   throw new Error('Judge0 did not finish in time');
+}
+
+/** Judge0 reports peak memory in KB (null when it couldn't measure). */
+export function judge0Memory(memory: unknown): number | undefined {
+  return typeof memory === 'number' && Number.isFinite(memory) && memory > 0 ? Math.round(memory) : undefined;
 }
 
 // ── Local (development only) ───────────────────────────────────────────────
@@ -102,18 +111,44 @@ const localEnv = (): NodeJS.ProcessEnv => ({
   PATH: process.env.PATH, LANG: 'C.UTF-8', HOME: os.tmpdir(), ...(process.env.JAVA_HOME ? { JAVA_HOME: process.env.JAVA_HOME } : {}),
 });
 
-function exec(command: string, args: string[], cwd: string, stdin: string): Promise<{ stdout: string; stderr: string; code: number | null; killed: boolean; timeMs: number }> {
+/** "VmHWM:   12345 kB" → 12345 (the process's peak resident memory so far). */
+export function peakKbFromStatus(status: string): number | undefined {
+  const m = status.match(/^VmHWM:\s+(\d+)\s*kB/m);
+  return m ? Number(m[1]) : undefined;
+}
+
+type ExecResult = { stdout: string; stderr: string; code: number | null; killed: boolean; timeMs: number; memoryKb?: number };
+
+function exec(command: string, args: string[], cwd: string, stdin: string): Promise<ExecResult> {
   const started = Date.now();
   return new Promise((resolve) => {
     const child = spawn(command, args, { cwd, env: localEnv() });
     let stdout = '';
     let stderr = '';
     let killed = false;
+    // Linux only: sample the peak (VmHWM) while it runs. Approximate — the last ms or two
+    // before exit can be missed — which is fine for a development runner.
+    let memoryKb: number | undefined;
+    const sample = () => {
+      if (!child.pid) return;
+      try {
+        const kb = peakKbFromStatus(readFileSync(`/proc/${child.pid}/status`, 'utf8'));
+        if (kb !== undefined) memoryKb = Math.max(memoryKb ?? 0, kb);
+      } catch { /* exited, or not Linux */ }
+    };
+    const sampler = process.platform === 'linux' ? setInterval(sample, 2) : undefined;
+    sample();
+    const done = (r: Omit<ExecResult, 'memoryKb' | 'timeMs'>) => {
+      clearTimeout(timer);
+      if (sampler) clearInterval(sampler);
+      resolve({ ...r, timeMs: Date.now() - started, ...(memoryKb ? { memoryKb } : {}) });
+    };
     const timer = setTimeout(() => { killed = true; child.kill('SIGKILL'); }, LOCAL_TIMEOUT_MS);
     child.stdout.on('data', (d) => { if (stdout.length < 1_000_000) stdout += d; });
     child.stderr.on('data', (d) => { if (stderr.length < 100_000) stderr += d; });
-    child.on('error', (err) => { clearTimeout(timer); resolve({ stdout, stderr: String(err), code: -1, killed, timeMs: Date.now() - started }); });
-    child.on('close', (code) => { clearTimeout(timer); resolve({ stdout, stderr, code, killed, timeMs: Date.now() - started }); });
+    child.on('exit', sample);
+    child.on('error', (err) => done({ stdout, stderr: String(err), code: -1, killed }));
+    child.on('close', (code) => done({ stdout, stderr, code, killed }));
     child.stdin.on('error', () => undefined);
     child.stdin.end(stdin);
   });
@@ -149,10 +184,11 @@ async function runLocally(language: RunLanguage, source: string, stdin: string):
   }
 }
 
-function toRun(r: { stdout: string; stderr: string; code: number | null; killed: boolean; timeMs: number }): ProgramRun {
+function toRun(r: ExecResult): ProgramRun {
   const stderr = r.stderr.replace(/Picked up JAVA_TOOL_OPTIONS.*\n/g, '').trim();
-  if (r.killed) return { stdout: r.stdout, stderr, compileOutput: '', outcome: 'time_limit', timeMs: r.timeMs };
-  return { stdout: r.stdout, stderr, compileOutput: '', outcome: r.code === 0 ? 'ok' : 'runtime_error', timeMs: r.timeMs };
+  const memory = r.memoryKb ? { memoryKb: r.memoryKb } : {};
+  if (r.killed) return { stdout: r.stdout, stderr, compileOutput: '', outcome: 'time_limit', timeMs: r.timeMs, ...memory };
+  return { stdout: r.stdout, stderr, compileOutput: '', outcome: r.code === 0 ? 'ok' : 'runtime_error', timeMs: r.timeMs, ...memory };
 }
 
 /** Run one program with stdin, on Judge0 or (non-production) locally. */

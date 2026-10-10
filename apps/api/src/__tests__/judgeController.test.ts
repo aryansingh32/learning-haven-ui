@@ -15,6 +15,10 @@ jest.mock('../modules/learning/services/status.service', () => ({
 jest.mock('../modules/learning/services/submissionHistory.service', () => ({
   SubmissionHistoryService: { record: jest.fn(), list: jest.fn() },
 }));
+jest.mock('../modules/learning/services/runHistory.service', () => ({
+  RunHistoryService: { record: jest.fn(), recordQuietly: jest.fn(), list: jest.fn() },
+  EditorPrefsService: { get: jest.fn(), save: jest.fn() },
+}));
 // The shared paid-plan rule (tested in courseAccess.test.ts), driven by the entitlements mock here.
 jest.mock('../modules/learning/services/courseAccess.service', () => ({
   CourseAccessService: {
@@ -36,6 +40,7 @@ import { SubmissionsService } from '../modules/learning/services/submissions.ser
 import { StatusService } from '../modules/learning/services/status.service';
 import { EntitlementsRepository } from '../modules/entitlements/entitlements.repository';
 import { SubmissionHistoryService } from '../modules/learning/services/submissionHistory.service';
+import { EditorPrefsService, RunHistoryService } from '../modules/learning/services/runHistory.service';
 
 const mocked = <T>(fn: T) => fn as unknown as jest.Mock;
 
@@ -169,5 +174,72 @@ describe('submission history', () => {
     const res = await call(JudgeController.history, {});
     expect(SubmissionHistoryService.list).toHaveBeenCalledWith('u1', 'p1');
     expect(res.body.submissions).toHaveLength(1);
+  });
+});
+
+describe('run history and custom input', () => {
+  jest.setTimeout(60_000);
+
+  it('keeps every server run in the learner\'s run history', async () => {
+    await call(JudgeController.run, { code: CORRECT, language: 'javascript' });
+    expect(RunHistoryService.recordQuietly).toHaveBeenCalledWith(expect.objectContaining({
+      userId: 'u1', problemId: 'p1', source: 'server', kind: 'examples', verdict: 'Accepted', passed: 1, total: 1,
+    }));
+  });
+
+  it('runs one custom input and shows the output, without comparing when nothing is expected', async () => {
+    const res = await call(JudgeController.run, { code: CORRECT, language: 'javascript', input: 'nums = [5,5,6]' });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toMatchObject({ verdict: 'Ran', passed: 0, total: 0, custom: { input: 'nums = [5,5,6]', output: 'true', expected: null, error: null } });
+    // Only the learner's input ran: the problem's hidden test never appears.
+    expect(JSON.stringify(res.body)).not.toContain('[7]');
+    expect(RunHistoryService.recordQuietly).toHaveBeenCalledWith(expect.objectContaining({ kind: 'custom', input: 'nums = [5,5,6]', output: 'true', verdict: 'Ran' }));
+  });
+
+  it('compares a custom input with the output the learner expects', async () => {
+    const ok = await call(JudgeController.run, { code: CORRECT, language: 'javascript', input: 'nums = [1,2]', expected: 'false' });
+    expect(ok.body).toMatchObject({ verdict: 'Accepted', passed: 1, total: 1 });
+    const wrong = await call(JudgeController.run, { code: CORRECT, language: 'javascript', input: 'nums = [1,2]', expected: 'true' });
+    expect(wrong.body).toMatchObject({ verdict: 'Wrong Answer', custom: { output: 'false', expected: 'true' } });
+  });
+
+  it('reports errors on a custom input and refuses empty or huge inputs', async () => {
+    const thrown = await call(JudgeController.run, { code: 'function containsDuplicate(n) { throw new Error("boom"); }', language: 'javascript', input: 'nums = [1]' });
+    expect(thrown.body).toMatchObject({ verdict: 'Runtime Error', custom: { output: null } });
+    expect(thrown.body.custom.error).toContain('boom');
+    expect((await call(JudgeController.run, { code: CORRECT, language: 'javascript', input: '   ' })).statusCode).toBe(400);
+    expect((await call(JudgeController.run, { code: CORRECT, language: 'javascript', input: 'x'.repeat(5001) })).statusCode).toBe(400);
+  });
+
+  it('keeps a browser run, validated, as history only', async () => {
+    const ok = await call(JudgeController.reportRun, { language: 'python', kind: 'custom', code: 'x', input: 'nums = [1]', output: '[0]', verdict: 'Ran' });
+    expect(ok.statusCode).toBe(201);
+    expect(RunHistoryService.record).toHaveBeenCalledWith(expect.objectContaining({ userId: 'u1', source: 'browser', kind: 'custom', input: 'nums = [1]' }));
+    expect(SubmissionsService.submitSolution).not.toHaveBeenCalled();
+    expect(StatusService.updateStatus).not.toHaveBeenCalled();
+    expect((await call(JudgeController.reportRun, { language: 'python', kind: 'custom', code: 'x', verdict: 'Ran' })).statusCode).toBe(400);
+    expect((await call(JudgeController.reportRun, { language: 'python', kind: 'examples', code: 'x', verdict: 'Accepted', passed: 3, total: 2 })).statusCode).toBe(400);
+    expect((await call(JudgeController.reportRun, { language: 'ruby', kind: 'examples', code: 'x', verdict: 'Accepted' })).statusCode).toBe(400);
+    mocked(RunHistoryService.record).mockRejectedValueOnce(Object.assign(new Error('fk'), { code: '23503' }));
+    expect((await call(JudgeController.reportRun, { language: 'python', kind: 'examples', code: 'x', verdict: 'Accepted' })).statusCode).toBe(404);
+  });
+
+  it('lists the caller\'s own runs', async () => {
+    mocked(RunHistoryService.list).mockResolvedValue([{ id: 'r1' }]);
+    const res = await call(JudgeController.runs, {});
+    expect(RunHistoryService.list).toHaveBeenCalledWith('u1', 'p1');
+    expect(res.body.runs).toHaveLength(1);
+  });
+});
+
+describe('editor preferences', () => {
+  it('saves a known theme and an in-range font size, and refuses the rest', async () => {
+    mocked(EditorPrefsService.save).mockResolvedValue({ theme: 'dracula', font_size: 16, word_wrap: true });
+    const ok = await call(JudgeController.saveEditorPrefs, { theme: 'dracula', font_size: 16, word_wrap: true });
+    expect(ok.statusCode).toBe(200);
+    expect(EditorPrefsService.save).toHaveBeenCalledWith('u1', { theme: 'dracula', font_size: 16, word_wrap: true });
+    expect((await call(JudgeController.saveEditorPrefs, { theme: 'neon-pink' })).statusCode).toBe(400);
+    expect((await call(JudgeController.saveEditorPrefs, { font_size: 30 })).statusCode).toBe(400);
+    expect((await call(JudgeController.saveEditorPrefs, {})).statusCode).toBe(400);
   });
 });
