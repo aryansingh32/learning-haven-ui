@@ -71,9 +71,9 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 41 | Mobile Application & PWA | 5 | 2 | 20 | 27 |
 | 42 | Multilingual & Accessibility | 0 | 4 | 21 | 25 |
 | 43 | Notifications, Rewards & Referral Growth | 10 | 3 | 16 | 29 |
-| 44 | Admin Control Center | 20 | 14 | 13 | 47 |
-| 45 | Payments & Monetization | 14 | 4 | 15 | 33 |
-| 46 | SaaS & Enterprise Management | 5 | 1 | 23 | 29 |
+| 44 | Admin Control Center | 21 | 14 | 12 | 47 |
+| 45 | Payments & Monetization | 15 | 4 | 14 | 33 |
+| 46 | SaaS & Enterprise Management | 8 | 1 | 20 | 29 |
 | 47 | Integrations & APIs | 8 | 6 | 29 | 43 |
 | 48 | Data Management & Migration | 11 | 7 | 11 | 29 |
 | 49 | Security & Privacy | 14 | 7 | 27 | 48 |
@@ -88,7 +88,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 | 58 | Innovation Features for the AI Era | 1 | 3 | 39 | 43 |
 | 59 | Unique Differentiation & Competitive Advantage | 4 | 5 | 26 | 35 |
 | 60 | Product Feedback & Continuous Improvement | 2 | 3 | 18 | 23 |
-| | **All modules** | **485** (26%) | **181** (10%) | **1232** (65%) | **1898** |
+| | **All modules** | **490** (26%) | **181** (10%) | **1227** (65%) | **1898** |
 
 ---
 
@@ -119,7 +119,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 
 ### 2. College, University & Organization Management
 - [x] Multi-Tenant Architecture — `campus` schema, RLS isolation, 36 + 79 + 11 SQL checks in CI
-- [x] College Registration — Forge staff create a college + owner (`campus-api/routes/platform.ts`, portal Platform page)
+- [x] College Registration — Forge staff create a college + owner from the Forge admin panel (Colleges), never from the college portal
 - [ ] University Management
 - [x] Organization Management — `campus.organizations` (platform / college)
 - [x] Department Management — `campus.departments`, portal Batches/Departments page
@@ -1584,7 +1584,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] System Announcement Management
 - [ ] Backup Management
 - [ ] Restore Management
-- [ ] Tenant Usage Monitoring
+- [x] Tenant Usage Monitoring — admin Colleges: students vs seats, staff, waiting roster, published tests, attempts in 30 days, last activity
 - [ ] 🟡 Admin Action History — admin audit logs
 - [ ] Approval Queue
 - [ ] Emergency Feature Disablement
@@ -1602,7 +1602,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] Assessment Credits
 - [ ] 🟡 AI Usage Credits — daily AI quota per plan
 - [ ] Coding Execution Credits
-- [ ] Team Licences
+- [x] Team Licences — premium Forge course licences per college (all or one course, with end date), granted from the admin panel
 - [x] College Licences — Forge staff grant a college one premium course or all, for a period (`campus.course_licences`, Platform page); every active member gets access; one premium rule for chapters and problems (D6)
 - [ ] Annual Contracts
 - [ ] Trial Periods
@@ -1628,13 +1628,13 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [x] Multi-Tenant Isolation — RLS + composite FKs; isolation suites in CI
 - [x] Tenant Provisioning — create college + owner
 - [x] Tenant Onboarding — roster upload plus a 'Set up your college' checklist on Overview (branding, units, batches, staff, roster, first test, first assignment) (C2c)
-- [ ] Tenant Offboarding
+- [x] Tenant Offboarding — suspend / archive / reactivate a college from the admin panel; enforced in every access rule, nothing deleted
 - [x] Tenant Data Isolation
 - [x] Tenant-Level Branding
 - [ ] Tenant-Level Feature Access
-- [ ] Tenant Usage Limits
+- [x] Tenant Usage Limits — student seat limit enforced by a DB trigger on every path; extra students wait as pending
 - [ ] Tenant Billing
-- [ ] Tenant Analytics
+- [x] Tenant Analytics — per-college usage in the admin Colleges section (and Insights inside the college's own portal)
 - [ ] Tenant Health Monitoring
 - [ ] Tenant Export
 - [ ] Tenant Backup
@@ -1744,7 +1744,7 @@ is 🟡. A content topic is done only if a published chapter or problem covers i
 - [ ] 🟡 Secrets Management — env vars; gitignored
 - [x] API Security — auth middleware, zod validation, CORS allow-list
 - [x] Rate Limiting
-- [ ] 🟡 Brute-Force Protection — rate limits; leaked-password protection is off
+- [ ] 🟡 Brute-Force Protection — sign-in limited per account and IP (10/15 min) plus a 300/15 min IP ceiling (lab-friendly); leaked-password protection is still off
 - [ ] Bot Protection
 - [ ] 🟡 CSRF Protection — bearer tokens (not cookies), so CSRF-safe by design
 - [x] XSS Protection — React escaping + helmet

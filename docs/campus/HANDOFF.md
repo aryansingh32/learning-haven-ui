@@ -11,7 +11,7 @@ Working tree was clean and pushed at the end of the last session.
 **Read next, in this order:**
 1. This file — state, rules, what's left.
 2. `docs/campus/BUILD_PLAN.md` — the agreed build order (tracks A–F, slices). Slices A1, B1 and A2 (C++) are done; **next is A4 content drafts** (§8.3).
-3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (485 done, 181 partly, 1,232 not done).
+3. `docs/campus/FEATURE_CHECKLIST.md` — all 1,898 features ticked with evidence (490 done, 181 partly, 1,227 not done).
 4. `docs/campus/PLATFORM_AUDIT.md` — strategy: the assess → gaps → practise → readiness loop, risks.
 
 Plan doc (Claude Docs, architecture + roadmap): https://claude.ai/artifact/QC8UE9d7H79QHW97V5GM15
