@@ -5,23 +5,27 @@ import { useApiQuery } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
+import { api } from "@/services/api.svc";
 
 const CertificatesPage = () => {
   const { user } = useAuth();
 
-  const downloadCertificate = (cert: any) => {
-    if (!cert?.certificate_url) {
-      toast.error("This certificate's PDF isn't ready yet. Please try again shortly.");
-      return;
+  // Drawn by the server from the certificate's template, with its verification QR code.
+  const downloadCertificate = async (cert: any) => {
+    if (!cert?.id) return;
+    try {
+      const blob = (await api.get(`/certificates/${cert.id}/pdf`, { responseType: 'blob' })) as unknown as Blob;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${(cert.topic || 'certificate').replace(/\s+/g, '-').toLowerCase()}-certificate.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    } catch {
+      toast.error("Couldn't download the certificate. Please try again.");
     }
-    const link = document.createElement('a');
-    link.href = cert.certificate_url;
-    link.download = `${(cert.topic || 'certificate').replace(/\s+/g, '-').toLowerCase()}.pdf`;
-    link.target = '_blank';
-    link.rel = 'noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
   };
 
   // Keep ALL existing API calls
@@ -30,9 +34,11 @@ const CertificatesPage = () => {
     '/users/me'
   );
 
+  // The API answers { success, data: [...] }; the page always showed "No certificates" before.
   const { data: certificates, isLoading: certsLoading } = useApiQuery<any[]>(
     ['user-certificates'],
-    '/certificates'
+    '/certificates',
+    { select: (body: any) => (Array.isArray(body) ? body : Array.isArray(body?.data) ? body.data : []) }
   );
 
   const userName = profile?.full_name || (user as any)?.full_name || 'Learner';

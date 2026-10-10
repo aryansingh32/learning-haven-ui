@@ -11,6 +11,7 @@ import { CourseLearningController } from '../controllers/courseLearning.controll
 import adminTestSeriesRoutes from '../../testseries/admin/admin-testseries.routes';
 import { z } from 'zod';
 import { BundlesService } from '../../learning/services/bundles.service';
+import { CertificateTemplatesService } from '../../learning/services/certificateTemplates.service';
 
 const router = Router();
 
@@ -259,6 +260,45 @@ router.post('/content/import/:batchId/publish', ContentImportController.publishB
 // tests, sections, question bank — see modules/testseries)
 // ══════════════════════════════════════════════════════════
 router.use('/test-series', adminTestSeriesRoutes);
+
+// ── Certificate templates ───────────────────────────────────────────────────
+const templateLayout = z.record(z.string(), z.union([z.string().max(1000), z.boolean()]));
+const templateBody = z.object({
+    kind: z.enum(['topic', 'apprenticeship']),
+    name: z.string().trim().min(2).max(80),
+    layout: templateLayout,
+    isDefault: z.boolean().optional(),
+});
+const templateError = (res: any, error: any, fallback: string) => {
+    if (error instanceof z.ZodError) return res.status(400).json({ error: 'Some fields are invalid.', details: error.flatten().fieldErrors });
+    if (/template/i.test(error?.message ?? '')) return res.status(400).json({ error: error.message });
+    logger.error(fallback, error);
+    return res.status(500).json({ error: fallback });
+};
+router.get('/certificate-templates', async (_req, res) => {
+    try { res.json(await CertificateTemplatesService.list()); } catch (e) { templateError(res, e, 'Failed to load templates'); }
+});
+router.post('/certificate-templates', async (req: any, res) => {
+    try { res.status(201).json(await CertificateTemplatesService.create(templateBody.parse(req.body), req.user.id)); }
+    catch (e) { templateError(res, e, 'Failed to create the template'); }
+});
+router.put('/certificate-templates/:id', async (req, res) => {
+    try { res.json(await CertificateTemplatesService.update(z.string().uuid().parse(req.params.id), templateBody.omit({ kind: true }).partial().parse(req.body))); }
+    catch (e) { templateError(res, e, 'Failed to save the template'); }
+});
+router.delete('/certificate-templates/:id', async (req, res) => {
+    try { await CertificateTemplatesService.remove(z.string().uuid().parse(req.params.id)); res.status(204).end(); }
+    catch (e) { templateError(res, e, 'Failed to delete the template'); }
+});
+/** A sample certificate for unsaved changes. */
+router.post('/certificate-templates/preview', async (req, res) => {
+    try {
+        const body = z.object({ kind: z.enum(['topic', 'apprenticeship']), layout: templateLayout }).parse(req.body);
+        const pdf = await CertificateTemplatesService.preview(body.kind, body.layout);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.send(Buffer.from(pdf));
+    } catch (e) { templateError(res, e, 'Failed to draw the preview'); }
+});
 
 // ── Course bundles ──────────────────────────────────────────────────────────
 const bundleBody = z.object({

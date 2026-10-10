@@ -34,6 +34,13 @@ router.post(
 router.get('/', authenticateUser, CertificatesController.getUserCertificates);
 
 /**
+ * @route   GET /api/certificates/:id/pdf
+ * @desc    Download one of my certificates, drawn from its template (with the verification QR)
+ * @access  Private (owner)
+ */
+router.get('/:id/pdf', authenticateUser, CertificatesController.downloadPdf);
+
+/**
  * @route   GET /api/certificates/verify/:code
  * @desc    Verify a certificate by code
  * @access  Public

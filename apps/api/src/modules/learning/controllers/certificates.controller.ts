@@ -48,6 +48,22 @@ export class CertificatesController {
     /**
      * GET /api/certificates/verify/:code
      */
+    static async downloadPdf(req: Request, res: Response) {
+        try {
+            const id = String(req.params.id);
+            if (!/^[0-9a-f-]{36}$/i.test(id)) return res.status(404).json({ error: 'Certificate not found' });
+            const pdf = await CertificatesService.renderPdf((req as AuthRequest).user!.id, id);
+            if (!pdf) return res.status(404).json({ error: 'Certificate not found' });
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename="${pdf.fileName}"`);
+            res.setHeader('Cache-Control', 'private, no-store');
+            res.send(Buffer.from(pdf.bytes));
+        } catch (error) {
+            logger.error('Certificate PDF error:', error);
+            res.status(500).json({ error: 'Could not create the PDF' });
+        }
+    }
+
     static async verify(req: Request, res: Response) {
         try {
             const code = req.params.code as string;

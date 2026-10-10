@@ -1,4 +1,5 @@
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { renderCertificatePdf } from '../learning/services/certificateRenderer';
+import { CertificateTemplatesService } from '../learning/services/certificateTemplates.service';
 import { supabase } from '../../config/database';
 import logger from '../../config/logger';
 import { sendCertificateEmail } from '../communication/services/email.service';
@@ -146,21 +147,12 @@ export class ApprenticeshipCertificatesService {
     finalGrade: string;
     verificationCode: string;
   }) {
-    const pdf = await PDFDocument.create();
-    const page = pdf.addPage([842, 595]);
-    const font = await pdf.embedFont(StandardFonts.HelveticaBold);
-    const regular = await pdf.embedFont(StandardFonts.Helvetica);
-
-    page.drawRectangle({ x: 0, y: 0, width: 842, height: 595, color: rgb(0.97, 0.98, 1) });
-    page.drawRectangle({ x: 40, y: 40, width: 762, height: 515, borderColor: rgb(0.79, 0.66, 0.22), borderWidth: 2 });
-    page.drawText('Learning Haven', { x: 320, y: 510, size: 26, font, color: rgb(0.08, 0.15, 0.28) });
-    page.drawText('Verified Apprenticeship Certificate', { x: 250, y: 470, size: 18, font: regular, color: rgb(0.25, 0.32, 0.45) });
-    page.drawText(input.recipientName, { x: 160, y: 380, size: 32, font, color: rgb(0.1, 0.1, 0.2) });
-    page.drawText(`has successfully completed ${input.programTitle}`, { x: 170, y: 330, size: 18, font: regular, color: rgb(0.28, 0.31, 0.4) });
-    page.drawText(`Grade: ${input.finalGrade}`, { x: 160, y: 255, size: 18, font, color: rgb(0.08, 0.15, 0.28) });
-    page.drawText(`Issued: ${new Date(input.issuedAt).toLocaleDateString()}`, { x: 160, y: 225, size: 14, font: regular, color: rgb(0.3, 0.35, 0.45) });
-    page.drawText(`Verification Code: ${input.verificationCode}`, { x: 160, y: 195, size: 14, font: regular, color: rgb(0.3, 0.35, 0.45) });
-
-    return Buffer.from(await pdf.save());
+    // Drawn from the apprenticeship default template (Forge admin → Certificates → Templates).
+    const template = await CertificateTemplatesService.forCertificate('apprenticeship');
+    return Buffer.from(await renderCertificatePdf(template.layout, {
+      name: input.recipientName, achievement: input.programTitle, issuedAt: new Date(input.issuedAt),
+      code: input.verificationCode, grade: input.finalGrade,
+      verifyUrl: `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '')}/certificates/${input.verificationCode}`,
+    }));
   }
 }

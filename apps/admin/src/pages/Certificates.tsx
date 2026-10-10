@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Search, Loader2, Trash2 } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from 'sonner';
+import CertificateTemplates from './CertificateTemplates';
 
 interface Certificate {
     id: string;
@@ -158,6 +159,7 @@ const Certificates = () => {
                     Next
                 </Button>
             </div>
+            <CertificateTemplates />
         </div>
     );
 };
