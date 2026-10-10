@@ -100,7 +100,11 @@ describe('QuizSection — one question at a time', () => {
     // All three graded server-side, all correct.
     expect(mockedPost).toHaveBeenCalledTimes(3);
     expect(screen.getByText('3 correct')).toBeInTheDocument();
-    expect(onSubmitQuiz).toHaveBeenCalledWith(3, true, 3);
+    expect(onSubmitQuiz).toHaveBeenCalledWith(3, true, 3, expect.any(Array));
+    // Per-answer details go to the notebook.
+    const details = onSubmitQuiz.mock.calls[0][3];
+    expect(details).toHaveLength(3);
+    expect(details[0]).toMatchObject({ selected_index: 1, selected_text: 'O(log n)', is_correct: true });
   });
 
   it('sends the skip sentinel for skipped questions and counts them in the summary', async () => {
@@ -136,7 +140,8 @@ describe('QuizSection — one question at a time', () => {
     fireEvent.click(screen.getByRole('button', { name: /skip/i }));
 
     await waitFor(() => expect(screen.getByText('Your result')).toBeInTheDocument());
-    expect(onSubmitQuiz).toHaveBeenCalledWith(0, false, 3);
+    expect(onSubmitQuiz).toHaveBeenCalledWith(0, false, 3, expect.any(Array));
+    expect(onSubmitQuiz.mock.calls[0][3].every((d: { is_correct: boolean }) => !d.is_correct)).toBe(true);
   });
 
   it('shows the previous attempt screen when the quiz was already submitted', () => {

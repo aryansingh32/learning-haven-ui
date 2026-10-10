@@ -12,15 +12,18 @@ export interface BuildChallenge {
   [key: string]: unknown;
 }
 
-export interface BuildWorkspace {
-  id: string;
-  slug: string;
-  [key: string]: unknown;
-}
-
 export interface BuildEnrollment {
   id: string;
   status: string;
+  language?: string;
+  build_mode?: 'traditional' | 'vibe';
+  [key: string]: unknown;
+}
+
+export interface BuildWorkspace {
+  id: string;
+  slug: string;
+  enrollment?: BuildEnrollment | null;
   [key: string]: unknown;
 }
 
