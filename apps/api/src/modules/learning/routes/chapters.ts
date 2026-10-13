@@ -4,74 +4,93 @@ import { ChaptersService } from '../services/chapters.service';
 import logger from '../../../config/logger';
 import { pool } from '../../../config/database';
 import { LearningGateService } from '../services/learningGate.service';
+import { gradeQuiz, loadChapterQuiz } from '../services/chapterQuiz';
 
 const router = Router();
 
 /**
- * POST /api/chapters/:chapterId/quiz/check
- * BUG-014 fix: Server-side quiz answer validation.
- * Client sends { questionIndex, selectedIndex } and gets back { correct, explanation }
- * WITHOUT the correct answer index being exposed.
+ * POST /api/chapters/:chapterId/quiz/submit  { answers: number[] }  (-1 = skipped)
+ * Grades the whole quiz on the server, records the best score, and returns the
+ * result per question (right option and explanation). The browser never sees the
+ * answers before submitting, and can't report its own score.
+ */
+router.post('/:chapterId/quiz/submit', authenticateUser, async (req: any, res: Response) => {
+    try {
+        const { chapterId } = req.params;
+        const userId = req.user?.id;
+        if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+        if (!Array.isArray(req.body?.answers) || req.body.answers.length > 200) {
+            return res.status(400).json({ error: 'answers must be a list of chosen option numbers' });
+        }
+        if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
+        const questions = await loadChapterQuiz(chapterId);
+        if (!questions.length) return res.status(404).json({ error: 'This chapter has no quiz' });
+        const graded = gradeQuiz(questions, req.body.answers);
+        const detail = questions.map((q, i) => ({
+            question: String(q.question ?? q.q ?? ''),
+            options: Array.isArray(q.options) ? q.options.map(String) : [],
+            selected_index: graded.results[i].selectedIndex,
+            selected_text: graded.results[i].selectedIndex >= 0 ? String((q.options as unknown[])[graded.results[i].selectedIndex]) : '',
+            is_correct: graded.results[i].correct,
+            correct_option: graded.results[i].correctOption,
+            explanation: graded.results[i].explanation,
+        }));
+        const saved = await ChaptersService.updateQuizProgress(userId, chapterId, graded.percent, detail);
+        return res.json({
+            score: graded.score,
+            total: graded.total,
+            percent: graded.percent,
+            passed: graded.passed,
+            best_percent: saved.quiz_score,
+            can_unlock: saved.can_unlock,
+            results: graded.results,
+        });
+    } catch (err) {
+        logger.error('Quiz submit error', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+/**
+ * POST /api/chapters/:chapterId/quiz/check  { questionIndex, selectedIndex }
+ * One question, graded on the server (kept for older clients; nothing is saved).
  */
 router.post('/:chapterId/quiz/check', authenticateUser, async (req: any, res: Response) => {
     try {
         const { chapterId } = req.params;
-        const { questionIndex, selectedIndex } = req.body;
-
+        const { questionIndex, selectedIndex } = req.body ?? {};
         if (typeof questionIndex !== 'number' || typeof selectedIndex !== 'number') {
             return res.status(400).json({ error: 'questionIndex and selectedIndex must be numbers' });
         }
-
-        // Fetch quiz questions from DB (with correct answers — never sent to client)
-        const contentResult = await pool.query(
-            'SELECT quiz_questions FROM public.chapter_content WHERE chapter_id = $1',
-            [chapterId]
-        );
-
-        if (!contentResult.rows[0]?.quiz_questions) {
-            return res.status(404).json({ error: 'Quiz not found for this chapter' });
-        }
-
-        let questions = contentResult.rows[0].quiz_questions;
-        if (typeof questions === 'string') questions = JSON.parse(questions);
-
+        const questions = await loadChapterQuiz(chapterId);
+        if (!questions.length) return res.status(404).json({ error: 'Quiz not found for this chapter' });
         const question = questions[questionIndex];
-        if (!question) {
-            return res.status(400).json({ error: 'Question index out of range' });
-        }
-
-        // Resolve correct answer (supports multiple field names)
-        const correctIndex = question.answer ?? question.correctAnswer ?? question.correct_answer ?? question.correct_index ?? question.correctIndex;
-
-        const isCorrect = selectedIndex === correctIndex;
-
-        return res.json({
-            correct: isCorrect,
-            explanation: question.explanation || '',
-            // Only reveal the correct option text (not its index) when wrong
-            correctOption: !isCorrect ? (question.options?.[correctIndex] ?? null) : null,
-        });
+        if (!question) return res.status(400).json({ error: 'Question index out of range' });
+        const [result] = gradeQuiz([question], [selectedIndex]).results;
+        return res.json({ correct: result.correct, explanation: result.explanation, correctOption: result.correctOption });
     } catch (err) {
         logger.error('Quiz check error', err);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-
 /**
- * POST /api/chapters/:chapterId/progress/quiz
+ * POST /api/chapters/:chapterId/progress/quiz  (older clients)
+ * The score is worked out here from the chosen options (answers[].selected_index);
+ * a score sent by the browser is ignored.
  */
 router.post('/:chapterId/progress/quiz', authenticateUser, async (req: any, res: Response) => {
     try {
         const { chapterId } = req.params;
-        const { score, passed, total_questions, answers } = req.body;
         const userId = req.user?.id;
-
         if (!userId) return res.status(401).json({ error: 'Unauthorized' });
-
-        // Prerequisites and drip release are enforced here, not only in the UI.
         if (!(await LearningGateService.allowChapterWrite(userId, chapterId, res))) return;
-        const result = await ChaptersService.updateQuizProgress(userId, chapterId, score, passed, total_questions, answers);
+        const questions = await loadChapterQuiz(chapterId);
+        if (!questions.length) return res.status(404).json({ error: 'This chapter has no quiz' });
+        const answers: unknown[] = Array.isArray(req.body?.answers) ? req.body.answers : [];
+        const selected = answers.map((a: any) => (typeof a === 'number' ? a : a?.selected_index));
+        const graded = gradeQuiz(questions, selected);
+        const result = await ChaptersService.updateQuizProgress(userId, chapterId, graded.percent, answers);
         return res.json(result);
     } catch (err: any) {
         logger.error('Quiz progress POST error', err);

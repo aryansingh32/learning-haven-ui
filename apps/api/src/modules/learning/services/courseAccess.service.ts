@@ -18,6 +18,12 @@ export interface CourseRow {
  * One place that decides who may see a course and who gets its premium
  * chapters. Learn (courses) and Campus (colleges) meet here.
  */
+/**
+ * Chapters of a paid course anyone signed in may take before buying (a free preview,
+ * Coursera-style). Reads (chapters.service) and writes (learningGate) use the same rule.
+ */
+export const FREE_PREVIEW_CHAPTERS = 1;
+
 export class CourseAccessService {
     /** Any paid plan: an active subscription, or a plan set on the account (e.g. by an admin). */
     static async hasPaidPlan(userId: string): Promise<boolean> {

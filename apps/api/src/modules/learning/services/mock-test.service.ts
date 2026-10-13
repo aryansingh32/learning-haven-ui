@@ -1,5 +1,7 @@
 import { pool, supabase } from '../../../config/database';
 import logger from '../../../config/logger';
+import { CourseAccessService } from './courseAccess.service';
+import { correctIndexOf } from './chapterQuiz';
 
 type SnapshotQuestion = {
     question: string;
@@ -25,6 +27,11 @@ function shuffle<T>(arr: T[]): T[] {
 
 export class MockTestService {
     static async startMockTest(userId: string, courseId: string) {
+        // A college's private course (or one the learner can't see) is "not found", like everywhere else.
+        const visible = await CourseAccessService.loadCourse(courseId);
+        if (!visible || !(await CourseAccessService.canSeeCourse(userId, visible))) {
+            throw new Error('Course not found');
+        }
         const courseResult = await pool.query('SELECT id, title FROM public.courses WHERE id = $1', [courseId]);
         const course = courseResult.rows[0];
         if (!course) {
@@ -44,8 +51,8 @@ export class MockTestService {
             const questions = Array.isArray(row.content?.quiz_questions) ? row.content.quiz_questions : [];
             for (const q of questions) {
                 if (!q?.question || !Array.isArray(q.options)) continue;
-                const correctIndex = q.options.indexOf(q.correctAnswer ?? q.correct_answer ?? '');
-                if (correctIndex < 0) continue;
+                const correctIndex = correctIndexOf(q);
+                if (correctIndex === null) continue;
                 questionPool.push({
                     question: q.question,
                     options: q.options,

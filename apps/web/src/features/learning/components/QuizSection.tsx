@@ -20,14 +20,15 @@ interface ServerCheckResult {
   correctOption: string | null;
 }
 
-export interface QuizAnswerDetail {
-  question: string;
-  options: string[];
-  selected_index: number;
-  selected_text: string;
-  is_correct: boolean;
-  correct_option: string | null;
-  explanation: string;
+/** What POST /chapters/:id/quiz/submit returns. */
+export interface SubmitResult {
+  score: number;
+  total: number;
+  percent: number;
+  passed: boolean;
+  best_percent: number;
+  can_unlock: boolean;
+  results: Array<{ correct: boolean; skipped: boolean; selectedIndex: number; correctOption: string | null; explanation: string }>;
 }
 
 interface QuizSectionProps {
@@ -35,7 +36,8 @@ interface QuizSectionProps {
   questions: QuizQuestion[];
   savedScorePercent?: number | null;
   alreadySubmitted?: boolean;
-  onSubmitQuiz: (score: number, passed: boolean, totalQuestions: number, answers: QuizAnswerDetail[]) => void;
+  /** Called after the server has graded and saved an attempt. */
+  onGraded: (result: SubmitResult) => void;
   onProceed: () => void;
 }
 
@@ -51,7 +53,7 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
   questions = [],
   savedScorePercent,
   alreadySubmitted = false,
-  onSubmitQuiz,
+  onGraded,
   onProceed,
 }) => {
   const storageKey = `lh_quiz_${chapterId}`;
@@ -65,6 +67,7 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
   const [checking, setChecking] = useState(false);
   // Server-returned check results per question index
   const [checkResults, setCheckResults] = useState<Record<number, ServerCheckResult>>({});
+  const [gradeError, setGradeError] = useState<string | null>(null);
 
   const normalized = useMemo(
     () =>
@@ -79,11 +82,14 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
     [questions]
   );
 
+  // A saved attempt shows as "Previous attempt" — but not right after the learner
+  // finishes one here: the chapter reloads then, and the fresh results must stay.
+  const [engaged, setEngaged] = useState(false); // took or retook the quiz on this page
   useEffect(() => {
-    if (alreadySubmitted && savedScorePercent != null) {
+    if (alreadySubmitted && savedScorePercent != null && !engaged) {
       setPhase('previously_submitted');
     }
-  }, [alreadySubmitted, savedScorePercent]);
+  }, [alreadySubmitted, savedScorePercent, engaged]);
 
   useEffect(() => {
     try {
@@ -94,8 +100,9 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
           submitted?: boolean;
           current?: number;
         };
+        // Only an unfinished attempt is restored; a finished one starts afresh on retake.
+        if (parsed.submitted) return;
         if (parsed.answers) setAnswers(parsed.answers);
-        if (parsed.submitted) setSubmitted(true);
         if (typeof parsed.current === 'number') setCurrent(parsed.current);
       }
     } catch {
@@ -128,63 +135,31 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
   };
 
   /**
-   * BUG-014: Answers are graded server-side; the client never receives correct
-   * indices. Skipped questions are sent as SKIPPED so the server still returns
-   * the correct option and explanation for the summary.
+   * The whole quiz is graded on the server in one request (the browser never has
+   * the answers, and can't report its own score). The server records the best score.
    */
   const gradeAll = async (finalAnswers: Record<number, number>) => {
     if (checking) return;
+    setEngaged(true);
     setChecking(true);
+    setGradeError(null);
 
     try {
-      const checkPromises = normalized.map((q, idx) =>
-        api
-          .post<ServerCheckResult>(`/chapters/${chapterId}/quiz/check`, {
-            questionIndex: idx,
-            selectedIndex: finalAnswers[q.id] ?? SKIPPED,
-          })
-          .then((res) => ({ idx, result: res as unknown as ServerCheckResult }))
-          .catch(() => ({
-            idx,
-            // Graceful fallback: treat as wrong if server unreachable
-            result: {
-              correct: false,
-              explanation: q.explanation || '',
-              correctOption: null,
-            } as ServerCheckResult,
-          }))
-      );
+      const res = (await api.post(`/chapters/${chapterId}/quiz/submit`, {
+        answers: normalized.map((q) => finalAnswers[q.id] ?? SKIPPED),
+      })) as unknown as SubmitResult;
 
-      const results = await Promise.all(checkPromises);
       const resultMap: Record<number, ServerCheckResult> = {};
-      results.forEach(({ idx, result }) => {
-        resultMap[idx] = result;
+      res.results.forEach((r, idx) => {
+        resultMap[idx] = { correct: r.correct, explanation: r.explanation, correctOption: r.correctOption };
       });
-
       setCheckResults(resultMap);
-
-      const correctCount = results.filter((r) => r.result.correct).length;
-      const percent = Math.round((correctCount / total) * 100);
-
       setSubmitted(true);
       setPhase('results');
       persistLocal(finalAnswers, true, current);
-
-      const answersDetail: QuizAnswerDetail[] = normalized.map((q) => {
-        const result = resultMap[q.id];
-        const selectedIndex = finalAnswers[q.id] ?? SKIPPED;
-        return {
-          question: q.text,
-          options: q.options,
-          selected_index: selectedIndex,
-          selected_text: q.options[selectedIndex] ?? '',
-          is_correct: Boolean(result?.correct),
-          correct_option: result?.correct ? null : result?.correctOption ?? null,
-          explanation: result?.explanation || q.explanation || '',
-        };
-      });
-
-      onSubmitQuiz(correctCount, percent >= PASS_PERCENT, total, answersDetail);
+      onGraded(res);
+    } catch (e) {
+      setGradeError(e instanceof Error && e.message ? e.message : 'Could not check your answers. Please try again.');
     } finally {
       setChecking(false);
     }
@@ -224,6 +199,7 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
   };
 
   const handleRetake = () => {
+    setEngaged(true);
     setAnswers({});
     setCurrent(0);
     setSubmitted(false);
@@ -453,6 +429,12 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
             ))}
         </div>
       </motion.div>
+
+      {gradeError && (
+        <p role="alert" className="rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {gradeError}
+        </p>
+      )}
 
       {/* Navigation */}
       <div className="flex items-center justify-between gap-3">

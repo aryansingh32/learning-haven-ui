@@ -1,5 +1,6 @@
 import { pool } from '../../../config/database';
 import logger from '../../../config/logger';
+import { CourseAccessService, FREE_PREVIEW_CHAPTERS } from './courseAccess.service';
 
 /** Postgres errors for objects a not-yet-applied migration creates: treat as "feature off". */
 const MISSING = new Set(['42P01', '42883', '42703', '3F000']); // table, function, column, schema
@@ -22,7 +23,8 @@ export type PrerequisiteExemption = 'admin' | 'college_assigned' | 'already_star
 export type ChapterGate =
     | { ok: true }
     | { ok: false; code: 'PREREQUISITES'; message: string; prerequisites: Prerequisite[] }
-    | { ok: false; code: 'DRIP'; message: string; available_at: string };
+    | { ok: false; code: 'DRIP'; message: string; available_at: string }
+    | { ok: false; code: 'PAYWALL'; message: string };
 
 /**
  * Drip release: chapter N opens (N - 1) × interval days after the learner
@@ -150,6 +152,15 @@ export class LearningGateService {
         );
         const chapter = rows[0];
         if (!chapter?.course_id || chapter.status === 'COMPLETED') return { ok: true };
+
+        // Paid courses: past the free preview, progress, quizzes and XP need access
+        // (these writes weren't checked before — only reading the chapter was).
+        if (chapter.chapter_number > FREE_PREVIEW_CHAPTERS) {
+            const course = await CourseAccessService.loadCourse(chapter.course_id);
+            if (course?.is_premium && !(await CourseAccessService.hasPremiumAccess(userId, course))) {
+                return { ok: false, code: 'PAYWALL', message: 'Unlock this course to continue.' };
+            }
+        }
 
         const start = await this.checkCourseStart(userId, chapter.course_id);
         if (start.blocked) {

@@ -14,7 +14,7 @@ import { api } from '@/services/api.svc';
 import { useAuth } from '@/context/AuthContext';
 import { StoryHook } from '@/features/learning/components/StoryHook';
 import { VideoSection } from '@/features/learning/components/VideoSection';
-import { QuizSection, type QuizAnswerDetail } from '@/features/learning/components/QuizSection';
+import { QuizSection } from '@/features/learning/components/QuizSection';
 import { TaskSection } from '@/features/learning/components/TaskSection';
 import { UnlockSection } from '@/features/learning/components/UnlockSection';
 import { ProblemsSection } from '@/features/learning/components/ProblemsSection';
@@ -29,6 +29,7 @@ import { ChapterDiscussion } from '@/features/learning/components/ChapterDiscuss
 import { formatUnlockDate } from '@/data/learning';
 import { toast } from 'sonner';
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 const difficultyStyles: Record<string, string> = {
   BEGINNER: 'bg-success/15 text-success',
@@ -53,6 +54,7 @@ function formatDifficulty(d?: string) {
 export default function LearnChapterPage() {
   const { chapterId } = useParams<{ chapterId: string }>();
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const qc = useQueryClient();
   const { user } = useAuth();
 
@@ -69,14 +71,6 @@ export default function LearnChapterPage() {
   const [notesOpen, setNotesOpen] = useState(false);
 
   // Live pricing — never hardcode prices, they must match what checkout actually charges.
-  const { data: plansData } = useQuery({
-    queryKey: ['learn-chapter-plans'],
-    queryFn: () => api.get('/plans'),
-    staleTime: 10 * 60 * 1000,
-  });
-  const activePlans = Array.isArray(plansData) ? plansData : ((plansData as any)?.data || []);
-  const proPlan = activePlans.find((p: any) => p.slug === 'pro') || activePlans.find((p: any) => p.is_highlighted) || activePlans[0];
-  const monthlyPriceDisplay = proPlan?.price_monthly ? Math.round(proPlan.price_monthly / 100).toLocaleString('en-IN') : null;
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['chapter', chapterId],
@@ -87,20 +81,6 @@ export default function LearnChapterPage() {
   const stepMutation = useMutation({
     mutationFn: (stepId: string) =>
       api.post(`/chapters/${chapterId}/progress/step`, { step_id: stepId }),
-    onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: ['chapter', chapterId] });
-      void qc.invalidateQueries({ queryKey: ['learn-chapters'] });
-    },
-  });
-
-  const quizMutation = useMutation({
-    mutationFn: ({ score, passed, totalQuestions, answers }: { score: number; passed: boolean; totalQuestions: number; answers: QuizAnswerDetail[] }) =>
-      api.post(`/chapters/${chapterId}/progress/quiz`, {
-        score,
-        passed,
-        total_questions: totalQuestions,
-        answers,
-      }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ['chapter', chapterId] });
       void qc.invalidateQueries({ queryKey: ['learn-chapters'] });
@@ -336,8 +316,8 @@ export default function LearnChapterPage() {
             Back to course
           </ChapterCta>
           {isPaywall && (
-            <ChapterCta variant="primary" onClick={() => navigate('/pricing')}>
-              Upgrade to Pro{monthlyPriceDisplay ? ` — ₹${monthlyPriceDisplay}/mo` : ''}
+            <ChapterCta variant="primary" onClick={() => checkout.open({ course: data?.course?.id ? { id: data.course.id, title: data.course.title } : undefined })}>
+              Unlock this chapter
             </ChapterCta>
           )}
         </div>
@@ -413,18 +393,13 @@ export default function LearnChapterPage() {
           <QuizSection
             chapterId={chapter.id}
             savedScorePercent={progress?.quiz_score ?? null}
-            alreadySubmitted={(progress?.quiz_score ?? 0) > 0}
+            alreadySubmitted={(progress?.quiz_attempts ?? 0) > 0}
             questions={(c.quiz_questions || []).map(
-              (q: { question?: string; options: string[]; correctAnswer?: string; explanation?: string }) => ({
-                question: q.question || '',
-                options: q.options,
-                correctAnswer: q.options.indexOf(q.correctAnswer || ''),
-                explanation: q.explanation || '',
-                q: q.question,
-              })
+              (q: { question?: string; options: string[] }) => ({ question: q.question || '', options: q.options || [], q: q.question })
             )}
-            onSubmitQuiz={(score, passed, totalQuestions, answers) => {
-              quizMutation.mutate({ score, passed, totalQuestions, answers });
+            onGraded={() => {
+              void qc.invalidateQueries({ queryKey: ['chapter', chapterId] });
+              void qc.invalidateQueries({ queryKey: ['learn-chapters'] });
             }}
             onProceed={() => markStepDone(step.id, index)}
           />

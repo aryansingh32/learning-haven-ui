@@ -21,6 +21,7 @@ interface Fixture {
     chapter?: { chapter_number: number; status: string | null };
     drip?: number | null;
     startedAt?: Date | null;
+    premium?: boolean;
 }
 
 function db(f: Fixture) {
@@ -35,6 +36,7 @@ function db(f: Fixture) {
         if (sql.includes('from public.chapters c where c.id')) {
             return { rows: [{ course_id: 'c1', chapter_number: f.chapter?.chapter_number ?? 1, status: f.chapter?.status ?? null }] };
         }
+        if (sql.includes('from public.courses where id')) return { rows: [{ id: 'c1', is_premium: f.premium ?? false, is_published: true, visibility: 'public', deleted_at: null }] };
         if (sql.includes('course_started_at')) return { rows: [{ drip_interval_days: f.drip ?? null, started_at: f.startedAt ?? null }] };
         throw new Error(`unexpected query: ${sql}`);
     });
@@ -140,5 +142,29 @@ describe('chapter gate', () => {
         expect(await LearningGateService.allowChapterWrite('u1', CH, res)).toBe(false);
         expect(res.status).toHaveBeenCalledWith(403);
         expect(json.mock.calls[0][0]).toMatchObject({ code: 'DRIP', error: expect.stringMatching(/unlocks on/) });
+    });
+});
+
+describe('paid courses (free preview, then unlock)', () => {
+    const { CourseAccessService } = jest.requireActual('../modules/learning/services/courseAccess.service');
+    afterEach(() => jest.restoreAllMocks());
+
+    it('lets anyone write progress in the free first chapter', async () => {
+        db({ premium: true, chapter: { chapter_number: 1, status: null } });
+        const access = jest.spyOn(CourseAccessService, 'hasPremiumAccess').mockResolvedValue(false);
+        expect(await LearningGateService.chapterGate('u1', '11111111-1111-1111-1111-111111111111')).toEqual({ ok: true });
+        expect(access).not.toHaveBeenCalled();
+    });
+
+    it('refuses progress, quizzes and XP past the preview without access', async () => {
+        db({ premium: true, chapter: { chapter_number: 2, status: 'UNLOCKED' } });
+        jest.spyOn(CourseAccessService, 'hasPremiumAccess').mockResolvedValue(false);
+        expect(await LearningGateService.chapterGate('u1', '11111111-1111-1111-1111-111111111111')).toMatchObject({ ok: false, code: 'PAYWALL' });
+    });
+
+    it('allows it once the learner has access', async () => {
+        db({ premium: true, chapter: { chapter_number: 2, status: 'UNLOCKED' } });
+        jest.spyOn(CourseAccessService, 'hasPremiumAccess').mockResolvedValue(true);
+        expect(await LearningGateService.chapterGate('u1', '11111111-1111-1111-1111-111111111111')).toEqual({ ok: true });
     });
 });

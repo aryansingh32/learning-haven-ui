@@ -1,12 +1,9 @@
 import { Router } from 'express';
-import { requireVerifiedEmail } from '../../../middleware/requireVerifiedEmail';
 import { PaymentsController } from '../controllers/payments.controller';
 import { PublicPaymentsController } from '../controllers/payments.public.controller';
 import { authenticateUser } from '../../../middleware/auth';
-import { validate } from '../../../middleware/validate';
-import { createOrderSchema, verifyPaymentSchema } from '../../../utils/validators';
 import { requireIdempotencyKey } from '../../../middleware/idempotency';
-import { webhookRateLimit, writeRateLimit } from '../../../middleware/rateLimit';
+import { webhookRateLimit } from '../../../middleware/rateLimit';
 
 const router = Router();
 
@@ -18,44 +15,15 @@ const router = Router();
 router.get('/plans', PublicPaymentsController.getPlans);
 
 /**
- * @route   POST /api/payments/create-order
- * @desc    Create a Razorpay order for a plan
- * @access  Private
+ * Retired: create-order, validate-coupon and verify moved to /api/v2/payments, which
+ * checks that an order belongs to the person confirming it and handles courses and
+ * bundles. These answered for nobody in the apps any more; they now say where to go.
  */
-router.post(
-    '/create-order',
-    authenticateUser,
-    requireVerifiedEmail,
-    writeRateLimit,
-    requireIdempotencyKey,
-    validate(createOrderSchema),
-    PaymentsController.createOrder
-);
-
-/**
- * @route   POST /api/payments/validate-coupon
- * @desc    Validate a discount coupon
- * @access  Private
- */
-router.post(
-    '/validate-coupon',
-    authenticateUser,
-    PaymentsController.validateCoupon
-);
-
-/**
- * @route   POST /api/payments/verify
- * @desc    Verify Razorpay payment and activate subscription
- * @access  Private
- */
-router.post(
-    '/verify',
-    authenticateUser,
-    writeRateLimit,
-    requireIdempotencyKey,
-    validate(verifyPaymentSchema),
-    PaymentsController.verifyPayment
-);
+const retired = (_req: unknown, res: any) =>
+    res.status(410).json({ success: false, error: { code: 'GONE', message: 'Use /api/v2/payments instead.' } });
+router.post('/create-order', retired);
+router.post('/validate-coupon', retired);
+router.post('/verify', retired);
 
 /**
  * @route   POST /api/payments/webhook

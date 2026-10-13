@@ -1,10 +1,11 @@
-import { CourseAccessService } from './courseAccess.service';
+import { CourseAccessService, FREE_PREVIEW_CHAPTERS } from './courseAccess.service';
 import { supabase, pool } from '../../../config/database';
 import logger from '../../../config/logger';
 import { updateStreak } from '../../../utils/streak';
 import { checkBadges } from '../../../utils/badges';
 import { CoursesService } from './courses.service';
 import { LearningGateService, dripUnlockAt } from './learningGate.service';
+import { stepsWithoutAnswers } from './chapterQuiz';
 
 /**
  * BUG-014 fix: Remove correct answer fields from quiz questions before sending to client.
@@ -218,7 +219,7 @@ export class ChaptersService {
             }
 
             let paywalled = false;
-            if (premiumDenied && progress?.status !== 'COMPLETED') {
+            if (premiumDenied && progress?.status !== 'COMPLETED' && chapter.chapter_number > FREE_PREVIEW_CHAPTERS) {
                 progress = { ...progress, status: 'LOCKED_PAYWALL' };
                 paywalled = true;
             }
@@ -242,7 +243,8 @@ export class ChaptersService {
                                   : JSON.parse(content.quiz_questions)
                           )
                         : [],
-                    steps: steps || [],
+                    // Quiz steps carry the answers; the browser never gets them.
+                    steps: stepsWithoutAnswers(steps || []),
                 },
                 progress,
                 gate: null,
@@ -312,7 +314,8 @@ export class ChaptersService {
                 
                 let status = prog?.status || (chapter.chapter_number === 1 ? 'UNLOCKED' : 'LOCKED');
                 
-                if (isPremiumCourse && isFreeUser && status !== 'COMPLETED') {
+                // Past the free preview, a paid course's chapters wait for the learner to unlock it.
+                if (isPremiumCourse && isFreeUser && status !== 'COMPLETED' && chapter.chapter_number > FREE_PREVIEW_CHAPTERS) {
                     status = 'LOCKED_PAYWALL';
                 }
 
@@ -339,21 +342,15 @@ export class ChaptersService {
         }
     }
 
-    static async updateQuizProgress(
-        userId: string,
-        chapterId: string,
-        score: number,
-        passed: boolean,
-        totalQuestions?: number,
-        answers?: unknown
-    ) {
+    /**
+     * Records a quiz graded on the server (see chapterQuiz.ts). The best score is
+     * kept, so a worse retake never locks a chapter the learner had passed.
+     */
+    static async updateQuizProgress(userId: string, chapterId: string, percentScore: number, answers?: unknown) {
         try {
-            const safeTotalQuestions = Number(totalQuestions) > 0 ? Number(totalQuestions) : 3;
-            const percentScore = Math.round((Number(score || 0) / safeTotalQuestions) * 100);
-
             const { data: existing, error: fetchError } = await supabase
                 .from('user_chapter_progress')
-                .select('id, quiz_attempts, tasks_completed')
+                .select('id, quiz_attempts, quiz_score, tasks_completed')
                 .eq('user_id', userId)
                 .eq('chapter_id', chapterId)
                 .maybeSingle();
@@ -364,9 +361,10 @@ export class ChaptersService {
 
             const attempts = (existing?.quiz_attempts || 0) + 1;
             const tasksCompleted = existing?.tasks_completed || 0;
+            const best = Math.max(Number(existing?.quiz_score) || 0, percentScore);
 
             const payload: any = {
-                quiz_score: percentScore,
+                quiz_score: best,
                 quiz_attempts: attempts,
                 updated_at: new Date().toISOString(),
             };
@@ -392,12 +390,11 @@ export class ChaptersService {
                 if (insertError) throw insertError;
             }
 
-            const canUnlock = Boolean(passed) && tasksCompleted >= 1;
-
             return {
                 success: true,
-                quiz_score: percentScore,
-                can_unlock: canUnlock,
+                quiz_score: best,
+                attempt_score: percentScore,
+                can_unlock: best >= 66 && tasksCompleted >= 1,
             };
         } catch (error) {
             logger.error('Update quiz progress error:', { userId, chapterId, error });
