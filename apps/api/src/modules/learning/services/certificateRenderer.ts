@@ -1,5 +1,6 @@
 import { PDFDocument, PDFFont, rgb, StandardFonts } from 'pdf-lib';
 import QRCode from 'qrcode';
+import { isPublicHttpsUrl } from '../../../utils/publicUrl';
 
 /**
  * Draws a certificate from a template. Used for practice-topic and apprenticeship
@@ -76,7 +77,8 @@ function fit(font: PDFFont, text: string, size: number, maxWidth: number, min = 
 
 async function fetchImage(url: string): Promise<{ bytes: Uint8Array; png: boolean } | null> {
     try {
-        const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+        if (!(await isPublicHttpsUrl(url))) return null; // never fetch internal addresses (SSRF)
+        const res = await fetch(url, { signal: AbortSignal.timeout(5000), redirect: 'error' });
         if (!res.ok) return null;
         const type = res.headers.get('content-type') ?? '';
         const bytes = new Uint8Array(await res.arrayBuffer());

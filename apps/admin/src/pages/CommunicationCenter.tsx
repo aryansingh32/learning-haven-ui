@@ -247,14 +247,15 @@ export default function CommunicationCenter() {
                                                 Preview (Desktop)
                                             </p>
                                             <div className="bg-white border rounded-md p-6 max-w-lg mx-auto shadow-sm">
-                                                <div
-                                                    className="prose prose-sm max-w-none text-slate-700"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: edited.body
-                                                            .replace(/\{\{name\}\}/g, 'John Doe')
-                                                            .replace(/\{\{email\}\}/g, 'john@example.com')
-                                                            .replace(/\{\{streak\}\}/g, '7')
-                                                    }}
+                                                {/* Sandboxed: a template's HTML can't run script in the admin. */}
+                                                <iframe
+                                                    title="Email preview"
+                                                    sandbox=""
+                                                    className="h-80 w-full border-0"
+                                                    srcDoc={edited.body
+                                                        .replace(/\{\{name\}\}/g, 'John Doe')
+                                                        .replace(/\{\{email\}\}/g, 'john@example.com')
+                                                        .replace(/\{\{streak\}\}/g, '7')}
                                                 />
                                             </div>
                                         </div>

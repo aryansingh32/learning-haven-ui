@@ -98,3 +98,24 @@ export const webhookRateLimit = createLimiter({
   max: 120,
   keyGenerator: userOrIpKey('webhook'),
 });
+
+/**
+ * A flood ceiling per IP across the whole API. High on purpose: a college lab sends
+ * every student's requests from one public IP (60 students × ~30 requests a minute).
+ * Health checks, the status the apps poll and payment/GitHub webhooks are not counted.
+ */
+export const apiIpCeiling = createLimiter({
+  keyPrefix: 'api-ip',
+  windowMs: 60 * 1000,
+  max: 3000,
+  keyGenerator: (req: any) => `api-ip:${ipKeyGenerator(req.ip || '127.0.0.1')}`,
+  skip: (req: any) => /^\/api\/(health$|system\/status$|(v2\/)?payments\/webhook$|whatsapp\/webhook$|v1\/(apprenticeship|build)\/webhooks\/)/.test(req.originalUrl.split('?')[0]),
+});
+
+/** Page-view/event tracking takes anonymous writes: per IP, generous for real browsing. */
+export const analyticsRateLimit = createLimiter({
+  keyPrefix: 'analytics',
+  windowMs: 60 * 1000,
+  max: 120,
+  keyGenerator: (req: any) => `analytics:${ipKeyGenerator(req.ip || '127.0.0.1')}`,
+});

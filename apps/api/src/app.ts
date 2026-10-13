@@ -22,6 +22,7 @@ import routes from './modules/core/routes/index';
 
 import { isCollegePortalOrigin } from './utils/collegeOrigin';
 import { maintenanceGate } from './middleware/controlGates';
+import { apiIpCeiling } from './middleware/rateLimit';
 
 const app = express();
 
@@ -111,6 +112,8 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 // Routes
 // ──────────────────────────────────────────────────────────
 // Maintenance mode (admin control centre): learners get a 503; staff and webhooks pass.
+// Flood ceiling per IP (high enough for a college lab behind one address).
+app.use('/api', apiIpCeiling);
 app.use(maintenanceGate);
 app.use('/api', routes);
 

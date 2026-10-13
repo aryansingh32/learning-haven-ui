@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { analyticsRateLimit } from '../../../middleware/rateLimit';
 import { trackEvent, getNetworkAnalytics, updateRetention, getPublicStats } from '../controllers/analytics.controller';
 import { authenticateUser } from '../../../middleware/auth';
 import { requireAdmin } from '../../../middleware/requireAdmin';
@@ -7,7 +8,7 @@ const router = Router();
 
 // Public routes
 router.get('/public', getPublicStats);
-router.post('/track', trackEvent);
+router.post('/track', analyticsRateLimit, trackEvent);
 
 // Admin routes for analytics dashboard
 router.get('/network', authenticateUser, requireAdmin, getNetworkAnalytics);

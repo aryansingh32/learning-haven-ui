@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { verifySupabaseAccessToken } from '../../../utils/supabaseJwt';
 import { supabase } from '../../../config/database';
 import logger from '../../../config/logger';
 
@@ -10,16 +11,11 @@ export const trackEvent = async (req: Request, res: Response) => {
         const user_agent = req.headers['user-agent'];
         
         // Optionally attach to user if authenticated
-        let user_id = null;
+        // Verified locally: an anonymous endpoint must not make a remote auth call per request.
+        let user_id: string | null = null;
         const authHeader = req.headers.authorization;
-        if (authHeader) {
-            const token = authHeader.split(' ')[1];
-            if (token) {
-                const { data } = await supabase.auth.getUser(token);
-                if (data?.user) {
-                    user_id = data.user.id;
-                }
-            }
+        if (authHeader?.startsWith('Bearer ')) {
+            user_id = verifySupabaseAccessToken(authHeader.slice(7))?.id ?? null;
         }
 
         if (typeof event_type !== 'string' || event_type.length === 0 || event_type.length > 64) {

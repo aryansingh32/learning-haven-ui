@@ -131,9 +131,11 @@ function ReleaseFlags({ flags, onSaved }: { flags: Flag[]; onSaved: () => void }
   const [draft, setDraft] = useState<FlagDraft | null>(null);
   const { data: colleges } = useQuery({ queryKey: ['colleges'], queryFn: collegesService.list, enabled: Boolean(draft), retry: false });
   const save = useMutation({
-    mutationFn: (d: FlagDraft) => (d.isNew
-      ? api.post('/admin/control/flags', { key: d.key, description: d.description || null, enabled: d.enabled, rollout: d.rollout, orgIds: d.orgIds })
-      : api.put(`/admin/control/flags/${d.key}`, { description: d.description || null, enabled: d.enabled, rollout: d.rollout, orgIds: d.orgIds })),
+    mutationFn: async (d: FlagDraft) => {
+      const body = { description: d.description || null, enabled: d.enabled, rollout: d.rollout, orgIds: d.orgIds };
+      if (d.isNew) await api.post('/admin/control/flags', { key: d.key, ...body });
+      else await api.put(`/admin/control/flags/${d.key}`, body);
+    },
     onSuccess: () => { toast.success('Flag saved'); setDraft(null); onSaved(); },
     onError: (e) => toast.error(errorOf(e)),
   });
