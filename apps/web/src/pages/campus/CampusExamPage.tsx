@@ -24,6 +24,14 @@ import { CodingQuestion } from '@/features/campus/CodingQuestion';
 import { enterFullscreen, exitFullscreen, fullscreenSupported, useLockdown } from '@/features/campus/useLockdown';
 import { assignmentStatus, formatWhen } from '@/features/campus/assignmentStatus';
 
+/** What the student is told when an integrity check fires (the invigilator sees it too). */
+const SIGNAL_NOTICE: Partial<Record<ProctoringEvent, string>> = {
+  multiple_screens: 'A second screen is connected. Disconnect it — your invigilator can see this.',
+  devtools_open: "Developer tools aren't allowed during the test. This was noted for your invigilator.",
+  screenshot_key: "Screenshots aren't allowed during the test. This was noted for your invigilator.",
+  large_paste: 'A large block of text appeared at once. This was noted for your invigilator.',
+};
+
 type SavePayload = {
   selectedOptions?: string[] | null; natValue?: number | null; textValue?: string | null;
   code?: string | null; language?: CodeLanguage | null;
@@ -145,6 +153,8 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
                 <li>Switching tabs or apps is recorded.{p.warnFirst ? ' The first time is only a warning.' : ''}</li>
                 {p.maxViolations !== null && <li>After <strong className="text-foreground">{p.maxViolations}</strong> violation{p.maxViolations === 1 ? '' : 's'}, the test submits automatically.</li>}
                 {p.blockClipboard && <li>Copy, paste and right-click are turned off.</li>}
+                <li>The test stays on this device. Continuing it on another device is a violation. Your device and network address are recorded.</li>
+                <li>Second screens, screenshots and developer tools are noted for your invigilator.</li>
                 <li>Close other apps and notifications before you begin.</li>
               </ul>
               {fsNote && <p className="text-xs text-muted-foreground">Your browser can't go full screen, so this test runs in a normal window. Tab switches are still recorded.</p>}
@@ -179,6 +189,8 @@ function examRules(p: MyAssignment['proctoring'] | undefined): string[] {
     'Switching tabs or apps is recorded',
     ...(p.maxViolations !== null ? [`Submits automatically after ${p.maxViolations} violations`] : []),
     ...(p.blockClipboard ? ['Copy, paste and right-click are off'] : []),
+    'Stays on this device; device and network address are recorded',
+    'Second screens, screenshots and developer tools are noted',
   ];
 }
 
@@ -605,6 +617,8 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
       const leave = type === 'tab_switch' || type === 'window_blur' || type === 'fullscreen_exit';
       if (leave && res.severity) {
         setWarning({ kind: res.severity, count: res.violationCount, max: res.maxViolations ?? initial.proctoring.maxViolations });
+      } else if (res.severity && SIGNAL_NOTICE[type]) {
+        toast.warning(SIGNAL_NOTICE[type]);
       }
     } catch { /* offline: the server still enforces the clock; nothing to do */ }
   }, [attemptId, finish, initial.proctoring.maxViolations]);

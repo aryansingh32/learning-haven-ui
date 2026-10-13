@@ -14,6 +14,7 @@ import { BundlesService } from '../../learning/services/bundles.service';
 import { CertificateTemplatesService } from '../../learning/services/certificateTemplates.service';
 import controlRoutes from './control';
 import operationsRoutes from './operations';
+import securityRoutes from './security';
 import { AdminUsersService, UserStatusFilter } from '../services/adminUsers.service';
 
 const router = Router();
@@ -38,6 +39,8 @@ router.use(authenticateUser, requireAdmin, adminLogging);
 router.use('/control', controlRoutes);
 // Operations: job queues, email set-up, integrations
 router.use('/ops', operationsRoutes);
+// Devices and sign-ins: per user, shared devices
+router.use('/', securityRoutes);
 
 // ══════════════════════════════════════════════════════════
 // DASHBOARD & HEALTH
@@ -384,70 +387,63 @@ router.delete('/bundles/:id', async (req, res) => {
 // ══════════════════════════════════════════════════════════
 // TASK 1: User Intelligence Endpoint
 // ══════════════════════════════════════════════════════════
+/**
+ * One learner at a glance: last active, purchases and lifetime value, activity,
+ * AI use and a risk score from real signals (flagged referrals, devices shared
+ * with other accounts, many devices). Each part degrades to empty on its own.
+ */
 router.get('/users/:id/intelligence', async (req: any, res: any) => {
+  const { pool } = await import('../../../config/database');
+  const userId = z.string().uuid().safeParse(req.params.id);
+  if (!userId.success) return res.status(404).json({ error: 'User not found' });
+  const id = userId.data;
+  const q = async <T = any>(sql: string, fallback: T[] = []): Promise<T[]> => {
+    try { return (await pool.query(sql, [id])).rows as T[]; } catch (err: any) {
+      if (['42P01', '42703', '42883'].includes(err?.code)) return fallback; // a table this database doesn't have
+      throw err;
+    }
+  };
   try {
-    const { pool } = await import('../../../config/database');
-    const userId = req.params.id;
-
-    // Last active (most recent submission or login)
-    const lastActiveResult = await pool.query(`
-      SELECT GREATEST(
-        COALESCE((SELECT MAX(submitted_at) FROM public.submissions WHERE user_id = $1), '1970-01-01'),
-        COALESCE((SELECT MAX(updated_at) FROM public.user_chapter_progress WHERE user_id = $1), '1970-01-01'),
-        COALESCE((SELECT updated_at FROM public.users WHERE id = $1), '1970-01-01')
-      ) AS last_active
-    `, [userId]);
-    const lastActive = lastActiveResult.rows[0]?.last_active;
-
-    // Purchases / payments
-    const purchasesResult = await pool.query(`
-      SELECT p.id, p.amount, p.status, p.created_at, pl.name AS plan_name
-      FROM public.payments p
-      LEFT JOIN public.plans_config pl ON pl.id::text = p.plan_id::text
-      WHERE p.user_id = $1 AND p.status = 'captured'
-      ORDER BY p.created_at DESC LIMIT 20
-    `, [userId]);
-
-    // Activity timeline (last 20 events from submissions + chapter progress)
-    const timelineResult = await pool.query(`
-      SELECT 'Solved problem' AS action, submitted_at AS timestamp FROM public.submissions WHERE user_id = $1
-      UNION ALL
-      SELECT 'Completed chapter' AS action, updated_at AS timestamp FROM public.user_chapter_progress WHERE user_id = $1 AND status = 'COMPLETED'
-      ORDER BY timestamp DESC LIMIT 20
-    `, [userId]);
-
-    // AI usage (from rate limit usage table if it exists, else 0)
-    let aiUsage = { totalTokens: 0, interactions: 0 };
-    try {
-      const aiResult = await pool.query(`
-        SELECT COUNT(*) AS interactions FROM public.rate_limit_usage
-        WHERE user_id = $1 AND metric = 'ai_queries_per_day'
-      `, [userId]);
-      aiUsage.interactions = parseInt(aiResult.rows[0]?.interactions || '0');
-    } catch { /* table may not exist */ }
-
-    // Fraud score (based on referral suspicious flag)
-    const fraudResult = await pool.query(`
-      SELECT COUNT(*) AS flagged FROM public.referrals
-      WHERE referrer_id = $1 AND is_suspicious = true
-    `, [userId]);
-    const fraudScore = Math.min(100, parseInt(fraudResult.rows[0]?.flagged || '0') * 25);
-
-    // LTV
-    const ltv = purchasesResult.rows.reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
-
+    const [last, purchases, timeline, ai, flagged, devices] = await Promise.all([
+      q(`select greatest(
+           (select max(submitted_at) from public.submissions where user_id = $1),
+           (select max(updated_at) from public.user_chapter_progress where user_id = $1),
+           (select max(last_seen_at) from public.user_devices where user_id = $1),
+           (select last_active_date::timestamptz from public.users where id = $1)) as last_active`),
+      q(`select p.id, coalesce(p.final_amount, p.amount, 0) as amount, p.status, p.created_at,
+                coalesce(pl.name, p.metadata->>'resource_title', initcap(p.metadata->>'resource_type'), 'Purchase') as plan_name
+           from public.payments p left join public.plans pl on pl.id = p.plan_id
+          where p.user_id = $1 and p.status in ('captured', 'completed', 'paid', 'success')
+          order by p.created_at desc limit 20`),
+      q(`select action, timestamp from (
+           select 'Solved a problem' as action, submitted_at as timestamp from public.submissions where user_id = $1 and solved
+           union all select 'Completed a chapter', updated_at from public.user_chapter_progress where user_id = $1 and status = 'COMPLETED'
+           union all select 'Signed in', occurred_at from public.account_events where user_id = $1 and kind = 'sign_in'
+         ) t where timestamp is not null order by timestamp desc limit 20`),
+      q(`select count(*) filter (where role = 'user')::int as interactions, coalesce(sum(tokens_used), 0)::int as tokens
+           from public.ai_chats where user_id = $1`, [{ interactions: 0, tokens: 0 }]),
+      q(`select count(*)::int as n from public.referrals where referrer_id = $1 and is_suspicious = true`, [{ n: 0 }]),
+      q(`select count(*)::int as devices,
+                count(*) filter (where last_seen_at > now() - interval '30 days')::int as recent,
+                (select count(distinct o.user_id)::int from public.user_devices o
+                  where o.device_id in (select device_id from public.user_devices where user_id = $1) and o.user_id <> $1) as shared_with
+           from public.user_devices where user_id = $1`, [{ devices: 0, recent: 0, shared_with: 0 }]),
+    ]);
+    const d = devices[0] ?? { devices: 0, recent: 0, shared_with: 0 };
+    const reasons: string[] = [];
+    let risk = 0;
+    if (flagged[0]?.n) { risk += Math.min(50, flagged[0].n * 25); reasons.push(`${flagged[0].n} suspicious referral(s)`); }
+    if (d.shared_with) { risk += Math.min(40, d.shared_with * 20); reasons.push(`device shared with ${d.shared_with} other account(s)`); }
+    if (d.recent >= 5) { risk += 20; reasons.push(`${d.recent} devices in 30 days`); }
     res.json({
-      lastActive,
-      fraudScore,
-      ltv,
-      purchases: purchasesResult.rows.map((p: any) => ({
-        plan_name: p.plan_name || 'Subscription',
-        amount: p.amount,
-        date: p.created_at,
-        status: p.status,
-      })),
-      timeline: timelineResult.rows,
-      aiUsage,
+      lastActive: last[0]?.last_active ?? null,
+      fraudScore: Math.min(100, risk),
+      riskReasons: reasons,
+      ltv: Math.round(purchases.reduce((sum: number, p: any) => sum + Number(p.amount || 0), 0) / 100),
+      purchases: purchases.map((p: any) => ({ plan_name: p.plan_name, amount: Math.round(Number(p.amount || 0) / 100), date: p.created_at, status: p.status })),
+      timeline,
+      aiUsage: { interactions: ai[0]?.interactions ?? 0, totalTokens: ai[0]?.tokens ?? 0 },
+      devices: d,
     });
   } catch (err) {
     logger.error('User intelligence error:', err);

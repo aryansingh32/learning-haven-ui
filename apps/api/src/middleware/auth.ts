@@ -9,6 +9,7 @@ import { sessionClaims } from '../modules/auth/services/accountHelpers';
 import { firstSighting, isSessionRevoked } from '../modules/auth/services/sessionGuard';
 import { AccountEvents } from '../modules/auth/services/account.service';
 import { isBanned } from '../modules/auth/services/banGuard';
+import { recordDevice } from '../modules/auth/services/deviceTracker';
 import { fail } from '../utils/api-response';
 
 export interface AuthRequest extends Request {
@@ -26,6 +27,7 @@ async function trackSession(req: AuthRequest, userId: string, claims: Record<str
   const session = sessionClaims(claims);
   if (await isSessionRevoked(session.sessionId)) return false;
   req.user.session_id = session.sessionId;
+  recordDevice(userId, req);
   if (session.sessionId && firstSighting(session.sessionId)) {
     void AccountEvents.recordSignIn(userId, session, { ip: req.ip ?? null, userAgent: req.get?.('user-agent') ?? null });
   }

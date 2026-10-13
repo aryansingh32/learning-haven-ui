@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import {
     LayoutDashboard,
     Power,
+    ShieldAlert,
     Server,
     Users,
     Code,
@@ -141,10 +142,11 @@ const categories = [
         id: 'people',
         label: 'Users',
         icon: Users,
-        basePaths: ['/users', '/permissions', '/communications', '/referrals', '/feedback', '/certificates'],
+        basePaths: ['/users', '/security', '/permissions', '/communications', '/referrals', '/feedback', '/certificates'],
         exactPaths: [],
         items: [
             { name: 'Users', href: '/users', icon: Users },
+            { name: 'Security', href: '/security', icon: ShieldAlert },
             { name: 'Permissions', href: '/permissions', icon: ShieldCheck },
             { name: 'Communications', href: '/communications', icon: Mail },
             { name: 'Referrals', href: '/referrals', icon: Zap },

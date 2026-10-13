@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Laptop } from 'lucide-react';
+import { UserDevices } from '../features/security/UserDevices';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -138,7 +140,7 @@ const UserDetail = () => {
                         </div>
                         <div className="flex items-center gap-4 mt-1 text-muted-foreground text-sm">
                             <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> {(user as any).email}</span>
-                            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> Joined {new Date((user as any).created_at).toLocaleDateString()}</span>
+                            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> Joined {(user as any).created_at ? new Date((user as any).created_at).toLocaleDateString('en-IN') : '—'}</span>
                         </div>
                     </div>
                 </div>
@@ -156,8 +158,9 @@ const UserDetail = () => {
                             {isHighRisk ? <AlertTriangle className="w-5 h-5" /> : <ShieldCheck className="w-5 h-5" />}
                         </div>
                         <div>
-                            <p className="text-sm text-muted-foreground font-medium">Fraud Score</p>
-                            <h3 className="text-2xl font-bold">{intelLoading ? '—' : `${intelligence.fraudScore}/100`}</h3>
+                            <p className="text-sm text-muted-foreground font-medium">Risk score</p>
+                            <h3 className="text-2xl font-bold">{intelLoading || !intel ? '—' : `${intelligence.fraudScore}/100`}</h3>
+                            {intel?.riskReasons?.length > 0 && <p className="text-xs text-muted-foreground">{intel.riskReasons.join(' · ')}</p>}
                         </div>
                     </CardContent>
                 </Card>
@@ -198,6 +201,7 @@ const UserDetail = () => {
                     <TabsTrigger value="timeline" className="flex gap-2"><Clock className="w-4 h-4" /> Activity</TabsTrigger>
                     <TabsTrigger value="purchases" className="flex gap-2"><CreditCard className="w-4 h-4" /> Purchases</TabsTrigger>
                     <TabsTrigger value="ai" className="flex gap-2"><Bot className="w-4 h-4" /> AI Usage</TabsTrigger>
+                    <TabsTrigger value="devices" className="flex gap-2"><Laptop className="w-4 h-4" /> Devices &amp; sign-ins</TabsTrigger>
                     <TabsTrigger value="controls" className="flex gap-2"><ShieldCheck className="w-4 h-4" /> Admin Controls</TabsTrigger>
                 </TabsList>
 
@@ -292,6 +296,10 @@ const UserDetail = () => {
                 </TabsContent>
 
                 {/* Admin Controls */}
+                <TabsContent value="devices" className="mt-4">
+                    <UserDevices userId={id!} />
+                </TabsContent>
+
                 <TabsContent value="controls" className="mt-4">
                     <div className="grid gap-4 md:grid-cols-3">
                         {/* XP Adjustment */}

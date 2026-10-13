@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { normalizePolicy, PROCTORING_EVENTS } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
+import { clientOf } from '../controls';
 import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
 import { JUDGED_LANGUAGES } from '../services/judge';
 import { myCourseAssignments } from './courses';
@@ -128,7 +129,7 @@ const startBody = z.object({
 studentRouter.post('/assignments/:id/start', async (req, res) => {
   const userId = userOf(req);
   const body = startBody.parse(req.body ?? {});
-  res.status(201).json(await startAttempt(userId, uuid.parse(req.params.id), body.consent));
+  res.status(201).json(await startAttempt(userId, uuid.parse(req.params.id), body.consent, clientOf(req)));
 });
 
 studentRouter.get('/attempts/:id', async (req, res) => {
@@ -147,7 +148,7 @@ const answerBody = z.object({
 
 studentRouter.put('/attempts/:id/answers/:questionId', async (req, res) => {
   const userId = userOf(req);
-  res.json(await saveAnswer(userId, uuid.parse(req.params.id), uuid.parse(req.params.questionId), answerBody.parse(req.body)));
+  res.json(await saveAnswer(userId, uuid.parse(req.params.id), uuid.parse(req.params.questionId), answerBody.parse(req.body), clientOf(req)));
 });
 
 const runBody = z.object({
@@ -164,7 +165,7 @@ studentRouter.post('/attempts/:id/questions/:questionId/run', async (req, res) =
 /** "Still here" every 30 s while the exam is open, so invigilators see who dropped off. */
 studentRouter.post('/attempts/:id/heartbeat', async (req, res) => {
   const userId = userOf(req);
-  res.json(await heartbeat(userId, uuid.parse(req.params.id)));
+  res.json(await heartbeat(userId, uuid.parse(req.params.id), clientOf(req)));
 });
 
 /** Finish the current timed section early and move on (no going back). */
@@ -177,7 +178,7 @@ const eventBody = z.object({ type: z.enum(PROCTORING_EVENTS) });
 
 studentRouter.post('/attempts/:id/events', async (req, res) => {
   const userId = userOf(req);
-  res.json(await recordEvent(userId, uuid.parse(req.params.id), eventBody.parse(req.body).type));
+  res.json(await recordEvent(userId, uuid.parse(req.params.id), eventBody.parse(req.body).type, clientOf(req)));
 });
 
 studentRouter.post('/attempts/:id/submit', async (req, res) => {

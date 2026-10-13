@@ -5,6 +5,7 @@
 // required for Forge-only learners: every call fails quietly when the Campus
 // API isn't configured, and the UI simply hides the college area.
 
+import { addDeviceHeaders } from '@/lib/device';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { ensureValidAccessToken, getAccessToken, getRefreshToken, refreshAccessToken } from '@/lib/authSession';
 
@@ -14,7 +15,10 @@ const client = axios.create({ baseURL: CAMPUS_BASE_URL, timeout: 20_000 });
 
 client.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const token = (await ensureValidAccessToken()) || getAccessToken();
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+    await addDeviceHeaders(config.headers as any);
+  }
   return config;
 });
 
@@ -192,7 +196,8 @@ export interface AttemptView {
   currentSection?: { index: number; endsAt: string } | null;
 }
 
-export type ProctoringEvent = 'tab_switch' | 'window_blur' | 'fullscreen_exit' | 'copy' | 'paste' | 'context_menu';
+export type ProctoringEvent = 'tab_switch' | 'window_blur' | 'fullscreen_exit' | 'copy' | 'paste' | 'context_menu'
+  | 'multiple_screens' | 'devtools_open' | 'screenshot_key' | 'large_paste';
 
 export interface EventResult {
   severity: 'warning' | 'violation' | null;

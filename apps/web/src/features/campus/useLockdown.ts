@@ -8,6 +8,13 @@ import type { ProctoringEvent, ProctoringPolicy } from '@/services/campus.servic
 const LEAVE_EVENTS: ProctoringEvent[] = ['tab_switch', 'window_blur', 'fullscreen_exit'];
 /** One real action (e.g. Alt+Tab out of full screen) fires several browser events; count it once. */
 const LEAVE_DEDUP_MS = 2000;
+/** Integrity signals (second screen, dev tools, screenshots, big insertions): at most one report per type per 30 s. */
+const SIGNAL_DEDUP_MS = 30_000;
+const SIGNALS: ProctoringEvent[] = ['multiple_screens', 'devtools_open', 'screenshot_key', 'large_paste'];
+/** Text inserted at once (beyond what typing produces) that counts as a large paste. */
+export const LARGE_INSERT_CHARS = 200;
+/** Docked developer tools take at least this much of the window. */
+const DEVTOOLS_GAP_PX = 160;
 
 export const fullscreenSupported = () =>
   typeof document !== 'undefined' && Boolean(document.fullscreenEnabled && document.documentElement.requestFullscreen);
@@ -40,6 +47,7 @@ interface Options {
 export function useLockdown({ policy, active, onEvent, onBlocked }: Options) {
   const [fullscreen, setFullscreen] = useState(isFullscreen());
   const lastLeaveAt = useRef(0);
+  const lastSignalAt = useRef<Partial<Record<ProctoringEvent, number>>>({});
   const onEventRef = useRef(onEvent);
   const onBlockedRef = useRef(onBlocked);
   onEventRef.current = onEvent;
@@ -53,6 +61,11 @@ export function useLockdown({ policy, active, onEvent, onBlocked }: Options) {
       const now = Date.now();
       if (now - lastLeaveAt.current < LEAVE_DEDUP_MS) return;
       lastLeaveAt.current = now;
+    }
+    if (SIGNALS.includes(type)) {
+      const now = Date.now();
+      if (now - (lastSignalAt.current[type] ?? 0) < SIGNAL_DEDUP_MS) return;
+      lastSignalAt.current[type] = now;
     }
     onEventRef.current(type);
   }, []);
@@ -118,6 +131,49 @@ export function useLockdown({ policy, active, onEvent, onBlocked }: Options) {
       document.removeEventListener('contextmenu', onMenu, capture);
       document.removeEventListener('drop', onDrop, capture);
       document.removeEventListener('dragover', onDragOver, capture);
+    };
+  }, [enabled, policy?.blockClipboard, report]);
+
+  // Integrity signals: reported, never blocking (the server notes them for invigilators).
+  useEffect(() => {
+    if (!enabled) return;
+    const scr = window.screen as Screen & { isExtended?: boolean; addEventListener?: (t: string, f: () => void) => void; removeEventListener?: (t: string, f: () => void) => void };
+    const checkScreens = () => { if (scr.isExtended) report('multiple_screens'); };
+    checkScreens();
+    scr.addEventListener?.('change', checkScreens);
+
+    // Docked dev tools shrink the page inside the window.
+    const devtoolsTimer = setInterval(() => {
+      const gapW = window.outerWidth - window.innerWidth;
+      const gapH = window.outerHeight - window.innerHeight;
+      if (window.outerWidth > 0 && (gapW > DEVTOOLS_GAP_PX || gapH > DEVTOOLS_GAP_PX + 80)) report('devtools_open');
+    }, 3000);
+
+    const onKey = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      const mod = e.ctrlKey || e.metaKey;
+      // Dev tools and view-source shortcuts: blocked and noted.
+      if (e.key === 'F12' || (mod && e.shiftKey && ['i', 'j', 'c'].includes(k)) || (mod && k === 'u')) {
+        e.preventDefault();
+        report('devtools_open');
+        return;
+      }
+      // Screenshots: Print Screen, Windows snip (Win+Shift+S arrives as Shift+S with meta), macOS Cmd+Shift+3/4/5.
+      if (e.key === 'PrintScreen' || (e.metaKey && e.shiftKey && ['s', '3', '4', '5'].includes(k))) report('screenshot_key');
+    };
+    // A big block of text appearing at once (drag-and-drop, auto-typers, IME tricks) in any answer box or the code editor.
+    const onBeforeInput = (e: InputEvent) => {
+      if ((e.data?.length ?? 0) >= LARGE_INSERT_CHARS || (/^insertFrom(Paste|Drop)/.test(e.inputType) && !policy?.blockClipboard)) report('large_paste');
+    };
+    document.addEventListener('keydown', onKey, true);
+    document.addEventListener('keyup', onKey, true);
+    document.addEventListener('beforeinput', onBeforeInput as EventListener, true);
+    return () => {
+      scr.removeEventListener?.('change', checkScreens);
+      clearInterval(devtoolsTimer);
+      document.removeEventListener('keydown', onKey, true);
+      document.removeEventListener('keyup', onKey, true);
+      document.removeEventListener('beforeinput', onBeforeInput as EventListener, true);
     };
   }, [enabled, policy?.blockClipboard, report]);
 

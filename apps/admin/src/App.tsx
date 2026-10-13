@@ -16,6 +16,7 @@ const UserDetail = lazy(() => import('./pages/UserDetail'));
 const SystemHealth = lazy(() => import('./pages/SystemHealth'));
 const ControlCentre = lazy(() => import('./pages/ControlCentre'));
 const Operations = lazy(() => import('./pages/Operations'));
+const Security = lazy(() => import('./pages/Security'));
 const Permissions = lazy(() => import('./pages/Permissions'));
 const Experiments = lazy(() => import('./pages/Experiments'));
 const CommunicationCenter = lazy(() => import('./pages/CommunicationCenter'));
@@ -161,6 +162,7 @@ function App() {
               <Route path="/colleges/:id" element={<CollegeDetailPage />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/:id" element={<UserDetail />} />
+              <Route path="/security" element={<Security />} />
               <Route path="/permissions" element={<Permissions />} />
               <Route path="/communications" element={<CommunicationCenter />} />
               <Route path="/feedback" element={<Feedback />} />

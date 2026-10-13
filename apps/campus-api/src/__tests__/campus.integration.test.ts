@@ -1589,3 +1589,63 @@ describe('Forge admin controls', () => {
     expect((await request(app).get(url).set(await as(U.s1))).status).toBe(200);
   });
 });
+
+describe('exam integrity: devices', () => {
+  const A = 'a'.repeat(64);
+  const B = 'b'.repeat(64);
+  const onDevice = async (who: string, device: string) => ({
+    ...(await as(who)),
+    'X-Device-Id': device,
+    'X-Device-Info': JSON.stringify({ platform: 'Windows', screen: '1920x1080', screens: 1, timezone: 'Asia/Kolkata' }),
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
+  });
+  let assignment = '';
+  let attempt = '';
+
+  it('ties an attempt to the device it started on', async () => {
+    const created = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId, title: 'Device-bound quiz', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000),
+      proctoring: { maxViolations: 3, warnFirst: true },
+    });
+    assignment = created.body.id;
+    // Earlier tests leave s1 mid-way through this test elsewhere; one open attempt per test at a time.
+    await pool.query(`update public.test_attempts set status = 'completed', submitted_at = now() where user_id = $1 and status = 'in_progress'`, [U.s1]);
+    const start = await request(app).post(`/campus/v1/my/assignments/${assignment}/start`).set(await onDevice(U.s1, A));
+    expect(start.status).toBe(201);
+    attempt = start.body.attemptId;
+    const row = (await pool.query(`select device_id, device_info->>'browser' as browser from public.test_attempts where id = $1`, [attempt])).rows[0];
+    expect(row).toEqual({ device_id: A, browser: 'Chrome' });
+    const seen = (await pool.query(`select os, browser from public.user_devices where user_id = $1 and device_id = $2`, [U.s1, A])).rows[0];
+    expect(seen).toEqual({ os: 'Windows', browser: 'Chrome' });
+  });
+
+  it('records continuing on another device once, as a violation', async () => {
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/heartbeat`).set(await onDevice(U.s1, A))).status).toBe(200);
+    await request(app).post(`/campus/v1/my/attempts/${attempt}/heartbeat`).set(await onDevice(U.s1, B));
+    await request(app).post(`/campus/v1/my/attempts/${attempt}/heartbeat`).set(await onDevice(U.s1, B));
+    const events = (await pool.query(`select event_type, severity from campus.proctoring_events where attempt_id = $1`, [attempt])).rows;
+    expect(events).toEqual([{ event_type: 'device_change', severity: 'violation' }]);
+    expect((await pool.query(`select violation_count from public.test_attempts where id = $1`, [attempt])).rows[0].violation_count).toBe(1);
+  });
+
+  it('only the server records a device change', async () => {
+    const res = await request(app).post(`/campus/v1/my/attempts/${attempt}/events`).set(await onDevice(U.s1, A)).send({ type: 'device_change' });
+    expect(res.status).toBe(400);
+    const screens = await request(app).post(`/campus/v1/my/attempts/${attempt}/events`).set(await onDevice(U.s1, A)).send({ type: 'multiple_screens' });
+    expect(screens.body).toMatchObject({ severity: 'warning', violationCount: 1 });
+  });
+
+  it('shows staff the device, network and signals', async () => {
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/integrity`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    expect(res.body.attempts).toEqual([expect.objectContaining({
+      userId: U.s1, otherDevices: 1, violations: 1,
+      device: expect.objectContaining({ browser: 'Chrome', os: 'Windows', screen: '1920x1080' }),
+      events: { device_change: 1, multiple_screens: 1 },
+    })]);
+    expect(res.body.attempts[0].ip).not.toMatch(/^::ffff:/);
+    // Other colleges' staff can't see it.
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/integrity`).set(await as(U.facultyB))).status).toBe(403);
+  });
+});

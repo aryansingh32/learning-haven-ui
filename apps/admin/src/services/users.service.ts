@@ -24,9 +24,11 @@ export const usersService = {
         return response.data;
     },
 
+    /** The user row (the API answers { user, subscriptions, payments, … }). */
     getUser: async (id: string): Promise<User> => {
-        const response = await api.get<User>(`/admin/users/${id}`);
-        return response.data;
+        const response = await api.get<any>(`/admin/users/${id}`);
+        const d = response.data;
+        return (d?.user ? { ...d.user, _detail: d } : d) as User;
     },
 
     updateUserRole: async (id: string, role: 'user' | 'admin' | 'super_admin'): Promise<User> => {
@@ -54,21 +56,12 @@ export const usersService = {
         URL.revokeObjectURL(url);
     },
 
+    /** Last active, purchases, activity, AI use and risk score. Null if it can't be loaded (never made-up numbers). */
     getUserIntelligence: async (id: string): Promise<any> => {
         try {
-            const response = await api.get(`/admin/users/${id}/intelligence`);
-            return response.data;
+            return (await api.get(`/admin/users/${id}/intelligence`)).data;
         } catch {
-            // Mock fallback if endpoint doesn't exist yet
-            return {
-                fraudScore: Math.floor(Math.random() * 30),
-                purchases: [],
-                timeline: [
-                    { action: 'Logged in', timestamp: new Date().toISOString() },
-                    { action: 'Account created', timestamp: new Date(Date.now() - 86400000).toISOString() }
-                ],
-                aiUsage: { totalTokens: 12500, interactions: 45 }
-            };
+            return null;
         }
     },
 };

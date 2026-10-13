@@ -7,3 +7,4 @@ export * from './sections';
 export * from './pools';
 export * from './questionSheet';
 export * from './analytics';
+export * from './device';

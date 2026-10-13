@@ -27,6 +27,7 @@ const pageNames: Record<string, string> = {
     '/ai-config': 'AI Configuration',
     '/control-centre': 'Control Centre',
     '/operations': 'Operations',
+    '/security': 'Security',
     '/settings': 'System Settings',
     '/logs': 'Audit Logs',
     '/cms': 'CMS & Appearance',

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { deviceHeaders } from '../lib/device';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -11,10 +12,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-    (config) => {
+    async (config) => {
         const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            // Staff devices are recorded too (admin → Security).
+            for (const [k, v] of Object.entries(await deviceHeaders())) config.headers.set(k, v);
         }
         return config;
     },

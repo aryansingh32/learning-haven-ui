@@ -21,8 +21,10 @@ import {
   finishSection,
   drawFromPools,
   shouldAutoSubmit,
+  SERVER_ONLY_EVENTS,
 } from '@repo/assessment-core';
 import { asSystem, asUser, Db } from '../db';
+import type { DeviceInfo } from '@repo/assessment-core';
 import { badRequest, HttpError, notFound } from '../errors';
 import { JudgedLanguage, judgeCode, JudgeUnavailableError, languagesOf, StarterCode } from './judge';
 
@@ -80,6 +82,7 @@ interface AttemptRow {
   section_started_at: string | null;
   last_seen_at: string | null;
   violation_count: number;
+  device_id?: string | null;
   submit_reason: string | null;
   feedback: string | null;
 }
@@ -184,6 +187,34 @@ async function ownAttempt(userId: string, attemptId: string): Promise<AttemptRow
     return rows[0];
   });
   if (!attempt) throw notFound('Attempt not found.');
+  return attempt;
+}
+
+/** Who is calling: the device the browser reports and the IP (see controls.ts clientOf). */
+export interface ClientContext { deviceId: string | null; ip: string | null; info: DeviceInfo | null }
+
+/**
+ * An attempt belongs to the device it started on. If it carries on from another
+ * device (someone else finishing the test, or the paper passed to a second
+ * machine), that's recorded once per new device as a 'device_change' violation.
+ * Attempts started before devices were tracked adopt the first device seen.
+ */
+async function guardDevice(attempt: AttemptRow, client?: ClientContext): Promise<AttemptRow> {
+  if (!client?.deviceId || attempt.status !== 'in_progress') return attempt;
+  if (!attempt.device_id) {
+    await asSystem((db) => db.query(
+      `update public.test_attempts set device_id = $2, start_ip = coalesce(start_ip, $3::inet), device_info = coalesce(device_info, $4::jsonb)
+        where id = $1 and device_id is null`, [attempt.id, client.deviceId, client.ip, client.info ? JSON.stringify(client.info) : null]));
+    return { ...attempt, device_id: client.deviceId };
+  }
+  if (attempt.device_id === client.deviceId) return attempt;
+  const seen = await asSystem(async (db) => (await db.query(
+    `select 1 from campus.proctoring_events where attempt_id = $1 and event_type = 'device_change' and details->>'device_id' = $2`,
+    [attempt.id, client.deviceId])).rowCount);
+  if (!seen) {
+    const r = await recordEventInternal(attempt, 'device_change', client);
+    if (r.autoSubmitted) return { ...attempt, status: 'completed' as AttemptRow['status'] };
+  }
   return attempt;
 }
 
@@ -380,7 +411,7 @@ function assertInCurrentSection(attempt: AttemptRow, questionId: string) {
   if (!current.questionIds.includes(questionId)) throw new HttpError(423, 'That section has closed — its answers can no longer be changed.');
 }
 
-export async function startAttempt(userId: string, assignmentId: string, consent?: { rules: string[] }) {
+export async function startAttempt(userId: string, assignmentId: string, consent?: { rules: string[] }, client?: ClientContext) {
   const assignment = await visibleAssignment(userId, assignmentId);
   if (!assignment) throw notFound('Assignment not found.');
 
@@ -398,7 +429,7 @@ export async function startAttempt(userId: string, assignmentId: string, consent
 
   const open = mine.find((a) => a.status === 'in_progress');
   if (open) {
-    const current = await closeIfExpired(open);
+    const current = await guardDevice(await closeIfExpired(open), client);
     if (current.status === 'in_progress') return getAttemptView(userId, current.id);
   }
 
@@ -463,12 +494,15 @@ export async function startAttempt(userId: string, assignmentId: string, consent
       await db.query(
         `insert into public.test_attempts
            (id, user_id, test_id, assignment_id, org_id, attempt_number, status, started_at,
-            expires_at, answers, total_questions, total_marks, question_order, current_section, section_started_at, consent)
+            expires_at, answers, total_questions, total_marks, question_order, current_section, section_started_at, consent,
+            device_id, start_ip, device_info)
          values ($1, $2, $3, $4, $5, $6, 'in_progress', now(),
-                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now(), $13::jsonb)`,
+                 least(now() + make_interval(secs => $7::int), $8::timestamptz), $9::jsonb, $10, $11, $12::jsonb, 0, now(), $13::jsonb,
+                 $14, $15::inet, $16::jsonb)`,
         [attemptId, userId, assignment.test_id, assignment.id, assignment.org_id, used + 1,
          duration, closesBy.toISOString(), JSON.stringify(initialAnswers), questions.length, totalMarks, JSON.stringify(order),
-         consent ? JSON.stringify({ at: new Date().toISOString(), rules: consent.rules }) : null]
+         consent ? JSON.stringify({ at: new Date().toISOString(), rules: consent.rules }) : null,
+         client?.deviceId ?? null, client?.ip ?? null, client?.info ? JSON.stringify(client.info) : null]
       );
     } catch (err) {
       if ((err as { code?: string }).code === '23505') {
@@ -501,8 +535,8 @@ async function touch(attemptId: string) {
   await asSystem((db) => db.query(`update public.test_attempts set last_seen_at = now() where id = $1 and status = 'in_progress'`, [attemptId]));
 }
 
-export async function heartbeat(userId: string, attemptId: string) {
-  const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+export async function heartbeat(userId: string, attemptId: string, client?: ClientContext) {
+  const attempt = await guardDevice(await closeIfExpired(await ownAttempt(userId, attemptId)), client);
   if (attempt.status === 'in_progress') await touch(attemptId);
   return { status: attempt.status, expiresAt: attempt.expires_at };
 }
@@ -626,9 +660,10 @@ export async function saveAnswer(
   payload: {
     selectedOptions?: string[] | null; natValue?: number | null; code?: string | null; language?: string | null;
     textValue?: string | null; markedForReview?: boolean;
-  }
+  },
+  client?: ClientContext
 ) {
-  const attempt = await closeIfExpired(await ownAttempt(userId, attemptId));
+  const attempt = await guardDevice(await closeIfExpired(await ownAttempt(userId, attemptId)), client);
   if (attempt.status !== 'in_progress') throw new HttpError(409, 'Time is up — this attempt has been submitted.');
   assertInCurrentSection(attempt, questionId);
 
@@ -747,14 +782,23 @@ export async function runSamples(userId: string, attemptId: string, questionId: 
   }
 }
 
-export async function recordEvent(userId: string, attemptId: string, type: ProctoringEventType) {
-  const attempt = await ownAttempt(userId, attemptId);
+export async function recordEvent(userId: string, attemptId: string, type: ProctoringEventType, client?: ClientContext) {
+  if (SERVER_ONLY_EVENTS.includes(type)) throw badRequest('That event is recorded by the server.');
+  const attempt = await guardDevice(await ownAttempt(userId, attemptId), client);
+  return recordEventInternal(attempt, type, client);
+}
+
+/** Records a proctoring event (with the IP and device) and applies the policy. */
+async function recordEventInternal(attempt: AttemptRow, type: ProctoringEventType, client?: ClientContext) {
+  const attemptId = attempt.id;
+  const userId = attempt.user_id;
   if (attempt.status !== 'in_progress') return { severity: null, violationCount: attempt.violation_count, autoSubmitted: false };
   const assignment = await assignmentFor(attempt);
   const policy = normalizePolicy(assignment.proctoring);
   if (!policy.enabled) return { severity: null, violationCount: attempt.violation_count, autoSubmitted: false };
+  const details = JSON.stringify({ ip: client?.ip ?? null, device_id: client?.deviceId ?? null });
 
-  const severity = await asUser(userId, async (db) => {
+  const severity = await asSystem(async (db) => {
     const { rows } = await db.query<{ n: string }>(
       `select count(*) as n from campus.proctoring_events
         where attempt_id = $1 and event_type in ('tab_switch', 'window_blur', 'fullscreen_exit')`,
@@ -762,8 +806,8 @@ export async function recordEvent(userId: string, attemptId: string, type: Proct
     );
     const sev = countsAsLeave(type) ? classifyEvent(type, Number(rows[0].n), policy) : classifyEvent(type, 0, policy);
     await db.query(
-      `insert into campus.proctoring_events (org_id, attempt_id, user_id, event_type, severity) values ($1, $2, $3, $4, $5)`,
-      [attempt.org_id, attemptId, userId, type, sev]
+      `insert into campus.proctoring_events (org_id, attempt_id, user_id, event_type, severity, details) values ($1, $2, $3, $4, $5, $6::jsonb)`,
+      [attempt.org_id, attemptId, userId, type, sev, details]
     );
     return sev;
   });

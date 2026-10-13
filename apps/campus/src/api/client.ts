@@ -1,6 +1,8 @@
 // Sign-in goes through the Forge API (same accounts as the learner app);
 // everything else goes to the Campus API with the Supabase access token.
 
+import { deviceHeaders } from '@/lib/device';
+
 const FORGE = (import.meta.env.VITE_FORGE_API_URL ?? '').replace(/\/+$/, '');
 const CAMPUS = (import.meta.env.VITE_CAMPUS_API_URL ?? '').replace(/\/+$/, '');
 const STORAGE_KEY = 'forge_campus_session';
@@ -123,7 +125,7 @@ async function campusFetch(path: string, init: RequestInit = {}, retried = false
     ...init,
     headers: {
       ...(init.body ? { 'Content-Type': 'application/json' } : {}),
-      ...(t ? { Authorization: `Bearer ${t}` } : {}),
+      ...(t ? { Authorization: `Bearer ${t}`, ...(await deviceHeaders()) } : {}),
       ...init.headers,
     },
   });

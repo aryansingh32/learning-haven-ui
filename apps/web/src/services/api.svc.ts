@@ -1,4 +1,5 @@
 import { systemEventFromResponse } from '@/features/system/systemEvents';
+import { addDeviceHeaders } from '@/lib/device';
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { logger } from '../lib/logger';
 import {
@@ -33,6 +34,7 @@ class ApiService {
         const token = (await ensureValidAccessToken()) || getAccessToken();
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
+          await addDeviceHeaders(config.headers as any);
         }
         logger.debug(`API Request: ${config.method?.toUpperCase()} ${config.url}`, config.data);
         return config;

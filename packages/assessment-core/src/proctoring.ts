@@ -9,6 +9,12 @@ export const PROCTORING_EVENTS = [
   'copy',
   'paste',
   'context_menu',
+  // Integrity signals (added with device tracking)
+  'device_change', // the attempt was continued from another device than it started on (server-detected)
+  'multiple_screens', // the browser reports a second display
+  'devtools_open', // browser developer tools look open
+  'screenshot_key', // Print Screen / screenshot shortcut pressed
+  'large_paste', // a large block of text appeared in an answer at once
 ] as const;
 export type ProctoringEventType = (typeof PROCTORING_EVENTS)[number];
 
@@ -20,7 +26,18 @@ const COUNTS_AS_VIOLATION: Record<ProctoringEventType, boolean> = {
   copy: false,
   paste: false,
   context_menu: false,
+  device_change: true,
+  multiple_screens: false,
+  devtools_open: false,
+  screenshot_key: false,
+  large_paste: false,
 };
+
+/** Never just a warning: someone else may be taking the test. */
+const ALWAYS_VIOLATION: Partial<Record<ProctoringEventType, boolean>> = { device_change: true };
+
+/** Events only the server may record (the browser can't report them). */
+export const SERVER_ONLY_EVENTS: readonly ProctoringEventType[] = ['device_change'];
 
 export interface ProctoringPolicy {
   enabled: boolean;
@@ -51,13 +68,15 @@ export function classifyEvent(
   priorLeaveEvents: number,
   policy: ProctoringPolicy
 ): Severity {
+  if (ALWAYS_VIOLATION[type]) return 'violation';
   if (!COUNTS_AS_VIOLATION[type]) return 'warning';
   if (policy.warnFirst && priorLeaveEvents === 0) return 'warning';
   return 'violation';
 }
 
+/** Leaving the exam (tab, window, full screen): what "warn first" counts. */
 export function countsAsLeave(type: ProctoringEventType): boolean {
-  return COUNTS_AS_VIOLATION[type];
+  return type === 'tab_switch' || type === 'window_blur' || type === 'fullscreen_exit';
 }
 
 export function shouldAutoSubmit(violationCount: number, policy: ProctoringPolicy): boolean {

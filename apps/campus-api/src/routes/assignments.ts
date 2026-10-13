@@ -285,7 +285,7 @@ assignmentsRouter.get('/:assignmentId/attempts/:attemptId/events', async (req, r
   const orgId = orgIdOf(req);
   await requirePermission(userId, orgId, 'reports.view');
   const events = await asUser(userId, async (db) => (await db.query(
-    `select e.event_type as type, e.severity, e.occurred_at as "occurredAt"
+    `select e.event_type as type, e.severity, e.occurred_at as "occurredAt", e.details->>'ip' as ip
        from campus.proctoring_events e join public.test_attempts a on a.id = e.attempt_id
       where e.attempt_id = $1 and a.assignment_id = $2 and e.org_id = $3 order by e.occurred_at`,
     [uuid.parse(req.params.attemptId), uuid.parse(req.params.assignmentId), orgId]
@@ -395,6 +395,62 @@ assignmentsRouter.get('/:assignmentId/live', async (req, res) => {
       needsReview: rows.filter((r) => r.violations > 0 && !r.review).length,
     },
     rows,
+  });
+});
+
+/**
+ * Exam integrity for one assignment: each student's device (OS, browser, screen),
+ * IP, device changes and flagged events; and devices or networks shared between
+ * students (one device used by two students is the strongest sign of
+ * impersonation; a shared IP is often just the college lab, so it is shown
+ * apart).
+ */
+assignmentsRouter.get('/:assignmentId/integrity', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  const assignmentId = uuid.parse(req.params.assignmentId);
+  await requireAnyPermission(userId, orgId, [...WATCHERS]);
+  await visibleToStaff(userId, orgId, assignmentId);
+
+  const rows = await asSystem(async (db) => (await db.query<{
+    attempt_id: string; user_id: string; full_name: string | null; email: string; roll_number: string | null; status: string;
+    device_id: string | null; start_ip: string | null; device_info: Record<string, unknown> | null; violation_count: number;
+    started_at: string; events: Record<string, number> | null; ips: string[] | null; devices: string[] | null;
+  }>(
+    `select a.id as attempt_id, a.user_id, u.full_name, u.email, m.roll_number, a.status, a.device_id, regexp_replace(host(a.start_ip), '^::ffff:', '') as start_ip,
+            a.device_info, a.violation_count, a.started_at,
+            (select jsonb_object_agg(event_type, n) from (select event_type, count(*)::int n from campus.proctoring_events e
+               where e.attempt_id = a.id group by event_type) x) as events,
+            (select array_agg(distinct regexp_replace(d.ip, '^::ffff:', '')) from (select e.details->>'ip' as ip from campus.proctoring_events e where e.attempt_id = a.id
+               union select host(a.start_ip)) d where d.ip is not null) as ips,
+            (select array_agg(distinct e.details->>'device_id') from campus.proctoring_events e
+               where e.attempt_id = a.id and e.event_type = 'device_change') as devices
+       from public.test_attempts a
+       join public.users u on u.id = a.user_id
+       left join campus.org_memberships m on m.org_id = a.org_id and m.user_id = a.user_id
+      where a.assignment_id = $1
+      order by m.roll_number nulls last, u.full_name`, [assignmentId])).rows);
+
+  const label = (r: (typeof rows)[number]) => ({ userId: r.user_id, name: r.full_name ?? r.email, rollNumber: r.roll_number });
+  const group = (key: (r: (typeof rows)[number]) => string[]) => {
+    const by = new Map<string, Map<string, ReturnType<typeof label>>>();
+    for (const r of rows) for (const k of key(r)) {
+      if (!by.has(k)) by.set(k, new Map());
+      by.get(k)!.set(r.user_id, label(r));
+    }
+    return [...by.entries()].filter(([, users]) => users.size > 1).map(([k, users]) => ({ key: k, students: [...users.values()] }));
+  };
+
+  res.json({
+    attempts: rows.map((r) => ({
+      attemptId: r.attempt_id, ...label(r), status: r.status, startedAt: r.started_at,
+      device: r.device_info ? { ...r.device_info, id: r.device_id ? r.device_id.slice(0, 12) : null } : null,
+      ip: r.start_ip, ips: r.ips ?? [], otherDevices: (r.devices ?? []).filter(Boolean).length,
+      violations: r.violation_count, events: r.events ?? {},
+    })),
+    sharedDevices: group((r) => [r.device_id, ...(r.devices ?? [])].filter((x): x is string => Boolean(x)))
+      .map((g) => ({ device: g.key.slice(0, 12), students: g.students })),
+    sharedIps: group((r) => r.ips ?? []).map((g) => ({ ip: g.key, students: g.students })),
   });
 });
 

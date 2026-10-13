@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { pool } from './db';
 import { userOf } from './auth';
 import { HttpError } from './errors';
+import { deviceIdOf, deviceInfoOf } from '@repo/assessment-core';
+import type { ClientContext } from './services/attempts';
 
 /**
  * Forge admin controls that also apply here: suspended accounts (users.is_banned)
@@ -27,7 +29,31 @@ export async function rejectSuspended(req: Request, _res: Response, next: NextFu
   } catch {
     // never lock everyone out over a lookup
   }
+  recordDevice(id, req);
   next();
+}
+
+/** The device the browser reports (X-Device-Id / X-Device-Info) and the caller's IP. */
+export function clientOf(req: Request): ClientContext {
+  const deviceId = deviceIdOf(req.get('x-device-id'));
+  return { deviceId, ip: req.ip ? req.ip.replace(/^::ffff:/, '') : null, info: deviceId ? deviceInfoOf(req.get('x-device-info'), req.get('user-agent')) : null };
+}
+
+const DEVICE_THROTTLE_MS = 10 * 60_000;
+const seenDevices = new Map<string, number>();
+/** Same record as the Forge API keeps (public.user_devices), at most every 10 minutes per device and IP. */
+function recordDevice(userId: string, req: Request) {
+  const c = clientOf(req);
+  if (!c.deviceId) return;
+  const key = `${userId}|${c.deviceId}|${c.ip}`;
+  const last = seenDevices.get(key);
+  if (last && Date.now() - last < DEVICE_THROTTLE_MS) return;
+  if (seenDevices.size > 50_000) seenDevices.clear();
+  seenDevices.set(key, Date.now());
+  Promise.resolve()
+    .then(() => pool.query(`select public.record_device($1, $2, $3::inet, $4, $5::jsonb)`,
+      [userId, c.deviceId, c.ip, req.get('user-agent') ?? null, JSON.stringify(c.info)]))
+    .catch(() => seenDevices.delete(key));
 }
 
 /** Refuses a module's requests while Forge staff have switched it off. */
