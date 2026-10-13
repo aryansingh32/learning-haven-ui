@@ -10,6 +10,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { MentorContext } from "@/lib/gamification";
 import { useRoadmap } from "@/context/RoadmapContext";
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 interface Message {
   role: "user" | "assistant";
@@ -21,6 +22,7 @@ interface Message {
 
 const AICoachPage = () => {
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [mentorInitiated, setMentorInitiated] = useState(false);
@@ -224,6 +226,7 @@ const AICoachPage = () => {
           onClick={handleClearChat}
           className="p-2 rounded-xl hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors border border-border/40"
           title="Clear History"
+          aria-label="Clear chat history"
         >
           <Trash2 className="h-4 w-4" />
         </button>
@@ -378,7 +381,7 @@ const AICoachPage = () => {
             <p className="text-xs text-muted-foreground mt-1">Upgrade to Pro for unlimited AI mentoring and faster responses.</p>
           </div>
           <button
-            onClick={() => navigate('/pricing')}
+            onClick={() => checkout.open({ reason: "You've reached today's AI mentor limit. Upgrade for unlimited help." })}
             className="px-6 py-2 rounded-lg bg-reward text-reward-foreground font-bold text-xs hover:bg-reward/90 transition-all shadow-sm"
           >
             Unlock Unlimited AI

@@ -16,6 +16,7 @@ import { fetchCourseNotebook, exportCourseNotebookPdf, saveChapterNotes, type No
 import { PremiumLockBadge } from '@/components/PremiumLockBadge';
 import { parseEntitlementError } from '@/lib/entitlementError';
 import { toast } from 'sonner';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 type NotebookPage =
   | { kind: 'cover' }
@@ -26,6 +27,7 @@ type NotebookPage =
 export default function NotebookPage() {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const qc = useQueryClient();
   const [pageIndex, setPageIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -48,7 +50,7 @@ export default function NotebookPage() {
       const { denied } = parseEntitlementError(err);
       if (denied) {
         toast.error('PDF export is a Pro feature.', {
-          action: { label: 'Upgrade', onClick: () => navigate('/pricing') },
+          action: { label: 'Upgrade', onClick: () => checkout.open({ reason: 'Notebook PDF export is part of Pro.' }) },
         });
       } else {
         toast.error('Could not generate the PDF. Try again.');

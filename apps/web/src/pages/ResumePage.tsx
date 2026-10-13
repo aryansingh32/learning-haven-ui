@@ -34,13 +34,15 @@ export default function ResumePage() {
     // Track whether we've finished loading from server (or confirmed no data exists)
     const [hasLoadedInitialData, setHasLoadedInitialData] = useState(false);
 
-    const { data: apiResumeData, isSuccess: apiLoaded } = useApiQuery<any>(['resume'], '/resume', {
-        // Don't retry on 404 — backend endpoint may not be deployed yet
-        retry: false,
-    });
+    // Saved resume: GET /api/user-resume → { resume, version } (this page used to call
+    // /api/resume, which doesn't exist, so nothing was ever loaded or saved).
+    const { data: apiResumeResponse, isSuccess, isError } = useApiQuery<any>(['resume'], '/user-resume', { retry: 1 });
+    const apiResumeData = (apiResumeResponse as any)?.data?.resume ?? (apiResumeResponse as any)?.resume ?? null;
+    // Settled either way: on an error the browser's copy is still used.
+    const apiLoaded = isSuccess || isError;
 
     const saveMutation = useApiMutation<any, any>(
-        (variables) => api.post('/resume', variables)
+        (variables) => api.post('/user-resume', { data: variables })
     );
 
     // BH-2.4: Single, ordered data-loading effect.

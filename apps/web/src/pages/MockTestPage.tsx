@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { startMockTest, submitMockTest, type MockTestStartResult, type MockTestSubmitResult } from '@/data/mockTest';
 import { parseEntitlementError } from '@/lib/entitlementError';
 import { toast } from 'sonner';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 type Phase = 'intro' | 'in_progress' | 'results';
 
@@ -21,6 +22,7 @@ function formatTime(seconds: number) {
 export default function MockTestPage() {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
+  const checkout = useCheckout();
 
   const [phase, setPhase] = useState<Phase>('intro');
   const [test, setTest] = useState<MockTestStartResult | null>(null);
@@ -41,7 +43,7 @@ export default function MockTestPage() {
       const { denied, message } = parseEntitlementError(err);
       if (denied) {
         toast.error(message || "You've used today's mock test attempt.", {
-          action: { label: 'Upgrade', onClick: () => navigate('/pricing') },
+          action: { label: 'Upgrade', onClick: () => checkout.open({ reason: "You've used today's free mock test." }) },
         });
       } else {
         toast.error((err as Error)?.message || 'Could not start the mock test.');

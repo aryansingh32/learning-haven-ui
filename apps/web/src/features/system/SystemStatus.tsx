@@ -96,7 +96,6 @@ export function SystemStatusProvider({ children }: { children: ReactNode }) {
           Maintenance mode is on: learners see the maintenance screen. You can keep working.
         </div>
       )}
-      <AnnouncementBar items={status.announcements} />
       {children}
     </Ctx.Provider>
   );
@@ -120,7 +119,9 @@ const LEVEL = {
   critical: { cls: 'bg-destructive text-destructive-foreground border-destructive', icon: AlertTriangle },
 };
 
-function AnnouncementBar({ items }: { items: SystemAnnouncement[] }) {
+/** Announcements for this learner; the app layout places it at the top of the content column. */
+export function AnnouncementBar() {
+  const items = useContext(Ctx).announcements;
   const { pathname } = useLocation();
   const [dismissed, setDismissed] = useState<string[]>(readDismissed);
   if (NO_BANNER.some((re) => re.test(pathname))) return null;

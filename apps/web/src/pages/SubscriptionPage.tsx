@@ -24,9 +24,11 @@ import { useApiQuery, useApiMutation } from '@/hooks/useApi';
 import { api } from '@/services/api.svc';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 export default function SubscriptionPage() {
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const [searchParams] = useSearchParams();
   const contextCourseId = searchParams.get('course_id');
   const { tier, isPaid, entitlements } = useEntitlements();
@@ -89,7 +91,7 @@ export default function SubscriptionPage() {
             <p className="text-xs text-muted-foreground">A Pro subscription gives you unlimited access to every course, AI mentor, and career tools.</p>
           </div>
           <button
-            onClick={() => navigate('/pricing')}
+            onClick={() => checkout.open()}
             className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold shrink-0 hover:bg-primary/90 transition-colors"
           >
             See plans
@@ -148,7 +150,7 @@ export default function SubscriptionPage() {
         <div className="flex gap-3">
           {!isPaid ? (
             <button
-              onClick={() => navigate('/pricing')}
+              onClick={() => checkout.open()}
               className="flex-1 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:-translate-y-0.5 transition-all shadow-lg flex items-center justify-center gap-2"
             >
               Upgrade to Pro <ArrowRight className="w-4 h-4" />
@@ -156,7 +158,7 @@ export default function SubscriptionPage() {
           ) : (
             <>
               <button
-                onClick={() => navigate('/pricing')}
+                onClick={() => checkout.open()}
                 className="flex-1 py-3 rounded-xl bg-secondary text-foreground font-semibold text-sm hover:bg-secondary/80 transition-colors border border-border/40"
               >
                 Change Plan
@@ -249,7 +251,7 @@ export default function SubscriptionPage() {
             <CreditCard className="w-8 h-8 mx-auto mb-2" />
             <p className="text-sm text-muted-foreground">No orders yet</p>
             <button
-              onClick={() => navigate('/pricing')}
+              onClick={() => checkout.open()}
               className="mt-3 text-xs text-primary font-semibold hover:underline"
             >
               View Plans →

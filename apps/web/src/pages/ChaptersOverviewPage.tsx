@@ -11,6 +11,7 @@ import { useLearnCourse } from "@/hooks/useLearnCourse";
 import { PremiumLockBadge } from "@/components/PremiumLockBadge";
 import { AssignedCourseBanner } from "@/features/campus/CollegeCourses";
 import { formatUnlockDate } from "@/data/learning";
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 const difficultyStyles: Record<string, string> = {
   easy: "bg-success/10 text-success border border-success/20",
@@ -33,6 +34,7 @@ function normalizeDifficulty(d?: string) {
 
 export default function ChaptersOverviewPage() {
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const { courseId } = useParams();
   const { course, chapters, isLoading, completedCount, progressPercent, gate } = useLearnCourse(courseId);
   const prereqBlocked = Boolean(gate?.prerequisites_blocked);
@@ -148,7 +150,7 @@ export default function ChaptersOverviewPage() {
             <h1 className="font-display text-2xl font-extrabold text-foreground">{phaseTitle}</h1>
             <p className="text-sm text-muted-foreground mt-1 max-w-xl">{phaseDescription}</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {courseId && (
               <button
                 type="button"
@@ -196,6 +198,28 @@ export default function ChaptersOverviewPage() {
             />
           </div>
         </div>
+        {missions.some((m) => m.paywalled) && (
+          <div className="mt-5 flex flex-col gap-3 rounded-xl border border-orange-500/30 bg-orange-500/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="flex items-center gap-2 font-semibold text-foreground">
+                <Lock className="h-4 w-4 text-orange-500" /> This is a paid course
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {missions.some((m) => !m.paywalled && !m.locked) ? 'Chapter 1 is free to try. ' : ''}
+                {(course as any)?.is_individually_purchasable && (course as any)?.price
+                  ? `Unlock all ${missions.length} chapters for ₹${Math.round((course as any).price / 100).toLocaleString('en-IN')} (lifetime), or with a Pro plan.`
+                  : `Unlock all ${missions.length} chapters with a Pro plan.`}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => checkout.open({ course: course ? { id: course.id, title: course.title } : undefined })}
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-orange-600"
+            >
+              Unlock course <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </section>
 
       {missions.length === 0 ? (
@@ -220,9 +244,11 @@ export default function ChaptersOverviewPage() {
               const blurredMissions = missions.slice(visibleCount);
 
               const renderMission = (mission: typeof missions[0], index: number, isBlurredSection: boolean = false) => {
-                const isComplete = mission.status === "COMPLETED" || (index < safeActiveIndex && !mission.locked);
-                const isActuallyActive = index === safeActiveIndex && !mission.locked && !mission.paywalled;
                 const isLockedOrPaywalled = mission.locked || mission.paywalled;
+                // Only a chapter the learner could open counts as done by position (a paywalled
+                // one used to show "Completed" because nothing after it was active).
+                const isComplete = mission.status === "COMPLETED" || (index < safeActiveIndex && !isLockedOrPaywalled);
+                const isActuallyActive = index === safeActiveIndex && !isLockedOrPaywalled;
                 const statusLabel = isComplete ? "Completed" : mission.paywalled ? "Pro Required" : mission.dripLocked && !mission.sequenceLocked ? "Coming soon" : mission.locked ? "Locked" : "Active";
                 const IconComponent = iconMap[mission.icon] || Grid;
 
@@ -252,13 +278,13 @@ export default function ChaptersOverviewPage() {
                       tabIndex={mission.locked || isBlurredSection ? -1 : 0}
                       onClick={() => {
                         if (isBlurredSection) return;
-                        if (mission.paywalled) navigate('/pricing');
+                        if (mission.paywalled) checkout.open({ course: course ? { id: course.id, title: course.title } : undefined });
                         else if (!mission.locked) navigate(`/chapter/${mission.id}`);
                       }}
                       onKeyDown={(e) => {
                         if (isBlurredSection) return;
                         if (e.key === "Enter") {
-                          if (mission.paywalled) navigate('/pricing');
+                          if (mission.paywalled) checkout.open({ course: course ? { id: course.id, title: course.title } : undefined });
                           else if (!mission.locked) navigate(`/chapter/${mission.id}`);
                         }
                       }}
@@ -271,12 +297,6 @@ export default function ChaptersOverviewPage() {
                             : "bg-background/80 border-border/60 cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:bg-background"
                       )}
                     >
-                      {isLockedOrPaywalled && (
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
-                          <Lock className="w-32 h-32" />
-                        </div>
-                      )}
-
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative z-10">
                         <div className="flex gap-4">
                           <div
@@ -329,7 +349,7 @@ export default function ChaptersOverviewPage() {
                         </div>
                       </div>
 
-                      {!mission.locked && !isBlurredSection && (
+                      {!mission.locked && !mission.paywalled && !isBlurredSection && (
                         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 relative z-10">
                           <motion.div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
                             <span className={cn(
@@ -386,8 +406,13 @@ export default function ChaptersOverviewPage() {
                       )}
 
                       {mission.paywalled && !isBlurredSection && (
-                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-orange-500 uppercase tracking-widest relative z-10">
-                          <Lock className="w-3.5 h-3.5" /> Pro required to unlock this chapter
+                        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 relative z-10">
+                          <span className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+                            <Lock className="w-3.5 h-3.5 text-orange-500" /> Included when you unlock the course
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 rounded-xl border border-orange-500/40 px-4 py-2 text-sm font-bold text-orange-600 dark:text-orange-400">
+                            Unlock <ArrowRight className="h-4 w-4" />
+                          </span>
                         </div>
                       )}
                     </div>
@@ -406,13 +431,13 @@ export default function ChaptersOverviewPage() {
                           <Lock className="w-12 h-12 text-orange-500 mx-auto mb-4 opacity-80" />
                           <h3 className="text-xl font-bold mb-2">Unlock the Full Course</h3>
                           <p className="text-sm text-muted-foreground mb-6">
-                            Get Learning Haven Pro to access all {missions.length} chapters and master the complete curriculum.
+                            Buy this course or go Pro to open all {missions.length} chapters and master the complete curriculum.
                           </p>
                           <button
-                            onClick={() => navigate('/pricing')}
+                            onClick={() => checkout.open({ course: course ? { id: course.id, title: course.title } : undefined })}
                             className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-all bg-orange-500 hover:bg-orange-600 text-white shadow-[0_4px_14px_rgba(249,115,22,0.3)] hover:-translate-y-0.5"
                           >
-                            Upgrade to Premium <ArrowRight className="h-4 w-4" />
+                            Unlock the course <ArrowRight className="h-4 w-4" />
                           </button>
                         </div>
                       </div>

@@ -3,11 +3,11 @@ import {
   LayoutDashboard, BookOpen, Bot, Gift, Award,
   Menu, X, Moon, Sun, LogOut, Briefcase, FileText, Hammer, Trophy, CreditCard, ListChecks, ClipboardList, GraduationCap, Medal,
   Globe, ShieldCheck,
-  UsersRound,
+  UsersRound, MoreHorizontal, ChevronDown,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile, SHELL_BREAKPOINT } from "@/hooks/use-mobile";
 import { useTheme } from "@/hooks/useTheme";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
@@ -19,6 +19,10 @@ import { EntitlementProvider } from "@/services/entitlement.service";
 import { useCampusMe } from "@/hooks/useCampus";
 import { NotificationBell } from "@/features/campus/NotificationBell";
 import { EmailVerifyBanner } from "@/features/account/EmailVerifyBanner";
+import { AnnouncementBar } from "@/features/system/SystemStatus";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const primaryNav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Home" },
@@ -34,6 +38,8 @@ const primaryNav = [
 const collegeNavItem = { to: "/college", icon: GraduationCap, label: "My College" };
 // Doubts, people and project teams of the learner's college.
 const communityNavItem = { to: "/community", icon: UsersRound, label: "Community" };
+// The phone bottom bar: four destinations and "More" (the full menu). Seven tabs didn't fit.
+const mobileTabs = primaryNav.filter((i) => ["/dashboard", "/courses", "/topics", "/test-series"].includes(i.to));
 // Sidebar and drawer only (the mobile bottom bar has no room); reachable from Home and Profile too.
 const achievementsNavItem = { to: "/achievements", icon: Medal, label: "Achievements" };
 
@@ -48,7 +54,7 @@ const careerNav = [
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(SHELL_BREAKPOINT);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
@@ -58,6 +64,44 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   // The mobile bottom bar stays as it is; My College lives in the sidebar and drawer.
   const journeyNav = [...primaryNav.slice(0, -1), achievementsNavItem, primaryNav[primaryNav.length - 1]];
   const sidebarNav = isStudent ? [journeyNav[0], collegeNavItem, communityNavItem, ...journeyNav.slice(1)] : journeyNav;
+
+  const themeButton = (className?: string) => (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      title={theme === "light" ? "Dark mode" : "Light mode"}
+      className={cn("p-2 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors", className)}
+    >
+      <motion.span key={theme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} className="block">
+        {theme === "light" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
+      </motion.span>
+    </button>
+  );
+
+  const initial = (user?.full_name?.[0] || user?.email?.[0] || "U").toUpperCase();
+  const accountMenu = (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button type="button" aria-label="Account menu" className="flex items-center gap-1.5 rounded-xl p-1 pr-2 hover:bg-secondary transition-colors">
+          <span className="h-8 w-8 rounded-lg gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm">{initial}</span>
+          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="font-normal">
+          <p className="text-sm font-medium truncate">{user?.full_name || "User"}</p>
+          <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild><RouterNavLink to="/profile"><Trophy className="mr-2 h-4 w-4" />Profile</RouterNavLink></DropdownMenuItem>
+        <DropdownMenuItem asChild><RouterNavLink to="/settings/account"><ShieldCheck className="mr-2 h-4 w-4" />Account &amp; security</RouterNavLink></DropdownMenuItem>
+        <DropdownMenuItem asChild><RouterNavLink to="/subscription"><CreditCard className="mr-2 h-4 w-4" />Billing</RouterNavLink></DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => logout()} className="text-destructive focus:text-destructive"><LogOut className="mr-2 h-4 w-4" />Sign out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 
   const renderNavItem = (item: typeof primaryNav[0], onClick?: () => void) => (
     <RouterNavLink
@@ -98,17 +142,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Desktop Sidebar */}
       {!isMobile && (
         <aside className="fixed left-0 top-0 bottom-0 w-[260px] bg-sidebar z-30 flex flex-col border-r border-border/40">
-          <div className="p-6 border-b border-border/40 flex items-start justify-between gap-2">
+          <div className="h-16 px-6 border-b border-border/40 flex items-center">
             <div>
               <h1 className="font-display text-xl font-bold text-foreground tracking-tight">
                 <span className="text-gradient-golden">FORGE</span>
               </h1>
               <p className="text-meta text-muted-foreground mt-0.5 tracking-wide">From zero to hired</p>
             </div>
-            <NotificationBell className="-mr-2 -mt-1" />
           </div>
 
-          <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
+          <nav aria-label="Main" className="flex-1 min-h-0 p-3 space-y-0.5 overflow-y-auto">
             <p className="text-caption font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
             {sidebarNav.map((item) => renderNavItem(item))}
 
@@ -121,7 +164,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   aria-label={item.label}
                   className={({ isActive }) =>
                     cn(
-                      "flex items-center gap-3 px-4 py-2 rounded-xl text-meta font-medium transition-all duration-200",
+                      "flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
                       isActive
                         ? "bg-secondary text-foreground"
                         : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
@@ -135,42 +178,15 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </nav>
 
-          <div className="p-3 border-t border-border/40">
-            <button
-              onClick={toggleTheme}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-secondary/80 hover:text-foreground transition-all group"
-            >
-              <motion.div
-                key={theme}
-                initial={{ rotate: -30, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {theme === "light" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
-              </motion.div>
-              {theme === "light" ? "Dark Mode" : "Light Mode"}
-            </button>
-          </div>
-
-          <div className="p-4 border-t border-border/40 space-y-2">
-            <RouterNavLink to="/profile" className="flex items-center gap-3 p-2 rounded-xl hover:bg-secondary/80 transition-colors group">
-              <div className="h-9 w-9 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-sm group-hover:shadow-md transition-shadow">
-                {user?.full_name?.[0] || user?.email?.[0] || "U"}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{user?.full_name || "User"}</p>
-                <p className="text-caption text-reward font-semibold truncate">{identity?.identity.title || 'Novice Coder'}</p>
-                <p className="text-caption text-muted-foreground">Level {identity?.level || (user as any)?.level || 1} • {identity?.xp || (user as any)?.xp || 0} XP</p>
-              </div>
-            </RouterNavLink>
-            <button
-              onClick={logout}
-              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-destructive transition-colors"
-            >
-              <LogOut className="h-3.5 w-3.5" />
-              Sign Out
-            </button>
-          </div>
+          <RouterNavLink to="/profile" className="m-3 flex items-center gap-3 p-2 rounded-xl border border-border/40 hover:bg-secondary/80 transition-colors">
+            <span className="h-9 w-9 shrink-0 rounded-xl gradient-golden flex items-center justify-center text-primary-foreground font-display font-bold text-sm">{initial}</span>
+            <span className="flex-1 min-w-0">
+              <span className="block text-sm font-medium text-foreground truncate">{user?.full_name || "User"}</span>
+              <span className="block text-caption text-muted-foreground truncate">
+                <span className="text-reward font-semibold">{identity?.identity.title || 'Novice Coder'}</span> · Lv {identity?.level || (user as any)?.level || 1} · {identity?.xp || (user as any)?.xp || 0} XP
+              </span>
+            </span>
+          </RouterNavLink>
         </aside>
       )}
 
@@ -178,7 +194,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {isMobile && (
         <header className="fixed top-0 left-0 right-0 h-14 card-glass z-30 flex items-center justify-between px-4 border-b border-border/40">
           <div className="flex items-center">
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-xl hover:bg-secondary transition-colors">
+            <button type="button" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label={sidebarOpen ? "Close menu" : "Open menu"} aria-expanded={sidebarOpen} className="p-2 rounded-xl hover:bg-secondary transition-colors">
               {sidebarOpen ? <X className="h-5 w-5 text-foreground" /> : <Menu className="h-5 w-5 text-foreground" />}
             </button>
             <h1 className="ml-3 font-display text-lg font-bold text-foreground">
@@ -186,12 +202,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </h1>
           </div>
           <div className="flex items-center gap-1">
+          {themeButton()}
           <NotificationBell />
-          <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-secondary transition-colors">
-            <motion.div key={theme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }}>
-              {theme === "light" ? <Moon className="h-4 w-4 text-muted-foreground" /> : <Sun className="h-4 w-4 text-muted-foreground" />}
-            </motion.div>
-          </button>
           </div>
         </header>
       )}
@@ -219,7 +231,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <span className="text-gradient-golden">FORGE</span>
                 </h1>
               </div>
-              <nav className="flex-1 p-3 space-y-0.5">
+              <nav aria-label="Main" className="flex-1 min-h-0 overflow-y-auto p-3 space-y-0.5">
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-4 pt-2 pb-1">Journey</p>
                 {sidebarNav.map((item) => renderNavItem(item, () => setSidebarOpen(false)))}
                 <div className="pt-3 mt-3 border-t border-border/30">
@@ -243,6 +255,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     </RouterNavLink>
                   ))}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => { setSidebarOpen(false); logout(); }}
+                  className="mt-3 w-full flex items-center gap-3 px-4 py-2 rounded-xl text-[13px] font-medium text-muted-foreground hover:text-destructive"
+                >
+                  <LogOut className="h-4 w-4" /> Sign out
+                </button>
               </nav>
             </motion.aside>
           </>
@@ -251,16 +270,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Floating Bottom Nav — primary only */}
       {isMobile && (
-        <nav className="fixed bottom-3 left-0 right-0 z-30 flex justify-center">
-          <div className="card-glass floating-nav border border-border/40 flex justify-around py-2 px-3 w-[calc(100%-2rem)]">
-            {primaryNav.map((item) => (
+        <nav aria-label="Quick" className="fixed bottom-3 left-0 right-0 z-30 flex justify-center pb-[env(safe-area-inset-bottom)]">
+          <div className="card-glass floating-nav border border-border/40 flex justify-around gap-1 py-1.5 px-2 w-[calc(100%-1.5rem)] max-w-md">
+            {mobileTabs.map((item) => (
               <RouterNavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === "/dashboard"}
                 className={({ isActive }) =>
                   cn(
-                    "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl text-[10px] font-medium transition-all duration-200 relative",
+                    "flex flex-1 flex-col items-center gap-0.5 py-1.5 rounded-xl text-[11px] font-medium transition-all duration-200 relative min-w-0",
                     isActive ? "text-primary" : "text-muted-foreground"
                   )
                 }
@@ -274,21 +293,41 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
-                    <item.icon className={cn("h-5 w-5 transition-transform", isActive && "scale-110")} />
-                    {item.label}
+                    <item.icon className={cn("h-5 w-5 transition-transform", isActive && "scale-110")} aria-hidden="true" />
+                    <span className="truncate max-w-full">{item.label === "Test Series" ? "Tests" : item.label}</span>
                   </>
                 )}
               </RouterNavLink>
             ))}
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="More: all sections"
+              className="flex flex-1 flex-col items-center gap-0.5 py-1.5 rounded-xl text-[11px] font-medium text-muted-foreground min-w-0"
+            >
+              <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
+              More
+            </button>
           </div>
         </nav>
       )}
 
       {/* Main Content */}
+      {/* Desktop top bar: theme next to notifications, account menu */}
+      {!isMobile && (
+        <header className="fixed top-0 right-0 left-[260px] h-16 z-20 flex items-center justify-end gap-1 px-6 lg:px-8 bg-background/80 backdrop-blur border-b border-border/40">
+          {themeButton()}
+          <NotificationBell />
+          <div className="ml-2">{accountMenu}</div>
+        </header>
+      )}
+
       <main className={cn(
         "min-h-screen transition-all duration-300",
-        isMobile ? "pt-14 pb-24 px-4" : "ml-[260px] p-6 lg:p-8"
+        isMobile ? "pt-14 pb-36 px-4" : "ml-[260px] pt-16 px-6 lg:px-8 pb-24"
       )}>
+        <div className={cn(isMobile ? "-mx-4" : "-mx-6 lg:-mx-8")}><AnnouncementBar /></div>
+        <div className={isMobile ? "pt-4" : "pt-6 lg:pt-8"} />
         <EntitlementProvider>
           <RoadmapProvider>
             <AnimatePresence mode="wait">

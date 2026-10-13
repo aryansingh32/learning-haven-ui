@@ -364,7 +364,7 @@ export function ProblemDetailPanel({ problem, question, editor }: { problem: Pro
   ];
   return (
     <div className="h-full flex flex-col bg-zinc-950">
-      <div role="tablist" className="flex items-center gap-1 px-2 sm:px-3 py-2 border-b border-white/5 bg-zinc-900/40 overflow-x-auto">
+      <div role="tablist" className="flex flex-wrap items-center gap-1 px-2 sm:px-3 py-2 border-b border-white/5 bg-zinc-900/40 min-w-0">
         {tabs.map((t) => (
           <button
             key={t.key}

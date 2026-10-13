@@ -26,6 +26,7 @@ import { AssessmentPerformance } from '@/features/dashboard/AssessmentPerformanc
 import { ActivityFeed } from '@/features/dashboard/ActivityFeed';
 import { ReadinessCard } from '@/features/dashboard/ReadinessCard';
 import { AchievementsWidget } from '@/features/achievements/AchievementsWidget';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 // ─── Activity Calendar (GitHub-style, real data) ───────────────────────────
 function ActivityCalendar({ heatmap }: { heatmap: { date: string; count: number; level: number }[] }) {
@@ -122,6 +123,7 @@ function StatCard({ icon: Icon, label, value, color }: {
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const checkout = useCheckout();
   const [searchParams] = useSearchParams();
   const { isPaid } = useEntitlements();
 
@@ -476,7 +478,7 @@ const Index = () => {
                   Unlock unlimited AI mentoring, premium real-world build challenges, and advanced chapters.
                 </p>
                 <button
-                  onClick={() => navigate('/pricing')}
+                  onClick={() => checkout.open()}
                   className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 flex items-center gap-2"
                 >
                   View Plans & Pricing <ArrowRight className="w-4 h-4" />

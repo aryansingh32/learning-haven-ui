@@ -8,6 +8,7 @@ import { initErrorTracking } from "@/lib/analytics";
 import { lazy, Suspense } from "react";
 import { AuthProvider } from "@/context/AuthContext";
 import { SystemStatusProvider } from "@/features/system/SystemStatus";
+import { CheckoutProvider } from "@/features/checkout/CheckoutProvider";
 
 initErrorTracking();
 
@@ -114,6 +115,7 @@ const App = () => (
         <AuthProvider>
           {/* BH-002: Suspense boundary required for all React.lazy() components */}
           <SystemStatusProvider>
+          <CheckoutProvider>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/test-editor" element={<CodeExecutorTest />} />
@@ -239,6 +241,7 @@ const App = () => (
               />
             </Routes>
           </Suspense>
+          </CheckoutProvider>
           </SystemStatusProvider>
         </AuthProvider>
         </BrowserRouter>

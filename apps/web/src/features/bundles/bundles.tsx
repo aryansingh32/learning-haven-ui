@@ -6,6 +6,8 @@ import { ArrowLeft, BookOpen, CheckCircle2, Loader2, Package, ShieldCheck } from
 import { cn } from '@/lib/utils';
 import { api } from '@/services/api.svc';
 import { Button } from '@/components/ui/button';
+import { orderOf, payOrder } from '@/features/checkout/razorpay';
+import { useAuth } from '@/context/AuthContext';
 
 export interface BundleCourse { id: string; title: string; slug: string; difficulty: string | null; price: number | null; chapters: number; owned: boolean }
 export interface Bundle {
@@ -18,35 +20,10 @@ export const fetchBundle = (slug: string): Promise<Bundle> => api.get(`/bundles/
 const rupees = (paise: number) => `₹${(paise / 100).toLocaleString('en-IN')}`;
 const saving = (b: Bundle) => (b.separatelyPrice && b.separatelyPrice > b.price ? Math.round(100 - (b.price / b.separatelyPrice) * 100) : 0);
 
-declare global { interface Window { Razorpay: any } }
-function loadRazorpay(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (window.Razorpay) return resolve();
-    const s = document.createElement('script');
-    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    s.onload = () => resolve();
-    s.onerror = () => reject(new Error('Could not load the payment window. Check your connection.'));
-    document.head.appendChild(s);
-  });
-}
-
-/** Order → Razorpay → verify. Resolves once access is granted; rejects with "Payment cancelled" if closed. */
-async function buyBundle(bundle: Bundle) {
-  const order: any = (await api.post('/v2/payments/create-bundle-order', { bundle_id: bundle.id })) as any;
-  const { razorpayOrderId, finalAmount, keyId } = order.data ?? order;
-  const verify = (paymentId: string, signature: string) => api.post('/v2/payments/verify', {
-    razorpay_order_id: razorpayOrderId, razorpay_payment_id: paymentId || razorpayOrderId, razorpay_signature: signature || 'free',
-  });
-  if (String(razorpayOrderId).startsWith('free_')) return verify('', '');
-  await loadRazorpay();
-  return new Promise((resolve, reject) => {
-    new window.Razorpay({
-      key: keyId, amount: finalAmount, currency: bundle.currency || 'INR', name: 'Forge', description: `Bundle: ${bundle.title}`,
-      order_id: razorpayOrderId, theme: { color: '#7C3AED' },
-      handler: (r: any) => verify(r.razorpay_payment_id, r.razorpay_signature).then(resolve, reject),
-      modal: { ondismiss: () => reject(new Error('Payment cancelled')) },
-    }).open();
-  });
+/** Order → Razorpay (in the page) → verify. Resolves 'paid' once access is granted, or 'cancelled'. */
+async function buyBundle(bundle: Bundle, buyer: { name?: string; email?: string }) {
+  const order = orderOf(await api.post('/v2/payments/create-bundle-order', { bundle_id: bundle.id }));
+  return payOrder(order, { title: `Bundle: ${bundle.title}`, ...buyer, onFailedAttempt: (m) => toast.error(m) });
 }
 
 function PriceLine({ b, large = false }: { b: Bundle; large?: boolean }) {
@@ -55,7 +32,7 @@ function PriceLine({ b, large = false }: { b: Bundle; large?: boolean }) {
       <span className="font-display font-bold text-foreground">{rupees(b.price)}</span>
       {b.separatelyPrice != null && b.separatelyPrice > b.price && <span className="text-sm text-muted-foreground line-through">{rupees(b.separatelyPrice)}</span>}
       {saving(b) > 0 && <span className="rounded-full bg-success/10 px-2 py-0.5 text-xs font-semibold text-success">Save {saving(b)}%</span>}
-      <span className="text-xs text-muted-foreground">+ GST</span>
+      <span className="text-xs text-muted-foreground">incl. GST</span>
     </p>
   );
 }
@@ -87,9 +64,11 @@ export function BundlePage() {
   const qc = useQueryClient();
   const { data: b, isLoading, error } = useQuery({ queryKey: ['bundle', slug], queryFn: () => fetchBundle(slug), retry: false });
   const [done, setDone] = useState(false);
+  const { user } = useAuth();
   const buy = useMutation({
-    mutationFn: () => buyBundle(b!),
-    onSuccess: () => {
+    mutationFn: () => buyBundle(b!, { name: (user as any)?.full_name, email: user?.email }),
+    onSuccess: (outcome) => {
+      if (outcome === 'cancelled') return;
       setDone(true);
       toast.success(`Unlocked ${b!.courses.length} courses`);
       qc.invalidateQueries({ queryKey: ['bundle', slug] });
@@ -97,7 +76,7 @@ export function BundlePage() {
       qc.invalidateQueries({ queryKey: ['entitlements'] });
       qc.invalidateQueries({ queryKey: ['my-course-enrollments'] });
     },
-    onError: (e: any) => { if (e?.message !== 'Payment cancelled') toast.error(e?.response?.data?.message || e?.response?.data?.error || e?.message || 'Payment failed'); },
+    onError: (e: unknown) => toast.error(e instanceof Error && e.message ? e.message : 'Payment failed. You have not been charged.'),
   });
 
   if (isLoading) return <div className="flex justify-center py-24"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>;

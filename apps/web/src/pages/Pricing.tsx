@@ -73,8 +73,15 @@ export default function Pricing() {
     if (!couponCode.trim()) return;
     setCouponLoading(true);
     try {
-      const res = await api.post("/v2/payments/validate-coupon", { code: couponCode.trim().toUpperCase() });
-      setCouponApplied(res);
+      const res: any = await api.post("/v2/payments/validate-coupon", { code: couponCode.trim().toUpperCase() });
+      const result = res?.data ?? res;
+      // The API answers 200 with { valid: false, reason } for a coupon it won't accept.
+      if (!result?.valid) {
+        setCouponApplied(null);
+        toast.error(result?.reason || "That coupon can't be used.");
+        return;
+      }
+      setCouponApplied(result);
       toast.success("Coupon applied successfully!");
     } catch (err: unknown) {
       setCouponApplied(null);

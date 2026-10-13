@@ -21,7 +21,6 @@ import { EnrolledPaths } from '@/components/catalog/EnrolledPaths';
 import { AIRecommendations } from '@/components/catalog/AIRecommendations';
 import { fetchMyCourseEnrollments } from '@/data/chapters';
 import { chapterCount, derivedTopics, type CatalogCourse, type HeroSlide } from '@/components/catalog/catalog-utils';
-import { CourseCheckoutModal } from '@/components/CourseCheckoutModal';
 import { cn } from '@/lib/utils';
 
 type Filter = 'all' | 'beginner' | 'intermediate' | 'advanced' | 'free' | 'premium';
@@ -85,7 +84,6 @@ export default function CoursesCatalogPage() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
   const [showAll, setShowAll] = useState(false);
-  const [checkoutCourse, setCheckoutCourse] = useState<CatalogCourse | null>(null);
   const navigate = useNavigate();
   const qc = useQueryClient();
 
@@ -178,22 +176,9 @@ export default function CoursesCatalogPage() {
     const enrolledCourseIds = new Set(enrollments.map((e: any) => e.course_id));
     return allCourses.filter(c => !enrolledCourseIds.has(c.id)).slice(0, 4);
   }, [allCourses, enrollments]);
-  // BH-010 (updated): Three-way branch for course navigation:
-  // 1. Free / entitled user                    → navigate to course chapters
-  // 2. Individually purchasable with price      → open per-course checkout modal
-  // 3. Premium plan-gated only                  → navigate to subscription page with course context
-  const goToCourse = (id: string) => {
-    const course = allCourses.find((c) => c.id === id);
-    const isEnrolled = enrollments.some((e: any) => e.course_id === id);
-
-    if (!course || !course.is_premium || isEnrolled) {
-      navigate(`/course/${id}/chapters`);
-    } else if (course.is_individually_purchasable && course.price) {
-      setCheckoutCourse(course);
-    } else {
-      navigate(`/subscription?course_id=${id}&ref=catalog`);
-    }
-  };
+  // Every course opens its own page (Coursera-style): free chapters to preview,
+  // and an in-place unlock for the rest. Nobody is sent to a payment page.
+  const goToCourse = (id: string) => navigate(`/course/${id}/chapters`);
 
   if (isCoursesLoading) {
     return (
@@ -213,20 +198,6 @@ export default function CoursesCatalogPage() {
 
   return (
     <div className="pb-24 md:pb-10">
-      {/* Per-course checkout modal */}
-      {checkoutCourse && (
-        <CourseCheckoutModal
-          open={Boolean(checkoutCourse)}
-          onClose={() => setCheckoutCourse(null)}
-          course={{
-            id: checkoutCourse.id,
-            title: checkoutCourse.title,
-            description: checkoutCourse.description,
-            price: checkoutCourse.price!,
-            currency: checkoutCourse.currency,
-          }}
-        />
-      )}
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 

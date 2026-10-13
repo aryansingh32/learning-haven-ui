@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Sparkles, RotateCcw, CheckCircle2, XCircle, Lightbulb, FileText, BookPlus, Loader2,
@@ -10,6 +9,7 @@ import type { VideoTimelineEvent } from '@/data/chapters';
 import { appendChapterNoteHighlight } from '@/data/notebook';
 import { parseEntitlementError } from '@/lib/entitlementError';
 import { toast } from 'sonner';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 type VideoTimelinePanelProps = {
   events: VideoTimelineEvent[];
@@ -95,7 +95,7 @@ function QuizCard({ event }: { event: VideoTimelineEvent }) {
 }
 
 export function VideoTimelinePanel({ events, currentTime, chapterId, chapterTitle }: VideoTimelinePanelProps) {
-  const navigate = useNavigate();
+  const checkout = useCheckout();
   const active = useMemo(() => findActiveEvent(events, currentTime), [events, currentTime]);
 
   const saveMutation = useMutation({
@@ -105,7 +105,7 @@ export function VideoTimelinePanel({ events, currentTime, chapterId, chapterTitl
       const { denied } = parseEntitlementError(err);
       if (denied) {
         toast.error('Saving video highlights to your notebook is a Pro feature.', {
-          action: { label: 'Upgrade', onClick: () => navigate('/pricing') },
+          action: { label: 'Upgrade', onClick: () => checkout.open({ reason: 'Saving video highlights is part of Pro.' }) },
         });
       } else {
         toast.error('Could not save. Try again.');

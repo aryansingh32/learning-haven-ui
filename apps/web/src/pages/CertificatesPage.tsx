@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Download, Share2, Award, Calendar, ExternalLink, BadgeCheck, Sparkles, Trophy, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 import { api } from "@/services/api.svc";
 
 const CertificatesPage = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   // Drawn by the server from the certificate's template, with its verification QR code.
@@ -130,7 +132,7 @@ const CertificatesPage = () => {
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mb-5">
             Complete a learning phase to earn your first verified certificate and showcase your DSA skills.
           </p>
-          <button className="px-5 py-2.5 rounded-xl gradient-golden text-white text-sm font-bold shadow-md">
+          <button type="button" onClick={() => navigate('/courses')} className="px-5 py-2.5 rounded-xl gradient-golden text-white text-sm font-bold shadow-md">
             Start Learning
           </button>
         </div>
@@ -222,13 +224,13 @@ const CertificatesPage = () => {
                   </div>
                 </div>
                 <div className="flex gap-1 flex-shrink-0">
-                  <button onClick={() => downloadCertificate(cert)} className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
+                  <button onClick={() => downloadCertificate(cert)} aria-label={`Download certificate: ${cert.topic || 'certificate'}`} title="Download PDF" className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
                     <Download className="w-3.5 h-3.5" />
                   </button>
                   <button onClick={() => {
                     const url = `${window.location.origin}/certificates/verify/${cert.verification_code || cert.id}`;
                     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
-                  }} className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
+                  }} aria-label="Share on LinkedIn" title="Share on LinkedIn" className="p-2 rounded-lg card-glass text-foreground hover:bg-secondary transition-all border border-border/40">
                     <Share2 className="w-3.5 h-3.5" />
                   </button>
                 </div>

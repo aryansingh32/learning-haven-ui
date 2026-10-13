@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useRoadmap } from '@/context/RoadmapContext';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile, SHELL_BREAKPOINT } from '@/hooks/use-mobile';
 import {
   Bot, X, ArrowRight, Sparkles, Target, BookOpen,
   Code2, Briefcase, Trophy, Zap, Send, ChevronRight,
@@ -67,7 +67,7 @@ export function GlobalAIAssistant() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(SHELL_BREAKPOINT);
   const roadmap = useRoadmap();
 
   const routeCtx = getRouteContext(location.pathname);
@@ -263,8 +263,8 @@ export function GlobalAIAssistant() {
         className={cn(
           'fixed z-50 flex items-center justify-center transition-all',
           isMobile
-            ? 'bottom-20 right-4 w-12 h-12 rounded-full'
-            : 'right-4 bottom-8 w-12 h-12 rounded-full',
+            ? 'bottom-[6.25rem] right-3 w-11 h-11 rounded-full'
+            : 'right-6 bottom-6 w-12 h-12 rounded-full',
         )}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

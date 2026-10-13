@@ -12,8 +12,8 @@ import {
 import { anchorFromSelection, containerText, locateHighlight, rangeFromOffsets, type HighlightAnchor } from '@/features/learning/highlightAnchors';
 import { parseEntitlementError } from '@/lib/entitlementError';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useCheckout } from '@/features/checkout/CheckoutProvider';
 
 type DocSectionProps = {
   markdown: string;
@@ -38,7 +38,7 @@ const cssHighlights = (): { registry: CssHighlights; Highlight: new (...r: Range
 };
 
 export function DocSection({ markdown, chapterId, chapterTitle, stepId, courseId, onMarkDone }: DocSectionProps) {
-  const navigate = useNavigate();
+  const checkout = useCheckout();
   const qc = useQueryClient();
   const [selection, setSelection] = useState<HighlightAnchor | null>(null);
   const [color, setColor] = useState<HighlightColor>('yellow');
@@ -89,7 +89,7 @@ export function DocSection({ markdown, chapterId, chapterTitle, stepId, courseId
       const { denied } = parseEntitlementError(err);
       if (denied) {
         toast.error('Adding highlights to your notebook is a Pro feature.', {
-          action: { label: 'Upgrade', onClick: () => navigate('/pricing') },
+          action: { label: 'Upgrade', onClick: () => checkout.open({ reason: 'Saving highlights to your notebook is part of Pro.' }) },
         });
       } else {
         toast.error('Could not add to notebook. Try again.');
