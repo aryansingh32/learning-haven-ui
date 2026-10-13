@@ -83,7 +83,7 @@ export function HeroCarousel({ slides }: Props) {
                         width={300}
                         height={220}
                         loading={index === 0 ? 'eager' : 'lazy'}
-                        fetchPriority={index === 0 ? 'high' : 'auto'}
+                        {...{ fetchpriority: index === 0 ? 'high' : 'auto' }}
                         decoding="async"
                         className="w-full h-full object-cover object-top"
                       />

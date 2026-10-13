@@ -72,7 +72,7 @@ export default function Activity() {
             {rows.map((r) => (
               <li key={r.id} className="flex flex-wrap gap-x-4 gap-y-1 px-4 py-3 text-sm">
                 <span className="w-32 shrink-0 text-xs text-muted-foreground tabular">{formatDateTime(r.at)}</span>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 [overflow-wrap:anywhere]">
                   <p><Badge variant={ACTION[r.action].variant} className="mr-2">{ACTION[r.action].label}</Badge>
                     <span className="font-medium">{r.what}</span>{r.summary ? <span className="text-muted-foreground"> · {r.summary}</span> : null}</p>
                   <Changes row={r} />

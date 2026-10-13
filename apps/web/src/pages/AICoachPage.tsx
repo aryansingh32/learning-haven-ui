@@ -25,6 +25,26 @@ const AICoachPage = () => {
   const checkout = useCheckout();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  // Voice input (the browser's speech recognition; the button is hidden where unsupported).
+  const SpeechRecognitionImpl = typeof window !== 'undefined' ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
+  const speechSupported = Boolean(SpeechRecognitionImpl);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+  const toggleDictation = () => {
+    if (listening) { recognitionRef.current?.stop(); return; }
+    const rec = new SpeechRecognitionImpl();
+    rec.lang = navigator.language || 'en-IN';
+    rec.interimResults = false;
+    rec.onresult = (e: any) => {
+      const said = Array.from(e.results as ArrayLike<any>).map((r: any) => r[0]?.transcript ?? '').join(' ').trim();
+      if (said) setInput((prev) => (prev ? `${prev} ${said}` : said));
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    recognitionRef.current = rec;
+    setListening(true);
+    rec.start();
+  };
   const [mentorInitiated, setMentorInitiated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -391,13 +411,20 @@ const AICoachPage = () => {
 
       {/* Input */}
       <div className="mt-4 flex gap-2">
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          disabled={usage?.remaining === 0}
-          className="h-11 w-11 rounded-xl card-glass flex items-center justify-center text-muted-foreground hover:text-primary transition-all flex-shrink-0 border border-border/50"
-        >
-          <Mic className="h-5 w-5" />
-        </motion.button>
+        {speechSupported && (
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.9 }}
+            disabled={usage?.remaining === 0}
+            onClick={toggleDictation}
+            aria-label={listening ? 'Stop dictation' : 'Speak your question'}
+            aria-pressed={listening}
+            title={listening ? 'Listening… click to stop' : 'Speak your question'}
+            className={`h-11 w-11 rounded-xl card-glass flex items-center justify-center transition-all flex-shrink-0 border ${listening ? 'border-primary text-primary animate-pulse' : 'border-border/50 text-muted-foreground hover:text-primary'}`}
+          >
+            <Mic className="h-5 w-5" />
+          </motion.button>
+        )}
         <div className="flex-1 relative">
           <input
             ref={inputRef}
