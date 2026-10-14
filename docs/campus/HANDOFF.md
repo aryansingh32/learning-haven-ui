@@ -120,6 +120,8 @@ above); live now matches the repo. `scripts/test-db.sh` also builds a *replay* d
 post-snapshot migrations, the order live got them) and runs `tests/replay/*.sql`.
 
 Security fixes found while applying (all mutation-tested, applied):
+- **2026-10-14 (20261106000001, applied + verified):** device records (`user_devices`, `record_device`), attempt device
+  columns, new proctoring event types. Server-only; additive.
 - **2026-10-10 (20261105000001):** signed-in learners had UPDATE on their own `public.users` row via PostgREST (policy
   "Users can update own data", full column grants): `role = 'super_admin'` made them admin everywhere, including every
   `*_admin_all` policy (payments, subscriptions, plans, coupons, withdrawals). Also `wallet_balance`, `current_plan`,

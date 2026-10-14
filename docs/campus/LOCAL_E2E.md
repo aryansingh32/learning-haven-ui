@@ -1,4 +1,19 @@
-# Local end-to-end stack (browser checks without Supabase)
+# Local end-to-end stack
+
+## With Docker (preferred, used 2026-10-10 → 2026-10-14)
+
+`npx supabase@2.48.3 start` in a scratch folder (project `forge-demo`) gives Auth, PostgREST and Postgres on
+54321/54322; the containers restart with Docker and keep their data. Apply the repo migrations to `54322`, then:
+- Keys: the containers don't expose them; mint HS256 JWTs (`role: anon` / `service_role`) with
+  `docker exec supabase_auth_forge-demo printenv GOTRUE_JWT_SECRET` (Kong passes JWT api keys through).
+- APIs: run each from a scratch folder holding its own `.env` (SUPABASE_URL=http://127.0.0.1:54321, DATABASE_URL on
+  54322, local Redis, dummy Razorpay `rzp_test_*`, OPENAI_API_KEY=sk-demo).
+- Demo data: `SB_SERVICE_KEY=… SB_ANON_KEY=… node scripts/demo/seed.mjs` (accounts `*@forge.demo`, `*@vit.demo`,
+  password Demo@12345; admin@forge.demo should be made `super_admin`).
+- Web: `VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SUPABASE_ANON_KEY=… VITE_API_BASE_URL=/api npx vite --port 5173`;
+  admin `VITE_API_URL=http://localhost:5000/api` on 5174; portal on 5175.
+
+## Without Docker (browser checks without Supabase)
 
 Used on 2026-10-10 to browser-verify W2-A1 and W2-L1. Nothing here talks to the live project.
 

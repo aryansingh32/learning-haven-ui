@@ -85,7 +85,20 @@ is **applied to live and verified** (2026-10-10). What it added:
 - Monetization worker now runs (referral activation and subscription expiry were never processed).
 - Known gap: Google sign-up goes straight to Supabase, so "pause sign-ups" doesn't stop it.
 
-**Immediate next step:** W5 (content drafts).
+**Hardening + UX pass (2026-10-14, branch `feat/hardening-ux`, stacked on `feat/w3-control-centre`):**
+- Quizzes graded on the server (they scored 0% on live: wrong column, index vs text; answers leaked; browser-reported
+  scores). Paid courses: chapter 1 free preview; progress/quiz/XP writes need access (were unchecked).
+- In-app checkout (Coursera-style) replaces every jump to /pricing; four duplicate Razorpay implementations removed.
+- Layout: desktop top bar (theme beside notifications, account menu), 5 phone tabs + More, tablets use the compact
+  shell, announcements in the content column; page audit of 22 learner + 15 portal pages × 3 widths.
+- Devices: every account's devices (id, OS, browser, IPs) recorded by both APIs (`public.user_devices`, migration
+  `20261106000001`, applied to live); exams tied to their device (device_change = violation), new signals (second
+  screen, dev tools, screenshots, large inserts); admin Devices tab + Security page; portal Integrity page per test.
+- Security: API flood ceiling, analytics rate limit, SSRF guard on logo fetches, sandboxed email preview, v1 payment
+  endpoints retired, mock tests check course access, dependency fixes (0 critical).
+- Resume builder never saved (called a non-existent endpoint); admin user page showed random made-up numbers.
+
+**Immediate next step:** content (W5) — see the audit (docs/campus/AUDIT_2026-10-14.md) for what blocks selling.
 
 ## 3. Done (high level)
 
