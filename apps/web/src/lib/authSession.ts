@@ -22,11 +22,25 @@ export function getRefreshToken(): string | null {
   return localStorage.getItem(REFRESH_KEY);
 }
 
-export function persistSession(session: Pick<Session, 'access_token' | 'refresh_token'>): void {
+/** Saves the tokens for API calls (no call to Supabase). */
+function storeTokens(session: Pick<Session, 'access_token' | 'refresh_token'>): void {
   localStorage.setItem(ACCESS_KEY, session.access_token);
   if (session.refresh_token) {
     localStorage.setItem(REFRESH_KEY, session.refresh_token);
   }
+}
+
+/**
+ * Saves the tokens and hands them to the Supabase client. setSession makes
+ * Supabase check the user and fire an auth event, so it is skipped when the
+ * client already holds these tokens (the event listener below used to call this
+ * again, looping on /auth/v1/user many times a second).
+ */
+let syncedAccessToken: string | null = null;
+export function persistSession(session: Pick<Session, 'access_token' | 'refresh_token'>): void {
+  storeTokens(session);
+  if (syncedAccessToken === session.access_token) return;
+  syncedAccessToken = session.access_token;
   void syncSupabaseClient(session);
 }
 
@@ -43,6 +57,7 @@ async function syncSupabaseClient(session: Pick<Session, 'access_token' | 'refre
 }
 
 export function clearStoredSession(): void {
+  syncedAccessToken = null;
   localStorage.removeItem(ACCESS_KEY);
   localStorage.removeItem(REFRESH_KEY);
   if (supabase?.auth) {
@@ -169,8 +184,10 @@ export function subscribeToAuthSessionChanges(
   if (!supabase?.auth) return undefined;
 
   const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    // The client already has this session: just keep our copy of the tokens.
     if (session?.access_token) {
-      persistSession(session);
+      storeTokens(session);
+      syncedAccessToken = session.access_token;
     }
     onSession(session);
   });

@@ -13,8 +13,9 @@ function traits() {
   let gpu = '';
   try {
     const gl = document.createElement('canvas').getContext('webgl') as WebGLRenderingContext | null;
-    const ext = gl?.getExtension('WEBGL_debug_renderer_info');
-    if (gl && ext) gpu = String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+    // Firefox reports the real renderer through RENDERER (its debug extension is deprecated).
+    const ext = /firefox/i.test(navigator.userAgent) ? null : gl?.getExtension('WEBGL_debug_renderer_info');
+    if (gl) gpu = String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
   } catch { /* no WebGL */ }
   const screens = (window.screen as Screen & { isExtended?: boolean }).isExtended ? 2 : 1;
   return {
