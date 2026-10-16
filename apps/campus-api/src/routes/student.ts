@@ -4,7 +4,7 @@ import { normalizePolicy, PROCTORING_EVENTS } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser } from '../db';
 import { clientOf } from '../controls';
-import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, startAttempt, submitAttempt } from '../services/attempts';
+import { finishCurrentSection, getAttemptView, heartbeat, recordEvent, resultsReleased, runSamples, saveAnswer, saveSnapshot, startAttempt, submitAttempt } from '../services/attempts';
 import { JUDGED_LANGUAGES } from '../services/judge';
 import { myCourseAssignments } from './courses';
 import { myDrives, setMyRegistration } from './drives';
@@ -179,6 +179,16 @@ const eventBody = z.object({ type: z.enum(PROCTORING_EVENTS) });
 studentRouter.post('/attempts/:id/events', async (req, res) => {
   const userId = userOf(req);
   res.json(await recordEvent(userId, uuid.parse(req.params.id), eventBody.parse(req.body).type, clientOf(req)));
+});
+
+// base64 of a JPEG of at most 45 KB (≈ 60 000 characters), optionally as a data URL.
+const snapshotBody = z.object({ image: z.string().max(62_000).regex(/^(data:image\/jpeg;base64,)?[A-Za-z0-9+/]+={0,2}$/, 'Send a JPEG photo.') });
+
+/** A webcam photo taken at a random moment (tests with webcam snapshots on). */
+studentRouter.post('/attempts/:id/snapshots', async (req, res) => {
+  const userId = userOf(req);
+  const image = Buffer.from(snapshotBody.parse(req.body).image.replace(/^data:image\/jpeg;base64,/, ''), 'base64');
+  res.status(201).json(await saveSnapshot(userId, uuid.parse(req.params.id), image, clientOf(req)));
 });
 
 studentRouter.post('/attempts/:id/submit', async (req, res) => {

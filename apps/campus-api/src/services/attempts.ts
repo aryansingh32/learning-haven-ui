@@ -22,6 +22,7 @@ import {
   drawFromPools,
   shouldAutoSubmit,
   SERVER_ONLY_EVENTS,
+  SNAPSHOT_LIMITS,
 } from '@repo/assessment-core';
 import { asSystem, asUser, Db } from '../db';
 import type { DeviceInfo } from '@repo/assessment-core';
@@ -830,6 +831,32 @@ async function recordEventInternal(attempt: AttemptRow, type: ProctoringEventTyp
     autoSubmitted = true;
   }
   return { severity, violationCount, maxViolations: policy.maxViolations, autoSubmitted };
+}
+
+/**
+ * A webcam photo from the exam page (only when the test's policy asks for them
+ * and the student agreed at the start). JPEG, at most SNAPSHOT_LIMITS.maxBytes,
+ * at most perAttempt per attempt and no closer than minGapSeconds apart.
+ */
+export async function saveSnapshot(userId: string, attemptId: string, image: Buffer, client?: ClientContext) {
+  const attempt = await guardDevice(await ownAttempt(userId, attemptId), client);
+  if (attempt.status !== 'in_progress') throw badRequest('This attempt has finished.');
+  const policy = normalizePolicy((await assignmentFor(attempt)).proctoring);
+  if (!policy.webcamSnapshots) throw badRequest('This test does not use webcam snapshots.');
+  if (image.length > SNAPSHOT_LIMITS.maxBytes) throw new HttpError(413, 'That photo is too large.');
+  if (image.length < 500 || image[0] !== 0xff || image[1] !== 0xd8 || image[2] !== 0xff) throw badRequest('Send a JPEG photo.');
+  return asSystem(async (db) => {
+    const { rows } = await db.query<{ n: number; last: string | null }>(
+      `select count(*)::int as n, max(taken_at) as last from campus.proctoring_snapshots where attempt_id = $1`, [attempt.id]);
+    if (rows[0].n >= SNAPSHOT_LIMITS.perAttempt) return { saved: false, remaining: 0 };
+    if (rows[0].last && Date.now() - new Date(rows[0].last).getTime() < SNAPSHOT_LIMITS.minGapSeconds * 1000) {
+      throw new HttpError(429, 'Too soon after the last photo.');
+    }
+    await db.query(
+      `insert into campus.proctoring_snapshots (org_id, attempt_id, user_id, image, ip, device_id) values ($1, $2, $3, $4, $5::inet, $6)`,
+      [attempt.org_id, attempt.id, userId, image, client?.ip ?? null, client?.deviceId ?? null]);
+    return { saved: true, remaining: SNAPSHOT_LIMITS.perAttempt - rows[0].n - 1 };
+  });
 }
 
 /** Finish the current timed section early; the next one starts now (the last one submits the test). */

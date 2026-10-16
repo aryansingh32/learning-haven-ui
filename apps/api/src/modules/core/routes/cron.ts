@@ -138,22 +138,24 @@ router.post('/week-xp-snapshot', async (req, res) => {
 
 /**
  * @route   POST /api/cron/purge-personal-data
- * @desc    Daily: delete device records not seen for 180 days and sign-in records
- *          older than a year (docs/security/DATA_RETENTION.md)
+ * @desc    Daily: delete device records not seen for 180 days, sign-in records
+ *          older than a year and exam webcam photos older than 90 days
+ *          (docs/security/DATA_RETENTION.md)
  * @access  Secured via x-cron-secret header
  */
 router.post('/purge-personal-data', async (req, res) => {
     if (!verifyCronSecret(req, res)) return;
     const run = async (sql: string) => {
         try { return (await pool.query(sql)).rowCount ?? 0; } catch (error: any) {
-            if (error?.code === '42P01') return 0; // table not there yet
+            if (error?.code === '42P01' || error?.code === '3F000') return 0; // table or schema not there yet
             throw error;
         }
     };
     const devices = await run(`delete from public.user_devices where last_seen_at < now() - interval '180 days'`);
     const signIns = await run(`delete from public.account_events where kind = 'sign_in' and occurred_at < now() - interval '1 year'`);
-    logger.info('Personal data purge', { devices, signIns });
-    return res.json({ success: true, devices, signIns });
+    const snapshots = await run(`delete from campus.proctoring_snapshots where taken_at < now() - interval '90 days'`);
+    logger.info('Personal data purge', { devices, signIns, snapshots });
+    return res.json({ success: true, devices, signIns, snapshots });
 });
 
 export default router;

@@ -15,6 +15,7 @@ export const PROCTORING_EVENTS = [
   'devtools_open', // browser developer tools look open
   'screenshot_key', // Print Screen / screenshot shortcut pressed
   'large_paste', // a large block of text appeared in an answer at once
+  'camera_off', // webcam snapshots are on but the camera was refused, stopped or unplugged
 ] as const;
 export type ProctoringEventType = (typeof PROCTORING_EVENTS)[number];
 
@@ -31,6 +32,7 @@ const COUNTS_AS_VIOLATION: Record<ProctoringEventType, boolean> = {
   devtools_open: false,
   screenshot_key: false,
   large_paste: false,
+  camera_off: false,
 };
 
 /** Never just a warning: someone else may be taking the test. */
@@ -47,6 +49,8 @@ export interface ProctoringPolicy {
   warnFirst: boolean;
   /** Auto-submit when violations reach this number; null = never. */
   maxViolations: number | null;
+  /** Take webcam photos at random moments for invigilators (students consent at the start). */
+  webcamSnapshots: boolean;
 }
 
 export const DEFAULT_PROCTORING: ProctoringPolicy = {
@@ -55,6 +59,7 @@ export const DEFAULT_PROCTORING: ProctoringPolicy = {
   blockClipboard: true,
   warnFirst: true,
   maxViolations: 3,
+  webcamSnapshots: false,
 };
 
 export type Severity = 'warning' | 'violation';
@@ -93,5 +98,14 @@ export function normalizePolicy(input: Partial<ProctoringPolicy> | null | undefi
     blockClipboard: Boolean(p.blockClipboard),
     warnFirst: Boolean(p.warnFirst),
     maxViolations: max === null ? null : Math.max(1, Math.min(50, Math.floor(Number(max) || DEFAULT_PROCTORING.maxViolations!))),
+    webcamSnapshots: Boolean(p.enabled && p.webcamSnapshots),
   };
+}
+
+/** Webcam snapshot limits: size of one photo, photos per attempt, and the gap between them. */
+export const SNAPSHOT_LIMITS = { maxBytes: 45_000, perAttempt: 40, minGapSeconds: 60, retentionDays: 90 } as const;
+
+/** Seconds until the next snapshot: random between 2 and 5 minutes so it can't be anticipated. */
+export function nextSnapshotDelay(random: () => number = Math.random): number {
+  return 120 + Math.floor(random() * 180);
 }

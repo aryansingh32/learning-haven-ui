@@ -24,7 +24,7 @@ const EVENT: Record<string, string> = {
   tab_switch: 'Switched tab', window_blur: 'Left the window', fullscreen_exit: 'Left full screen',
   copy: 'Tried to copy', paste: 'Tried to paste', context_menu: 'Right-clicked',
   device_change: 'Continued on another device', multiple_screens: 'Second screen connected', devtools_open: 'Opened developer tools',
-  screenshot_key: 'Pressed a screenshot key', large_paste: 'Large block of text inserted',
+  screenshot_key: 'Pressed a screenshot key', large_paste: 'Large block of text inserted', camera_off: 'Camera off',
 };
 const OUTCOME: Record<ReviewOutcome, { label: string; className: string }> = {
   no_issue: { label: 'No issue', className: 'text-success' },

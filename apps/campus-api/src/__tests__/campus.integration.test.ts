@@ -1676,3 +1676,63 @@ describe('exam integrity: similar answers', () => {
     expect(res.body.fastFinishers).toEqual([]);
   });
 });
+
+describe('webcam snapshots', () => {
+  const jpeg = (bytes: number) => Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(bytes - 4, 7)]).toString('base64');
+  let assignment = '';
+  let attempt = '';
+
+  it('are refused when the test does not use them', async () => {
+    await pool.query(`update public.test_attempts set status = 'completed', submitted_at = now() where user_id = $1 and status = 'in_progress'`, [U.s1]);
+    const plain = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId, title: 'No camera', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000), proctoring: { maxViolations: 3 },
+    })).body.id;
+    const started = (await request(app).post(`/campus/v1/my/assignments/${plain}/start`).set(await as(U.s1))).body.attemptId;
+    const res = await request(app).post(`/campus/v1/my/attempts/${started}/snapshots`).set(await as(U.s1)).send({ image: jpeg(2000) });
+    expect(res.status).toBe(400);
+    await request(app).post(`/campus/v1/my/attempts/${started}/submit`).set(await as(U.s1));
+  });
+
+  it('are stored for a test that asks for them, shown to invigilators only', async () => {
+    const created = await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId, title: 'Camera on', publish: true,
+      opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 3_600_000),
+      proctoring: { maxViolations: 3, webcamSnapshots: true },
+    });
+    expect(created.status).toBe(201);
+    assignment = created.body.id;
+    const start = await request(app).post(`/campus/v1/my/assignments/${assignment}/start`).set(await as(U.s1));
+    attempt = start.body.attemptId;
+    expect((await request(app).get(`/campus/v1/my/attempts/${attempt}`).set(await as(U.s1))).body.proctoring.webcamSnapshots).toBe(true);
+
+    const first = await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s1)).send({ image: `data:image/jpeg;base64,${jpeg(3000)}` });
+    expect(first.status).toBe(201);
+    expect(first.body).toEqual({ saved: true, remaining: 39 });
+    // Not a JPEG; too large; too soon after the last one; someone else's attempt.
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s1))
+      .send({ image: Buffer.alloc(2000, 1).toString('base64') })).status).toBe(400);
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s1)).send({ image: jpeg(46_000) })).status).toBe(413);
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s1)).send({ image: jpeg(2000) })).status).toBe(429);
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s2)).send({ image: jpeg(2000) })).status).toBe(404);
+
+    const list = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/attempts/${attempt}/snapshots`).set(await as(U.invigA));
+    expect(list.status).toBe(200);
+    expect(list.body).toHaveLength(1);
+    expect(list.body[0].image).toMatch(/^data:image\/jpeg;base64,\/9j\//);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/attempts/${attempt}/snapshots`).set(await as(U.s1))).status).toBe(403);
+    expect((await request(app).get(`/campus/v1/orgs/${ORG_B}/assignments/${assignment}/attempts/${attempt}/snapshots`).set(await as(U.facultyB))).status).not.toBe(200);
+
+    const integrity = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/integrity`).set(await as(U.invigA));
+    expect(integrity.body.attempts.find((a: { attemptId: string }) => a.attemptId === attempt).snapshots).toBe(1);
+  });
+
+  it('notes a refused camera without counting it as a violation', async () => {
+    const res = await request(app).post(`/campus/v1/my/attempts/${attempt}/events`).set(await as(U.s1)).send({ type: 'camera_off' });
+    expect(res.status).toBe(200);
+    expect(res.body.severity).toBe('warning');
+    expect(res.body.violationCount).toBe(0);
+    await request(app).post(`/campus/v1/my/attempts/${attempt}/submit`).set(await as(U.s1));
+    expect((await request(app).post(`/campus/v1/my/attempts/${attempt}/snapshots`).set(await as(U.s1)).send({ image: jpeg(2000) })).status).toBe(400);
+  });
+});

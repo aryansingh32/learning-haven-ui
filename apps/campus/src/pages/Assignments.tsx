@@ -134,6 +134,7 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
   const [release, setRelease] = useState<'immediately' | 'after_close' | 'manual'>('after_close');
   const [proctored, setProctored] = useState(true);
   const [maxViolations, setMaxViolations] = useState('3');
+  const [webcam, setWebcam] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -168,7 +169,7 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
       opensAt: new Date(opensAt).toISOString(), closesAt: new Date(closesAt).toISOString(),
       durationMinutes: duration ? Number(duration) : null, maxAttempts: Number(maxAttempts),
       shuffleQuestions: shuffle, shuffleOptions: shuffle, resultRelease: release, publish,
-      proctoring: { enabled: proctored, requireFullscreen: proctored, blockClipboard: proctored, warnFirst: true, maxViolations: proctored ? Number(maxViolations) : null },
+      proctoring: { enabled: proctored, requireFullscreen: proctored, blockClipboard: proctored, warnFirst: true, maxViolations: proctored ? Number(maxViolations) : null, webcamSnapshots: proctored && webcam },
     }),
     onSuccess: (_d, publish) => { toast.success(publish ? 'Assigned — students will see it when it opens' : 'Saved as draft'); onCreated(); onClose(); },
     onError: (e) => toast.error(e.message),
@@ -247,6 +248,12 @@ function NewAssignment({ open, onClose, orgId, onCreated }: { open: boolean; onC
                 <Field label="Auto-submit after this many violations" htmlFor="as-viol">
                   <Input id="as-viol" type="number" min={1} max={50} value={maxViolations} onChange={(e) => setMaxViolations(e.target.value)} className="w-24" />
                 </Field>
+              )}
+              {proctored && (
+                <div className="flex items-center justify-between gap-4">
+                  <label htmlFor="as-webcam" className="text-sm"><span className="font-medium">Webcam photos</span><br /><span className="text-muted-foreground">A small photo at a few random moments (no video or sound). Students agree before starting; a camera that's off is flagged. Kept 90 days.</span></label>
+                  <Switch id="as-webcam" checked={webcam} onCheckedChange={setWebcam} />
+                </div>
               )}
             </div>
 

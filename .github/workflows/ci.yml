@@ -36,25 +36,25 @@ jobs:
         run: pnpm --filter @repo/assessment-core test
       - name: Forge API — type check
         working-directory: apps/api
-        run: npx tsc --noEmit -p .
+        run: pnpm exec tsc --noEmit -p .
       - name: Forge API — unit tests
         working-directory: apps/api
-        run: npx jest --ci
+        run: pnpm exec jest --ci
       - name: Campus API — type check
         working-directory: apps/campus-api
-        run: npx tsc --noEmit -p .
+        run: pnpm exec tsc --noEmit -p .
       - name: Learner app — unit tests
         working-directory: apps/web
-        run: npx vitest run
+        run: pnpm exec vitest run
       - name: Learner app — production build
         working-directory: apps/web
-        run: npx vite build
+        run: pnpm exec vite build
       - name: Admin — type check and build
         working-directory: apps/admin
-        run: npx tsc --noEmit -p tsconfig.app.json && npx vite build
+        run: pnpm exec tsc --noEmit -p tsconfig.app.json && pnpm exec vite build
       - name: College portal — type check and build
         working-directory: apps/campus
-        run: npx tsc --noEmit -p tsconfig.app.json && npx vite build
+        run: pnpm exec tsc --noEmit -p tsconfig.app.json && pnpm exec vite build
 
   security:
     runs-on: ubuntu-latest

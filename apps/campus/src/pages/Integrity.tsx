@@ -1,9 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Copy, Laptop, MonitorSmartphone, Network, ShieldAlert, Smartphone, Tablet, Timer } from 'lucide-react';
+import { ArrowLeft, Camera, Copy, Laptop, MonitorSmartphone, Network, ShieldAlert, Smartphone, Tablet, Timer } from 'lucide-react';
 import { api } from '@/api/client';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface Student { userId: string; name: string; rollNumber: string | null }
 interface IntegrityAttempt extends Student {
@@ -11,7 +14,7 @@ interface IntegrityAttempt extends Student {
   device: { id: string | null; os?: string | null; osVersion?: string | null; browser?: string | null; browserVersion?: string | null;
     deviceType?: 'desktop' | 'mobile' | 'tablet' | null; screen?: string | null; screens?: number | null; timezone?: string | null } | null;
   ip: string | null; ips: string[]; otherDevices: number; violations: number; events: Record<string, number>;
-  similarAnswers: number; fastFinisher: boolean;
+  similarAnswers: number; fastFinisher: boolean; snapshots?: number;
 }
 interface Integrity {
   attempts: IntegrityAttempt[];
@@ -24,13 +27,46 @@ interface Integrity {
 const EVENT_LABEL: Record<string, string> = {
   tab_switch: 'Tab switches', window_blur: 'Left window', fullscreen_exit: 'Left full screen', copy: 'Copy', paste: 'Paste',
   context_menu: 'Right-click', device_change: 'Other device', multiple_screens: 'Second screen', devtools_open: 'Dev tools',
-  screenshot_key: 'Screenshot', large_paste: 'Large insert',
+  screenshot_key: 'Screenshot', large_paste: 'Large insert', camera_off: 'Camera off',
 };
-const SERIOUS = new Set(['device_change', 'devtools_open', 'multiple_screens', 'large_paste']);
+const SERIOUS = new Set(['device_change', 'devtools_open', 'multiple_screens', 'large_paste', 'camera_off']);
 const TypeIcon = ({ t }: { t?: string | null }) => (t === 'mobile' ? <Smartphone className="h-4 w-4" /> : t === 'tablet' ? <Tablet className="h-4 w-4" /> : <Laptop className="h-4 w-4" />);
 const deviceLine = (d: IntegrityAttempt['device']) =>
   d ? [[d.browser, d.browserVersion].filter(Boolean).join(' '), [d.os, d.osVersion].filter(Boolean).join(' ')].filter(Boolean).join(' · ') || 'Unknown device' : 'Not recorded';
 const who = (s: Student) => `${s.name}${s.rollNumber ? ` (${s.rollNumber})` : ''}`;
+
+interface Snapshot { id: string; takenAt: string; ip: string | null; image: string }
+
+/** The webcam photos of one attempt, in the order they were taken. */
+function SnapshotsDialog({ orgId, assignmentId, attempt, onClose }: {
+  orgId: string; assignmentId: string; attempt: IntegrityAttempt | null; onClose: () => void;
+}) {
+  const q = useQuery({
+    queryKey: ['snapshots', attempt?.attemptId],
+    queryFn: () => api<Snapshot[]>(`/orgs/${orgId}/assignments/${assignmentId}/attempts/${attempt!.attemptId}/snapshots`),
+    enabled: Boolean(attempt),
+    staleTime: 60_000,
+  });
+  return (
+    <Dialog open={Boolean(attempt)} onOpenChange={(o) => { if (!o) onClose(); }}>
+      <DialogContent className="max-w-3xl">
+        <DialogHeader><DialogTitle>Webcam photos — {attempt ? who(attempt) : ''}</DialogTitle></DialogHeader>
+        {q.isLoading ? <Loading /> : q.error ? <ErrorNote error={q.error} /> : (q.data ?? []).length === 0 ? (
+          <p className="text-sm text-muted-foreground">No photos yet.</p>
+        ) : (
+          <ul className="grid max-h-[70vh] grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3">
+            {q.data!.map((s) => (
+              <li key={s.id}>
+                <img src={s.image} alt={`Photo at ${formatDateTime(s.takenAt)}`} className="aspect-[4/3] w-full rounded-md bg-muted object-cover" loading="lazy" />
+                <p className="mt-1 text-xs text-muted-foreground">{formatDateTime(s.takenAt)}{s.ip ? ` · ${s.ip}` : ''}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 /**
  * Exam integrity for one test: the device and network each student used, devices
@@ -38,6 +74,7 @@ const who = (s: Student) => `${s.name}${s.rollNumber ? ` (${s.rollNumber})` : ''
  */
 export default function Integrity() {
   const { orgId, assignmentId } = useParams();
+  const [photosOf, setPhotosOf] = useState<IntegrityAttempt | null>(null);
   const q = useQuery({
     queryKey: ['integrity', assignmentId],
     queryFn: () => api<Integrity>(`/orgs/${orgId}/assignments/${assignmentId}/integrity`),
@@ -145,6 +182,11 @@ export default function Integrity() {
                     {a.fastFinisher && <span className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">Very fast, top score</span>}
                     {Object.keys(a.events).length === 0 && !a.similarAnswers && !a.fastFinisher && <span className="text-xs text-muted-foreground">None</span>}
                   </div>
+                  {Boolean(a.snapshots) && (
+                    <Button variant="outline" size="sm" className="mt-1.5 h-7 px-2 text-xs" onClick={() => setPhotosOf(a)}>
+                      <Camera className="mr-1 h-3.5 w-3.5" />{a.snapshots} photo{a.snapshots === 1 ? '' : 's'}
+                    </Button>
+                  )}
                 </td>
                 <td className="p-2 text-right tabular">{a.violations}</td>
               </tr>
@@ -153,6 +195,7 @@ export default function Integrity() {
           </tbody>
         </table>
       </div>
+      <SnapshotsDialog orgId={orgId!} assignmentId={assignmentId!} attempt={photosOf} onClose={() => setPhotosOf(null)} />
     </>
   );
 }

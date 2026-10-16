@@ -44,6 +44,7 @@ const proctoringBody = z.object({
   blockClipboard: z.boolean(),
   warnFirst: z.boolean(),
   maxViolations: z.number().int().min(1).max(50).nullable(),
+  webcamSnapshots: z.boolean(),
 }).partial();
 
 /** A rule naming a school or department also covers the units inside it. */
@@ -418,9 +419,11 @@ assignmentsRouter.get('/:assignmentId/integrity', async (req, res) => {
     started_at: string; events: Record<string, number> | null; ips: string[] | null; devices: string[] | null;
     submitted_at: string | null; score: number | null; total_marks: number | null;
     answers: Array<{ question_id: string; code?: string | null; text_value?: string | null }> | null;
+    snapshots: number;
   }>(
     `select a.id as attempt_id, a.user_id, u.full_name, u.email, m.roll_number, a.status, a.device_id, regexp_replace(host(a.start_ip), '^::ffff:', '') as start_ip,
             a.device_info, a.violation_count, a.started_at, a.submitted_at, a.score, a.total_marks, a.answers,
+            (select count(*)::int from campus.proctoring_snapshots s where s.attempt_id = a.id) as snapshots,
             (select jsonb_object_agg(event_type, n) from (select event_type, count(*)::int n from campus.proctoring_events e
                where e.attempt_id = a.id group by event_type) x) as events,
             (select array_agg(distinct regexp_replace(d.ip, '^::ffff:', '')) from (select e.details->>'ip' as ip from campus.proctoring_events e where e.attempt_id = a.id
@@ -488,12 +491,25 @@ assignmentsRouter.get('/:assignmentId/integrity', async (req, res) => {
       attemptId: r.attempt_id, ...label(r), status: r.status, startedAt: r.started_at,
       device: r.device_info ? { ...r.device_info, id: r.device_id ? r.device_id.slice(0, 12) : null } : null,
       ip: r.start_ip, ips: r.ips ?? [], otherDevices: (r.devices ?? []).filter(Boolean).length,
-      violations: r.violation_count, events: r.events ?? {},
+      violations: r.violation_count, events: r.events ?? {}, snapshots: r.snapshots,
     })),
     sharedDevices: group((r) => [r.device_id, ...(r.devices ?? [])].filter((x): x is string => Boolean(x)))
       .map((g) => ({ device: g.key.slice(0, 12), students: g.students })),
     sharedIps: group((r) => r.ips ?? []).map((g) => ({ ip: g.key, students: g.students })),
   });
+});
+
+/** Webcam photos of one attempt, oldest first, as data URLs (RLS: invigilators and report viewers). */
+assignmentsRouter.get('/:assignmentId/attempts/:attemptId/snapshots', async (req, res) => {
+  const userId = userOf(req);
+  const orgId = orgIdOf(req);
+  await requireAnyPermission(userId, orgId, [...WATCHERS]);
+  const attempt = await visibleAttempt(userId, orgId, uuid.parse(req.params.assignmentId), uuid.parse(req.params.attemptId));
+  const rows = await asUser(userId, async (db) => (await db.query<{ id: string; taken_at: string; ip: string | null; image: Buffer }>(
+    `select id, taken_at, regexp_replace(host(ip), '^::ffff:', '') as ip, image from campus.proctoring_snapshots
+      where attempt_id = $1 and org_id = $2 order by taken_at`, [attempt.id, orgId])).rows);
+  res.set('Cache-Control', 'private, no-store');
+  res.json(rows.map((r) => ({ id: r.id, takenAt: r.taken_at, ip: r.ip, image: `data:image/jpeg;base64,${r.image.toString('base64')}` })));
 });
 
 const adjustBody = z.object({ minutes: z.number().int().min(1).max(240), reason: z.string().trim().min(3).max(500) });

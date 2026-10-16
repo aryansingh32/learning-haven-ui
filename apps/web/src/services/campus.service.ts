@@ -149,6 +149,8 @@ export interface ProctoringPolicy {
   blockClipboard: boolean;
   warnFirst: boolean;
   maxViolations: number | null;
+  /** Webcam photos at random moments (the student agrees on the start screen). */
+  webcamSnapshots?: boolean;
 }
 
 export interface QuestionResult {
@@ -197,7 +199,7 @@ export interface AttemptView {
 }
 
 export type ProctoringEvent = 'tab_switch' | 'window_blur' | 'fullscreen_exit' | 'copy' | 'paste' | 'context_menu'
-  | 'multiple_screens' | 'devtools_open' | 'screenshot_key' | 'large_paste';
+  | 'multiple_screens' | 'devtools_open' | 'screenshot_key' | 'large_paste' | 'camera_off';
 
 export interface EventResult {
   severity: 'warning' | 'violation' | null;
@@ -288,6 +290,10 @@ export const runCampusCode = (attemptId: string, questionId: string, body: { cod
 
 export const reportProctoringEvent = (attemptId: string, type: ProctoringEvent): Promise<EventResult> =>
   client.post(`/my/attempts/${attemptId}/events`, { type });
+
+/** A webcam photo (JPEG data URL) for tests that use webcam snapshots. */
+export const uploadSnapshot = (attemptId: string, image: string): Promise<{ saved: boolean; remaining: number }> =>
+  client.post(`/my/attempts/${attemptId}/snapshots`, { image });
 
 /** "Still here" ping so invigilators can see who has dropped off. */
 export const campusHeartbeat = (attemptId: string): Promise<{ status: 'in_progress' | 'completed'; expiresAt: string }> =>

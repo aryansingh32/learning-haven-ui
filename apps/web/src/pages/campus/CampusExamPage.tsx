@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
   ArrowLeft, ArrowRight, Clock, Loader2, ShieldCheck, Maximize, Flag, Eraser, CheckCircle2,
-  AlertTriangle, LayoutGrid, CloudOff, Check, ShieldAlert, BookOpenText, Info, Layers,
+  AlertTriangle, LayoutGrid, CloudOff, Check, ShieldAlert, BookOpenText, Info, Layers, Camera, CameraOff,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,7 @@ import {
 import { CodingQuestion } from '@/features/campus/CodingQuestion';
 import { enterFullscreen, exitFullscreen, fullscreenSupported, useLockdown } from '@/features/campus/useLockdown';
 import { assignmentStatus, formatWhen } from '@/features/campus/assignmentStatus';
+import { cameraSupported, requestCamera, stopCamera, useWebcamSnapshots } from '@/features/campus/useWebcamSnapshots';
 
 /** What the student is told when an integrity check fires (the invigilator sees it too). */
 const SIGNAL_NOTICE: Partial<Record<ProctoringEvent, string>> = {
@@ -30,6 +31,7 @@ const SIGNAL_NOTICE: Partial<Record<ProctoringEvent, string>> = {
   devtools_open: "Developer tools aren't allowed during the test. This was noted for your invigilator.",
   screenshot_key: "Screenshots aren't allowed during the test. This was noted for your invigilator.",
   large_paste: 'A large block of text appeared at once. This was noted for your invigilator.',
+  camera_off: 'Your camera is off. This test takes webcam photos — your invigilator can see that the camera was off.',
 };
 
 type SavePayload = {
@@ -77,7 +79,11 @@ function paletteClass(status: AnswerStatus | undefined, current: boolean) {
 
 // ─── Instructions screen ─────────────────────────────────────────────────
 
-function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => void; starting: boolean }) {
+function ExamIntro({ a, onStart, starting, camera, onCamera }: {
+  a: MyAssignment; onStart: () => void; starting: boolean;
+  /** Webcam tests: the camera stream the student allowed (kept for the whole test). */
+  camera: MediaStream | null; onCamera: (stream: MediaStream | null) => void;
+}) {
   const navigate = useNavigate();
   const [ack, setAck] = useState(false);
   const p = a.proctoring;
@@ -155,11 +161,14 @@ function ExamIntro({ a, onStart, starting }: { a: MyAssignment; onStart: () => v
                 {p.blockClipboard && <li>Copy, paste and right-click are turned off.</li>}
                 <li>The test stays on this device. Continuing it on another device is a violation. Your device and network address are recorded.</li>
                 <li>Second screens, screenshots and developer tools are noted for your invigilator.</li>
+                {p.webcamSnapshots && <li>Your webcam takes a small photo at a few random moments (no video, no sound). Only your college's invigilators see them, and they are deleted after 90 days.</li>}
                 <li>Close other apps and notifications before you begin.</li>
               </ul>
               {fsNote && <p className="text-xs text-muted-foreground">Your browser can't go full screen, so this test runs in a normal window. Tab switches are still recorded.</p>}
             </div>
           )}
+
+          {p?.enabled && p.webcamSnapshots && <CameraCheck camera={camera} onCamera={onCamera} />}
 
           <BrowserCheck needsFullscreen={Boolean(p?.enabled && p.requireFullscreen)} />
 
@@ -191,7 +200,54 @@ function examRules(p: MyAssignment['proctoring'] | undefined): string[] {
     ...(p.blockClipboard ? ['Copy, paste and right-click are off'] : []),
     'Stays on this device; device and network address are recorded',
     'Second screens, screenshots and developer tools are noted',
+    ...(p.webcamSnapshots ? ['Webcam photos at random moments, seen only by invigilators, deleted after 90 days'] : []),
   ];
+}
+
+/** Webcam tests: allow the camera before starting and see what it shows. */
+function CameraCheck({ camera, onCamera }: { camera: MediaStream | null; onCamera: (stream: MediaStream | null) => void }) {
+  const video = useRef<HTMLVideoElement>(null);
+  const [asking, setAsking] = useState(false);
+  const [refused, setRefused] = useState(false);
+  useEffect(() => {
+    if (video.current) video.current.srcObject = camera;
+  }, [camera]);
+
+  const ask = async () => {
+    setAsking(true);
+    const stream = await requestCamera();
+    setAsking(false);
+    setRefused(!stream);
+    onCamera(stream);
+  };
+
+  return (
+    <div className="rounded-xl border border-border/50 bg-background/50 p-4 text-sm space-y-3">
+      <p className="font-bold text-foreground flex items-center gap-2"><Camera className="w-4 h-4 text-primary" /> Camera</p>
+      {camera ? (
+        <div className="flex items-center gap-3">
+          <video ref={video} autoPlay muted playsInline aria-label="Your camera preview" className="w-32 h-24 rounded-lg bg-black object-cover -scale-x-100" />
+          <p className="text-muted-foreground">Camera is on. Make sure your face is clearly visible and the room is lit.</p>
+        </div>
+      ) : (
+        <>
+          <p className="text-muted-foreground">
+            {!cameraSupported()
+              ? "This browser can't use a camera. You can still take the test; your invigilator will see that the camera was off."
+              : refused
+                ? 'The camera was blocked. Allow it from the camera icon in the address bar and try again — or begin without it; your invigilator will see that the camera was off.'
+                : 'This test takes a few webcam photos. Allow your camera before you begin.'}
+          </p>
+          {cameraSupported() && (
+            <Button type="button" variant="outline" size="sm" onClick={() => void ask()} disabled={asking}>
+              {asking ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : refused ? <CameraOff className="mr-2 h-4 w-4" /> : <Camera className="mr-2 h-4 w-4" />}
+              {refused ? 'Try again' : 'Allow camera'}
+            </Button>
+          )}
+        </>
+      )}
+    </div>
+  );
 }
 
 /** Quick checks before a test, so problems show up before the clock starts. */
@@ -372,8 +428,10 @@ function Palette({
 
 // ─── The exam ────────────────────────────────────────────────────────────
 
-function ExamRunner({ initial, collegeName, onSectionChange }: {
+function ExamRunner({ initial, collegeName, onSectionChange, camera = null }: {
   initial: AttemptView; collegeName?: string;
+  /** Webcam tests: the camera the student allowed on the start screen. */
+  camera?: MediaStream | null;
   /** Timed sections: called with the attempt's next section once this one has closed. */
   onSectionChange?: (view: AttemptView) => void;
 }) {
@@ -630,6 +688,12 @@ function ExamRunner({ initial, collegeName, onSectionChange }: {
     onBlocked: (type) => toast.info(type === 'context_menu' ? 'Right-click is turned off during this test.' : 'Copy and paste are turned off during this test.'),
   });
   useEffect(() => { if (lockdown.fullscreen) setHasBeenFullscreen(true); }, [lockdown.fullscreen]);
+  useWebcamSnapshots({
+    attemptId,
+    enabled: Boolean(initial.proctoring?.enabled && initial.proctoring.webcamSnapshots) && !finishing,
+    stream: camera,
+    onCameraOff: () => void onProctorEvent('camera_off'),
+  });
 
   if (!q) return null;
   const a = answers[q.id];
@@ -972,6 +1036,15 @@ export default function CampusExamPage() {
   const assignments = useMyAssignments();
   const [attempt, setAttempt] = useState<AttemptView | null>(null);
   const [starting, setStarting] = useState(false);
+  const [camera, setCamera] = useState<MediaStream | null>(null);
+  const cameraRef = useRef<MediaStream | null>(null);
+  const changeCamera = useCallback((stream: MediaStream | null) => {
+    if (cameraRef.current !== stream) stopCamera(cameraRef.current);
+    cameraRef.current = stream;
+    setCamera(stream);
+  }, []);
+  // The camera stays on for the whole test (all sections) and goes off when the student leaves the page.
+  useEffect(() => () => stopCamera(cameraRef.current), []);
 
   const assignment = useMemo(() => assignments.data?.find((x) => x.id === assignmentId), [assignments.data, assignmentId]);
 
@@ -998,7 +1071,7 @@ export default function CampusExamPage() {
 
   if (attempt) {
     // A new section remounts the runner with that section's questions and clock.
-    return <ExamRunner key={`${attempt.attemptId}:${attempt.currentSection?.index ?? 0}`} initial={attempt} collegeName={assignment?.college} onSectionChange={setAttempt} />;
+    return <ExamRunner key={`${attempt.attemptId}:${attempt.currentSection?.index ?? 0}`} initial={attempt} collegeName={assignment?.college} onSectionChange={setAttempt} camera={camera} />;
   }
 
   if (assignments.isLoading) {
@@ -1051,5 +1124,5 @@ export default function CampusExamPage() {
     );
   }
 
-  return <ExamIntro a={assignment} onStart={start} starting={starting} />;
+  return <ExamIntro a={assignment} onStart={start} starting={starting} camera={camera} onCamera={changeCamera} />;
 }

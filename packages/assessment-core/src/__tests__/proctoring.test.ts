@@ -1,4 +1,4 @@
-import { classifyEvent, normalizePolicy, shouldAutoSubmit, DEFAULT_PROCTORING } from '../proctoring';
+import { classifyEvent, normalizePolicy, nextSnapshotDelay, shouldAutoSubmit, DEFAULT_PROCTORING } from '../proctoring';
 
 describe('classifyEvent', () => {
   it('treats the first time a student leaves the exam as a warning', () => {
@@ -40,5 +40,22 @@ describe('normalizePolicy', () => {
     expect(normalizePolicy({ maxViolations: -4 }).maxViolations).toBe(1);
     expect(normalizePolicy({ maxViolations: 1000 }).maxViolations).toBe(50);
     expect(normalizePolicy({ maxViolations: null }).maxViolations).toBeNull();
+  });
+});
+
+describe('webcam snapshots', () => {
+  it('are off unless asked for, and never without proctoring', () => {
+    expect(normalizePolicy({}).webcamSnapshots).toBe(false);
+    expect(normalizePolicy({ webcamSnapshots: true }).webcamSnapshots).toBe(true);
+    expect(normalizePolicy({ enabled: false, webcamSnapshots: true }).webcamSnapshots).toBe(false);
+  });
+
+  it('a camera that is off is noted, never a violation by itself', () => {
+    expect(classifyEvent('camera_off', 5, { ...DEFAULT_PROCTORING, warnFirst: false })).toBe('warning');
+  });
+
+  it('come 2 to 5 minutes apart', () => {
+    expect(nextSnapshotDelay(() => 0)).toBe(120);
+    expect(nextSnapshotDelay(() => 0.999)).toBe(299);
   });
 });
