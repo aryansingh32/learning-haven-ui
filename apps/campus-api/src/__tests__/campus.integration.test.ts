@@ -1649,3 +1649,30 @@ describe('exam integrity: devices', () => {
     expect((await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/integrity`).set(await as(U.facultyB))).status).toBe(403);
   });
 });
+
+describe('exam integrity: similar answers', () => {
+  it('flags two students who handed in the same written answer', async () => {
+    const test = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests`).set(await as(U.facultyA)).send({ title: 'Essay paper', durationMinutes: 30 })).body.id;
+    const essay = (await request(app).post(`/campus/v1/orgs/${ORG_A}/tests/${test}/questions`).set(await as(U.facultyA))
+      .send({ type: 'descriptive', body: 'Explain processes and threads.', rubric: 'Memory, cost', maxWords: 200, marks: 5 })).body.id;
+    await request(app).patch(`/campus/v1/orgs/${ORG_A}/tests/${test}`).set(await as(U.facultyA)).send({ published: true });
+    const assignment = (await request(app).post(`/campus/v1/orgs/${ORG_A}/assignments`).set(await as(U.facultyA)).send({
+      batchId: BATCH_A, testId: test, title: 'Essay paper', publish: true,
+      opensAt: new Date(Date.now() - 3_600_000), closesAt: new Date(Date.now() + 3_600_000),
+    })).body.id;
+    const text = 'A process is a program in execution with its own memory space while a thread shares the memory of its process and is cheaper to create and to switch between';
+    const answers = (t: string) => JSON.stringify([{ question_id: essay, status: 'answered', selected_options: null, nat_value: null, text_value: t }]);
+    for (const [user, t] of [[U.s1, text], [U.s2, text.replace('cheaper', 'much cheaper')], [U.invigA, 'Threads run inside processes and share their address space; processes are isolated by the operating system and cost more to start']] as const) {
+      await pool.query(
+        `insert into public.test_attempts (user_id, test_id, assignment_id, org_id, attempt_number, status, started_at, expires_at, submitted_at, answers, total_questions, total_marks, score)
+         values ($1, $2, $3, $4, 1, 'completed', now() - interval '20 minutes', now() + interval '10 minutes', now(), $5::jsonb, 1, 5, 3)`,
+        [user, test, assignment, ORG_A, answers(t)]);
+    }
+    const res = await request(app).get(`/campus/v1/orgs/${ORG_A}/assignments/${assignment}/integrity`).set(await as(U.facultyA));
+    expect(res.status).toBe(200);
+    expect(res.body.similarAnswers).toEqual([expect.objectContaining({ kind: 'text', question: 'Explain processes and threads.' })]);
+    expect(res.body.similarAnswers[0].students.map((s: { userId: string }) => s.userId).sort()).toEqual([U.s1, U.s2].sort());
+    expect(res.body.attempts.find((a: { userId: string }) => a.userId === U.invigA).similarAnswers).toBe(0);
+    expect(res.body.fastFinishers).toEqual([]);
+  });
+});

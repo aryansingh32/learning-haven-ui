@@ -8,3 +8,4 @@ export * from './pools';
 export * from './questionSheet';
 export * from './analytics';
 export * from './device';
+export * from './similarity';

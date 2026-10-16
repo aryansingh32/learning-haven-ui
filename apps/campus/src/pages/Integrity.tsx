@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Laptop, MonitorSmartphone, Network, ShieldAlert, Smartphone, Tablet } from 'lucide-react';
+import { ArrowLeft, Copy, Laptop, MonitorSmartphone, Network, ShieldAlert, Smartphone, Tablet, Timer } from 'lucide-react';
 import { api } from '@/api/client';
 import { ErrorNote, formatDateTime, Loading, PageHeader, Stat } from '@/components/common';
 import { cn } from '@/lib/utils';
@@ -11,8 +11,15 @@ interface IntegrityAttempt extends Student {
   device: { id: string | null; os?: string | null; osVersion?: string | null; browser?: string | null; browserVersion?: string | null;
     deviceType?: 'desktop' | 'mobile' | 'tablet' | null; screen?: string | null; screens?: number | null; timezone?: string | null } | null;
   ip: string | null; ips: string[]; otherDevices: number; violations: number; events: Record<string, number>;
+  similarAnswers: number; fastFinisher: boolean;
 }
-interface Integrity { attempts: IntegrityAttempt[]; sharedDevices: { device: string; students: Student[] }[]; sharedIps: { ip: string; students: Student[] }[] }
+interface Integrity {
+  attempts: IntegrityAttempt[];
+  sharedDevices: { device: string; students: Student[] }[];
+  sharedIps: { ip: string; students: Student[] }[];
+  similarAnswers: { question: string; kind: 'code' | 'text'; score: number; students: Student[] }[];
+  fastFinishers: (Student & { minutes: number; scorePercent: number })[];
+}
 
 const EVENT_LABEL: Record<string, string> = {
   tab_switch: 'Tab switches', window_blur: 'Left window', fullscreen_exit: 'Left full screen', copy: 'Copy', paste: 'Paste',
@@ -38,7 +45,7 @@ export default function Integrity() {
   });
   if (q.isLoading) return <Loading />;
   if (q.error) return <ErrorNote error={q.error} />;
-  const { attempts, sharedDevices, sharedIps } = q.data!;
+  const { attempts, sharedDevices, sharedIps, similarAnswers = [], fastFinishers = [] } = q.data!;
   const changed = attempts.filter((a) => a.otherDevices > 0);
   const flagged = attempts.filter((a) => Object.keys(a.events).some((k) => SERIOUS.has(k)));
 
@@ -49,10 +56,11 @@ export default function Integrity() {
       </Link>
       <PageHeader title="Integrity" description="Devices, networks and integrity signals for this test. Each attempt is tied to the device it started on." />
 
-      <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Stat label="Attempts" value={attempts.length} />
         <Stat label="Shared devices" value={sharedDevices.length} tone={sharedDevices.length ? 'warning' : undefined} hint="Same device, different students" />
         <Stat label="Device changed mid-test" value={changed.length} tone={changed.length ? 'warning' : undefined} />
+        <Stat label="Similar answers" value={similarAnswers.length} tone={similarAnswers.length ? 'warning' : undefined} hint="Pairs of students, per question" />
         <Stat label="Other signals" value={flagged.length} hint="Second screen, dev tools, large inserts" />
       </div>
 
@@ -62,6 +70,39 @@ export default function Integrity() {
           <p className="mb-2 text-sm text-muted-foreground">The strongest sign of someone taking a test for another student. Check these first.</p>
           <ul className="space-y-1 text-sm">
             {sharedDevices.map((d) => <li key={d.device}><span className="font-mono text-xs">{d.device}…</span> — {d.students.map(who).join(', ')}</li>)}
+          </ul>
+        </section>
+      )}
+
+      {similarAnswers.length > 0 && (
+        <section className="mb-6 rounded-lg border border-warning/40 bg-warning/5 p-4" aria-label="Similar answers">
+          <h2 className="mb-1 flex items-center gap-2 font-semibold"><Copy className="h-4 w-4" />Similar answers</h2>
+          <p className="mb-2 text-sm text-muted-foreground">
+            Pairs whose code or written answer is mostly the same after ignoring names, comments, spacing and the starter code. Read both answers before deciding.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-1 pr-3 font-medium">Students</th><th className="pr-3 font-medium">Question</th><th className="text-right font-medium">Match</th></tr></thead>
+              <tbody>
+                {similarAnswers.slice(0, 50).map((p, i) => (
+                  <tr key={i} className="border-t align-top">
+                    <td className="py-1.5 pr-3">{p.students.map(who).join(' & ')}</td>
+                    <td className="pr-3 text-muted-foreground">{p.kind === 'code' ? 'Code · ' : 'Written · '}{p.question}</td>
+                    <td className="text-right tabular font-medium">{Math.round(p.score * 100)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {fastFinishers.length > 0 && (
+        <section className="mb-6 rounded-lg border p-4" aria-label="Unusually fast">
+          <h2 className="mb-1 flex items-center gap-2 font-semibold"><Timer className="h-4 w-4" />Top scores in unusually little time</h2>
+          <p className="mb-2 text-sm text-muted-foreground">Finished in about a third of the class's typical time with a top-quarter score. Often just a strong student — worth a look alongside the other signals.</p>
+          <ul className="space-y-1 text-sm">
+            {fastFinishers.map((f) => <li key={f.userId}>{who(f)} — {f.minutes} min, {f.scorePercent}%</li>)}
           </ul>
         </section>
       )}
@@ -100,7 +141,9 @@ export default function Integrity() {
                         {EVENT_LABEL[k] ?? k} ×{n}
                       </span>
                     ))}
-                    {Object.keys(a.events).length === 0 && <span className="text-xs text-muted-foreground">None</span>}
+                    {a.similarAnswers > 0 && <span className="rounded bg-warning/10 px-1.5 py-0.5 text-xs text-warning">Similar answers ×{a.similarAnswers}</span>}
+                    {a.fastFinisher && <span className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">Very fast, top score</span>}
+                    {Object.keys(a.events).length === 0 && !a.similarAnswers && !a.fastFinisher && <span className="text-xs text-muted-foreground">None</span>}
                   </div>
                 </td>
                 <td className="p-2 text-right tabular">{a.violations}</td>

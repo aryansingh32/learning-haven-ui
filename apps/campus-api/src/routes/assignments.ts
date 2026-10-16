@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { normalizePolicy, textAnswerMatches } from '@repo/assessment-core';
+import { codeFingerprint, fastAndHighScoring, normalizePolicy, similarPairs, textAnswerMatches, textFingerprint } from '@repo/assessment-core';
 import { userOf } from '../auth';
 import { asSystem, asUser, Db } from '../db';
 import { badRequest, HttpError, notFound } from '../errors';
@@ -416,9 +416,11 @@ assignmentsRouter.get('/:assignmentId/integrity', async (req, res) => {
     attempt_id: string; user_id: string; full_name: string | null; email: string; roll_number: string | null; status: string;
     device_id: string | null; start_ip: string | null; device_info: Record<string, unknown> | null; violation_count: number;
     started_at: string; events: Record<string, number> | null; ips: string[] | null; devices: string[] | null;
+    submitted_at: string | null; score: number | null; total_marks: number | null;
+    answers: Array<{ question_id: string; code?: string | null; text_value?: string | null }> | null;
   }>(
     `select a.id as attempt_id, a.user_id, u.full_name, u.email, m.roll_number, a.status, a.device_id, regexp_replace(host(a.start_ip), '^::ffff:', '') as start_ip,
-            a.device_info, a.violation_count, a.started_at,
+            a.device_info, a.violation_count, a.started_at, a.submitted_at, a.score, a.total_marks, a.answers,
             (select jsonb_object_agg(event_type, n) from (select event_type, count(*)::int n from campus.proctoring_events e
                where e.attempt_id = a.id group by event_type) x) as events,
             (select array_agg(distinct regexp_replace(d.ip, '^::ffff:', '')) from (select e.details->>'ip' as ip from campus.proctoring_events e where e.attempt_id = a.id
@@ -441,8 +443,48 @@ assignmentsRouter.get('/:assignmentId/integrity', async (req, res) => {
     return [...by.entries()].filter(([, users]) => users.size > 1).map(([k, users]) => ({ key: k, students: [...users.values()] }));
   };
 
+  // Similar answers: per coding / written question, every pair of students compared
+  // (starter code removed first). Only the latest attempt of each student counts.
+  const latest = new Map<string, (typeof rows)[number]>();
+  for (const r of rows) if (!latest.has(r.user_id) || new Date(r.started_at) > new Date(latest.get(r.user_id)!.started_at)) latest.set(r.user_id, r);
+  const questionIds = [...new Set([...latest.values()].flatMap((r) => (r.answers ?? []).filter((x) => x.code || x.text_value).map((x) => x.question_id)))];
+  const questions = questionIds.length === 0 ? [] : await asSystem(async (db) => (await db.query<{ id: string; body: string; question_type: string; starter_code: Record<string, string> | null }>(
+    `select id, body, question_type, starter_code from public.testseries_questions where id = any($1::uuid[])`, [questionIds])).rows);
+  const similarAnswers: Array<{ question: string; kind: 'code' | 'text'; score: number; students: ReturnType<typeof label>[] }> = [];
+  const similarCount = new Map<string, number>();
+  for (const q of questions) {
+    const kind = q.question_type === 'coding' ? 'code' : q.question_type === 'descriptive' ? 'text' : null;
+    if (!kind) continue;
+    const items = [...latest.values()].flatMap((r) => {
+      const ans = (r.answers ?? []).find((x) => x.question_id === q.id);
+      if (kind === 'code' && ans?.code) return [{ id: r.user_id, fingerprint: codeFingerprint(ans.code, Object.values(q.starter_code ?? {}).join('\n')) }];
+      if (kind === 'text' && ans?.text_value) return [{ id: r.user_id, fingerprint: textFingerprint(ans.text_value) }];
+      return [];
+    });
+    for (const pair of similarPairs(items, 0.8, kind === 'code' ? 40 : 25, kind === 'code' ? 8 : 10)) {
+      similarAnswers.push({ question: q.body.replace(/\s+/g, ' ').slice(0, 90), kind, score: pair.score,
+        students: [label(latest.get(pair.a)!), label(latest.get(pair.b)!)] });
+      for (const id of [pair.a, pair.b]) similarCount.set(id, (similarCount.get(id) ?? 0) + 1);
+    }
+  }
+  similarAnswers.sort((x, y) => y.score - x.score);
+
+  // Finished far faster than the class with a top score.
+  const fast = new Set(fastAndHighScoring([...latest.values()]
+    .filter((r) => r.status === 'completed' && r.submitted_at && r.total_marks)
+    .map((r) => ({ id: r.user_id, durationSeconds: (new Date(r.submitted_at!).getTime() - new Date(r.started_at).getTime()) / 1000,
+      scorePercent: (Number(r.score ?? 0) / Number(r.total_marks)) * 100 }))));
+
   res.json({
+    similarAnswers: similarAnswers.slice(0, 100),
+    fastFinishers: [...fast].map((id) => {
+      const r = latest.get(id)!;
+      return { ...label(r), minutes: Math.round((new Date(r.submitted_at!).getTime() - new Date(r.started_at).getTime()) / 60000),
+        scorePercent: Math.round((Number(r.score ?? 0) / Number(r.total_marks)) * 100) };
+    }),
     attempts: rows.map((r) => ({
+      similarAnswers: similarCount.get(r.user_id) ?? 0,
+      fastFinisher: fast.has(r.user_id),
       attemptId: r.attempt_id, ...label(r), status: r.status, startedAt: r.started_at,
       device: r.device_info ? { ...r.device_info, id: r.device_id ? r.device_id.slice(0, 12) : null } : null,
       ip: r.start_ip, ips: r.ips ?? [], otherDevices: (r.devices ?? []).filter(Boolean).length,
