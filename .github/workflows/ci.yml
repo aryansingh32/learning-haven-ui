@@ -1,0 +1,76 @@
+name: CI
+
+# Every pull request and push to main: unit tests for all apps and packages,
+# production builds of the three front ends, a dependency audit gate and a
+# secret scan. The database / RLS suites run in db-tests.yml.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      redis:
+        image: redis:7
+        ports: ['6379:6379']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install workspace
+        run: pnpm install --frozen-lockfile
+      - name: Shared assessment logic tests
+        run: pnpm --filter @repo/assessment-core test
+      - name: Forge API — type check
+        working-directory: apps/api
+        run: npx tsc --noEmit -p .
+      - name: Forge API — unit tests
+        working-directory: apps/api
+        run: npx jest --ci
+      - name: Campus API — type check
+        working-directory: apps/campus-api
+        run: npx tsc --noEmit -p .
+      - name: Learner app — unit tests
+        working-directory: apps/web
+        run: npx vitest run
+      - name: Learner app — production build
+        working-directory: apps/web
+        run: npx vite build
+      - name: Admin — type check and build
+        working-directory: apps/admin
+        run: npx tsc --noEmit -p tsconfig.app.json && npx vite build
+      - name: College portal — type check and build
+        working-directory: apps/campus
+        run: npx tsc --noEmit -p tsconfig.app.json && npx vite build
+
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Dependency audit (fails on critical)
+        run: pnpm audit --prod --audit-level=critical
+      - name: Secret scan (full history)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

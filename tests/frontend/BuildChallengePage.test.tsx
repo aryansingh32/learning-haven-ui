@@ -1,160 +1,116 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import BuildChallengePage from '@/pages/BuildChallengePage';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
 import { buildHavenService } from '@/features/build-haven/api/build-haven.service';
+import { apprenticeshipService } from '@/features/apprenticeship/api/apprenticeship.service';
 import { toast } from 'sonner';
 
-// Mock Dependencies
-vi.mock('@/context/AuthContext', () => ({
-  useAuth: vi.fn(),
-}));
-
+vi.mock('@/context/AuthContext', () => ({ useAuth: vi.fn() }));
 vi.mock('@/features/build-haven/api/build-haven.service', () => ({
   buildHavenService: {
     getChallengeBySlug: vi.fn(),
-    getMyEnrollments: vi.fn(),
-    enrollInChallenge: vi.fn(),
+    getWorkspace: vi.fn(),
+    getLeaderboard: vi.fn(),
+    startChallenge: vi.fn(),
   },
 }));
+vi.mock('@/features/apprenticeship/api/apprenticeship.service', () => ({
+  apprenticeshipService: { getGithubStatus: vi.fn(), getGithubAuthUrl: vi.fn() },
+}));
+vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn() } }));
 
-vi.mock('sonner', () => ({
-  toast: {
-    success: vi.fn(),
-    error: vi.fn(),
-  },
+const navigateSpy = vi.fn();
+vi.mock('react-router-dom', async (orig) => ({
+  ...(await orig<typeof import('react-router-dom')>()),
+  useNavigate: () => navigateSpy,
 }));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: false },
-  },
-});
-
-const renderComponent = () => {
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <BuildChallengePage />
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
+const challenge = {
+  id: 'challenge-1',
+  title: 'Test Redis Challenge',
+  slug: 'test-redis',
+  description: 'Build Redis from scratch',
+  difficulty_level: 'advanced',
+  available_modes: ['traditional', 'vibe'],
+  default_mode: 'vibe',
+  languages: [{ language: 'python' }, { language: 'typescript' }],
+  stages: [{ id: 's1', stage_number: 1, title: 'Stage 1: PING', estimated_minutes: 30 }],
 };
 
-describe('BuildChallengePage Integration & Edge Case Suite', () => {
+function renderPage() {
+  const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(
+    <QueryClientProvider client={qc}>
+      <MemoryRouter initialEntries={['/projects/test-redis']}>
+        <Routes>
+          <Route path="/projects/:slug" element={<BuildChallengePage />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+}
+
+describe('BuildChallengePage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (useAuth as any).mockReturnValue({ user: { id: 'test-user-123' }, isAuthenticated: true });
-    
-    // Default Successful Mock Responses
-    (buildHavenService.getChallengeBySlug as any).mockResolvedValue({
-      id: 'challenge-1',
-      title: 'Test Redis Challenge',
-      slug: 'test-redis',
-      description: 'Build Redis from scratch',
-      difficultyLevel: 'advanced',
-      priceInr: 0,
-      durationDays: 30,
-      available_modes: ['traditional', 'vibe'],
-      default_mode: 'vibe',
-      supportedLanguages: ['python', 'typescript'],
-      stages: [
-        { id: 's1', stage_number: 1, title: 'Stage 1: PING', verification_type: 'contract' }
-      ]
-    });
-
-    (buildHavenService.getMyEnrollments as any).mockResolvedValue([]);
+    (useAuth as any).mockReturnValue({ user: { id: 'u1' }, isAuthenticated: true });
+    (buildHavenService.getChallengeBySlug as any).mockResolvedValue({ challenge });
+    (buildHavenService.getWorkspace as any).mockResolvedValue({ workspace: { enrollment: null } });
+    (buildHavenService.getLeaderboard as any).mockResolvedValue({ leaderboard: [] });
+    (apprenticeshipService.getGithubStatus as any).mockResolvedValue({ connected: false });
   });
 
-  it('renders loading state initially', () => {
-    // Force a hanging promise to test loading state
+  it('announces loading while the challenge loads', () => {
     (buildHavenService.getChallengeBySlug as any).mockImplementation(() => new Promise(() => {}));
-    renderComponent();
-    expect(screen.getByRole('status')).toBeInTheDocument(); // Expecting loader icon/spinner
+    renderPage();
+    expect(screen.getByRole('status', { name: /loading challenge/i })).toBeInTheDocument();
   });
 
-  it('renders dual-mode options properly after loading', async () => {
-    renderComponent();
-    await waitFor(() => {
-      expect(screen.getByText('Test Redis Challenge')).toBeInTheDocument();
-    });
-
-    // Check if dual modes are present
-    expect(screen.getByText('Vibe Mode')).toBeInTheDocument();
-    expect(screen.getByText('Traditional Mode')).toBeInTheDocument();
+  it('shows the challenge with both build modes', async () => {
+    renderPage();
+    expect(await screen.findByText('Test Redis Challenge')).toBeInTheDocument();
+    expect(screen.getByText('Traditional')).toBeInTheDocument();
+    expect(screen.getByText('Vibe Coded')).toBeInTheDocument();
   });
 
-  it('handles edge case: User lacking GitHub connection blocks traditional mode enrollment', async () => {
-    renderComponent();
-    await waitFor(() => expect(screen.getByText('Traditional Mode')).toBeInTheDocument());
-
-    // Switch to Traditional Mode
-    fireEvent.click(screen.getByText('Traditional Mode'));
-    
-    // In traditional mode, selecting a language and enrolling should check github
-    fireEvent.click(screen.getByText('Python'));
-    
-    const enrollBtn = screen.getByRole('button', { name: /Enroll & Start Building/i });
-    fireEvent.click(enrollBtn);
-
-    // Because we mock auth context but didn't mock github auth state, we expect a toast or redirect
-    await waitFor(() => {
-      // Assuming missing github triggers an error or redirect, we check for error handling
-      expect(toast.error).toHaveBeenCalledWith(expect.stringContaining('GitHub'));
-    });
-  });
-
-  it('handles edge case: API error on challenge load displays 404/Error state', async () => {
+  it('says "Challenge not found" instead of spinning forever when loading fails', async () => {
     (buildHavenService.getChallengeBySlug as any).mockRejectedValue(new Error('Challenge Not Found'));
-    renderComponent();
-    
-    await waitFor(() => {
-      expect(screen.getByText(/Challenge not found/i)).toBeInTheDocument();
-    });
+    renderPage();
+    // The page retries once before giving up.
+    expect(await screen.findByText(/Challenge not found/i, undefined, { timeout: 5000 })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /All challenges/i }));
+    expect(navigateSpy).toHaveBeenCalledWith('/projects');
   });
 
-  it('successfully executes Vibe Mode Enrollment Flow', async () => {
-    (buildHavenService.enrollInChallenge as any).mockResolvedValue({ id: 'enroll-1' });
-    renderComponent();
-
-    await waitFor(() => expect(screen.getByText('Test Redis Challenge')).toBeInTheDocument());
-
-    // Ensure Vibe Mode is active
-    fireEvent.click(screen.getByText('Vibe Mode'));
-    
-    // Select Language
-    fireEvent.click(screen.getByText('Python'));
-
-    // Submit
-    const enrollBtn = screen.getByRole('button', { name: /Enroll & Start Building/i });
-    fireEvent.click(enrollBtn);
-
-    await waitFor(() => {
-      expect(buildHavenService.enrollInChallenge).toHaveBeenCalledWith(
-        'challenge-1',
-        'python',
-        null,
-        'vibe'
-      );
-      // Wait for redirect logic or success toast
-      expect(toast.success).toHaveBeenCalledWith(expect.stringContaining('successfully'));
-    });
+  it('asks to connect GitHub before a traditional build', async () => {
+    renderPage();
+    await screen.findByText('Test Redis Challenge');
+    fireEvent.click(screen.getByText('Traditional'));
+    expect(await screen.findByRole('button', { name: /Connect GitHub to Start/i })).toBeInTheDocument();
+    expect(buildHavenService.startChallenge).not.toHaveBeenCalled();
   });
 
-  it('handles edge case: Server error during enrollment gracefully', async () => {
-    (buildHavenService.enrollInChallenge as any).mockRejectedValue(new Error('Internal Server Error'));
-    renderComponent();
+  it('starts a vibe build and opens the workspace', async () => {
+    (buildHavenService.startChallenge as any).mockResolvedValue({ enrollment: { id: 'e1' }, repository: null, clone_command: null });
+    renderPage();
+    await screen.findByText('Test Redis Challenge');
+    fireEvent.click(screen.getByText('Vibe Coded'));
+    fireEvent.click(await screen.findByRole('button', { name: /Start Vibe Coding/i }));
+    await waitFor(() => expect(buildHavenService.startChallenge).toHaveBeenCalledWith('test-redis', 'python', 'vibe'));
+    await waitFor(() => expect(navigateSpy).toHaveBeenCalledWith('/projects/test-redis/workspace?language=python&mode=vibe'));
+    expect(toast.success).toHaveBeenCalled();
+  });
 
-    await waitFor(() => expect(screen.getByText('Test Redis Challenge')).toBeInTheDocument());
-
-    fireEvent.click(screen.getByText('Python'));
-    const enrollBtn = screen.getByRole('button', { name: /Enroll & Start Building/i });
-    fireEvent.click(enrollBtn);
-
-    await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith(expect.stringContaining('Failed to enroll'));
-    });
+  it('shows the server error when starting fails', async () => {
+    (buildHavenService.startChallenge as any).mockRejectedValue(new Error('Internal Server Error'));
+    renderPage();
+    await screen.findByText('Test Redis Challenge');
+    fireEvent.click(screen.getByText('Vibe Coded'));
+    fireEvent.click(await screen.findByRole('button', { name: /Start Vibe Coding/i }));
+    await waitFor(() => expect(toast.error).toHaveBeenCalledWith('Internal Server Error'));
+    expect(navigateSpy).not.toHaveBeenCalledWith(expect.stringContaining('/workspace'));
   });
 });

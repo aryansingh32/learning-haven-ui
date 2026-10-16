@@ -9,8 +9,18 @@ const client = new Client({
 });
 
 async function createSuperAdmin() {
-    const email = 'admin12@gmail.com';
-    const password = 'AdMiN#1212';
+    // Never commit credentials: pass them in for one run, e.g.
+    //   SUPER_ADMIN_EMAIL=you@org.com SUPER_ADMIN_PASSWORD='…' node scripts/create-super-admin.js
+    const email = (process.env.SUPER_ADMIN_EMAIL || '').trim().toLowerCase();
+    const password = process.env.SUPER_ADMIN_PASSWORD || '';
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        console.error('Set SUPER_ADMIN_EMAIL to the admin\'s email address.');
+        process.exit(1);
+    }
+    if (password.length < 14 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password) || !/[^A-Za-z0-9]/.test(password)) {
+        console.error('Set SUPER_ADMIN_PASSWORD: at least 14 characters with upper and lower case, a digit and a symbol.');
+        process.exit(1);
+    }
 
     try {
         await client.connect();

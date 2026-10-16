@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import BuildWorkspacePage from '@/pages/BuildWorkspacePage';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
 import { buildHavenService } from '@/features/build-haven/api/build-haven.service';
@@ -35,18 +35,16 @@ vi.mock('sonner', () => ({
   },
 }));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: false },
-  },
-});
-
+// A fresh cache per test, so one test's data never leaks into the next.
 const renderComponent = () => {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <BuildWorkspacePage />
-      </BrowserRouter>
+      <MemoryRouter initialEntries={['/projects/docker-test/workspace?language=go']}>
+        <Routes>
+          <Route path="/projects/:slug/workspace" element={<BuildWorkspacePage />} />
+        </Routes>
+      </MemoryRouter>
     </QueryClientProvider>
   );
 };
@@ -87,14 +85,20 @@ describe('BuildWorkspacePage UI/UX & Flow Suite', () => {
   it('renders loading state initially', () => {
     (buildHavenService.getWorkspace as any).mockImplementation(() => new Promise(() => {}));
     renderComponent();
-    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: /loading workspace/i })).toBeInTheDocument();
+  });
+
+  it('explains when the workspace cannot be loaded instead of spinning forever', async () => {
+    (buildHavenService.getWorkspace as any).mockRejectedValue(new Error('Not found'));
+    renderComponent();
+    expect(await screen.findByText(/workspace isn't available/i, undefined, { timeout: 3000 })).toBeInTheDocument();
   });
 
   it('renders workspace UI correctly for enrolled user', async () => {
     renderComponent();
     await waitFor(() => {
-      expect(screen.getByText('Docker Challenge')).toBeInTheDocument();
-      expect(screen.getByText('Bind to port')).toBeInTheDocument(); // Stage title
+      expect(screen.getAllByText('Docker Challenge').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Bind to port').length).toBeGreaterThan(0); // Stage title
     });
     
     // Check Tabs exist
@@ -103,15 +107,21 @@ describe('BuildWorkspacePage UI/UX & Flow Suite', () => {
     expect(screen.getByText('Concepts')).toBeInTheDocument();
   });
 
-  it('displays "Complete Solution" blur gate when accessing examples before completion', async () => {
-    renderComponent();
-    await waitFor(() => expect(screen.getByText('Code Examples')).toBeInTheDocument());
-    
-    fireEvent.click(screen.getByText('Code Examples'));
-    
-    // If the modal/gate appears
-    await waitFor(() => {
-      expect(screen.getByText(/View code examples\?/i)).toBeInTheDocument();
+  it('keeps the complete solution hidden until the learner reveals it', async () => {
+    (buildHavenService.getWorkspace as any).mockResolvedValue({
+      workspace: {
+        challenge: {
+          title: 'Docker Challenge', slug: 'docker-test', languages: [{ language: 'go' }],
+          stages: [{ stage_number: 1, title: 'Bind to port', description: 'Bind to 8080', code_example: 'package main // SOLUTION_BODY' }],
+        },
+        enrollment: { id: 'enroll-123', language: 'go', current_stage: 1, status: 'in_progress', repo_url: 'https://github.com/test/repo', build_mode: 'vibe' },
+        attempts: [],
+      },
     });
+    renderComponent();
+    const reveal = await screen.findByRole('button', { name: /Reveal complete solution/i });
+    expect(screen.getByText(/Click "Reveal" to see the solution/i)).toBeInTheDocument();
+    fireEvent.click(reveal);
+    expect(await screen.findByRole('button', { name: /Hide solution/i })).toBeInTheDocument();
   });
 });

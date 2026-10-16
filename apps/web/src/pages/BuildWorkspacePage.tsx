@@ -235,10 +235,21 @@ export default function BuildWorkspacePage() {
     }
   };
 
+  // A workspace that can't be loaded used to leave the spinner up forever.
+  if (!workspaceQuery.isLoading && (workspaceQuery.isError || !challenge)) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background px-4 text-center">
+        <h1 className="text-xl font-semibold text-foreground">This workspace isn't available</h1>
+        <p className="max-w-sm text-sm text-muted-foreground">The challenge may have been moved, or you haven't started it yet.</p>
+        <Button variant="outline" onClick={() => navigate(slug ? `/projects/${slug}` : '/projects')}>Back to the challenge</Button>
+      </div>
+    );
+  }
+
   if (workspaceQuery.isLoading || !challenge) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div role="status" aria-label="Loading workspace" className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
       </div>
     );
   }

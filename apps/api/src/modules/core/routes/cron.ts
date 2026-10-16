@@ -1,15 +1,22 @@
 import { Router } from 'express';
-import { supabase } from '../../../config/database';
+import { timingSafeEqual } from 'crypto';
+import { pool, supabase } from '../../../config/database';
 import logger from '../../../config/logger';
 import { WhatsAppService } from '../../communication/services/whatsapp.service';
 import { AchievementsService } from '../../auth/services/achievements.service';
 
 const router = Router();
 
+/** Constant-time comparison, so the secret can't be guessed from response timing. */
+const sameSecret = (given: unknown, expected: string | undefined): boolean => {
+    if (!expected || typeof given !== 'string') return false;
+    const a = Buffer.from(given);
+    const b = Buffer.from(expected);
+    return a.length === b.length && timingSafeEqual(a, b);
+};
+
 const verifyCronSecret = (req: any, res: any): boolean => {
-    const headerSecret = req.headers['x-cron-secret'];
-    const expected = process.env.CRON_SECRET;
-    if (!expected || headerSecret !== expected) {
+    if (!sameSecret(req.headers['x-cron-secret'], process.env.CRON_SECRET)) {
         res.status(401).json({ error: 'Unauthorized' });
         return false;
     }
@@ -23,10 +30,7 @@ const verifyCronSecret = (req: any, res: any): boolean => {
  */
 router.post('/replenish-tokens', async (req, res) => {
     try {
-        const headerSecret = req.headers['x-cron-secret'];
-        const expected = process.env.CRON_SECRET;
-
-        if (!expected || headerSecret !== expected) {
+        if (!sameSecret(req.headers['x-cron-secret'], process.env.CRON_SECRET)) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
@@ -62,10 +66,7 @@ router.post('/replenish-tokens', async (req, res) => {
  */
 router.get('/expire-jobs', async (req, res) => {
     try {
-        const headerSecret = req.headers['x-cron-secret'];
-        const expected = process.env.CRON_SECRET;
-
-        if (!expected || headerSecret !== expected) {
+        if (!sameSecret(req.headers['x-cron-secret'], process.env.CRON_SECRET)) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
@@ -133,6 +134,26 @@ router.post('/week-xp-snapshot', async (req, res) => {
         logger.error('Week XP snapshot cron error:', { error });
         return res.status(500).json({ error: 'Failed to record the week snapshot' });
     }
+});
+
+/**
+ * @route   POST /api/cron/purge-personal-data
+ * @desc    Daily: delete device records not seen for 180 days and sign-in records
+ *          older than a year (docs/security/DATA_RETENTION.md)
+ * @access  Secured via x-cron-secret header
+ */
+router.post('/purge-personal-data', async (req, res) => {
+    if (!verifyCronSecret(req, res)) return;
+    const run = async (sql: string) => {
+        try { return (await pool.query(sql)).rowCount ?? 0; } catch (error: any) {
+            if (error?.code === '42P01') return 0; // table not there yet
+            throw error;
+        }
+    };
+    const devices = await run(`delete from public.user_devices where last_seen_at < now() - interval '180 days'`);
+    const signIns = await run(`delete from public.account_events where kind = 'sign_in' and occurred_at < now() - interval '1 year'`);
+    logger.info('Personal data purge', { devices, signIns });
+    return res.json({ success: true, devices, signIns });
 });
 
 export default router;

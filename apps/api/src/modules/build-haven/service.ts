@@ -563,6 +563,10 @@ export class BuildHavenService {
     /** Template variable randomization config */
     randomizationConfig?: Record<string, unknown> | null;
   }) {
+    // The stage id names a folder and a Docker container: only a real UUID may do that.
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(params.stageId)) {
+      throw new Error('Invalid stage id');
+    }
     const workdir = path.join('/tmp/verify-build', `${params.stageId}-${Date.now()}`);
     await fs.mkdir(workdir, { recursive: true });
     const startedAt = Date.now();

@@ -237,10 +237,11 @@ export default function BuildChallengePage() {
   const [buildMode, setBuildMode] = useState<'traditional' | 'vibe'>('traditional');
   const [showModePicker, setShowModePicker] = useState(false);
 
-  const { data, refetch, isLoading } = useQuery({
+  const { data, refetch, isLoading, isError } = useQuery({
     queryKey: ['build-challenge', slug],
     queryFn: () => buildHavenService.getChallengeBySlug(slug),
     enabled: Boolean(slug),
+    retry: 1,
   });
 
   const githubStatusQuery = useQuery({
@@ -324,10 +325,21 @@ export default function BuildChallengePage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  // A challenge that can't be loaded (or doesn't exist) used to leave the spinner up forever.
+  if (!isLoading && (isError || !challenge)) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 text-center">
+        <h1 className="text-xl font-semibold text-foreground">Challenge not found</h1>
+        <p className="max-w-sm text-sm text-muted-foreground">It may have been moved or unpublished. Pick another challenge to build.</p>
+        <Button variant="outline" onClick={() => navigate('/projects')}><ArrowLeft className="mr-2 h-4 w-4" />All challenges</Button>
+      </div>
+    );
+  }
+
   if (isLoading || !challenge) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div role="status" aria-label="Loading challenge" className="flex min-h-[50vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
       </div>
     );
   }

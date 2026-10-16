@@ -1,0 +1,14 @@
+# Secret scan settings: the default rules, plus allowances for values that are
+# public by design or only used against local test services.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Public or test-only values"
+paths = [
+  '''(^|/)\.env\.example$''',
+  '''apps/api/src/__tests__/''',
+  '''apps/campus-api/src/__tests__/''',
+  '''apps/api/supabase/tests/''',
+  '''pnpm-lock\.yaml''',
+]
