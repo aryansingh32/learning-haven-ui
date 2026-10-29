@@ -107,34 +107,23 @@ export const updateRetention = async (req: Request, res: Response) => {
 };
 
 export const getPublicStats = async (req: Request, res: Response) => {
+    // Real numbers only: these are shown to the public, so nothing is padded or invented.
     try {
-        // Fast counting query for total users
         const { count: totalUsers } = await supabase
             .from('users')
             .select('*', { count: 'estimated', head: true });
-            
-        // Mock placement data for social proof or fetch from jobs/apprenticeships
-        // For now, base it on total users (e.g., 8.5% placed)
-        const baseUsers = totalUsers || 847;
-        const placed = Math.floor(baseUsers * 0.085) + 312;
-        
-        // Active today
+
         const todayStart = new Date();
-        todayStart.setHours(0,0,0,0);
+        todayStart.setHours(0, 0, 0, 0);
         const { count: activeToday } = await supabase
             .from('analytics_events')
             .select('user_id', { count: 'exact', head: true })
             .gte('created_at', todayStart.toISOString())
             .not('user_id', 'is', null);
 
-        res.json({
-            total_users: (totalUsers || 847) + 10000, // Offset to look impressive as per business strategy
-            active_today: activeToday || 847,
-            students_placed: placed
-        });
+        res.json({ total_users: totalUsers || 0, active_today: activeToday || 0 });
     } catch (e) {
         logger.error('Failed to fetch public stats:', e);
-        // Return default impressive numbers if DB fails
-        res.json({ total_users: 10847, active_today: 847, students_placed: 312 });
+        res.json({ total_users: 0, active_today: 0 });
     }
 };

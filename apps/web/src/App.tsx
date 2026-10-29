@@ -35,7 +35,6 @@ const AuthLayout = lazy(() => import("@/components/layouts/AuthLayout").then(m =
 const SignIn = lazy(() => import("@/pages/auth/SignIn"));
 const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 const Onboarding = lazy(() => import("@/pages/Onboarding"));
-const CoursePreview = lazy(() => import("@/pages/CoursePreview"));
 const CodeExecutorTest = lazy(() => import("@/modules/CodeExecutor/test-page"));
 const Index = lazy(() => import("./pages/Index"));
 const InvoicePage = lazy(() => import("./pages/InvoicePage"));
@@ -125,7 +124,6 @@ const App = () => (
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/verify-email" element={<VerifyEmailPage />} />
                 <Route path="/onboarding" element={<Onboarding />} />
-                <Route path="/course-preview" element={<CoursePreview />} />
               </Route>
 
               <Route path="/" element={<LandingPage />} />

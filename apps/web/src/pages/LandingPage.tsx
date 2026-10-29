@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, X, BookOpen, Code2, Award, Briefcase, Flame, ChevronDown, Star, Users, Zap, Shield } from 'lucide-react';
+import { ArrowRight, Check, X, BookOpen, Code2, Award, Briefcase, Flame, ChevronDown, Zap, Shield } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSiteConfig } from '@/context/SiteConfigContext';
 import { trackPageView } from '@/lib/analytics';
-import { api } from '@/services/api.svc';
 import { useApiQuery } from '@/hooks/useApi';
 
 const painPoints = [
@@ -88,7 +87,6 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const config = useSiteConfig();
-  const [studentCount, setStudentCount] = useState(847);
 
   // Live pricing — never hardcode prices, they must match what checkout actually charges.
   const { data: plansData } = useApiQuery<any[]>(['landing-plans'], '/plans');
@@ -102,15 +100,6 @@ export default function LandingPage() {
     if (isAuthenticated) {
       navigate('/dashboard', { replace: true });
     }
-
-    // Fetch live student count
-    api.get('/analytics/public')
-      .then(data => {
-        if (data && data.total_users) {
-          setStudentCount(data.total_users);
-        }
-      })
-      .catch(err => console.error('Failed to fetch public stats:', err));
   }, [isAuthenticated, navigate]);
 
   return (
@@ -153,7 +142,7 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-600 rounded-full px-4 py-1.5 text-xs font-bold mb-6 border border-orange-100">
               <Flame className="w-3.5 h-3.5" />
-              {studentCount.toLocaleString()} students learning right now
+              Learn, practise and get placement-ready
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-5">
               {config.hero_title || 'From Confused Beginner to Hired Developer.'}
@@ -196,10 +185,6 @@ export default function LandingPage() {
             transition={{ delay: 0.6 }}
             className="flex items-center justify-center gap-4 mt-6 text-sm text-slate-400"
           >
-            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" /> 4.8 rating</span>
-            <span>•</span>
-            <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" /> 10,000+ students</span>
-            <span>•</span>
             <span className="flex items-center gap-1"><Shield className="w-3.5 h-3.5" /> Free forever tier</span>
           </motion.div>
         </div>
@@ -444,7 +429,7 @@ export default function LandingPage() {
             Ready to forge your future?
           </h2>
           <p className="text-slate-500 mb-8">
-            Join {studentCount.toLocaleString()}+ students already building their careers on Forge.
+            Start free and build your placement-ready profile on Forge.
           </p>
           <button
             onClick={() => navigate('/signup')}

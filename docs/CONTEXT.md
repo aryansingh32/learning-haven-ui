@@ -98,6 +98,12 @@ is **applied to live and verified** (2026-10-10). What it added:
   endpoints retired, mock tests check course access, dependency fixes (0 critical).
 - Resume builder never saved (called a non-existent endpoint); admin user page showed random made-up numbers.
 
+**Production-readiness check (2026-10-29, `feat/hardening-ux`):** all checks green (Forge API 279 jest, Campus API 104,
+assessment-core, web 63, API/Campus API type checks, three front-end builds; 0 critical dependency findings). Fixed: a
+date-dependent drip test; fabricated public numbers removed (API `/analytics/public` returns real counts only; landing
+and Topics pages no longer claim "10,000+ students" or a rating; orphan `/course-preview` deleted). SQL suites and
+Campus API DB tests were not re-run (no local Postgres in this session).
+
 **Immediate next step:** content (W5) — see the audit (docs/campus/AUDIT_2026-10-14.md) for what blocks selling.
 
 ## 3. Done (high level)

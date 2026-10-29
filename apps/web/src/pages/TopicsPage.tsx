@@ -85,7 +85,7 @@ const TopicsPage = () => {
              <div className="w-6 h-6 rounded-full bg-green-500 border-2 border-background flex items-center justify-center text-[8px] font-bold text-white">S</div>
           </div>
           <p className="text-xs font-semibold text-foreground">
-             Join <span className="text-primary">10,000+ students</span> mastering DSA.
+             Practise DSA topic by topic, with a real judge.
           </p>
         </div>
       </div>

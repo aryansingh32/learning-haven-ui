@@ -136,7 +136,7 @@ describe('chapter gate', () => {
     });
 
     it('answers 403 with the reason for writes', async () => {
-        db({ chapter: { chapter_number: 3, status: 'UNLOCKED' }, drip: 7, startedAt: now });
+        db({ chapter: { chapter_number: 3, status: 'UNLOCKED' }, drip: 7, startedAt: new Date() }); // allowChapterWrite reads the real clock
         const json = jest.fn();
         const res = { status: jest.fn(() => ({ json })) };
         expect(await LearningGateService.allowChapterWrite('u1', CH, res)).toBe(false);
