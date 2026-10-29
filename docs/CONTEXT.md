@@ -38,7 +38,7 @@ The work goes in waves:
 | W2 | Learner-side partials | 🔄 in progress (see below) |
 | W3 | Admin control center: feature flags, maintenance mode, AI prompts, API keys, email config, queues, bulk user operations | ✅ (2026-10-10, browser-verified, 31 checks) |
 | W4 | AI features (testable only with a stub model until a key is set) | ⏳ |
-| W5 | Content drafts (problems, editorials, aptitude bank) for the owner's team to review | ⏳ |
+| W5 | Content drafts (problems, editorials, aptitude bank) for the owner's team to review | 🔄 first tranche drafted 2026-10-29 in `content/drafts/` (82 problems, 414 aptitude MCQs + 8 mocks, 2 courses); awaiting team review, nothing applied to live |
 | W6 | Infra and security (some steps are owner-only) | ⏳ |
 | W7 | Accessibility (axe audit) | ⏳ |
 
